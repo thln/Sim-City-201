@@ -15,21 +15,21 @@ class Wealthy extends Person
     {
 	    //roles.landlord.waitingToExecute;
 	}
-
-    void msgNewTime (int time) 
+    
+    public void updateTime(int newTime) 
     {
-		if (time == eatTime1)
+		if (newTime == eatTime1)
 		{		
 			//Need to turn Restaurant into a "Role"
 			//RestaurantCustomer.state = roleState.waitingToExecute;
 		}
-		if (time == eatTime2)
+		if (newTime == eatTime2)
 		{
 			//RestaurantCustomer.state = roleState.waitingToExecute;
 		}
-		if (time == sleepTime)
+		if (newTime == sleepTime)
 		{
 		    //GoToSleep();
 		}
-	}
+    }
 }
