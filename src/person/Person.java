@@ -2,8 +2,10 @@ package person;
 
 import java.util.*;
 
+import market.MarketCustomer;
 import person.Role;
 import person.Role.roleState;
+import restaurant.RestaurantCustomer;
 import agent.Agent;
 
 public abstract class Person extends Agent {
@@ -18,6 +20,12 @@ public abstract class Person extends Agent {
 	public double accountBalance;
 	public int sleepTime = 22;
 
+	Person() {
+		//roles.add(new RestaurantCustomer(this));
+		//roles.add(new MarketCustomer(this));
+		//roles.add(new BankCustomer(this));
+	}
+	
 	//Messages
 	void msgNewTime(int time) {
 	}
