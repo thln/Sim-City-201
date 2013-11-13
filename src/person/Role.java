@@ -5,7 +5,7 @@ public abstract class Role {
 	Person person;
 	
 	enum roleState {active, inActive, waitingToExecute}
-	roleState state = roleState.inActive;
+	private roleState state = roleState.inActive;
 	
 	protected Role() {
 	}
@@ -22,7 +22,15 @@ public abstract class Role {
     protected abstract boolean pickAndExecuteAnAction();
     
     protected void inactivateRole() {
-    	state = roleState.inActive;
+    	setState(roleState.inActive);
     	stateChanged();
     }
+
+	public roleState getState() {
+		return state;
+	}
+
+	public void setState(roleState state) {
+		this.state = state;
+	}
 }

@@ -7,7 +7,9 @@ import restaurant.Cashier;
 import restaurant.Cook;
 import restaurant.Host;
 import restaurant.Waiter;
+import market.MarketCustomer;
 import market.SalesPerson;
+import market.UPSman;
 import bank.BankGuard;
 import bank.BankTeller;
 import bank.LoanOfficer;
@@ -65,11 +67,11 @@ public class Worker extends Person {
 				roles.add(workerRole);
 			}
 			if (title == "UPSman") {
-				//workerRole = new UPSman;
+				workerRole = new UPSman();
 				roles.add(workerRole);
 			}
 			if (title == "maintenance") {
-				//workerRole = new Role(maintenanceRole));
+			//	workerRole = new Role(maintenanceRole));
 				roles.add(workerRole);
 			}
 			if (title == "cashier") {
@@ -132,7 +134,7 @@ public class Worker extends Person {
 			//	BankCustomer.state = roleState.waitingToExecute;      
 		}
 		if (newTime == myJob.startTime) {
-			workerRole.state = roleState.waitingToExecute;
+			workerRole.setState(roleState.waitingToExecute);
 		}
 		if (newTime == myJob.lunchTime) {
 			//	workerRole.msgLunchTime();
@@ -143,7 +145,8 @@ public class Worker extends Person {
 		}
 
 		if (newTime == marketTime && !hasFoodInFridge) {
-			//		MarketCustomerRole.state = roleState.waitingToExecute;
+			for (MarketCustomer role1: roles)
+				role1.setState(roleState.waitingToExecute);
 		}
 
 		if (newTime == myJob.endTime) {

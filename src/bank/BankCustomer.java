@@ -1,5 +1,6 @@
 package bank;
 
+import person.Person;
 import person.Role;
 
 public class BankCustomer extends Role {
@@ -24,8 +25,8 @@ public class BankCustomer extends Role {
 	double loan; 	
 	BankCustomerDesire desire;
 
-	BankCustomer () {
-		super();
+	public BankCustomer (String name, Person p1) {
+		super(p1);
 		desire = BankCustomerDesire.none;
 		myTeller = new BankTeller();
 	}

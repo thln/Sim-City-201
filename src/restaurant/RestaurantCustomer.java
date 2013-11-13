@@ -6,11 +6,12 @@ import java.util.Random;
 import java.util.concurrent.Semaphore;
 
 import person.Person;
+import person.Role;
 
 /**
  * Restaurant customer agent.
  */
-public class RestaurantCustomer {
+public class RestaurantCustomer extends Role {
 	private String name;
 	private int hungerLevel = 5;        // determines length of meal
 	Timer timer = new Timer();
@@ -45,8 +46,8 @@ public class RestaurantCustomer {
 	 * @param name name of the customer
 	 * @param gui  reference to the customergui so the customer can send it messages
 	 */
-	public RestaurantCustomer(String name){
-		super();
+	public RestaurantCustomer(String name, Person p1){
+		super(p1);
 		this.name = name;
 		if (name.equals("Broke 1")) {
 			money = 0;

@@ -2,6 +2,7 @@ package person;
 
 import java.util.*;
 
+import bank.BankCustomer;
 import market.MarketCustomer;
 import person.Role;
 import person.Role.roleState;
@@ -23,9 +24,9 @@ public abstract class Person extends Agent {
 	private int newTime;
 
 	Person() {
-		//roles.add(new RestaurantCustomer(this));
-		//roles.add(new MarketCustomer(this));
-		//roles.add(new BankCustomer(this));
+		roles.add(new RestaurantCustomer(name, this));
+		roles.add(new MarketCustomer(this));
+		roles.add(new BankCustomer(name, this));
 	}
 	
 	//Messages
@@ -45,12 +46,12 @@ public abstract class Person extends Agent {
 						updateTime(newTime);	
 					}
 					
-					if (r.state == roleState.active) {
+					if (r.getState() == roleState.active) {
 						r.pickAndExecuteAnAction();
 						return true;
 					}
 
-					if (r.state == roleState.waitingToExecute) {
+					if (r.getState() == roleState.waitingToExecute) {
 						setRoleActive(r);
 						return true;
 					}
@@ -68,12 +69,12 @@ public abstract class Person extends Agent {
 	public abstract void updateTime(int newTime);
 	
 	public void setRoleActive(Role role) {
-		role.state = roleState.active;
+		role.setState(roleState.active);
 		stateChanged();
 	}
 	
 	public void setRoleInactive(Role role) {
-		role.state = roleState.inActive;
+		role.setState(roleState.inActive);
 		stateChanged();
 	}
 	
