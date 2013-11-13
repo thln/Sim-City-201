@@ -7,6 +7,8 @@ import restaurant.MarketAgent.Stock;
 import java.util.*;
 import java.util.concurrent.Semaphore;
 
+import person.Role;
+
 /**
  * Restaurant Cook Role
  */
