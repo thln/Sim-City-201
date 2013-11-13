@@ -7,19 +7,19 @@ public class Crook extends Person {
 	int eatTime = 12;
 	int marketTime = 15;
 
-	//Messages
-	public void msgNewTime(int time) {
 
-		if (time == time2RobDaBank) {
+	//Messages
+	public void updateTime(int newTime) {
+		if (newTime == time2RobDaBank) {
 			//RobberRole.state = waitingToExecute;
 		}
-		if (time == eatTime) {
+		if (newTime == eatTime) {
 			//RestaurantCustomer.state = waitingToExecute;
 		}
-		if (time == marketTime && !hasFoodInFridge) {
+		if (newTime == marketTime && !hasFoodInFridge) {
 			//MarketCustomer.state = waitingToExecute;
 		}
-		if (time == sleepTime) {
+		if (newTime == sleepTime) {
 			//GoToSleep();
 		}
 	}
