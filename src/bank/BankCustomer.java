@@ -2,7 +2,7 @@ package bank;
 
 import person.Role;
 
-public class BankCustomerAgent extends Role {
+public class BankCustomer extends Role {
 
 
 	//Can be implemented as a person or as a business liaison. 
@@ -13,7 +13,7 @@ public class BankCustomerAgent extends Role {
 
 	enum BankCustomerDesire {none, withdraw, deposit, wantLoan, closeLoan, openAccount, closeAccount, robBank}
 
-	BankTellerAgent myTeller;
+	BankTeller myTeller;
 
 	double cash;
 	int accountNum;
@@ -24,10 +24,10 @@ public class BankCustomerAgent extends Role {
 	double loan; 	
 	BankCustomerDesire desire;
 
-	BankCustomerAgent () {
+	BankCustomer () {
 		super();
 		desire = BankCustomerDesire.none;
-		myTeller = new BankTellerAgent();
+		myTeller = new BankTeller();
 	}
 	
 	//Messages
@@ -129,7 +129,7 @@ public class BankCustomerAgent extends Role {
 		cash += myTeller.getVault()/10;
 	}
 
-	void stateChanged() {
+	public void stateChanged() {
 //		super.stateChanged();
 	}
 

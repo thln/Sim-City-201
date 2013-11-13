@@ -17,6 +17,7 @@ public abstract class Person extends Agent {
 	public double accountBalance;
 	public boolean hasFoodInFridge;
 	public int sleepTime = 22;
+	String name;
 
 	//Messages
 	void msgNewTime(int time) {
