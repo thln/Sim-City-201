@@ -10,7 +10,7 @@ import java.util.concurrent.Semaphore;
  * Restaurant Waiter Role
  */
 
-public class Waiter {
+public class Waiter extends Role {
 
 	//Keeps  a list of customers
 	public List<myCustomer> myCustomers = Collections.synchronizedList(new ArrayList<myCustomer>());

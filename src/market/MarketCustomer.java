@@ -1,5 +1,7 @@
 package market;
 
-public class MarketCustomer {
+import person.Role;
+
+public class MarketCustomer extends Role {
 
 }

@@ -11,7 +11,7 @@ import java.util.concurrent.Semaphore;
  * Restaurant Cook Role
  */
 
-public class Cook {
+public class Cook extends Role {
 
 	private String name;
 	private Semaphore atDestination = new Semaphore(0,true);
