@@ -1,14 +1,12 @@
 package restaurant;
 
-import agent.Agent;
-import restaurant.interfaces.Market;
 import java.util.*;
 
 /**
  * Restaurant Cook Agent
  */
 
-public class MarketAgent extends Agent implements Market{
+public class MarketAgent {
 
 	private String name;
 	//private Semaphore atTable = new Semaphore(0,true);

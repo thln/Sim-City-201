@@ -10,7 +10,7 @@ import person.Person;
 /**
  * Restaurant customer agent.
  */
-public class RestaurantCustomer extends Person {
+public class RestaurantCustomer {
 	private String name;
 	private int hungerLevel = 5;        // determines length of meal
 	Timer timer = new Timer();

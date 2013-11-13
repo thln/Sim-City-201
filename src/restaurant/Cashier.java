@@ -1,24 +1,15 @@
 package restaurant;
 
-import agent.Agent;
 
 import java.util.*;
 
-import restaurant.interfaces.Cashier;
-import restaurant.interfaces.Customer;
-import restaurant.interfaces.Market;
-import restaurant.interfaces.Waiter;
-import restaurant.test.mock.EventLog;
-import restaurant.test.mock.LoggedEvent;
 
 /**
- * Restaurant Cashier Agent
+ * Restaurant Cashier Role
  */
 
-public class Cashier extends Person {
+public class Cashier{
 
-	public EventLog log = new EventLog();
-	
 	private String name;
 	//private Semaphore atTable = new Semaphore(0,true);
 

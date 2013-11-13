@@ -3,16 +3,15 @@ package restaurant;
 import agent.Agent;
 import restaurant.RestaurantCustomer.AgentState;
 import restaurant.MarketAgent.Stock;
-import restaurant.gui.CookGui;
 
 import java.util.*;
 import java.util.concurrent.Semaphore;
 
 /**
- * Restaurant Cook Agent
+ * Restaurant Cook Role
  */
 
-public class Cook extends Person {
+public class Cook {
 
 	private String name;
 	private Semaphore atDestination = new Semaphore(0,true);
