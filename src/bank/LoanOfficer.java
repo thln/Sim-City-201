@@ -1,11 +1,10 @@
-package Images;
+package bank;
+
+import person.Role;
 
 import java.util.List;
 
-import Images.BankTellerAgent.Account;
-import agent.Agent;
-
-public class LoanOfficerAgent {
+public class LoanOfficer extends Role {
 
 
 	//Data
@@ -16,9 +15,9 @@ public class LoanOfficerAgent {
 	class Loan {
 		Account account1;
 		LoanState state = LoanState.requesting;
-		BankTellerAgent teller1;
+		BankTeller teller1;
 		
-		Loan(Account acc1, BankTellerAgent t1) {
+		Loan(Account acc1, BankTeller t1) {
 			account1 = acc1;
 			teller1 = t1;
 		}
@@ -30,7 +29,7 @@ public class LoanOfficerAgent {
 
 	//Messages
 
-	void msgIsLoanApproved(Account account1, BankTellerAgent t1) {
+	void msgIsLoanApproved(Account account1, BankTeller t1) {
 		loans.add( new Loan(account1, t1));
 	}
 

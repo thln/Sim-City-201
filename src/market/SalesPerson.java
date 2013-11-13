@@ -8,7 +8,7 @@ import restaurant.Cook;
 
 public class SalesPerson extends Role {
 
-	SalesPerson(Person person) {
+	public SalesPerson(Person person) {
 		super(person);
 	}
 

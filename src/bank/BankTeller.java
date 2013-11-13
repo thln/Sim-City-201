@@ -1,10 +1,9 @@
-package Images;
+package bank;
 
+import person.Role;
 import java.util.List;
 
-import agent.Agent;
-
-public class BankTellerAgent {
+public class BankTeller extends Role {
 
 
 	//DATA
@@ -12,7 +11,7 @@ public class BankTellerAgent {
 	enum AccountState {neutral, newAccount, waiting, depositing, withdrawing, requestingLoan, closingLoan, loanApproved, loanDenied}
 
 	class Account {	
-		BankCustomerAgent customer;
+		BankCustomer customer;
 		int accountNum; 		//the hash key
 		double loan = 0;
 		double balance = 0;
@@ -20,7 +19,7 @@ public class BankTellerAgent {
 		double processingMoney = 0;
 		AccountState state = AccountState.newAccount;
 		
-		Account (BankCustomerAgent c1) {
+		Account (BankCustomer c1) {
 			customer = c1;
 		}
 	}
@@ -32,7 +31,7 @@ public class BankTellerAgent {
 
 	//MESSAGES
 
-	void msgWantNewAccount (BankCustomerAgent cust1) {
+	void msgWantNewAccount (BankCustomer cust1) {
 		accounts.add(new Account(cust1));
 	}
 

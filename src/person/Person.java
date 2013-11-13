@@ -2,8 +2,10 @@ package person;
 
 import java.util.*;
 
+import market.MarketCustomer;
 import person.Role;
 import person.Role.roleState;
+import restaurant.RestaurantCustomer;
 import agent.Agent;
 
 public abstract class Person extends Agent {
@@ -13,11 +15,18 @@ public abstract class Person extends Agent {
 	public double money;
 	public HashMap <String, Integer> Inventory = new HashMap<String, Integer>(); 		//market list
 	public boolean hasCar;
+	public boolean hasFoodInFridge;
 	public int accountNum;
 	public double accountBalance;
-	public boolean hasFoodInFridge;
 	public int sleepTime = 22;
+	String name;
 
+	Person() {
+		//roles.add(new RestaurantCustomer(this));
+		//roles.add(new MarketCustomer(this));
+		//roles.add(new BankCustomer(this));
+	}
+	
 	//Messages
 	void msgNewTime(int time) {
 	}
@@ -55,5 +64,9 @@ public abstract class Person extends Agent {
 	public void setRoleInactive(Role role) {
 		role.state = roleState.inActive;
 		stateChanged();
+	}
+	
+	public void goToSleep() {
+		//puts agent to sleep
 	}
 }
