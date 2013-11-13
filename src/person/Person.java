@@ -6,7 +6,7 @@ import person.Role;
 import person.Role.roleState;
 import agent.Agent;
 
-public class Person extends Agent {
+public abstract class Person extends Agent {
 
 	//Data
 	public List<Role> roles = Collections.synchronizedList(new ArrayList<Role>()); 	//contains all the customer roles
@@ -24,21 +24,36 @@ public class Person extends Agent {
 
 	//Scheduler
 	protected boolean pickAndExecuteAnAction() {
-		//		if (exists a role in role such that r. is active)
-		//			then r.pickAndExecuteAnAction();
-		//		if (exists a role such that r. is watingToExecute) {
-		//			then SetRoleActive(role);	
-		//			return true;
-		//		}
-		//		if (no role is active) {
-		//			GoHome();
-		return false;
-		//		}
+
+		synchronized (roles) {
+			if (!roles.isEmpty()) {
+				for (Role r : roles) {
+					if (r.state == roleState.active) {
+						r.pickAndExecuteAnAction();
+						return true;
+					}
+
+					if (r.state == roleState.waitingToExecute) {
+						setRoleActive(r);
+						return true;
+					}
+				}
+				//goHome();
+				return false;
+			}
+			//goHome();
+			return false;
+		}
 	}
 
 	//Actions
 	public void setRoleActive(Role role) {
 		role.state = roleState.active;
+		stateChanged();
+	}
+	
+	public void setRoleInactive(Role role) {
+		role.state = roleState.inActive;
 		stateChanged();
 	}
 }
