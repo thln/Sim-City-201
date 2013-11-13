@@ -7,6 +7,9 @@ public abstract class Role {
 	enum roleState {active, inActive, waitingToExecute}
 	roleState state = roleState.inActive;
 	
+	protected Role() {
+	}
+	
 	protected Role(Person person) {
 		this.person = person;
 	}

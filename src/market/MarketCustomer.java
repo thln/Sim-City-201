@@ -6,6 +6,7 @@ import person.Person;
 import person.Role;
 
 public class MarketCustomer extends Role {
+<<<<<<< HEAD
 
 	protected MarketCustomer(Person person) {
 		super(person);
@@ -19,4 +20,13 @@ public class MarketCustomer extends Role {
 		return false;
 	}
 
+=======
+	public MarketCustomer() {
+		super();
+	}
+	
+	protected boolean pickAndExecuteAnAction() {
+		return false;
+	}
+>>>>>>> 22c324ebdc08c6de01990a208a16a1ff66d3c517
 }
