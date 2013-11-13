@@ -11,6 +11,8 @@ import person.Role;
 
 /**
  * Restaurant Cook Role
+ * Currently not printing
+ * No current Cook Gui
  */
 
 public class Cook extends Role {
@@ -18,7 +20,7 @@ public class Cook extends Role {
 	private String name;
 	private Semaphore atDestination = new Semaphore(0,true);
 
-	public CookGui cookGui = null;
+	//public CookGui cookGui = null;
 
 	Timer timer = new Timer();
 	private int cookTime;
@@ -56,7 +58,7 @@ public class Cook extends Role {
 	 */
 	public void msgHeresAnOrder(int table, String choice, Waiter waiter) {
 		synchronized(myOrders){
-			print("Order recived for table " + table);
+			//print("Order recived for table " + table);
 			Order order = new Order(table, choice, waiter);
 			myOrders.add(order);
 			stateChanged();
@@ -70,7 +72,7 @@ public class Cook extends Role {
 
 	public void msgCantFulfill(String choice, int amount, int orderedAmount, MarketAgent market) {
 		synchronized(stockFulfillment){
-			print("Market cannot fulfill order for " + choice + "-- Amount: " + amount + " Ordered: " + orderedAmount);
+			//print("Market cannot fulfill order for " + choice + "-- Amount: " + amount + " Ordered: " + orderedAmount);
 			stockFulfillment.add(new Stock(choice, amount, orderedAmount, market));
 			stateChanged();
 		}
@@ -78,7 +80,7 @@ public class Cook extends Role {
 
 	public void msgOrderFulfillment(String choice, int amount, int orderedAmount, MarketAgent market) {
 		synchronized(stockFulfillment){
-			print("Got fullfillment for " + choice + "-- Amount: " + amount + " Ordered: " + orderedAmount);
+			//print("Got fullfillment for " + choice + "-- Amount: " + amount + " Ordered: " + orderedAmount);
 			stockFulfillment.add(new Stock(choice, amount, orderedAmount, market));
 			stateChanged();
 		}
@@ -151,11 +153,11 @@ public class Cook extends Role {
 			return;
 		}
 
+		/*
 		cookGui.DoGetIngredients();
 		try {
 			atDestination.acquire();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 
 		}
@@ -163,11 +165,11 @@ public class Cook extends Role {
 		try {
 			atDestination.acquire();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 
 		}
 		cookGui.DoGoToHomePosition();
+		*/
 		
 		foodMap.get(o.choice).quantity--;
 		checkInventory(o.choice);
@@ -199,7 +201,6 @@ public class Cook extends Role {
 		try {
 			atDestination.acquire();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 
 		}
@@ -208,7 +209,6 @@ public class Cook extends Role {
 		try {
 			atDestination.acquire();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 
 		}
