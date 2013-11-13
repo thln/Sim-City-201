@@ -13,9 +13,9 @@ public abstract class Person extends Agent {
 	public double money;
 	public HashMap <String, Integer> Inventory = new HashMap<String, Integer>(); 		//market list
 	public boolean hasCar;
+	public boolean hasFoodInFridge;
 	public int accountNum;
 	public double accountBalance;
-	public boolean hasFoodInFridge;
 	public int sleepTime = 22;
 
 	//Messages
@@ -55,5 +55,9 @@ public abstract class Person extends Agent {
 	public void setRoleInactive(Role role) {
 		role.state = roleState.inActive;
 		stateChanged();
+	}
+	
+	public void goToSleep() {
+		//puts agent to sleep
 	}
 }
