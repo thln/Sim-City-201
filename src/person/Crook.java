@@ -8,7 +8,8 @@ public class Crook extends Person {
 	int marketTime = 15;
 
 	//Messages
-	public void msgNewTime (int time) {
+	public void msgNewTime(int time) {
+
 		if (time == time2RobDaBank) {
 			//RobberRole.state = waitingToExecute;
 		}
@@ -23,3 +24,4 @@ public class Crook extends Person {
 		}
 	}
 }
+
