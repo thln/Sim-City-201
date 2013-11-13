@@ -145,8 +145,8 @@ public class Worker extends Person {
 		}
 
 		if (newTime == marketTime && !hasFoodInFridge) {
-			for (MarketCustomer role1: roles)
-				role1.setState(roleState.waitingToExecute);
+		//	for (MarketCustomer role1: roles)
+				//role1.setState(roleState.waitingToExecute);
 		}
 
 		if (newTime == myJob.endTime) {

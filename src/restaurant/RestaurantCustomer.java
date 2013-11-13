@@ -80,7 +80,7 @@ public class RestaurantCustomer extends Role {
 	 * Messages
 	 */
 	public void gotHungry(int xHome, int yHome) {//from animation
-		print("I'm hungry");
+		System.out.println("I'm hungry");
 		this.xHome = xHome;
 		this.yHome = yHome;
 		event = AgentEvent.gotHungry;
@@ -88,7 +88,7 @@ public class RestaurantCustomer extends Role {
 	}
 
 	public void msgTablesAreFull() {
-		print("Got message that all tables are full");
+		System.out.println("Got message that all tables are full");
 		state = AgentState.TablesFull;
 		stateChanged();
 	}
@@ -97,7 +97,7 @@ public class RestaurantCustomer extends Role {
 		this.tableNumber = tableNumber;
 		this.menu = menu;
 		this.waiter = waiter; //to establish connection to waiter
-		print("Received msgPleaseFollowMe from " + waiter.getName());
+		System.out.println("Received msgPleaseFollowMe from " + waiter.getName());
 		event = AgentEvent.followHost;
 		stateChanged();
 	}
@@ -139,7 +139,7 @@ public class RestaurantCustomer extends Role {
 	public void msgHeresYourChange(double change) {
 		event = AgentEvent.gotChange;
 		money = change;
-		print("Recieved my change of $" + change + ". I have now $" + money);
+		System.out.println("Recieved my change of $" + change + ". I have now $" + money);
 		stateChanged();
 	}
 	
@@ -220,7 +220,7 @@ public class RestaurantCustomer extends Role {
 	 */
 	private void goToRestaurant() {
 		state = AgentState.WaitingInRestaurant;
-		Do("Going to restaurant");
+		System.out.println("Going to restaurant");
 		host.msgIWantFood(this, xHome, yHome);
 	}
 	
@@ -235,13 +235,13 @@ public class RestaurantCustomer extends Role {
 
 		if (myRandomChoice == 0) {
 			state = AgentState.Leaving;
-			print("I don't want to wait, bailing from this stupid restaurant");
+			System.out.println("I don't want to wait, bailing from this stupid restaurant");
 			customerGui.DoExitRestaurant();
 			stateChanged();
 		}
 		else {
 			state = AgentState.WaitingInRestaurant;
-			print("Decided to stay and eat in restaurant");
+			System.out.println("Decided to stay and eat in restaurant");
 			host.msgStaying(this, xHome, yHome);
 			stateChanged();
 		}
@@ -249,19 +249,19 @@ public class RestaurantCustomer extends Role {
 
 	private void SitDown() {
 		state = AgentState.BeingSeated;
-		Do("Being seated. Going to table");
+		System.out.println("Being seated. Going to table");
 		customerGui.DoGoToSeat(tableNumber);
 	}
 
 	private void MakeChoice() {
 		state = AgentState.DecidingChoice;
 		
-		print("Deciding what I want...");
+		System.out.println("Deciding what I want...");
 		timer.schedule(new TimerTask() {
 			public void run() {
 				
 				if (money < menu.lowestPricedItem) {
-					print("I can't afford anything on the menu");
+					System.out.println("I can't afford anything on the menu");
 					LeaveRestaurant();
 					ResetState();
 					return;
@@ -299,7 +299,7 @@ public class RestaurantCustomer extends Role {
 	private void EatFood() {
 		state = AgentState.Eating;
 		customerGui.DoEatFood(choice);
-		Do("Eating Food");
+		System.out.println("Eating Food");
 		//This next complicated line creates and starts a timer thread.
 		//We schedule a deadline of getHungerLevel()*1000 milliseconds.
 		//When that time elapses, it will call back to the run routine
@@ -323,13 +323,13 @@ public class RestaurantCustomer extends Role {
 	private void AskForCheck() {
 		customerGui.DoAskForCheck();
 		state = AgentState.AskedForCheck;
-		print("Asking for my check");
+		System.out.println("Asking for my check");
 		waiter.msgIWantMyCheck(this);
 	}
 
 	private void PayingCheck() {
 		state = AgentState.PayingCheck;
-		print("Going to the cashier");
+		System.out.println("Going to the cashier");
 		customerGui.DoGoToCashier();
 	}
 
@@ -339,8 +339,8 @@ public class RestaurantCustomer extends Role {
 			money = 0;
 		}
 		
-		print("Paying my check of: " + check);
-		print("I have $" + money);
+		System.out.println("Paying my check of: " + check);
+		System.out.println("I have $" + money);
 		
 		state = AgentState.PayedCheck;
 		cashier.msgPayment(choice, money, this);
@@ -349,7 +349,7 @@ public class RestaurantCustomer extends Role {
 
 	private void LeaveRestaurant() {
 		state = AgentState.Leaving;
-		Do("Leaving.");
+		DoSystem.out.println("Leaving.");
 		waiter.msgLeavingTable(this);
 		customerGui.DoExitRestaurant();
 	}

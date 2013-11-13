@@ -4,6 +4,8 @@ import person.Role;
 
 import java.util.List;
 
+import bank.BankTeller.Account;
+
 public class LoanOfficer extends Role {
 
 

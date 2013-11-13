@@ -25,7 +25,7 @@ public class BankTeller extends Role {
 	}
 
 	List<Account> accounts;
-	LoanOfficerAgent myLoaner;
+	LoanOfficer myLoaner;
 	int balanceMinimum = 5;
 
 
