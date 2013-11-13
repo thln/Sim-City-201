@@ -12,9 +12,9 @@ public class ApplicationGui extends JFrame implements ActionListener{
 	
 	//List containing all of the different building animation panels
 	public List<CityPanel> cityPanels = new ArrayList<CityPanel>();
-	CityPanel cityPanel1 = new CityPanel();
-	CityPanel cityPanel2 = new CityPanel();
-	CityPanel cityPanel3 = new CityPanel();
+	CityPanel buildingPanel1 = new CityPanel();
+	CityPanel buildingPanel2 = new CityPanel();
+	CityPanel buildingPanel3 = new CityPanel();
 	ControlPanel controlPanel = new ControlPanel();
 	
 	public ApplicationGui() {
@@ -27,16 +27,16 @@ public class ApplicationGui extends JFrame implements ActionListener{
     	cityPanel.setBounds(WINDOWX/2, 0, WINDOWX/2, WINDOWY/2);
     	
     	//stacking the building animations
-    	cityPanel1.setBounds(WINDOWX/2, WINDOWY/2, WINDOWX/2, WINDOWY/2);
-    	cityPanel2.setBounds(WINDOWX/2+50, WINDOWY/2, WINDOWX/2, WINDOWY/2);
-    	cityPanel3.setBounds(WINDOWX/2+100, WINDOWY/2, WINDOWX/2, WINDOWY/2);
+    	buildingPanel1.setBounds(WINDOWX/2, WINDOWY/2, WINDOWX/2, WINDOWY/2);
+    	buildingPanel2.setBounds(WINDOWX/2+50, WINDOWY/2, WINDOWX/2, WINDOWY/2);
+    	buildingPanel3.setBounds(WINDOWX/2+100, WINDOWY/2, WINDOWX/2, WINDOWY/2);
     	
     	add(controlPanel);
     	add(cityPanel);
     	
-    	add(cityPanel1);
-    	add(cityPanel2);
-    	add(cityPanel3);
+    	add(buildingPanel1);
+    	add(buildingPanel2);
+    	add(buildingPanel3);
 	}
 	
 	public void actionPerformed(ActionEvent e) {
