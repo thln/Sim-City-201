@@ -7,7 +7,7 @@ import java.util.*;
 import java.util.concurrent.Semaphore;
 
 /**
- * Restaurant Waiter Agent
+ * Restaurant Waiter Role
  */
 
 public class Waiter {
@@ -18,9 +18,6 @@ public class Waiter {
 
 	private String name;
 	private Semaphore atDestination = new Semaphore(0,true);
-
-	public WaiterGui waiterGui = null;
-	private CookGui cookGui = null;
 
 	public Menu menu = new Menu();
 
