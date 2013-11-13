@@ -28,7 +28,7 @@ public class GroupPanel extends JPanel {
 		
 	}
 	
-	public void addPerson(String name, String occupation, ){
+	public void addPerson(String name, String occupation){
 		if(name !=null){
 			
 			
