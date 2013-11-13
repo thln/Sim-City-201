@@ -38,9 +38,7 @@ public class Cook extends Role {
 
 	public Cook(String name) {
 		super();
-
 		this.name = name;
-
 	}
 
 	public String getMaitreDName() {
