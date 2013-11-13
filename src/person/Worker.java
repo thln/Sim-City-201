@@ -12,10 +12,6 @@ import bank.BankGuard;
 import bank.BankTeller;
 import bank.LoanOfficer;
 
-//--Currently have decision making (i.e. if time = workStartTime, then go To work) 
-//in the message of Update Time given by the application. Will move this decision making to the scheduler,
-//and use the application message to update time and prepare scheduler to react (perhaps with boolean newTime)
-
 public class Worker extends Person {
 	//Data
 	Role workerRole;
@@ -157,6 +153,8 @@ public class Worker extends Person {
 
 		if (newTime == sleepTime) {
 			//GoToSleep();
-		}   
+		}  
+		
+		newTime = -30;
 	}
 }
