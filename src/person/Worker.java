@@ -2,6 +2,7 @@ package person;
 
 import java.awt.Point;
 
+import person.Role.roleState;
 import restaurant.Cashier;
 import restaurant.Cook;
 import restaurant.Host;
@@ -18,6 +19,7 @@ public class Worker extends Person {
 	Job myJob = null;
 	int marketTime = myJob.getEndTime();
 	int bankTime = 8;
+	int sleepTime = 22;
 	int moneyMinThreshold = 20;
 	int moneyMaxThreshold = 200;
 
@@ -88,31 +90,31 @@ public class Worker extends Person {
 				roles.add(workerRole);
 			}
 		}
-			
+
 		int getStartTime() {
 			return endTime;
 		}
-		
+
 		void setStartTime(int t) {
 			endTime = t;
 		}
-		
+
 		int getLunchTime() {
 			return endTime;
 		}
-		
+
 		void setLunchTime(int t) {
 			endTime = t;
 		}
-		
+
 		int getEndTime() {
 			return endTime;
 		}
-		
+
 		void setEndTime(int t) {
 			endTime = t;
 		}
-		
+
 		int getBankTime() {
 			return bankTime;
 		}
@@ -123,30 +125,32 @@ public class Worker extends Person {
 	void msgHereIsPayCheck (double amount) {
 		money += amount;
 	}
-	void msgNewTime(int time) {
-		If ((time == myJob.getBankTime()) && 
-				(money  maxMoneyThreshold))
-				bankCustomerRole.state = waitingToExecute;      
-		If (time == myJob.startTime) {
-			workerRole.state = waitingToExecute;
+	void msgNewTime(int newTime) {
+		if ((newTime == myJob.getBankTime()) && (money >= moneyMaxThreshold))
+		//	BankCustomer.state = roleState.waitingToExecute;      
+		if (newTime == myJob.startTime) {
+			workerRole.state = roleState.waitingToExecute;
 
-			If (time = myJob.lunchTime) {
-				workerRole.msgLunchTime();
+			if (newTime == myJob.lunchTime) {
+				//	workerRole.msgLunchTime();
 			}
 
-			If (time = myJob.lunchTime + myJob.lunchBreak) {
-				workerRole.msgBackToWork();
+			if (newTime == myJob.lunchTime + myJob.lunchTime) {
+				//	workerRole.msgBackToWork();
 			}
 
-			If (time = marketTime && !hasFoodInFridge)
-			MarketCustomerRole.state = waitingToExecute;
+			if (newTime == marketTime && !hasFoodInFridge) {
+				//		MarketCustomerRole.state = roleState.waitingToExecute;
+			}
+
+			if (newTime == myJob.endTime) {
+			//	workerRole.msgShiftOver();
+			//	roles.maintenance.msgShiftOver;
+			} 
+
+			if (newTime == sleepTime) {
+				//GoToSleep();
+			}   
 		}
-
-		If (time = myJob.endTime) {
-			workerRole.msgShiftOver;
-			then roles.maintenance.msgShiftOver;
-		} 
-		if (time = sleepTime)
-			GoToSleep();
-	}   
+	}
 }
