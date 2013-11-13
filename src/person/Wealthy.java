@@ -1,6 +1,8 @@
 package person;
 
-class Wealthy implements Person 
+import person.Role.roleState;
+
+class Wealthy extends Person 
 {
     int eatTime1 = 10;
     int eatTime2 = 16;
@@ -11,21 +13,23 @@ class Wealthy implements Person
     //Messages
     void msgRentDue () 
     {
-	    roles.landlord.waitingToExecute;
+	    //roles.landlord.waitingToExecute;
 	}
 
     void msgNewTime (int time) 
     {
 		if (time == eatTime1)
-		{
-		    //then activate roles.restaurantCustomer;
+		{		
+			//Need to turn Restaurant into a "Role"
+			//RestaurantCustomer.state = roleState.waitingToExecute;
 		}
 		if (time == eatTime2)
 		{
-		    //then activate roles.restaurantCustomer;
+			//RestaurantCustomer.state = roleState.waitingToExecute;
 		}
 		if (time == sleepTime)
 		{
-		    GoToSleep();
+		    //GoToSleep();
 		}
 	}
+}
