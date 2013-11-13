@@ -18,9 +18,12 @@ public abstract class Person extends Agent {
 	public boolean hasFoodInFridge;
 	public int sleepTime = 22;
 	String name;
+	private int newTime;
 
 	//Messages
 	void msgNewTime(int time) {
+		newTime = time;
+		stateChanged();
 	}
 
 	//Scheduler
@@ -29,6 +32,11 @@ public abstract class Person extends Agent {
 		synchronized (roles) {
 			if (!roles.isEmpty()) {
 				for (Role r : roles) {
+					
+					if (newTime >= 0) {
+						updateTime(newTime);	
+					}
+					
 					if (r.state == roleState.active) {
 						r.pickAndExecuteAnAction();
 						return true;
@@ -48,6 +56,9 @@ public abstract class Person extends Agent {
 	}
 
 	//Actions
+	
+	public abstract void updateTime(int newTime);
+	
 	public void setRoleActive(Role role) {
 		role.state = roleState.active;
 		stateChanged();

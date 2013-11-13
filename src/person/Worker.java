@@ -12,6 +12,9 @@ import bank.BankGuard;
 import bank.BankTeller;
 import bank.LoanOfficer;
 
+//--Currently have decision making (i.e. if time = workStartTime, then go To work) 
+//in the message of Update Time given by the application. Will move this decision making to the scheduler,
+//and use the application message to update time and prepare scheduler to react (perhaps with boolean newTime)
 
 public class Worker extends Person {
 	//Data
@@ -125,32 +128,35 @@ public class Worker extends Person {
 	void msgHereIsPayCheck (double amount) {
 		money += amount;
 	}
-	void msgNewTime(int newTime) {
-		if ((newTime == myJob.getBankTime()) && (money >= moneyMaxThreshold))
-		//	BankCustomer.state = roleState.waitingToExecute;      
+
+	//Actions
+
+	public void updateTime(int newTime) {
+		if ((newTime == myJob.getBankTime()) && (money >= moneyMaxThreshold)) {
+			//	BankCustomer.state = roleState.waitingToExecute;      
+		}
 		if (newTime == myJob.startTime) {
 			workerRole.state = roleState.waitingToExecute;
+		}
+		if (newTime == myJob.lunchTime) {
+			//	workerRole.msgLunchTime();
+		}
 
-			if (newTime == myJob.lunchTime) {
-				//	workerRole.msgLunchTime();
-			}
+		if (newTime == myJob.lunchTime + myJob.lunchTime) {
+			//	workerRole.msgBackToWork();
+		}
 
-			if (newTime == myJob.lunchTime + myJob.lunchTime) {
-				//	workerRole.msgBackToWork();
-			}
+		if (newTime == marketTime && !hasFoodInFridge) {
+			//		MarketCustomerRole.state = roleState.waitingToExecute;
+		}
 
-			if (newTime == marketTime && !hasFoodInFridge) {
-				//		MarketCustomerRole.state = roleState.waitingToExecute;
-			}
-
-			if (newTime == myJob.endTime) {
+		if (newTime == myJob.endTime) {
 			//	workerRole.msgShiftOver();
 			//	roles.maintenance.msgShiftOver;
-			} 
+		} 
 
-			if (newTime == sleepTime) {
-				//GoToSleep();
-			}   
-		}
+		if (newTime == sleepTime) {
+			//GoToSleep();
+		}   
 	}
 }
