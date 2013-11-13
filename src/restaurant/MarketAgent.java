@@ -13,8 +13,8 @@ public class MarketAgent extends Agent implements Market{
 	private String name;
 	//private Semaphore atTable = new Semaphore(0,true);
 
-	private CookAgent cook;
-	private CashierAgent cashier;
+	private Cook cook;
+	private Cashier cashier;
 
 	enum StockState {open, processing, fulfilled};
 	
@@ -30,7 +30,7 @@ public class MarketAgent extends Agent implements Market{
 		Inventory.put("Salad", 2);
 	}
 
-	public MarketAgent(String name, CookAgent cook, CashierAgent cashier) {
+	public MarketAgent(String name, Cook cook, Cashier cashier) {
 		super();
 
 		this.name = name;
@@ -59,7 +59,7 @@ public class MarketAgent extends Agent implements Market{
 		}
 	}
 	
-	public void msgPayment(double payment, CashierAgent cashier) {
+	public void msgPayment(double payment, Cashier cashier) {
 		print("Received a payment of $" + payment + " from " + cashier.getName());
 		stateChanged();
 	}

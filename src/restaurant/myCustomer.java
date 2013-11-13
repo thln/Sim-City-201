@@ -2,7 +2,7 @@ package restaurant;
 
 public class myCustomer {
 	
-	CustomerAgent customer;
+	RestaurantCustomer customer;
 	
 	int tableNumber;
 	double CheckAmount = 0;
@@ -17,7 +17,7 @@ public class myCustomer {
 	 * Constructor for myCustomer class
 	 */
 	
-	myCustomer (CustomerAgent customer, int tableNumber, int xHome, int yHome) {
+	myCustomer (RestaurantCustomer customer, int tableNumber, int xHome, int yHome) {
 		this.customer = customer;
 		this.tableNumber = tableNumber;
 		this.xHome = xHome;
@@ -28,7 +28,7 @@ public class myCustomer {
 	
 	//Utilities
 	
-	CustomerAgent getCustomer() {
+	RestaurantCustomer getCustomer() {
 		return customer;
 	}
 

@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.*;
 import java.util.concurrent.*;
 
-import restaurant.WaiterAgent;
+import restaurant.Waiter;
 
 /**
  * Base class for simple agents
