@@ -3,12 +3,14 @@ package restaurant;
 
 import java.util.*;
 
+import person.Role;
+
 
 /**
  * Restaurant Cashier Role
  */
 
-public class Cashier{
+public class Cashier extends Role {
 
 	private String name;
 	//private Semaphore atTable = new Semaphore(0,true);
