@@ -1,13 +1,17 @@
 package bank;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import person.Person;
 import person.Role;
 
 public class BankGuard extends Role {
 
 	//DATA
 
+	String name;
 	List <BankCustomer> customers;
 	List <BankCustomer> robbers;
 	List <MyTeller> tellers; 
@@ -18,20 +22,31 @@ public class BankGuard extends Role {
 		TellerState state;
 		BankTeller tell1;
 	}
+	
+	BankGuard (String name, Person p1) {
+		super(p1);
+		this.name = name;
+		customers = Collections.synchronizedList(new ArrayList<BankCustomer>());
+		robbers = Collections.synchronizedList(new ArrayList<BankCustomer>());
+		tellers = Collections.synchronizedList(new ArrayList<MyTeller>());
+	}
 
 	//MESSAGES
 
 	void msgRobbingBank(BankCustomer cust1) {
 		robbers.add(cust1);
+		stateChanged();
 	}
 
 	void msgArrivedAtBank(BankCustomer c1) {
 		customers.add(c1);
+		stateChanged();
 	}
 
 	void msgLeavingBank (BankTeller t1) {
 		MyTeller correct = findTeller(t1);
 		correct.state = TellerState.available;
+		stateChanged();
 	}
 
 

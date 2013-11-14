@@ -3,9 +3,11 @@ package person;
 import java.util.*;
 
 import bank.BankCustomer;
+import bank.BankGuard;
 import market.MarketCustomer;
 import person.Role;
 import person.Role.roleState;
+import restaurant.Host;
 import restaurant.RestaurantCustomer;
 import agent.Agent;
 
@@ -22,11 +24,17 @@ public abstract class Person extends Agent {
 	public int sleepTime = 22;
 	String name;
 	private int newTime;
+	PhoneBook myPhoneBook;
+	
+	class PhoneBook {
+		Host host1;
+		BankGuard bankGuard;
+	}
 
 	Person() {
 		roles.add(new RestaurantCustomer(name, this));
 		roles.add(new MarketCustomer(this));
-		roles.add(new BankCustomer(name, this));
+		roles.add(new BankCustomer(name, this, myPhoneBook.bankGuard, 0, 0, 0, 0));
 	}
 	
 	//Messages

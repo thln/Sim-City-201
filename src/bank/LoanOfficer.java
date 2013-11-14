@@ -29,14 +29,14 @@ public class LoanOfficer extends Role {
 		}
 	}
 	
-	List<Loan> loans;
-	List<Account> accounts;
+	public List<Loan> loans;
+	public List<Account> accounts;
 
 	LoanOfficer(String name, Person p1) {
 		super(p1);
 		this.name = name;
-		loans = new Collections.synchronizedList(new ArrayList<Loan>());
-		accounts = new Collections.synchronizedList(new ArrayList<Account>());
+		loans = Collections.synchronizedList(new ArrayList<Loan>());
+		accounts = Collections.synchronizedList(new ArrayList<Account>());
 	}
 	
 	//Messages

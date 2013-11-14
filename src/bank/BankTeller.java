@@ -7,7 +7,9 @@ import java.util.List;
 
 public class BankTeller extends Role {
 
-
+//TODO
+	//Finish find account function,
+	
 	//DATA
 
 	List<Account> accounts;
@@ -53,33 +55,39 @@ public class BankTeller extends Role {
 		Account correct = FindAccount (accountNum);
 		correct.processingMoney = desiredAmount;
 		correct.state = AccountState.withdrawing;
+		stateChanged();
 	}
 
 	void msgHereIsMyDeposit(double amount, int accountNum) {
 		Account correct = FindAccount (accountNum);
 		correct.processingMoney = amount;
 		correct.state = AccountState.depositing;
+		stateChanged();
 	}
 
 	void msgINeedALoan(double desiredLoan, int accountNum) {
 		Account correct = FindAccount (accountNum);
 		correct.processingMoney = desiredLoan;
 		correct.state = AccountState.requestingLoan;
+		stateChanged();
 	}
 
 	void msgPayingOffLoan(double loan, int accountNum) {
 		Account correct = FindAccount (accountNum);
 		correct.processingMoney = loan;
 		correct.state = AccountState.closingLoan;
+		stateChanged();
 	}
 
 	void msgThisLoanApproved(Account account1) {
 		account1.state = AccountState.loanApproved;
+		stateChanged();
 	}
 
 	void msgThisLoanDenied (Account account1, double possibleLoan) {
 		account1.state = AccountState.loanDenied;
 		account1.processingMoney = possibleLoan;
+		stateChanged();
 	}
 
 	//Scheduler
