@@ -31,16 +31,23 @@ public class ApplicationGui extends JFrame {
     	
     	//here's the main application
 		//MainView 
+		appPanel.setSize(appDim);
+		/*
 		appPanel.setPreferredSize(appDim);
 		appPanel.setMinimumSize(appDim);
 		appPanel.setMaximumSize(appDim);
+		*/
 		appPanel.setVisible(true);
 		add(appPanel);
 		
 		//AnimationView
+		animPanel.setSize(animDim);
+		/*
 		animPanel.setPreferredSize(animDim);
 		animPanel.setMinimumSize(animDim);
 		animPanel.setMaximumSize(animDim);
+		*/
+		animPanel.setVisible(true);
 		add(animPanel);
     
 	}
