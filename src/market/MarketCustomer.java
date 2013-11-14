@@ -1,14 +1,11 @@
 package market;
 
-import java.util.HashMap;
-
 import person.Person;
 import person.Role;
 
 public class MarketCustomer extends Role {
 
-
-	public MarketCustomer(Person person) {
+	protected MarketCustomer(Person person) {
 		super(person);
 	}
 
@@ -16,11 +13,6 @@ public class MarketCustomer extends Role {
 		
 	}
 
-
-	public MarketCustomer() {
-		super();
-	}
-	
 	protected boolean pickAndExecuteAnAction() {
 		return false;
 	}
