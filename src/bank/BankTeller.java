@@ -1,6 +1,8 @@
 package bank;
 
+import person.Person;
 import person.Role;
+
 import java.util.List;
 
 public class BankTeller extends Role {
@@ -8,6 +10,11 @@ public class BankTeller extends Role {
 
 	//DATA
 
+	List<Account> accounts;
+	LoanOfficer myLoaner;
+	int balanceMinimum = 5;
+	String name;
+	
 	enum AccountState {neutral, newAccount, waiting, depositing, withdrawing, requestingLoan, closingLoan, loanApproved, loanDenied}
 
 	class Account {	
@@ -24,11 +31,13 @@ public class BankTeller extends Role {
 		}
 	}
 
-	List<Account> accounts;
-	LoanOfficer myLoaner;
-	int balanceMinimum = 5;
-
-
+	BankTeller (String name, Person p1, LoanOfficer officer1) {
+		super(p1);
+		this.name = name;
+		myLoaner = officer1;
+		accounts = myLoaner.getAccounts();
+	}
+	
 	//MESSAGES
 
 	void msgWantNewAccount (BankCustomer cust1) {

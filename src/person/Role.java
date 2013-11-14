@@ -2,7 +2,7 @@ package person;
 
 public abstract class Role {
 
-	Person person;
+	protected Person person;
 	
 	enum roleState {active, inActive, waitingToExecute}
 	private roleState state = roleState.inActive;

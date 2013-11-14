@@ -1,7 +1,10 @@
 package bank;
 
+import person.Person;
 import person.Role;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import bank.BankTeller.Account;
@@ -13,6 +16,7 @@ public class LoanOfficer extends Role {
 
 	double vault = 10000;
 	double vaultMinimum = 1000;
+	String name;
 	enum LoanState {requesting, open, closed}
 	class Loan {
 		Account account1;
@@ -24,11 +28,17 @@ public class LoanOfficer extends Role {
 			teller1 = t1;
 		}
 	}
+	
 	List<Loan> loans;
+	List<Account> accounts;
 
-
-
-
+	LoanOfficer(String name, Person p1) {
+		super(p1);
+		this.name = name;
+		loans = new Collections.synchronizedList(new ArrayList<Loan>());
+		accounts = new Collections.synchronizedList(new ArrayList<Account>());
+	}
+	
 	//Messages
 
 	void msgIsLoanApproved(Account account1, BankTeller t1) {
@@ -66,5 +76,8 @@ public class LoanOfficer extends Role {
 
 	}
 
+	public List<Account> getAccounts() {
+		return accounts;
+	}
 
 }

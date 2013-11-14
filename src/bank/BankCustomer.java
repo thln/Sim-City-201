@@ -1,18 +1,15 @@
 package bank;
 
+import bank.BankGuard.MyTeller;
+import bank.BankGuard.TellerState;
 import person.Person;
 import person.Role;
 
 public class BankCustomer extends Role {
 
-
-	//Can be implemented as a person or as a business liaison. 
-	//If business liaison, they have different accountNum, different cash, loan ,etc.
-	//people request loans when desired cash is less than account balance
-
 	//DATA
 
-	enum BankCustomerDesire {none, withdraw, deposit, wantLoan, closeLoan, openAccount, closeAccount, robBank}
+	enum BankCustomerDesire {atBank, none, withdraw, deposit, wantLoan, closeLoan, openAccount, closeAccount, robBank}
 
 	BankTeller myTeller;
 
@@ -27,12 +24,15 @@ public class BankCustomer extends Role {
 
 	public BankCustomer (String name, Person p1) {
 		super(p1);
-		desire = BankCustomerDesire.none;
-		myTeller = new BankTeller();
+		desire = BankCustomerDesire.atBank;
 	}
 	
 	//Messages
 
+	void msgGoToTeller(BankTeller tell1) {
+		myTeller = tell1;
+	}
+	
 	void msgHereIsYourMoney(double amount) {
 		cash += amount;
 	}
@@ -65,12 +65,20 @@ public class BankCustomer extends Role {
 	void msgLoanClosed() {
 
 	}	
+	
+	void msgCaughtYou() {
+		
+	}
+	
+	void msgGotAway() {
+	}
 
 	//Scheduler
 	
 	protected boolean pickAndExecuteAnAction () {
 		
-		
+	if (desire == BankCustomerDesire.atBank)
+		WithdrawCash();
 
 	if (desire == BankCustomerDesire.withdraw)
 		WithdrawCash();
