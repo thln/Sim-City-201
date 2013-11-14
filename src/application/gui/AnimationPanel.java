@@ -23,16 +23,13 @@ public class AnimationPanel extends JPanel implements ActionListener {
 	
 	AnimationPanel(){
 		
-		Dimension cityDim = new Dimension(this.getWidth(), this.getHeight()/2);
-
+		//Dimension cityDim = new Dimension(getWidth(), getHeight());
 		setLayout(null);
-		
-		
-		
-
+		setBorder(BorderFactory.createTitledBorder("Animation"));
     	//here we have the main city view
     	
-		cityPanel.setSize(400, 400);
+		//cityPanel.setSize(700, 400);
+		cityPanel.setBounds(3, 15, 700, 400); //x & y positions in animation panel, x & y sizes
 		/*
     	cityPanel.setPreferredSize(cityDim);
     	cityPanel.setMinimumSize(cityDim);
