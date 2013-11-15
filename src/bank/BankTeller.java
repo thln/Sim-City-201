@@ -43,6 +43,7 @@ public class BankTeller extends Role {
 	//MESSAGES
 
 	void msgWantNewAccount (BankCustomer cust1) {
+		System.out.println("Customer wants new account");
 		accounts.add(new Account(cust1));
 	}
 
@@ -52,6 +53,7 @@ public class BankTeller extends Role {
 	}
 
 	void msgINeedMoney(double desiredAmount, int accountNum) {
+		System.out.println("Customer approached Teller");
 		Account correct = FindAccount (accountNum);
 		correct.processingMoney = desiredAmount;
 		correct.state = AccountState.withdrawing;

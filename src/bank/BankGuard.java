@@ -21,6 +21,10 @@ public class BankGuard extends Role {
 	class MyTeller {
 		TellerState state;
 		BankTeller tell1;
+		
+		MyTeller (BankTeller t1) {
+			tell1 = t1;
+		}
 	}
 	
 	public BankGuard (String name, Person p1) {
@@ -33,17 +37,22 @@ public class BankGuard extends Role {
 
 	//MESSAGES
 
-	void msgRobbingBank(BankCustomer cust1) {
+	public void msgTellerCameToWork (BankTeller t1) {
+		tellers.add(new MyTeller(t1));
+	}
+	
+	public void msgRobbingBank(BankCustomer cust1) {
 		robbers.add(cust1);
 		stateChanged();
 	}
 
-	void msgArrivedAtBank(BankCustomer c1) {
+	public void msgArrivedAtBank(BankCustomer c1) {
+		System.out.println("New customer arrived");
 		customers.add(c1);
 		stateChanged();
 	}
 
-	void msgLeavingBank (BankTeller t1) {
+	public void msgLeavingBank (BankTeller t1) {
 		MyTeller correct = findTeller(t1);
 		correct.state = TellerState.available;
 		stateChanged();
@@ -68,11 +77,11 @@ public class BankGuard extends Role {
 
 	//ACTIONS
 
-	MyTeller findTeller (BankTeller t1) {
+	private MyTeller findTeller (BankTeller t1) {
 			return null;
 	}
 
-	void catchRobber(BankCustomer robber1) {
+	private void catchRobber(BankCustomer robber1) {
 		boolean caught = true;
 		//95% chance Robber is caught, 5% he gets away;
 		if (caught)
@@ -81,7 +90,7 @@ public class BankGuard extends Role {
 			robber1.msgGotAway();  
 	}
 
-	void assignToTeller(BankCustomer cust1) {
+	private void assignToTeller(BankCustomer cust1) {
 		for (MyTeller teller1: tellers) {
 			if (teller1.state == TellerState.available) {
 				cust1.msgGoToTeller(teller1.tell1);

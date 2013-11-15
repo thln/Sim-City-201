@@ -10,6 +10,7 @@ import restaurant.Waiter;
 import market.MarketCustomer;
 import market.SalesPerson;
 import market.UPSman;
+import bank.BankCustomer;
 import bank.BankGuard;
 import bank.BankTeller;
 import bank.LoanOfficer;
@@ -19,16 +20,28 @@ public class Worker extends Person {
 	Role workerRole;
 	String name;
 	Job myJob = null;
-	int marketTime = myJob.getEndTime();
+	int marketTime;
 	int bankTime = 8;
 	int sleepTime = 22;
 	int moneyMinThreshold = 20;
 	int moneyMaxThreshold = 200;
+	
+	LoanOfficer l1;
 
-	Worker (String name, String jobTitle, int startT, int lunchT, int endT) {
+	public Worker (String name, int money, String jobTitle, int startT, int lunchT, int endT) {
 		super();
+		this.money = money;
 		this.name = name;       
 		myJob = new Job(jobTitle, startT, lunchT, endT, this);
+		marketTime = myJob.getEndTime();
+			
+			if (name == "Bill") {
+				 Worker worker2 = new Worker("Ted", 10, "loanOfficer", 2, 0, 0);      
+			        l1 = (LoanOfficer) worker2.workerRole;
+			        worker2.startThread();
+			        worker2.msgNewTime(2);
+			}
+	
 	}
 
 	class Job {
@@ -48,14 +61,14 @@ public class Worker extends Person {
 			this.title = title;
 
 			if (title == "bankTeller") {
-				workerRole = new BankTeller(name, myself, null);
+				workerRole = new BankTeller(name, myself, l1);
 				roles.add(workerRole);
 			}
 			if (title == "loanOfficer") {
 				workerRole = new LoanOfficer(name, myself);
 				roles.add(workerRole);
 			}
-			if (title == "guard") {
+			if (title == "bankGuard") {
 				workerRole = new BankGuard(name, myself);
 				roles.add(workerRole);
 			}
@@ -131,32 +144,42 @@ public class Worker extends Person {
 	//Actions
 
 	public void updateTime(int newTime) {
-		if ((newTime == myJob.getBankTime()) && (money >= moneyMaxThreshold)) {
+		if ((newTime == myJob.getBankTime()) && (money >= moneyMaxThreshold) || (money <= moneyMinThreshold)) {
+			System.out.println("Becoming customer");
+			Role cust1 = new BankCustomer("Josh", this, myPhoneBook.bankGuard, 40, 0, 0, 10);
+			roles.add(cust1);
 			//	BankCustomer.state = roleState.waitingToExecute;      
 		}
 		if (newTime == myJob.startTime) {
 			workerRole.setState(roleState.waitingToExecute);
+			System.out.println("Starting Job");
+			stateChanged();
 		}
 		if (newTime == myJob.lunchTime) {
 			//	workerRole.msgLunchTime();
+			stateChanged();
 		}
 
 		if (newTime == myJob.lunchTime + myJob.lunchTime) {
 			//	workerRole.msgBackToWork();
+			stateChanged();
 		}
 
 		if (newTime == marketTime && !hasFoodInFridge) {
 		//	for (MarketCustomer role1: roles)
 				//role1.setState(roleState.waitingToExecute);
+			stateChanged();
 		}
 
 		if (newTime == myJob.endTime) {
 			//	workerRole.msgShiftOver();
 			//	roles.maintenance.msgShiftOver;
+			stateChanged();
 		} 
 
 		if (newTime == sleepTime) {
 			//GoToSleep();
+			stateChanged();
 		}  
 		
 		newTime = -30;
