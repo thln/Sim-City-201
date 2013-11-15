@@ -23,7 +23,7 @@ public class BankGuard extends Role {
 		BankTeller tell1;
 	}
 	
-	BankGuard (String name, Person p1) {
+	public BankGuard (String name, Person p1) {
 		super(p1);
 		this.name = name;
 		customers = Collections.synchronizedList(new ArrayList<BankCustomer>());

@@ -17,6 +17,7 @@ import bank.LoanOfficer;
 public class Worker extends Person {
 	//Data
 	Role workerRole;
+	String name;
 	Job myJob = null;
 	int marketTime = myJob.getEndTime();
 	int bankTime = 8;
@@ -47,15 +48,15 @@ public class Worker extends Person {
 			this.title = title;
 
 			if (title == "bankTeller") {
-				workerRole = new BankTeller();
+				workerRole = new BankTeller(name, myself, null);
 				roles.add(workerRole);
 			}
 			if (title == "loanOfficer") {
-				workerRole = new LoanOfficer();
+				workerRole = new LoanOfficer(name, myself);
 				roles.add(workerRole);
 			}
 			if (title == "guard") {
-				workerRole = new BankGuard();
+				workerRole = new BankGuard(name, myself);
 				roles.add(workerRole);
 			}
 			if (title == "marketRunner") {

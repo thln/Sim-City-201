@@ -33,7 +33,7 @@ public class BankTeller extends Role {
 		}
 	}
 
-	BankTeller (String name, Person p1, LoanOfficer officer1) {
+	public BankTeller (String name, Person p1, LoanOfficer officer1) {
 		super(p1);
 		this.name = name;
 		myLoaner = officer1;
