@@ -22,7 +22,6 @@ public abstract class Person extends Agent {
 	public int accountNum;
 	public double accountBalance;
 	public int sleepTime = 22;
-	String name;
 	private int newTime;
 	PhoneBook myPhoneBook;
 	
