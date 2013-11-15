@@ -11,11 +11,10 @@ public class ApplicationPanel extends JPanel implements ActionListener {
 	
 	JPanel controlPanel = new JPanel();
 	JPanel infoPanel = new JPanel();
-	JPanel crookPanel = new GroupPanel();
-	
-	private GroupPanel deadbeatPanel = new GroupPanel();
-	private GroupPanel workerPanel = new GroupPanel();
-	private GroupPanel wealthyPanel = new GroupPanel();
+	private GroupPanel crookPanel = new GroupPanel("Crook",Color.WHITE);
+	private GroupPanel deadbeatPanel = new GroupPanel("Deadbeat", Color.LIGHT_GRAY);
+	private GroupPanel workerPanel = new GroupPanel("Worker", Color.LIGHT_GRAY);
+	private GroupPanel wealthyPanel = new GroupPanel("Wealthy",Color.WHITE);
 	
 	Dimension controlDim = new Dimension(this.getWidth(), this.getHeight()*(1/4));
 	Dimension infoDim = new Dimension(this.getWidth(), this.getHeight()*(3/4));
@@ -23,8 +22,6 @@ public class ApplicationPanel extends JPanel implements ActionListener {
 	
 	
 	ApplicationPanel(){
-		
-		
 		//Control Panel
 		
 		controlPanel.setPreferredSize(controlDim);
@@ -33,23 +30,27 @@ public class ApplicationPanel extends JPanel implements ActionListener {
 		controlPanel.setVisible(true);
 		add(controlPanel);
 		
-		
-		
-		
-		
 		//InfoPanel
-		
+		infoPanel.setLayout(new GridLayout(2,2));
+
 		infoPanel.setPreferredSize(infoDim);
 		infoPanel.setMinimumSize(infoDim);
 		infoPanel.setMaximumSize(infoDim);
 		infoPanel.setVisible(true);
-		add(infoPanel);	
-	
+		
+			infoPanel.add(crookPanel);
+			infoPanel.add(deadbeatPanel);
+			infoPanel.add(workerPanel);
+			infoPanel.add(wealthyPanel);
+					
+		add(infoPanel);
 	}
 
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
+		
 		
 		
 	}

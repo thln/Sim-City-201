@@ -1,7 +1,6 @@
 package person;
 
 import java.util.*;
-
 import market.MarketCustomer;
 import person.Role;
 import person.Role.roleState;
