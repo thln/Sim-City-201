@@ -1,8 +1,8 @@
 package restaurant;
 
-import agent.Agent;
-import restaurant.RestaurantCustomer.AgentState;
-import restaurant.MarketAgent.Stock;
+//import agent.Agent;
+//import restaurant.RestaurantCustomer.AgentState;
+//import restaurant.MarketAgent.Stock;
 
 import java.util.*;
 import java.util.concurrent.Semaphore;
@@ -195,8 +195,9 @@ public class Cook extends Role {
 	}
 
 	private void doneCooking(Order o) {
-		print("Done cooking order for table " + o.tableNumber);
+		//print("Done cooking order for table " + o.tableNumber);
 
+		/* GUI stuff
 		cookGui.DoPickUpFood();
 		try {
 			atDestination.acquire();
@@ -215,6 +216,7 @@ public class Cook extends Role {
 		o.waiter.msgOrderIsReady(o.tableNumber, o.choice);
 		myOrders.remove(o);
 		cookGui.DoGoToHomePosition();
+		*/
 	}
 
 	public void checkInventory() {
@@ -236,22 +238,23 @@ public class Cook extends Role {
 			}
 
 			if (myMark == null) {
-				print("Out of markets to order from for " + choice);
+				//print("Out of markets to order from for " + choice);
 				return;
 			}
 
 			int stockOnHand;
 			stockOnHand = foodMap.get(choice).amountOrdered + foodMap.get(choice).quantity;
 
-			print("Current stock on hand for " + choice + ": " + stockOnHand);
+			//print("Current stock on hand for " + choice + ": " + stockOnHand);
 
 			if (stockOnHand < foodMap.get(choice).threshold) {
 				int orderAmount;
 				orderAmount = foodMap.get(choice).capacity - stockOnHand;
 				foodMap.get(choice).amountOrdered = orderAmount;
 
-				print("Requesting " + myMark.market.getName() + " for " + orderAmount + " " + choice + "(s)");
-				myMark.market.msgOutofItems(choice, orderAmount);
+				//print("Requesting " + myMark.market.getName() + " for " + orderAmount + " " + choice + "(s)");
+				//myMark.market.msgOutofItems(choice, orderAmount);
+				//CHEF AND MARKET
 			}
 		}
 	}
@@ -265,11 +268,11 @@ public class Cook extends Role {
 
 					//Setting order availability for the choice at market to false
 					MM.availableChoices.put(stockFulfillment.get(0).choice, false);
-					print(MM.market.getName() + " is out of " + stockFulfillment.get(0).choice);
+					//print(MM.market.getName() + " is out of " + stockFulfillment.get(0).choice);
 				}
 			}
 			//Check inventory to re-order
-			print("Re-ordering from different market for " + stockFulfillment.get(0).choice);
+			//print("Re-ordering from different market for " + stockFulfillment.get(0).choice);
 			checkInventory(stockFulfillment.get(0).choice);
 			stockFulfillment.remove(0);
 		}
@@ -285,12 +288,12 @@ public class Cook extends Role {
 					if (MM.market.equals(stockFulfillment.get(0).market)) {
 						//Setting order availability for the choice at market to false
 						MM.availableChoices.put(stockFulfillment.get(0).choice, false);
-						print(MM.market.getName() + " is out of " + stockFulfillment.get(0).choice);
+						//print(MM.market.getName() + " is out of " + stockFulfillment.get(0).choice);
 					}
 				}
 				
 				//Order only partially fulfilled, ordering from a new market
-				print("Order partially fulfilled, re-ordering from different market for " + stockFulfillment.get(0).choice);
+				//print("Order partially fulfilled, re-ordering from different market for " + stockFulfillment.get(0).choice);
 				
 				myMarket myMark = null;
 				for(myMarket MM: markets) {
@@ -301,15 +304,16 @@ public class Cook extends Role {
 				}
 
 				if (myMark == null) {
-					print("Out of markets to order from for " + stockFulfillment.get(0).choice);
+					//print("Out of markets to order from for " + stockFulfillment.get(0).choice);
 					stockFulfillment.remove(0);
 					return;
 				}
 				
 				int newOrderAmount;
 				newOrderAmount = stockFulfillment.get(0).orderedAmount - stockFulfillment.get(0).quantity;
-				print("Requesting " + myMark.market.getName() + " for " + newOrderAmount + " " + stockFulfillment.get(0).choice + "(s)");
-				myMark.market.msgOutofItems(stockFulfillment.get(0).choice, newOrderAmount);
+				//print("Requesting " + myMark.market.getName() + " for " + newOrderAmount + " " + stockFulfillment.get(0).choice + "(s)");
+				//CHEF AND MARKET
+				//myMark.market.msgOutofItems(stockFulfillment.get(0).choice, newOrderAmount);
 			}
 			
 			stockFulfillment.remove(0);
@@ -319,6 +323,7 @@ public class Cook extends Role {
 
 	//Utilities
 
+	/* GUI STUFF
 	public void setGui(CookGui gui) {
 		cookGui = gui;
 	}
@@ -326,7 +331,8 @@ public class Cook extends Role {
 	public CookGui getGui() {
 		return cookGui;
 	}
-
+	*/
+	
 	private boolean isInStock(String choice) {
 		if (foodMap.get(choice).quantity > 0)
 			return true;
@@ -343,7 +349,7 @@ public class Cook extends Role {
 		foodMap.get("Steak").quantity = 0;
 		foodMap.get("Salad").quantity = 0;
 		foodMap.get("Pizza").quantity = 0;
-		print("Deleted all food inventory");
+	//	print("Deleted all food inventory");
 	}
 
 	//Food Class

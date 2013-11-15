@@ -6,11 +6,12 @@ import java.util.Random;
 import java.util.concurrent.Semaphore;
 
 import person.Person;
+import person.Role;
 
 /**
  * Restaurant customer agent.
  */
-public class RestaurantCustomer {
+public class RestaurantCustomer extends Role {
 	private String name;
 	private int hungerLevel = 5;        // determines length of meal
 	Timer timer = new Timer();
@@ -79,7 +80,7 @@ public class RestaurantCustomer {
 	 * Messages
 	 */
 	public void gotHungry(int xHome, int yHome) {//from animation
-		print("I'm hungry");
+		//print("I'm hungry");
 		this.xHome = xHome;
 		this.yHome = yHome;
 		event = AgentEvent.gotHungry;
@@ -87,7 +88,7 @@ public class RestaurantCustomer {
 	}
 
 	public void msgTablesAreFull() {
-		print("Got message that all tables are full");
+		//print("Got message that all tables are full");
 		state = AgentState.TablesFull;
 		stateChanged();
 	}
@@ -96,7 +97,7 @@ public class RestaurantCustomer {
 		this.tableNumber = tableNumber;
 		this.menu = menu;
 		this.waiter = waiter; //to establish connection to waiter
-		print("Received msgPleaseFollowMe from " + waiter.getName());
+		//print("Received msgPleaseFollowMe from " + waiter.getName());
 		event = AgentEvent.followHost;
 		stateChanged();
 	}
@@ -138,7 +139,7 @@ public class RestaurantCustomer {
 	public void msgHeresYourChange(double change) {
 		event = AgentEvent.gotChange;
 		money = change;
-		print("Recieved my change of $" + change + ". I have now $" + money);
+		//print("Recieved my change of $" + change + ". I have now $" + money);
 		stateChanged();
 	}
 	
@@ -219,7 +220,7 @@ public class RestaurantCustomer {
 	 */
 	private void goToRestaurant() {
 		state = AgentState.WaitingInRestaurant;
-		Do("Going to restaurant");
+		//Do("Going to restaurant");
 		host.msgIWantFood(this, xHome, yHome);
 	}
 	
@@ -234,13 +235,13 @@ public class RestaurantCustomer {
 
 		if (myRandomChoice == 0) {
 			state = AgentState.Leaving;
-			print("I don't want to wait, bailing from this stupid restaurant");
-			customerGui.DoExitRestaurant();
+			//print("I don't want to wait, bailing from this stupid restaurant");
+			//customerGui.DoExitRestaurant();
 			stateChanged();
 		}
 		else {
 			state = AgentState.WaitingInRestaurant;
-			print("Decided to stay and eat in restaurant");
+			//print("Decided to stay and eat in restaurant");
 			host.msgStaying(this, xHome, yHome);
 			stateChanged();
 		}
@@ -248,19 +249,19 @@ public class RestaurantCustomer {
 
 	private void SitDown() {
 		state = AgentState.BeingSeated;
-		Do("Being seated. Going to table");
-		customerGui.DoGoToSeat(tableNumber);
+		//Do("Being seated. Going to table");
+		//customerGui.DoGoToSeat(tableNumber);
 	}
 
 	private void MakeChoice() {
 		state = AgentState.DecidingChoice;
 		
-		print("Deciding what I want...");
+		//print("Deciding what I want...");
 		timer.schedule(new TimerTask() {
 			public void run() {
 				
 				if (money < menu.lowestPricedItem) {
-					print("I can't afford anything on the menu");
+					//print("I can't afford anything on the menu");
 					LeaveRestaurant();
 					ResetState();
 					return;
@@ -278,7 +279,7 @@ public class RestaurantCustomer {
 				
 				state = AgentState.DoneDeciding;
 				AskToOrder();
-				customerGui.DoReadyToOrder();
+				//customerGui.DoReadyToOrder();
 				stateChanged();
 			}
 		},
@@ -290,15 +291,15 @@ public class RestaurantCustomer {
 	}
 
 	private void PlaceOrder() {
-		customerGui.DoPlaceOrder(choice); //GUI call
+		//customerGui.DoPlaceOrder(choice); //GUI call
 		state = AgentState.Ordered;
 		waiter.msgHeresMyOrder(this, choice);
 	}
 
 	private void EatFood() {
 		state = AgentState.Eating;
-		customerGui.DoEatFood(choice);
-		Do("Eating Food");
+		//customerGui.DoEatFood(choice);
+		//Do("Eating Food");
 		//This next complicated line creates and starts a timer thread.
 		//We schedule a deadline of getHungerLevel()*1000 milliseconds.
 		//When that time elapses, it will call back to the run routine
@@ -310,7 +311,7 @@ public class RestaurantCustomer {
 		timer.schedule(new TimerTask() {
 			//Object cookie = 1;
 			public void run() {
-				print("Done eating " + choice);
+				//print("Done eating " + choice);
 				event = AgentEvent.doneEating;
 				//isHungry = false;
 				stateChanged();
@@ -320,16 +321,16 @@ public class RestaurantCustomer {
 	}
 
 	private void AskForCheck() {
-		customerGui.DoAskForCheck();
+		//customerGui.DoAskForCheck();
 		state = AgentState.AskedForCheck;
-		print("Asking for my check");
+		//print("Asking for my check");
 		waiter.msgIWantMyCheck(this);
 	}
 
 	private void PayingCheck() {
 		state = AgentState.PayingCheck;
-		print("Going to the cashier");
-		customerGui.DoGoToCashier();
+		//print("Going to the cashier");
+		//customerGui.DoGoToCashier();
 	}
 
 	private void PayCheck() {
@@ -338,8 +339,8 @@ public class RestaurantCustomer {
 			money = 0;
 		}
 		
-		print("Paying my check of: " + check);
-		print("I have $" + money);
+		//print("Paying my check of: " + check);
+		//print("I have $" + money);
 		
 		state = AgentState.PayedCheck;
 		cashier.msgPayment(choice, money, this);
@@ -348,15 +349,15 @@ public class RestaurantCustomer {
 
 	private void LeaveRestaurant() {
 		state = AgentState.Leaving;
-		Do("Leaving.");
+		//Do("Leaving.");
 		waiter.msgLeavingTable(this);
-		customerGui.DoExitRestaurant();
+		//customerGui.DoExitRestaurant();
 	}
 	
 	private void GoToJail() {
 		state = AgentState.inJail;
 		waiter.msgLeavingTable(this);
-		customerGui.DoGoToJail();
+		//customerGui.DoGoToJail();
 		
 		timer.schedule(new TimerTask() {
 			public void run() {
@@ -368,7 +369,7 @@ public class RestaurantCustomer {
 	
 	private void walkOfShame() {
 		state = AgentState.Leaving;
-		customerGui.DoExitRestaurant();
+		//customerGui.DoExitRestaurant();
 		stateChanged();
 	}
 
@@ -398,17 +399,19 @@ public class RestaurantCustomer {
 		return "customer " + getName();
 	}
 
+	/*
 	public void setGui(CustomerGui g) {
 		customerGui = g;
-	}
+	}*/
 
 	public void setCashier(Cashier cashier) {
 		this.cashier = cashier;
 	}
 
+	/*
 	public CustomerGui getGui() {
 		return customerGui;
-	}
+	}*/
 	
 	public double getMoney() {
 		return money;

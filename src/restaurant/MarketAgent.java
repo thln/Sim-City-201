@@ -1,13 +1,13 @@
 package restaurant;
 
-import java.util.*;
+//import java.util.*;
 
 /**
  * Restaurant Cook Agent
  */
 
 public class MarketAgent {
-
+/*
 	private String name;
 	//private Semaphore atTable = new Semaphore(0,true);
 
@@ -48,7 +48,7 @@ public class MarketAgent {
 
 	/**
 	 * Messages
-	 */
+	 /
 	public void msgOutofItems(String choice, int orderAmount) {
 		synchronized(myOrders){
 			print("Received an order for " + orderAmount + " " + choice + "(s)");
@@ -65,13 +65,13 @@ public class MarketAgent {
 
 	/**
 	 * Scheduler
-	 */
+	 /
 	protected boolean pickAndExecuteAnAction() {
 		/* Think of this next rule as:
             Does there exist a table and customer,
             so that table is unoccupied and customer is waiting.
             If so seat him at the table.
-		 */
+		 /
 		synchronized(myOrders){
 			if (!myOrders.isEmpty()) {
 				for (Stock order: myOrders) {
@@ -98,7 +98,7 @@ public class MarketAgent {
 
 	/**
 	 * Actions
-	 */
+	 /
 	private void checkInventory(final Stock order) {					
 		order.state = StockState.processing;
 		
@@ -167,6 +167,6 @@ public class MarketAgent {
 			this.orderedAmount = orderedAmount;
 		}
 	}
-
+*/
 }
 

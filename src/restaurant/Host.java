@@ -30,7 +30,8 @@ public class Host extends Role {
 	private String name;
 	//private Semaphore atTable = new Semaphore(0,true);
 
-	public HostGui hostGui = null;
+	//GUI stuff
+	//public HostGui hostGui = null;
 
 	public Host(String name) {
 		super();
@@ -82,7 +83,7 @@ public class Host extends Role {
 	public void msgLeavingTable(RestaurantCustomer cust, Waiter waiter) {
 		for (Table table : tables) {
 			if (table.getOccupant() == cust) {
-				print(cust.getName() + " is leaving table " + table);
+				//print(cust.getName() + " is leaving table " + table);
 				table.setUnoccupied();
 			}
 		}
@@ -97,7 +98,7 @@ public class Host extends Role {
 	}
 
 	public void msgMayIGoOnBreak(Waiter waiter) {
-		print(waiter.getName() + " asked to go on break");
+		//print(waiter.getName() + " asked to go on break");
 		for (myWaiter MW: waiters) {
 			if (MW.waiter == waiter) {
 				MW.askedToGoOnBreak = true;
@@ -190,7 +191,7 @@ public class Host extends Role {
 	}
 
 	private void assignCustomer(myCustomer MC, Table table, Waiter waiter) {
-		print("Assigning customer " + MC.customer.getCustomerName() + " to waiter");
+		//print("Assigning customer " + MC.customer.getCustomerName() + " to waiter");
 		addCustomerToWaiter(waiter);
 		waiter.msgPleaseSeatCustomer(table.tableNumber, MC.customer, MC.xHome, MC.yHome);
 		table.setOccupant(MC.customer);
@@ -207,7 +208,7 @@ public class Host extends Role {
 		if (waiters.size() == 1) {
 			MW.askedToGoOnBreak = false;
 			MW.waiter.msgPermissionToBreak(false);
-			print("Telling " + MW.waiter.getName() + " he/she cannot go on break");
+			//print("Telling " + MW.waiter.getName() + " he/she cannot go on break");
 			return;
 		}
 
@@ -221,13 +222,13 @@ public class Host extends Role {
 
 		if (workingWaiterCount > 1) {
 			MW.askedToGoOnBreak = false;
-			print("Allowing " + MW.waiter.getName() + " to go on break");
+			//print("Allowing " + MW.waiter.getName() + " to go on break");
 			MW.waiter.msgPermissionToBreak(true);
 			MW.onBreak = true;
 		}
 		else {
 			MW.askedToGoOnBreak = false;
-			print("Deny " + MW.waiter.getName() + " to go on break");
+			//print("Deny " + MW.waiter.getName() + " to go on break");
 			MW.waiter.msgPermissionToBreak(false);
 		}
 	}
@@ -246,17 +247,18 @@ public class Host extends Role {
 
 	//utilities
 
+	/* GUI STUFF
 	public void setGui(HostGui gui) {
 		hostGui = gui;
 	}
 
 	public HostGui getGui() {
 		return hostGui;
-	}
+	}*/
 
 	public void addWaiter(Waiter waiter) {
 		waiters.add(new myWaiter(waiter));
-		print("Hired new waiter, " + waiter.getName());
+		//print("Hired new waiter, " + waiter.getName());
 		stateChanged();
 	}
 

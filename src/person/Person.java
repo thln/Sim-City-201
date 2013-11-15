@@ -26,6 +26,8 @@ public abstract class Person extends Agent {
 		//roles.add(new RestaurantCustomer(this));
 		//roles.add(new MarketCustomer(this));
 		//roles.add(new BankCustomer(this));
+		
+		//NOTE: Should we add a print function?
 	}
 	
 	//Messages
