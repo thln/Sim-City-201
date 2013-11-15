@@ -54,9 +54,6 @@ public class ApplicationGui extends JFrame implements ActionListener{
         gui.setResizable(true);
         gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
        
-        Worker customer1 = new Worker("Bill", 10, "none", 10, 0, 0);
-        customer1.startThread();
-        customer1.msgNewTime(8);
     }
 	
 }
