@@ -105,6 +105,19 @@ public class Cook extends Role {
 		 */
 
 		inventoryChecker++;
+
+		if (inventoryChecker == 500) {
+			checkInventory();
+			return true;
+		}
+
+
+		if(!theRevolvingStand.isStandEmpty())
+		{
+			myOrders.add(theRevolvingStand.takeOrder());
+			return true;
+		}
+		
 		synchronized(myOrders){
 			if (!myOrders.isEmpty()) {
 				for (Order order : myOrders) {
@@ -128,19 +141,6 @@ public class Cook extends Role {
 			}
 		}
 
-		if (inventoryChecker == 500) {
-			checkInventory();
-			return true;
-		}
-
-		if(inventoryChecker == 250) {
-			//Is this Okay? hahaha
-			if(!theRevolvingStand.isStandEmpty())
-			{
-				myOrders.add(theRevolvingStand.takeOrder());
-				return true;
-			}
-		}
 
 		return false;
 		//we have tried all our rules and found
