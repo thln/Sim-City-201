@@ -2,9 +2,9 @@ package market;
 
 import java.util.*;
 
+import market.MarketOrder.orderState;
 import person.Person;
 import person.Role;
-import restaurant.Cook;
 
 public class SalesPerson extends Role {
 
@@ -13,13 +13,13 @@ public class SalesPerson extends Role {
 	}
 
 	//Data
+
 	//Correspondents
 	//MarketRunner marketRunner;
-	
-	private List<Order> orders;
+
+	private List<MarketOrder> orders;
 	public double money;
-	public enum orderState {open, processing, itemsFound, gaveToCustomer};
-	public enum CustomerType {marketCustomer, business};
+
 	public HashMap<String, Item> inventoryPrices = new HashMap<String, Item>(); {
 		//For people
 		inventoryPrices.put("Car", new Item("Car", 1000));
@@ -30,7 +30,7 @@ public class SalesPerson extends Role {
 		inventoryPrices.put("Eggs", new Item("Eggs", 1.50));
 		inventoryPrices.put("Lobster", new Item("Lobster", 12.99));
 		inventoryPrices.put("Cheese", new Item("Cheese", 4.99));
-		
+
 		//For restaurants
 		inventoryPrices.put("Chicken", new Item("Chicken", 10.99));
 		inventoryPrices.put("Steak", new Item("Steak", 15.99));
@@ -38,43 +38,23 @@ public class SalesPerson extends Role {
 		inventoryPrices.put("Salad", new Item("Salad", 5.99));
 	}
 
-	class Order {
-		Order(MarketCustomer customer, String item, int itemsWanted) {
-			this.customer = customer;
-			this.item = item;
-			totalItems = itemsWanted;
-		}
-		
-		Order(Cook customer, String item, int itemsWanted) {
-			this.cook = cook;
-			this.item = item;
-			totalItems = itemsWanted;
-		}
 
-		MarketCustomer customer = null;
-		Cook cook = null;
-		CustomerType custType;
-		String item;
-		int totalItems;
-		double orderCost;
-		orderState state = orderState.open;
-	}
 
 	//Messages
 	public void msgIWantProducts(MarketCustomer customer, String item, int numWanted) {
-		orders.add(new Order(customer, item, numWanted));
+		orders.add(new MarketOrder(customer, item, numWanted));
 		stateChanged();
 	}
 
 	public void msgIWantProducts(Cook cook, String item, int numWanted, double payment) {
-		orders.add(new Order(cook, item, numWanted));
+		orders.add(new MarketOrder(cook, item, numWanted));
 		money += payment;
 		stateChanged();
 	}
 
 	public void msgPayment(MarketCustomer customer, double payment) {
 		money += payment;
-		for (Order o : orders) {
+		for (MarketOrder o : orders) {
 			if (o.customer.equals(customer)) {
 				orders.remove(o);
 				return;
@@ -85,7 +65,7 @@ public class SalesPerson extends Role {
 	//Scheduler
 	protected boolean pickAndExecuteAnAction() {
 		if (!orders.isEmpty()) {
-			for (Order o : orders) {
+			for (MarketOrder o : orders) {
 				if (o.state == orderState.open) {
 					findItems(o);
 					return true;
@@ -100,19 +80,19 @@ public class SalesPerson extends Role {
 	}
 
 	//Actions
-	private void findItems(Order o) {
+	private void findItems(MarketOrder o) {
 		o.state = orderState.processing;
 		//marketRunner.msgHeresAnOrder(o);
 		stateChanged();
 	}
 
-	private void giveCustomerItems(Order o) {
+	private void giveCustomerItems(MarketOrder o) {
 		o.state = orderState.gaveToCustomer;
 		o.orderCost = inventoryPrices.get(o.item).price;
 		o.customer.msgHereAreYourThings(o.item, o.orderCost);
 		stateChanged();
 	}
-	
+
 	//Item Class
 	public class Item {
 		String itemName;

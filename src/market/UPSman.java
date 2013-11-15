@@ -5,15 +5,14 @@ import java.util.Collections;
 import java.util.List;
 
 import person.Role;
-import restaurant.Order;
 
 public class UPSman extends Role {
 
 	//Data
-	private List<Order> orders = Collections.synchronizedList(new ArrayList<Order>());
+	private List<MarketOrder> orders = Collections.synchronizedList(new ArrayList<MarketOrder>());
 
 	//Messages
-	public void msgDeliverOrder(Order o) {
+	public void msgDeliverOrder(MarketOrder o) {
 		orders.add(o);
 		stateChanged();
 	}
@@ -21,7 +20,7 @@ public class UPSman extends Role {
 	//Scheduler
 	protected boolean pickAndExecuteAnAction() {
 		if (!orders.isEmpty()) {
-			for (Order o: orders) {
+			for (MarketOrder o: orders) {
 				deliverOrder(o);
 				return true;
 			}
@@ -30,8 +29,8 @@ public class UPSman extends Role {
 	}
 	
 	//Actions
-	public void deliverOrder(Order o) {
-		o.customer.HereIsOrder(o);
+	public void deliverOrder(MarketOrder o) {
+		//o.cook.HereIsOrder(o.item, o.totalItems);
 		orders.remove(o);
 	}
 
