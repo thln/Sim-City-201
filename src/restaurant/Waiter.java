@@ -1,6 +1,6 @@
 package restaurant;
 
-import agent.Agent;
+//import agent.Agent;
 import restaurant.myCustomer.customerState;
 
 import java.util.*;
@@ -18,25 +18,26 @@ public class Waiter extends Role {
 	public List<myCustomer> myCustomers = Collections.synchronizedList(new ArrayList<myCustomer>());
 	public List<Order> readyOrders = Collections.synchronizedList(new ArrayList<Order>());
 
-	private String name;
-	private Semaphore atDestination = new Semaphore(0,true);
+	protected String name;
+	protected Semaphore atDestination = new Semaphore(0,true);
 
 	public Menu menu = new Menu();
 
 	Timer breakTimer = new Timer();
 
 	//Agent Correspondents
-	private Host host;
-	private Cook cook;
-	private Cashier cashier;
+	protected Host host;
+	protected Cook cook;
+	protected Cashier cashier;
 
-	private boolean isInLobby = true;
-	private enum breakStatus{working, askedToGoOnBreak, waitingForReply, receivedReply, onBreak, goOffBreak};
+	protected boolean isInLobby = true;
+	protected enum breakStatus{working, askedToGoOnBreak, waitingForReply, receivedReply, onBreak, goOffBreak};
 	breakStatus state = breakStatus.working;
 
-	private boolean PermissionToBreak = false;
+	protected boolean PermissionToBreak = false;
 
-	public Waiter(String name) {
+	public Waiter(String name) 
+	{
 		super();
 
 		this.name = name;
@@ -247,7 +248,7 @@ public class Waiter extends Role {
 	/**
 	 * Actions
 	 */
-	private void seatCustomer(myCustomer MC) {
+	protected void seatCustomer(myCustomer MC) {
 		//waiterGui.DoPickUpCustomer(MC.xHome, MC.yHome);
 		try {
 			atDestination.acquire();
@@ -270,7 +271,7 @@ public class Waiter extends Role {
 	}
 
 	// The animation DoXYZ() routines
-	private void DoSeatCustomer(RestaurantCustomer customer, int table) {
+	protected void DoSeatCustomer(RestaurantCustomer customer, int table) {
 		//Notice how we print "customer" directly. It's toString method will do it.
 		//Same with "table"
 		isInLobby = false;
@@ -278,7 +279,7 @@ public class Waiter extends Role {
 		//waiterGui.DoBringToTable(customer, table);
 	}
 
-	private void takeOrder(myCustomer MC) {
+	protected void takeOrder(myCustomer MC) {
 		isInLobby = false;
 		//print(MC.customer.getCustomerName() + " wants to order");
 
@@ -300,7 +301,7 @@ public class Waiter extends Role {
 		MC.customer.msgWhatWouldYouLike();
 	}
 
-	private void placeOrder(myCustomer MC) {
+	protected void placeOrder(myCustomer MC) {
 		isInLobby = false;
 		//print("Placing " + MC.customer.getCustomerName() + "'s order");
 
@@ -323,7 +324,7 @@ public class Waiter extends Role {
 
 	}
 
-	private void retakeOrder(myCustomer MC) {
+	protected void retakeOrder(myCustomer MC) {
 		isInLobby = false;
 
 		//waiterGui.DoTakeOrder(MC.tableNumber);
@@ -341,7 +342,7 @@ public class Waiter extends Role {
 
 	}
 
-	private void deliverOrder() {
+	protected void deliverOrder() {
 		isInLobby = false;
 		//waiterGui.DoGoToPlatingArea();
 
@@ -373,7 +374,7 @@ public class Waiter extends Role {
 		readyOrders.remove(0);
 	}
 
-	private void giveCheck(myCustomer MC) {
+	protected void giveCheck(myCustomer MC) {
 		isInLobby = false;
 
 		//waiterGui.DoTakeOrder(MC.tableNumber); //Is going to table
@@ -389,19 +390,19 @@ public class Waiter extends Role {
 		MC.state = customerState.GaveCheck;
 	}
 
-	private void clearTable(myCustomer MC){
+	protected void clearTable(myCustomer MC){
 		//print(MC.customer.getCustomerName() + " is leaving " + MC.tableNumber);
 		host.msgLeavingTable(MC.customer, this);
 		myCustomers.remove(MC);
 	}
 
-	private void askToGoOnBreak() {
+	protected void askToGoOnBreak() {
 		//print("Asking host for break");
 		host.msgMayIGoOnBreak(this);
 		state = breakStatus.waitingForReply;
 	}
 
-	private void goOnBreak() {
+	protected void goOnBreak() {
 		isInLobby = false;
 		state = breakStatus.onBreak;
 		PermissionToBreak = false;
@@ -409,7 +410,7 @@ public class Waiter extends Role {
 		stateChanged();
 	}
 
-	private void goOffBreak() {
+	protected void goOffBreak() {
 		isInLobby = false;
 		//waiterGui.DoLeaveCustomer();
 		host.msgOffBreak(this);
@@ -418,7 +419,7 @@ public class Waiter extends Role {
 		stateChanged();
 	}
 
-	private void breakDenied() {
+	protected void breakDenied() {
 		state = breakStatus.working;
 		//waiterGui.denyBreak();
 		stateChanged();

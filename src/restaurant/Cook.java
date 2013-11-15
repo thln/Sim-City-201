@@ -24,6 +24,7 @@ public class Cook extends Role {
 
 	Timer timer = new Timer();
 	private int cookTime;
+	private RevolvingStand theRevolvingStand;
 
 	int inventoryChecker = 0;
 
@@ -132,6 +133,14 @@ public class Cook extends Role {
 			return true;
 		}
 
+		if(inventoryChecker == 250) {
+			//Is this Okay? hahaha
+			if(!theRevolvingStand.isStandEmpty())
+			{
+				myOrders.add(theRevolvingStand.takeOrder());
+				return true;
+			}
+		}
 
 		return false;
 		//we have tried all our rules and found
@@ -352,6 +361,11 @@ public class Cook extends Role {
 	//	print("Deleted all food inventory");
 	}
 
+	public void setRevolvingStand(RevolvingStand rs)
+	{
+		theRevolvingStand = rs;
+	}
+	
 	//Food Class
 	public class Food {
 		String foodType;
