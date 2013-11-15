@@ -1,10 +1,12 @@
 package market;
 
+import java.util.*;
 import person.Person;
 
 public class Market {
 
 	double money;
+	HashMap<String, Integer> inventory = new HashMap<String, Integer>();
 	
 	SalesPerson salesPersonRole;
 	UPSman	UPSmanRole;

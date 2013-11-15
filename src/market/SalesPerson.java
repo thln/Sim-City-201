@@ -5,6 +5,7 @@ import java.util.*;
 import market.MarketOrder.orderState;
 import person.Person;
 import person.Role;
+import restaurant.Cook;
 
 public class SalesPerson extends Role {
 
@@ -17,7 +18,7 @@ public class SalesPerson extends Role {
 	//Correspondents
 	//MarketRunner marketRunner;
 
-	private List<MarketOrder> orders;
+	private List<MarketOrder> orders = Collections.synchronizedList(new ArrayList<MarketOrder>());
 	public double money;
 
 	public HashMap<String, Item> inventoryPrices = new HashMap<String, Item>(); {
@@ -50,6 +51,16 @@ public class SalesPerson extends Role {
 		orders.add(new MarketOrder(cook, item, numWanted));
 		money += payment;
 		stateChanged();
+	}
+	
+	public void msgOrderFulfilled(MarketOrder o) {
+		for (MarketOrder MO : orders) {
+			if (MO.equals(o)) {
+				MO.state = orderState.itemsFound;
+				stateChanged();
+				return;
+			}
+		}
 	}
 
 	public void msgPayment(MarketCustomer customer, double payment) {
