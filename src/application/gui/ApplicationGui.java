@@ -27,24 +27,19 @@ public class ApplicationGui extends JFrame {
 		
 		setLayout(new BoxLayout((Container) getContentPane(),BoxLayout.X_AXIS));
 		
-		setBounds(50, 50, WINDOWX, WINDOWY);
+		setBounds(50,0, WINDOWX, WINDOWY);
     	
     	//here's the main application
 		//MainView 
-		appPanel.setPreferredSize(appDim);
-		appPanel.setMinimumSize(appDim);
-		appPanel.setMaximumSize(appDim);
+		appPanel.setSize(appDim);
 		appPanel.setVisible(true);
+        appPanel.setBackground(Color.BLACK);
 		add(appPanel);
 		
 		//AnimationView
-		animPanel.setPreferredSize(animDim);
-		animPanel.setMinimumSize(animDim);
-		animPanel.setMaximumSize(animDim);
-		add(animPanel);
-    
+		animPanel.setSize(animDim);
+		//commentedoutfortesting add(animPanel);
 	}
-	
 	
 	public static void main(String[] args) {
         ApplicationGui gui = new ApplicationGui();
@@ -52,6 +47,7 @@ public class ApplicationGui extends JFrame {
         gui.setVisible(true);
         gui.setResizable(true);
         gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
     }
 	
 }

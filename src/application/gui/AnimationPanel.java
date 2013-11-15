@@ -14,12 +14,7 @@ public class AnimationPanel extends JPanel implements ActionListener {
 	CityPanel cityPanel = new CityPanel();
 	public List<JPanel> buildingPanels = new ArrayList<JPanel>();
 	//JPanel buildingPanel = new JFrame("Building View");
-		
-	private GroupPanel crookPanel = new GroupPanel();
-	private GroupPanel deadbeatPanel = new GroupPanel();
-	private GroupPanel workerPanel = new GroupPanel();
-	private GroupPanel wealthyPanel = new GroupPanel();
-	
+			
 	final static int CityDimX = 600; //City View Frame Width
 	final static int CityDimY = 300; //City View Frame Height
 	final static int BuildingDimX = 600; //Building View Frame Width

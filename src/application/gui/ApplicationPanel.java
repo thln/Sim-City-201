@@ -1,13 +1,11 @@
 package application.gui;
 
 import javax.swing.*;
-
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Vector;
 
 
-public class ApplicationPanel extends JPanel implements ActionListener {
+public class ApplicationPanel extends JPanel{
 	
 	JPanel controlPanel = new JPanel();
 	JPanel infoPanel = new JPanel();
@@ -22,51 +20,26 @@ public class ApplicationPanel extends JPanel implements ActionListener {
 	
 	
 	ApplicationPanel(){
+		
 		//Control Panel
 		
-		controlPanel.setPreferredSize(controlDim);
-		controlPanel.setMinimumSize(controlDim);
-		controlPanel.setMaximumSize(controlDim);
+		controlPanel.setSize(controlDim);
 		controlPanel.setVisible(true);
-		add(controlPanel);
+		//commentedoutfortesting add(controlPanel);
+		
 		
 		//InfoPanel
 		infoPanel.setLayout(new GridLayout(2,2));
 
-		infoPanel.setPreferredSize(infoDim);
-		infoPanel.setMinimumSize(infoDim);
-		infoPanel.setMaximumSize(infoDim);
+		infoPanel.setSize(infoDim);
 		infoPanel.setVisible(true);
 		
 			infoPanel.add(crookPanel);
-			infoPanel.add(deadbeatPanel);
-			infoPanel.add(workerPanel);
-			infoPanel.add(wealthyPanel);
+			//commentedoutfortesting infoPanel.add(deadbeatPanel);
+			//commentedoutfortesting infoPanel.add(workerPanel);
+			//commentedoutfortesting infoPanel.add(wealthyPanel);
 					
 		add(infoPanel);
 	}
 
-	
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		
-		
-		
-		
-	}
-
-	
-	
-	
-	/*Classes 
-	 *There are several subpanels used in this ApplicationPanel that are included in this file 
-	 * infoPanel(that 
-	 * 
-	 * 
-	 * 
-	 */
-	
-
-	
-	
 }

@@ -6,10 +6,26 @@ import java.awt.event.*;
 
 public class ControlPanel extends JPanel implements ActionListener{
 	
-	public ControlPanel() {
+	JPanel addPersonPanel = new JPanel();
+	
+	
+	public ControlPanel(){
+		
+		
+		
+		
+		add(addPersonPanel);
+	
+	}
+	
+	
+	
+	public void actionPerformed(ActionEvent e) {
 		
 	}
-	public void actionPerformed(ActionEvent e) {
+	
+	
+	public void addPerson(){
 		
 	}
 
