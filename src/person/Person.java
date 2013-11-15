@@ -27,17 +27,18 @@ public abstract class Person extends Agent {
 	
 	class PhoneBook {
 		Host host1;
-		BankGuard bankGuard;
+		public Role bankGuard;
 	}
 
 	Person() {
-		roles.add(new RestaurantCustomer(name, this));
-		roles.add(new MarketCustomer(this));
-		roles.add(new BankCustomer(name, this, myPhoneBook.bankGuard, 0, 0, 0, 0));
+		newTime = -5;
+	//	roles.add(new RestaurantCustomer(name, this));
+	//	roles.add(new MarketCustomer(this));
+	//	roles.add(new BankCustomer(name, this, myPhoneBook.bankGuard, 0, 0, 0, 0));
 	}
 	
 	//Messages
-	void msgNewTime(int time) {
+	public void msgNewTime(int time) {
 		newTime = time;
 		stateChanged();
 	}

@@ -1,6 +1,10 @@
 package application.gui;
 
 import javax.swing.*;
+
+import person.Person;
+import person.Worker;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
@@ -49,6 +53,7 @@ public class ApplicationGui extends JFrame implements ActionListener{
         gui.setVisible(true);
         gui.setResizable(true);
         gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+       
     }
 	
 }
