@@ -3,7 +3,7 @@ package restaurant;
 public class Order {
 
 	Waiter waiter;
-	RestaurantCustomer customer;
+	public RestaurantCustomer customer;
 
 	int tableNumber;
 
