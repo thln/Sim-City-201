@@ -1,6 +1,7 @@
 package person;
 
 import java.util.*;
+import java.util.concurrent.Semaphore;
 
 import bank.BankCustomerRole;
 import bank.BankGuardRole;
@@ -18,26 +19,27 @@ public abstract class Person extends Agent {
 	String name;
 	public double money;
 	Phonebook phonebook; //List of all agent correspondents in phonebook
-	
+	private Semaphore atDestination = new Semaphore(0,true);
+
 	//Role Related
 	public List<Role> roles = Collections.synchronizedList(new ArrayList<Role>()); 	//contains all the customer roles
 	Role workerRole;
-	
+
 	//Car Related
 	public enum CarState {noCar, wantsCar, hasCar};
 	public CarState carStatus = CarState.noCar;
 	final int carCost = 1000;
-	
+
 	//Hunger Related
 	public HashMap <String, Integer> Inventory = new HashMap<String, Integer>(); 		//Food list
 	public boolean hasFoodInFridge;
-	
+
 	//Bank Related
 	public int accountNum;
 	public double accountBalance;
 	int moneyMinThreshold = 20;
 	int moneyMaxThreshold = 200;
-	
+
 	//Time Related
 	public int sleepTime = 22;
 	private int newTime;
@@ -47,7 +49,8 @@ public abstract class Person extends Agent {
 		this.name = name;
 		roles.add(new RestaurantCustomerRole(getName(), this));
 		roles.add(new MarketCustomerRole(this));
-		//roles.add(new BankCustomerRole(getName(), this, phonebook.Bank.bankGuard, 0, 0, 0, 0));
+		//roles.add(new BankCustomerRole(getName(), this, phonebook.bank.bankGuardRole, 0, 0, 0, 0));
+		//constructors should be changed so they match
 	}
 
 	//Messages
@@ -104,8 +107,16 @@ public abstract class Person extends Agent {
 	public abstract void updateTime(int newTime);
 
 	private void prepareForBank (Role r){
-		//Do Gui method
-		setRoleActive(r);
+		//GUI call to go to business
+		try {
+			atDestination.acquire();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		}
+		//Once semaphore is released from GUI
+
 		BankCustomerRole cust1 = (BankCustomerRole) r;
 		if (money <= moneyMinThreshold){
 			cust1.setDesiredCash(100);
@@ -116,55 +127,104 @@ public abstract class Person extends Agent {
 		}
 		//(String name, Person p1, BankGuard guard1, int desiredCash, int deposit, int accNum, int cash)
 		//if bank customer role hasn't already been instantiated, instatiate it
-		//phonebook.Bank.bankGuard.msgArrivedAtBank(cust1);
+		phonebook.bank.bankGuardRole.msgArrivedAtBank(cust1);
+		setRoleActive(r);
 		stateChanged();
 	}
 
 	private void robBank(Role r) {
-		//Do Gui method
+		//GUI call to go to business
+		try {
+			atDestination.acquire();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		}
+		//Once semaphore is released from GUI
+
 		setRoleActive(r);
 		BankCustomerRole cust1 = (BankCustomerRole) r;
 		cust1.setDesire("robBank");
+		phonebook.bank.bankGuardRole.msgRobbingBank(cust1);
 		stateChanged();
 	}
 
 	private void prepareForMarket(Role r) {
-		//Do GUI method
+		//GUI call to go to business
+		try {
+			atDestination.acquire();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		}
+		//Once semaphore is released from GUI
+
 		if(accountBalance >= (carCost + 100)) {
 			if (carStatus == CarState.noCar) {
 				carStatus = CarState.wantsCar;
 			}
 		}
-		
-		if (carStatus == CarState.wantsCar && hasFoodInFridge == false) {
+
+		if (hasFoodInFridge == false) {
 			MarketCustomerRole cust1 = (MarketCustomerRole) r;
-			cust1.setDesire("buyCarAndFood");
-			//must set desire to has car once car is gained
+
+			//choosing random item to buy from market
+			String item;
+			item = chooseMarketItem();
+			phonebook.market.salesPersonRole.msgIWantProducts(cust1, item, 3);
 		}
 		else if (carStatus == CarState.wantsCar) {
 			MarketCustomerRole cust1 = (MarketCustomerRole) r;
-			cust1.setDesire("buyCar");
-			//must set desire to has car once car is gained
+			phonebook.market.salesPersonRole.msgIWantProducts(cust1, "car", 1);
+			//must set desire to hasCar once car is bought
 		}
-		else if (hasFoodInFridge == false) {
-			MarketCustomerRole cust1 = (MarketCustomerRole) r;
-			cust1.setDesire("buyFood");
-		}
-	
+
 		setRoleActive(r);
 		stateChanged();
 	}
 
+	private String chooseMarketItem() {
+		Random rand = new Random();
+		int myRandomChoice;
+		String item;
+		do {
+			myRandomChoice = rand.nextInt(10);
+			myRandomChoice %= 7;
+		} while (!phonebook.market.marketItemsForSale.containsKey(myRandomChoice) || (money < phonebook.market.marketItemsForSale.get(myRandomChoice).price));
+		item = phonebook.market.marketItemsForSale.get(myRandomChoice).itemName;
+		return item;
+	}
+
 	private void prepareForRestaurant(Role r) {
-		//Do GUI method
+		//GUI call to go to business
+		try {
+			atDestination.acquire();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 
+		}
+		//Once semaphore is released from GUI
+		RestaurantCustomerRole cust1 = (RestaurantCustomerRole) r;
 
+		//must change message because no x,y coordinates have been generated
+		//phonebook.restaurant.hostRole.msgIWantFood(cust1, xHome, yHome);
 		setRoleActive(r);
 		stateChanged();
 	}
 
 	private void prepareForWork(Role r) {
-		//Do GUI method
+		//GUI call to go to business
+		try {
+			atDestination.acquire();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		}
+		//Once semaphore is released from GUI
 
 		setRoleActive(r);
 		stateChanged();

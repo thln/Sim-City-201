@@ -5,9 +5,9 @@ import market.Market;
 import restaurant.Restaurant;
 
 public class Phonebook {
-	Bank bank;
-	Market market;
-	Restaurant restaurant;
+	public Bank bank;
+	public Market market;
+	public Restaurant restaurant;
 	
 	//ChineseRestaurant chineseRestaurant;
 	//ItalianRestaurant italianRestaurant;
