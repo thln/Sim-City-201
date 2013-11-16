@@ -177,7 +177,7 @@ public abstract class Person extends Agent {
 		}
 		else if (carStatus == CarState.wantsCar) {
 			MarketCustomerRole cust1 = (MarketCustomerRole) r;
-			phonebook.market.salesPersonRole.msgIWantProducts(cust1, "car", 1);
+			phonebook.market.salesPersonRole.msgIWantProducts(cust1, "Car", 1);
 			//must set desire to hasCar once car is bought
 		}
 
