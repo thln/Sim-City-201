@@ -37,6 +37,10 @@ public abstract class Role {
 		this.state = state;
 	}
 	
+	public String getName() {
+		return person.getName();
+	}
+	
 	  /**
      * Print message
      */
