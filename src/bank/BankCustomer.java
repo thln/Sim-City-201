@@ -180,7 +180,7 @@ public class BankCustomer extends Role {
 			desire = BankCustomerDesire.deposit;
 		if (d1 == "withdraw")
 			desire = BankCustomerDesire.withdraw;
-		if (d1 == "deposit")
+		if (d1 == "robBank")
 			desire = BankCustomerDesire.robBank;
 	}
 }
