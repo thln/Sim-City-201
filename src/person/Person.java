@@ -37,8 +37,7 @@ public abstract class Person extends Agent {
 	{
 		roles.add(new RestaurantCustomer(getName(), this));
 		roles.add(new MarketCustomer(this));
-		//roles.add(new BankCustomer(getName(), this, myPhoneBook.bankGuard, 0, 0, 0, 0));
-
+		roles.add(new BankCustomer(getName(), this, myPhoneBook.bankGuard, 0, 0, 0, 0));
 	}
 	
 	//Messages
