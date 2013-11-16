@@ -3,6 +3,7 @@ package restaurant;
 
 import java.util.*;
 
+import market.SalesPerson;
 import person.Role;
 
 
@@ -46,26 +47,26 @@ public class Cashier extends Role {
 	 */
 	public void msgComputeBill(String choice, int tableNumber, Waiter waiter) {
 		synchronized(Checks){
-			print("Calculating bill for table " + tableNumber);
-			log.add(new LoggedEvent("Calculating bill for table"));
+			//print("Calculating bill for table " + tableNumber);
+			//log.add(new LoggedEvent("Calculating bill for table"));
 			Checks.add(new Check(choice, tableNumber, waiter));
 			stateChanged();
 		}
 	}
 
-	public void msgPayment(String choice, double amount, Customer customer) {
+	public void msgPayment(String choice, double amount, RestaurantCustomer customer) {
 		synchronized(Payments){
-			print("Received payment from " + customer.getCustomerName());
-			log.add(new LoggedEvent("Received payment from " + customer.getCustomerName()));
+			//print("Received payment from " + customer.getCustomerName());
+			//log.add(new LoggedEvent("Received payment from " + customer.getCustomerName()));
 			Payments.add(new Payment(choice, amount, customer));
 			stateChanged();
 		}
 	}
 
-	public void msgOrderFulfilled(String choice, int amount, Market market) {
+	public void msgOrderFulfilled(String choice, int amount, SalesPerson market) {
 		synchronized(OrdersToPay){
 			OrdersToPay.add(new Order(choice, amount, market));
-			log.add(new LoggedEvent("Received msgOrderFulfilled from " + market.getName()));
+			//log.add(new LoggedEvent("Received msgOrderFulfilled from " + market.getName()));
 			stateChanged();
 		}
 	}
@@ -131,7 +132,7 @@ public class Cashier extends Role {
 		change = Payments.get(0).payment - foodPrices.get(Payments.get(0).choice);
 		change = Math.round(change * 100.0) / 100.0;
 		Payments.get(0).customer.msgHeresYourChange(change);
-		print("Gave change to customer " + Payments.get(0).customer.getName());
+		//print("Gave change to customer " + Payments.get(0).customer.getName());
 		Payments.remove(0);
 	}
 	
@@ -139,8 +140,8 @@ public class Cashier extends Role {
 		double payment;
 		payment = OrdersToPay.get(0).amountOrdered * foodPrices.get(OrdersToPay.get(0).choice);
 		payment = Math.round(payment * 100.0) / 100.0;
-		print("Giving Market " + OrdersToPay.get(0).market.getName() + " for " + OrdersToPay.get(0).amountOrdered + " " + OrdersToPay.get(0).choice + "(s) x $" + foodPrices.get(OrdersToPay.get(0).choice) + " = $" + payment);
-		OrdersToPay.get(0).market.msgPayment(payment, this);
+		//print("Giving Market " + OrdersToPay.get(0).market + " for " + OrdersToPay.get(0).amountOrdered + " " + OrdersToPay.get(0).choice + "(s) x $" + foodPrices.get(OrdersToPay.get(0).choice) + " = $" + payment);
+		//OrdersToPay.get(0).market.msgPayment(this, payment); How to make cashier a MarketCustomer
 		OrdersToPay.remove(0);
 	}
 
@@ -163,9 +164,9 @@ public class Cashier extends Role {
 	public class Payment {
 		public String choice;
 		public double payment;
-		public Customer customer;
+		public RestaurantCustomer customer;
 
-		Payment(String choice, double payment, Customer customer) {
+		Payment(String choice, double payment, RestaurantCustomer customer) {
 			this.choice = choice;
 			this.payment = payment;
 			this.customer = customer;
@@ -176,9 +177,9 @@ public class Cashier extends Role {
 	public class Order {
 		String choice;
 		int amountOrdered;
-		Market market;
+		SalesPerson market; //The market
 
-		Order(String choice, int amountOrdered, Market market) {
+		Order(String choice, int amountOrdered, SalesPerson market) {
 			this.choice = choice;
 			this.amountOrdered = amountOrdered;
 			this.market = market;
