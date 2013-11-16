@@ -3,11 +3,11 @@ package market;
 import person.Person;
 import person.Role;
 
-public class MarketCustomer extends Role {
+public class MarketCustomerRole extends Role {
 
 	protected String RoleName = "Market Customer";
 	
-	public MarketCustomer(Person person) {
+	public MarketCustomerRole(Person person) {
 		super(person);
 	}
 

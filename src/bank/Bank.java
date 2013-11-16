@@ -2,10 +2,10 @@ package bank;
 
 public class Bank {
 
-	BankGuard bankGuard;
+	BankGuardRole bankGuardRole;
 	
 	public void msgArrivedAtBank(BankCustomer c1) {
-		bankGuard.msgArrivedAtBank(c1);
+		bankGuardRole.msgArrivedAtBank(c1);
 	}
 	
 }

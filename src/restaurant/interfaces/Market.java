@@ -1,6 +1,6 @@
 package restaurant.interfaces;
 
-import restaurant.Cashier;
+import restaurant.CashierRole;
 
 public interface Market {
 	
@@ -11,5 +11,5 @@ public interface Market {
 	 */
 	public void msgOutofItems(String choice, int orderAmount);
 	
-	public void msgPayment(double payment, Cashier cashier);
+	public void msgPayment(double payment, CashierRole cashierRole);
 }

@@ -2,10 +2,10 @@ package restaurant;
 
 public class Restaurant {
 
-	Host host;
+	HostRole hostRole;
 	
-	public void msgIWantFood(RestaurantCustomer cust, int xHome, int yHome) {
-		host.msgIWantFood(cust, xHome, yHome);
+	public void msgIWantFood(RestaurantCustomerRole cust, int xHome, int yHome) {
+		hostRole.msgIWantFood(cust, xHome, yHome);
 	}
 	
 }

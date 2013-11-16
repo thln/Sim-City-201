@@ -8,18 +8,18 @@ public class Market {
 	double money;
 	HashMap<String, Integer> inventory = new HashMap<String, Integer>();
 	
-	SalesPerson salesPersonRole;
-	UPSman	UPSmanRole;
+	SalesPersonRole salesPersonRole;
+	UPSmanRole	UPSmanRole;
 	
-	public void iWantProducts(MarketCustomer customer, String item, int numWanted) {
+	public void iWantProducts(MarketCustomerRole customer, String item, int numWanted) {
 		salesPersonRole.msgIWantProducts(customer, item, numWanted);
 	}
 	
-	public SalesPerson arrivedAtWorkSalesPerson(Person person) {
+	public SalesPersonRole arrivedAtWorkSalesPerson(Person person) {
 		return salesPersonRole;
 	}
 	
-	public UPSman arrivedAtWorkUPSman(Person person) {
+	public UPSmanRole arrivedAtWorkUPSman(Person person) {
 		return UPSmanRole;
 	}
 }

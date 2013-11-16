@@ -1,6 +1,6 @@
 package restaurant.test.mock;
 
-import restaurant.Cashier;
+import restaurant.CashierRole;
 import restaurant.interfaces.Market;
 
 /**
@@ -12,7 +12,7 @@ import restaurant.interfaces.Market;
 
 public class MockMarket extends Mock implements Market {
 
-	public Cashier cashier;
+	public CashierRole cashierRole;
 
 	public MockMarket(String name) {
 		super(name);

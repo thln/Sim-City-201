@@ -2,13 +2,13 @@ package person;
 
 import java.util.*;
 
-import bank.BankCustomer;
-import bank.BankGuard;
-import market.MarketCustomer;
+import bank.BankCustomerRole;
+import bank.BankGuardRole;
+import market.MarketCustomerRole;
 import person.Role;
 import person.Role.roleState;
-import restaurant.Host;
-import restaurant.RestaurantCustomer;
+import restaurant.HostRole;
+import restaurant.RestaurantCustomerRole;
 import agent.Agent;
 
 public abstract class Person extends Agent {
@@ -30,16 +30,16 @@ public abstract class Person extends Agent {
 	PhoneBook myPhoneBook;
 
 	class PhoneBook {
-		Host host1;
-		public BankGuard bankGuard;
+		HostRole host1;
+		public BankGuardRole bankGuardRole;
 	}
 
 
 	Person() 
 	{
-		roles.add(new RestaurantCustomer(getName(), this));
-		roles.add(new MarketCustomer(this));
-		roles.add(new BankCustomer(getName(), this, myPhoneBook.bankGuard, 0, 0, 0, 0));
+		roles.add(new RestaurantCustomerRole(getName(), this));
+		roles.add(new MarketCustomerRole(this));
+		roles.add(new BankCustomerRole(getName(), this, myPhoneBook.bankGuardRole, 0, 0, 0, 0));
 	}
 
 	//Messages
@@ -65,16 +65,16 @@ public abstract class Person extends Agent {
 					}
 
 					if (r.getState() == roleState.waitingToExecute) {
-						if (r instanceof BankCustomer) {
+						if (r instanceof BankCustomerRole) {
 							if (this instanceof Crook)
 								robBank(r);
 							else
 								prepareForBank(r);
 						}
-						if (r instanceof MarketCustomer) {
+						if (r instanceof MarketCustomerRole) {
 							prepareForMarket(r);
 						}
-						if (r instanceof RestaurantCustomer) {
+						if (r instanceof RestaurantCustomerRole) {
 							prepareForRestaurant(r);
 						}
 						if (r.equals(this.workerRole)) {
@@ -100,7 +100,7 @@ public abstract class Person extends Agent {
 	private void prepareForBank (Role r){
 		//Do Gui method
 		setRoleActive(r);
-		BankCustomer cust1 = (BankCustomer) r;
+		BankCustomerRole cust1 = (BankCustomerRole) r;
 		if (money <= moneyMinThreshold){
 			cust1.setDesiredCash(100);
 			cust1.setDesire("withdraw");
@@ -110,14 +110,14 @@ public abstract class Person extends Agent {
 		}
 		//(String name, Person p1, BankGuard guard1, int desiredCash, int deposit, int accNum, int cash)
 		//if bank customer role hasn't already been instantiated, instatiate it
-		myPhoneBook.bankGuard.msgArrivedAtBank(cust1);
+		myPhoneBook.bankGuardRole.msgArrivedAtBank(cust1);
 		stateChanged();
 	}
 
 	private void robBank (Role r) {
 		//Do Gui method
 		setRoleActive(r);
-		BankCustomer cust1 = (BankCustomer) r;
+		BankCustomerRole cust1 = (BankCustomerRole) r;
 		cust1.setDesire("robBank");
 		stateChanged();
 	}
