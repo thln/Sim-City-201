@@ -26,14 +26,16 @@ public class Worker extends Person {
 	
 	LoanOfficer l1;
 
-	public Worker (String name, int money, String jobTitle, int startT, int lunchT, int endT) {
+	public Worker (String name, int money, String jobTitle, int startT, int lunchT, int endT) 
+	{
 		super();
 		this.money = money;
 		this.name = name;       
 		myJob = new Job(jobTitle, startT, lunchT, endT, this);
 		marketTime = myJob.getEndTime();
 			
-			if (name == "Bill") {
+			if (name == "Bill") 
+			{
 				 Worker worker2 = new Worker("Ted", 10, "loanOfficer", 2, 0, 0);      
 			        l1 = (LoanOfficer) worker2.workerRole;
 			        worker2.startThread();

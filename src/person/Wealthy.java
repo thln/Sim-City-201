@@ -9,7 +9,16 @@ class Wealthy extends Person
     int bankTime = 10;
     int sleepTime = 22;
     boolean needToDeposit;
+    String name;
 
+    
+    public Wealthy(String name,  int money)
+    {
+		super();
+		this.money = money;
+		this.name = name;
+    }
+    
     //Messages
     void msgRentDue () 
     {
