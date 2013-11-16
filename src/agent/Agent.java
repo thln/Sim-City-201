@@ -31,7 +31,7 @@ public abstract class Agent {
      * current state.  Will be called whenever a state change has occurred,
      * and will be called repeated as long as it returns true.
      *
-     * @return true iff some action was executed that might have changed the
+     * @return true if some action was executed that might have changed the
      *         state.
      */
     protected abstract boolean pickAndExecuteAnAction();

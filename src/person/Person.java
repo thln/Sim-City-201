@@ -10,36 +10,44 @@ import person.Role.roleState;
 import restaurant.HostRole;
 import restaurant.RestaurantCustomerRole;
 import agent.Agent;
+import application.Phonebook;
 
 public abstract class Person extends Agent {
 
 	//Data
-	public List<Role> roles = Collections.synchronizedList(new ArrayList<Role>()); 	//contains all the customer roles
+	String name;
 	public double money;
+	Phonebook phonebook; //List of all agent correspondents in phonebook
+	
+	//Role Related
+	public List<Role> roles = Collections.synchronizedList(new ArrayList<Role>()); 	//contains all the customer roles
 	Role workerRole;
-	public HashMap <String, Integer> Inventory = new HashMap<String, Integer>(); 		//market list
-	public boolean hasCar;
+	
+	//Car Related
+	public enum CarState {noCar, wantsCar, hasCar};
+	public CarState carStatus = CarState.noCar;
+	final int carCost = 1000;
+	
+	//Hunger Related
+	public HashMap <String, Integer> Inventory = new HashMap<String, Integer>(); 		//Food list
 	public boolean hasFoodInFridge;
+	
+	//Bank Related
 	public int accountNum;
 	public double accountBalance;
 	int moneyMinThreshold = 20;
 	int moneyMaxThreshold = 200;
+	
+	//Time Related
 	public int sleepTime = 22;
 	private int newTime;
-	final int carCost = 1000;
-	PhoneBook myPhoneBook;
-
-	class PhoneBook {
-		HostRole host1;
-		public BankGuardRole bankGuardRole;
-	}
 
 
-	Person() 
-	{
+	Person(String name) {
+		this.name = name;
 		roles.add(new RestaurantCustomerRole(getName(), this));
 		roles.add(new MarketCustomerRole(this));
-		roles.add(new BankCustomerRole(getName(), this, myPhoneBook.bankGuardRole, 0, 0, 0, 0));
+		//roles.add(new BankCustomerRole(getName(), this, phonebook.Bank.bankGuard, 0, 0, 0, 0));
 	}
 
 	//Messages
@@ -89,8 +97,6 @@ public abstract class Person extends Agent {
 			//goHome();
 			return false;
 		}
-		
-		//at some point we check to see if people have enough money to buy a car
 	}
 
 	//Actions
@@ -110,11 +116,11 @@ public abstract class Person extends Agent {
 		}
 		//(String name, Person p1, BankGuard guard1, int desiredCash, int deposit, int accNum, int cash)
 		//if bank customer role hasn't already been instantiated, instatiate it
-		myPhoneBook.bankGuardRole.msgArrivedAtBank(cust1);
+		//phonebook.Bank.bankGuard.msgArrivedAtBank(cust1);
 		stateChanged();
 	}
 
-	private void robBank (Role r) {
+	private void robBank(Role r) {
 		//Do Gui method
 		setRoleActive(r);
 		BankCustomerRole cust1 = (BankCustomerRole) r;
@@ -122,16 +128,34 @@ public abstract class Person extends Agent {
 		stateChanged();
 	}
 
-	private void prepareForMarket (Role r) {
+	private void prepareForMarket(Role r) {
 		//Do GUI method
-
-		//make money decisions
-
+		if(accountBalance >= (carCost + 100)) {
+			if (carStatus == CarState.noCar) {
+				carStatus = CarState.wantsCar;
+			}
+		}
+		
+		if (carStatus == CarState.wantsCar && hasFoodInFridge == false) {
+			MarketCustomerRole cust1 = (MarketCustomerRole) r;
+			cust1.setDesire("buyCarAndFood");
+			//must set desire to has car once car is gained
+		}
+		else if (carStatus == CarState.wantsCar) {
+			MarketCustomerRole cust1 = (MarketCustomerRole) r;
+			cust1.setDesire("buyCar");
+			//must set desire to has car once car is gained
+		}
+		else if (hasFoodInFridge == false) {
+			MarketCustomerRole cust1 = (MarketCustomerRole) r;
+			cust1.setDesire("buyFood");
+		}
+	
 		setRoleActive(r);
 		stateChanged();
 	}
 
-	private void prepareForRestaurant (Role r) {
+	private void prepareForRestaurant(Role r) {
 		//Do GUI method
 
 
@@ -158,12 +182,12 @@ public abstract class Person extends Agent {
 	public void goToSleep() {
 		//puts agent to sleep
 	}
-	
+
 	/*
 	public void print(String s)
 	{
 		String roleName = "";
-		
+
 		synchronized (roles) 
 		{
 			if (!roles.isEmpty()) 
@@ -177,8 +201,8 @@ public abstract class Person extends Agent {
 				}
 			}
 		}
-				
+
 		System.out.println(getName() + ": " + s);
 	}
-	*/
+	 */
 }

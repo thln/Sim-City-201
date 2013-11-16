@@ -17,30 +17,25 @@ import bank.LoanOfficerRole;
 
 public class Worker extends Person {
 	//Data
-	String name;
 	Job myJob = null;
 	int marketTime;
 	int bankTime = 8;
 	int sleepTime = 22;
-	
+
 	LoanOfficerRole l1;
 
-	public Worker (String name, int money, String jobTitle, int startT, int lunchT, int endT) 
-	{
-		super();
-		this.money = money;
-		this.name = name;       
+	public Worker (String name, int money, String jobTitle, int startT, int lunchT, int endT)  {
+		super(name);
+		this.money = money;       
 		myJob = new Job(jobTitle, startT, lunchT, endT, this);
 		marketTime = myJob.getEndTime();
-			
-			if (name == "Bill") 
-			{
-				 Worker worker2 = new Worker("Ted", 10, "loanOfficer", 2, 0, 0);      
-			        l1 = (LoanOfficerRole) worker2.workerRole;
-			        worker2.startThread();
-			        worker2.msgNewTime(2);
-			}
-	
+
+		if (name == "Bill") {
+			Worker worker2 = new Worker("Ted", 10, "loanOfficer", 2, 0, 0);      
+			l1 = (LoanOfficerRole) worker2.workerRole;
+			worker2.startThread();
+			worker2.msgNewTime(2);
+		}
 	}
 
 	class Job {
@@ -84,7 +79,7 @@ public class Worker extends Person {
 				roles.add(workerRole);
 			}
 			if (title == "maintenance") {
-			//	workerRole = new Role(maintenanceRole));
+				//	workerRole = new Role(maintenanceRole));
 				roles.add(workerRole);
 			}
 			if (title == "cashier") {
@@ -176,7 +171,7 @@ public class Worker extends Person {
 					return;
 				}
 			}
-				
+
 		}
 
 		if (newTime == myJob.endTime) {
@@ -189,7 +184,7 @@ public class Worker extends Person {
 			//GoToSleep();
 			stateChanged();
 		}  
-		
+
 		newTime = -5;
 	}
 }
