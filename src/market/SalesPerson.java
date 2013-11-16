@@ -8,6 +8,8 @@ import person.Role;
 import restaurant.Cook;
 
 public class SalesPerson extends Role {
+	
+	protected String RoleName = "Sales Person";
 
 	public SalesPerson(Person person) {
 		super(person);

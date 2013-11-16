@@ -6,6 +6,8 @@ public abstract class Role {
 
 	protected Person person;
 	
+	protected String RoleName = "";
+	
 	enum roleState {active, inActive, waitingToExecute}
 	private roleState state = roleState.inActive;
 	
@@ -44,8 +46,9 @@ public abstract class Role {
 	  /**
      * Print message
      */
-    protected void print(String msg) {
-        print(msg, null);
+    protected void print(String msg) 
+    {
+    	System.out.println(RoleName + " " + getName() + " : " + msg);
     }
 
     /**

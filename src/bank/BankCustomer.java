@@ -24,6 +24,7 @@ public class BankCustomer extends Role {
 	double loan; 	
 	BankCustomerDesire desire;
 	CustomerState state;
+	protected String RoleName = "Bank Customer";
 
 	public BankCustomer (String name, Person p1, BankGuard guard1, int desiredCash, int deposit, int accNum, int cash) {
 		super(p1);

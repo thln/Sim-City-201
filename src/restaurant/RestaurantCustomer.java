@@ -15,6 +15,7 @@ public class RestaurantCustomer extends Role {
 	private String name;
 	private int hungerLevel = 5;        // determines length of meal
 	Timer timer = new Timer();
+	protected String RoleName = "Restaurant Customer";
 	//private CustomerGui customerGui;
 	int xHome, yHome;
 

@@ -10,7 +10,8 @@ public class UPSman extends Role {
 
 	//Data
 	private List<MarketOrder> orders = Collections.synchronizedList(new ArrayList<MarketOrder>());
-
+	protected String RoleName = "UPS man";
+	
 	//Messages
 	public void msgDeliverOrder(MarketOrder o) {
 		orders.add(o);

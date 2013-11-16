@@ -15,6 +15,7 @@ public class BankGuard extends Role {
 	List <BankCustomer> customers;
 	List <BankCustomer> robbers;
 	List <MyTeller> tellers; 
+	protected String RoleName = "Bank Guard";
 
 	enum TellerState {available, busy};
 

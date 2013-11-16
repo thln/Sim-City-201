@@ -14,6 +14,7 @@ public class BankTeller extends Role {
 
 	List<Account> accounts;
 	LoanOfficer myLoaner;
+	protected String RoleName = "Bank Teller";
 	int balanceMinimum = 5;
 	String name;
 	

@@ -8,6 +8,8 @@ import person.Person;
 import person.Role;
 
 public class MarketRunner extends Role {
+	
+	protected String RoleName = "Market Runner";
 
 	//Data
 	//Correspondents

@@ -5,7 +5,9 @@ import person.Role;
 
 public class MarketCustomer extends Role {
 
-	protected MarketCustomer(Person person) {
+	protected String RoleName = "Market Customer";
+	
+	public MarketCustomer(Person person) {
 		super(person);
 	}
 
