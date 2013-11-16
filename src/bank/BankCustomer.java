@@ -170,4 +170,17 @@ public class BankCustomer extends Role {
 		myGuard.msgRobbingBank(this);
 		state = CustomerState.waiting;
 	}
+	
+	public void setDesiredCash(int d1) {
+		desiredCashAmount = d1;
+	}
+	
+	public void setDesire(String d1){
+		if (d1 == "deposit")
+			desire = BankCustomerDesire.deposit;
+		if (d1 == "withdraw")
+			desire = BankCustomerDesire.withdraw;
+		if (d1 == "deposit")
+			desire = BankCustomerDesire.robBank;
+	}
 }

@@ -21,13 +21,15 @@ public abstract class Person extends Agent {
 	public boolean hasFoodInFridge;
 	public int accountNum;
 	public double accountBalance;
+	int moneyMinThreshold = 20;
+	int moneyMaxThreshold = 200;
 	public int sleepTime = 22;
 	private int newTime;
 	PhoneBook myPhoneBook;
 	
 	class PhoneBook {
 		Host host1;
-		public Role bankGuard;
+		public BankGuard bankGuard;
 	}
 
 	Person() {
@@ -60,7 +62,9 @@ public abstract class Person extends Agent {
 					}
 
 					if (r.getState() == roleState.waitingToExecute) {
-						setRoleActive(r);
+						if (r instanceof BankCustomer) {
+							prepareForBank(r);
+						}
 						return true;
 					}
 				}
@@ -76,14 +80,29 @@ public abstract class Person extends Agent {
 	
 	public abstract void updateTime(int newTime);
 	
+	private void prepareForBank (Role r){
+		//Do Gui method
+		setRoleActive(r);
+		BankCustomer cust1 = (BankCustomer) r;
+		if (money <= moneyMinThreshold){
+			cust1.setDesiredCash(100);
+			cust1.setDesire("withdraw");
+		}
+		if (money >= moneyMaxThreshold){
+			cust1.setDesire("deposit");
+		}
+			//(String name, Person p1, BankGuard guard1, int desiredCash, int deposit, int accNum, int cash)
+			//if bank customer role hasn't already been instantiated, instatiate it
+		myPhoneBook.bankGuard.msgArrivedAtBank(cust1);
+		stateChanged();
+	}
+	
 	public void setRoleActive(Role role) {
 		role.setState(roleState.active);
-		stateChanged();
 	}
 	
 	public void setRoleInactive(Role role) {
 		role.setState(roleState.inActive);
-		stateChanged();
 	}
 	
 	public void goToSleep() {
