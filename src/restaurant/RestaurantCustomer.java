@@ -236,7 +236,7 @@ public class RestaurantCustomer extends Role {
 		if (myRandomChoice == 0) {
 			state = AgentState.Leaving;
 			System.out.println("I don't want to wait, bailing from this stupid restaurant");
-			customerGui.DoExitRestaurant();
+			//customerGui.DoExitRestaurant();
 			stateChanged();
 		}
 		else {
@@ -250,7 +250,7 @@ public class RestaurantCustomer extends Role {
 	private void SitDown() {
 		state = AgentState.BeingSeated;
 		System.out.println("Being seated. Going to table");
-		customerGui.DoGoToSeat(tableNumber);
+		//customerGui.DoGoToSeat(tableNumber);
 	}
 
 	private void MakeChoice() {
@@ -279,7 +279,7 @@ public class RestaurantCustomer extends Role {
 				
 				state = AgentState.DoneDeciding;
 				AskToOrder();
-				customerGui.DoReadyToOrder();
+				//customerGui.DoReadyToOrder();
 				stateChanged();
 			}
 		},
@@ -291,14 +291,14 @@ public class RestaurantCustomer extends Role {
 	}
 
 	private void PlaceOrder() {
-		customerGui.DoPlaceOrder(choice); //GUI call
+		//customerGui.DoPlaceOrder(choice); //GUI call
 		state = AgentState.Ordered;
 		waiter.msgHeresMyOrder(this, choice);
 	}
 
 	private void EatFood() {
 		state = AgentState.Eating;
-		customerGui.DoEatFood(choice);
+		//customerGui.DoEatFood(choice);
 		System.out.println("Eating Food");
 		//This next complicated line creates and starts a timer thread.
 		//We schedule a deadline of getHungerLevel()*1000 milliseconds.
@@ -311,7 +311,7 @@ public class RestaurantCustomer extends Role {
 		timer.schedule(new TimerTask() {
 			//Object cookie = 1;
 			public void run() {
-				print("Done eating " + choice);
+				//print("Done eating " + choice);
 				event = AgentEvent.doneEating;
 				//isHungry = false;
 				stateChanged();
@@ -321,7 +321,7 @@ public class RestaurantCustomer extends Role {
 	}
 
 	private void AskForCheck() {
-		customerGui.DoAskForCheck();
+		//customerGui.DoAskForCheck();
 		state = AgentState.AskedForCheck;
 		System.out.println("Asking for my check");
 		waiter.msgIWantMyCheck(this);
@@ -330,7 +330,7 @@ public class RestaurantCustomer extends Role {
 	private void PayingCheck() {
 		state = AgentState.PayingCheck;
 		System.out.println("Going to the cashier");
-		customerGui.DoGoToCashier();
+		//customerGui.DoGoToCashier();
 	}
 
 	private void PayCheck() {
@@ -339,9 +339,10 @@ public class RestaurantCustomer extends Role {
 			money = 0;
 		}
 		
+
 		System.out.println("Paying my check of: " + check);
 		System.out.println("I have $" + money);
-		
+
 		state = AgentState.PayedCheck;
 		cashier.msgPayment(choice, money, this);
 		money = 0;
@@ -349,15 +350,16 @@ public class RestaurantCustomer extends Role {
 
 	private void LeaveRestaurant() {
 		state = AgentState.Leaving;
-		DoSystem.out.println("Leaving.");
+
+		System.out.println("Leaving.");
 		waiter.msgLeavingTable(this);
-		customerGui.DoExitRestaurant();
+		//customerGui.DoExitRestaurant();
 	}
 	
 	private void GoToJail() {
 		state = AgentState.inJail;
 		waiter.msgLeavingTable(this);
-		customerGui.DoGoToJail();
+		//customerGui.DoGoToJail();
 		
 		timer.schedule(new TimerTask() {
 			public void run() {
@@ -369,7 +371,7 @@ public class RestaurantCustomer extends Role {
 	
 	private void walkOfShame() {
 		state = AgentState.Leaving;
-		customerGui.DoExitRestaurant();
+		//customerGui.DoExitRestaurant();
 		stateChanged();
 	}
 
@@ -399,17 +401,19 @@ public class RestaurantCustomer extends Role {
 		return "customer " + getName();
 	}
 
+	/*
 	public void setGui(CustomerGui g) {
 		customerGui = g;
-	}
+	}*/
 
 	public void setCashier(Cashier cashier) {
 		this.cashier = cashier;
 	}
 
+	/*
 	public CustomerGui getGui() {
 		return customerGui;
-	}
+	}*/
 	
 	public double getMoney() {
 		return money;
