@@ -158,4 +158,27 @@ public abstract class Person extends Agent {
 	public void goToSleep() {
 		//puts agent to sleep
 	}
+	
+	/*
+	public void print(String s)
+	{
+		String roleName = "";
+		
+		synchronized (roles) 
+		{
+			if (!roles.isEmpty()) 
+			{
+				for (Role r : roles) 
+				{
+					if (r.getState() == roleState.active) 
+					{
+						roleName = r.
+					}
+				}
+			}
+		}
+				
+		System.out.println(getName() + ": " + s);
+	}
+	*/
 }

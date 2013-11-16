@@ -17,6 +17,7 @@ public class LoanOfficer extends Role {
 	double vault = 10000;
 	double vaultMinimum = 1000;
 	String name;
+	protected String RoleName = "Loan Officer";
 	enum LoanState {requesting, open, closed}
 	class Loan {
 		Account account1;

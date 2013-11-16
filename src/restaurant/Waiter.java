@@ -19,6 +19,7 @@ public class Waiter extends Role {
 	public List<Order> readyOrders = Collections.synchronizedList(new ArrayList<Order>());
 
 	protected String name;
+	protected String RoleName = "Normal Waiter";
 	protected Semaphore atDestination = new Semaphore(0,true);
 
 	public Menu menu = new Menu();

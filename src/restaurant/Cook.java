@@ -19,6 +19,7 @@ public class Cook extends Role {
 
 	private String name;
 	private Semaphore atDestination = new Semaphore(0,true);
+	protected String RoleName = "Cook";
 
 	//public CookGui cookGui = null;
 

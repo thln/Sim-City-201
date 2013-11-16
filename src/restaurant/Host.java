@@ -24,6 +24,7 @@ public class Host extends Role {
 
 
 	public Collection<Table> tables;
+	protected String RoleName = "Host";
 	//note that tables is typed with Collection semantics.
 	//Later we will see how it is implemented
 

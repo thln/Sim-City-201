@@ -3,6 +3,7 @@ package restaurant;
 public class AltWaiter extends Waiter 
 {
 	private RevolvingStand theRevolvingStand;
+	protected String RoleName = "Alternative Waiter";
 	
 	public AltWaiter(String name) 
 	{
