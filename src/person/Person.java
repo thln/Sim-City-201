@@ -16,6 +16,7 @@ public abstract class Person extends Agent {
 	//Data
 	public List<Role> roles = Collections.synchronizedList(new ArrayList<Role>()); 	//contains all the customer roles
 	public double money;
+	Role workerRole;
 	public HashMap <String, Integer> Inventory = new HashMap<String, Integer>(); 		//market list
 	public boolean hasCar;
 	public boolean hasFoodInFridge;
@@ -25,8 +26,9 @@ public abstract class Person extends Agent {
 	int moneyMaxThreshold = 200;
 	public int sleepTime = 22;
 	private int newTime;
+	final int carCost = 1000;
 	PhoneBook myPhoneBook;
-	
+
 	class PhoneBook {
 		Host host1;
 		public BankGuard bankGuard;
@@ -39,7 +41,7 @@ public abstract class Person extends Agent {
 		roles.add(new MarketCustomer(this));
 		roles.add(new BankCustomer(getName(), this, myPhoneBook.bankGuard, 0, 0, 0, 0));
 	}
-	
+
 	//Messages
 	public void msgNewTime(int time) {
 		newTime = time;
@@ -52,11 +54,11 @@ public abstract class Person extends Agent {
 		synchronized (roles) {
 			if (!roles.isEmpty()) {
 				for (Role r : roles) {
-					
+
 					if (newTime >= 0) {
 						updateTime(newTime);	
 					}
-					
+
 					if (r.getState() == roleState.active) {
 						r.pickAndExecuteAnAction();
 						return true;
@@ -64,7 +66,19 @@ public abstract class Person extends Agent {
 
 					if (r.getState() == roleState.waitingToExecute) {
 						if (r instanceof BankCustomer) {
-							prepareForBank(r);
+							if (this instanceof Crook)
+								robBank(r);
+							else
+								prepareForBank(r);
+						}
+						if (r instanceof MarketCustomer) {
+							prepareForMarket(r);
+						}
+						if (r instanceof RestaurantCustomer) {
+							prepareForRestaurant(r);
+						}
+						if (r.equals(this.workerRole)) {
+							prepareForWork(r);
 						}
 						return true;
 					}
@@ -75,12 +89,14 @@ public abstract class Person extends Agent {
 			//goHome();
 			return false;
 		}
+		
+		//at some point we check to see if people have enough money to buy a car
 	}
 
 	//Actions
-	
+
 	public abstract void updateTime(int newTime);
-	
+
 	private void prepareForBank (Role r){
 		//Do Gui method
 		setRoleActive(r);
@@ -92,20 +108,53 @@ public abstract class Person extends Agent {
 		if (money >= moneyMaxThreshold){
 			cust1.setDesire("deposit");
 		}
-			//(String name, Person p1, BankGuard guard1, int desiredCash, int deposit, int accNum, int cash)
-			//if bank customer role hasn't already been instantiated, instatiate it
+		//(String name, Person p1, BankGuard guard1, int desiredCash, int deposit, int accNum, int cash)
+		//if bank customer role hasn't already been instantiated, instatiate it
 		myPhoneBook.bankGuard.msgArrivedAtBank(cust1);
 		stateChanged();
 	}
-	
+
+	private void robBank (Role r) {
+		//Do Gui method
+		setRoleActive(r);
+		BankCustomer cust1 = (BankCustomer) r;
+		cust1.setDesire("robBank");
+		stateChanged();
+	}
+
+	private void prepareForMarket (Role r) {
+		//Do GUI method
+
+		//make money decisions
+
+		setRoleActive(r);
+		stateChanged();
+	}
+
+	private void prepareForRestaurant (Role r) {
+		//Do GUI method
+
+
+		setRoleActive(r);
+		stateChanged();
+	}
+
+	private void prepareForWork(Role r) {
+		//Do GUI method
+
+		setRoleActive(r);
+		stateChanged();
+	}
+
 	public void setRoleActive(Role role) {
 		role.setState(roleState.active);
+
 	}
-	
+
 	public void setRoleInactive(Role role) {
 		role.setState(roleState.inActive);
 	}
-	
+
 	public void goToSleep() {
 		//puts agent to sleep
 	}

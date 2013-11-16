@@ -17,7 +17,6 @@ import bank.LoanOfficer;
 
 public class Worker extends Person {
 	//Data
-	Role workerRole;
 	String name;
 	Job myJob = null;
 	int marketTime;
@@ -146,9 +145,13 @@ public class Worker extends Person {
 	public void updateTime(int newTime) {
 		if ((newTime == myJob.getBankTime()) && (money >= moneyMaxThreshold) || (money <= moneyMinThreshold)) {
 			System.out.println("Becoming customer");
-			//Role cust1 = new BankCustomer("Josh", this, myPhoneBook.bankGuard, 40, 0, 0, 10);
-		//	roles.add(cust1);
-			//	BankCustomer.state = roleState.waitingToExecute;      
+			for (Role role1: roles) {
+				if (role1 instanceof BankCustomer) {
+					role1.setState(roleState.waitingToExecute);
+					stateChanged();
+					return;
+				}
+			}
 		}
 		if (newTime == myJob.startTime) {
 			workerRole.setState(roleState.waitingToExecute);
@@ -165,10 +168,15 @@ public class Worker extends Person {
 			stateChanged();
 		}
 
-		if (newTime == marketTime && !hasFoodInFridge) {
-		//	for (MarketCustomer role1: roles)
-				//role1.setState(roleState.waitingToExecute);
-			stateChanged();
+		if (newTime == marketTime && (!hasFoodInFridge || money > carCost)) {	//everyone with more than 1000 dollars wants to buy a car
+			for (Role role1: roles) {
+				if (role1 instanceof MarketCustomer) {
+					role1.setState(roleState.waitingToExecute);
+					stateChanged();
+					return;
+				}
+			}
+				
 		}
 
 		if (newTime == myJob.endTime) {
@@ -182,6 +190,6 @@ public class Worker extends Person {
 			stateChanged();
 		}  
 		
-		newTime = -30;
+		newTime = -5;
 	}
 }
