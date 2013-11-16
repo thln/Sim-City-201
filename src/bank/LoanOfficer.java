@@ -32,7 +32,7 @@ public class LoanOfficer extends Role {
 	public List<Loan> loans;
 	public List<Account> accounts;
 
-	LoanOfficer(String name, Person p1) {
+	public LoanOfficer(String name, Person p1) {
 		super(p1);
 		this.name = name;
 		loans = Collections.synchronizedList(new ArrayList<Loan>());

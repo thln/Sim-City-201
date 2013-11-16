@@ -126,11 +126,13 @@ public class BankCustomer extends Role {
 	//Actions
 
 	void MessageGuard () {
+		System.out.println("Arrived at bank");
 		myGuard.msgArrivedAtBank(this);
 		state = CustomerState.waiting;
 	}
 	
 	void WithdrawCash() {
+		System.out.println("Received withdrawal");
 		myTeller.msgINeedMoney(desiredCashAmount,accountNum);
 		state = CustomerState.waiting;
 	}
