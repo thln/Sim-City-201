@@ -60,7 +60,7 @@ public class Cook extends Role {
 	 */
 	public void msgHeresAnOrder(int table, String choice, Waiter waiter) {
 		synchronized(myOrders){
-			//print("Order recived for table " + table);
+			//print("Order received for table " + table);
 			Order order = new Order(table, choice, waiter);
 			myOrders.add(order);
 			stateChanged();

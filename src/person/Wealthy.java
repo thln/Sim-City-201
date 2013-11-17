@@ -2,7 +2,7 @@ package person;
 
 import person.Role.roleState;
 
-class Wealthy extends Person 
+public class Wealthy extends Person 
 {
     int eatTime1 = 10;
     int eatTime2 = 16;

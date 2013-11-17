@@ -3,6 +3,7 @@ package person;
 import java.awt.Point;
 
 import person.Role.roleState;
+import restaurant.AltWaiter;
 import restaurant.Cashier;
 import restaurant.Cook;
 import restaurant.Host;
@@ -101,6 +102,10 @@ public class Worker extends Person {
 			}
 			if (title == "waiter") {
 				workerRole = new Waiter(title);
+				roles.add(workerRole);
+			}
+			if (title == "altWaiter") {
+				workerRole = new AltWaiter(title);
 				roles.add(workerRole);
 			}
 		}
