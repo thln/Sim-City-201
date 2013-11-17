@@ -34,10 +34,10 @@ public class BankTellerRole extends Role {
 		}
 	}
 
-	public BankTellerRole (String name, Person p1, LoanOfficerRole officer1) {
+	public BankTellerRole (String name, Person p1) {
 		super(p1);
 		this.name = name;
-		myLoaner = officer1;
+		myLoaner = Bank.loanOfficerRole;
 		accounts = myLoaner.getAccounts();
 	}
 	

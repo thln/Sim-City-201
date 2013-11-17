@@ -2,6 +2,7 @@ package bank;
 
 public class Bank {
 
-	public BankGuardRole bankGuardRole;
+	public static BankGuardRole bankGuardRole;
+	public static LoanOfficerRole loanOfficerRole;
 	
 }
