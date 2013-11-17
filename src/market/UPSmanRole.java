@@ -6,7 +6,7 @@ import java.util.List;
 
 import person.Role;
 
-public class UPSman extends Role {
+public class UPSmanRole extends Role {
 
 	//Data
 	private List<MarketOrder> orders = Collections.synchronizedList(new ArrayList<MarketOrder>());

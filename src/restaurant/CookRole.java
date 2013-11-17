@@ -15,7 +15,7 @@ import person.Role;
  * No current Cook Gui
  */
 
-public class Cook extends Role {
+public class CookRole extends Role {
 
 	private String name;
 	private Semaphore atDestination = new Semaphore(0,true);
@@ -40,7 +40,7 @@ public class Cook extends Role {
 		foodMap.put("Salad", new Food("Salad"));
 	}
 
-	public Cook(String name) {
+	public CookRole(String name) {
 		super();
 		this.name = name;
 	}
@@ -58,10 +58,11 @@ public class Cook extends Role {
 	/**
 	 * Messages
 	 */
-	public void msgHeresAnOrder(int table, String choice, Waiter waiter) {
+	public void msgHeresAnOrder(int table, String choice, WaiterRole waiterRole) {
 		synchronized(myOrders){
-			//print("Order received for table " + table);
-			Order order = new Order(table, choice, waiter);
+
+			print("Order received for table " + table);
+			Order order = new Order(table, choice, waiterRole);
 			myOrders.add(order);
 			stateChanged();
 		}
@@ -159,7 +160,7 @@ public class Cook extends Role {
 		if(!isInStock(o.choice)) {
 			checkInventory(o.choice);
 			myOrders.remove(o);
-			o.waiter.msgOrderIsNotAvailable(o.choice, o.tableNumber);
+			o.waiterRole.msgOrderIsNotAvailable(o.choice, o.tableNumber);
 			return;
 		}
 

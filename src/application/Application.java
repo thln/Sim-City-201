@@ -12,10 +12,9 @@ import java.awt.event.*;
 import java.util.*;
 import java.util.List;
 
-public class Application extends JPanel
-{
+public class Application extends JPanel {
 	
-	private Vector<Person> Population = new Vector<Person>();
+	private ArrayList<Person> Population = new ArrayList<Person>();
 	
 	public Application() 
 	{
@@ -102,6 +101,7 @@ public class Application extends JPanel
 			Population.add(newP);
 			newP.startThread();
 		}
+
 	}
 	
 }

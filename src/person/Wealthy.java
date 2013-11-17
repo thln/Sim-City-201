@@ -14,7 +14,7 @@ public class Wealthy extends Person
     
     public Wealthy(String name,  int money)
     {
-		super();
+		super(name);
 		this.money = money;
 		this.name = name;
     }

@@ -7,21 +7,21 @@ import java.util.List;
 import person.Person;
 import person.Role;
 
-public class MarketRunner extends Role {
+public class MarketRunnerRole extends Role {
 	
 	protected String RoleName = "Market Runner";
 
 	//Data
 	//Correspondents
 	Market market;
-	SalesPerson salesPerson;
-	UPSman UPSMan;
+	SalesPersonRole salesPersonRole;
+	UPSmanRole UPSMan;
 	
 	private List<MarketOrder> orders = Collections.synchronizedList(new ArrayList<MarketOrder>());
 
-	MarketRunner(Person person, Market market, SalesPerson salesPerson) {
+	MarketRunnerRole(Person person, Market market, SalesPersonRole salesPersonRole) {
 		this.market = market;
-		this.salesPerson = salesPerson;
+		this.salesPersonRole = salesPersonRole;
 	}
 
 	//Messages
@@ -45,7 +45,7 @@ public class MarketRunner extends Role {
 	public void processOrder(MarketOrder o) {
 		if (o.customer != null) {
 			decreaseInventoryBy(o.item, o.totalItems);
-			salesPerson.msgOrderFulfilled(o);
+			salesPersonRole.msgOrderFulfilled(o);
 			orders.remove(o);
 		}
 		else { //o.customerType is an instance of business

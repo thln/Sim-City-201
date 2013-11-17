@@ -12,7 +12,7 @@ import person.Role;
  * Restaurant Waiter Role
  */
 
-public class Waiter extends Role {
+public class WaiterRole extends Role {
 
 	//Keeps  a list of customers
 	public List<myCustomer> myCustomers = Collections.synchronizedList(new ArrayList<myCustomer>());
@@ -27,9 +27,9 @@ public class Waiter extends Role {
 	Timer breakTimer = new Timer();
 
 	//Agent Correspondents
-	protected Host host;
-	protected Cook cook;
-	protected Cashier cashier;
+	protected HostRole hostRole;
+	protected CookRole cookRole;
+	protected CashierRole cashierRole;
 
 	protected boolean isInLobby = true;
 	protected enum breakStatus{working, askedToGoOnBreak, waitingForReply, receivedReply, onBreak, goOffBreak};
@@ -37,7 +37,7 @@ public class Waiter extends Role {
 
 	protected boolean PermissionToBreak = false;
 
-	public Waiter(String name) 
+	public WaiterRole(String name) 
 	{
 		super();
 
@@ -57,7 +57,7 @@ public class Waiter extends Role {
 	/**
 	 * Messages
 	 */
-	public void msgPleaseSeatCustomer(int tableNumber, RestaurantCustomer customer, int xHome, int yHome) {
+	public void msgPleaseSeatCustomer(int tableNumber, RestaurantCustomerRole customer, int xHome, int yHome) {
 		myCustomers.add(new myCustomer(customer, tableNumber, xHome, yHome));
 		//print(customer.getCustomerName() + " was added to myCustomers list");
 		stateChanged();
@@ -73,7 +73,7 @@ public class Waiter extends Role {
 		stateChanged();
 	}
 
-	public void msgReadyToOrder(RestaurantCustomer customer) {
+	public void msgReadyToOrder(RestaurantCustomerRole customer) {
 		for (myCustomer myCust : myCustomers) {
 			if (myCust.customer == customer) {
 				myCust.setReadyToOrder();
@@ -82,7 +82,7 @@ public class Waiter extends Role {
 		}
 	}
 
-	public void msgHeresMyOrder(RestaurantCustomer customer, String choice) {
+	public void msgHeresMyOrder(RestaurantCustomerRole customer, String choice) {
 		for (myCustomer myCust : myCustomers) {
 			if (myCust.customer == customer) {
 				myCust.setChoice(choice);
@@ -112,7 +112,7 @@ public class Waiter extends Role {
 		stateChanged();
 	}
 
-	public void msgIWantMyCheck(RestaurantCustomer cust) {
+	public void msgIWantMyCheck(RestaurantCustomerRole cust) {
 		for (myCustomer myCust : myCustomers) {
 			if (myCust.customer == cust) {
 				myCust.setWantCheck();
@@ -121,7 +121,7 @@ public class Waiter extends Role {
 		}
 	}
 
-	public void msgLeavingTable(RestaurantCustomer cust) {
+	public void msgLeavingTable(RestaurantCustomerRole cust) {
 		for (myCustomer myCust : myCustomers) {
 			if (myCust.customer == cust) {
 				myCust.setFinished();
@@ -272,7 +272,7 @@ public class Waiter extends Role {
 	}
 
 	// The animation DoXYZ() routines
-	protected void DoSeatCustomer(RestaurantCustomer customer, int table) {
+	protected void DoSeatCustomer(RestaurantCustomerRole customer, int table) {
 		//Notice how we print "customer" directly. It's toString method will do it.
 		//Same with "table"
 		isInLobby = false;
@@ -321,7 +321,7 @@ public class Waiter extends Role {
 		}
 		//waiterGui.DoLeaveCustomer();
 
-		cook.msgHeresAnOrder(MC.tableNumber, MC.choice, this);
+		cookRole.msgHeresAnOrder(MC.tableNumber, MC.choice, this);
 
 	}
 
@@ -364,7 +364,7 @@ public class Waiter extends Role {
 		}
 		//waiterGui.DoLeaveCustomer();
 		readyOrders.get(0).customer.msgHeresYourOrder(readyOrders.get(0).choice);
-		cashier.msgComputeBill(readyOrders.get(0).choice, readyOrders.get(0).tableNumber, this);
+		cashierRole.msgComputeBill(readyOrders.get(0).choice, readyOrders.get(0).tableNumber, this);
 
 		//Changing customer state to "Got Food"
 		for (myCustomer MC : myCustomers) {
@@ -393,13 +393,13 @@ public class Waiter extends Role {
 
 	protected void clearTable(myCustomer MC){
 		//print(MC.customer.getCustomerName() + " is leaving " + MC.tableNumber);
-		host.msgLeavingTable(MC.customer, this);
+		hostRole.msgLeavingTable(MC.customer, this);
 		myCustomers.remove(MC);
 	}
 
 	protected void askToGoOnBreak() {
 		//print("Asking host for break");
-		host.msgMayIGoOnBreak(this);
+		hostRole.msgMayIGoOnBreak(this);
 		state = breakStatus.waitingForReply;
 	}
 
@@ -414,7 +414,7 @@ public class Waiter extends Role {
 	protected void goOffBreak() {
 		isInLobby = false;
 		//waiterGui.DoLeaveCustomer();
-		host.msgOffBreak(this);
+		hostRole.msgOffBreak(this);
 		state = breakStatus.working;
 		//waiterGui.denyBreak();
 		stateChanged();
@@ -440,12 +440,12 @@ public class Waiter extends Role {
 		return waiterGui;
 	}*/
 
-	public void setHost(Host host) {
-		this.host = host;
+	public void setHost(HostRole hostRole) {
+		this.hostRole = hostRole;
 	}
 
-	public void setCook(Cook cook) {
-		this.cook = cook;
+	public void setCook(CookRole cookRole) {
+		this.cookRole = cookRole;
 	}
 	
 	/*
@@ -454,8 +454,8 @@ public class Waiter extends Role {
 	}
 	*/
 
-	public void setCashier(Cashier cashier) {
-		this.cashier = cashier;
+	public void setCashier(CashierRole cashierRole) {
+		this.cashierRole = cashierRole;
 	}
 
 	public boolean isOnBreak() {

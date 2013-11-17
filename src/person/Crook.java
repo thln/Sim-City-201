@@ -10,7 +10,7 @@ public class Crook extends Person {
 
     public Crook(String name,  int money)
     {
-		super();
+		super(name);
 		this.money = money;
 		this.name = name;
     }

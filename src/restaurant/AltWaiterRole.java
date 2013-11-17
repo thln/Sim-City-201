@@ -1,11 +1,11 @@
 package restaurant;
 
-public class AltWaiter extends Waiter 
+public class AltWaiterRole extends WaiterRole 
 {
 	private RevolvingStand theRevolvingStand;
 	protected String RoleName = "Alternative Waiter";
 	
-	public AltWaiter(String name) 
+	public AltWaiterRole(String name) 
 	{
 		super(name);
 		//super(name);
