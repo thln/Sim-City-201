@@ -66,6 +66,7 @@ public abstract class Person extends Agent {
 
 					if (r.getState() == roleState.waitingToExecute) {
 						if (r instanceof BankCustomer) {
+							//make sure bankguard is set
 							if (this instanceof Crook)
 								robBank(r);
 							else
@@ -99,6 +100,7 @@ public abstract class Person extends Agent {
 
 	private void prepareForBank (Role r){
 		//Do Gui method
+			
 		setRoleActive(r);
 		BankCustomer cust1 = (BankCustomer) r;
 		if (money <= moneyMinThreshold){
