@@ -1,9 +1,9 @@
 package restaurant.test.mock;
 
 
-import restaurant.Host;
+import restaurant.HostRole;
 import restaurant.Menu;
-import restaurant.Waiter;
+import restaurant.WaiterRole;
 import restaurant.interfaces.Cashier;
 import restaurant.interfaces.Customer;
 

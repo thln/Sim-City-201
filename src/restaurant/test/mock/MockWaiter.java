@@ -14,7 +14,7 @@ package restaurant.test.mock;
  * @author Kristi Hupka
  *
  */
-public class MockWaiter extends Mock implements Waiter {
+public class MockWaiter extends Mock implements WaiterRole {
 
 	public MockWaiter(String name) {
 		super(name);

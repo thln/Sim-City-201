@@ -2,7 +2,7 @@ package restaurant;
 
 public class myCustomer {
 	
-	RestaurantCustomer customer;
+	RestaurantCustomerRole customer;
 	
 	int tableNumber;
 	double CheckAmount = 0;
@@ -17,7 +17,7 @@ public class myCustomer {
 	 * Constructor for myCustomer class
 	 */
 	
-	myCustomer (RestaurantCustomer customer, int tableNumber, int xHome, int yHome) {
+	myCustomer (RestaurantCustomerRole customer, int tableNumber, int xHome, int yHome) {
 		this.customer = customer;
 		this.tableNumber = tableNumber;
 		this.xHome = xHome;
@@ -28,7 +28,7 @@ public class myCustomer {
 	
 	//Utilities
 	
-	RestaurantCustomer getCustomer() {
+	RestaurantCustomerRole getCustomer() {
 		return customer;
 	}
 

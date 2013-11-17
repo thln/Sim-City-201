@@ -3,44 +3,39 @@ package person;
 import java.awt.Point;
 
 import person.Role.roleState;
-import restaurant.Cashier;
-import restaurant.Cook;
-import restaurant.Host;
-import restaurant.Waiter;
-import market.MarketCustomer;
-import market.SalesPerson;
-import market.UPSman;
+import restaurant.CashierRole;
+import restaurant.CookRole;
+import restaurant.HostRole;
+import restaurant.WaiterRole;
+import market.MarketCustomerRole;
+import market.SalesPersonRole;
+import market.UPSmanRole;
 import bank.BankCustomer;
-import bank.BankGuard;
-import bank.BankTeller;
-import bank.LoanOfficer;
+import bank.BankGuardRole;
+import bank.BankTellerRole;
+import bank.LoanOfficerRole;
 
 public class Worker extends Person {
 	//Data
-	String name;
 	Job myJob = null;
 	int marketTime;
 	int bankTime = 8;
 	int sleepTime = 22;
-	
-	LoanOfficer l1;
 
-	public Worker (String name, int money, String jobTitle, int startT, int lunchT, int endT) 
-	{
-		super();
-		this.money = money;
-		this.name = name;       
+	LoanOfficerRole l1;
+
+	public Worker (String name, int money, String jobTitle, int startT, int lunchT, int endT)  {
+		super(name);
+		this.money = money;       
 		myJob = new Job(jobTitle, startT, lunchT, endT, this);
 		marketTime = myJob.getEndTime();
-			
-			if (name == "Bill") 
-			{
-				 Worker worker2 = new Worker("Ted", 10, "loanOfficer", 2, 0, 0);      
-			        l1 = (LoanOfficer) worker2.workerRole;
-			        worker2.startThread();
-			        worker2.msgNewTime(2);
-			}
-	
+
+		if (name == "Bill") {
+			Worker worker2 = new Worker("Ted", 10, "loanOfficer", 2, 0, 0);      
+			l1 = (LoanOfficerRole) worker2.workerRole;
+			worker2.startThread();
+			worker2.msgNewTime(2);
+		}
 	}
 
 	class Job {
@@ -60,15 +55,15 @@ public class Worker extends Person {
 			this.title = title;
 
 			if (title == "bankTeller") {
-				workerRole = new BankTeller(name, myself, l1);
+				workerRole = new BankTellerRole(name, myself, l1);
 				roles.add(workerRole);
 			}
 			if (title == "loanOfficer") {
-				workerRole = new LoanOfficer(name, myself);
+				workerRole = new LoanOfficerRole(name, myself);
 				roles.add(workerRole);
 			}
 			if (title == "bankGuard") {
-				workerRole = new BankGuard(name, myself);
+				workerRole = new BankGuardRole(name, myself);
 				roles.add(workerRole);
 			}
 			if (title == "marketRunner") {
@@ -76,31 +71,31 @@ public class Worker extends Person {
 				roles.add(workerRole);
 			}
 			if (title == "marketSales") {
-				workerRole = new SalesPerson(myself);
+				workerRole = new SalesPersonRole(myself);
 				roles.add(workerRole);
 			}
 			if (title == "UPSman") {
-				workerRole = new UPSman();
+				workerRole = new UPSmanRole();
 				roles.add(workerRole);
 			}
 			if (title == "maintenance") {
-			//	workerRole = new Role(maintenanceRole));
+				//	workerRole = new Role(maintenanceRole));
 				roles.add(workerRole);
 			}
 			if (title == "cashier") {
-				workerRole = new Cashier(title);
+				workerRole = new CashierRole(title);
 				roles.add(workerRole);
 			}
 			if (title == "host") {
-				workerRole = new Host(title);
+				workerRole = new HostRole(title);
 				roles.add(workerRole);
 			}
 			if (title == "cook") {
-				workerRole = new Cook(title);		//need to input name not title
+				workerRole = new CookRole(title);		//need to input name not title
 				roles.add(workerRole);
 			}
 			if (title == "waiter") {
-				workerRole = new Waiter(title);
+				workerRole = new WaiterRole(title);
 				roles.add(workerRole);
 			}
 		}
@@ -170,13 +165,13 @@ public class Worker extends Person {
 
 		if (newTime == marketTime && (!hasFoodInFridge || money > carCost)) {	//everyone with more than 1000 dollars wants to buy a car
 			for (Role role1: roles) {
-				if (role1 instanceof MarketCustomer) {
+				if (role1 instanceof MarketCustomerRole) {
 					role1.setState(roleState.waitingToExecute);
 					stateChanged();
 					return;
 				}
 			}
-				
+
 		}
 
 		if (newTime == myJob.endTime) {
@@ -189,7 +184,7 @@ public class Worker extends Person {
 			//GoToSleep();
 			stateChanged();
 		}  
-		
+
 		newTime = -5;
 	}
 }

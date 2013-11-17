@@ -5,13 +5,13 @@ import java.util.*;
 import market.MarketOrder.orderState;
 import person.Person;
 import person.Role;
-import restaurant.Cook;
+import restaurant.CookRole;
 
-public class SalesPerson extends Role {
+public class SalesPersonRole extends Role {
 	
 	protected String RoleName = "Sales Person";
 
-	public SalesPerson(Person person) {
+	public SalesPersonRole(Person person) {
 		super(person);
 	}
 
@@ -44,13 +44,13 @@ public class SalesPerson extends Role {
 
 
 	//Messages
-	public void msgIWantProducts(MarketCustomer customer, String item, int numWanted) {
+	public void msgIWantProducts(MarketCustomerRole customer, String item, int numWanted) {
 		orders.add(new MarketOrder(customer, item, numWanted));
 		stateChanged();
 	}
 
-	public void msgIWantProducts(Cook cook, String item, int numWanted, double payment) {
-		orders.add(new MarketOrder(cook, item, numWanted));
+	public void msgIWantProducts(CookRole cookRole, String item, int numWanted, double payment) {
+		orders.add(new MarketOrder(cookRole, item, numWanted));
 		money += payment;
 		stateChanged();
 	}
@@ -65,7 +65,7 @@ public class SalesPerson extends Role {
 		}
 	}
 
-	public void msgPayment(MarketCustomer customer, double payment) {
+	public void msgPayment(MarketCustomerRole customer, double payment) {
 		money += payment;
 		for (MarketOrder o : orders) {
 			if (o.customer.equals(customer)) {
