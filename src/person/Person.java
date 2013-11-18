@@ -6,6 +6,7 @@ import java.util.concurrent.Semaphore;
 import bank.Bank;
 import bank.BankCustomerRole;
 import bank.BankGuardRole;
+import bank.BankTellerRole;
 import bank.interfaces.BankCustomer;
 import market.MarketCustomerRole;
 import person.Role;
@@ -44,25 +45,16 @@ public abstract class Person extends Agent {
 
 	//Time Related
 	public int sleepTime = 22;
-<<<<<<< HEAD
-	String name;
 	protected int newTime;
-	PhoneBook myPhoneBook;
-	
-	class PhoneBook {
-		Host host1;
-		public Role bankGuard;
-	}
-=======
-	protected int newTime;
->>>>>>> master
+
+
 
 
 	Person(String name) {
 		this.name = name;
-	//	roles.add(new RestaurantCustomerRole(getName(), this));
-	//	roles.add(new MarketCustomerRole(this));
-		roles.add(new BankCustomerRole(getName(), this, Bank.bankGuardRole, 0, 0, 0, 0));
+		//	roles.add(new RestaurantCustomerRole(getName(), this));
+		//	roles.add(new MarketCustomerRole(this));
+		roles.add(new BankCustomerRole(getName(), this, Bank.bankGuardRole, 100, 20, 0, 10));
 		newTime = -5;
 		//constructors should be changed so they match
 	}
@@ -79,25 +71,25 @@ public abstract class Person extends Agent {
 		synchronized (roles) {
 			if (!roles.isEmpty()) {
 				for (Role r : roles) {
-					
+
 					if (newTime >= 0) {
 						updateTime(newTime);
-						return false;
 					}
-					
+
 
 					if (r.getState() == RoleState.active) {
-						r.pickAndExecuteAnAction();
-						return true;
+						return r.pickAndExecuteAnAction();
 					}
 
 					if (r.getState() == RoleState.waitingToExecute) {
 
-						
-							//make sure bankguard is set
+						if (r.equals(workerRole)) {
+							Do("Going to work");
+							prepareForWork(r);
+						}
 
 						if (r instanceof BankCustomerRole) {
-
+							Do("Going to bank");
 							if (this instanceof Crook)
 								robBank(r);
 							else
@@ -109,9 +101,7 @@ public abstract class Person extends Agent {
 						if (r instanceof RestaurantCustomerRole) {
 							prepareForRestaurant(r);
 						}
-						if (r.equals(this.getWorkerRole())) {
-							prepareForWork(r);
-						}
+
 						return true;
 					}
 				}
@@ -139,21 +129,22 @@ public abstract class Person extends Agent {
 			e.printStackTrace();
 
 		}
-		*/
+		 */
 		//Once semaphore is released from GUI
 
 		BankCustomerRole cust1 = (BankCustomerRole) r;
-		if (money <= moneyMinThreshold){
-			cust1.setDesiredCash(100);
-			cust1.setDesire("withdraw");
-		}
-		if (money >= moneyMaxThreshold){
-			cust1.setDesire("deposit");
+		if (accountNum != 0) {
+			if (money <= moneyMinThreshold){
+				cust1.setDesiredCash(100);
+				cust1.setDesire("withdraw");
+			}
+			if (money >= moneyMaxThreshold){
+				cust1.setDesire("deposit");
+			}
 		}
 		//(String name, Person p1, BankGuard guard1, int desiredCash, int deposit, int accNum, int cash)
 		//if bank customer role hasn't already been instantiated, instatiate it
 		//phonebook.bank.bankGuardRole.msgArrivedAtBank(cust1);
-		Bank.bankGuardRole.msgArrivedAtBank(cust1);
 		setRoleActive(r);
 		stateChanged();
 	}
@@ -243,6 +234,7 @@ public abstract class Person extends Agent {
 
 	private void prepareForWork(Role r) {
 		//GUI call to go to business
+		/*
 		try {
 			atDestination.acquire();
 		} catch (InterruptedException e) {
@@ -250,15 +242,17 @@ public abstract class Person extends Agent {
 			e.printStackTrace();
 
 		}
+		 */
 		//Once semaphore is released from GUI
 
+		if (r instanceof BankTellerRole)
+			Bank.bankGuardRole.msgTellerCameToWork((BankTellerRole) r);
 		setRoleActive(r);
 		stateChanged();
 	}
 
 	public void setRoleActive(Role role) {
 		role.setState(RoleState.active);
-
 	}
 
 	public void setRoleInactive(Role role) {

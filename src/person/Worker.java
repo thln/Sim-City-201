@@ -22,7 +22,6 @@ import bank.LoanOfficerRole;
 
 public class Worker extends Person {
 	//Data
-	Role workerRole;
 	String name;
 	Job myJob = null;
 	int marketTime;
@@ -30,7 +29,7 @@ public class Worker extends Person {
 	int sleepTime = 2200;
 	int moneyMinThreshold = 20;
 	int moneyMaxThreshold = 200;
-	
+
 	public Worker (String name, int money, String jobTitle, int startT, int lunchT, int endT) {
 		super(name);
 		this.money = money;
@@ -56,21 +55,21 @@ public class Worker extends Person {
 			this.title = title;
 
 			if (title == "bankTeller") {
-				workerRole = new BankTellerRole(name, myself);
+				workerRole = new BankTellerRole(name, myself, title);
 				roles.add(workerRole);
 			}
 			if (title == "loanOfficer") {
-				workerRole = new LoanOfficerRole(name, myself);
+				workerRole = new LoanOfficerRole(name, myself, title);
 				Bank.loanOfficerRole = (LoanOfficerRole) workerRole;
 				roles.add(workerRole);			
 			}
 			if (title == "bankGuard") {
-				workerRole = new BankGuardRole(name, myself);
+				workerRole = new BankGuardRole(name, myself, title);
 				Bank.bankGuardRole = (BankGuardRole) workerRole;
 				roles.add(workerRole);			
 			}
 			if (title == "marketRunner") {
-			//	workerRole = new MarketRunnerRole(myself,title);
+				//	workerRole = new MarketRunnerRole(myself,title);
 				roles.add(workerRole);
 			}
 			if (title == "marketSales") {
@@ -146,17 +145,18 @@ public class Worker extends Person {
 
 	public void updateTime(int newTime) {
 		if ((newTime == myJob.getBankTime()) && (money >= moneyMaxThreshold) || (money <= moneyMinThreshold)) {
-			System.out.println("Becoming customer");
 
 			for (Role r: roles) {
-				if (r instanceof BankCustomerRole)
+				if (r instanceof BankCustomerRole) {
 					r.setState(RoleState.waitingToExecute);
-			}
 
+				}
+			}
+			stateChanged();
 		}
 		if (newTime == myJob.startTime) {
 			workerRole.setState(RoleState.waitingToExecute);
-			System.out.println("Starting Job");
+			System.out.println("Starting Job " + workerRole.getRoleName());
 			stateChanged();
 		}
 		if (newTime == myJob.lunchTime) {
@@ -170,8 +170,8 @@ public class Worker extends Person {
 		}
 
 		if (newTime == marketTime && !hasFoodInFridge) {
-		//	for (MarketCustomer role1: roles)
-				//role1.setState(roleState.waitingToExecute);
+			//	for (MarketCustomer role1: roles)
+			//role1.setState(roleState.waitingToExecute);
 			stateChanged();
 		}
 
@@ -185,7 +185,7 @@ public class Worker extends Person {
 			//GoToSleep();
 			stateChanged();
 		}  
-		
+
 		newTime = -30;
 	}
 }

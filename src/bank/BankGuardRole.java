@@ -25,12 +25,14 @@ public class BankGuardRole extends Role {
 		
 		MyTeller (BankTellerRole t1) {
 			tell1 = t1;
+			state = TellerState.available;
 		}
 	}
 	
-	public BankGuardRole (String name, Person p1) {
+	public BankGuardRole (String name, Person p1, String roleName) {
 		super(p1);
 		this.name = name;
+		this.RoleName = roleName;
 		customers = Collections.synchronizedList(new ArrayList<BankCustomerRole>());
 		robbers = Collections.synchronizedList(new ArrayList<BankCustomerRole>());
 		tellers = Collections.synchronizedList(new ArrayList<MyTeller>());
@@ -39,7 +41,20 @@ public class BankGuardRole extends Role {
 	//MESSAGES
 
 	public void msgTellerCameToWork (BankTellerRole t1) {
+		print("Adding teller to list");
 		tellers.add(new MyTeller(t1));
+	}
+	
+	public void msgTellerBecameAvailable (BankTellerRole t1){
+		print("Teller became available");
+		for (MyTeller teller: tellers) {
+			if (teller.tell1.equals(t1)) {
+				teller.state = TellerState.available;
+				stateChanged();
+				return;
+			}
+		}
+			
 	}
 	
 	public void msgRobbingBank(BankCustomerRole cust1) {
@@ -48,7 +63,7 @@ public class BankGuardRole extends Role {
 	}
 
 	public void msgArrivedAtBank(BankCustomerRole c1) {
-		System.out.println("New customer arrived");
+		print("New customer arrived");
 		customers.add(c1);
 		stateChanged();
 	}

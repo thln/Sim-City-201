@@ -32,7 +32,7 @@ public class BankCustomerRole extends Role {
 		depositAmount = deposit;
 		accountNum = accNum;
 		this.cash = cash;
-		desire = BankCustomerDesire.withdraw;
+		desire = BankCustomerDesire.openAccount;
 		state = CustomerState.atBank;
 		myGuard = guard1;
 	}
@@ -53,7 +53,9 @@ public class BankCustomerRole extends Role {
 	}
 
 	void msgHereIsNewAccount (int accountNum) {
+		print("Received new bank account");
 		this.accountNum = accountNum;
+		desire = BankCustomerDesire.deposit;
 		state = CustomerState.ready;
 		stateChanged();
 	}
@@ -67,7 +69,10 @@ public class BankCustomerRole extends Role {
 	}
 
 	void msgDepositReceived() {
+		desire = BankCustomerDesire.leaveBank;
 		state = CustomerState.ready;
+		print("ready to leave bank");
+		stateChanged();
 	}
 
 	void msgYourLoanWasApproved() {
@@ -115,9 +120,9 @@ public class BankCustomerRole extends Role {
 	if (desire == BankCustomerDesire.openAccount && state == CustomerState.ready)
 		OpenAccount();
 
-	if (desire == BankCustomerDesire.closeAccount && state == CustomerState.ready)
-		CloseAccount();
-
+	if (desire == BankCustomerDesire.leaveBank && state == CustomerState.ready)
+		LeaveBank();
+	
 	if (desire == BankCustomerDesire.robBank && state == CustomerState.ready)
 		RobBank();
 
@@ -127,13 +132,12 @@ public class BankCustomerRole extends Role {
 	//Actions
 
 	void MessageGuard () {
-		System.out.println("Arrived at bank");
+		print("Arrived at bank");
 		myGuard.msgArrivedAtBank(this);
 		state = CustomerState.waiting;
 	}
 	
 	void WithdrawCash() {
-		System.out.println("Received withdrawal");
 		myTeller.msgINeedMoney(desiredCashAmount,accountNum);
 		state = CustomerState.waiting;
 	}
@@ -159,11 +163,12 @@ public class BankCustomerRole extends Role {
 		myTeller.msgWantNewAccount(this);
 		state = CustomerState.waiting;
 	}
-
-	void CloseAccount() {
-		myTeller.msgWantToCloseAccount(accountNum);
-		accountNum = 0;
+	
+	void LeaveBank () {
+		desire = BankCustomerDesire.none;
+		myTeller.msgLeavingBank(accountNum);
 		state = CustomerState.waiting;
+		person.setRoleInactive(this);
 	}
 
 	void RobBank() {
