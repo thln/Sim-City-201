@@ -43,14 +43,15 @@ public class AnimationPanel extends JPanel implements MouseListener {
     	
     	
     	//stacking the building animations
-    	ImageIcon icon = new ImageIcon("chef.png",
-                "a pretty but meaningless splat");
+    	ImageIcon icon = new ImageIcon("bank.jpg", "bank icon");
+    	ImageIcon restaurant = new ImageIcon("restaurant.jpg", "restaurant icon");
 
     	//initializing some stubs to test the stacking
     	for(int i=0; i < 5; i++) {
-    		CityPanel building = new CityPanel();
+    		BuildingPanel building = new BuildingPanel("Restaurant " + (i+1));
     		buildingPanels.add(building);
-    		JLabel label = new JLabel("Label " + (i+1), icon, JLabel.TRAILING);
+    		//JLabel label = new JLabel("Label " + (i+1), restaurant, JLabel.TRAILING);
+    		JLabel label = new JLabel(restaurant);
     		//imglabels.add(label);
     		imglabels.add(label);
     		buildingMap.put(label, building);
@@ -81,14 +82,15 @@ public class AnimationPanel extends JPanel implements MouseListener {
 		//If any of the icons are clicked, it will find and display its corresponding animation panel
 		for(int i=0; i<imglabels.size();i++) {
 			if(e.getSource() == imglabels.get(i)) {
-				final String name = imglabels.get(i).getText();
-				System.out.println(name + " clicked " + buildingMap.get(imglabels.get(i)));
+				final String name = imglabels.get(i).getIcon().toString();
+				System.out.println(name + " showed " + buildingMap.get(imglabels.get(i)));
 				clearScreen();
 				buildingMap.get(imglabels.get(i)).setVisible(true);
 			}
 		}
 		if(e.getSource() == cityPanel) {
-			System.out.println("Panel Clicked!!");
+			//System.out.println("Screen Cleared");
+			clearScreen();
 		}
 	}
 	
