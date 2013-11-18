@@ -146,7 +146,7 @@ public class Worker extends Person {
 	public void updateTime(int newTime) {
 		if ((newTime == myJob.getBankTime()) && (money >= moneyMaxThreshold) || (money <= moneyMinThreshold)) {
 			System.out.println("Becoming customer");
-			Role cust1 = new BankCustomer("Josh", this, myPhoneBook.bankGuard, 40, 0, 0, 10);
+			//Role cust1 = new BankCustomer("Josh", this, myPhoneBook.bankGuard, 40, 0, 0, 10);
 			roles.add(cust1);
 			//	BankCustomer.state = roleState.waitingToExecute;      
 		}
