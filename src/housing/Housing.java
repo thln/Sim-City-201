@@ -11,7 +11,7 @@ public class Housing
 	int xCordinate;
 	int yCordinate;
 	
-	Housing(Person newP, int Address, String type)
+	public Housing(Person newP, int Address, String type)
 	{
 		occupant = newP;
 		housingNumber = Address;
