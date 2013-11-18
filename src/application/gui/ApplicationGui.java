@@ -2,9 +2,9 @@ package application.gui;
 
 import javax.swing.*;
 
-import bank.Bank;
-import bank.BankGuardRole;
-import bank.LoanOfficerRole;
+//import bank.Bank;
+//import bank.BankGuardRole;
+//import bank.LoanOfficerRole;
 import person.Person;
 import person.Worker;
 
@@ -68,7 +68,7 @@ public class ApplicationGui extends JFrame {
         gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         
-      
+      /*
     	Worker loanOffice = new Worker("Officer", 100, "loanOfficer", 8, 0, 10);  	
 		Worker bankGuard = new Worker("Guard", 100, "bankGuard", 8, 0 , 10);
 		
@@ -91,6 +91,7 @@ public class ApplicationGui extends JFrame {
 		bankGuard.updateTime(8);
 		loanOffice.updateTime(8);
 		bankCust.updateTime(8);
+		*/
        
     }
 	
