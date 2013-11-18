@@ -51,7 +51,7 @@ public abstract class Person extends Agent {
 		this.name = name;
 	//	roles.add(new RestaurantCustomerRole(getName(), this));
 	//	roles.add(new MarketCustomerRole(this));
-	//	roles.add(new BankCustomerRole(getName(), this, Bank.bankGuardRole, 0, 0, 0, 0));
+		roles.add(new BankCustomerRole(getName(), this, Bank.bankGuardRole, 0, 0, 0, 0));
 		newTime = -5;
 		//constructors should be changed so they match
 	}

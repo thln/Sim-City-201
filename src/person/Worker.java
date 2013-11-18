@@ -26,8 +26,8 @@ public class Worker extends Person {
 	String name;
 	Job myJob = null;
 	int marketTime;
-	int bankTime = 8;
-	int sleepTime = 22;
+	int bankTime = 900;
+	int sleepTime = 2200;
 	int moneyMinThreshold = 20;
 	int moneyMaxThreshold = 200;
 	
@@ -147,10 +147,10 @@ public class Worker extends Person {
 	public void updateTime(int newTime) {
 		if ((newTime == myJob.getBankTime()) && (money >= moneyMaxThreshold) || (money <= moneyMinThreshold)) {
 			System.out.println("Becoming customer");
-			//BankCustomerRole cust1 = new BankCustomerRole(String name, Person p1, BankGuard guard1, int desiredCash, int deposit, int accNum, int cash)
-			//Role cust1 = new BankCustomer("Josh", this, Bank.bankGuard, 40, 0, 0, 10);
-			//roles.add(cust1);
-			//	BankCustomer.state = roleState.waitingToExecute;      
+			for (Role r: roles) {
+				if (r instanceof BankCustomerRole)
+					r.setState(RoleState.waitingToExecute);
+			}
 		}
 		if (newTime == myJob.startTime) {
 			workerRole.setState(RoleState.waitingToExecute);
