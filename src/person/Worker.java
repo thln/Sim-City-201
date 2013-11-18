@@ -1,15 +1,20 @@
 package person;
 
+import housing.MaintenanceWorker;
+
 import java.awt.Point;
 
-import person.Role.roleState;
+import person.Role.RoleState;
+import restaurant.AltWaiterRole;
 import restaurant.CashierRole;
 import restaurant.CookRole;
 import restaurant.HostRole;
 import restaurant.WaiterRole;
 import market.MarketCustomerRole;
+import market.MarketRunnerRole;
 import market.SalesPersonRole;
 import market.UPSmanRole;
+import bank.Bank;
 import bank.BankCustomerRole;
 import bank.BankGuardRole;
 import bank.BankTellerRole;
@@ -56,26 +61,28 @@ public class Worker extends Person {
 			}
 			if (title == "loanOfficer") {
 				workerRole = new LoanOfficerRole(name, myself);
-				roles.add(workerRole);
+				Bank.loanOfficerRole = (LoanOfficerRole) workerRole;
+				roles.add(workerRole);			
 			}
 			if (title == "bankGuard") {
 				workerRole = new BankGuardRole(name, myself);
-				roles.add(workerRole);
+				Bank.bankGuardRole = (BankGuardRole) workerRole;
+				roles.add(workerRole);			
 			}
 			if (title == "marketRunner") {
-				//workerRole = new Role(marketRunnerRole));
+			//	workerRole = new MarketRunnerRole(myself,title);
 				roles.add(workerRole);
 			}
 			if (title == "marketSales") {
-				workerRole = new SalesPersonRole(myself);
+				workerRole = new SalesPersonRole(myself, title);
 				roles.add(workerRole);
 			}
 			if (title == "UPSman") {
-				workerRole = new UPSmanRole();
+				workerRole = new UPSmanRole(myself, title);
 				roles.add(workerRole);
 			}
 			if (title == "maintenance") {
-			//	workerRole = new Role(maintenanceRole));
+				workerRole = new MaintenanceWorker(myself, title);
 				roles.add(workerRole);
 			}
 			if (title == "cashier") {
@@ -92,6 +99,10 @@ public class Worker extends Person {
 			}
 			if (title == "waiter") {
 				workerRole = new WaiterRole(title);
+				roles.add(workerRole);
+			}
+			if (title == "altWaiter") {
+				workerRole = new AltWaiterRole(title);
 				roles.add(workerRole);
 			}
 		}
@@ -142,7 +153,7 @@ public class Worker extends Person {
 			//	BankCustomer.state = roleState.waitingToExecute;      
 		}
 		if (newTime == myJob.startTime) {
-			workerRole.setState(roleState.waitingToExecute);
+			workerRole.setState(RoleState.waitingToExecute);
 			System.out.println("Starting Job");
 			stateChanged();
 		}

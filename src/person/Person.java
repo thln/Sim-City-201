@@ -9,7 +9,7 @@ import bank.BankGuardRole;
 import bank.interfaces.BankCustomer;
 import market.MarketCustomerRole;
 import person.Role;
-import person.Role.roleState;
+import person.Role.RoleState;
 import restaurant.HostRole;
 import restaurant.RestaurantCustomerRole;
 import agent.Agent;
@@ -49,9 +49,10 @@ public abstract class Person extends Agent {
 
 	Person(String name) {
 		this.name = name;
-		roles.add(new RestaurantCustomerRole(getName(), this));
-		roles.add(new MarketCustomerRole(this));
-		roles.add(new BankCustomerRole(getName(), this, Bank.bankGuardRole, 0, 0, 0, 0));
+	//	roles.add(new RestaurantCustomerRole(getName(), this));
+	//	roles.add(new MarketCustomerRole(this));
+	//	roles.add(new BankCustomerRole(getName(), this, Bank.bankGuardRole, 0, 0, 0, 0));
+		newTime = -5;
 		//constructors should be changed so they match
 	}
 
@@ -67,19 +68,19 @@ public abstract class Person extends Agent {
 		synchronized (roles) {
 			if (!roles.isEmpty()) {
 				for (Role r : roles) {
-
+					
 					if (newTime >= 0) {
 						updateTime(newTime);
 						return false;
 					}
 					
 
-					if (r.getState() == roleState.active) {
+					if (r.getState() == RoleState.active) {
 						r.pickAndExecuteAnAction();
 						return true;
 					}
 
-					if (r.getState() == roleState.waitingToExecute) {
+					if (r.getState() == RoleState.waitingToExecute) {
 
 						
 							//make sure bankguard is set
@@ -245,12 +246,12 @@ public abstract class Person extends Agent {
 	}
 
 	public void setRoleActive(Role role) {
-		role.setState(roleState.active);
+		role.setState(RoleState.active);
 
 	}
 
 	public void setRoleInactive(Role role) {
-		role.setState(roleState.inActive);
+		role.setState(RoleState.inActive);
 	}
 
 	public void goToSleep() {

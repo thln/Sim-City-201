@@ -8,14 +8,16 @@ public abstract class Role {
 	
 	protected String RoleName = "";
 	
-	enum roleState {active, inActive, waitingToExecute}
-	private roleState state = roleState.inActive;
+	enum RoleState {active, inActive, waitingToExecute}
+	private RoleState state = RoleState.inActive;
 	
 	protected Role() {
+		state = RoleState.inActive;
 	}
 	
 	protected Role(Person person) {
 		this.person = person;
+		state = RoleState.inActive;
 	}
 	
 	protected void stateChanged() {
@@ -25,17 +27,12 @@ public abstract class Role {
     }
 
     protected abstract boolean pickAndExecuteAnAction();
-    
-    protected void inactivateRole() {
-    	setState(roleState.inActive);
-    	stateChanged();
-    }
-
-	public roleState getState() {
+ 
+	public RoleState getState() {
 		return state;
 	}
 
-	public void setState(roleState state) {
+	public void setState(RoleState state) {
 		this.state = state;
 	}
 	

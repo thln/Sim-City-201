@@ -12,6 +12,7 @@ public class AltWaiterRole extends WaiterRole
 		//Waiter(name);
 
 		this.name = name;
+		this.RoleName = name;
 	}
 	
 	protected void placeOrder(myCustomer MC) {

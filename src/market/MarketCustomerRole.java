@@ -11,15 +11,17 @@ public class MarketCustomerRole extends Role {
 	double money;
 	double bill;
 	String item;
-
+	String name;
+	
 	//Agent correspondents
 	SalesPersonRole salesPerson;
 
 	//	enum CustomerDesire {none, buyCar, buyFood};
 	//	CustomerDesire desire = CustomerDesire.none;
 
-	public MarketCustomerRole(Person person) {
+	public MarketCustomerRole(Person person, String name) {
 		super(person);
+		this.name = name;
 	}
 
 	//Messages

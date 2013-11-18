@@ -10,9 +10,11 @@ import restaurant.CookRole;
 public class SalesPersonRole extends Role {
 	
 	protected String RoleName = "Sales Person";
+	String name;
 
-	public SalesPersonRole(Person person) {
+	public SalesPersonRole(Person person, String name) {
 		super(person);
+		this.name = name;
 	}
 
 	//Data

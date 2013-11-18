@@ -43,12 +43,12 @@ public class AnimationPanel extends JPanel implements MouseListener {
     	
     	
     	//stacking the building animations
-<<<<<<< HEAD
+
     	ImageIcon icon = new ImageIcon("Team Project/docs/bank.jpg",
                 "a pretty but meaningless splat");
-=======
-    	ImageIcon icon = new ImageIcon("bank.jpg", "bank icon");
->>>>>>> b17695c4b5ebe6661a73516a6c40e5670e1914a2
+
+    	ImageIcon icon2 = new ImageIcon("bank.jpg", "bank icon");
+
 
     	//initializing some stubs to test the stacking
     	for(int i=0; i < 5; i++) {

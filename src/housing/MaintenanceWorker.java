@@ -9,6 +9,9 @@ public class MaintenanceWorker extends Role
 	//Need to talk more about housing. 
 	//Dynamic number of housing? Cant go through X a day
 	//Or automatically X number of housing every day?
+	
+	String name; 
+	
 	class WorkOrder 
 	{
 		int HomeNumber;
@@ -18,9 +21,11 @@ public class MaintenanceWorker extends Role
 	};
 		//List  WorkOrders;
 	
-	protected MaintenanceWorker(Person person) 
+	public MaintenanceWorker(Person person, String name) 
 	{
 		super(person);
+		this.RoleName = name;
+		this.name = name;
 	}
 	
 	protected boolean pickAndExecuteAnAction() 

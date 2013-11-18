@@ -40,8 +40,8 @@ public class WaiterRole extends Role {
 	public WaiterRole(String name) 
 	{
 		super();
-
 		this.name = name;
+		this.RoleName = name;
 	}
 
 	public String getMaitreDName() {
