@@ -3,6 +3,7 @@ package restaurant;
 
 import java.util.*;
 
+import market.SalesPersonRole;
 import person.Role;
 
 
@@ -10,9 +11,10 @@ import person.Role;
  * Restaurant Cashier Role
  */
 
-public class Cashier extends Role {
+public class CashierRole extends Role {
 
 	private String name;
+	protected String RoleName = "Cashier";
 	//private Semaphore atTable = new Semaphore(0,true);
 
 	//Keeps a list of checks
@@ -28,7 +30,7 @@ public class Cashier extends Role {
 		foodPrices.put("Salad", 5.99);
 	}
 
-	public Cashier(String name) {
+	public CashierRole(String name) {
 		super();
 
 		this.name = name;
@@ -44,28 +46,28 @@ public class Cashier extends Role {
 	/**
 	 * Messages
 	 */
-	public void msgComputeBill(String choice, int tableNumber, Waiter waiter) {
+	public void msgComputeBill(String choice, int tableNumber, WaiterRole waiterRole) {
 		synchronized(Checks){
-			print("Calculating bill for table " + tableNumber);
-			log.add(new LoggedEvent("Calculating bill for table"));
-			Checks.add(new Check(choice, tableNumber, waiter));
+			//print("Calculating bill for table " + tableNumber);
+			//log.add(new LoggedEvent("Calculating bill for table"));
+			Checks.add(new Check(choice, tableNumber, waiterRole));
 			stateChanged();
 		}
 	}
 
-	public void msgPayment(String choice, double amount, Customer customer) {
+	public void msgPayment(String choice, double amount, RestaurantCustomerRole customer) {
 		synchronized(Payments){
-			print("Received payment from " + customer.getCustomerName());
-			log.add(new LoggedEvent("Received payment from " + customer.getCustomerName()));
+			//print("Received payment from " + customer.getCustomerName());
+			//log.add(new LoggedEvent("Received payment from " + customer.getCustomerName()));
 			Payments.add(new Payment(choice, amount, customer));
 			stateChanged();
 		}
 	}
 
-	public void msgOrderFulfilled(String choice, int amount, Market market) {
+	public void msgOrderFulfilled(String choice, int amount, SalesPersonRole market) {
 		synchronized(OrdersToPay){
 			OrdersToPay.add(new Order(choice, amount, market));
-			log.add(new LoggedEvent("Received msgOrderFulfilled from " + market.getName()));
+			//log.add(new LoggedEvent("Received msgOrderFulfilled from " + market.getName()));
 			stateChanged();
 		}
 	}
@@ -116,7 +118,7 @@ public class Cashier extends Role {
 
 	public void ComputeBill() {
 		double checkAmount = foodPrices.get(Checks.get(0).choice);
-		Checks.get(0).waiter.msgHereIsCheck(Checks.get(0).tableNumber, checkAmount);
+		Checks.get(0).waiterRole.msgHereIsCheck(Checks.get(0).tableNumber, checkAmount);
 		Checks.remove(0);
 	}
 
@@ -131,7 +133,7 @@ public class Cashier extends Role {
 		change = Payments.get(0).payment - foodPrices.get(Payments.get(0).choice);
 		change = Math.round(change * 100.0) / 100.0;
 		Payments.get(0).customer.msgHeresYourChange(change);
-		print("Gave change to customer " + Payments.get(0).customer.getName());
+		//print("Gave change to customer " + Payments.get(0).customer.getName());
 		Payments.remove(0);
 	}
 	
@@ -139,8 +141,8 @@ public class Cashier extends Role {
 		double payment;
 		payment = OrdersToPay.get(0).amountOrdered * foodPrices.get(OrdersToPay.get(0).choice);
 		payment = Math.round(payment * 100.0) / 100.0;
-		print("Giving Market " + OrdersToPay.get(0).market.getName() + " for " + OrdersToPay.get(0).amountOrdered + " " + OrdersToPay.get(0).choice + "(s) x $" + foodPrices.get(OrdersToPay.get(0).choice) + " = $" + payment);
-		OrdersToPay.get(0).market.msgPayment(payment, this);
+		//print("Giving Market " + OrdersToPay.get(0).market + " for " + OrdersToPay.get(0).amountOrdered + " " + OrdersToPay.get(0).choice + "(s) x $" + foodPrices.get(OrdersToPay.get(0).choice) + " = $" + payment);
+		//OrdersToPay.get(0).market.msgPayment(this, payment); How to make cashier a MarketCustomer
 		OrdersToPay.remove(0);
 	}
 
@@ -150,12 +152,12 @@ public class Cashier extends Role {
 	public class Check {
 		String choice;
 		int tableNumber;
-		Waiter waiter;
+		WaiterRole waiterRole;
 
-		Check(String choice, int tableNumber, Waiter waiter) {
+		Check(String choice, int tableNumber, WaiterRole waiterRole) {
 			this.choice = choice;
 			this.tableNumber = tableNumber;
-			this.waiter = waiter;
+			this.waiterRole = waiterRole;
 		}
 	}
 
@@ -163,9 +165,9 @@ public class Cashier extends Role {
 	public class Payment {
 		public String choice;
 		public double payment;
-		public Customer customer;
+		public RestaurantCustomerRole customer;
 
-		Payment(String choice, double payment, Customer customer) {
+		Payment(String choice, double payment, RestaurantCustomerRole customer) {
 			this.choice = choice;
 			this.payment = payment;
 			this.customer = customer;
@@ -176,9 +178,9 @@ public class Cashier extends Role {
 	public class Order {
 		String choice;
 		int amountOrdered;
-		Market market;
+		SalesPersonRole market; //The market
 
-		Order(String choice, int amountOrdered, Market market) {
+		Order(String choice, int amountOrdered, SalesPersonRole market) {
 			this.choice = choice;
 			this.amountOrdered = amountOrdered;
 			this.market = market;

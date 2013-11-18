@@ -1,17 +1,23 @@
 package person;
 
+import agent.StringUtil;
+
 public abstract class Role {
 
 	protected Person person;
 	
-	enum roleState {active, inActive, waitingToExecute}
-	private roleState state = roleState.inActive;
+	protected String RoleName = "";
+	
+	enum RoleState {active, inActive, waitingToExecute}
+	private RoleState state = RoleState.inActive;
 	
 	protected Role() {
+		state = RoleState.inActive;
 	}
 	
 	protected Role(Person person) {
 		this.person = person;
+		state = RoleState.inActive;
 	}
 	
 	protected void stateChanged() {
@@ -21,17 +27,40 @@ public abstract class Role {
     }
 
     protected abstract boolean pickAndExecuteAnAction();
-    
-    protected void inactivateRole() {
-    	setState(roleState.inActive);
-    	stateChanged();
-    }
-
-	public roleState getState() {
+ 
+	public RoleState getState() {
 		return state;
 	}
 
-	public void setState(roleState state) {
+	public void setState(RoleState state) {
 		this.state = state;
 	}
+	
+	public String getName() {
+		return person.getName();
+	}
+	
+	  /**
+     * Print message
+     */
+    protected void print(String msg) 
+    {
+    	System.out.println(RoleName + " " + getName() + " : " + msg);
+    }
+
+    /**
+     * Print message with exception stack trace
+     */
+    protected void print(String msg, Throwable e) {
+        StringBuffer sb = new StringBuffer();
+        sb.append(getName());
+        sb.append(": ");
+        sb.append(msg);
+        sb.append("\n");
+        if (e != null) {
+            sb.append(StringUtil.stackTraceString(e));
+        }
+        System.out.print(sb.toString());
+    }
+
 }

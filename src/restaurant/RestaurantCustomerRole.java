@@ -11,19 +11,20 @@ import person.Role;
 /**
  * Restaurant customer agent.
  */
-public class RestaurantCustomer extends Role {
+public class RestaurantCustomerRole extends Role {
 	private String name;
 	private int hungerLevel = 5;        // determines length of meal
 	Timer timer = new Timer();
+	protected String RoleName = "Restaurant Customer";
 	//private CustomerGui customerGui;
 	int xHome, yHome;
 
 	private Menu menu;
 
 	//Agent Correspondents
-	private Host host;
-	private Waiter waiter;
-	private Cashier cashier;
+	private HostRole hostRole;
+	private WaiterRole waiterRole;
+	private CashierRole cashierRole;
 
 
 	// private boolean isHungry = false; //hack for gui
@@ -46,7 +47,7 @@ public class RestaurantCustomer extends Role {
 	 * @param name name of the customer
 	 * @param gui  reference to the customergui so the customer can send it messages
 	 */
-	public RestaurantCustomer(String name, Person p1){
+	public RestaurantCustomerRole(String name, Person p1){
 		super(p1);
 		this.name = name;
 		if (name.equals("Broke 1")) {
@@ -66,8 +67,8 @@ public class RestaurantCustomer extends Role {
 	/**
 	 * hack to establish connection to Host agent.
 	 */
-	public void setHost(Host host) {
-		this.host = host;
+	public void setHost(HostRole hostRole) {
+		this.hostRole = hostRole;
 	}
 
 	public String getCustomerName() {
@@ -93,11 +94,11 @@ public class RestaurantCustomer extends Role {
 		stateChanged();
 	}
 	
-	public void msgPleaseFollowMe(int tableNumber, Menu menu, Waiter waiter) {
+	public void msgPleaseFollowMe(int tableNumber, Menu menu, WaiterRole waiterRole) {
 		this.tableNumber = tableNumber;
 		this.menu = menu;
-		this.waiter = waiter; //to establish connection to waiter
-		System.out.println("Received msgPleaseFollowMe from " + waiter.getName());
+		this.waiterRole = waiterRole; //to establish connection to waiter
+		System.out.println("Received msgPleaseFollowMe from " + waiterRole.getName());
 		event = AgentEvent.followHost;
 		stateChanged();
 	}
@@ -221,7 +222,7 @@ public class RestaurantCustomer extends Role {
 	private void goToRestaurant() {
 		state = AgentState.WaitingInRestaurant;
 		System.out.println("Going to restaurant");
-		host.msgIWantFood(this, xHome, yHome);
+		hostRole.msgIWantFood(this, xHome, yHome);
 	}
 	
 	private void DecidingToStay() {
@@ -236,13 +237,13 @@ public class RestaurantCustomer extends Role {
 		if (myRandomChoice == 0) {
 			state = AgentState.Leaving;
 			System.out.println("I don't want to wait, bailing from this stupid restaurant");
-			customerGui.DoExitRestaurant();
+			//customerGui.DoExitRestaurant();
 			stateChanged();
 		}
 		else {
 			state = AgentState.WaitingInRestaurant;
 			System.out.println("Decided to stay and eat in restaurant");
-			host.msgStaying(this, xHome, yHome);
+			hostRole.msgStaying(this, xHome, yHome);
 			stateChanged();
 		}
 	}
@@ -250,7 +251,7 @@ public class RestaurantCustomer extends Role {
 	private void SitDown() {
 		state = AgentState.BeingSeated;
 		System.out.println("Being seated. Going to table");
-		customerGui.DoGoToSeat(tableNumber);
+		//customerGui.DoGoToSeat(tableNumber);
 	}
 
 	private void MakeChoice() {
@@ -279,7 +280,7 @@ public class RestaurantCustomer extends Role {
 				
 				state = AgentState.DoneDeciding;
 				AskToOrder();
-				customerGui.DoReadyToOrder();
+				//customerGui.DoReadyToOrder();
 				stateChanged();
 			}
 		},
@@ -287,18 +288,18 @@ public class RestaurantCustomer extends Role {
 	}
 
 	private void AskToOrder() {
-		waiter.msgReadyToOrder(this);
+		waiterRole.msgReadyToOrder(this);
 	}
 
 	private void PlaceOrder() {
-		customerGui.DoPlaceOrder(choice); //GUI call
+		//customerGui.DoPlaceOrder(choice); //GUI call
 		state = AgentState.Ordered;
-		waiter.msgHeresMyOrder(this, choice);
+		waiterRole.msgHeresMyOrder(this, choice);
 	}
 
 	private void EatFood() {
 		state = AgentState.Eating;
-		customerGui.DoEatFood(choice);
+		//customerGui.DoEatFood(choice);
 		System.out.println("Eating Food");
 		//This next complicated line creates and starts a timer thread.
 		//We schedule a deadline of getHungerLevel()*1000 milliseconds.
@@ -311,7 +312,7 @@ public class RestaurantCustomer extends Role {
 		timer.schedule(new TimerTask() {
 			//Object cookie = 1;
 			public void run() {
-				print("Done eating " + choice);
+				//print("Done eating " + choice);
 				event = AgentEvent.doneEating;
 				//isHungry = false;
 				stateChanged();
@@ -321,16 +322,16 @@ public class RestaurantCustomer extends Role {
 	}
 
 	private void AskForCheck() {
-		customerGui.DoAskForCheck();
+		//customerGui.DoAskForCheck();
 		state = AgentState.AskedForCheck;
 		System.out.println("Asking for my check");
-		waiter.msgIWantMyCheck(this);
+		waiterRole.msgIWantMyCheck(this);
 	}
 
 	private void PayingCheck() {
 		state = AgentState.PayingCheck;
 		System.out.println("Going to the cashier");
-		customerGui.DoGoToCashier();
+		//customerGui.DoGoToCashier();
 	}
 
 	private void PayCheck() {
@@ -339,25 +340,27 @@ public class RestaurantCustomer extends Role {
 			money = 0;
 		}
 		
+
 		System.out.println("Paying my check of: " + check);
 		System.out.println("I have $" + money);
-		
+
 		state = AgentState.PayedCheck;
-		cashier.msgPayment(choice, money, this);
+		cashierRole.msgPayment(choice, money, this);
 		money = 0;
 	}
 
 	private void LeaveRestaurant() {
 		state = AgentState.Leaving;
-		DoSystem.out.println("Leaving.");
-		waiter.msgLeavingTable(this);
-		customerGui.DoExitRestaurant();
+
+		System.out.println("Leaving.");
+		waiterRole.msgLeavingTable(this);
+		//customerGui.DoExitRestaurant();
 	}
 	
 	private void GoToJail() {
 		state = AgentState.inJail;
-		waiter.msgLeavingTable(this);
-		customerGui.DoGoToJail();
+		waiterRole.msgLeavingTable(this);
+		//customerGui.DoGoToJail();
 		
 		timer.schedule(new TimerTask() {
 			public void run() {
@@ -369,7 +372,7 @@ public class RestaurantCustomer extends Role {
 	
 	private void walkOfShame() {
 		state = AgentState.Leaving;
-		customerGui.DoExitRestaurant();
+		//customerGui.DoExitRestaurant();
 		stateChanged();
 	}
 
@@ -399,17 +402,19 @@ public class RestaurantCustomer extends Role {
 		return "customer " + getName();
 	}
 
+	/*
 	public void setGui(CustomerGui g) {
 		customerGui = g;
+	}*/
+
+	public void setCashier(CashierRole cashierRole) {
+		this.cashierRole = cashierRole;
 	}
 
-	public void setCashier(Cashier cashier) {
-		this.cashier = cashier;
-	}
-
+	/*
 	public CustomerGui getGui() {
 		return customerGui;
-	}
+	}*/
 	
 	public double getMoney() {
 		return money;

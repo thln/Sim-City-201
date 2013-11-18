@@ -5,7 +5,7 @@ import person.Role;
 
 import java.util.List;
 
-public class BankTeller extends Role {
+public class BankTellerRole extends Role {
 
 //TODO
 	//Finish find account function,
@@ -13,14 +13,15 @@ public class BankTeller extends Role {
 	//DATA
 
 	List<Account> accounts;
-	LoanOfficer myLoaner;
+	LoanOfficerRole myLoaner;
+	protected String RoleName = "Bank Teller";
 	int balanceMinimum = 5;
 	String name;
 	
 	enum AccountState {neutral, newAccount, waiting, depositing, withdrawing, requestingLoan, closingLoan, loanApproved, loanDenied}
 
 	class Account {	
-		BankCustomer customer;
+		BankCustomerRole customer;
 		int accountNum; 		//the hash key
 		double loan = 0;
 		double balance = 0;
@@ -28,21 +29,21 @@ public class BankTeller extends Role {
 		double processingMoney = 0;
 		AccountState state = AccountState.newAccount;
 		
-		Account (BankCustomer c1) {
+		Account (BankCustomerRole c1) {
 			customer = c1;
 		}
 	}
 
-	public BankTeller (String name, Person p1, LoanOfficer officer1) {
+	public BankTellerRole (String name, Person p1) {
 		super(p1);
 		this.name = name;
-		myLoaner = officer1;
+		myLoaner = Bank.loanOfficerRole;
 		accounts = myLoaner.getAccounts();
 	}
 	
 	//MESSAGES
 
-	void msgWantNewAccount (BankCustomer cust1) {
+	void msgWantNewAccount (BankCustomerRole cust1) {
 		System.out.println("Customer wants new account");
 		accounts.add(new Account(cust1));
 	}

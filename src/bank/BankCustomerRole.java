@@ -1,19 +1,19 @@
 package bank;
 
-import bank.BankGuard.MyTeller;
-import bank.BankGuard.TellerState;
+import bank.BankGuardRole.MyTeller;
+import bank.BankGuardRole.TellerState;
 import person.Person;
 import person.Role;
 
-public class BankCustomer extends Role {
+public class BankCustomerRole extends Role {
 
 	//DATA
 
 	enum BankCustomerDesire {none, withdraw, deposit, wantLoan, closeLoan, openAccount, closeAccount, robBank, leaveBank}
 	enum CustomerState {atBank, none, waiting, ready};
 	
-	BankTeller myTeller;
-	BankGuard myGuard;
+	BankTellerRole myTeller;
+	BankGuardRole myGuard;
 
 	double cash;
 	int accountNum;
@@ -24,8 +24,9 @@ public class BankCustomer extends Role {
 	double loan; 	
 	BankCustomerDesire desire;
 	CustomerState state;
+	protected String RoleName = "Bank Customer";
 
-	public BankCustomer (String name, Person p1, BankGuard guard1, int desiredCash, int deposit, int accNum, int cash) {
+	public BankCustomerRole (String name, Person p1, BankGuardRole guard1, int desiredCash, int deposit, int accNum, int cash) {
 		super(p1);
 		desiredCashAmount = desiredCash;
 		depositAmount = deposit;
@@ -38,7 +39,7 @@ public class BankCustomer extends Role {
 	
 	//Messages
 
-	void msgGoToTeller(BankTeller tell1) {
+	void msgGoToTeller(BankTellerRole tell1) {
 		myTeller = tell1;
 		state = CustomerState.ready;
 		stateChanged();
@@ -169,5 +170,18 @@ public class BankCustomer extends Role {
 		//Animation();
 		myGuard.msgRobbingBank(this);
 		state = CustomerState.waiting;
+	}
+	
+	public void setDesiredCash(int d1) {
+		desiredCashAmount = d1;
+	}
+	
+	public void setDesire(String d1){
+		if (d1 == "deposit")
+			desire = BankCustomerDesire.deposit;
+		if (d1 == "withdraw")
+			desire = BankCustomerDesire.withdraw;
+		if (d1 == "robBank")
+			desire = BankCustomerDesire.robBank;
 	}
 }

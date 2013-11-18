@@ -1,15 +1,24 @@
 package person;
 
-import person.Role.roleState;
+import person.Role.RoleState;
 
-class Wealthy extends Person 
+public class Wealthy extends Person 
 {
     int eatTime1 = 10;
     int eatTime2 = 16;
     int bankTime = 10;
     int sleepTime = 22;
     boolean needToDeposit;
+    String name;
 
+    
+    public Wealthy(String name,  int money)
+    {
+		super(name);
+		this.money = money;
+		this.name = name;
+    }
+    
     //Messages
     void msgRentDue () 
     {

@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import bank.BankTeller.Account;
+import bank.BankTellerRole.Account;
 
-public class LoanOfficer extends Role {
+public class LoanOfficerRole extends Role {
 
 
 	//Data
@@ -17,13 +17,14 @@ public class LoanOfficer extends Role {
 	double vault = 10000;
 	double vaultMinimum = 1000;
 	String name;
+	protected String RoleName = "Loan Officer";
 	enum LoanState {requesting, open, closed}
 	class Loan {
 		Account account1;
 		LoanState state = LoanState.requesting;
-		BankTeller teller1;
+		BankTellerRole teller1;
 		
-		Loan(Account acc1, BankTeller t1) {
+		Loan(Account acc1, BankTellerRole t1) {
 			account1 = acc1;
 			teller1 = t1;
 		}
@@ -32,7 +33,7 @@ public class LoanOfficer extends Role {
 	public List<Loan> loans;
 	public List<Account> accounts;
 
-	public LoanOfficer(String name, Person p1) {
+	public LoanOfficerRole(String name, Person p1) {
 		super(p1);
 		this.name = name;
 		loans = Collections.synchronizedList(new ArrayList<Loan>());
@@ -41,7 +42,7 @@ public class LoanOfficer extends Role {
 	
 	//Messages
 
-	void msgIsLoanApproved(Account account1, BankTeller t1) {
+	void msgIsLoanApproved(Account account1, BankTellerRole t1) {
 		loans.add( new Loan(account1, t1));
 	}
 

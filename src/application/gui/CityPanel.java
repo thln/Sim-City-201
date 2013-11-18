@@ -45,5 +45,7 @@ public class CityPanel extends JPanel implements ActionListener{
         }
         
     }
-
+    public String toString() {
+    	return "JPanel";
+    }
 }

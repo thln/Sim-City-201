@@ -2,8 +2,8 @@ package restaurant;
 
 public class Order {
 
-	Waiter waiter;
-	RestaurantCustomer customer;
+	WaiterRole waiterRole;
+	public RestaurantCustomerRole customer;
 
 	int tableNumber;
 
@@ -12,13 +12,13 @@ public class Order {
 	enum orderStatus {Open, Cooking, Done}
 	orderStatus status = orderStatus.Open;
 
-	Order(int tableNumber, String choice, Waiter waiter) {
+	Order(int tableNumber, String choice, WaiterRole waiterRole) {
 		this.tableNumber = tableNumber;
 		this.choice = choice;
-		this.waiter = waiter;
+		this.waiterRole = waiterRole;
 	}
 
-	Order(int tableNumber, String choice, RestaurantCustomer customer) {
+	Order(int tableNumber, String choice, RestaurantCustomerRole customer) {
 		this.tableNumber = tableNumber;
 		this.choice = choice;
 		this.customer = customer;

@@ -6,9 +6,16 @@ public class Crook extends Person {
 	int time2RobDaBank = 8;
 	int eatTime = 12;
 	int marketTime = 15;
+	String name;
 
+    public Crook(String name,  int money)
+    {
+		super(name);
+		this.money = money;
+		this.name = name;
+    }
 
-	//Messages
+	
 	public void updateTime(int newTime) {
 		if (this.newTime == time2RobDaBank) {
 			//RobberRole.state = waitingToExecute;
