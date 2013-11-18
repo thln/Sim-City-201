@@ -23,7 +23,7 @@ public abstract class Person extends Agent {
 	public double accountBalance;
 	public int sleepTime = 22;
 	String name;
-	private int newTime;
+	protected int newTime;
 	PhoneBook myPhoneBook;
 	
 	class PhoneBook {
