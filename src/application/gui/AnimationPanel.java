@@ -43,8 +43,12 @@ public class AnimationPanel extends JPanel implements MouseListener {
     	
     	
     	//stacking the building animations
+<<<<<<< HEAD
     	ImageIcon icon = new ImageIcon("Team Project/docs/bank.jpg",
                 "a pretty but meaningless splat");
+=======
+    	ImageIcon icon = new ImageIcon("bank.jpg", "bank icon");
+>>>>>>> b17695c4b5ebe6661a73516a6c40e5670e1914a2
 
     	//initializing some stubs to test the stacking
     	for(int i=0; i < 5; i++) {
@@ -81,7 +85,8 @@ public class AnimationPanel extends JPanel implements MouseListener {
 		//If any of the icons are clicked, it will find and display its corresponding animation panel
 		for(int i=0; i<imglabels.size();i++) {
 			if(e.getSource() == imglabels.get(i)) {
-				final String name = imglabels.get(i).getText();
+				//final String name = imglabels.get(i).getText();
+				final String name = imglabels.get(i).getIcon().toString();
 				System.out.println(name + " clicked " + buildingMap.get(imglabels.get(i)));
 				clearScreen();
 				buildingMap.get(imglabels.get(i)).setVisible(true);
