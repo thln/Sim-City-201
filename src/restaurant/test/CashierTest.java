@@ -1,6 +1,6 @@
 package restaurant.test;
 
-import restaurant.Cashier;
+import restaurant.interfaces.Cashier;
 import restaurant.test.mock.MockCustomer;
 import restaurant.test.mock.MockMarket;
 import restaurant.test.mock.MockWaiter;
@@ -15,13 +15,15 @@ import junit.framework.*;
  * @author Kristi Hupka
  */
 public class CashierTest extends TestCase {
+	
 	//these are instantiated for each test separately via the setUp() method.
-//	Cashier cashier;
-//	MockWaiter waiter;
-//	MockCustomer customer;
-//	MockCustomer customer2;
-//	MockMarket market1;
-//	MockMarket market2;
+	Cashier cashier;
+	MockWaiter waiter;
+	MockCustomer customer;
+	MockCustomer customer2;
+	MockMarket market1;
+	MockMarket market2;
+}
 //
 //
 //	/**
@@ -579,4 +581,4 @@ public class CashierTest extends TestCase {
 //		assertFalse("Cashier's scheduler should have returned false (no actions left to do), but didn't.", 
 //				cashier.pickAndExecuteAnAction());
 //	}//end of Two Customer (One customer cannot pay), Two Market Payment Scenario
-//}
+
