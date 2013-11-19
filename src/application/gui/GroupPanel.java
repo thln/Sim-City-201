@@ -25,6 +25,7 @@ public class GroupPanel extends JPanel implements ActionListener{
     private List<JButton> list = new ArrayList<JButton>();
     JButton button = new JButton();
 	JButton button1 = new JButton();
+
     
 	GroupPanel(String type, Color bg){
 		this.setBackground(bg);
@@ -39,6 +40,7 @@ public class GroupPanel extends JPanel implements ActionListener{
         
         ListView.add(pane);
         ListView.setVisible(true);
+        
         ///Temp Testing
 		button.setText("Person1");
 		button.setSize(buttonSize);
@@ -72,16 +74,6 @@ public class GroupPanel extends JPanel implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()== BackToListView){
 			GoBack();
-		}
-		else if (e.getSource() == button1){
-			//TODO Temp For Testing
-			CardLayout c1 = (CardLayout) (flipPanel.getLayout());
-			c1.show(flipPanel, PROFILEVIEW);
-		}
-		else if (e.getSource() == button){
-			//TODO Temp For Testing
-			CardLayout c1 = (CardLayout) (flipPanel.getLayout());
-			c1.show(flipPanel, PROFILEVIEW);
 		}
 		else{
 			for(JButton temp: list){

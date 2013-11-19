@@ -33,17 +33,18 @@ public class ApplicationGui extends JFrame {
 		//MainView 
 		appPanel.setSize(appDim);
 		appPanel.setVisible(true);
-        appPanel.setBackground(Color.BLACK);
+		appPanel.setBackground(Color.WHITE);
 		add(appPanel);
 		
 		//AnimationView
 		animPanel.setSize(animDim);
-		//commentedoutfortesting add(animPanel);
+		add(animPanel);
 	}
 	
 	public static void main(String[] args) {
         ApplicationGui gui = new ApplicationGui();
         gui.setTitle("SimCity 201 - Team 20");
+        
         gui.setVisible(true);
         gui.setResizable(true);
         gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

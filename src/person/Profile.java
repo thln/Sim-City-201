@@ -27,11 +27,20 @@ public class Profile {
 		this.cash = cash;
 		this.netWorth = netWorth; 
 	}
+	public Profile(String name, String type){
+		this.name = name;
+		this.type = type;
+		this.age = "18";
+		this.gender = "Male";
+		
+		//Set Money 
+		cash = 80.00;
+		netWorth = 500.00;
+	}
 	
 	public String printFullView(){
 		String fullView = new String();
 		return fullView;
-	
 	}
 	
 	public String printQuickView(){

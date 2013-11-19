@@ -14,32 +14,33 @@ public class ApplicationPanel extends JPanel{
 	private GroupPanel workerPanel = new GroupPanel("Worker", Color.LIGHT_GRAY);
 	private GroupPanel wealthyPanel = new GroupPanel("Wealthy",Color.WHITE);
 	
-	Dimension controlDim = new Dimension(this.getWidth(), this.getHeight()*(1/4));
-	Dimension infoDim = new Dimension(this.getWidth(), this.getHeight()*(3/4));
-	
-	
-	
 	ApplicationPanel(){
-		
+		setLayout(new GridLayout(2,1));
+		GridBagConstraints c = new GridBagConstraints();
+		c.fill = GridBagConstraints.VERTICAL;
 		//Control Panel
+		c.gridx = 0;
+		c.gridy = 0;
 		
-		controlPanel.setSize(controlDim);
 		controlPanel.setVisible(true);
-		//commentedoutfortesting add(controlPanel);
-		
+		controlPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		add(controlPanel);
 		
 		//InfoPanel
-		infoPanel.setLayout(new GridLayout(2,2));
-
-		infoPanel.setSize(infoDim);
-		infoPanel.setVisible(true);
+		//TODO set size so that info panel is 75% and controPanel is 25% of total height
+		c.gridx = 0;
+		c.gridy = 1;
 		
+		infoPanel.setLayout(new GridLayout(2,2));
+		infoPanel.setVisible(true);
+		infoPanel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
 			infoPanel.add(crookPanel);
-			//commentedoutfortesting infoPanel.add(deadbeatPanel);
-			//commentedoutfortesting infoPanel.add(workerPanel);
-			//commentedoutfortesting infoPanel.add(wealthyPanel);
-					
-		add(infoPanel);
+			infoPanel.add(deadbeatPanel);
+			infoPanel.add(workerPanel);
+			infoPanel.add(wealthyPanel);
+		
+			add(infoPanel);
+			
 	}
 
 }
