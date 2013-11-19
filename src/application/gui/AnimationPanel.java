@@ -28,40 +28,30 @@ public class AnimationPanel extends JPanel implements MouseListener {
 	ImageIcon market = new ImageIcon("docs/market.jpg", "market icon");
 	ImageIcon house = new ImageIcon("docs/house.jpg", "house icon");
 	
+	final static int WINDOWX = 570;
+    final static int WINDOWY = 360;
+	
 	AnimationPanel(){
 		
-		//Dimension cityDim = new Dimension(getWidth(), getHeight());
 		setLayout(null);
 		setBorder(BorderFactory.createTitledBorder("Animation"));
     	//here we have the main city view
     	
-		cityPanel.setBounds(10, 20, 570, 360); //x & y positions in animation panel, x & y sizes
-		/*
-    	cityPanel.setPreferredSize(cityDim);
-    	cityPanel.setMinimumSize(cityDim);
-    	cityPanel.setMaximumSize(cityDim);
-    	*/
+		cityPanel.setBounds(10, 20, WINDOWX, WINDOWY); //x & y positions in animation panel, x & y sizes
 		cityPanel.addMouseListener(this);
     	cityPanel.setVisible(true);
     	add(cityPanel);
     	
-    	
-    	//stacking the building animations
+    	//instantiating the bank icon and panel
     	BuildingPanel bankPanel = new BuildingPanel("Bank");
     	JLabel bankLabel = new JLabel(bank);
     	buildingPanels.add(bankPanel);
     	imglabels.add(bankLabel);
     	buildingMap.put(bankLabel, bankPanel);
     	Dimension banksize = bankLabel.getPreferredSize();
-    	bankLabel.setBounds(getSize().width, 100, banksize.width, banksize.height);
-    	
-    	BuildingPanel marketPanel = new BuildingPanel("Market");
-    	JLabel marketLabel = new JLabel(market);
-    	buildingPanels.add(marketPanel);
-    	imglabels.add(marketLabel);
-    	buildingMap.put(marketLabel, marketPanel);
+    	bankLabel.setBounds(WINDOWX - banksize.width, 110, banksize.width, banksize.height);
 
-    	//initializing some stubs to test the stacking
+    	//instantiating the restaurant icons and panels
     	for(int i=0; i < 5; i++) {
     		BuildingPanel restPanel = new BuildingPanel("Restaurant " + (i+1));
     		buildingPanels.add(restPanel);
@@ -70,7 +60,31 @@ public class AnimationPanel extends JPanel implements MouseListener {
     		buildingMap.put(restLabel, restPanel);
     		
     		Dimension size = restLabel.getPreferredSize();
-    		restLabel.setBounds(size.width*i, 50, size.width, size.height);
+    		restLabel.setBounds(WINDOWX - size.width*(i+1), 50, size.width, size.height);
+    	}
+    	
+    	//instantiating the market icons and panels
+    	for(int j=0; j < 3; j++) {
+    		BuildingPanel marketPanel = new BuildingPanel("Market " + (j+1));
+    		buildingPanels.add(marketPanel);
+    		JLabel marketLabel = new JLabel(market);
+    		imglabels.add(marketLabel);
+    		buildingMap.put(marketLabel, marketPanel);
+    		
+    		Dimension size = marketLabel.getPreferredSize();
+    		marketLabel.setBounds(WINDOWX - size.width*(j+1), 175, size.width, size.height);
+    	}
+    	
+    	//instantiating the house icons and panels
+    	for(int k=0; k < 8; k++) {
+    		BuildingPanel housePanel = new BuildingPanel("House " + (k+1));
+    		buildingPanels.add(housePanel);
+    		JLabel houseLabel = new JLabel(house);
+    		imglabels.add(houseLabel);
+    		buildingMap.put(houseLabel, housePanel);
+    		
+    		Dimension size = houseLabel.getPreferredSize();
+    		houseLabel.setBounds(WINDOWX - size.width*(k+1), WINDOWY - size.height, size.width, size.height);
     	}
     	
     	//positioning the city building icons
@@ -81,7 +95,7 @@ public class AnimationPanel extends JPanel implements MouseListener {
     	
     	//positioning the building panels into the same spot
     	for(int m=0; m<buildingPanels.size();m++) {
-    		buildingPanels.get(m).setBounds(10, 400, 570, 360);
+    		buildingPanels.get(m).setBounds(10, 400, WINDOWX, WINDOWY);
     		add(buildingPanels.get(m));
     	}
     	clearScreen();
