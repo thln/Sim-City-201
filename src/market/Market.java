@@ -50,6 +50,10 @@ public class Market {
 		return UPSmanRole;
 	}
 	
+	public setSalesPersonRole(Person person) {
+		//salesPersonRole = ?
+	}
+	
 	public class Item {
 		public String itemName;
 		public double  price;
