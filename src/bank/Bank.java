@@ -5,8 +5,8 @@ import person.Person;
 public class Bank {
 	
 	//Roles
-	public static BankGuardRole bankGuardRole;
-	public static LoanOfficerRole loanOfficerRole;
+	public BankGuardRole bankGuardRole;
+	public LoanOfficerRole loanOfficerRole;
 	
 	public void setBankGuardRole(Person person) {
 		person.setWorkerRole(bankGuardRole);

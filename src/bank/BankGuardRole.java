@@ -30,7 +30,7 @@ public class BankGuardRole extends Role {
 	}
 	
 	public BankGuardRole (String name, Person p1, String roleName) {
-		super(p1);
+		super(p1, name, roleName);
 		this.name = name;
 		this.RoleName = roleName;
 		customers = Collections.synchronizedList(new ArrayList<BankCustomerRole>());

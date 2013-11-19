@@ -1,7 +1,5 @@
 package bank;
 
-import bank.BankGuardRole.MyTeller;
-import bank.BankGuardRole.TellerState;
 import person.Person;
 import person.Role;
 
@@ -24,10 +22,9 @@ public class BankCustomerRole extends Role {
 	double loan; 	
 	BankCustomerDesire desire;
 	CustomerState state;
-	protected String RoleName = "Bank Customer";
 
 	public BankCustomerRole (String name, Person p1, BankGuardRole guard1, int desiredCash, int deposit, int accNum, int cash) {
-		super(p1);
+		super(p1, name, "BankCustomerRole");
 		desiredCashAmount = desiredCash;
 		depositAmount = deposit;
 		accountNum = accNum;
