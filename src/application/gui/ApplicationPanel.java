@@ -4,11 +4,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import application.*;
+import application.gui.controlPanel.*;
 
 
 public class ApplicationPanel extends JPanel{
 	
-	private JPanel controlPanel = new JPanel();
+	private ControlPanel controlPanel;
 	private JPanel infoPanel = new JPanel();
 	private GroupPanel crookPanel = new GroupPanel("Crook",Color.WHITE);
 	private GroupPanel deadbeatPanel = new GroupPanel("Deadbeat", Color.LIGHT_GRAY);
@@ -18,6 +19,7 @@ public class ApplicationPanel extends JPanel{
 	
 	ApplicationPanel(Application app){
 		this.app = app;
+		controlPanel = new ControlPanel();
 		setLayout(new GridLayout(2,1));
 		
 		GridBagConstraints c = new GridBagConstraints();

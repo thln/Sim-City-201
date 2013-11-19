@@ -1,5 +1,4 @@
 package controlPanel;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -13,12 +12,11 @@ public class ControlPanel extends JPanel{
 	private JPanel tempPanel = new JPanel();
 	private JTabbedPane ControlPane = new JTabbedPane();
 	
-	public ControlPanel(){
-		
+	ControlPanel() {
 		addPersonTab.setVisible(true);
 		ControlPane.addTab("Add Person", null, addPersonTab, "add a person");
 		add(ControlPane);
-	}	
+	}
 	
 	private class AddPersonPanel extends JPanel implements ActionListener {
 		JLabel first = new JLabel("First Name: ");
