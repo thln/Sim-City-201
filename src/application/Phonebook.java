@@ -14,4 +14,16 @@ public class Phonebook {
 	//MexicanRestaurant mexicanRestaurant;
 	//AmericanRestaurant americanRestaurant;
 	//SeafoodRestaurant seafoodRestaurant;
+	
+	Phonebook(Bank bank, Market market, Restaurant restaurant) {
+		this.bank = bank;
+		this.market = market;
+		this.restaurant = restaurant;
+		
+		//this.chineseRestaurant = chineseRestaurant;
+		//this.italianRestaurant = italianRestaurant;
+		//this.mexicanRestaurant = mexicanRestaurant;
+		//this.americanRestaurant = americanRestaurant;
+		//this.seafoodRestaurant = seafoodRestaurant;
+	}
 }
