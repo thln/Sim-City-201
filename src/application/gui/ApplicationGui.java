@@ -33,10 +33,8 @@ public class ApplicationGui extends JFrame {
 	
 	ApplicationGui() {
 		appPanel = new ApplicationPanel(app);
-		setBounds(50,0, WINDOWX, WINDOWY);
-		
-		setLayout(new GridLayout(1,2)); //GridLayout with 2 columns and 1 row
 		setBounds(50, 50, WINDOWX, WINDOWY);
+		setLayout(new GridLayout(1,2)); //GridLayout with 2 columns and 1 row
     	
     	//here's the main application
 		//MainView 
