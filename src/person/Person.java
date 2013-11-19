@@ -19,6 +19,7 @@ import application.Phonebook;
 public abstract class Person extends Agent {
 
 	//Data
+	String name;
 	public double money;
 	Phonebook phonebook; //List of all agent correspondents in phonebook
 	private Semaphore atDestination = new Semaphore(0,true);
@@ -268,6 +269,11 @@ public abstract class Person extends Agent {
 
 	public void setWorkerRole(Role workerRole) {
 		this.workerRole = workerRole;
+	}
+	
+	@Override
+	public String getName() {
+		return name;
 	}
 
 	/*
