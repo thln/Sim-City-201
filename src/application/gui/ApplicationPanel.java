@@ -3,19 +3,22 @@ package application.gui;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import application.*;
 
 
 public class ApplicationPanel extends JPanel{
 	
-	JPanel controlPanel = new JPanel();
-	JPanel infoPanel = new JPanel();
+	private JPanel controlPanel = new JPanel();
+	private JPanel infoPanel = new JPanel();
 	private GroupPanel crookPanel = new GroupPanel("Crook",Color.WHITE);
 	private GroupPanel deadbeatPanel = new GroupPanel("Deadbeat", Color.LIGHT_GRAY);
 	private GroupPanel workerPanel = new GroupPanel("Worker", Color.LIGHT_GRAY);
 	private GroupPanel wealthyPanel = new GroupPanel("Wealthy",Color.WHITE);
-	
-	ApplicationPanel(){
+	private Application app;
+	ApplicationPanel(Application app){
+		this.app = app;
 		setLayout(new GridLayout(2,1));
+		
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.VERTICAL;
 		//Control Panel
@@ -41,6 +44,10 @@ public class ApplicationPanel extends JPanel{
 		
 			add(infoPanel);
 			
+	}
+	
+	public void setApplication(Application app){
+		this.app = app;
 	}
 
 }

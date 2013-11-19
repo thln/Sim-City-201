@@ -1,20 +1,22 @@
 package application.gui.controlPanel;
 
 import javax.swing.*;
-import person.Profile;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import application.*;
+import application.gui.*;
 
 public class ControlPanel extends JPanel{
 	
-	AddPersonPanel addPersonTab = new AddPersonPanel();
+	AddPanel addPersonTab;
 	private ImageIcon picture;
-	private ArrayList<Profile> tempPersonList = new ArrayList<Profile>();
 	private JPanel tempPanel = new JPanel();
 	private JTabbedPane ControlPane = new JTabbedPane();
-	
-	public ControlPanel(){
+	private Application app;
+	public ControlPanel(Application app){
+		this.app = app;
+		addPersonTab = new AddPanel(this, app);
 		addPersonTab.setVisible(true);
 		ControlPane.addTab("Add Person", addPersonTab);
 		add(ControlPane);
@@ -54,7 +56,7 @@ public class ControlPanel extends JPanel{
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
 		}
-	
+		
 	}
 
 }

@@ -1,64 +1,46 @@
 package application.gui;
 
 import javax.swing.*;
-
-//import bank.Bank;
-//import bank.BankGuardRole;
-//import bank.LoanOfficerRole;
+import application.*;
+import bank.Bank;
+import bank.BankGuardRole;
+import bank.LoanOfficerRole;
 import person.Person;
 import person.Worker;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import java.util.List;
+import application.*;
 
 public class ApplicationGui extends JFrame {
-	
-	ApplicationPanel appPanel = new ApplicationPanel();
+	Application app = new Application();
+	ApplicationPanel appPanel; 
 	AnimationPanel animPanel = new AnimationPanel();
+	
 	//List containing all of the different building animation panels
 	final static int WINDOWX = 1200;
     final static int WINDOWY = 800;
-    final static int AppPanelX = WINDOWX*(4/10); //Application View Panel Width 400
-	final static int AppPanelY = WINDOWY; //Application View Panel Height 600
-	final static int AnimPanelX = WINDOWX*(6/10); //Animation View Panel Width 600
-	final static int AnimPanelY = WINDOWY; //Animation View Panel Height 600
-	 
+    final static int APPWIDTH = WINDOWX*(4/10); //Application View Panel Width 400
+	final static int ANIMWIDTH = WINDOWX*(6/10); //Animation View Panel Width 600
+	//final static int AnimPanelY = WINDOWY; //Animation View Panel Height 600
+	
+	
+	
 	ApplicationGui() {
-		
-		Dimension appDim = new Dimension(AppPanelX, AppPanelY);
-		Dimension animDim = new Dimension(AnimPanelX, AnimPanelY);
+		appPanel = new ApplicationPanel(app);
 		setBounds(50,0, WINDOWX, WINDOWY);
-		//Horizontal BoxLayout -- ApplicaitonPanel on the Left, 
-				//AnimationPanel on the Right
 		
-		setLayout(new GridLayout(1,2));
-		/*GridBagConstraints c = new GridBagConstraints();
-		//c.gridwidth = 1;
-    	//c.fill = GridBagConstraints.HORIZONTAL;
-    	//here's the main application
-		//MainView 
-		c.gridx = 0;
-		c.gridy = 0;
-		c.gridwidth = 1;
-		c.ipadx = AppPanelX;*/
-		
+		setLayout(new GridLayout(1,2)); //GridLayout with 2 columns and 1 row
 		setBounds(50, 50, WINDOWX, WINDOWY);
     	
     	//here's the main application
 		//MainView 
-		appPanel.setSize(appDim);
 		
 		appPanel.setVisible(true);
 		add(appPanel);
 		
 		//AnimationView
-
-		//c.gridwidth = GridBagConstraints.REMAINDER;
-		//c.ipadx = AppPanelY;
-
-		animPanel.setSize(animDim);
 		
 		animPanel.setVisible(true);
 		add(animPanel);
