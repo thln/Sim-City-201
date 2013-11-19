@@ -20,10 +20,10 @@ public class MarketRunnerRole extends Role {
 	
 	private List<MarketOrder> orders = Collections.synchronizedList(new ArrayList<MarketOrder>());
 
-	MarketRunnerRole(Person person, Market market, SalesPersonRole salesPersonRole, String name) {
+	MarketRunnerRole(Person person, Market market, SalesPersonRole salesPersonRole, String pName, String rName) {
+		super(person, pName, rName);
 		this.market = market;
-		this.salesPersonRole = salesPersonRole;
-		this.name = name;
+		this.salesPersonRole = salesPersonRole;		
 	}
 
 	//Messages

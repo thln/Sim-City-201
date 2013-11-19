@@ -19,9 +19,8 @@ public class MarketCustomerRole extends Role {
 	//	enum CustomerDesire {none, buyCar, buyFood};
 	//	CustomerDesire desire = CustomerDesire.none;
 
-	public MarketCustomerRole(Person person, String name) {
-		super(person);
-		this.name = name;
+	public MarketCustomerRole(Person person, String pName, String rName) {
+		super(person, pName, rName);
 	}
 
 	//Messages

@@ -26,11 +26,11 @@ public class MaintenanceWorkerRole extends Role
 	};
 		//List  WorkOrders;
 	
-	public MaintenanceWorkerRole(Person person, String name) 
+	public MaintenanceWorkerRole(Person person, String pName, String rTitle) 
 	{
-		super(person);
-		this.RoleName = name;
-		this.name = name;
+		super(person, pName, rTitle);
+		//this.RoleName = rTitle;
+		//this.name = pName;
 	}
 	
 	protected boolean pickAndExecuteAnAction() 

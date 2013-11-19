@@ -6,6 +6,8 @@ public class Housing
 {
 	public enum differentHousingTypes {Apartment, Park, Mansion};
 	public static differentHousingTypes housingStructure;
+	public enum housingState {UrgentWorkOrder, CheckUpNeeded, RecentlyChecked};
+	public housingState state;
 	public Person occupant;
 	int housingNumber;
 	int xCordinate;
@@ -15,6 +17,7 @@ public class Housing
 	{
 		occupant = newP;
 		housingNumber = Address;
+		state = housingState.CheckUpNeeded;
 		
 		if(type.equals("Apartment"))
 		{

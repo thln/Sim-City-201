@@ -7,6 +7,7 @@ package restaurant;
 import java.util.*;
 import java.util.concurrent.Semaphore;
 
+import person.Person;
 import person.Role;
 
 /**
@@ -40,9 +41,8 @@ public class CookRole extends Role {
 		foodMap.put("Salad", new Food("Salad"));
 	}
 
-	public CookRole(String name) {
-		super();
-		this.name = name;
+	public CookRole(Person p1, String pName, String rName) {
+		super(p1, pName, rName);
 	}
 
 	public String getMaitreDName() {

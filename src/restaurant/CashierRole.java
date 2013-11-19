@@ -4,6 +4,7 @@ package restaurant;
 import java.util.*;
 
 import market.SalesPersonRole;
+import person.Person;
 import person.Role;
 
 
@@ -30,11 +31,8 @@ public class CashierRole extends Role {
 		foodPrices.put("Salad", 5.99);
 	}
 
-	public CashierRole(String name) {
-		super();
-
-		this.name = name;
-
+	public CashierRole(Person p1, String pName, String rName) {
+		super(p1, pName, rName);
 	}
 
 	public String getName() {

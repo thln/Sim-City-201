@@ -14,9 +14,8 @@ public class UPSmanRole extends Role {
 	protected String RoleName = "UPS man";
 	String name;
 	
-	public UPSmanRole (Person p, String name) {
-		super(p);
-		this.name = name;
+	public UPSmanRole (Person p, String pName, String rName) {
+		super(p, pName, rName);
 	}
 	//Messages
 	public void msgDeliverOrder(MarketOrder o) {

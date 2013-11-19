@@ -17,16 +17,16 @@ public class Crook extends Person {
 
 	
 	public void updateTime(int newTime) {
-		if (newTime == time2RobDaBank) {
+		if (this.newTime == time2RobDaBank) {
 			//RobberRole.state = waitingToExecute;
 		}
-		if (newTime == eatTime) {
+		if (this.newTime == eatTime) {
 			//RestaurantCustomer.state = waitingToExecute;
 		}
-		if (newTime == marketTime && !hasFoodInFridge) {
+		if (this.newTime == marketTime && !hasFoodInFridge) {
 			//MarketCustomer.state = waitingToExecute;
 		}
-		if (newTime == sleepTime) {
+		if (this.newTime == sleepTime) {
 			//GoToSleep();
 		}
 	}
