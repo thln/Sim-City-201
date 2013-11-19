@@ -3,6 +3,7 @@ package application;
 import housing.Housing;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import bank.Bank;
 import market.Market;
@@ -10,7 +11,7 @@ import restaurant.Restaurant;
 
 public class Phonebook {
 
-	public static ArrayList<Housing> publicAllHousing = new ArrayList<Housing>();
+	public static List<Housing> publicAllHousing; //= Collections.synchronizedList(new ArrayList<Housing>());
 
 	public static Bank bank;
 	public static Market market;
@@ -23,7 +24,7 @@ public class Phonebook {
 	//AmericanRestaurant americanRestaurant;
 	//SeafoodRestaurant seafoodRestaurant;
 	
-	Phonebook(Bank bank, Market market, Restaurant restaurant, ArrayList<Housing> passHousing) {
+	Phonebook(Bank bank, Market market, Restaurant restaurant, List<Housing> passHousing) {
 		Phonebook.bank = bank;
 		Phonebook.market = market;
 		Phonebook.restaurant = restaurant;

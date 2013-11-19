@@ -24,7 +24,7 @@ import java.util.List;
 public class Application extends JPanel {
 	
 	private ArrayList<Person> population = new ArrayList<Person>();
-	private static ArrayList<Housing> allHousing = new ArrayList<Housing>();
+	private static List<Housing> allHousing = Collections.synchronizedList(new ArrayList<Housing>());
 
 	public static Bank bank = new Bank();
 	public static Market market = new Market();
@@ -33,6 +33,21 @@ public class Application extends JPanel {
 
 	public Application() {
 
+		/*
+		Worker m = new Worker("Matthew", 300, "maintenance", 800, 1400, 1700);
+		//allHousing.add(new Housing(m, allHousing.size(), "Mansion"));
+		//m.setHome(allHousing.get(allHousing.size() - 1));
+		allHousing.add(new Housing(m, allHousing.size(), "Apartment"));
+		m.setHome(allHousing.get(allHousing.size() - 1));
+		//allHousing.add(new Housing(m, allHousing.size(), "Park"));
+		//m.setHome(allHousing.get(allHousing.size() - 1));
+		population.add(m);
+		m.startThread();
+		m.updateTime(800);
+		*/
+		
+		//Standard
+		
 		//Worker(String name, int money, String jobTitle, int startT, int lunchT, int endT);
 		//Standard Workers
 
@@ -137,10 +152,11 @@ public class Application extends JPanel {
 		v.startThread();
 		w.startThread();
 
-		b.updateTime(800);
-		c.updateTime(800);
-		a.updateTime(800);
-		m.updateTime(900);
+		//b.updateTime(800);
+		//c.updateTime(800);
+		//a.updateTime(800);
+		m.updateTime(800);
+		
 	}
 
 	public void addPerson(String name, int money, String type,
