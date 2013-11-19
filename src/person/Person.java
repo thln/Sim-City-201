@@ -195,11 +195,11 @@ public abstract class Person extends Agent {
 			//choosing random item to buy from market
 			String item;
 			item = chooseMarketItem();
-			phonebook.market.salesPersonRole.msgIWantProducts(cust1, item, 3);
+			Phonebook.market.salesPersonRole.msgIWantProducts(cust1, item, 3);
 		}
 		else if (carStatus == CarState.wantsCar) {
 			MarketCustomerRole cust1 = (MarketCustomerRole) r;
-			phonebook.market.salesPersonRole.msgIWantProducts(cust1, "Car", 1);
+			Phonebook.market.salesPersonRole.msgIWantProducts(cust1, "Car", 1);
 			//must set desire to hasCar once car is bought
 		}
 
@@ -214,8 +214,8 @@ public abstract class Person extends Agent {
 		do {
 			myRandomChoice = rand.nextInt(10);
 			myRandomChoice %= 7;
-		} while (!phonebook.market.marketItemsForSale.containsKey(myRandomChoice) || (money < phonebook.market.marketItemsForSale.get(myRandomChoice).price));
-		item = phonebook.market.marketItemsForSale.get(myRandomChoice).itemName;
+		} while (!Phonebook.market.marketItemsForSale.containsKey(myRandomChoice) || (money < Phonebook.market.marketItemsForSale.get(myRandomChoice).price));
+		item = Phonebook.market.marketItemsForSale.get(myRandomChoice).itemName;
 		return item;
 	}
 
