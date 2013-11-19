@@ -47,6 +47,7 @@ public class BankCustomerRole extends Role {
 		print("Received new bank account");
 		person.accountNum = accountNum;
 		desire = BankCustomerDesire.deposit;
+		person.depositAmount = 100;
 		state = CustomerState.ready;
 		stateChanged();
 	}

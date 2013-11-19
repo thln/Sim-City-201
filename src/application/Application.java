@@ -46,7 +46,7 @@ public class Application extends JPanel {
 		Worker j = new Worker("Josh", 500, "waiter", 1000, 1100, 1700);
 		Worker k = new Worker("Kristi", 20, "altWaiter", 1000, 1100, 1700);
 		//	Worker l = new Worker("Lauren", 100, "waiter", 1000, 1100, 1700);
-		Worker m = new Worker("Matthew", 10, "maintenance", 800, 1400, 1700);
+		Worker m = new Worker("Matthew", 300, "maintenance", 800, 1400, 1700);
 
 		//!!!!Important -- Need to initialize setters 
 		//ex. waiter.setHost, waiter.setCook, waiter.setHost, 

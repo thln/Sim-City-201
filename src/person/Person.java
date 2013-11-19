@@ -20,8 +20,6 @@ public abstract class Person extends Agent {
 
 	//Data
 	String name;
-	public double money;
-	Phonebook phonebook; //List of all agent correspondents in phonebook
 	private Semaphore atDestination = new Semaphore(0,true);
 
 	//Role Related
@@ -38,6 +36,7 @@ public abstract class Person extends Agent {
 	public boolean hasFoodInFridge;
 
 	//Bank Related
+	public double money;
 	public int accountNum;
 	public double accountBalance;
 	public double desiredCash;
@@ -51,15 +50,11 @@ public abstract class Person extends Agent {
 	protected int newTime;
 
 
-
-
 	Person(String name) {
 		this.name = name;
 		//	roles.add(new RestaurantCustomerRole(getName(), this));
 		//	roles.add(new MarketCustomerRole(this));
-
 		roles.add(new BankCustomerRole(this, getName(), "BankCustomerRole"));
-				//Phonebook.bank.bankGuardRole, 100, 20, 0, 10));
 		newTime = -5;
 		//constructors should be changed so they match
 	}
@@ -144,7 +139,7 @@ public abstract class Person extends Agent {
 				cust1.setDesire("withdraw");
 			}
 			if (money >= moneyMaxThreshold){
-				depositAmount = 200;
+				depositAmount = 100;
 				cust1.setDesire("deposit");
 			}
 		}
@@ -169,7 +164,7 @@ public abstract class Person extends Agent {
 		setRoleActive(r);
 		BankCustomerRole cust1 = (BankCustomerRole) r;
 		cust1.setDesire("robBank");
-		phonebook.bank.bankGuardRole.msgRobbingBank(cust1);
+		Phonebook.bank.bankGuardRole.msgRobbingBank(cust1);
 		stateChanged();
 	}
 
@@ -196,11 +191,11 @@ public abstract class Person extends Agent {
 			//choosing random item to buy from market
 			String item;
 			item = chooseMarketItem();
-			phonebook.market.salesPersonRole.msgIWantProducts(cust1, item, 3);
+			Phonebook.market.salesPersonRole.msgIWantProducts(cust1, item, 3);
 		}
 		else if (carStatus == CarState.wantsCar) {
 			MarketCustomerRole cust1 = (MarketCustomerRole) r;
-			phonebook.market.salesPersonRole.msgIWantProducts(cust1, "Car", 1);
+			Phonebook.market.salesPersonRole.msgIWantProducts(cust1, "Car", 1);
 			//must set desire to hasCar once car is bought
 		}
 
@@ -215,8 +210,8 @@ public abstract class Person extends Agent {
 		do {
 			myRandomChoice = rand.nextInt(10);
 			myRandomChoice %= 7;
-		} while (!phonebook.market.marketItemsForSale.containsKey(myRandomChoice) || (money < phonebook.market.marketItemsForSale.get(myRandomChoice).price));
-		item = phonebook.market.marketItemsForSale.get(myRandomChoice).itemName;
+		} while (!Phonebook.market.marketItemsForSale.containsKey(myRandomChoice) || (money < Phonebook.market.marketItemsForSale.get(myRandomChoice).price));
+		item = Phonebook.market.marketItemsForSale.get(myRandomChoice).itemName;
 		return item;
 	}
 
