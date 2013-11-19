@@ -22,20 +22,20 @@ import java.util.List;
 public class Application extends JPanel {
 
 	private ArrayList<Person> Population = new ArrayList<Person>();
+
 	public static Bank bank = new Bank();
 	public static Market market = new Market();
 	public static Restaurant restaurant = new Restaurant();
 	public static Phonebook phonebook = new Phonebook(bank, market, restaurant);
 
-
 	public Application() {
 		//Worker(String name, int money, String jobTitle, int startT, int lunchT, int endT);
 		//Standard Workers
 
-		Worker b = new Worker("Ben", 500, "loanOfficer", 800, 1200, 1600);
 		//add all important workers to phonebook
+		Worker b = new Worker("Ben", 500, "loanOfficer", 800, 1200, 1600);
 		Worker c = new Worker("Caitlyn", 500, "bankGuard", 800, 1200, 1600);
-		//	Bank.bankGuardRole = (BankGuardRole) c.getWorkerRole();
+			Phonebook.bank.bankGuardRole = (BankGuardRole) c.getWorkerRole();
 		Worker a = new Worker("Alex", 500, "bankTeller", 800, 1200, 1600);
 		//	Worker d = new Worker("Derrick", 500, "marketRunner", 1100, 1300, 1900);
 		Worker e = new Worker("Erin", 0, "marketSales", 1100, 1300, 1900);

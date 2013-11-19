@@ -2,7 +2,7 @@ package bank;
 
 import person.Person;
 import person.Role;
-
+import application.Phonebook;
 import java.util.List;
 
 public class BankTellerRole extends Role {
@@ -40,10 +40,10 @@ public class BankTellerRole extends Role {
 	}
 
 	public BankTellerRole (String name, Person p1, String roleName) {
-		super(p1);
+		super(p1, name, roleName);
 		this.RoleName = roleName;
 		this.name = name;
-		myLoaner = Bank.loanOfficerRole;
+		myLoaner = Phonebook.bank.loanOfficerRole;
 		accounts = myLoaner.getAccounts();
 	}
 	
@@ -222,7 +222,7 @@ public class BankTellerRole extends Role {
 	
 	void BecomeAvailable (Account account1) {
 		account1.state = AccountState.neutral;
-		Bank.bankGuardRole.msgTellerBecameAvailable(this);
+		Phonebook.bank.bankGuardRole.msgTellerBecameAvailable(this);
 	}
 
 	public double getVault() {

@@ -14,6 +14,7 @@ import market.MarketCustomerRole;
 import market.MarketRunnerRole;
 import market.SalesPersonRole;
 import market.UPSmanRole;
+import application.Phonebook;
 import bank.Bank;
 import bank.BankCustomerRole;
 import bank.BankGuardRole;
@@ -65,7 +66,7 @@ public class Worker extends Person {
 			}
 			if (title == "bankGuard") {
 				workerRole = new BankGuardRole(name, myself, title);
-				Bank.bankGuardRole = (BankGuardRole) workerRole;
+				Phonebook.bank.bankGuardRole = (BankGuardRole) workerRole;
 				roles.add(workerRole);			
 			}
 			if (title == "marketRunner") {

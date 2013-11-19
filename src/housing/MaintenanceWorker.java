@@ -24,7 +24,7 @@ public class MaintenanceWorker extends Role
 	public MaintenanceWorker(Person person, String name) 
 	{
 		super(person);
-		this.RoleName = name;
+		this.roleName = name;
 		this.name = name;
 	}
 	
