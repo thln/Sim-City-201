@@ -20,7 +20,7 @@ public class ApplicationGui extends JFrame {
 	ApplicationPanel appPanel; 
 	AnimationPanel animPanel = new AnimationPanel();
 
-	static Application simcity201;
+	//static Application simcity201;
 	
 	//List containing all of the different building animation panels
 	final static int WINDOWX = 1200;
@@ -53,13 +53,13 @@ public class ApplicationGui extends JFrame {
 	
 	
 	public static void main(String[] args) {
-//        ApplicationGui gui = new ApplicationGui();
- //       gui.setTitle("SimCity 201 - Team 20");
- //       gui.setVisible(true);
- //       gui.setResizable(true);        
- //       gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ApplicationGui gui = new ApplicationGui();
+        gui.setTitle("SimCity 201 - Team 20");
+        gui.setVisible(true);
+        gui.setResizable(true);        
+        gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-        simcity201 = new Application();
+      //  simcity201 = new Application();
        
     }
 	
