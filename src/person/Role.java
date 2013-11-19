@@ -12,7 +12,7 @@ public abstract class Role {
 	enum RoleState {active, inActive, waitingToExecute}
 	private RoleState state = RoleState.inActive;
 	
-	protected Role(Person person, String pName, String rName) {
+	protected Role(Person person, String rName, String pName) {
 		this.person = person;
 		personName = pName;
 		roleName = rName;
@@ -52,7 +52,9 @@ public abstract class Role {
      */
     protected void print(String msg, Throwable e) {
         StringBuffer sb = new StringBuffer();
-        sb.append(getName());
+        sb.append(personName);
+        sb.append("role ");
+       // sb.append(roleName);
         sb.append(": ");
         sb.append(msg);
         sb.append("\n");

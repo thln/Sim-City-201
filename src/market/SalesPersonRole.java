@@ -12,9 +12,8 @@ public class SalesPersonRole extends Role {
 	protected String RoleName = "Sales Person";
 	String name;
 
-	public SalesPersonRole(Person person, String name) {
-		super(person);
-		this.name = name;
+	public SalesPersonRole(Person person, String pName, String rName) {
+		super(person, pName, rName);
 	}
 
 	//Data

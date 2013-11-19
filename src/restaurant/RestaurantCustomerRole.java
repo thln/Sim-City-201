@@ -12,7 +12,6 @@ import person.Role;
  * Restaurant customer agent.
  */
 public class RestaurantCustomerRole extends Role {
-	private String name;
 	private int hungerLevel = 5;        // determines length of meal
 	Timer timer = new Timer();
 	protected String RoleName = "Restaurant Customer";
@@ -47,9 +46,9 @@ public class RestaurantCustomerRole extends Role {
 	 * @param name name of the customer
 	 * @param gui  reference to the customergui so the customer can send it messages
 	 */
-	public RestaurantCustomerRole(String name, Person p1){
-		super(p1);
-		this.name = name;
+	public RestaurantCustomerRole(Person p1, String pName, String rName) {
+		super(p1, pName, rName);
+	/*
 		if (name.equals("Broke 1")) {
 			money = 0;
 		}
@@ -62,6 +61,9 @@ public class RestaurantCustomerRole extends Role {
 		else {
 			money = 50;
 		}
+		
+		these need to just pass in money, or become dishonest if instanceof crook
+		*/
 	}
 
 	/**
@@ -72,7 +74,7 @@ public class RestaurantCustomerRole extends Role {
 	}
 
 	public String getCustomerName() {
-		return name;
+		return personName;
 	}
 
 
@@ -336,7 +338,7 @@ public class RestaurantCustomerRole extends Role {
 
 	private void PayCheck() {
 		
-		if (name.equals("Broke 3")) {
+		if (personName.equals("Broke 3")) {
 			money = 0;
 		}
 		
@@ -383,10 +385,6 @@ public class RestaurantCustomerRole extends Role {
 
 
 	//Utilities
-
-	public String getName() {
-		return name;
-	}
 
 	public int getHungerLevel() {
 		return hungerLevel;

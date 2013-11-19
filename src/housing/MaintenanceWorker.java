@@ -21,11 +21,9 @@ public class MaintenanceWorker extends Role
 	};
 		//List  WorkOrders;
 	
-	public MaintenanceWorker(Person person, String name) 
+	public MaintenanceWorker(Person person, String pName, String rName) 
 	{
-		super(person);
-		this.roleName = name;
-		this.name = name;
+		super(person, pName, rName);
 	}
 	
 	protected boolean pickAndExecuteAnAction() 

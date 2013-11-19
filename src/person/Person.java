@@ -19,7 +19,6 @@ import application.Phonebook;
 public abstract class Person extends Agent {
 
 	//Data
-	String name; 
 	public double money;
 	Phonebook phonebook; //List of all agent correspondents in phonebook
 	private Semaphore atDestination = new Semaphore(0,true);
@@ -54,7 +53,7 @@ public abstract class Person extends Agent {
 		this.name = name;
 		//	roles.add(new RestaurantCustomerRole(getName(), this));
 		//	roles.add(new MarketCustomerRole(this));
-		roles.add(new BankCustomerRole(getName(), this, Bank.bankGuardRole, 100, 20, 0, 10));
+		roles.add(new BankCustomerRole(getName(), this, Phonebook.bank.bankGuardRole, 100, 20, 0, 10));
 		newTime = -5;
 		//constructors should be changed so they match
 	}
@@ -246,7 +245,7 @@ public abstract class Person extends Agent {
 		//Once semaphore is released from GUI
 
 		if (r instanceof BankTellerRole)
-			Bank.bankGuardRole.msgTellerCameToWork((BankTellerRole) r);
+			Phonebook.bank.bankGuardRole.msgTellerCameToWork((BankTellerRole) r);
 		setRoleActive(r);
 		stateChanged();
 	}
