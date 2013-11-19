@@ -2,7 +2,6 @@ package market;
 
 import java.util.*;
 
-import market.SalesPersonRole.Item;
 import person.Person;
 
 public class Market {
