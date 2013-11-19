@@ -1,4 +1,4 @@
-package application.gui.controlPanel;
+package controlPanel;
 
 import javax.swing.*;
 import java.awt.*;

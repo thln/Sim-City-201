@@ -1,7 +1,6 @@
 package application.gui;
 
 import javax.swing.*;
-import person.Profile;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
@@ -87,14 +86,14 @@ public class GroupPanel extends JPanel implements ActionListener{
 	}
 	
 	//Adds person's profile quick view onto a Jbutton and adds this button to the list pane
-		public void addPerson(Profile profile){
-			if(profile.getName() !=null){
+		public void addPerson(String name){
+			if(name !=null){
 				Dimension paneSize = pane.getSize();
 			    
 				//Profile Quick View Button
 				Dimension buttonSize = new Dimension(paneSize.width, (int) (paneSize.height /7));
 				JButton button = new JButton();
-				button.setText(profile.printQuickView());
+				//button.setText(profile.printQuickView());
 				button.setSize(buttonSize);
 	            button.addActionListener(this);
 	            list.add(button);
@@ -102,10 +101,10 @@ public class GroupPanel extends JPanel implements ActionListener{
 		}
 		
 		
-		public void updateProfileView(Profile profile){
+		public void updateProfileView(){
 			//Profile Full view
 			JLabel  fullView = new JLabel();
-			fullView.setText(profile.printFullView());
+			//fullView.setText(profile.printFullView());
 			add(fullView);
 
 		}

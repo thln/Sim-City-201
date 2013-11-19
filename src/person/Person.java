@@ -1,10 +1,10 @@
 package person;
 
 import java.util.*;
-import market.MarketCustomer;
+//import market.MarketCustomer;
 import person.Role;
 import person.Role.roleState;
-import restaurant.RestaurantCustomer;
+//import restaurant.RestaurantCustomer;
 import agent.Agent;
 
 public abstract class Person extends Agent {

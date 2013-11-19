@@ -1,7 +1,6 @@
-package application.gui.controlPanel;
+package controlPanel;
 
 import javax.swing.*;
-import person.Profile;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -49,7 +48,6 @@ public class AddPanel extends JPanel implements ActionListener {
 		if (e.getSource() == addButton){
 			String name = firstName.getText() + lastName.getText();
 			String type = "Crook";
-			pf = new Profile(name, type);	
 		}
 	}
 	
