@@ -42,7 +42,7 @@ public class Application extends JPanel {
 		//add all important workers to phonebook
 		Worker b = new Worker("Ben", 500, "loanOfficer", 800, 1200, 1600);
 		Worker c = new Worker("Caitlyn", 500, "bankGuard", 800, 1200, 1600);
-			Phonebook.bank.bankGuardRole = (BankGuardRole) c.getWorkerRole();
+			Phonebook.getPhonebook().getBank().bankGuardRole = (BankGuardRole) c.getWorkerRole();
 		Worker a = new Worker("Alex", 500, "bankTeller", 800, 1200, 1600);
 		//	Worker d = new Worker("Derrick", 500, "marketRunner", 1100, 1300, 1900);
 		Worker e = new Worker("Erin", 0, "marketSales", 1100, 1300, 1900);

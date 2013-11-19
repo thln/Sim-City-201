@@ -15,6 +15,7 @@ import restaurant.HostRole;
 import restaurant.RestaurantCustomerRole;
 import agent.Agent;
 import application.Phonebook;
+import application.TimeManager.Time;
 
 public abstract class Person extends Agent {
 
@@ -47,7 +48,7 @@ public abstract class Person extends Agent {
 
 	//Time Related
 	public int sleepTime = 22;
-	protected int newTime;
+	protected Time newTime;
 
 
 	Person(String name) {
@@ -55,27 +56,20 @@ public abstract class Person extends Agent {
 		//	roles.add(new RestaurantCustomerRole(getName(), this));
 		//	roles.add(new MarketCustomerRole(this));
 		roles.add(new BankCustomerRole(this, getName(), "BankCustomerRole"));
-		newTime = -5;
+		//newTime = -5;
 		//constructors should be changed so they match
 	}
 
-	//Messages
-	public void msgNewTime(int time) {
-		newTime = time;
-		stateChanged();
-	}
+
 
 	//Scheduler
 	protected boolean pickAndExecuteAnAction() {
 
+		makeDecision(newTime);
+		
 		synchronized (roles) {
 			if (!roles.isEmpty()) {
 				for (Role r : roles) {
-
-					if (newTime >= 0) {
-						updateTime(newTime);
-					}
-
 
 					if (r.getState() == RoleState.active) {
 						return r.pickAndExecuteAnAction();
@@ -115,7 +109,7 @@ public abstract class Person extends Agent {
 
 	//Actions
 
-	public abstract void updateTime(int newTime);
+	public abstract void makeDecision(Time newTime);
 
 	private void prepareForBank (Role r){
 		Do("Becoming Bank Customer");

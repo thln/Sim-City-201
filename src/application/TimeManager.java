@@ -34,9 +34,9 @@ public class TimeManager {
 	}
 	
 	public class Time {
-		int dayMinute;
-		int dayHour;
-		Day day = Day.Sunday;
+		final int dayMinute;
+		final int dayHour;
+		final Day day = Day.Sunday;
 
 		Time(int simulationMinutesSinceBegnningOfTime) {
 			dayMinute = (int) simulationMinutesSinceBegnningOfTime % 60;
