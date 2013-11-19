@@ -26,25 +26,29 @@ public class ApplicationGui extends JFrame {
 	final static int AnimPanelY = WINDOWY; //Animation View Panel Height 600
 	 
 	ApplicationGui() {
-		
+		setBounds(50,0, WINDOWX, WINDOWY);
 		//Horizontal BoxLayout -- ApplicaitonPanel on the Left, 
 				//AnimationPanel on the Right
-		Dimension appDim = new Dimension(AppPanelX, AppPanelY);
-		Dimension animDim = new Dimension(AnimPanelX, AnimPanelY);
 		
-		setLayout(new BoxLayout((Container) getContentPane(),BoxLayout.X_AXIS));
 		
-		setBounds(50,0, WINDOWX, WINDOWY);
-    	
+		setLayout(new GridLayout(1,2));
+		/*GridBagConstraints c = new GridBagConstraints();
+		//c.gridwidth = 1;
+    	//c.fill = GridBagConstraints.HORIZONTAL;
     	//here's the main application
 		//MainView 
-		appPanel.setSize(appDim);
+		c.gridx = 0;
+		c.gridy = 0;
+		c.gridwidth = 1;
+		c.ipadx = AppPanelX;*/
 		appPanel.setVisible(true);
 		appPanel.setBackground(Color.WHITE);
 		add(appPanel);
 		
 		//AnimationView
-		animPanel.setSize(animDim);
+		//c.gridwidth = GridBagConstraints.REMAINDER;
+		//c.ipadx = AppPanelY;
+
 		animPanel.setVisible(true);
 		add(animPanel);
 	}
