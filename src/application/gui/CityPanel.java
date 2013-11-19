@@ -29,7 +29,7 @@ public class CityPanel extends JPanel implements ActionListener{
         setVisible(true);
         setLayout(null);
         try {
-            background = ImageIO.read(new File("docs/grass.jpg"));
+            background = ImageIO.read(new File("docs/asphalt.jpg"));
         	} catch (IOException e) {
         	}
 	}

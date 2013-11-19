@@ -49,6 +49,8 @@ public class BuildingPanel extends JPanel implements ActionListener {
         //g2.setColor(getBackground());
         if(name.toLowerCase().contains("restaurant"))
         	g2.setColor(Color.YELLOW);
+        else if(name.toLowerCase().contains("market"))
+        	g2.setColor(Color.ORANGE);
         else
         	g2.setColor(Color.LIGHT_GRAY);
         

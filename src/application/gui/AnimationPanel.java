@@ -25,7 +25,7 @@ public class AnimationPanel extends JPanel implements MouseListener {
 	//BufferedImage bankicon = null;
 	ImageIcon bank = new ImageIcon("docs/bank.jpg", "bank icon");
 	ImageIcon restaurant = new ImageIcon("docs/restaurant.jpg", "restaurant icon");
-	ImageIcon market = new ImageIcon("docs/bank.jpg", "market icon");
+	ImageIcon market = new ImageIcon("docs/market.jpg", "market icon");
 	ImageIcon house = new ImageIcon("docs/house.jpg", "house icon");
 	
 	AnimationPanel(){
@@ -52,6 +52,14 @@ public class AnimationPanel extends JPanel implements MouseListener {
     	buildingPanels.add(bankPanel);
     	imglabels.add(bankLabel);
     	buildingMap.put(bankLabel, bankPanel);
+    	Dimension banksize = bankLabel.getPreferredSize();
+    	bankLabel.setBounds(getSize().width, 100, banksize.width, banksize.height);
+    	
+    	BuildingPanel marketPanel = new BuildingPanel("Market");
+    	JLabel marketLabel = new JLabel(market);
+    	buildingPanels.add(marketPanel);
+    	imglabels.add(marketLabel);
+    	buildingMap.put(marketLabel, marketPanel);
 
     	//initializing some stubs to test the stacking
     	for(int i=0; i < 5; i++) {
@@ -60,14 +68,14 @@ public class AnimationPanel extends JPanel implements MouseListener {
     		JLabel restLabel = new JLabel(restaurant);
     		imglabels.add(restLabel);
     		buildingMap.put(restLabel, restPanel);
+    		
+    		Dimension size = restLabel.getPreferredSize();
+    		restLabel.setBounds(size.width*i, 50, size.width, size.height);
     	}
     	
-    	//positioning the city building icons (temp)
+    	//positioning the city building icons
     	for(int n=0; n<imglabels.size();n++) {
-    		Dimension size = imglabels.get(n).getPreferredSize();
-    		imglabels.get(n).setBounds(size.width*n, 50, size.width, size.height);
     		cityPanel.add(imglabels.get(n));
-    		
     		imglabels.get(n).addMouseListener(this);
     	}
     	
