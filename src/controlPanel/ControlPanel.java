@@ -14,8 +14,9 @@ public class ControlPanel extends JPanel{
 	private JTabbedPane ControlPane = new JTabbedPane();
 	
 	public ControlPanel(){
+		
 		addPersonTab.setVisible(true);
-		ControlPane.addTab("Add Person", addPersonTab);
+		ControlPane.addTab("Add Person", null, addPersonTab, "add a person");
 		add(ControlPane);
 	}	
 	
