@@ -6,6 +6,7 @@ import restaurant.myCustomer.customerState;
 import java.util.*;
 import java.util.concurrent.Semaphore;
 
+import person.Person;
 import person.Role;
 
 /**
@@ -37,11 +38,9 @@ public class WaiterRole extends Role {
 
 	protected boolean PermissionToBreak = false;
 
-	public WaiterRole(String name) 
+	public WaiterRole(Person p1, String pName, String rName) 
 	{
-		super();
-		this.name = name;
-		this.RoleName = name;
+		super(p1, pName, rName);
 	}
 
 	public String getMaitreDName() {

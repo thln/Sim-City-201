@@ -41,8 +41,6 @@ public class BankTellerRole extends Role {
 
 	public BankTellerRole (String name, Person p1, String roleName) {
 		super(p1, name, roleName);
-		this.RoleName = roleName;
-		this.name = name;
 		myLoaner = Phonebook.bank.loanOfficerRole;
 		accounts = myLoaner.getAccounts();
 	}

@@ -24,8 +24,6 @@ public class MaintenanceWorker extends Role
 	public MaintenanceWorker(Person person, String pName, String rName) 
 	{
 		super(person, pName, rName);
-		this.roleName = name;
-		this.name = name;
 	}
 	
 	protected boolean pickAndExecuteAnAction() 

@@ -23,7 +23,6 @@ import bank.LoanOfficerRole;
 
 public class Worker extends Person {
 	//Data
-	String name;
 	Job myJob = null;
 	int marketTime;
 	int bankTime = 900;
@@ -34,7 +33,6 @@ public class Worker extends Person {
 	public Worker (String name, int money, String jobTitle, int startT, int lunchT, int endT) {
 		super(name);
 		this.money = money;
-		this.name = name;       
 		myJob = new Job(jobTitle, startT, lunchT, endT, this);
 		marketTime = myJob.getEndTime();
 	}
@@ -74,35 +72,35 @@ public class Worker extends Person {
 				roles.add(workerRole);
 			}
 			if (title == "marketSales") {
-				workerRole = new SalesPersonRole(myself, title);
+				workerRole = new SalesPersonRole(myself, name, title);
 				roles.add(workerRole);
 			}
 			if (title == "UPSman") {
-				workerRole = new UPSmanRole(myself, title);
+				workerRole = new UPSmanRole(myself, name, title);
 				roles.add(workerRole);
 			}
 			if (title == "maintenance") {
-				workerRole = new MaintenanceWorker(myself, title);
+				workerRole = new MaintenanceWorker(myself, name, title);
 				roles.add(workerRole);
 			}
 			if (title == "cashier") {
-				workerRole = new CashierRole(title);
+				workerRole = new CashierRole(myself, name, title);
 				roles.add(workerRole);
 			}
 			if (title == "host") {
-				workerRole = new HostRole(title);
+				workerRole = new HostRole(myself, name, title);
 				roles.add(workerRole);
 			}
 			if (title == "cook") {
-				workerRole = new CookRole(title);		//need to input name not title
+				workerRole = new CookRole(myself, name, title);		//need to input name not title
 				roles.add(workerRole);
 			}
 			if (title == "waiter") {
-				workerRole = new WaiterRole(title);
+				workerRole = new WaiterRole(myself, name, title);
 				roles.add(workerRole);
 			}
 			if (title == "altWaiter") {
-				workerRole = new AltWaiterRole(title);
+				workerRole = new AltWaiterRole(myself, name, title);
 				roles.add(workerRole);
 			}
 		}
@@ -187,6 +185,6 @@ public class Worker extends Person {
 			stateChanged();
 		}  
 
-		newTime = -30;
+		newTime = -5;
 	}
 }

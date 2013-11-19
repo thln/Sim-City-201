@@ -22,9 +22,11 @@ import java.util.List;
 public class Application extends JPanel {
 
 	private ArrayList<Person> Population = new ArrayList<Person>();
-	private Bank bank = new Bank();
-	private Market market = new Market();
-	private Restaurant restaurant = new Restaurant();
+
+	public static Bank bank = new Bank();
+	public static Market market = new Market();
+	public static Restaurant restaurant = new Restaurant();
+	public static Phonebook phonebook = new Phonebook(bank, market, restaurant);
 
 	public Application() {
 		//Worker(String name, int money, String jobTitle, int startT, int lunchT, int endT);
