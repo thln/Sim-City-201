@@ -1,18 +1,20 @@
 package application.gui;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.util.*;
+
 import javax.imageio.*;
 
 import java.awt.image.BufferedImage;
 
 public class CityPanel extends JPanel implements ActionListener{
 	
-    private final int WINDOWX = 450;
-    private final int WINDOWY = 400;
+    private final int WINDOWX = 570;
+    private final int WINDOWY = 360;
     
     //list of images representing our different buildings
     BufferedImage carIcon = null;
@@ -20,11 +22,16 @@ public class CityPanel extends JPanel implements ActionListener{
     BufferedImage marketIcon = null;
     BufferedImage houseIcon = null;
     BufferedImage restaurantIcon = null;
+    BufferedImage background = null;
 	
 	public CityPanel() {
 	   	setSize(WINDOWX, WINDOWY);
         setVisible(true);
         setLayout(null);
+        try {
+            background = ImageIO.read(new File("docs/grass.jpg"));
+        	} catch (IOException e) {
+        	}
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -36,16 +43,12 @@ public class CityPanel extends JPanel implements ActionListener{
         //Clear the screen by painting a rectangle the size of the frame
         g2.setColor(getBackground());
         g2.fillRect(0, 0, WINDOWX, WINDOWY );
-
+        g2.drawImage(background, 0, 0, null);
         //Here is the table
-        g2.setColor(Color.ORANGE);
-
-        for(int ix=1; ix<= 5; ix++) {
-        	g2.fillRect(50*ix, 50, 40, 40);
-        }
+        //g2.setColor(Color.ORANGE);
         
     }
     public String toString() {
-    	return "JPanel";
+    	return "City JPanel";
     }
 }

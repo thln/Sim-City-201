@@ -34,28 +34,39 @@ public class ApplicationGui extends JFrame {
 		
 		setLayout(new BoxLayout((Container) getContentPane(),BoxLayout.X_AXIS));
 		
-		setBounds(50,0, WINDOWX, WINDOWY);
+		setBounds(50, 50, WINDOWX, WINDOWY);
     	
     	//here's the main application
 		//MainView 
 		appPanel.setSize(appDim);
+		/*
+		appPanel.setPreferredSize(appDim);
+		appPanel.setMinimumSize(appDim);
+		appPanel.setMaximumSize(appDim);
+		*/
 		appPanel.setVisible(true);
-		appPanel.setBackground(Color.WHITE);
 		add(appPanel);
 		
 		//AnimationView
 		animPanel.setSize(animDim);
+		/*
+		animPanel.setPreferredSize(animDim);
+		animPanel.setMinimumSize(animDim);
+		animPanel.setMaximumSize(animDim);
+		*/
 		animPanel.setVisible(true);
 		add(animPanel);
+    
 	}
+	
 	
 	public static void main(String[] args) {
         ApplicationGui gui = new ApplicationGui();
         gui.setTitle("SimCity 201 - Team 20");
-        
         gui.setVisible(true);
         gui.setResizable(true);        
         gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
         
       /*
     	Worker loanOffice = new Worker("Officer", 100, "loanOfficer", 8, 0, 10);  	
@@ -81,7 +92,7 @@ public class ApplicationGui extends JFrame {
 		loanOffice.updateTime(8);
 		bankCust.updateTime(8);
 		*/
-
+       
     }
 	
 }
