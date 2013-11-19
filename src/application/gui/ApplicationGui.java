@@ -26,12 +26,13 @@ public class ApplicationGui extends JFrame {
 	final static int AnimPanelY = WINDOWY; //Animation View Panel Height 600
 	 
 	ApplicationGui() {
+		
+		Dimension appDim = new Dimension(AppPanelX, AppPanelY);
+		Dimension animDim = new Dimension(AnimPanelX, AnimPanelY);
 		setBounds(50,0, WINDOWX, WINDOWY);
 		//Horizontal BoxLayout -- ApplicaitonPanel on the Left, 
 				//AnimationPanel on the Right
 		
-		
-<<<<<<< HEAD
 		setLayout(new GridLayout(1,2));
 		/*GridBagConstraints c = new GridBagConstraints();
 		//c.gridwidth = 1;
@@ -42,34 +43,23 @@ public class ApplicationGui extends JFrame {
 		c.gridy = 0;
 		c.gridwidth = 1;
 		c.ipadx = AppPanelX;*/
-=======
+		
 		setBounds(50, 50, WINDOWX, WINDOWY);
     	
     	//here's the main application
 		//MainView 
 		appPanel.setSize(appDim);
-		/*
-		appPanel.setPreferredSize(appDim);
-		appPanel.setMinimumSize(appDim);
-		appPanel.setMaximumSize(appDim);
-		*/
->>>>>>> 025d81095eaf8017d14ebbb4e9e66b3b0bd7834f
+		
 		appPanel.setVisible(true);
 		add(appPanel);
 		
 		//AnimationView
-<<<<<<< HEAD
+
 		//c.gridwidth = GridBagConstraints.REMAINDER;
 		//c.ipadx = AppPanelY;
 
-=======
 		animPanel.setSize(animDim);
-		/*
-		animPanel.setPreferredSize(animDim);
-		animPanel.setMinimumSize(animDim);
-		animPanel.setMaximumSize(animDim);
-		*/
->>>>>>> 025d81095eaf8017d14ebbb4e9e66b3b0bd7834f
+		
 		animPanel.setVisible(true);
 		add(animPanel);
     

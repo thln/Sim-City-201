@@ -1,8 +1,6 @@
-package restaurant.gui;
+package application.gui;
 
-import restaurant.CustomerAgent;
-import restaurant.HostAgent;
-import restaurant.Order;
+import restaurant.*;
 
 import java.awt.*;
 
@@ -10,11 +8,11 @@ import javax.swing.JLabel;
 
 public class CustomerGui implements Gui{
 
-	private CustomerAgent agent = null;
+	private RestaurantCustomerRole agent = null;
 	private boolean isPresent = false;
 	private boolean isHungry = false;
 
-	RestaurantGui gui;
+	//RestaurantGui gui;
 
 	private int xPos, yPos;
 	private int xDestination, yDestination;
@@ -30,11 +28,11 @@ public class CustomerGui implements Gui{
 
 	private String choice;
 
-	public CustomerGui(CustomerAgent c, RestaurantGui gui){ //HostAgent m) {
+	public CustomerGui(RestaurantCustomerRole c/*, RestaurantGui gui*/){ //HostAgent m) {
 		agent = c;
 		xPos = -20;
 		yPos = -20;
-		this.gui = gui;
+		//this.gui = gui;
 	}
 
 	public void updatePosition() {
@@ -62,7 +60,7 @@ public class CustomerGui implements Gui{
 				agent.msgAnimationFinishedLeaveRestaurant();
 				System.out.println("about to call gui.setCustomerEnabled(agent);");
 				isHungry = false;
-				gui.setCustomerEnabled(agent);
+			//	gui.setCustomerEnabled(agent);
 			}
 			command = Command.noCommand;
 		}

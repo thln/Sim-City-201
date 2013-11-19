@@ -1,9 +1,7 @@
-package restaurant.gui;
+package application.gui;
 
 
-import restaurant.CustomerAgent;
-import restaurant.HostAgent;
-import restaurant.WaiterAgent;
+import restaurant.*;
 import sun.applet.resources.MsgAppletViewer;
 
 import java.awt.*;
@@ -12,8 +10,8 @@ import java.util.TreeMap;
 
 public class WaiterGui implements Gui {
 
-	private WaiterAgent agent = null;
-	RestaurantGui gui;
+	private WaiterRole agent = null;
+	//RestaurantGui gui;
 
 	private int xPos = -20, yPos = 0;//default waiter position
 	private int xDestination = -20, yDestination = -20;//default start position
@@ -27,9 +25,9 @@ public class WaiterGui implements Gui {
 	private boolean deliveringOrder = false;
 	private String currentDelivery;
 
-	public WaiterGui(WaiterAgent agent, RestaurantGui gui) {
+	public WaiterGui(WaiterRole agent/*, RestaurantGui gui*/) {
 		this.agent = agent;
-		this.gui = gui;
+		//this.gui = gui;
 	}
 
 	public void updatePosition() {
@@ -85,7 +83,7 @@ public class WaiterGui implements Gui {
 	}
 	
 	private void enableOffBreakBox() {
-		gui.enableOffBreakBox(agent);
+		//gui.enableOffBreakBox(agent);
 	}
 	
 //	private void enableOnBreakBox() {
@@ -103,7 +101,7 @@ public class WaiterGui implements Gui {
 	
 	public void denyBreak() {
 		onBreak = false;
-		gui.enableOnBreakBox(agent);
+		//gui.enableOnBreakBox(agent);
 	}
 
 	public boolean isOnBreak() {
@@ -118,7 +116,7 @@ public class WaiterGui implements Gui {
 		yDestination = y + 20;
 	}
 
-	public void DoBringToTable(CustomerAgent customer, int tableNumber) {
+	public void DoBringToTable(RestaurantCustomerRole customer, int tableNumber) {
 
 		if (tableNumber == 1)
 		{

@@ -1,9 +1,7 @@
-package restaurant.gui;
+package application.gui;
 
 
-import restaurant.CustomerAgent;
-import restaurant.CookAgent;
-import restaurant.myCustomer;
+import restaurant.*;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -14,7 +12,7 @@ import java.util.Map;
 
 public class CookGui implements Gui {
 
-	private CookAgent agent = null;
+	private CookRole agent = null;
 
 	private int xPos = 405, yPos = 140;//default cook position
 	private int xDestination = 405, yDestination = 140;//default start position
@@ -30,7 +28,7 @@ public class CookGui implements Gui {
 	
 	private List<String> platedFood = Collections.synchronizedList(new ArrayList<String>());
 
-	public CookGui(CookAgent agent) {
+	public CookGui(CookRole agent) {
 		this.agent = agent;
 	}
 	
