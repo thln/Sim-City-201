@@ -27,5 +27,4 @@ public class RevolvingStand {
 			return AllOrders.isEmpty();
 		}
 	}
-
 }

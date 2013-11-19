@@ -7,6 +7,11 @@ import person.Person;
 
 public class Market {
 
+	//Roles
+	public SalesPersonRole salesPersonRole;
+	public UPSmanRole UPSmanRole;
+	
+	
 	double money;
 	HashMap<String, Integer> inventory = new HashMap<String, Integer>(); {
 		//For people
@@ -38,10 +43,6 @@ public class Market {
 		marketItemsForSale.put(7, new Item("Cheese", 4.99));
 	}
 	
-	public SalesPersonRole salesPersonRole;
-	public UPSmanRole	UPSmanRole;
-	
-	
 	public SalesPersonRole arrivedAtWorkSalesPerson(Person person) {
 		return salesPersonRole;
 	}
@@ -50,8 +51,21 @@ public class Market {
 		return UPSmanRole;
 	}
 	
-	public setSalesPersonRole(Person person) {
-		//salesPersonRole = ?
+	public void setSalesPersonRole(Person person) {
+		person.setWorkerRole(salesPersonRole);
+	}
+	
+	public void setUPSmanRole(Person person) {
+		person.setWorkerRole(UPSmanRole);
+	}
+	
+	public void goingOffWork(Person person) {
+		if (person.getWorkerRole().equals(salesPersonRole)) {
+			salesPersonRole = null;
+		}
+		else if (person.getWorkerRole().equals(UPSmanRole)) {
+			UPSmanRole = null;
+		}
 	}
 	
 	public class Item {
