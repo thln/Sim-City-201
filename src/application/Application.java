@@ -25,7 +25,7 @@ public class Application extends JPanel {
 	private Bank bank = new Bank();
 	private Market market = new Market();
 	private Restaurant restaurant = new Restaurant();
-	private Phonebook phonebook = new Phonebook(bank, market, restaurant);
+	public Phonebook phonebook = new Phonebook(bank, market, restaurant);
 
 
 	public Application() {
