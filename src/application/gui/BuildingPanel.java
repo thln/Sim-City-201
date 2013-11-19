@@ -17,24 +17,23 @@ import java.awt.image.BufferedImage;
 
 public class BuildingPanel extends JPanel implements ActionListener {
 
-    private final int WINDOWX = 450;
-    private final int WINDOWY = 400;
+    private final int WINDOWX = 570;
+    private final int WINDOWY = 360;
     
     static final int NTABLES = 5;
     
     private Image bufferImage;
     private Dimension bufferSize;
     
-    String buildingName;
-    private List<JLabel> labels = new ArrayList<JLabel>();
+    String name;
     private List<Gui> guis = new ArrayList<Gui>();
 
-    public BuildingPanel(String name) {
+    public BuildingPanel(String buildName) {
     	setSize(WINDOWX, WINDOWY);
         setVisible(true);
         setLayout(null);
         bufferSize = this.getSize();
-        buildingName = name;
+        name = buildName;
     	Timer timer = new Timer(20, this );
     	timer.start();
     }
@@ -44,20 +43,18 @@ public class BuildingPanel extends JPanel implements ActionListener {
 	}
 
     public void paintComponent(Graphics g) {
+    	
         Graphics2D g2 = (Graphics2D)g;
         //Clear the screen by painting a rectangle the size of the frame
-        g2.setColor(getBackground());
-        g2.fillRect(0, 0, WINDOWX, WINDOWY );
-
-        //Here is the table
-        g2.setColor(Color.RED);
-        // ALT: g2.fillRect(WINDOWX*4/9, WINDOWY*5/7, 50, 50);//200 and 250 need to be table params
+        //g2.setColor(getBackground());
+        if(name.toLowerCase().contains("restaurant"))
+        	g2.setColor(Color.YELLOW);
+        else
+        	g2.setColor(Color.LIGHT_GRAY);
         
-        if(NTABLES < 10) {
-        	for(int ix=1; ix<= NTABLES; ix++) {
-        		g2.fillRect(50*ix, 50, 40, 40);
-        	}
-        }
+        g2.fillRect(0, 0, WINDOWX, WINDOWY );	
+        g2.setColor(Color.RED);
+        g.drawString(name, 10, 10);
         for(Gui gui : guis) {
             if (gui.isPresent()) {
                 gui.updatePosition();
@@ -78,6 +75,6 @@ public class BuildingPanel extends JPanel implements ActionListener {
     }
     
     public String toString() {
-    	return buildingName;
+    	return name;
     }
 }

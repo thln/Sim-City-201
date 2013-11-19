@@ -31,6 +31,7 @@ public class ApplicationGui extends JFrame {
 				//AnimationPanel on the Right
 		
 		
+<<<<<<< HEAD
 		setLayout(new GridLayout(1,2));
 		/*GridBagConstraints c = new GridBagConstraints();
 		//c.gridwidth = 1;
@@ -41,25 +42,47 @@ public class ApplicationGui extends JFrame {
 		c.gridy = 0;
 		c.gridwidth = 1;
 		c.ipadx = AppPanelX;*/
+=======
+		setBounds(50, 50, WINDOWX, WINDOWY);
+    	
+    	//here's the main application
+		//MainView 
+		appPanel.setSize(appDim);
+		/*
+		appPanel.setPreferredSize(appDim);
+		appPanel.setMinimumSize(appDim);
+		appPanel.setMaximumSize(appDim);
+		*/
+>>>>>>> 025d81095eaf8017d14ebbb4e9e66b3b0bd7834f
 		appPanel.setVisible(true);
-		appPanel.setBackground(Color.WHITE);
 		add(appPanel);
 		
 		//AnimationView
+<<<<<<< HEAD
 		//c.gridwidth = GridBagConstraints.REMAINDER;
 		//c.ipadx = AppPanelY;
 
+=======
+		animPanel.setSize(animDim);
+		/*
+		animPanel.setPreferredSize(animDim);
+		animPanel.setMinimumSize(animDim);
+		animPanel.setMaximumSize(animDim);
+		*/
+>>>>>>> 025d81095eaf8017d14ebbb4e9e66b3b0bd7834f
 		animPanel.setVisible(true);
 		add(animPanel);
+    
 	}
+	
 	
 	public static void main(String[] args) {
         ApplicationGui gui = new ApplicationGui();
         gui.setTitle("SimCity 201 - Team 20");
-        
         gui.setVisible(true);
         gui.setResizable(true);        
         gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
         
       /*
     	Worker loanOffice = new Worker("Officer", 100, "loanOfficer", 8, 0, 10);  	
@@ -85,7 +108,7 @@ public class ApplicationGui extends JFrame {
 		loanOffice.updateTime(8);
 		bankCust.updateTime(8);
 		*/
-
+       
     }
 	
 }

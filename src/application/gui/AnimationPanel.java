@@ -21,15 +21,12 @@ public class AnimationPanel extends JPanel implements MouseListener {
 	public List<JPanel> buildingPanels = new ArrayList<JPanel>();
 	public List<JLabel> imglabels = new ArrayList<JLabel>();
 	public Map<JLabel, JPanel> buildingMap = new HashMap<JLabel, JPanel>();
-	//JPanel buildingPanel = new JFrame("Building View");
-			
-	final static int CityDimX = 600; //City View Frame Width
-	final static int CityDimY = 300; //City View Frame Height
-	final static int BuildingDimX = 600; //Building View Frame Width
-	final static int BuildingDimY = 300; //Building View Frame Height
-
 	
-	BufferedImage bankicon = null;
+	//BufferedImage bankicon = null;
+	ImageIcon bank = new ImageIcon("docs/bank.jpg", "bank icon");
+	ImageIcon restaurant = new ImageIcon("docs/restaurant.jpg", "restaurant icon");
+	ImageIcon market = new ImageIcon("docs/bank.jpg", "market icon");
+	ImageIcon house = new ImageIcon("docs/house.jpg", "house icon");
 	
 	AnimationPanel(){
 		
@@ -38,7 +35,7 @@ public class AnimationPanel extends JPanel implements MouseListener {
 		setBorder(BorderFactory.createTitledBorder("Animation"));
     	//here we have the main city view
     	
-		cityPanel.setBounds(3, 15, 700, 400); //x & y positions in animation panel, x & y sizes
+		cityPanel.setBounds(10, 20, 570, 360); //x & y positions in animation panel, x & y sizes
 		/*
     	cityPanel.setPreferredSize(cityDim);
     	cityPanel.setMinimumSize(cityDim);
@@ -50,31 +47,36 @@ public class AnimationPanel extends JPanel implements MouseListener {
     	
     	
     	//stacking the building animations
-    	ImageIcon icon = new ImageIcon("bank.jpg", "bank icon");
-    	ImageIcon restaurant = new ImageIcon("restaurant.jpg", "restaurant icon");
+    	BuildingPanel bankPanel = new BuildingPanel("Bank");
+    	JLabel bankLabel = new JLabel(bank);
+    	buildingPanels.add(bankPanel);
+    	imglabels.add(bankLabel);
+    	buildingMap.put(bankLabel, bankPanel);
 
     	//initializing some stubs to test the stacking
     	for(int i=0; i < 5; i++) {
-    		//BuildingPanel building = new BuildingPanel("Restaurant " + (i+1));
-    		//buildingPanels.add(building);
-    		//JLabel label = new JLabel("Label " + (i+1), restaurant, JLabel.TRAILING);
-    		JLabel label = new JLabel(restaurant);
-    		//imglabels.add(label);
-    		imglabels.add(label);
-    		//buildingMap.put(label, building);
+    		BuildingPanel restPanel = new BuildingPanel("Restaurant " + (i+1));
+    		buildingPanels.add(restPanel);
+    		JLabel restLabel = new JLabel(restaurant);
+    		imglabels.add(restLabel);
+    		buildingMap.put(restLabel, restPanel);
     	}
     	
-    	for(int n=0; n<buildingPanels.size();n++) {
+    	//positioning the city building icons (temp)
+    	for(int n=0; n<imglabels.size();n++) {
     		Dimension size = imglabels.get(n).getPreferredSize();
-    		imglabels.get(n).setBounds(size.width*n, 0, size.width, size.height);
-    		imglabels.get(n).addMouseListener(this);
+    		imglabels.get(n).setBounds(size.width*n, 50, size.width, size.height);
     		cityPanel.add(imglabels.get(n));
-    		buildingPanels.get(n).setBounds(3 + 50*n, 415, 700, 400);
     		
-    		buildingPanels.get(n).setVisible(false);
-    		
-    		add(buildingPanels.get(n));
+    		imglabels.get(n).addMouseListener(this);
     	}
+    	
+    	//positioning the building panels into the same spot
+    	for(int m=0; m<buildingPanels.size();m++) {
+    		buildingPanels.get(m).setBounds(10, 400, 570, 360);
+    		add(buildingPanels.get(m));
+    	}
+    	clearScreen();
 	}
 
 	public void clearScreen() {
@@ -88,14 +90,12 @@ public class AnimationPanel extends JPanel implements MouseListener {
 		
 		//If any of the icons are clicked, it will find and display its corresponding animation panel
 		for(int i=0; i<imglabels.size();i++) {
-			if(e.getSource() == imglabels.get(i)) {
-				final String name = imglabels.get(i).getIcon().toString();
-				System.out.println(name + " showed " + buildingMap.get(imglabels.get(i)));
+			if(e.getSource().equals(imglabels.get(i))) {
 				clearScreen();
 				buildingMap.get(imglabels.get(i)).setVisible(true);
 			}
 		}
-		if(e.getSource() == cityPanel) {
+		if(e.getSource().equals(cityPanel)) {
 			//System.out.println("Screen Cleared");
 			clearScreen();
 		}
