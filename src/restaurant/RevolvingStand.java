@@ -23,7 +23,9 @@ public class RevolvingStand {
 	}
 
 	public boolean isStandEmpty() {
-		return AllOrders.isEmpty();
+		synchronized(AllOrders){
+			return AllOrders.isEmpty();
+		}
 	}
 
 }
