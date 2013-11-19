@@ -15,6 +15,7 @@ public class ApplicationPanel extends JPanel{
 	private GroupPanel workerPanel = new GroupPanel("Worker", Color.LIGHT_GRAY);
 	private GroupPanel wealthyPanel = new GroupPanel("Wealthy",Color.WHITE);
 	private Application app;
+	
 	ApplicationPanel(Application app){
 		this.app = app;
 		setLayout(new GridLayout(2,1));
@@ -25,7 +26,6 @@ public class ApplicationPanel extends JPanel{
 		c.gridx = 0;
 		c.gridy = 0;
 		
-		controlPanel.setVisible(true);
 		controlPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		add(controlPanel);
 		
@@ -42,8 +42,7 @@ public class ApplicationPanel extends JPanel{
 			infoPanel.add(workerPanel);
 			infoPanel.add(wealthyPanel);
 		
-			add(infoPanel);
-			
+		add(infoPanel);
 	}
 	
 	public void setApplication(Application app){
