@@ -1,6 +1,6 @@
 package person;
 
-import housing.MaintenanceWorker;
+import housing.MaintenanceWorkerRole;
 
 import java.awt.Point;
 
@@ -82,7 +82,7 @@ public class Worker extends Person {
 				roles.add(workerRole);
 			}
 			if (title == "maintenance") {
-				workerRole = new MaintenanceWorker(myself, title);
+				workerRole = new MaintenanceWorkerRole(myself, title);
 				roles.add(workerRole);
 			}
 			if (title == "cashier") {

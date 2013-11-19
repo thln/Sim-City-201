@@ -5,7 +5,7 @@ import person.Person;
 public class Housing 
 {
 	public enum differentHousingTypes {Apartment, Park, Mansion};
-	differentHousingTypes housingStructure;
+	public static differentHousingTypes housingStructure;
 	public Person occupant;
 	int housingNumber;
 	int xCordinate;
