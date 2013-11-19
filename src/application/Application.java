@@ -23,15 +23,22 @@ public class Application extends JPanel {
 
 	private ArrayList<Person> Population = new ArrayList<Person>();
 
-	public static Bank bank = new Bank();
-	public static Market market = new Market();
-	public static Restaurant restaurant = new Restaurant();
-	public static Phonebook phonebook = new Phonebook(bank, market, restaurant);
+	public Bank bank;
+	public Market market;
+	public Restaurant restaurant;
 
 	public Application() {
 		//Worker(String name, int money, String jobTitle, int startT, int lunchT, int endT);
 		//Standard Workers
-
+		
+		bank = new Bank();
+		market = new Market();
+		restaurant = new Restaurant();
+		
+		Phonebook.getPhonebook().setBank(bank);
+		Phonebook.getPhonebook().setMarket(market);
+		Phonebook.getPhonebook().setRestaurant(restaurant);
+		
 		//add all important workers to phonebook
 		Worker b = new Worker("Ben", 500, "loanOfficer", 800, 1200, 1600);
 		Worker c = new Worker("Caitlyn", 500, "bankGuard", 800, 1200, 1600);

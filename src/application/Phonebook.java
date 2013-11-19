@@ -5,9 +5,9 @@ import market.Market;
 import restaurant.Restaurant;
 
 public class Phonebook {
-	public static Bank bank;
-	public static Market market;
-	public static Restaurant restaurant;
+	private Bank bank;
+	private Market market;
+	private Restaurant restaurant;
 	
 	//ChineseRestaurant chineseRestaurant;
 	//ItalianRestaurant italianRestaurant;
@@ -15,15 +15,42 @@ public class Phonebook {
 	//AmericanRestaurant americanRestaurant;
 	//SeafoodRestaurant seafoodRestaurant;
 	
-	Phonebook(Bank bank, Market market, Restaurant restaurant) {
-		Phonebook.bank = bank;
-		Phonebook.market = market;
-		Phonebook.restaurant = restaurant;
-		
-		//this.chineseRestaurant = chineseRestaurant;
-		//this.italianRestaurant = italianRestaurant;
-		//this.mexicanRestaurant = mexicanRestaurant;
-		//this.americanRestaurant = americanRestaurant;
-		//this.seafoodRestaurant = seafoodRestaurant;
+	private static Phonebook phonebook;
+
+	private Phonebook() {
+	}
+	
+	public static Phonebook getPhonebook() {
+		if (phonebook == null) {
+			phonebook = new Phonebook();
+			return phonebook;
+		}
+		else {
+			return phonebook;
+		}
+	}
+
+	public Bank getBank() {
+		return bank;
+	}
+
+	public void setBank(Bank bank) {
+		this.bank = bank;
+	}
+
+	public Market getMarket() {
+		return market;
+	}
+
+	public void setMarket(Market market) {
+		this.market = market;
+	}
+
+	public Restaurant getRestaurant() {
+		return restaurant;
+	}
+
+	public void setRestaurant(Restaurant restaurant) {
+		this.restaurant = restaurant;
 	}
 }

@@ -3,6 +3,7 @@ package application;
 public class TimeManager {
 	
 	private static final long startTime = System.currentTimeMillis();
+	
 	private static TimeManager timeManager;
 	
 	enum Day{Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday};
