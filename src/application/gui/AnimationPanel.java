@@ -22,25 +22,25 @@ public class AnimationPanel extends JPanel implements MouseListener {
 	public List<JLabel> imglabels = new ArrayList<JLabel>();
 	public Map<JLabel, JPanel> buildingMap = new HashMap<JLabel, JPanel>();
 	
-	BufferedImage bankicon = null;
+	//BufferedImage bankicon = null;
+	ImageIcon bank = new ImageIcon("docs/bank.jpg", "bank icon");
+	ImageIcon restaurant = new ImageIcon("docs/restaurant.jpg", "restaurant icon");
+	ImageIcon market = new ImageIcon("docs/market.jpg", "market icon");
+	ImageIcon house = new ImageIcon("docs/house.jpg", "house icon");
+	
+	final static int WINDOWX = 570;
+    final static int WINDOWY = 360;
 	
 	AnimationPanel(){
 		
-		//Dimension cityDim = new Dimension(getWidth(), getHeight());
 		setLayout(null);
 		setBorder(BorderFactory.createTitledBorder("Animation"));
     	//here we have the main city view
     	
-		cityPanel.setBounds(3, 15, 700, 400); //x & y positions in animation panel, x & y sizes
-		/*
-    	cityPanel.setPreferredSize(cityDim);
-    	cityPanel.setMinimumSize(cityDim);
-    	cityPanel.setMaximumSize(cityDim);
-    	*/
+		cityPanel.setBounds(10, 20, WINDOWX, WINDOWY); //x & y positions in animation panel, x & y sizes
 		cityPanel.addMouseListener(this);
     	cityPanel.setVisible(true);
     	add(cityPanel);
-    	
     	
     	//stacking the building animations
 
@@ -49,28 +49,63 @@ public class AnimationPanel extends JPanel implements MouseListener {
 
     	ImageIcon icon2 = new ImageIcon("bank.jpg", "bank icon");
 
+    	//instantiating the bank icon and panel
+    	BuildingPanel bankPanel = new BuildingPanel("Bank");
+    	JLabel bankLabel = new JLabel(bank);
+    	buildingPanels.add(bankPanel);
+    	imglabels.add(bankLabel);
+    	buildingMap.put(bankLabel, bankPanel);
+    	Dimension banksize = bankLabel.getPreferredSize();
+    	bankLabel.setBounds(WINDOWX - banksize.width, 110, banksize.width, banksize.height);
 
-    	//initializing some stubs to test the stacking
+    	//instantiating the restaurant icons and panels
     	for(int i=0; i < 5; i++) {
-    		CityPanel building = new CityPanel();
-    		buildingPanels.add(building);
-    		JLabel label = new JLabel("Label " + (i+1), icon, JLabel.TRAILING);
-    		//imglabels.add(label);
-    		imglabels.add(label);
-    		buildingMap.put(label, building);
+    		BuildingPanel restPanel = new BuildingPanel("Restaurant " + (i+1));
+    		buildingPanels.add(restPanel);
+    		JLabel restLabel = new JLabel(restaurant);
+    		imglabels.add(restLabel);
+    		buildingMap.put(restLabel, restPanel);
+    		
+    		Dimension size = restLabel.getPreferredSize();
+    		restLabel.setBounds(WINDOWX - size.width*(i+1), 50, size.width, size.height);
     	}
     	
-    	for(int n=0; n<buildingPanels.size();n++) {
-    		Dimension size = imglabels.get(n).getPreferredSize();
-    		imglabels.get(n).setBounds(size.width*n, 0, size.width, size.height);
-    		imglabels.get(n).addMouseListener(this);
-    		cityPanel.add(imglabels.get(n));
-    		buildingPanels.get(n).setBounds(3 + 50*n, 415, 700, 400);
+    	//instantiating the market icons and panels
+    	for(int j=0; j < 3; j++) {
+    		BuildingPanel marketPanel = new BuildingPanel("Market " + (j+1));
+    		buildingPanels.add(marketPanel);
+    		JLabel marketLabel = new JLabel(market);
+    		imglabels.add(marketLabel);
+    		buildingMap.put(marketLabel, marketPanel);
     		
-    		buildingPanels.get(n).setVisible(false);
-    		
-    		add(buildingPanels.get(n));
+    		Dimension size = marketLabel.getPreferredSize();
+    		marketLabel.setBounds(WINDOWX - size.width*(j+1), 175, size.width, size.height);
     	}
+    	
+    	//instantiating the house icons and panels
+    	for(int k=0; k < 8; k++) {
+    		BuildingPanel housePanel = new BuildingPanel("House " + (k+1));
+    		buildingPanels.add(housePanel);
+    		JLabel houseLabel = new JLabel(house);
+    		imglabels.add(houseLabel);
+    		buildingMap.put(houseLabel, housePanel);
+    		
+    		Dimension size = houseLabel.getPreferredSize();
+    		houseLabel.setBounds(WINDOWX - size.width*(k+1), WINDOWY - size.height, size.width, size.height);
+    	}
+    	
+    	//positioning the city building icons
+    	for(int n=0; n<imglabels.size();n++) {
+    		cityPanel.add(imglabels.get(n));
+    		imglabels.get(n).addMouseListener(this);
+    	}
+    	
+    	//positioning the building panels into the same spot
+    	for(int m=0; m<buildingPanels.size();m++) {
+    		buildingPanels.get(m).setBounds(10, 400, WINDOWX, WINDOWY);
+    		add(buildingPanels.get(m));
+    	}
+    	clearScreen();
 	}
 
 	public void clearScreen() {
@@ -88,12 +123,15 @@ public class AnimationPanel extends JPanel implements MouseListener {
 				//final String name = imglabels.get(i).getText();
 				final String name = imglabels.get(i).getIcon().toString();
 				System.out.println(name + " clicked " + buildingMap.get(imglabels.get(i)));
+			}
+			if(e.getSource().equals(imglabels.get(i))) {
 				clearScreen();
 				buildingMap.get(imglabels.get(i)).setVisible(true);
 			}
 		}
-		if(e.getSource() == cityPanel) {
-			System.out.println("Panel Clicked!!");
+		if(e.getSource().equals(cityPanel)) {
+			//System.out.println("Screen Cleared");
+			clearScreen();
 		}
 	}
 	
