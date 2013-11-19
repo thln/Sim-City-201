@@ -23,10 +23,10 @@ public class AnimationPanel extends JPanel implements MouseListener {
 	public Map<JLabel, JPanel> buildingMap = new HashMap<JLabel, JPanel>();
 	
 	//BufferedImage bankicon = null;
-	ImageIcon bank = new ImageIcon("docs/bank.jpg", "bank icon");
-	ImageIcon restaurant = new ImageIcon("docs/restaurant.jpg", "restaurant icon");
-	ImageIcon market = new ImageIcon("docs/market.jpg", "market icon");
-	ImageIcon house = new ImageIcon("docs/house.jpg", "house icon");
+	ImageIcon bank = new ImageIcon("docs/bank.png", "bank icon");
+	ImageIcon restaurant = new ImageIcon("docs/restaurant.png", "restaurant icon");
+	ImageIcon market = new ImageIcon("docs/market.png", "market icon");
+	ImageIcon house = new ImageIcon("docs/house.png", "house icon");
 	
 	final static int WINDOWX = 570;
     final static int WINDOWY = 360;
@@ -56,7 +56,7 @@ public class AnimationPanel extends JPanel implements MouseListener {
     	imglabels.add(bankLabel);
     	buildingMap.put(bankLabel, bankPanel);
     	Dimension banksize = bankLabel.getPreferredSize();
-    	bankLabel.setBounds(WINDOWX - banksize.width, 110, banksize.width, banksize.height);
+    	bankLabel.setBounds(WINDOWX - banksize.width, 150, banksize.width, banksize.height);
 
     	//instantiating the restaurant icons and panels
     	for(int i=0; i < 5; i++) {
@@ -67,7 +67,7 @@ public class AnimationPanel extends JPanel implements MouseListener {
     		buildingMap.put(restLabel, restPanel);
     		
     		Dimension size = restLabel.getPreferredSize();
-    		restLabel.setBounds(WINDOWX - size.width*(i+1), 50, size.width, size.height);
+    		restLabel.setBounds(size.width*i+150, 100, size.width, size.height);
     	}
     	
     	//instantiating the market icons and panels
@@ -79,11 +79,11 @@ public class AnimationPanel extends JPanel implements MouseListener {
     		buildingMap.put(marketLabel, marketPanel);
     		
     		Dimension size = marketLabel.getPreferredSize();
-    		marketLabel.setBounds(WINDOWX - size.width*(j+1), 175, size.width, size.height);
+    		marketLabel.setBounds(size.width*j + 150, 200, size.width, size.height);
     	}
     	
     	//instantiating the house icons and panels
-    	for(int k=0; k < 8; k++) {
+    	for(int k=0; k < 20; k++) {
     		BuildingPanel housePanel = new BuildingPanel("House " + (k+1));
     		buildingPanels.add(housePanel);
     		JLabel houseLabel = new JLabel(house);
@@ -91,7 +91,10 @@ public class AnimationPanel extends JPanel implements MouseListener {
     		buildingMap.put(houseLabel, housePanel);
     		
     		Dimension size = houseLabel.getPreferredSize();
-    		houseLabel.setBounds(WINDOWX - size.width*(k+1), WINDOWY - size.height, size.width, size.height);
+    		if(k < 10)
+    			houseLabel.setBounds(size.width*(k), 0, size.width, size.height);
+    		else
+    			houseLabel.setBounds(size.width*(k-10), WINDOWY - size.height, size.width, size.height);
     	}
     	
     	//positioning the city building icons

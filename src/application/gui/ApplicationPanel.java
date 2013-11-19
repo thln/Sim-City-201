@@ -19,7 +19,7 @@ public class ApplicationPanel extends JPanel{
 	
 	ApplicationPanel(Application app){
 		this.app = app;
-		controlPanel = new ControlPanel();
+		//controlPanel = new ControlPanel();
 		setLayout(new GridLayout(2,1));
 		
 		GridBagConstraints c = new GridBagConstraints();
@@ -28,8 +28,8 @@ public class ApplicationPanel extends JPanel{
 		c.gridx = 0;
 		c.gridy = 0;
 		
-		controlPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		add(controlPanel);
+		//controlPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		//add(controlPanel);
 		
 		//InfoPanel
 		//TODO set size so that info panel is 75% and controPanel is 25% of total height
