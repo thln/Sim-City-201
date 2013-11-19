@@ -5,9 +5,9 @@ import market.Market;
 import restaurant.Restaurant;
 
 public class Phonebook {
-	public Bank bank;
-	public Market market;
-	public Restaurant restaurant;
+	public static Bank bank;
+	public static Market market;
+	public static Restaurant restaurant;
 	
 	//ChineseRestaurant chineseRestaurant;
 	//ItalianRestaurant italianRestaurant;
@@ -16,9 +16,9 @@ public class Phonebook {
 	//SeafoodRestaurant seafoodRestaurant;
 	
 	Phonebook(Bank bank, Market market, Restaurant restaurant) {
-		this.bank = bank;
-		this.market = market;
-		this.restaurant = restaurant;
+		Phonebook.bank = bank;
+		Phonebook.market = market;
+		Phonebook.restaurant = restaurant;
 		
 		//this.chineseRestaurant = chineseRestaurant;
 		//this.italianRestaurant = italianRestaurant;
