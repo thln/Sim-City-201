@@ -1,71 +1,46 @@
 package application.gui;
 
 import javax.swing.*;
-
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Vector;
 
 
-public class ApplicationPanel extends JPanel implements ActionListener {
+public class ApplicationPanel extends JPanel{
 	
 	JPanel controlPanel = new JPanel();
 	JPanel infoPanel = new JPanel();
-	JPanel crookPanel = new GroupPanel();
-	
-	private GroupPanel deadbeatPanel = new GroupPanel();
-	private GroupPanel workerPanel = new GroupPanel();
-	private GroupPanel wealthyPanel = new GroupPanel();
-	
-	Dimension controlDim = new Dimension(this.getWidth(), this.getHeight()*(1/4));
-	Dimension infoDim = new Dimension(this.getWidth(), this.getHeight()*(3/4));
-	
-	
+	private GroupPanel crookPanel = new GroupPanel("Crook",Color.WHITE);
+	private GroupPanel deadbeatPanel = new GroupPanel("Deadbeat", Color.LIGHT_GRAY);
+	private GroupPanel workerPanel = new GroupPanel("Worker", Color.LIGHT_GRAY);
+	private GroupPanel wealthyPanel = new GroupPanel("Wealthy",Color.WHITE);
 	
 	ApplicationPanel(){
-		
-		
+		setLayout(new GridLayout(2,1));
+		GridBagConstraints c = new GridBagConstraints();
+		c.fill = GridBagConstraints.VERTICAL;
 		//Control Panel
+		c.gridx = 0;
+		c.gridy = 0;
 		
-		controlPanel.setPreferredSize(controlDim);
-		controlPanel.setMinimumSize(controlDim);
-		controlPanel.setMaximumSize(controlDim);
 		controlPanel.setVisible(true);
+		controlPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		add(controlPanel);
 		
-		
-		
-		
-		
 		//InfoPanel
+		//TODO set size so that info panel is 75% and controPanel is 25% of total height
+		c.gridx = 0;
+		c.gridy = 1;
 		
-		infoPanel.setPreferredSize(infoDim);
-		infoPanel.setMinimumSize(infoDim);
-		infoPanel.setMaximumSize(infoDim);
+		infoPanel.setLayout(new GridLayout(2,2));
 		infoPanel.setVisible(true);
-		add(infoPanel);	
-	
+		infoPanel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
+			infoPanel.add(crookPanel);
+			infoPanel.add(deadbeatPanel);
+			infoPanel.add(workerPanel);
+			infoPanel.add(wealthyPanel);
+		
+			add(infoPanel);
+			
 	}
 
-	
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		
-		
-	}
-
-	
-	
-	
-	/*Classes 
-	 *There are several subpanels used in this ApplicationPanel that are included in this file 
-	 * infoPanel(that 
-	 * 
-	 * 
-	 * 
-	 */
-	
-
-	
-	
 }

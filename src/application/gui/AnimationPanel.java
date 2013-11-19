@@ -21,6 +21,13 @@ public class AnimationPanel extends JPanel implements MouseListener {
 	public List<JPanel> buildingPanels = new ArrayList<JPanel>();
 	public List<JLabel> imglabels = new ArrayList<JLabel>();
 	public Map<JLabel, JPanel> buildingMap = new HashMap<JLabel, JPanel>();
+	//JPanel buildingPanel = new JFrame("Building View");
+			
+	final static int CityDimX = 600; //City View Frame Width
+	final static int CityDimY = 300; //City View Frame Height
+	final static int BuildingDimX = 600; //Building View Frame Width
+	final static int BuildingDimY = 300; //Building View Frame Height
+
 	
 	BufferedImage bankicon = null;
 	
@@ -48,13 +55,13 @@ public class AnimationPanel extends JPanel implements MouseListener {
 
     	//initializing some stubs to test the stacking
     	for(int i=0; i < 5; i++) {
-    		BuildingPanel building = new BuildingPanel("Restaurant " + (i+1));
-    		buildingPanels.add(building);
+    		//BuildingPanel building = new BuildingPanel("Restaurant " + (i+1));
+    		//buildingPanels.add(building);
     		//JLabel label = new JLabel("Label " + (i+1), restaurant, JLabel.TRAILING);
     		JLabel label = new JLabel(restaurant);
     		//imglabels.add(label);
     		imglabels.add(label);
-    		buildingMap.put(label, building);
+    		//buildingMap.put(label, building);
     	}
     	
     	for(int n=0; n<buildingPanels.size();n++) {
