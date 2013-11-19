@@ -21,7 +21,6 @@ public abstract class Person extends Agent {
 	//Data
 	String name;
 	public double money;
-	Phonebook phonebook; //List of all agent correspondents in phonebook
 	private Semaphore atDestination = new Semaphore(0,true);
 
 	//Role Related
@@ -169,7 +168,7 @@ public abstract class Person extends Agent {
 		setRoleActive(r);
 		BankCustomerRole cust1 = (BankCustomerRole) r;
 		cust1.setDesire("robBank");
-		phonebook.bank.bankGuardRole.msgRobbingBank(cust1);
+		Phonebook.bank.bankGuardRole.msgRobbingBank(cust1);
 		stateChanged();
 	}
 
