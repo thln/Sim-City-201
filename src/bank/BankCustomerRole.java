@@ -1,5 +1,6 @@
 package bank;
 
+import application.Phonebook;
 import person.Person;
 import person.Role;
 
@@ -11,27 +12,20 @@ public class BankCustomerRole extends Role {
 	enum CustomerState {atBank, none, waiting, ready};
 	
 	BankTellerRole myTeller;
-	BankGuardRole myGuard;
+//	BankGuardRole myGuard;
 
-	double cash;
-	int accountNum;
-	double accountBalance;
+//	double cash;
+//	int accountNum;
+//	double accountBalance;
 	double desiredLoanAmount;
-	double desiredCashAmount;
-	double depositAmount;
 	double loan; 	
 	BankCustomerDesire desire;
 	CustomerState state;
 
-	public BankCustomerRole (String name, Person p1, BankGuardRole guard1, int desiredCash, int deposit, int accNum, int cash) {
-		super(p1, name, "BankCustomerRole");
-		desiredCashAmount = desiredCash;
-		depositAmount = deposit;
-		accountNum = accNum;
-		this.cash = cash;
+	public BankCustomerRole (Person p1, String pName, String rName) {
+		super(p1, pName, rName);
 		desire = BankCustomerDesire.openAccount;
 		state = CustomerState.atBank;
-		myGuard = guard1;
 	}
 	
 	//Messages
@@ -43,7 +37,7 @@ public class BankCustomerRole extends Role {
 	}
 	
 	void msgHereIsYourMoney(double amount) {
-		cash += amount;
+		person.money += amount;
 		desire = BankCustomerDesire.leaveBank;
 		state = CustomerState.ready;
 		stateChanged();
@@ -51,7 +45,7 @@ public class BankCustomerRole extends Role {
 
 	void msgHereIsNewAccount (int accountNum) {
 		print("Received new bank account");
-		this.accountNum = accountNum;
+		person.accountNum = accountNum;
 		desire = BankCustomerDesire.deposit;
 		state = CustomerState.ready;
 		stateChanged();
@@ -63,8 +57,11 @@ public class BankCustomerRole extends Role {
 
 	void msgInsufficentFunds(){
 		state = CustomerState.ready;
+		desiredLoanAmount = person.withdrawAmount*10;
+		desire = BankCustomerDesire.wantLoan;
+		stateChanged();
 	}
-
+//finish setting loan and teller interactions, make sure everything is phonebook global or person data
 	void msgDepositReceived() {
 		desire = BankCustomerDesire.leaveBank;
 		state = CustomerState.ready;
@@ -130,29 +127,29 @@ public class BankCustomerRole extends Role {
 
 	void MessageGuard () {
 		print("Arrived at bank");
-		myGuard.msgArrivedAtBank(this);
+		Phonebook.bank.bankGuardRole.msgArrivedAtBank(this);
 		state = CustomerState.waiting;
 	}
 	
 	void WithdrawCash() {
-		myTeller.msgINeedMoney(desiredCashAmount,accountNum);
+		myTeller.msgINeedMoney(person.desiredCash,person.accountNum);
 		state = CustomerState.waiting;
 	}
 
 	void DepositCash () {
-		myTeller.msgHereIsMyDeposit(depositAmount, accountNum);
+		myTeller.msgHereIsMyDeposit(person.depositAmount, person.accountNum);
 		state = CustomerState.waiting;
 	}
 
 	void RequestLoan () {
-		desiredLoanAmount = 10*desiredCashAmount;
-		myTeller.msgINeedALoan(desiredLoanAmount, accountNum);
+		desiredLoanAmount = 10*person.withdrawAmount;
+		myTeller.msgINeedALoan(desiredLoanAmount, person.accountNum);
 		state = CustomerState.waiting;
 	}
 
 	void PayOffLoan() {
-		cash -= loan;
-		myTeller.msgPayingOffLoan(loan, accountNum);
+		person.money -= loan;
+		myTeller.msgPayingOffLoan(loan, person.accountNum);
 		state = CustomerState.waiting;
 	}
 
@@ -163,19 +160,15 @@ public class BankCustomerRole extends Role {
 	
 	void LeaveBank () {
 		desire = BankCustomerDesire.none;
-		myTeller.msgLeavingBank(accountNum);
+		myTeller.msgLeavingBank(person.accountNum);
 		state = CustomerState.waiting;
 		person.setRoleInactive(this);
 	}
 
 	void RobBank() {
 		//Animation();
-		myGuard.msgRobbingBank(this);
+		Phonebook.bank.bankGuardRole.msgRobbingBank(this);
 		state = CustomerState.waiting;
-	}
-	
-	public void setDesiredCash(int d1) {
-		desiredCashAmount = d1;
 	}
 	
 	public void setDesire(String d1){

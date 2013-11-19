@@ -61,7 +61,7 @@ public class Worker extends Person {
 			}
 			if (title == "loanOfficer") {
 				workerRole = new LoanOfficerRole(name, myself, title);
-				Bank.loanOfficerRole = (LoanOfficerRole) workerRole;
+				Phonebook.bank.loanOfficerRole = (LoanOfficerRole) workerRole;
 				roles.add(workerRole);			
 			}
 			if (title == "bankGuard") {

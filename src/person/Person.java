@@ -40,6 +40,9 @@ public abstract class Person extends Agent {
 	//Bank Related
 	public int accountNum;
 	public double accountBalance;
+	public double desiredCash;
+	public double depositAmount;
+	public double withdrawAmount;
 	int moneyMinThreshold = 20;
 	int moneyMaxThreshold = 200;
 
@@ -54,7 +57,8 @@ public abstract class Person extends Agent {
 		this.name = name;
 		//	roles.add(new RestaurantCustomerRole(getName(), this));
 		//	roles.add(new MarketCustomerRole(this));
-		roles.add(new BankCustomerRole(getName(), this, Bank.bankGuardRole, 100, 20, 0, 10));
+		roles.add(new BankCustomerRole(this, getName(), "BankCustomerRole"));
+				//Phonebook.bank.bankGuardRole, 100, 20, 0, 10));
 		newTime = -5;
 		//constructors should be changed so they match
 	}
@@ -135,10 +139,11 @@ public abstract class Person extends Agent {
 		BankCustomerRole cust1 = (BankCustomerRole) r;
 		if (accountNum != 0) {
 			if (money <= moneyMinThreshold){
-				cust1.setDesiredCash(100);
+				withdrawAmount = 100;
 				cust1.setDesire("withdraw");
 			}
 			if (money >= moneyMaxThreshold){
+				depositAmount = 200;
 				cust1.setDesire("deposit");
 			}
 		}
@@ -246,7 +251,7 @@ public abstract class Person extends Agent {
 		//Once semaphore is released from GUI
 
 		if (r instanceof BankTellerRole)
-			Bank.bankGuardRole.msgTellerCameToWork((BankTellerRole) r);
+			Phonebook.bank.bankGuardRole.msgTellerCameToWork((BankTellerRole) r);
 		setRoleActive(r);
 		stateChanged();
 	}
