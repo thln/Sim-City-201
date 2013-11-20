@@ -229,7 +229,7 @@ public class BankTellerRole extends Role {
 	
 	void BecomeAvailable (Account account1) {
 		account1.state = AccountState.neutral;
-		Phonebook.bank.bankGuardRole.msgTellerBecameAvailable(this);
+		Phonebook.getPhonebook().getBank().bankGuardRole.msgTellerBecameAvailable(this);
 	}
 
 	public double getVault() {
