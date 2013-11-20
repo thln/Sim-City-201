@@ -13,7 +13,6 @@ public class Bank {
 
 	//Roles
 	public BankGuardRole bankGuardRole = new BankGuardRole("Bank Guard");
-	public BankTellerRole bankTellerRole = new BankTellerRole("Bank Teller");
 	public LoanOfficerRole loanOfficerRole = new LoanOfficerRole("Loan Officer");
 
 	public Role arrivedAtWork(Person person, String title) {
@@ -26,16 +25,6 @@ public class Bank {
 			//Setting bank guard role to new role
 			bankGuardRole.setPerson(person);
 			return bankGuardRole;
-		}
-		else if (title == "bankTeller") {
-			//Setting previous bank guard role to inactive
-			if (bankTellerRole.getPerson() != null) {
-				Worker worker = (Worker) bankTellerRole.getPerson();
-				worker.goOffWork();
-			}
-			//Setting bank guard role to new role
-			bankTellerRole.setPerson(person);
-			return bankTellerRole;
 		}
 		else if (title == "loanOfficer") {
 			//Setting previous bank guard role to inactive
