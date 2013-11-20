@@ -13,18 +13,13 @@ public class MarketRunnerRole extends Role {
 	protected String roleName = "Market Runner";
 
 	//Data
-	//Correspondents
-	Market market;
-	SalesPersonRole salesPerson;
-	UPSmanRole UPSMan;
+	
 	String name;
 	
 	private List<MarketOrder> orders = Collections.synchronizedList(new ArrayList<MarketOrder>());
 
 	MarketRunnerRole(Person person, String pName, String rName) {
 		super(person, pName, rName);
-		market = Phonebook.getPhonebook().getMarket();
-		salesPerson = Phonebook.getPhonebook().getMarket().salesPersonRole;
 	}
 
 	public MarketRunnerRole(String roleName) {
@@ -52,18 +47,18 @@ public class MarketRunnerRole extends Role {
 	public void processOrder(MarketOrder o) {
 		if (o.customer != null) {
 			decreaseInventoryBy(o.item, o.totalItems);
-			salesPersonRole.msgOrderFulfilled(o);
+			Phonebook.getPhonebook().getMarket().salesPersonRole.msgOrderFulfilled(o);
 			orders.remove(o);
 		}
 		else { //o.customerType is an instance of business
 			decreaseInventoryBy(o.item, o.totalItems);
-			UPSMan.msgDeliverOrder(o);
+			Phonebook.getPhonebook().getMarket().UPSmanRole.msgDeliverOrder(o);
 			orders.remove(o);
 		}
 	}
 
 	public void decreaseInventoryBy(String item, int amount) {
-		int newAmount = market.inventory.get(item) - amount;
-		market.inventory.put(item, newAmount);
+		int newAmount = Phonebook.getPhonebook().getMarket().inventory.get(item) - amount;
+		Phonebook.getPhonebook().getMarket().inventory.put(item, newAmount);
 	}
 }
