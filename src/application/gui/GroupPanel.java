@@ -1,6 +1,7 @@
 package application.gui;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
@@ -26,9 +27,14 @@ public class GroupPanel extends JPanel implements ActionListener{
 	JButton button1 = new JButton();
 
     
-	GroupPanel(String type, Color bg){
-		this.setBackground(bg);
+	GroupPanel(String type, Color bg, ApplicationPanel app){
+		setLayout(new BorderLayout());
+		setBackground(bg);
 		this.type = type;
+		JLabel title  = new JLabel(type);
+		Font titleFont = new Font("Serif", Font.BOLD,18);
+		title.setFont(titleFont);
+		add(title,BorderLayout.PAGE_START);
 		
 		//ListView Panel 
 		buttonList.setLayout(new BoxLayout(buttonList, BoxLayout.Y_AXIS));
@@ -64,7 +70,7 @@ public class GroupPanel extends JPanel implements ActionListener{
         flipPanel.add(ListView, LISTVIEW); 
         flipPanel.add(ProfileView, PROFILEVIEW);
         
-        add(flipPanel);
+        add(flipPanel, BorderLayout.CENTER);
         
 		
 	}
@@ -86,7 +92,9 @@ public class GroupPanel extends JPanel implements ActionListener{
 	}
 	
 	//Adds person's profile quick view onto a Jbutton and adds this button to the list pane
-		public void addPerson(String name){
+	public void addPerson(String name, int money, String type,
+			String jobTitle, int startT, int lunchT, int endT)
+	{
 			if(name !=null){
 				Dimension paneSize = pane.getSize();
 			    

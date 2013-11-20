@@ -13,10 +13,10 @@ public class ApplicationPanel extends JPanel{
 	
 	private ControlPanel cp;
 	private JPanel infoPanel = new JPanel();
-	private GroupPanel crookPanel = new GroupPanel("Crook",Color.WHITE);
-	private GroupPanel deadbeatPanel = new GroupPanel("Deadbeat", Color.LIGHT_GRAY);
-	private GroupPanel workerPanel = new GroupPanel("Worker", Color.LIGHT_GRAY);
-	private GroupPanel wealthyPanel = new GroupPanel("Wealthy",Color.WHITE);
+	private GroupPanel crookPanel = new GroupPanel("Crook",Color.WHITE, this);
+	private GroupPanel deadbeatPanel = new GroupPanel("Deadbeat", Color.LIGHT_GRAY, this);
+	private GroupPanel workerPanel = new GroupPanel("Worker", Color.LIGHT_GRAY, this);
+	private GroupPanel wealthyPanel = new GroupPanel("Wealthy",Color.WHITE, this);
 	
 	ApplicationPanel(Application app){
 		cp = new ControlPanel(app);
@@ -49,6 +49,23 @@ public class ApplicationPanel extends JPanel{
 	
 	public ControlPanel getControlPanel(){
 		return cp;
+	}
+	
+	public void addPerson(String name, int money, String type,
+			String jobTitle, int startT, int lunchT, int endT)
+	{
+		if(type == "Crook"){
+			crookPanel.addPerson(name, money, type, jobTitle, startT, lunchT, endT);
+		}
+		else if(type == "Deadbeat"){
+			deadbeatPanel.addPerson(name, money, type, jobTitle, startT, lunchT, endT);
+		}
+		else if(type == "Worker"){
+			workerPanel.addPerson(name, money, type, jobTitle, startT, lunchT, endT);			
+		}
+		else if(type == "Wealthy"){
+			wealthyPanel.addPerson(name, money, type, jobTitle, startT, lunchT, endT);
+		}	
 	}
 
 }
