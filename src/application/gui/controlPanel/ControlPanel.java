@@ -10,19 +10,23 @@ import application.*;
 import application.gui.*;
 
 public class ControlPanel extends JPanel{
-	
-	AddPanel addPersonTab;
+	private AddPanel addP;
+	private JPanel addPersonTab;
 	private ImageIcon picture;
 	private JPanel tempPanel = new JPanel();
 	private JTabbedPane ControlPane = new JTabbedPane();
 	private Application app;
 	
-	public ControlPanel(){
-		addPersonTab = new AddPanel(this, app);
-		addPersonTab.setVisible(true);
+	public ControlPanel(Application app){
+		this.app = app;
+		addP = new AddPanel(this, app);
+		addPersonTab =  addP.mainPanel;
 		ControlPane.addTab("Add Person", addPersonTab);
 		add(ControlPane);
+		
+		add(ControlPane);
 	}	
+	
 	public void setApplication(Application app){
 		this.app = app;
 	}

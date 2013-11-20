@@ -17,10 +17,10 @@ public class ApplicationPanel extends JPanel{
 	private GroupPanel deadbeatPanel = new GroupPanel("Deadbeat", Color.LIGHT_GRAY);
 	private GroupPanel workerPanel = new GroupPanel("Worker", Color.LIGHT_GRAY);
 	private GroupPanel wealthyPanel = new GroupPanel("Wealthy",Color.WHITE);
-	private Application app;
+
 	
-	ApplicationPanel(){
-		cp = new ControlPanel();
+	ApplicationPanel(Application app){
+		cp = new ControlPanel(app);
 		setLayout(new GridLayout(2,1));
 		
 		GridBagConstraints c = new GridBagConstraints();
@@ -47,9 +47,6 @@ public class ApplicationPanel extends JPanel{
 		add(infoPanel);
 	}
 	
-	public void setApplication(Application app){
-		this.app = app;
-	}
 	public ControlPanel getControlPanel(){
 		return cp;
 	}

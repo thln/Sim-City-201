@@ -222,7 +222,13 @@ public class Application extends JPanel {
 			Population.add(newP);
 			newP.startThread();
 		}
+		
 
 	}
+	
+	/*function used to test gui functionality
+	public void printLastPop(){
+		System.out.println(Population.get(Population.size()-1).getName());		
+	}*/
 
 }

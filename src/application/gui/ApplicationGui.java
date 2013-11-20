@@ -29,7 +29,7 @@ public class ApplicationGui extends JFrame {
 	//final static int AnimPanelY = WINDOWY; //Animation View Panel Height 600	
 	
 	ApplicationGui() {
-		appPanel = new ApplicationPanel();
+		appPanel = new ApplicationPanel(app);
 		setBounds(50,0, WINDOWX, WINDOWY);
 		appPanel.getControlPanel().setApplication(app);
 		setLayout(new GridLayout(1,2)); //GridLayout with 2 columns and 1 row

@@ -7,17 +7,19 @@ import java.awt.*;
 import java.awt.event.*;
 import application.*;
 
-public class AddPanel extends JPanel implements ActionListener {
-	JLabel first = new JLabel("First Name: ");
-	JTextField firstName = new JTextField(10);
-	JLabel last = new JLabel("Last Name: ");
-	JTextField lastName = new JTextField(10);
-	JButton addButton = new JButton("Add");
-	JLabel type = new JLabel("Type");
-	String name = new String();
-	Profile pf;
-	ControlPanel cp;
-	Application app;
+public class AddPanel implements ActionListener {
+	public static JPanel mainPanel = new JPanel();
+	private JLabel first = new JLabel("First Name: ");
+	private JTextField firstName = new JTextField(10);
+	private JLabel last = new JLabel("Last Name: ");
+	private JTextField lastName = new JTextField(10);
+	private JButton addButton = new JButton("Add");
+	private JLabel type = new JLabel("Type");
+	private String name = new String();
+	private Profile pf;
+	private ControlPanel cp;
+	private Application app;
+	private enum personType {Crook, Deadbeat, Worker, Wealthy };
 	
 	public AddPanel(ControlPanel cp, Application app){
 		this.cp = cp;
@@ -28,24 +30,24 @@ public class AddPanel extends JPanel implements ActionListener {
 		
 		c.gridx = 0;
 		c.gridy = 0;
-		add(first,c);
+		mainPanel.add(first,c);
 		
 		c.gridx = 0;
 		c.gridy = 1;
-		add(firstName);
+		mainPanel.add(firstName);
 		
 		c.gridx = 1;
 		c.gridy = 0;
-		add(last,c);
+		mainPanel.add(last,c);
 		
 		c.gridx = 1;
 		c.gridy = 1;
-		add(lastName);
+		mainPanel.add(lastName);
 		
 		c.gridx = 0;
 		c.gridy	= 2;
 		addButton.addActionListener(this);
-		add(addButton);
+		mainPanel.add(addButton);
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -53,10 +55,12 @@ public class AddPanel extends JPanel implements ActionListener {
 			String name = firstName.getText() + lastName.getText();
 			String type = "Crook";
 			app.addPerson(name, 500, type, null, 0, 0, 0);
+			app.printLastPop();
 		}
 	}
 	
 	public void setApplication(Application app){
 		this.app = app; 
 	} 
+	
 }
