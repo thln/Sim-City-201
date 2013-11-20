@@ -3,6 +3,7 @@ package bank;
 import person.Person;
 import person.Role;
 import application.Phonebook;
+import bank.interfaces.LoanOfficer;
 
 import java.util.List;
 
@@ -14,7 +15,6 @@ public class BankTellerRole extends Role {
 	//DATA
 	int accountNumKeyList = 3000;
 	List<Account> accounts;
-	LoanOfficerRole myLoaner;
 	protected String RoleName = "Bank Teller";
 	int balanceMinimum = 5;
 	String name;
@@ -42,14 +42,13 @@ public class BankTellerRole extends Role {
 
 	public BankTellerRole (String name, Person p1, String roleName) {
 		super(p1, name, roleName);
-		myLoaner = Phonebook.getPhonebook().getBank().loanOfficerRole;
-		accounts = myLoaner.getAccounts();
+		
+		accounts = Phonebook.getPhonebook().getBank().loanOfficerRole.getAccounts();
 	}
 	
 	public BankTellerRole(String roleName) {
 		super(roleName);
-		myLoaner = Phonebook.getPhonebook().getBank().loanOfficerRole;
-		accounts = myLoaner.getAccounts();
+		accounts = Phonebook.getPhonebook().getBank().loanOfficerRole.getAccounts();
 	}
 	
 	//MESSAGES
@@ -180,12 +179,12 @@ public class BankTellerRole extends Role {
 
 	void WithdrawMoney(Account account1) {
 		if (account1.balance > (account1.processingMoney + balanceMinimum) &&
-				(account1.processingMoney < (myLoaner.vault - myLoaner.vaultMinimum))) {
-			myLoaner.vault -= account1.processingMoney;
+				(account1.processingMoney < (Phonebook.getPhonebook().getBank().vault - Phonebook.getPhonebook().getBank().vaultMinimum))) {
+			Phonebook.getPhonebook().getBank().vault -= account1.processingMoney;
 			account1.state = AccountState.neutral;
 			account1.customer.msgHereIsYourMoney(account1.processingMoney);
 		}
-		else if (account1.processingMoney > (myLoaner.vault-myLoaner.vaultMinimum))
+		else if (account1.processingMoney > (Phonebook.getPhonebook().getBank().vault-Phonebook.getPhonebook().getBank().vaultMinimum))
 			account1.customer.msgBankrupt();
 		else
 			account1.customer.msgInsufficentFunds();
@@ -195,7 +194,7 @@ public class BankTellerRole extends Role {
 	}
 
 	void DepositMoney(Account account1) {
-		myLoaner.vault += account1.processingMoney;
+		Phonebook.getPhonebook().getBank().vault += account1.processingMoney;
 		print("$" + account1.processingMoney + " deposited into bank vault");
 		account1.balance +=  account1.processingMoney;
 		account1.creditScore += account1.processingMoney/10;	//every time you deposit money, your credit goes up the bank can trust that you have money
@@ -204,7 +203,7 @@ public class BankTellerRole extends Role {
 	}
 
 	void RequestLoan (Account account1) {
-		myLoaner.msgIsLoanApproved(account1, this);
+		Phonebook.getPhonebook().getBank().loanOfficerRole.msgIsLoanApproved(account1, this);
 		account1.state = AccountState.waiting;
 	}
 
@@ -233,7 +232,7 @@ public class BankTellerRole extends Role {
 	}
 
 	public double getVault() {
-		return myLoaner.vault;
+		return Phonebook.getPhonebook().getBank().vault;
 	}
 
 }

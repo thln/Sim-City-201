@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import application.Phonebook;
 import bank.BankTellerRole.Account;
 
 public class LoanOfficerRole extends Role {
@@ -14,8 +15,6 @@ public class LoanOfficerRole extends Role {
 
 	//Data
 
-	double vault = 10000;
-	double vaultMinimum = 1000;
 	String name;
 	protected String RoleName = "Loan Officer";
 	enum LoanState {requesting, open, closed}
@@ -69,7 +68,7 @@ public class LoanOfficerRole extends Role {
 	void ProcessLoan (Loan loan1) {
 
 		double loanAmount = loan1.account1.processingMoney;
-		if (vault <=  vaultMinimum + loanAmount) {
+		if (Phonebook.getPhonebook().getBank().vault <=  Phonebook.getPhonebook().getBank().vaultMinimum + loanAmount) {
 			loan1.teller1.msgThisLoanDenied(loan1.account1, 0);
 		}
 
