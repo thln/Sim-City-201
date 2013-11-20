@@ -12,6 +12,9 @@ import application.gui.*;
 public class ControlPanel extends JPanel{
 	private AddPanel addP;
 	private JPanel addPersonTab;
+	private JPanel panel2;
+	private JPanel panel3;	
+	private JPanel panel4;
 	private ImageIcon picture;
 	private JPanel tempPanel = new JPanel();
 	private JTabbedPane ControlPane = new JTabbedPane();
@@ -26,9 +29,4 @@ public class ControlPanel extends JPanel{
 		
 		add(ControlPane);
 	}	
-	
-	public void setApplication(Application app){
-		this.app = app;
-	}
-	
 }

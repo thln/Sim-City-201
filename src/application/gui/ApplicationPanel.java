@@ -17,7 +17,6 @@ public class ApplicationPanel extends JPanel{
 	private GroupPanel deadbeatPanel = new GroupPanel("Deadbeat", Color.LIGHT_GRAY);
 	private GroupPanel workerPanel = new GroupPanel("Worker", Color.LIGHT_GRAY);
 	private GroupPanel wealthyPanel = new GroupPanel("Wealthy",Color.WHITE);
-
 	
 	ApplicationPanel(Application app){
 		cp = new ControlPanel(app);
@@ -31,6 +30,7 @@ public class ApplicationPanel extends JPanel{
 		
 		cp.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		add(cp);		
+		
 		//InfoPanel
 		//TODO set size so that info panel is 75% and controPanel is 25% of total height
 		c.gridx = 0;

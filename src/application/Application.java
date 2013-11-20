@@ -226,9 +226,9 @@ public class Application extends JPanel {
 
 	}
 	
-	/*function used to test gui functionality
+	//function used to test gui functionality
 	public void printLastPop(){
-		System.out.println(Population.get(Population.size()-1).getName());		
-	}*/
+		System.out.println(Population.get(Population.size()-1).getName());
+	}
 
 }
