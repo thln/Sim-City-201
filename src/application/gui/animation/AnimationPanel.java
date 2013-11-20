@@ -1,4 +1,4 @@
-package application.gui;
+package application.gui.animation;
 
 import javax.swing.*;
 
@@ -31,7 +31,7 @@ public class AnimationPanel extends JPanel implements MouseListener {
 	final static int WINDOWX = 570;
     final static int WINDOWY = 360;
 	
-	AnimationPanel(){
+	public AnimationPanel(){
 		
 		setLayout(null);
 		setBorder(BorderFactory.createTitledBorder("Animation"));

@@ -1,7 +1,6 @@
-package application.gui;
+package application.gui.animation;
 
 import javax.swing.*;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -10,22 +9,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 import java.io.*;
-
 import javax.imageio.*;
-
 import java.awt.image.BufferedImage;
+import application.gui.animation.agentGui.*;
 
 public class BuildingPanel extends JPanel implements ActionListener {
 
     private final int WINDOWX = 570;
     private final int WINDOWY = 360;
-    
     static final int NTABLES = 5;
-    
     private Image bufferImage;
     private Dimension bufferSize;
-    
-    String name;
+    private String name;
     private List<Gui> guis = new ArrayList<Gui>();
 
     public BuildingPanel(String buildName) {

@@ -1,4 +1,4 @@
-package application.gui.controlPanel;
+package application.gui.appView.controlPanel;
 
 
 import javax.swing.*;

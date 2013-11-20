@@ -1,7 +1,7 @@
-package application.gui;
+package application.gui.appView.groupPanel;
 
 import javax.swing.*;
-
+import application.gui.appView.ApplicationPanel;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
@@ -27,7 +27,7 @@ public class GroupPanel extends JPanel implements ActionListener{
 	JButton button1 = new JButton();
 
     
-	GroupPanel(String type, Color bg, ApplicationPanel app){
+	public GroupPanel(String type, Color bg, ApplicationPanel app){
 		setLayout(new BorderLayout());
 		setBackground(bg);
 		this.type = type;

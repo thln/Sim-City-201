@@ -15,6 +15,8 @@ import java.util.*;
 import java.util.List;
 import application.*;
 import application.gui.*;
+import application.gui.animation.*;
+import application.gui.appView.*;
 
 public class ApplicationGui extends JFrame {
 	

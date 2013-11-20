@@ -1,33 +1,31 @@
-package application.gui;
+package application.gui.animation.agentGui;
 
 
-import restaurant.CashierAgent;
+import restaurant.MarketAgent;
 
 import java.awt.*;
 import java.io.*;
-
 import javax.imageio.*;
-
 import java.awt.image.BufferedImage;
 
-public class CashierGui implements Gui {
+public class MarketGui implements Gui {
 
-    private CashierAgent agent = null;
+    private MarketAgent agent = null;
     BufferedImage img = null;
 
-    private int xPos = 0, yPos = 200;//default Cashier position
-    private int xDestination = 20, yDestination = 200;//default start position
+    private int xPos = 450, yPos = 100;//default cook position
+    private int xDestination = 375, yDestination = 100;//default start position
     
     static final int NTABLES = 5;
     int tables;
 
-    public CashierGui(CashierAgent agent) {
+    public MarketGui(MarketAgent agent) {
         this.agent = agent;
-        /*
+        
         try {
-            img = ImageIO.read(new File("chef.png"));
+            img = ImageIO.read(new File("market.png"));
         } catch (IOException e) {
-        }*/
+        }
     }
 
     public void updatePosition() {
@@ -44,23 +42,37 @@ public class CashierGui implements Gui {
 
     		if (xPos == xDestination && yPos == yDestination
     				& (xDestination == 50*tables + 20) & (yDestination == 50 - 20)) {
-    			
+    		//	agent.msgAtTable();
     		}
         //}
     }
 
     public void draw(Graphics2D g) {
-        g.setColor(Color.BLUE);
-        //g.drawImage(img, xPos, yPos, null);
-        g.fillRect(xPos, yPos, 20, 20);
+        g.setColor(Color.CYAN);
+        g.drawImage(img, xPos, yPos, null);
+        //g.fillRect(xPos, yPos, 20, 20);
     }
 
     public boolean isPresent() {
         return true;
     }
     
-    public void DoCashiering() {
+    public void DoRestocking() {
     	
+    	/*
+    	switch (Ochoice){
+    	case "Steak": System.out.print(Ochoice);
+    	break;
+    	case "Chicken": System.out.print(Ochoice);
+    	break;
+    	case "Salad": System.out.print(Ochoice);
+    	break;
+    	case "Pizza": System.out.print(Ochoice);
+    	break;
+    	default:
+    	break;
+    	}
+    	*/
     }
     
     public void DoPlateIt() {

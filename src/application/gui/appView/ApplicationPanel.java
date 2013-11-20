@@ -1,4 +1,4 @@
-package application.gui;
+package application.gui.appView;
 
 import javax.swing.*;
 
@@ -6,7 +6,11 @@ import java.awt.*;
 import java.awt.event.*;
 
 import application.*;
-import application.gui.controlPanel.*;
+import application.gui.*;
+import application.gui.animation.*;
+import application.gui.animation.agentGui.*;
+import application.gui.appView.controlPanel.*;
+import application.gui.appView.groupPanel.*;
 
 
 public class ApplicationPanel extends JPanel{
@@ -18,7 +22,7 @@ public class ApplicationPanel extends JPanel{
 	private GroupPanel workerPanel = new GroupPanel("Worker", Color.LIGHT_GRAY, this);
 	private GroupPanel wealthyPanel = new GroupPanel("Wealthy",Color.WHITE, this);
 	
-	ApplicationPanel(Application app){
+	public ApplicationPanel(Application app){
 		cp = new ControlPanel(app);
 		setLayout(new GridLayout(2,1));
 		

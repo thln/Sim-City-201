@@ -1,4 +1,4 @@
-package application.gui;
+package application.gui.animation.agentGui;
 
 import bank.*;
 import application.gui.controlPanel.*;
