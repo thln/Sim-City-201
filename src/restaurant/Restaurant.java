@@ -1,15 +1,21 @@
 package restaurant;
 
+import application.WatchTime;
 import person.Person;
 import person.Role;
 import person.Worker;
 
 public class Restaurant {
 
+	//Open and closing times
+	public WatchTime openTime = new WatchTime(11);
+	public WatchTime closeTime = new WatchTime(21);
+
+	//Roles
 	public HostRole hostRole = new HostRole("Host");
 	public CookRole cookRole = new CookRole("Cook");
 	public CashierRole cashierRole = new CashierRole("Cashier");
-	
+
 	public Role arrivedAtWork(Person person, String title) {
 		if (title == "host") {
 			//Setting previous bank guard role to inactive
@@ -44,7 +50,7 @@ public class Restaurant {
 		else
 			return null;
 	}
-	
+
 	public void msgIWantFood(RestaurantCustomerRole cust, int xHome, int yHome) {
 		hostRole.msgIWantFood(cust, xHome, yHome);
 	}
@@ -54,5 +60,5 @@ public class Restaurant {
 			hostRole = null;
 		}
 	}
-	
+
 }

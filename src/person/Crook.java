@@ -1,5 +1,7 @@
 package person;
 
+import bank.BankCustomerRole;
+import application.Phonebook;
 import application.TimeManager.Time;
 
 public class Crook extends Person {
@@ -12,5 +14,23 @@ public class Crook extends Person {
 		this.money = money;
 		this.name = name;
     }
+    
+    private void robBank(Role r) {
+		//GUI call to go to business
+//		try {
+//			atDestination.acquire();
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//
+//		}
+		//Once semaphore is released from GUI
+
+		setRoleActive(r);
+		BankCustomerRole cust1 = (BankCustomerRole) r;
+		cust1.setDesire("robBank");
+		Phonebook.getPhonebook().getBank().bankGuardRole.msgRobbingBank(cust1);
+		stateChanged();
+	}
 }
 

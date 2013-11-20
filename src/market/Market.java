@@ -2,17 +2,22 @@ package market;
 
 import java.util.*;
 
+import application.WatchTime;
 import person.Person;
 import person.Role;
 import person.Worker;
 
 public class Market {
 
+	//Open and closing times
+	public WatchTime openTime = new WatchTime(9);
+	public WatchTime closeTime = new WatchTime(18);
+
 	//Roles
 	public SalesPersonRole salesPersonRole = new SalesPersonRole("Sales Person");
 	public MarketRunnerRole marketRunnerRole = new MarketRunnerRole("Market Runner");
 	public UPSmanRole UPSmanRole = new UPSmanRole("UPS Man");
-	
+
 	public Role arrivedAtWork(Person person, String title) {
 		if (title == "salesPerson") {
 			//Setting previous bank guard role to inactive
@@ -47,9 +52,9 @@ public class Market {
 		else
 			return null;
 	}
-	
-	
-	
+
+
+
 	double money;
 	HashMap<String, Integer> inventory = new HashMap<String, Integer>(); {
 		//For people
@@ -68,7 +73,7 @@ public class Market {
 		inventory.put("Pizza", 100);
 		inventory.put("Salad", 100);
 	}
-	
+
 	public HashMap<Integer, Item> marketItemsForSale = new HashMap<Integer, Item>(); {
 		//For people shopping
 		marketItemsForSale.put(0, new Item("Car", 1000));
@@ -80,7 +85,7 @@ public class Market {
 		marketItemsForSale.put(6, new Item("Lobster", 12.99));
 		marketItemsForSale.put(7, new Item("Cheese", 4.99));
 	}
-	
+
 	public class Item {
 		public String itemName;
 		public double  price;
