@@ -67,7 +67,7 @@ public abstract class Person extends Agent {
 
 	//Actions
 	protected void eatAtHome() {
-		
+
 	}
 
 	protected void prepareForBank () {
@@ -130,7 +130,7 @@ public abstract class Person extends Agent {
 				carStatus = CarState.wantsCar;
 			}
 		}
-		
+
 		if (hasFoodInFridge == false) {
 			//choosing random item to buy from market
 			String item;

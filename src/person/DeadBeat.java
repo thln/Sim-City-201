@@ -1,20 +1,97 @@
 package person;
 
+import person.Person.CarState;
+import person.Role.RoleState;
+import application.Phonebook;
+import application.TimeManager;
+
 public class Deadbeat extends Person {
-    int wanderTime = 8;
-    int parkTime = 20;
-    int eatTime = 13;
-    
+
 	String name;
 
-    public Deadbeat(String name,  int money) {
+	public Deadbeat(String name,  int money) {
 		super(name);
 		this.money = money;
 		this.name = name;
-    }
+	}
 
-	
+
 	public void msgWelfareCheck() {
-	    money += 50;
+		money += 50;
+	}
+
+
+	protected boolean pickAndExecuteAnAction() {
+		synchronized (roles) {
+			if (!roles.isEmpty()) {
+				for (Role r : roles) {
+					if (r.getState() == RoleState.active) {
+						return r.pickAndExecuteAnAction();
+					}
+				}
+			}
+		}
+
+		//If no role is active
+		//Checking the time
+		simulationTime = timeManager.getTime();
+
+		//Park Related
+		//Start day in park for a couple hours
+		if (simulationTime.dayHour == 10) {
+			visitPark();
+			return true;
+		}
+
+		//Hunger Related
+		if (hungry) {
+			//If you don't have food in the fridge
+			if (!hasFoodInFridge) {
+				if (money <= moneyMinThreshold) { 
+					//This if says go to the business if it is open and at least 1 hour before closing time
+					if ((simulationTime.dayHour >= Phonebook.getPhonebook().getBank().openTime.hour) &&
+							(simulationTime.dayHour < Phonebook.getPhonebook().getBank().closeTime.hour)) {
+						prepareForBank();
+						return true;
+					}
+				}
+				else if ((simulationTime.dayHour >= Phonebook.getPhonebook().getRestaurant().openTime.hour) &&
+						(simulationTime.dayHour < Phonebook.getPhonebook().getRestaurant().closeTime.hour)) {
+					prepareForRestaurant();
+					return true;
+				}
+			}
+			else //if you do have food in the fridge
+			{
+				eatAtHome(); //empty method for now...
+				return true;
+			}
+		}
+
+		//Market Related
+		if (!hasFoodInFridge || carStatus == CarState.wantsCar) {
+			if (money <= moneyMinThreshold && !hasFoodInFridge) {
+				if ((simulationTime.dayHour >= Phonebook.getPhonebook().getBank().openTime.hour) &&
+						(simulationTime.dayHour < Phonebook.getPhonebook().getBank().closeTime.hour)) {
+					prepareForBank();
+					return true;
+				}
+			}
+			else {
+				if ((simulationTime.dayHour >= Phonebook.getPhonebook().getMarket().openTime.hour) &&
+						(simulationTime.dayHour < Phonebook.getPhonebook().getMarket().closeTime.hour)) {
+					prepareForMarket();
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+
+	//Actions
+	public void visitPark() {
+		//Go visit the park (GUI)
 	}
 }

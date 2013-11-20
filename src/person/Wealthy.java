@@ -1,25 +1,102 @@
 package person;
 
+import market.MarketCustomerRole;
+import application.Phonebook;
+import application.TimeManager;
+import application.WatchTime.Day;
+import person.Person.CarState;
 import person.Role.RoleState;
 
-public class Wealthy extends Person 
-{
-    int eatTime1 = 10;
-    int eatTime2 = 16;
-    int bankTime = 10;
-    int sleepTime = 22;
-    boolean needToDeposit;
-    String name;
+public class Wealthy extends Person {
 
-    
-    public Wealthy(String name,  int money) {
+	boolean needToDeposit;
+	String name;
+
+
+	public Wealthy(String name,  int money) {
 		super(name);
 		this.money = money;
 		this.name = name;
-    }
-    
-    //Messages
-    void msgRentDue() {
-	    //roles.landlord.waitingToExecute;
+		//roles.add(new LandlordRole());
+	}
+
+
+	//Scheduler
+	protected boolean pickAndExecuteAnAction() {
+		synchronized (roles) {
+			if (!roles.isEmpty()) {
+				for (Role r : roles) {
+					if (r.getState() == RoleState.active) {
+						return r.pickAndExecuteAnAction();
+					}
+				}
+			}
+		}
+
+		//If no role is active
+		//Checking the time
+		simulationTime = timeManager.getTime();
+
+		//Rent Related
+		if (simulationTime.day == TimeManager.Day.Monday) {
+			prepareForRentCollection();
+			return true;
+		}
+
+		//Hunger Related
+		if (hungry) {
+			//If you don't have food in the fridge
+			if (!hasFoodInFridge) {
+				if (money <= moneyMinThreshold) { 
+					//This if says go to the business if it is open and at least 1 hour before closing time
+					if ((simulationTime.dayHour >= Phonebook.getPhonebook().getBank().openTime.hour) &&
+							(simulationTime.dayHour < Phonebook.getPhonebook().getBank().closeTime.hour)) {
+						prepareForBank();
+						return true;
+					}
+				}
+				else if ((simulationTime.dayHour >= Phonebook.getPhonebook().getRestaurant().openTime.hour) &&
+						(simulationTime.dayHour < Phonebook.getPhonebook().getRestaurant().closeTime.hour)) {
+					prepareForRestaurant();
+					return true;
+				}
+			}
+			else //if you do have food in the fridge
+			{
+				eatAtHome(); //empty method for now...
+				return true;
+			}
+		}
+
+		//Market Related
+		if (!hasFoodInFridge || carStatus == CarState.wantsCar) {
+			if (money <= moneyMinThreshold && !hasFoodInFridge) {
+				if ((simulationTime.dayHour >= Phonebook.getPhonebook().getBank().openTime.hour) &&
+						(simulationTime.dayHour < Phonebook.getPhonebook().getBank().closeTime.hour)) {
+					prepareForBank();
+					return true;
+				}
+			}
+			else {
+				if ((simulationTime.dayHour >= Phonebook.getPhonebook().getMarket().openTime.hour) &&
+						(simulationTime.dayHour < Phonebook.getPhonebook().getMarket().closeTime.hour)) {
+					prepareForMarket();
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	//Actions
+	public void prepareForRentCollection() {
+		for (Role landlord: roles) {
+			//			if (landlord instanceof LandlordRole) {
+			//				landlord.setRoleActive();
+			//				stateChanged();
+			//				return;
+			//			}
+		}
 	}
 }

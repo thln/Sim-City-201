@@ -165,7 +165,7 @@ public class Worker extends Person {
 		if (hungry) {
 			//If you don't have food in the fridge
 			if (!hasFoodInFridge) {
-				if (money <= 10) { 
+				if (money <= moneyMinThreshold) { 
 					//This if says go to the business if it is open and at least 1 hour before closing time
 					if ((simulationTime.dayHour >= Phonebook.getPhonebook().getBank().openTime.hour) &&
 							(simulationTime.dayHour < Phonebook.getPhonebook().getBank().closeTime.hour)) {
@@ -185,10 +185,10 @@ public class Worker extends Person {
 				return true;
 			}
 		}
-		
+
 		//Market Related
 		if (!hasFoodInFridge || carStatus == CarState.wantsCar) {
-			if (money <= 10 && !hasFoodInFridge) {
+			if (money <= moneyMinThreshold && !hasFoodInFridge) {
 				if ((simulationTime.dayHour >= Phonebook.getPhonebook().getBank().openTime.hour) &&
 						(simulationTime.dayHour < Phonebook.getPhonebook().getBank().closeTime.hour)) {
 					prepareForBank();
