@@ -288,4 +288,12 @@ public class Worker extends Person {
 		workerRole = null;
 		stateChanged();
 	}
+
+	public void setWorkerRole(Role workerRole) {
+		this.workerRole = workerRole;
+	}
+
+	public Role getWorkerRole() {
+		return workerRole;
+	}
 }

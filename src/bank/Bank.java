@@ -52,14 +52,18 @@ public class Bank {
 	}
 
 	public void setUPSmanRole(Person person) {
-		person.setWorkerRole(loanOfficerRole);
+		Worker worker = (Worker) person;
+		
+		worker.setWorkerRole(loanOfficerRole);
 	}
 
 	public void goingOffWork(Person person) {
-		if (person.getWorkerRole().equals(bankGuardRole)) {
+		Worker worker = (Worker) person;
+		
+		if (worker.getWorkerRole().equals(bankGuardRole)) {
 			bankGuardRole = null;
 		}
-		else if (person.getWorkerRole().equals(loanOfficerRole)) {
+		else if (worker.getWorkerRole().equals(loanOfficerRole)) {
 			loanOfficerRole = null;
 		}
 	}
