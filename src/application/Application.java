@@ -196,8 +196,8 @@ public class Application extends JPanel {
 		m.updateTime(900);
 	}
 
-	public void addPerson(String name, int money, String type,
-			String jobTitle, int startT, int lunchT, int endT)
+	public void addPerson(String name ,int money, String type,
+			String jobTitle, String jobLocation, int startT, int lunchT, int endT)
 	{
 		//last 4 parameters specifically for worker. make empty/0 for all other types
 		//add any special parameters if new things needed for other types
@@ -217,7 +217,7 @@ public class Application extends JPanel {
 		}
 		else if(type.equals("Worker"))
 		{
-			Worker newP = new Worker(name, money, jobTitle, startT, lunchT, endT);
+			Worker newP = new Worker(name, money, jobTitle, jobLocation, startT, lunchT, endT);
 			Population.add(newP);
 			newP.startThread();
 		}
