@@ -1,14 +1,14 @@
 package application.gui;
 
 import javax.swing.*;
+
+import application.Application;
+//import bank.Bank;
+//import bank.BankGuardRole;
+//import bank.LoanOfficerRole;
 import application.*;
-/*
-import bank.Bank;
-import bank.BankGuardRole;
-import bank.LoanOfficerRole;
-import person.Person;
-import person.Worker;
-*/
+import bank.*;
+import person.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
@@ -21,7 +21,7 @@ public class ApplicationGui extends JFrame {
 	Application app = new Application();
 	ApplicationPanel appPanel; 
 	AnimationPanel animPanel = new AnimationPanel();
-	//List containing all of the different building animation panels
+
 	final static int WINDOWX = 1200;
 	final static int WINDOWY = 800;
     final static int APPWIDTH = WINDOWX*(4/10); //Application View Panel Width 400
@@ -67,6 +67,7 @@ public class ApplicationGui extends JFrame {
 		loanOffice.updateTime(8);
 		bankCust.updateTime(8);
 		*/
+      //  simcity201 = new Application();
     }
 	
 }

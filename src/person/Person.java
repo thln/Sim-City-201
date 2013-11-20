@@ -6,10 +6,11 @@ import java.util.concurrent.Semaphore;
 import bank.Bank;
 import bank.BankCustomerRole;
 import bank.BankGuardRole;
+import bank.BankTellerRole;
 import bank.interfaces.BankCustomer;
 import market.MarketCustomerRole;
 import person.Role;
-import person.Role.roleState;
+import person.Role.RoleState;
 import restaurant.HostRole;
 import restaurant.RestaurantCustomerRole;
 import agent.Agent;
@@ -18,9 +19,7 @@ import application.Phonebook;
 public abstract class Person extends Agent {
 
 	//Data
-	String name; 
-	public double money;
-	Phonebook phonebook; //List of all agent correspondents in phonebook
+	String name;
 	private Semaphore atDestination = new Semaphore(0,true);
 
 	//Role Related
@@ -37,8 +36,12 @@ public abstract class Person extends Agent {
 	public boolean hasFoodInFridge;
 
 	//Bank Related
+	public double money;
 	public int accountNum;
 	public double accountBalance;
+	public double desiredCash;
+	public double depositAmount;
+	public double withdrawAmount;
 	int moneyMinThreshold = 20;
 	int moneyMaxThreshold = 200;
 
@@ -49,9 +52,10 @@ public abstract class Person extends Agent {
 
 	Person(String name) {
 		this.name = name;
-		roles.add(new RestaurantCustomerRole(getName(), this));
-		roles.add(new MarketCustomerRole(this));
-		roles.add(new BankCustomerRole(getName(), this, Bank.bankGuardRole, 0, 0, 0, 0));
+		//	roles.add(new RestaurantCustomerRole(getName(), this));
+		//	roles.add(new MarketCustomerRole(this));
+		roles.add(new BankCustomerRole(this, getName(), "BankCustomerRole"));
+		newTime = -5;
 		//constructors should be changed so they match
 	}
 
@@ -70,22 +74,22 @@ public abstract class Person extends Agent {
 
 					if (newTime >= 0) {
 						updateTime(newTime);
-						return false;
-					}
-					
-
-					if (r.getState() == roleState.active) {
-						r.pickAndExecuteAnAction();
-						return true;
 					}
 
-					if (r.getState() == roleState.waitingToExecute) {
 
-						
-							//make sure bankguard is set
+					if (r.getState() == RoleState.active) {
+						return r.pickAndExecuteAnAction();
+					}
+
+					if (r.getState() == RoleState.waitingToExecute) {
+
+						if (r.equals(workerRole)) {
+							Do("Going to work");
+							prepareForWork(r);
+						}
 
 						if (r instanceof BankCustomerRole) {
-
+							Do("Going to bank");
 							if (this instanceof Crook)
 								robBank(r);
 							else
@@ -97,9 +101,7 @@ public abstract class Person extends Agent {
 						if (r instanceof RestaurantCustomerRole) {
 							prepareForRestaurant(r);
 						}
-						if (r.equals(this.getWorkerRole())) {
-							prepareForWork(r);
-						}
+
 						return true;
 					}
 				}
@@ -127,21 +129,23 @@ public abstract class Person extends Agent {
 			e.printStackTrace();
 
 		}
-		*/
+		 */
 		//Once semaphore is released from GUI
 
 		BankCustomerRole cust1 = (BankCustomerRole) r;
-		if (money <= moneyMinThreshold){
-			cust1.setDesiredCash(100);
-			cust1.setDesire("withdraw");
-		}
-		if (money >= moneyMaxThreshold){
-			cust1.setDesire("deposit");
+		if (accountNum != 0) {
+			if (money <= moneyMinThreshold){
+				withdrawAmount = 100;
+				cust1.setDesire("withdraw");
+			}
+			if (money >= moneyMaxThreshold){
+				depositAmount = 100;
+				cust1.setDesire("deposit");
+			}
 		}
 		//(String name, Person p1, BankGuard guard1, int desiredCash, int deposit, int accNum, int cash)
 		//if bank customer role hasn't already been instantiated, instatiate it
 		//phonebook.bank.bankGuardRole.msgArrivedAtBank(cust1);
-		Bank.bankGuardRole.msgArrivedAtBank(cust1);
 		setRoleActive(r);
 		stateChanged();
 	}
@@ -160,7 +164,7 @@ public abstract class Person extends Agent {
 		setRoleActive(r);
 		BankCustomerRole cust1 = (BankCustomerRole) r;
 		cust1.setDesire("robBank");
-		phonebook.bank.bankGuardRole.msgRobbingBank(cust1);
+		Phonebook.bank.bankGuardRole.msgRobbingBank(cust1);
 		stateChanged();
 	}
 
@@ -187,11 +191,11 @@ public abstract class Person extends Agent {
 			//choosing random item to buy from market
 			String item;
 			item = chooseMarketItem();
-			phonebook.market.salesPersonRole.msgIWantProducts(cust1, item, 3);
+			Phonebook.market.salesPersonRole.msgIWantProducts(cust1, item, 3);
 		}
 		else if (carStatus == CarState.wantsCar) {
 			MarketCustomerRole cust1 = (MarketCustomerRole) r;
-			phonebook.market.salesPersonRole.msgIWantProducts(cust1, "Car", 1);
+			Phonebook.market.salesPersonRole.msgIWantProducts(cust1, "Car", 1);
 			//must set desire to hasCar once car is bought
 		}
 
@@ -206,8 +210,8 @@ public abstract class Person extends Agent {
 		do {
 			myRandomChoice = rand.nextInt(10);
 			myRandomChoice %= 7;
-		} while (!phonebook.market.marketItemsForSale.containsKey(myRandomChoice) || (money < phonebook.market.marketItemsForSale.get(myRandomChoice).price));
-		item = phonebook.market.marketItemsForSale.get(myRandomChoice).itemName;
+		} while (!Phonebook.market.marketItemsForSale.containsKey(myRandomChoice) || (money < Phonebook.market.marketItemsForSale.get(myRandomChoice).price));
+		item = Phonebook.market.marketItemsForSale.get(myRandomChoice).itemName;
 		return item;
 	}
 
@@ -231,6 +235,7 @@ public abstract class Person extends Agent {
 
 	private void prepareForWork(Role r) {
 		//GUI call to go to business
+		/*
 		try {
 			atDestination.acquire();
 		} catch (InterruptedException e) {
@@ -238,19 +243,21 @@ public abstract class Person extends Agent {
 			e.printStackTrace();
 
 		}
+		 */
 		//Once semaphore is released from GUI
 
+		if (r instanceof BankTellerRole)
+			Phonebook.bank.bankGuardRole.msgTellerCameToWork((BankTellerRole) r);
 		setRoleActive(r);
 		stateChanged();
 	}
 
 	public void setRoleActive(Role role) {
-		role.setState(roleState.active);
-
+		role.setState(RoleState.active);
 	}
 
 	public void setRoleInactive(Role role) {
-		role.setState(roleState.inActive);
+		role.setState(RoleState.inActive);
 	}
 
 	public void goToSleep() {
@@ -263,6 +270,11 @@ public abstract class Person extends Agent {
 
 	public void setWorkerRole(Role workerRole) {
 		this.workerRole = workerRole;
+	}
+	
+	@Override
+	public String getName() {
+		return name;
 	}
 
 	/*

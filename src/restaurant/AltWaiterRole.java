@@ -1,17 +1,17 @@
 package restaurant;
 
+import person.Person;
+
 public class AltWaiterRole extends WaiterRole 
 {
 	private RevolvingStand theRevolvingStand;
 	protected String RoleName = "Alternative Waiter";
 	
-	public AltWaiterRole(String name) 
+	public AltWaiterRole(Person p1, String pName, String rName) 
 	{
-		super(name);
+		super(p1, pName, rName);
 		//super(name);
 		//Waiter(name);
-
-		this.name = name;
 	}
 	
 	protected void placeOrder(myCustomer MC) {

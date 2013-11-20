@@ -1,6 +1,6 @@
 package person;
 
-import person.Role.roleState;
+import person.Role.RoleState;
 
 public class Wealthy extends Person 
 {

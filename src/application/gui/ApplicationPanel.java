@@ -30,8 +30,7 @@ public class ApplicationPanel extends JPanel{
 		c.gridy = 0;
 		
 		cp.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		add(cp);
-		
+		add(cp);		
 		//InfoPanel
 		//TODO set size so that info panel is 75% and controPanel is 25% of total height
 		c.gridx = 0;

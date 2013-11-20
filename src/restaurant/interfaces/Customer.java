@@ -1,8 +1,8 @@
 package restaurant.interfaces;
 
-import restaurant.HostAgent;
+import restaurant.interfaces.Host;
 import restaurant.Menu;
-import restaurant.WaiterAgent;
+import restaurant.interfaces.Waiter;
 
 /**
  * A sample Customer interface built to unit test a CashierAgent.
@@ -12,7 +12,7 @@ import restaurant.WaiterAgent;
  */
 public interface Customer {
 
-	public abstract void setHost(HostAgent host);
+	public abstract void setHost(Host host);
 
 	public abstract String getCustomerName();
 	
@@ -27,7 +27,7 @@ public interface Customer {
 
 	public abstract void msgTablesAreFull();
 	
-	public abstract void msgPleaseFollowMe(int tableNumber, Menu menu, WaiterAgent waiter);
+	public abstract void msgPleaseFollowMe(int tableNumber, Menu menu, Waiter waiter);
 
 	public abstract void msgAnimationFinishedGoToSeat();
 

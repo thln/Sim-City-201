@@ -5,6 +5,7 @@ import agent.Agent;
 import java.util.*;
 import java.util.concurrent.Semaphore;
 
+import person.Person;
 import person.Role;
 
 /**
@@ -34,10 +35,9 @@ public class HostRole extends Role {
 	//GUI stuff
 	//public HostGui hostGui = null;
 
-	public HostRole(String name) {
-		super();
+	public HostRole(Person p1, String pName, String rName) {
+		super(p1, pName, rName);
 
-		this.name = name;
 		// make some tables
 		tables = new ArrayList<Table>(NTABLES);
 		for (int ix = 1; ix <= NTABLES; ix++) {

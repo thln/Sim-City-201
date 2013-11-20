@@ -6,16 +6,17 @@ public abstract class Role {
 
 	protected Person person;
 	
-	protected String RoleName = "";
+	protected String roleName = "";
+	protected String personName = "";
 	
-	enum roleState {active, inActive, waitingToExecute}
-	private roleState state = roleState.inActive;
+	enum RoleState {active, inActive, waitingToExecute}
+	private RoleState state = RoleState.inActive;
 	
-	protected Role() {
-	}
-	
-	protected Role(Person person) {
+	protected Role(Person person, String pName, String rName) {
 		this.person = person;
+		personName = pName;
+		roleName = rName;
+		state = RoleState.inActive;
 	}
 	
 	protected void stateChanged() {
@@ -25,17 +26,12 @@ public abstract class Role {
     }
 
     protected abstract boolean pickAndExecuteAnAction();
-    
-    protected void inactivateRole() {
-    	setState(roleState.inActive);
-    	stateChanged();
-    }
-
-	public roleState getState() {
+ 
+	public RoleState getState() {
 		return state;
 	}
 
-	public void setState(roleState state) {
+	public void setState(RoleState state) {
 		this.state = state;
 	}
 	
@@ -48,7 +44,7 @@ public abstract class Role {
      */
     protected void print(String msg) 
     {
-    	System.out.println(RoleName + " " + getName() + " : " + msg);
+    	System.out.println(roleName + " " + getName() + " : " + msg);
     }
 
     /**
@@ -56,7 +52,8 @@ public abstract class Role {
      */
     protected void print(String msg, Throwable e) {
         StringBuffer sb = new StringBuffer();
-        sb.append(getName());
+        sb.append("role ");
+        sb.append(roleName);
         sb.append(": ");
         sb.append(msg);
         sb.append("\n");
@@ -64,6 +61,10 @@ public abstract class Role {
             sb.append(StringUtil.stackTraceString(e));
         }
         System.out.print(sb.toString());
+    }
+    
+    public String getRoleName () {
+    	return roleName;
     }
 
 }

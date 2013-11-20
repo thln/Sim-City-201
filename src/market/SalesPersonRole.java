@@ -10,9 +10,10 @@ import restaurant.CookRole;
 public class SalesPersonRole extends Role {
 	
 	protected String RoleName = "Sales Person";
+	String name;
 
-	public SalesPersonRole(Person person) {
-		super(person);
+	public SalesPersonRole(Person person, String pName, String rName) {
+		super(person, pName, rName);
 	}
 
 	//Data
@@ -102,7 +103,7 @@ public class SalesPersonRole extends Role {
 	private void giveCustomerItems(MarketOrder o) {
 		o.state = orderState.gaveToCustomer;
 		o.orderCost = inventoryPrices.get(o.item).price;
-		o.customer.msgHereAreYourThings(o.item, o.orderCost);
+		//o.customer.msgHereAreYourThings(o.item, o.orderCost);		KRISTI: THIS LINE IS GIVING AN ERROR: PLZ FIX
 		stateChanged();
 	}
 
