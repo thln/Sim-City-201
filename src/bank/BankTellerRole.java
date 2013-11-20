@@ -11,7 +11,6 @@ public class BankTellerRole extends Role {
 	//Finish find account function,
 	
 	//DATA
-
 	List<Account> accounts;
 	LoanOfficerRole myLoaner;
 	protected String RoleName = "Bank Teller";

@@ -1,14 +1,17 @@
 package application.gui;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.*;
+
 import application.*;
+import application.gui.controlPanel.*;
 
 
 public class ApplicationPanel extends JPanel{
 	
-	private JPanel controlPanel = new JPanel();
+	private ControlPanel cp;
 	private JPanel infoPanel = new JPanel();
 	private GroupPanel crookPanel = new GroupPanel("Crook",Color.WHITE);
 	private GroupPanel deadbeatPanel = new GroupPanel("Deadbeat", Color.LIGHT_GRAY);
@@ -16,8 +19,8 @@ public class ApplicationPanel extends JPanel{
 	private GroupPanel wealthyPanel = new GroupPanel("Wealthy",Color.WHITE);
 	private Application app;
 	
-	ApplicationPanel(Application app){
-		this.app = app;
+	ApplicationPanel(){
+		cp = new ControlPanel();
 		setLayout(new GridLayout(2,1));
 		
 		GridBagConstraints c = new GridBagConstraints();
@@ -26,8 +29,8 @@ public class ApplicationPanel extends JPanel{
 		c.gridx = 0;
 		c.gridy = 0;
 		
-		controlPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		add(controlPanel);
+		cp.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		add(cp);
 		
 		//InfoPanel
 		//TODO set size so that info panel is 75% and controPanel is 25% of total height
@@ -47,6 +50,9 @@ public class ApplicationPanel extends JPanel{
 	
 	public void setApplication(Application app){
 		this.app = app;
+	}
+	public ControlPanel getControlPanel(){
+		return cp;
 	}
 
 }
