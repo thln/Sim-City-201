@@ -107,8 +107,7 @@ public class Application extends JPanel {
 		m.updateTime(900);
 	}
 */	
-	public Application() 
-	{
+	public Application() {
 		
 	}
 	

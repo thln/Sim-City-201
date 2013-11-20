@@ -20,7 +20,7 @@ public class CookRole extends Role {
 
 	private String name;
 	private Semaphore atDestination = new Semaphore(0,true);
-	protected String RoleName = "Cook";
+	protected String roleName = "Cook";
 
 	//public CookGui cookGui = null;
 
@@ -43,6 +43,10 @@ public class CookRole extends Role {
 
 	public CookRole(Person p1, String pName, String rName) {
 		super(p1, pName, rName);
+	}
+
+	public CookRole(String roleName) {
+		super(roleName);
 	}
 
 	public String getMaitreDName() {

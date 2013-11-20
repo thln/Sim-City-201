@@ -11,18 +11,23 @@ public class UPSmanRole extends Role {
 
 	//Data
 	private List<MarketOrder> orders = Collections.synchronizedList(new ArrayList<MarketOrder>());
-	protected String RoleName = "UPS man";
+	protected String roleName = "UPS man";
 	String name;
-	
+
 	public UPSmanRole (Person p, String pName, String rName) {
 		super(p, pName, rName);
 	}
+
+	public UPSmanRole(String roleName) {
+		super(roleName);
+	}
+
 	//Messages
 	public void msgDeliverOrder(MarketOrder o) {
 		orders.add(o);
 		stateChanged();
 	}
-	
+
 	//Scheduler
 	protected boolean pickAndExecuteAnAction() {
 		if (!orders.isEmpty()) {
@@ -33,7 +38,7 @@ public class UPSmanRole extends Role {
 		}
 		return false;
 	}
-	
+
 	//Actions
 	public void deliverOrder(MarketOrder o) {
 		//o.cook.HereIsOrder(o.item, o.totalItems);

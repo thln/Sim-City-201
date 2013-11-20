@@ -15,7 +15,7 @@ public class BankGuardRole extends Role {
 	List <BankCustomerRole> customers;
 	List <BankCustomerRole> robbers;
 	List <MyTeller> tellers; 
-	protected String RoleName = "Bank Guard";
+	protected String roleName = "Bank Guard";
 
 	enum TellerState {available, busy};
 
@@ -31,6 +31,13 @@ public class BankGuardRole extends Role {
 	
 	public BankGuardRole (String name, Person p1, String roleName) {
 		super(p1, name, roleName);
+		customers = Collections.synchronizedList(new ArrayList<BankCustomerRole>());
+		robbers = Collections.synchronizedList(new ArrayList<BankCustomerRole>());
+		tellers = Collections.synchronizedList(new ArrayList<MyTeller>());
+	}
+	
+	public BankGuardRole (String roleName) {
+		super(roleName);
 		customers = Collections.synchronizedList(new ArrayList<BankCustomerRole>());
 		robbers = Collections.synchronizedList(new ArrayList<BankCustomerRole>());
 		tellers = Collections.synchronizedList(new ArrayList<MyTeller>());

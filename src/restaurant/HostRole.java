@@ -25,7 +25,7 @@ public class HostRole extends Role {
 
 
 	public Collection<Table> tables;
-	protected String RoleName = "Host";
+	protected String roleName = "Host";
 	//note that tables is typed with Collection semantics.
 	//Later we will see how it is implemented
 
@@ -43,7 +43,16 @@ public class HostRole extends Role {
 		for (int ix = 1; ix <= NTABLES; ix++) {
 			tables.add(new Table(ix));//how you add to a collections
 		}
+	}
 
+	public HostRole(String roleName) {
+		super(roleName);
+
+		// make some tables
+		tables = new ArrayList<Table>(NTABLES);
+		for (int ix = 1; ix <= NTABLES; ix++) {
+			tables.add(new Table(ix));//how you add to a collections
+		}
 	}
 
 	public String getMaitreDName() {

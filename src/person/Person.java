@@ -15,6 +15,7 @@ import restaurant.HostRole;
 import restaurant.RestaurantCustomerRole;
 import agent.Agent;
 import application.Phonebook;
+import application.TimeManager;
 import application.TimeManager.Time;
 
 public abstract class Person extends Agent {
@@ -24,8 +25,7 @@ public abstract class Person extends Agent {
 	private Semaphore atDestination = new Semaphore(0,true);
 
 	//Role Related
-	public List<Role> roles = Collections.synchronizedList(new ArrayList<Role>()); 	//contains all the customer roles
-	protected Role workerRole;
+	public List<Role> roles = Collections.synchronizedList(new ArrayList<Role>()); 	//contains all the customer role
 
 	//Car Related
 	public enum CarState {noCar, wantsCar, hasCar};
@@ -48,7 +48,8 @@ public abstract class Person extends Agent {
 
 	//Time Related
 	public int sleepTime = 22;
-	protected Time newTime;
+	protected TimeManager timeManager;
+	protected Time simulationTime;
 
 
 	Person(String name) {
@@ -58,58 +59,17 @@ public abstract class Person extends Agent {
 		roles.add(new BankCustomerRole(this, getName(), "BankCustomerRole"));
 		//newTime = -5;
 		//constructors should be changed so they match
+		
+		timeManager = TimeManager.getTimeManager();
 	}
 
 
 
 	//Scheduler
-	protected boolean pickAndExecuteAnAction() {
-
-		makeDecision(newTime);
-		
-		synchronized (roles) {
-			if (!roles.isEmpty()) {
-				for (Role r : roles) {
-
-					if (r.getState() == RoleState.active) {
-						return r.pickAndExecuteAnAction();
-					}
-
-					if (r.getState() == RoleState.waitingToExecute) {
-
-						if (r.equals(workerRole)) {
-							Do("Going to work");
-							prepareForWork(r);
-						}
-
-						if (r instanceof BankCustomerRole) {
-							Do("Going to bank");
-							if (this instanceof Crook)
-								robBank(r);
-							else
-								prepareForBank(r);
-						}
-						if (r instanceof MarketCustomerRole) {
-							prepareForMarket(r);
-						}
-						if (r instanceof RestaurantCustomerRole) {
-							prepareForRestaurant(r);
-						}
-
-						return true;
-					}
-				}
-				//goHome();
-				return false;
-			}
-			//goHome();
-			return false;
-		}
-	}
+	protected abstract boolean pickAndExecuteAnAction();
 
 	//Actions
-
-	public abstract void makeDecision(Time newTime);
+	//public abstract boolean makeDecision(Time newTime);
 
 	private void prepareForBank (Role r){
 		Do("Becoming Bank Customer");
@@ -158,7 +118,7 @@ public abstract class Person extends Agent {
 		setRoleActive(r);
 		BankCustomerRole cust1 = (BankCustomerRole) r;
 		cust1.setDesire("robBank");
-		Phonebook.bank.bankGuardRole.msgRobbingBank(cust1);
+		Phonebook.getPhonebook().getBank().bankGuardRole.msgRobbingBank(cust1);
 		stateChanged();
 	}
 
@@ -223,25 +183,6 @@ public abstract class Person extends Agent {
 
 		//must change message because no x,y coordinates have been generated
 		//phonebook.restaurant.hostRole.msgIWantFood(cust1, xHome, yHome);
-		setRoleActive(r);
-		stateChanged();
-	}
-
-	private void prepareForWork(Role r) {
-		//GUI call to go to business
-		/*
-		try {
-			atDestination.acquire();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-
-		}
-		 */
-		//Once semaphore is released from GUI
-
-		if (r instanceof BankTellerRole)
-			Phonebook.bank.bankGuardRole.msgTellerCameToWork((BankTellerRole) r);
 		setRoleActive(r);
 		stateChanged();
 	}

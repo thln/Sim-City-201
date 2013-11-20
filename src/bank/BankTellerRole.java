@@ -3,6 +3,7 @@ package bank;
 import person.Person;
 import person.Role;
 import application.Phonebook;
+
 import java.util.List;
 
 public class BankTellerRole extends Role {
@@ -41,11 +42,19 @@ public class BankTellerRole extends Role {
 
 	public BankTellerRole (String name, Person p1, String roleName) {
 		super(p1, name, roleName);
-		myLoaner = Phonebook.bank.loanOfficerRole;
+		myLoaner = Phonebook.getPhonebook().getBank().loanOfficerRole;
+		accounts = myLoaner.getAccounts();
+	}
+	
+	public BankTellerRole(String roleName) {
+		super(roleName);
+		myLoaner = Phonebook.getPhonebook().getBank().loanOfficerRole;
 		accounts = myLoaner.getAccounts();
 	}
 	
 	//MESSAGES
+
+	
 
 	void msgWantNewAccount (BankCustomerRole cust1) {	
 		print("Customer wants new account");

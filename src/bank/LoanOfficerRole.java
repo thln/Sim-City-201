@@ -39,8 +39,13 @@ public class LoanOfficerRole extends Role {
 		accounts = Collections.synchronizedList(new ArrayList<Account>());
 	}
 	
+	public LoanOfficerRole(String roleName) {
+		super(roleName);
+		loans = Collections.synchronizedList(new ArrayList<Loan>());
+		accounts = Collections.synchronizedList(new ArrayList<Account>());
+	}
+	
 	//Messages
-
 	void msgIsLoanApproved(Account account1, BankTellerRole t1) {
 		loans.add( new Loan(account1, t1));
 	}

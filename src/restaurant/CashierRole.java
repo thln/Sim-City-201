@@ -15,7 +15,7 @@ import person.Role;
 public class CashierRole extends Role {
 
 	private String name;
-	protected String RoleName = "Cashier";
+	protected String roleName = "Cashier";
 	//private Semaphore atTable = new Semaphore(0,true);
 
 	//Keeps a list of checks
@@ -33,6 +33,10 @@ public class CashierRole extends Role {
 
 	public CashierRole(Person p1, String pName, String rName) {
 		super(p1, pName, rName);
+	}
+
+	public CashierRole(String roleName) {
+		super(roleName);
 	}
 
 	public String getName() {

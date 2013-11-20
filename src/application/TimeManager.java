@@ -34,10 +34,11 @@ public class TimeManager {
 	}
 	
 	public class Time {
-		final int dayMinute;
-		final int dayHour;
-		final Day day = Day.Sunday;
+		public final int dayMinute;
+		public final int dayHour;
+		public Day day = Day.Sunday;
 
+		//Used to calculate simulation time
 		Time(int simulationMinutesSinceBegnningOfTime) {
 			dayMinute = (int) simulationMinutesSinceBegnningOfTime % 60;
 			dayHour = ((int) simulationMinutesSinceBegnningOfTime / 60) % 24;

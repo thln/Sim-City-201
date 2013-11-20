@@ -12,33 +12,14 @@ public class Wealthy extends Person
     String name;
 
     
-    public Wealthy(String name,  int money)
-    {
+    public Wealthy(String name,  int money) {
 		super(name);
 		this.money = money;
 		this.name = name;
     }
     
     //Messages
-    void msgRentDue () 
-    {
+    void msgRentDue() {
 	    //roles.landlord.waitingToExecute;
 	}
-    
-    public void updateTime(int newTime) 
-    {
-		if (newTime == eatTime1)
-		{		
-			//Need to turn Restaurant into a "Role"
-			//RestaurantCustomer.state = roleState.waitingToExecute;
-		}
-		if (newTime == eatTime2)
-		{
-			//RestaurantCustomer.state = roleState.waitingToExecute;
-		}
-		if (newTime == sleepTime)
-		{
-		    //GoToSleep();
-		}
-    }
 }

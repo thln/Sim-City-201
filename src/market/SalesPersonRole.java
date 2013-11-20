@@ -2,6 +2,7 @@ package market;
 
 import java.util.*;
 
+import application.Phonebook;
 import market.MarketOrder.orderState;
 import person.Person;
 import person.Role;
@@ -9,18 +10,10 @@ import restaurant.CookRole;
 
 public class SalesPersonRole extends Role {
 	
-	protected String RoleName = "Sales Person";
+	protected String roleName = "Sales Person";
 	String name;
 
-	public SalesPersonRole(Person person, String pName, String rName) {
-		super(person, pName, rName);
-	}
-
 	//Data
-
-	//Correspondents
-	//MarketRunner marketRunner;
-
 	private List<MarketOrder> orders = Collections.synchronizedList(new ArrayList<MarketOrder>());
 	public double money;
 
@@ -40,6 +33,20 @@ public class SalesPersonRole extends Role {
 		inventoryPrices.put("Steak", new Item("Steak", 15.99));
 		inventoryPrices.put("Pizza", new Item("Pizza", 8.99));
 		inventoryPrices.put("Salad", new Item("Salad", 5.99));
+	}
+	
+	//Correspondents
+	MarketRunnerRole marketRunner;
+
+
+	//Constructors
+	public SalesPersonRole(Person person, String pName, String rName) {
+		super(person, pName, rName);
+		marketRunner = Phonebook.getPhonebook().getMarket().marketRunnerRole;
+	}
+	
+	public SalesPersonRole(String roleName) {
+		super(roleName);
 	}
 
 

@@ -4,26 +4,31 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import application.Phonebook;
 import person.Person;
 import person.Role;
 
 public class MarketRunnerRole extends Role {
 	
-	protected String RoleName = "Market Runner";
+	protected String roleName = "Market Runner";
 
 	//Data
 	//Correspondents
 	Market market;
-	SalesPersonRole salesPersonRole;
+	SalesPersonRole salesPerson;
 	UPSmanRole UPSMan;
 	String name;
 	
 	private List<MarketOrder> orders = Collections.synchronizedList(new ArrayList<MarketOrder>());
 
-	MarketRunnerRole(Person person, Market market, SalesPersonRole salesPersonRole, String pName, String rName) {
+	MarketRunnerRole(Person person, String pName, String rName) {
 		super(person, pName, rName);
-		this.market = market;
-		this.salesPersonRole = salesPersonRole;		
+		market = Phonebook.getPhonebook().getMarket();
+		salesPerson = Phonebook.getPhonebook().getMarket().salesPersonRole;
+	}
+
+	public MarketRunnerRole(String roleName) {
+		super(roleName);
 	}
 
 	//Messages

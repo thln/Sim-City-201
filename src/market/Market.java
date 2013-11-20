@@ -3,12 +3,51 @@ package market;
 import java.util.*;
 
 import person.Person;
+import person.Role;
+import person.Worker;
 
 public class Market {
 
 	//Roles
-	public SalesPersonRole salesPersonRole;
-	public UPSmanRole UPSmanRole;
+	public SalesPersonRole salesPersonRole = new SalesPersonRole("Sales Person");
+	public MarketRunnerRole marketRunnerRole = new MarketRunnerRole("Market Runner");
+	public UPSmanRole UPSmanRole = new UPSmanRole("UPS Man");
+	
+	public Role arrivedAtWork(Person person, String title) {
+		if (title == "salesPerson") {
+			//Setting previous bank guard role to inactive
+			if (salesPersonRole.getPerson() != null) {
+				Worker worker = (Worker) salesPersonRole.getPerson();
+				worker.goOffWork();
+			}
+			//Setting bank guard role to new role
+			salesPersonRole.setPerson(person);
+			return salesPersonRole;
+		}
+		else if (title == "marketRunner") {
+			//Setting previous bank guard role to inactive
+			if (marketRunnerRole.getPerson() != null) {
+				Worker worker = (Worker) marketRunnerRole.getPerson();
+				worker.goOffWork();
+			}
+			//Setting bank guard role to new role
+			marketRunnerRole.setPerson(person);
+			return marketRunnerRole;
+		}
+		else if (title == "UPSman") {
+			//Setting previous bank guard role to inactive
+			if (UPSmanRole.getPerson() != null) {
+				Worker worker = (Worker) UPSmanRole.getPerson();
+				worker.goOffWork();
+			}
+			//Setting bank guard role to new role
+			UPSmanRole.setPerson(person);
+			return UPSmanRole;
+		}
+		else
+			return null;
+	}
+	
 	
 	
 	double money;
@@ -42,31 +81,6 @@ public class Market {
 		marketItemsForSale.put(7, new Item("Cheese", 4.99));
 	}
 	
-	public SalesPersonRole arrivedAtWorkSalesPerson(Person person) {
-		return salesPersonRole;
-	}
-	
-	public UPSmanRole arrivedAtWorkUPSman(Person person) {
-		return UPSmanRole;
-	}
-	
-	public void setSalesPersonRole(Person person) {
-		person.setWorkerRole(salesPersonRole);
-	}
-	
-	public void setUPSmanRole(Person person) {
-		person.setWorkerRole(UPSmanRole);
-	}
-	
-	public void goingOffWork(Person person) {
-		if (person.getWorkerRole().equals(salesPersonRole)) {
-			salesPersonRole = null;
-		}
-		else if (person.getWorkerRole().equals(UPSmanRole)) {
-			UPSmanRole = null;
-		}
-	}
-	
 	public class Item {
 		public String itemName;
 		public double  price;
@@ -75,5 +89,10 @@ public class Market {
 			itemName = choice;
 			this.price = price;
 		}
+	}
+
+	public Role arrivedAtWork(Worker worker, String title) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
