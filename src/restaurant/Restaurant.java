@@ -56,7 +56,9 @@ public class Restaurant {
 	}
 
 	public void goingOffWork(Person person) {
-		if (person.getWorkerRole().equals(hostRole)) {
+		Worker worker = (Worker) person;
+		
+		if (worker.getWorkerRole().equals(hostRole)) {
 			hostRole = null;
 		}
 	}
