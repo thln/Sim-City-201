@@ -55,6 +55,6 @@ public class Housing
 	
 	public String getOccupantName()
 	{
-		return "";//occupant.getName();
+		return occupant.getName();
 	}
 }
