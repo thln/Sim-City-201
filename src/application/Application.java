@@ -2,7 +2,6 @@ package application;
 
 import housing.Housing;
 
-import javax.management.relation.Role;
 import javax.swing.*;
 
 import market.*;
@@ -10,8 +9,6 @@ import bank.*;
 import person.*;
 import restaurant.Restaurant;
 
-import java.awt.*;
-import java.awt.event.*;
 import java.util.*;
 import java.util.List;
 
@@ -327,13 +324,11 @@ public class Application extends JPanel {
 		//
 	}
 
-	public void addPerson(String name ,int money, String type,
-			String jobTitle, String jobLocation, int startT, int lunchT, int endT)
-	{
+	public void addPerson (String name ,int money, String type,
+			String jobTitle, String jobLocation, int startT, int lunchT, int endT) {
 		//last 4 parameters specifically for worker. make empty/0 for all other types
 		//add any special parameters if new things needed for other types
-		if(type.equals("Wealthy"))
-		{
+		if (type.equals("Wealthy")) {
 			//min money req?
 			Wealthy newP = new Wealthy(name, money);
 			allHousing.add(new Housing(newP, allHousing.size(), "Mansion"));
@@ -341,31 +336,27 @@ public class Application extends JPanel {
 			population.add(newP);
 			newP.startThread();
 		}
-		else if(type.equals("Crook"))
-		{
+		else if (type.equals("Crook")) {
 			Crook newP = new Crook(name, money);
 			allHousing.add(new Housing(newP, allHousing.size(), "Apartment"));
 			newP.setHome(allHousing.get(allHousing.size() - 1));
 			population.add(newP);
 			newP.startThread();
 		}
-		else if(type.equals("Worker"))
-		{
-<<<<<<< HEAD
+		else if (type.equals("Worker")) {
+
 			/*
 			Worker newP = new Worker(name, money, jobTitle, startT, lunchT, endT);
 			allHousing.add(new Housing(newP, allHousing.size(), "Apartment"));
 			newP.setHome(allHousing.get(allHousing.size() - 1));
 			population.add(newP);
-=======
 			Worker newP = new Worker(name, money, jobTitle, jobLocation, startT, lunchT, endT);
 			Population.add(newP);
->>>>>>> 88f4e50550dde803e5bcb5fb5fae6f595ff3852b
+
 			newP.startThread();
 			*/
 		}
-		else if(type.equals("DeadBeat"))
-		{
+		else if (type.equals("Deadbeat")) {
 			/*
 			DeadBeat newP = new DeadBeat(name, money);
 			allHousing.add(new Housing(newP, allHousing.size(), "Park"));
