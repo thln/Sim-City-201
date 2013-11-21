@@ -1,5 +1,7 @@
 package person;
 
+import housing.Housing;
+
 import java.util.*;
 import java.util.concurrent.Semaphore;
 
@@ -23,6 +25,7 @@ public abstract class Person extends Agent {
 	//Data
 	String name;
 	private Semaphore atDestination = new Semaphore(0,true);
+	private Housing home;
 
 	//Role Related
 	public List<Role> roles = Collections.synchronizedList(new ArrayList<Role>()); 	//contains all the customer role
@@ -207,6 +210,11 @@ public abstract class Person extends Agent {
 		return name;
 	}
 
+	public void setHome(Housing place)
+	{
+		home = place;
+	}
+	
 	/*
 	public void print(String s)
 	{

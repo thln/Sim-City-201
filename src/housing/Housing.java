@@ -5,16 +5,19 @@ import person.Person;
 public class Housing 
 {
 	public enum differentHousingTypes {Apartment, Park, Mansion};
-	differentHousingTypes housingStructure;
+	public static differentHousingTypes housingStructure;
+	public enum housingState {UrgentWorkOrder, CheckUpNeeded, RecentlyChecked, Checking};
+	public housingState state;
 	public Person occupant;
 	int housingNumber;
 	int xCordinate;
 	int yCordinate;
 	
-	Housing(Person newP, int Address, String type)
+	public Housing(Person newP, int Address, String type)
 	{
 		occupant = newP;
 		housingNumber = Address;
+		state = housingState.CheckUpNeeded;
 		
 		if(type.equals("Apartment"))
 		{
@@ -52,6 +55,6 @@ public class Housing
 	
 	public String getOccupantName()
 	{
-		return "";//occupant.getName();
+		return occupant.getName();
 	}
 }

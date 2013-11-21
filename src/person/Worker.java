@@ -1,6 +1,6 @@
 package person;
 
-import housing.MaintenanceWorker;
+import housing.MaintenanceWorkerRole;
 
 import java.awt.Point;
 import java.util.Random;
@@ -102,6 +102,7 @@ public class Worker extends Person {
 			//				workerRole = new AltWaiterRole(myself, name, title);
 			//				roles.add(workerRole);
 			//			}
+
 		}
 
 		WatchTime getStartTime() {
