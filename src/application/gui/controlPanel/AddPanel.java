@@ -52,7 +52,7 @@ public class AddPanel extends JPanel implements ActionListener {
 		if (e.getSource() == addButton){
 			String name = firstName.getText() + lastName.getText();
 			String type = "Crook";
-			app.addPerson(name, 500, type, null, 0, 0, 0);
+			app.addPerson(name, 500, type, null, null, 0, 0, 0);
 		}
 	}
 	

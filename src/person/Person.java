@@ -52,17 +52,12 @@ public abstract class Person extends Agent {
 
 	//Time Related
 	public int sleepTime = 22;
-	protected TimeManager timeManager;
-	protected Time simulationTime;
-
 
 	Person(String name) {
 		this.name = name;
 		roles.add(new BankCustomerRole(this, getName(), "Bank Customer"));
 		roles.add(new MarketCustomerRole(this, getName(), "Market Customer"));
 		roles.add(new RestaurantCustomerRole(this, getName(), "Restaurant Customer"));
-
-		timeManager = TimeManager.getTimeManager();
 	}
 
 	//Scheduler

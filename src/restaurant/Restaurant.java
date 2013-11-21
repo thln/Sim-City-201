@@ -7,15 +7,23 @@ import person.Worker;
 
 public class Restaurant {
 
+	//Data
+	String name;
+
 	//Open and closing times
 	public WatchTime openTime = new WatchTime(11);
 	public WatchTime closeTime = new WatchTime(21);
 
 	//Roles
 	public HostRole hostRole = new HostRole("Host");
-	public CookRole cookRole = new CookRole("Cook");
-	public CashierRole cashierRole = new CashierRole("Cashier");
+	public CookRole cookRole = new CookRole("Cook", this);
+	public CashierRole cashierRole = new CashierRole("Cashier", this);
 
+	public Restaurant(String name) {
+		this.name = name;
+	}
+
+	//Methods
 	public Role arrivedAtWork(Person person, String title) {
 		if (title == "host") {
 			//Setting previous bank guard role to inactive
@@ -57,10 +65,18 @@ public class Restaurant {
 
 	public void goingOffWork(Person person) {
 		Worker worker = (Worker) person;
-		
+
 		if (worker.getWorkerRole().equals(hostRole)) {
 			hostRole = null;
 		}
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

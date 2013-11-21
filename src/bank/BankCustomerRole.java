@@ -3,6 +3,7 @@ package bank;
 import application.Phonebook;
 import person.Person;
 import person.Role;
+import person.Worker;
 
 public class BankCustomerRole extends Role {
 
@@ -128,7 +129,7 @@ public class BankCustomerRole extends Role {
 
 	void MessageGuard () {
 		print("Arrived at bank");
-		Phonebook.bank.bankGuardRole.msgArrivedAtBank(this);
+		Phonebook.getPhonebook().getBank().bankGuardRole.msgArrivedAtBank(this);
 		state = CustomerState.waiting;
 	}
 	
@@ -163,12 +164,13 @@ public class BankCustomerRole extends Role {
 		desire = BankCustomerDesire.none;
 		myTeller.msgLeavingBank(person.accountNum);
 		state = CustomerState.waiting;
-		person.setRoleInactive(this);
+		
+		this.setRoleInactive();
 	}
 
 	void RobBank() {
 		//Animation();
-		Phonebook.bank.bankGuardRole.msgRobbingBank(this);
+		Phonebook.getPhonebook().getBank().bankGuardRole.msgRobbingBank(this);
 		state = CustomerState.waiting;
 	}
 	
