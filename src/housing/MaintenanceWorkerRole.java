@@ -25,7 +25,10 @@ public class MaintenanceWorkerRole extends Role
 	
 	String name; 
 	private Timer FixingTimer  = new Timer();
-	private Semaphore workingOnResidence = new Semaphore(0, true);
+	public enum maintenanceState {Working, CheckingHouse};
+	public maintenanceState state = maintenanceState.Working;
+	//private Semaphore workingOnResidence = new Semaphore(0, true);
+	
 	
 	class WorkOrder 
 	{
@@ -61,61 +64,59 @@ public class MaintenanceWorkerRole extends Role
 	//Scheduler
 	protected boolean pickAndExecuteAnAction() 
 	{
-		synchronized(Phonebook.publicAllHousing)
+		if(state == maintenanceState.Working)
 		{
-			for(Housing h : Phonebook.publicAllHousing)
+			synchronized(Phonebook.publicAllHousing)
 			{
-				if(h.state == housingState.UrgentWorkOrder)
+				for(Housing h : Phonebook.publicAllHousing)
 				{
-					checkHousing(h);
-					return true;
-				}
-			}
-			
-			for(Housing h : Phonebook.publicAllHousing)
-			{
-				if(h.state == housingState.CheckUpNeeded)
-				{
-					checkHousing(h);
-					return true;
+					if(h.state == housingState.UrgentWorkOrder)
+					{
+						checkHousing(h);
+						return true;
+					}
 				}
 				
+				for(Housing h : Phonebook.publicAllHousing)
+				{
+					if(h.state == housingState.CheckUpNeeded)
+					{
+						checkHousing(h);
+						return true;
+					}
+					
+				}
+				resetHousingCheck();
+				return true;
+				
 			}
-			resetHousingCheck();
-			return true;
-			
 		}
-		//return false;
+		return false;
 	}
 	
 	//Actions
 	public void checkHousing(final Housing h)
 	{
 		//For some reason this only runs once
+		state = maintenanceState.CheckingHouse;
 		h.state = housingState.Checking;
-		print("Checking housing " + h.housingNumber);
-		print("The number of semaphores is: " + workingOnResidence.availablePermits());
+		print("Checking housing " + h.housingNumber + " in state " + h.state);
+		//print("The number of semaphores is: " + workingOnResidence.availablePermits());
 		FixingTimer.schedule(new TimerTask() 
 		{
 			public void run() 
 			{
 				//o.state = FoodState.Ready;
-				print("Done checking " + h.housingNumber);
-				print("The number of semaphores is: " + workingOnResidence.availablePermits());
-				workingOnResidence.release();
-				print("The number of semaphores is: " + workingOnResidence.availablePermits());
+				state = maintenanceState.Working;
 				h.state = housingState.RecentlyChecked;
+				print("Done checking " + h.housingNumber + " in state " + h.state);
+				//print("The number of semaphores is: " + workingOnResidence.availablePermits());
+				//workingOnResidence.release();
+				//print("The number of semaphores is: " + workingOnResidence.availablePermits());
 				stateChanged();
 			}
 		},
-		1000);
-		try 
-		{
-			workingOnResidence.acquire();
-		} catch (InterruptedException e) 
-		{
-			e.printStackTrace();
-		}
+		2000);
 	}
 	
 	public void resetHousingCheck()
