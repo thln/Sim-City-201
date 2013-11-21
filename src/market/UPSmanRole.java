@@ -6,7 +6,6 @@ import java.util.List;
 
 import person.Person;
 import person.Role;
-import restaurant.Market;
 
 public class UPSmanRole extends Role {
 
@@ -45,7 +44,8 @@ public class UPSmanRole extends Role {
 
 	//Actions
 	public void deliverOrder(MarketOrder o) {
-		o.cookRole.msgOrderFulfillment(o.item, o.totalItems, o.itemAmountOrdered, market);
+		o.restaurant.cookRole.msgOrderFulfillment(o.item, o.itemAmountFulfilled, o.itemAmountOrdered, market);
+		market.salesPersonRole.msgOrderDelivered(o);
 		orders.remove(o);
 	}
 

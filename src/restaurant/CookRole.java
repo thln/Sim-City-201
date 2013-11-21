@@ -18,6 +18,7 @@ public class CookRole extends Role {
 	private String name;
 	private Semaphore atDestination = new Semaphore(0,true);
 	protected String roleName = "Cook";
+	public Restaurant restaurant;
 
 	//public CookGui cookGui = null;
 
@@ -38,12 +39,14 @@ public class CookRole extends Role {
 		foodMap.put("Salad", new Food("Salad"));
 	}
 
-	public CookRole(Person p1, String pName, String rName) {
+	public CookRole(Person p1, String pName, String rName, Restaurant resturant) {
 		super(p1, pName, rName);
+		this.restaurant = restaurant;
 	}
 
-	public CookRole(String roleName) {
+	public CookRole(String roleName, Restaurant restaurant) {
 		super(roleName);
+		this.restaurant = restaurant;
 	}
 
 	public String getMaitreDName() {
@@ -323,9 +326,8 @@ public class CookRole extends Role {
 				
 				int newOrderAmount;
 				newOrderAmount = stockFulfillment.get(0).orderedAmount - stockFulfillment.get(0).quantity;
-				//print("Requesting " + myMark.market.getName() + " for " + newOrderAmount + " " + stockFulfillment.get(0).choice + "(s)");
-				//CHEF AND MARKET
-				//myMark.market.msgOutofItems(stockFulfillment.get(0).choice, newOrderAmount);
+				print("Requesting " + myMark.market.getName() + " for " + newOrderAmount + " " + stockFulfillment.get(0).choice + "(s)");
+				myMark.market.salesPersonRole.msgIWantProducts(restaurant, stockFulfillment.get(0).choice, newOrderAmount);
 			}
 			
 			stockFulfillment.remove(0);
@@ -352,7 +354,7 @@ public class CookRole extends Role {
 			return false;
 	}
 
-	public void addMarket(MarketAgent market) {
+	public void addMarket(Market market) {
 		markets.add(new myMarket(market));
 	}
 
@@ -364,8 +366,7 @@ public class CookRole extends Role {
 	//	print("Deleted all food inventory");
 	}
 
-	public void setRevolvingStand(RevolvingStand rs)
-	{
+	public void setRevolvingStand(RevolvingStand rs) {
 		theRevolvingStand = rs;
 	}
 	

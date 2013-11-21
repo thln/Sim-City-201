@@ -7,15 +7,16 @@ import market.MarketOrder.orderState;
 import person.Person;
 import person.Role;
 import restaurant.CookRole;
+import restaurant.Restaurant;
 
 public class SalesPersonRole extends Role {
 	
 	protected String roleName = "Sales Person";
 	String name;
+	Market market;
 
 	//Data
 	private List<MarketOrder> orders = Collections.synchronizedList(new ArrayList<MarketOrder>());
-	public double money;
 
 	public HashMap<String, Item> inventoryPrices = new HashMap<String, Item>(); {
 		//For people
@@ -40,13 +41,14 @@ public class SalesPersonRole extends Role {
 
 
 	//Constructors
-	public SalesPersonRole(Person person, String pName, String rName) {
+	public SalesPersonRole(Person person, String pName, String rName, Market market) {
 		super(person, pName, rName);
-		marketRunner = Phonebook.getPhonebook().getMarket().marketRunnerRole;
+		this.market = market;
 	}
 	
-	public SalesPersonRole(String roleName) {
+	public SalesPersonRole(String roleName, Market market) {
 		super(roleName);
+		this.market = market;
 	}
 
 
@@ -57,9 +59,8 @@ public class SalesPersonRole extends Role {
 		stateChanged();
 	}
 
-	public void msgIWantProducts(CookRole cookRole, String item, int numWanted, double payment) {
-		orders.add(new MarketOrder(cookRole, item, numWanted));
-		money += payment;
+	public void msgIWantProducts(Restaurant restaurant, String item, int numWanted) {
+		orders.add(new MarketOrder(restaurant, item, numWanted));
 		stateChanged();
 	}
 	
@@ -72,11 +73,31 @@ public class SalesPersonRole extends Role {
 			}
 		}
 	}
+	
+	public void msgOrderDelivered(MarketOrder o) {
+		for (MarketOrder MO : orders) {
+			if (MO.equals(o)) {
+				MO.state = orderState.itemsDelivered;
+				stateChanged();
+				return;
+			}
+		}
+	}
 
 	public void msgPayment(MarketCustomerRole customer, double payment) {
-		money += payment;
+		market.money += payment;
 		for (MarketOrder o : orders) {
 			if (o.customer.equals(customer)) {
+				orders.remove(o);
+				return;
+			}
+		}
+	}
+	
+	public void msgPayment(Restaurant restaurant, double payment) {
+		market.money += payment;
+		for (MarketOrder o : orders) {
+			if (o.customer.equals(restaurant)) {
 				orders.remove(o);
 				return;
 			}
@@ -95,6 +116,10 @@ public class SalesPersonRole extends Role {
 					giveCustomerItems(o);
 					return true;
 				}
+				if (o.state == orderState.itemsDelivered) {
+					askForPayment(o);
+					return true;
+				}
 			}
 		}
 		return false;
@@ -109,11 +134,18 @@ public class SalesPersonRole extends Role {
 
 	private void giveCustomerItems(MarketOrder o) {
 		o.state = orderState.gaveToCustomer;
-		o.orderCost = inventoryPrices.get(o.item).price;
-		//o.customer.msgHereAreYourThings(o.item, o.orderCost);		KRISTI: THIS LINE IS GIVING AN ERROR: PLZ FIX
+		o.orderCost = inventoryPrices.get(o.item).price  * o.itemAmountFulfilled;
+		o.customer.msgHereAreYourThings(o.item, o.itemAmountFulfilled, o.orderCost);
 		stateChanged();
 	}
 
+	private void askForPayment(MarketOrder o) {
+		o.state = orderState.gaveToCustomer;
+		o.orderCost = inventoryPrices.get(o.item).price * o.itemAmountFulfilled;
+		o.restaurant.cashierRole.msgPleasePayForItems(o.item, o.itemAmountFulfilled, o.orderCost, this);
+		stateChanged();
+	}
+	
 	//Item Class
 	public class Item {
 		String itemName;

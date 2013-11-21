@@ -17,8 +17,8 @@ public class Market {
 	public WatchTime closeTime = new WatchTime(18);
 
 	//Roles
-	public SalesPersonRole salesPersonRole = new SalesPersonRole("Sales Person");
-	public MarketRunnerRole marketRunnerRole = new MarketRunnerRole("Market Runner");
+	public SalesPersonRole salesPersonRole = new SalesPersonRole("Sales Person", this);
+	public MarketRunnerRole marketRunnerRole = new MarketRunnerRole("Market Runner", this);
 	public UPSmanRole UPSmanRole = new UPSmanRole("UPS Man", this);
 
 	double money;

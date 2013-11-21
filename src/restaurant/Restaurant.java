@@ -16,8 +16,8 @@ public class Restaurant {
 
 	//Roles
 	public HostRole hostRole = new HostRole("Host");
-	public CookRole cookRole = new CookRole("Cook");
-	public CashierRole cashierRole = new CashierRole("Cashier");
+	public CookRole cookRole = new CookRole("Cook", this);
+	public CashierRole cashierRole = new CashierRole("Cashier", this);
 
 	public Restaurant(String name) {
 		this.name = name;

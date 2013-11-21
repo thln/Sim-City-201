@@ -1,12 +1,12 @@
 package market;
 
-import restaurant.CookRole;
+import restaurant.Restaurant;
 
 public class MarketOrder {
 
-	public enum orderState {open, processing, itemsFound, gaveToCustomer};
+	public enum orderState {open, processing, itemsFound, itemsDelivered, gaveToCustomer};
 	MarketCustomerRole customer = null;
-	CookRole cookRole = null;
+	Restaurant restaurant = null;
 	String item;
 	int itemAmountOrdered;
 	int itemAmountFulfilled;
@@ -19,8 +19,8 @@ public class MarketOrder {
 		this.itemAmountOrdered = itemAmountOrdered;
 	}
 
-	MarketOrder(CookRole cookRole, String item, int itemAmountOrdered) {
-		this.cookRole = cookRole;
+	MarketOrder(Restaurant restaurant, String item, int itemAmountOrdered) {
+		this.restaurant = restaurant;
 		this.item = item;
 		this.itemAmountOrdered = itemAmountOrdered;
 	}
