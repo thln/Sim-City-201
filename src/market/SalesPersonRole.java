@@ -18,11 +18,6 @@ public class SalesPersonRole extends Role {
 	//Data
 	private List<MarketOrder> orders = Collections.synchronizedList(new ArrayList<MarketOrder>());
 
-	
-	//Correspondents
-	MarketRunnerRole marketRunner;
-
-
 	//Constructors
 	public SalesPersonRole(Person person, String pName, String rName, Market market) {
 		super(person, pName, rName);

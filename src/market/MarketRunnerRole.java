@@ -49,7 +49,7 @@ public class MarketRunnerRole extends Role {
 	public void processOrder(MarketOrder o) {
 		if (o.customer != null) {
 			decreaseInventoryBy(o.item, o.itemAmountOrdered);
-			Phonebook.getPhonebook().getMarket().salesPersonRole.msgOrderFulfilled(o);
+			market.salesPersonRole.msgOrderFulfilled(o);
 			orders.remove(o);
 		}
 		else { //o.customerType is an instance of business
