@@ -191,7 +191,7 @@ public abstract class Person extends Agent {
 
 	}
 
-	public void goToSleep() {
+	protected void goToSleep() {
 		//		gui.goHome();
 		//		try {
 		//			atDestination.acquire();
@@ -210,7 +210,7 @@ public abstract class Person extends Agent {
 		(((24 - TimeManager.getTimeManager().getTime().dayHour) + 8) * 500)); //Check this math please?
 	}
 
-	public void startHungerTimer() {
+	protected void startHungerTimer() {
 		//		gui.goHome();
 		//		try {
 		//			atDestination.acquire();
