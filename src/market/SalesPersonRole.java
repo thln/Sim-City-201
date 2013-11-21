@@ -18,23 +18,6 @@ public class SalesPersonRole extends Role {
 	//Data
 	private List<MarketOrder> orders = Collections.synchronizedList(new ArrayList<MarketOrder>());
 
-	public HashMap<String, Item> inventoryPrices = new HashMap<String, Item>(); {
-		//For people
-		inventoryPrices.put("Car", new Item("Car", 1000));
-		inventoryPrices.put("Pasta", new Item("Pasta", 1.99));
-		inventoryPrices.put("Ice Cream", new Item("Ice Cream", 5.99));
-		inventoryPrices.put("Chips", new Item("Chips", 2.99));
-		inventoryPrices.put("Milk", new Item("Milk", 2.50));
-		inventoryPrices.put("Eggs", new Item("Eggs", 1.50));
-		inventoryPrices.put("Lobster", new Item("Lobster", 12.99));
-		inventoryPrices.put("Cheese", new Item("Cheese", 4.99));
-
-		//For restaurants
-		inventoryPrices.put("Chicken", new Item("Chicken", 10.99));
-		inventoryPrices.put("Steak", new Item("Steak", 15.99));
-		inventoryPrices.put("Pizza", new Item("Pizza", 8.99));
-		inventoryPrices.put("Salad", new Item("Salad", 5.99));
-	}
 	
 	//Correspondents
 	MarketRunnerRole marketRunner;
@@ -128,32 +111,29 @@ public class SalesPersonRole extends Role {
 	//Actions
 	private void findItems(MarketOrder o) {
 		o.state = orderState.processing;
-		//marketRunner.msgHeresAnOrder(o);
+		
+		if (market.inventory.get(o.item).amount == 0) {
+			o.restaurant.cookRole.msgCantFulfill(o.item, 0, o.itemAmountOrdered, market);
+			orders.remove(o);
+			stateChanged();
+			return;
+		}
+		
+		market.marketRunnerRole.msgHeresAnOrder(o);
 		stateChanged();
 	}
 
 	private void giveCustomerItems(MarketOrder o) {
 		o.state = orderState.gaveToCustomer;
-		o.orderCost = inventoryPrices.get(o.item).price  * o.itemAmountFulfilled;
+		o.orderCost = market.inventory.get(o.item).price  * o.itemAmountFulfilled;
 		o.customer.msgHereAreYourThings(o.item, o.itemAmountFulfilled, o.orderCost);
 		stateChanged();
 	}
 
 	private void askForPayment(MarketOrder o) {
 		o.state = orderState.gaveToCustomer;
-		o.orderCost = inventoryPrices.get(o.item).price * o.itemAmountFulfilled;
+		o.orderCost = market.inventory.get(o.item).price * o.itemAmountFulfilled;
 		o.restaurant.cashierRole.msgPleasePayForItems(o.item, o.itemAmountFulfilled, o.orderCost, this);
 		stateChanged();
-	}
-	
-	//Item Class
-	public class Item {
-		String itemName;
-		double  price;
-
-		Item(String choice, double price) {
-			itemName = choice;
-			this.price = price;
-		}
 	}
 }
