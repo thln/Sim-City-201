@@ -1,10 +1,7 @@
 package person;
 
-import market.MarketCustomerRole;
 import application.Phonebook;
 import application.TimeManager;
-import application.WatchTime.Day;
-import person.Person.CarState;
 import person.Role.RoleState;
 
 public class Wealthy extends Person {
@@ -23,6 +20,11 @@ public class Wealthy extends Person {
 
 	//Scheduler
 	protected boolean pickAndExecuteAnAction() {
+		if (hunger == HungerLevel.full) {
+			startHungerTimer();
+			return true;
+		}
+		
 		synchronized (roles) {
 			if (!roles.isEmpty()) {
 				for (Role r : roles) {
@@ -42,7 +44,7 @@ public class Wealthy extends Person {
 		}
 
 		//Hunger Related
-		if (hungry) {
+		if (hunger == HungerLevel.hungry) {
 			//If you don't have food in the fridge
 			if (!hasFoodInFridge) {
 				if (money <= moneyMinThreshold) { 
@@ -90,12 +92,12 @@ public class Wealthy extends Person {
 
 	//Actions
 	public void prepareForRentCollection() {
-		for (Role landlord: roles) {
-			//			if (landlord instanceof LandlordRole) {
-			//				landlord.setRoleActive();
-			//				stateChanged();
-			//				return;
-			//			}
-		}
+//		for (Role landlord: roles) {
+//			//			if (landlord instanceof LandlordRole) {
+//			//				landlord.setRoleActive();
+//			//				stateChanged();
+//			//				return;
+//			//			}
+//		}
 	}
 }

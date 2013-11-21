@@ -1,34 +1,14 @@
 package person;
 
-import housing.MaintenanceWorkerRole;
-
 import java.awt.Point;
-import java.util.Random;
-
 import person.Role.RoleState;
-import restaurant.AltWaiterRole;
-import restaurant.CashierRole;
-import restaurant.CookRole;
-import restaurant.HostRole;
-import restaurant.WaiterRole;
-import market.MarketCustomerRole;
-import market.MarketRunnerRole;
-import market.SalesPersonRole;
-import market.UPSmanRole;
 import application.Phonebook;
 import application.TimeManager;
 import application.WatchTime;
-import bank.Bank;
-import bank.BankCustomerRole;
-import bank.BankGuardRole;
-import bank.BankTellerRole;
-import bank.LoanOfficerRole;
 
 public class Worker extends Person {
 	//Data
 	protected Job myJob = null;
-	private int moneyMinThreshold = 20;
-	private int moneyMaxThreshold = 200;
 	protected Role workerRole = null;
 
 	public Worker (String name, int money, String jobTitle, String jobPlace, int startT, int lunchT, int endT) {
@@ -143,6 +123,11 @@ public class Worker extends Person {
 
 	//Scheduler
 	public boolean pickAndExecuteAnAction() {
+		if (hunger == HungerLevel.full) {
+			startHungerTimer();
+			return true;
+		}
+		
 		synchronized (roles) {
 			if (!roles.isEmpty()) {
 				for (Role r : roles) {
@@ -162,7 +147,7 @@ public class Worker extends Person {
 		}
 
 		//Hunger Related
-		if (hungry) {
+		if (hunger == HungerLevel.hungry) {
 			//If you don't have food in the fridge
 			if (!hasFoodInFridge) {
 				if (money <= moneyMinThreshold) { 

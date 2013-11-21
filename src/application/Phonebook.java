@@ -2,7 +2,6 @@ package application;
 
 import housing.Housing;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import bank.Bank;

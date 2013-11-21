@@ -1,12 +1,10 @@
 package person;
 
-import person.Person.CarState;
 import person.Role.RoleState;
 import bank.BankCustomerRole;
 import application.Phonebook;
 import application.TimeManager;
 import application.TimeManager.Day;
-import application.TimeManager.Time;
 
 public class Crook extends Person {
 	//These people become dishonest customers in the restaurant
@@ -20,7 +18,11 @@ public class Crook extends Person {
 	}
 
 	protected boolean pickAndExecuteAnAction() {
-
+		if (hunger == HungerLevel.full) {
+			startHungerTimer();
+			return true;
+		}
+		
 		synchronized (roles) {
 			if (!roles.isEmpty()) {
 				for (Role r : roles) {
@@ -40,7 +42,7 @@ public class Crook extends Person {
 		}
 
 		//Hunger Related
-		if (hungry) {
+		if (hunger == HungerLevel.hungry) {
 			//If you don't have food in the fridge
 			if (!hasFoodInFridge) {
 				if (money <= moneyMinThreshold) { 

@@ -21,6 +21,11 @@ public class Deadbeat extends Person {
 
 
 	protected boolean pickAndExecuteAnAction() {
+		if (hunger == HungerLevel.full) {
+			startHungerTimer();
+			return true;
+		}
+		
 		synchronized (roles) {
 			if (!roles.isEmpty()) {
 				for (Role r : roles) {
@@ -41,7 +46,7 @@ public class Deadbeat extends Person {
 		}
 
 		//Hunger Related
-		if (hungry) {
+		if (hunger == HungerLevel.hungry) {
 			//If you don't have food in the fridge
 			if (!hasFoodInFridge) {
 				if (money <= moneyMinThreshold) { 
