@@ -26,6 +26,7 @@ public abstract class Person extends Agent {
 	String name;
 	private Semaphore atDestination = new Semaphore(0,true);
 	private Housing home;
+	private Timer alarmClock = new Timer();
 
 	//Role Related
 	public List<Role> roles = Collections.synchronizedList(new ArrayList<Role>()); 	//contains all the customer role
@@ -189,16 +190,13 @@ public abstract class Person extends Agent {
 	}
 
 	public void goToSleep() {
-		//puts agent to sleep
+		alarmClock.schedule(new TimerTask() {
+			public void run() {
+				stateChanged();
+			}
+		},
+		(((24 - TimeManager.getTimeManager().getTime().dayHour) + 8) * 1000));
 	}
-
-	//	public Role getWorkerRole() {
-	//		return workerRole;
-	//	}
-	//
-	//	public void setWorkerRole(Role workerRole) {
-	//		this.workerRole = workerRole;
-	//	}
 
 	@Override
 	public String getName() {

@@ -1,15 +1,13 @@
 package restaurant;
 
-import agent.Agent;
-
 import java.util.*;
-import java.util.concurrent.Semaphore;
+//import java.util.concurrent.Semaphore;
 
 import person.Person;
 import person.Role;
 
 /**
- * Restaurant Host Agent
+ * Restaurant Host Role
  */
 //We only have 2 types of agents in this prototype. A customer and an agent that
 //does all the rest. Rather than calling the other agent a waiter, we called him

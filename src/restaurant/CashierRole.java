@@ -53,7 +53,7 @@ public class CashierRole extends Role {
 	 */
 	public void msgComputeBill(String choice, int tableNumber, WaiterRole waiterRole) {
 		synchronized(Checks){
-			//print("Calculating bill for table " + tableNumber);
+			print("Calculating bill for table " + tableNumber);
 			//log.add(new LoggedEvent("Calculating bill for table"));
 			Checks.add(new Check(choice, tableNumber, waiterRole));
 			stateChanged();
@@ -62,7 +62,7 @@ public class CashierRole extends Role {
 
 	public void msgPayment(String choice, double amount, RestaurantCustomerRole customer) {
 		synchronized(Payments){
-			//print("Received payment from " + customer.getCustomerName());
+			print("Received payment from " + customer.getCustomerName());
 			//log.add(new LoggedEvent("Received payment from " + customer.getCustomerName()));
 			Payments.add(new Payment(choice, amount, customer));
 			stateChanged();
@@ -137,7 +137,7 @@ public class CashierRole extends Role {
 		change = Payments.get(0).payment - foodPrices.get(Payments.get(0).choice);
 		change = Math.round(change * 100.0) / 100.0;
 		Payments.get(0).customer.msgHeresYourChange(change);
-		//print("Gave change to customer " + Payments.get(0).customer.getName());
+		print("Gave change to customer " + Payments.get(0).customer.getName());
 		Payments.remove(0);
 	}
 
