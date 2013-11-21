@@ -1,6 +1,5 @@
 package person;
 
-import person.Person.CarState;
 import person.Role.RoleState;
 import application.Phonebook;
 import application.TimeManager;
@@ -33,7 +32,7 @@ public class Deadbeat extends Person {
 		}
 
 		//If no role is active
-		
+
 		//Park Related
 		//Start day in park for a couple hours
 		if (TimeManager.getTimeManager().getTime().dayHour == 10) {
