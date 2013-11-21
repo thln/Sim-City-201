@@ -190,12 +190,22 @@ public abstract class Person extends Agent {
 	}
 
 	public void goToSleep() {
+//		gui.goHome();
+//		try {
+//			atDestination.acquire();
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//
+//		}
+		
+		//After arrives home
 		alarmClock.schedule(new TimerTask() {
 			public void run() {
 				stateChanged();
 			}
 		},
-		(((24 - TimeManager.getTimeManager().getTime().dayHour) + 8) * 1000));
+		(((24 - TimeManager.getTimeManager().getTime().dayHour) + 8) * 500)); //Check this math please?
 	}
 
 	@Override

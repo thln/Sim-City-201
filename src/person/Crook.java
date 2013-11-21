@@ -82,6 +82,7 @@ public class Crook extends Person {
 			}
 		}
 
+		goToSleep();
 		return false;
 	}
 

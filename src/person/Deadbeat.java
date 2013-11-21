@@ -83,6 +83,7 @@ public class Deadbeat extends Person {
 			}
 		}
 
+		goToSleep();
 		return false;
 	}
 

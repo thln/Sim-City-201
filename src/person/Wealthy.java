@@ -84,6 +84,7 @@ public class Wealthy extends Person {
 			}
 		}
 
+		goToSleep();
 		return false;
 	}
 

@@ -204,6 +204,7 @@ public class Worker extends Person {
 			}
 		}
 
+		goToSleep();
 		return false;
 	}
 
