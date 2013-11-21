@@ -125,18 +125,18 @@ public class Application extends JPanel {
 		Phonebook.getPhonebook().setRestaurant(restaurant);
 		
 		//add all important workers to phonebook
-		Worker b = new Worker("Ben", 500, "loanOfficer", 800, 1200, 1600);
-		Worker c = new Worker("Caitlyn", 500, "bankGuard", 800, 1200, 1600);
+		Worker b = new Worker("Ben","Worker", 500, "loanOfficer", 800, 1200, 1600);
+		Worker c = new Worker("Caitlyn","Worker", 500, "bankGuard", 800, 1200, 1600);
 		//Phonebook.bank.bankGuardRole = (BankGuardRole) c.getWorkerRole();
-		Worker a = new Worker("Alex", 500, "bankTeller", 800, 1200, 1600);
+		Worker a = new Worker("Alex", "Worker", 500, "bankTeller", 800, 1200, 1600);
 		//	Worker d = new Worker("Derrick", 500, "marketRunner", 1100, 1300, 1900);
-		Worker e = new Worker("Erin", 0, "marketSales", 1100, 1300, 1900);
-		Worker f = new Worker("Fred", 500, "UPSman", 1100, 1300, 1900);
-		Worker g = new Worker("Greg", 10, "cashier", 1000, 1100, 1700);
-		Worker h = new Worker("Henry", 500, "host", 1000, 1100, 1700);
-		Worker i = new Worker("Iris", 50, "cook", 1000, 1100, 1700);
-		Worker j = new Worker("Josh", 500, "waiter", 1000, 1100, 1700);
-		Worker k = new Worker("Kristi", 20, "altWaiter", 1000, 1100, 1700);
+		Worker e = new Worker("Erin", "Worker", 0, "marketSales", 1100, 1300, 1900);
+		Worker f = new Worker("Fred", "Worker", 500, "UPSman", 1100, 1300, 1900);
+		Worker g = new Worker("Greg", "Worker", 10, "cashier", 1000, 1100, 1700);
+		Worker h = new Worker("Henry", "Worker", 500, "host", 1000, 1100, 1700);
+		Worker i = new Worker("Iris", "Worker", 50, "cook", 1000, 1100, 1700);
+		Worker j = new Worker("Josh", "Worker", 500, "waiter", 1000, 1100, 1700);
+		Worker k = new Worker("Kristi", "Worker", 20, "altWaiter", 1000, 1100, 1700);
 		//	Worker l = new Worker("Lauren", 100, "waiter", 1000, 1100, 1700);
 		Worker m = new Worker("Matthew", 300, "maintenance", 800, 1400, 1700);
 
@@ -145,13 +145,13 @@ public class Application extends JPanel {
 		//Do this when person walks in for work***
 
 		//Standard Wealthy Person
-		Wealthy t = new Wealthy("Tony", 2000);
+		Wealthy t = new Wealthy("Tony", "Wealthy", 2000);
 
 		//Standard Crook
-		Crook v = new Crook("Vinny", 250);
+		Crook v = new Crook("Vinny", "Crook", 250);
 
 		//Standard Deadbeat
-		//DeadBeat w = new DeadBeat("Walter", 0);
+		//DeadBeat w = new DeadBeat("Walter", "Deadbeat", 0);
 
 		//Setting Gui for everyone
 
@@ -206,19 +206,25 @@ public class Application extends JPanel {
 		if(type.equals("Wealthy"))
 		{
 			//min money req?
-			Wealthy newP = new Wealthy(name, money);
+			Wealthy newP = new Wealthy(name,"Wealthy", money);
 			Population.add(newP);
 			newP.startThread();
 		}
 		else if(type.equals("Crook"))
 		{
-			Crook newP = new Crook(name, money);
+			Crook newP = new Crook(name, "Crook", money);
 			Population.add(newP);
 			newP.startThread();
 		}
 		else if(type.equals("Worker"))
 		{
-			Worker newP = new Worker(name, money, jobTitle, startT, lunchT, endT);
+			Worker newP = new Worker(name, "Worker", money, jobTitle, startT, lunchT, endT);
+			Population.add(newP);
+			newP.startThread();
+		}
+		else if(type.equals("Deadbeat"))
+		{
+			DeadBeat newP = new DeadBeat(name, "Deadbeat", money);
 			Population.add(newP);
 			newP.startThread();
 		}
@@ -230,5 +236,15 @@ public class Application extends JPanel {
 	public void printLastPop(){
 		System.out.println(Population.get(Population.size()-1).getName());
 	}
+	
+	public int getPopulationSize(){
+		return Population.size();
+	}
+	
+	public Person getPerson(int personIndex){
+		return Population.get(personIndex);
+		
+	}
+	
 
 }

@@ -7,10 +7,18 @@ public class Crook extends Person {
 	int eatTime = 12;
 	int marketTime = 15;
 	String name;
+	String type = "Crook";
 
     public Crook(String name,  int money)
     {
 		super(name);
+		this.money = money;
+		this.name = name;
+    }
+    
+    public Crook(String name, String type, int money)
+    {
+		super(name, type);
 		this.money = money;
 		this.name = name;
     }
@@ -29,6 +37,9 @@ public class Crook extends Person {
 		if (this.newTime == sleepTime) {
 			//GoToSleep();
 		}
+	}
+	public String getType(){
+		return type;
 	}
 }
 

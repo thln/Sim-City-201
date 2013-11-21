@@ -17,13 +17,18 @@ public class ApplicationPanel extends JPanel{
 	
 	private ControlPanel cp;
 	private JPanel infoPanel = new JPanel();
-	private GroupPanel crookPanel = new GroupPanel("Crook",Color.WHITE, this);
-	private GroupPanel deadbeatPanel = new GroupPanel("Deadbeat", Color.LIGHT_GRAY, this);
-	private GroupPanel workerPanel = new GroupPanel("Worker", Color.LIGHT_GRAY, this);
-	private GroupPanel wealthyPanel = new GroupPanel("Wealthy",Color.WHITE, this);
+	private GroupPanel crookPanel;
+	private GroupPanel deadbeatPanel;
+	private GroupPanel workerPanel;
+	private GroupPanel wealthyPanel;
 	
 	public ApplicationPanel(Application app){
 		cp = new ControlPanel(app);
+		crookPanel = new GroupPanel("Crook",Color.WHITE, this, app);
+		deadbeatPanel = new GroupPanel("Deadbeat", Color.LIGHT_GRAY, this, app);
+		workerPanel = new GroupPanel("Worker", Color.LIGHT_GRAY, this, app);
+		wealthyPanel = new GroupPanel("Wealthy",Color.WHITE, this, app);
+		
 		setLayout(new GridLayout(2,1));
 		
 		GridBagConstraints c = new GridBagConstraints();
@@ -71,5 +76,11 @@ public class ApplicationPanel extends JPanel{
 			wealthyPanel.addPerson(name, money, type, jobTitle, startT, lunchT, endT);
 		}	
 	}
-
+	
+	public void updateGroups(){
+		crookPanel.updatePersonList();
+		deadbeatPanel.updatePersonList();
+		workerPanel.updatePersonList();
+		wealthyPanel.updatePersonList();
+	}
 }

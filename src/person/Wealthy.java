@@ -10,11 +10,18 @@ public class Wealthy extends Person
     int sleepTime = 22;
     boolean needToDeposit;
     String name;
-
+    String type = "Wealthy";
     
     public Wealthy(String name,  int money)
     {
 		super(name);
+		this.money = money;
+		this.name = name;
+    }
+    
+    public Wealthy(String name, String type, int money)
+    {
+		super(name, type);
 		this.money = money;
 		this.name = name;
     }
@@ -41,4 +48,8 @@ public class Wealthy extends Person
 		    //GoToSleep();
 		}
     }
+    
+    public String getType(){
+		return type;
+	}
 }

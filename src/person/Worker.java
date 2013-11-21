@@ -29,14 +29,21 @@ public class Worker extends Person {
 	int sleepTime = 2200;
 	int moneyMinThreshold = 20;
 	int moneyMaxThreshold = 200;
-
+	
 	public Worker (String name, int money, String jobTitle, int startT, int lunchT, int endT) {
 		super(name);
 		this.money = money;
 		myJob = new Job(jobTitle, startT, lunchT, endT, this);
 		marketTime = myJob.getEndTime();
 	}
-
+	
+	public Worker (String name, String type, int money, String jobTitle, int startT, int lunchT, int endT) {
+		super(name, type);
+		this.money = money;
+		myJob = new Job(jobTitle, startT, lunchT, endT, this);
+		marketTime = myJob.getEndTime();
+	}
+	
 	class Job {
 		String title;
 		int lunchBreakLength = 1; 
@@ -187,4 +194,9 @@ public class Worker extends Person {
 
 		newTime = -5;
 	}
+	
+	public String getType(){
+		return type;
+	}
+
 }

@@ -7,14 +7,20 @@ public class DeadBeat extends Person
     int eatTime = 13;
     
 	String name;
-
+	public final String type = "Deadbeat";
     public DeadBeat(String name,  int money)
     {
 		super(name);
 		this.money = money;
 		this.name = name;
     }
-
+    
+    public DeadBeat(String name, String type, int money)
+    {
+		super(name, type);
+		this.money = money;
+		this.name = name;
+    }
 	
 	public void updateTime(int newTime) 
 	{
@@ -36,5 +42,8 @@ public class DeadBeat extends Person
 	public void msgWelfareCheck() 
 	{
 	    money += 50;
+	}
+	public String getType(){
+		return type;
 	}
 }

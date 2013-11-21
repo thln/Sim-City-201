@@ -1,7 +1,10 @@
 package application.gui.appView.groupPanel;
 
 import javax.swing.*;
-import application.gui.appView.ApplicationPanel;
+
+import application.*;
+import application.gui.appView.*;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
@@ -21,13 +24,15 @@ public class GroupPanel extends JPanel implements ActionListener{
 							JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 	private Dimension paneDim;
     private Dimension buttonSize;
-
     private List<JButton> list = new ArrayList<JButton>();
     JButton button = new JButton();
 	JButton button1 = new JButton();
-
+	private ApplicationPanel appPanel;
+	private Application app;
     
-	public GroupPanel(String type, Color bg, ApplicationPanel app){
+	public GroupPanel(String type, Color bg, ApplicationPanel appPanel, Application app){
+		this.appPanel = appPanel;
+		this.app = app;
 		setLayout(new BorderLayout());
 		setBackground(bg);
 		this.type = type;
@@ -36,26 +41,27 @@ public class GroupPanel extends JPanel implements ActionListener{
 		title.setFont(titleFont);
 		add(title,BorderLayout.PAGE_START);
 		
-		//ListView Panel 
-		buttonList.setLayout(new BoxLayout(buttonList, BoxLayout.Y_AXIS));
-		pane.setViewportView(buttonList);
+		//ListView Panel
 		paneDim = new Dimension(this.getSize());
+		Dimension buttonSize = new Dimension(paneDim.width, (int) (paneDim.height /7));
+		buttonList.setLayout(new BoxLayout(buttonList, BoxLayout.Y_AXIS));
+		
+		for(int i = 0; i<app.getPopulationSize();i++){
+			if(app.getPerson(i).getType()== type){
+				JButton button = new JButton();
+				button.setText(app.getPerson(i).getName());
+				button.setPreferredSize(buttonSize);
+		        button.addActionListener(this);
+		        list.add(button);
+	        }
+		}
+		
+		pane.setViewportView(buttonList);
 		buttonSize = new Dimension(paneDim.width, (int) (paneDim.height /7));
         pane.setSize(paneDim);
         
         ListView.add(pane);
         ListView.setVisible(true);
-        
-        ///Temp Testing
-		button.setText("Person1");
-		button.setSize(buttonSize);
-        button.addActionListener(this);
-        list.add(button);
-        button1.setText("Person2");
-		button1.setSize(buttonSize);
-        button1.addActionListener(this);
-        list.add(button1);
-        //Temp Testing End
         
         //
         
@@ -88,6 +94,21 @@ public class GroupPanel extends JPanel implements ActionListener{
 					c1.show(flipPanel, PROFILEVIEW);
 				}
 			}
+		}
+	}
+	
+	public void updatePersonList(){
+		list = new ArrayList<JButton>();
+		Dimension paneSize = pane.getSize();
+		Dimension buttonSize = new Dimension(paneSize.width, (int) (paneSize.height /7));
+		for(int i = 0; i<app.getPopulationSize();i++){
+			//if(app.getPerson(i).getType()== type){
+				JButton button = new JButton();
+				button.setText(app.getPerson(i).getName());
+				button.setSize(buttonSize);
+		        button.addActionListener(this);
+		        list.add(button);
+	        //}
 		}
 	}
 	

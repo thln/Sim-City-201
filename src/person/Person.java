@@ -1,5 +1,5 @@
 package person;
-
+//personal additions to this file marked with a //&&NS&&//
 import java.util.*;
 import java.util.concurrent.Semaphore;
 
@@ -21,7 +21,7 @@ public abstract class Person extends Agent {
 	//Data
 	String name;
 	private Semaphore atDestination = new Semaphore(0,true);
-
+	String type;
 	//Role Related
 	public List<Role> roles = Collections.synchronizedList(new ArrayList<Role>()); 	//contains all the customer roles
 	protected Role workerRole;
@@ -52,15 +52,26 @@ public abstract class Person extends Agent {
 
 	Person(String name) {
 		this.name = name;
+		this.type = new String();
 		//	roles.add(new RestaurantCustomerRole(getName(), this));
 		//	roles.add(new MarketCustomerRole(this));
 		roles.add(new BankCustomerRole(this, getName(), "BankCustomerRole"));
 		newTime = -5;
 		//constructors should be changed so they match
 	}
-
+	
+	Person(String name, String type) {
+		this.name = name;
+		this.type = type;
+		//	roles.add(new RestaurantCustomerRole(getName(), this));
+		//	roles.add(new MarketCustomerRole(this));
+		roles.add(new BankCustomerRole(this, getName(), "BankCustomerRole"));
+		newTime = -5;
+		//constructors should be changed so they match
+	}
 	//Messages
 	public void msgNewTime(int time) {
+	
 		newTime = time;
 		stateChanged();
 	}
@@ -275,6 +286,9 @@ public abstract class Person extends Agent {
 	@Override
 	public String getName() {
 		return name;
+	}
+	public String getType(){
+		
 	}
 
 	/*

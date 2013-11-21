@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-
 public class AddPanel extends JPanel implements ActionListener {
 	JLabel first = new JLabel("First Name: ");
 	JTextField firstName = new JTextField(10);
