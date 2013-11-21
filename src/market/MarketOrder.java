@@ -8,20 +8,21 @@ public class MarketOrder {
 	MarketCustomerRole customer = null;
 	CookRole cookRole = null;
 	String item;
-	int totalItems;
+	int itemAmountOrdered;
+	int itemAmountFulfilled;
 	double orderCost;
 	orderState state = orderState.open;
 
-	MarketOrder(MarketCustomerRole customer, String item, int itemsWanted) {
+	MarketOrder(MarketCustomerRole customer, String item, int itemAmountOrdered) {
 		this.customer = customer;
 		this.item = item;
-		totalItems = itemsWanted;
+		this.itemAmountOrdered = itemAmountOrdered;
 	}
 
-	MarketOrder(CookRole cookRole, String item, int itemsWanted) {
+	MarketOrder(CookRole cookRole, String item, int itemAmountOrdered) {
 		this.cookRole = cookRole;
 		this.item = item;
-		totalItems = itemsWanted;
+		this.itemAmountOrdered = itemAmountOrdered;
 	}
 
 }

@@ -1,10 +1,11 @@
 package market;
 
+import application.Phonebook;
 import person.Person;
 import person.Role;
 
 public class MarketCustomerRole extends Role {
-	protected String RoleName = "Market Customer";
+	protected String roleName = "Market Customer";
 
 	//Data
 	boolean recievedItems = false;
@@ -12,22 +13,15 @@ public class MarketCustomerRole extends Role {
 	double bill;
 	String item;
 	String name;
-	
-	//Agent correspondents
-	SalesPersonRole salesPerson;
-
-	//	enum CustomerDesire {none, buyCar, buyFood};
-	//	CustomerDesire desire = CustomerDesire.none;
 
 	public MarketCustomerRole(Person person, String pName, String rName) {
 		super(person, pName, rName);
 	}
 
 	//Messages
-	public void msgHereAreYouThings(String item, double orderCost, SalesPersonRole salesPerson) {
+	public void msgHereAreYouThings(String item, double orderCost) {
 		recievedItems = true;
 		bill = orderCost;
-		this.salesPerson = salesPerson;
 	}
 
 	//Scheduler
@@ -42,7 +36,7 @@ public class MarketCustomerRole extends Role {
 
 	//Actions
 	public void payBill(){
-		salesPerson.msgPayment(this, bill);
+		Phonebook.getPhonebook().getMarket().salesPersonRole.msgPayment(this, bill);
 		money -= bill;
 		recievedItems = false;
 	}
