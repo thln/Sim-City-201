@@ -1,6 +1,5 @@
 package market;
 
-import market.MarketOrder.orderState;
 import application.Phonebook;
 import person.Person;
 import person.Role;
@@ -48,7 +47,7 @@ public class MarketCustomerRole extends Role {
 
 	//Actions
 	private void payBill(){
-		if (bill == Phonebook.getPhonebook().getMarket().marketItemsForSale.get(item).price * itemAmount) {
+		if (bill == Phonebook.getPhonebook().getMarket().inventory.get(item).price * itemAmount) {
 			Phonebook.getPhonebook().getMarket().salesPersonRole.msgPayment(this, bill);
 			money -= bill;
 			state = MarketCustomerState.payed;

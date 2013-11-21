@@ -60,7 +60,7 @@ public class MarketRunnerRole extends Role {
 	}
 
 	public void decreaseInventoryBy(String item, int amount) {
-		int newAmount = market.inventory.get(item) - amount;
-		market.inventory.put(item, newAmount);
+		int newAmount = market.inventory.get(item).amount - amount;
+		market.inventory.get(item).setInventory(newAmount);
 	}
 }

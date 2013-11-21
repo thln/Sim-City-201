@@ -22,16 +22,16 @@ public class Market {
 	public UPSmanRole UPSmanRole = new UPSmanRole("UPS Man", this);
 
 	double money;
-	HashMap<String, Double> marketItemsForSale = new HashMap<String, Double>(); {
+	public HashMap<Integer, Product> marketItemsForSale = new HashMap<Integer, Product>(); {
 		//For people
-		marketItemsForSale.put("Car", 1000.00);
-		marketItemsForSale.put("Pasta", 1.99);
-		marketItemsForSale.put("Ice Cream", 4.99);
-		marketItemsForSale.put("Chips", 2.99);
-		marketItemsForSale.put("Milk", 2.50);
-		marketItemsForSale.put("Eggs", 1.50);
-		marketItemsForSale.put("Lobster", 12.99);
-		marketItemsForSale.put("Cheese", 3.99);
+		marketItemsForSale.put(0, new Product("Car", 1000.00));
+		marketItemsForSale.put(1, new Product("Pasta", 1.99));
+		marketItemsForSale.put(2, new Product("Ice Cream", 4.99));
+		marketItemsForSale.put(3, new Product("Chips", 2.99));
+		marketItemsForSale.put(4, new Product("Milk", 2.50));
+		marketItemsForSale.put(5, new Product("Eggs", 1.50));
+		marketItemsForSale.put(6, new Product("Lobster", 12.99));
+		marketItemsForSale.put(7, new Product("Cheese", 3.99));
 	}
 
 	public HashMap<Integer, Item> inventory = new HashMap<Integer, Item>(); {
@@ -104,6 +104,20 @@ public class Market {
 			itemName = choice;
 			this.price = price;
 			this.amount = amount;
+		}
+		
+		public void setInventory(int newAmount) {
+			this.amount = newAmount;
+		}
+	}
+	
+	public class Product {
+		public String itemName;
+		public double  price;
+
+		public Product (String choice, double price) {
+			itemName = choice;
+			this.price = price;
 		}
 	}
 
