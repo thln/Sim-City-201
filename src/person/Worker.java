@@ -143,7 +143,7 @@ public class Worker extends Person {
 			if (!roles.isEmpty()) {
 				for (Role r : roles) {
 					if (r.getState() == RoleState.active) {
-						if (r.equals(workerRole) && ((myJob.getEndTime().hour - simulationTime.dayHour) <= 0)) 
+						if (r.equals(workerRole) && ((TimeManager.getTimeManager().getTime().dayHour - myJob.getEndTime().hour) <= 0)) 
 							workerRole.msgLeaveRole(); 
 						return r.pickAndExecuteAnAction();
 					}
