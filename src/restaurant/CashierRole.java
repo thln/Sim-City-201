@@ -3,7 +3,7 @@ package restaurant;
 
 import java.util.*;
 
-import market.SalesPersonRole;
+import market.interfaces.SalesPerson;
 import person.Person;
 import person.Role;
 import person.Worker;
@@ -70,7 +70,7 @@ public class CashierRole extends Role {
 		}
 	}
 
-	public void msgPleasePayForItems(String choice, int amount, double bill, SalesPersonRole market) {
+	public void msgPleasePayForItems(String choice, int amount, double bill, SalesPerson market) {
 		synchronized(OrdersToPay){
 			OrdersToPay.add(new Order(choice, amount, bill, market));
 			//log.add(new LoggedEvent("Received msgOrderFulfilled from " + market.getName()));
@@ -193,9 +193,9 @@ public class CashierRole extends Role {
 		String choice;
 		int amountOrdered;
 		double bill;
-		SalesPersonRole market; //The market
+		SalesPerson market; //The market
 
-		Order(String choice, int amountOrdered, double bill, SalesPersonRole market) {
+		Order(String choice, int amountOrdered, double bill, SalesPerson market) {
 			this.choice = choice;
 			this.amountOrdered = amountOrdered;
 			this.bill = bill;
