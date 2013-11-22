@@ -133,10 +133,7 @@ public class Worker extends Person {
 			startHungerTimer();
 			return true;
 		}
-		
-		//Checking the time
-		simulationTime = timeManager.getTime();
-		
+	
 		//Decisions more urgent that role continuity (None for now)
 			
 		synchronized (roles) {
