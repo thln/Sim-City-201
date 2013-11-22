@@ -126,7 +126,6 @@ public class Worker extends Person {
 		stateChanged();
 	}
 
-
 	//Scheduler
 	public boolean pickAndExecuteAnAction() {
 

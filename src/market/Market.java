@@ -64,7 +64,7 @@ public class Market {
 			//Setting previous bank guard role to inactive
 			if (salesPersonRole.getPerson() != null) {
 				Worker worker = (Worker) salesPersonRole.getPerson();
-				worker.goOffWork();
+				worker.roleFinishedWork();
 			}
 			//Setting bank guard role to new role
 			salesPersonRole.setPerson(person);
@@ -74,7 +74,7 @@ public class Market {
 			//Setting previous bank guard role to inactive
 			if (marketRunnerRole.getPerson() != null) {
 				Worker worker = (Worker) marketRunnerRole.getPerson();
-				worker.goOffWork();
+				worker.roleFinishedWork();
 			}
 			//Setting bank guard role to new role
 			marketRunnerRole.setPerson(person);
@@ -84,7 +84,7 @@ public class Market {
 			//Setting previous bank guard role to inactive
 			if (UPSmanRole.getPerson() != null) {
 				Worker worker = (Worker) UPSmanRole.getPerson();
-				worker.goOffWork();
+				worker.roleFinishedWork();
 			}
 			//Setting bank guard role to new role
 			UPSmanRole.setPerson(person);
