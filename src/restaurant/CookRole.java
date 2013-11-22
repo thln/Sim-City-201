@@ -6,6 +6,7 @@ import java.util.concurrent.Semaphore;
 import market.Market;
 import person.Person;
 import person.Role;
+import person.Worker;
 
 /**
  * Restaurant Cook Role
@@ -147,6 +148,11 @@ public class CookRole extends Role {
 			}
 		}
 
+		if (leaveRole){
+			((Worker) person).roleFinishedWork();
+			leaveRole = false;
+			return true;
+		}
 
 		return false;
 		//we have tried all our rules and found

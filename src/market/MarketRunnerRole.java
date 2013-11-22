@@ -7,6 +7,7 @@ import java.util.List;
 import application.Phonebook;
 import person.Person;
 import person.Role;
+import person.Worker;
 
 public class MarketRunnerRole extends Role {
 	
@@ -42,6 +43,13 @@ public class MarketRunnerRole extends Role {
 				return true;
 			}
 		}
+		
+		if (leaveRole){
+			((Worker) person).roleFinishedWork();
+			leaveRole = false;
+			return true;
+		}
+		
 		return false;
 	}
 

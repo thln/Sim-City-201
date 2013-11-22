@@ -6,6 +6,7 @@ import java.util.*;
 import market.SalesPersonRole;
 import person.Person;
 import person.Role;
+import person.Worker;
 
 
 /**
@@ -108,6 +109,12 @@ public class CashierRole extends Role {
 			}
 		}
 
+		if (leaveRole){
+			((Worker) person).roleFinishedWork();
+			leaveRole = false;
+			return true;
+		}
+		
 		return false;
 		//we have tried all our rules and found
 		//nothing to do. So return false to main loop of abstract agent
