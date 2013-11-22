@@ -1,19 +1,22 @@
 package market;
 
+import market.interfaces.MarketCustomer;
 import application.Phonebook;
 import person.Person;
 import person.Role;
+import testing.LoggedEvent;
+import testing.EventLog;
 
-public class MarketCustomerRole extends Role {
+public class MarketCustomerRole extends Role implements MarketCustomer {
 	protected String roleName = "Market Customer";
 
-	//Data
+	public EventLog log = new EventLog();
 	
+	//Data
 	enum MarketCustomerState {waitingForOrders, recievedOrders, payed, disputingBill}
-	MarketCustomerState state;
-
-	double money;
-	double bill;
+	MarketCustomerState state = MarketCustomerState.waitingForOrders;
+	
+	public double bill = 0;
 	String item;
 	int itemAmount;
 	String name;
@@ -25,8 +28,11 @@ public class MarketCustomerRole extends Role {
 	//Messages
 	public void msgHereAreYourThings(String item, int itemAmount, double orderCost) {
 		state = MarketCustomerState.recievedOrders;
+		this.item = item;
 		this.itemAmount = itemAmount;
 		bill = orderCost;
+		log.add(new LoggedEvent("Recieved msgHereAreYourThings"));
+		stateChanged();
 	}
 
 	//Scheduler
@@ -46,10 +52,10 @@ public class MarketCustomerRole extends Role {
 	}
 
 	//Actions
-	private void payBill(){
+	public void payBill(){
 		if (bill == Phonebook.getPhonebook().getMarket().inventory.get(item).price * itemAmount) {
 			Phonebook.getPhonebook().getMarket().salesPersonRole.msgPayment(this, bill);
-			money -= bill;
+			person.money -= bill;
 			state = MarketCustomerState.payed;
 		}
 		else {
@@ -58,7 +64,7 @@ public class MarketCustomerRole extends Role {
 		}
 	}
 	
-	private void exitMarket() {
+	public void exitMarket() {
 		this.setRoleActive();
 	}
 }

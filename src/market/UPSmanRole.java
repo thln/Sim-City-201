@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import market.interfaces.UPSman;
 import person.Person;
 import person.Role;
 import person.Worker;
 
-public class UPSmanRole extends Role {
+public class UPSmanRole extends Role implements UPSman {
 
 	//Data
 	private List<MarketOrder> orders = Collections.synchronizedList(new ArrayList<MarketOrder>());

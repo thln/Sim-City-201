@@ -14,7 +14,9 @@ import testing.Mock;
  * @author Kristi Hupka
  *
  */
+
 public class MockWaiter extends Mock implements Waiter {
+
 
 	public MockWaiter(String name) {
 		super(name);

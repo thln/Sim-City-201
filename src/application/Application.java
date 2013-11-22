@@ -364,4 +364,16 @@ public class Application extends JPanel {
 		}
 	}
 	
+	//function used to test gui functionality
+	public void printLastPop(){
+		System.out.println(population.get(population.size()-1).getName());
+	}
+	
+	public int getPopulationSize() {
+		return population.size();
+	}
+	
+	public Person getPerson(int personIndex){
+		return population.get(personIndex);
+	}
 }

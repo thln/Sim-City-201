@@ -14,7 +14,6 @@ public class Deadbeat extends Person {
 		this.name = name;
 	}
 
-
 	public void msgWelfareCheck() {
 		money += 50;
 	}
