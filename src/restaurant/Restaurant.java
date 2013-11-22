@@ -29,7 +29,7 @@ public class Restaurant {
 			//Setting previous bank guard role to inactive
 			if (hostRole.getPerson() != null) {
 				Worker worker = (Worker) hostRole.getPerson();
-				worker.goOffWork();
+				worker.roleFinishedWork();
 			}
 			//Setting bank guard role to new role
 			hostRole.setPerson(person);
@@ -39,7 +39,7 @@ public class Restaurant {
 			//Setting previous bank guard role to inactive
 			if (cookRole.getPerson() != null) {
 				Worker worker = (Worker) cookRole.getPerson();
-				worker.goOffWork();
+				worker.roleFinishedWork();
 			}
 			//Setting bank guard role to new role
 			cookRole.setPerson(person);
@@ -49,7 +49,7 @@ public class Restaurant {
 			//Setting previous bank guard role to inactive
 			if (cashierRole.getPerson() != null) {
 				Worker worker = (Worker) cashierRole.getPerson();
-				worker.goOffWork();
+				worker.roleFinishedWork();
 			}
 			//Setting bank guard role to new role
 			cashierRole.setPerson(person);

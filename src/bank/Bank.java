@@ -34,7 +34,7 @@ public class Bank {
 			//Setting previous bank guard role to inactive
 			if (bankGuardRole.getPerson() != null) {
 				Worker worker = (Worker) bankGuardRole.getPerson();
-				worker.goOffWork();
+				worker.roleFinishedWork();
 			}
 			//Setting bank guard role to new role
 			bankGuardRole.setPerson(person);
@@ -44,7 +44,7 @@ public class Bank {
 			//Setting previous bank guard role to inactive
 			if (loanOfficerRole.getPerson() != null) {
 				Worker worker = (Worker) loanOfficerRole.getPerson();
-				worker.goOffWork();
+				worker.roleFinishedWork();
 			}
 			//Setting bank guard role to new role
 			loanOfficerRole.setPerson(person);
