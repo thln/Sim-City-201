@@ -2,14 +2,13 @@ package market;
 
 import java.util.*;
 
-import application.Phonebook;
 import market.MarketOrder.orderState;
 import market.interfaces.SalesPerson;
 import person.Person;
 import person.Role;
 import person.Worker;
-import restaurant.CookRole;
 import restaurant.Restaurant;
+import testing.EventLog;
 
 public class SalesPersonRole extends Role implements SalesPerson {
 	
@@ -17,6 +16,8 @@ public class SalesPersonRole extends Role implements SalesPerson {
 	String name;
 	Market market;
 
+	public EventLog log = new EventLog();
+	
 	//Data
 	private List<MarketOrder> orders = Collections.synchronizedList(new ArrayList<MarketOrder>());
 
@@ -34,27 +35,20 @@ public class SalesPersonRole extends Role implements SalesPerson {
 
 
 	//Messages
-	/* (non-Javadoc)
-	 * @see market.SalesPerson#msgIWantProducts(market.MarketCustomerRole, java.lang.String, int)
-	 */
+
 	@Override
 	public void msgIWantProducts(MarketCustomerRole customer, String item, int numWanted) {
 		orders.add(new MarketOrder(customer, item, numWanted));
 		stateChanged();
 	}
 
-	/* (non-Javadoc)
-	 * @see market.SalesPerson#msgIWantProducts(restaurant.Restaurant, java.lang.String, int)
-	 */
+
 	@Override
 	public void msgIWantProducts(Restaurant restaurant, String item, int numWanted) {
 		orders.add(new MarketOrder(restaurant, item, numWanted));
 		stateChanged();
 	}
 	
-	/* (non-Javadoc)
-	 * @see market.SalesPerson#msgOrderFulfilled(market.MarketOrder)
-	 */
 	@Override
 	public void msgOrderFulfilled(MarketOrder o) {
 		for (MarketOrder MO : orders) {
@@ -66,9 +60,7 @@ public class SalesPersonRole extends Role implements SalesPerson {
 		}
 	}
 	
-	/* (non-Javadoc)
-	 * @see market.SalesPerson#msgOrderDelivered(market.MarketOrder)
-	 */
+
 	@Override
 	public void msgOrderDelivered(MarketOrder o) {
 		for (MarketOrder MO : orders) {
@@ -80,9 +72,7 @@ public class SalesPersonRole extends Role implements SalesPerson {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see market.SalesPerson#msgPayment(market.MarketCustomerRole, double)
-	 */
+
 	@Override
 	public void msgPayment(MarketCustomerRole customer, double payment) {
 		market.money += payment;
