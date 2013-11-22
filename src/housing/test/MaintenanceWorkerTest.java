@@ -12,10 +12,22 @@ import junit.framework.TestCase;
 public class MaintenanceWorkerTest extends TestCase 
 {
 
-	List<Housing> allHousing = Collections.synchronizedList(new ArrayList<Housing>());
+	List<Housing> testHousing;// = Collections.synchronizedList(new ArrayList<Housing>());
+	Worker testingMaintenanceWorker;
 	
-	Worker testingMaintenanceWorker = new Worker("Henry", 500, "Maintenance", "Maintenance Company", 800, 1200, 1800);
-
 	//Why isn't Phonebook working
-	//Phonebook.getPhonebook().setHousing(testHousing);
+	public void SetUp() throws Exception
+	{
+		super.setUp();
+		testHousing = Collections.synchronizedList(new ArrayList<Housing>());
+		Phonebook.getPhonebook().setHousing(testHousing);
+		testingMaintenanceWorker = new Worker("Henry", 500, "Maintenance", "Maintenance Company", 800, 1200, 1800);
+	}
+	
+	//Test that maintenance worker can handle one house
+	
+	public void testNormativeScenarioOne()
+	{
+		
+	}
 }
