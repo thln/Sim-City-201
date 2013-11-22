@@ -6,6 +6,7 @@ import application.Phonebook;
 import market.MarketOrder.orderState;
 import person.Person;
 import person.Role;
+import person.Worker;
 import restaurant.CookRole;
 
 public class SalesPersonRole extends Role {
@@ -97,6 +98,13 @@ public class SalesPersonRole extends Role {
 				}
 			}
 		}
+		
+		if (leaveRole){
+			((Worker) person).roleFinishedWork();
+			leaveRole = false;
+			return true;
+		}
+		
 		return false;
 	}
 

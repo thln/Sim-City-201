@@ -1,5 +1,7 @@
 package restaurant;
 
+import person.Worker;
+
 //import java.util.*;
 
 /**
@@ -88,6 +90,12 @@ public class MarketAgent {
 			}
 		}
 
+if (leaveRole){
+			((Worker) person).roleFinishedWork();
+			leaveRole = false;
+			return true;
+		}
+		
 		return false;
 		//we have tried all our rules and found
 		//nothing to do. So return false to main loop of abstract agent

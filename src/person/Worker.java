@@ -138,13 +138,26 @@ public class Worker extends Person {
 	void msgHereIsPayCheck (double amount) {
 		money += amount;
 	}
+	
+	public void roleFinishedWork(){ 		//from worker role
+		workerRole.setRoleInactive();
+	}
+
 
 	//Scheduler
 	public boolean pickAndExecuteAnAction() {
+		
+		//Checking the time
+		simulationTime = timeManager.getTime();
+		
+		//Decisions more urgent that role continuity (None for now)
+			
 		synchronized (roles) {
 			if (!roles.isEmpty()) {
 				for (Role r : roles) {
 					if (r.getState() == RoleState.active) {
+						if (r.equals(workerRole) && ((myJob.getEndTime().hour - simulationTime.dayHour) <= 0)) 
+							workerRole.msgLeaveRole(); 
 						return r.pickAndExecuteAnAction();
 					}
 				}
@@ -152,9 +165,7 @@ public class Worker extends Person {
 		}
 
 		//If no role is active
-		//Checking the time
-		simulationTime = timeManager.getTime();
-
+		
 		//Job Related
 		if ((myJob.getStartTime().hour - simulationTime.dayHour) <= 1) {
 			prepareForWork();

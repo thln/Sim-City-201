@@ -7,6 +7,7 @@ import java.util.concurrent.Semaphore;
 
 import person.Person;
 import person.Role;
+import person.Worker;
 
 /**
  * Restaurant Host Agent
@@ -171,6 +172,12 @@ public class HostRole extends Role {
 			}
 		}
 
+		if (leaveRole){
+			((Worker) person).roleFinishedWork();
+			leaveRole = false;
+			return true;
+		}
+		
 		return false;
 		//we have tried all our rules and found
 		//nothing to do. So return false to main loop of abstract agent

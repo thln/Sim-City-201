@@ -1,6 +1,8 @@
 package person;
 
 import agent.StringUtil;
+import application.TimeManager;
+import application.TimeManager.Time;
 
 public abstract class Role {
 
@@ -12,6 +14,7 @@ public abstract class Role {
 	enum RoleState {active, inActive};
 	//, waitingToExecute}
 	private RoleState state = RoleState.inActive;
+	protected boolean leaveRole = false;
 	
 	//For customer roles
 	protected Role(Person person, String pName, String rName) {
@@ -87,5 +90,9 @@ public abstract class Role {
     public String getRoleName () {
     	return roleName;
     }
+
+	public void msgLeaveRole() {
+		leaveRole = true;
+	}
 
 }

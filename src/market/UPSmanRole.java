@@ -6,6 +6,7 @@ import java.util.List;
 
 import person.Person;
 import person.Role;
+import person.Worker;
 
 public class UPSmanRole extends Role {
 
@@ -36,6 +37,13 @@ public class UPSmanRole extends Role {
 				return true;
 			}
 		}
+		
+		if (leaveRole){
+			((Worker) person).roleFinishedWork();
+			leaveRole = false;
+			return true;
+		}
+		
 		return false;
 	}
 

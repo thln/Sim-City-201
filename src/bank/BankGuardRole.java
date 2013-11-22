@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import application.Phonebook;
 import person.Person;
 import person.Role;
+import person.Worker;
 
 public class BankGuardRole extends Role {
 
@@ -15,6 +17,7 @@ public class BankGuardRole extends Role {
 	List <BankCustomerRole> customers;
 	List <BankCustomerRole> robbers;
 	List <MyTeller> tellers; 
+	
 	protected String roleName = "Bank Guard";
 
 	enum TellerState {available, busy};
@@ -82,6 +85,7 @@ public class BankGuardRole extends Role {
 
 	//SCHEDULER
 	 public boolean pickAndExecuteAnAction() {
+		 
 		for (BankCustomerRole cust1: robbers) {
 			catchRobber(cust1);
 			return true;
@@ -90,6 +94,12 @@ public class BankGuardRole extends Role {
 
 		for (BankCustomerRole cust1: customers) {
 			assignToTeller(cust1); 
+			return true;
+		}
+		
+		if (leaveRole){
+			((Worker) person).roleFinishedWork();
+			leaveRole = false;
 			return true;
 		}
 		

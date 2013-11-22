@@ -2,6 +2,7 @@ package bank;
 
 import person.Person;
 import person.Role;
+import person.Worker;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -57,6 +58,12 @@ public class LoanOfficerRole extends Role {
 		for (Loan loan1: loans) {
 			if (loan1.state == LoanState.requesting)
 				ProcessLoan(loan1);
+		}
+		
+		if (leaveRole){
+			((Worker) person).roleFinishedWork();
+			leaveRole = false;
+			return true;
 		}
 		
 		return false;

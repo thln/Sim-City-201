@@ -2,6 +2,7 @@ package bank;
 
 import person.Person;
 import person.Role;
+import person.Worker;
 import application.Phonebook;
 import bank.interfaces.LoanOfficer;
 
@@ -151,6 +152,13 @@ public class BankTellerRole extends Role {
 				BecomeAvailable(account1);
 				return false;
 			}
+		}
+		
+		if (leaveRole){
+			Worker myself = (Worker) person;
+			myself.roleFinishedWork();
+			leaveRole = false;
+			return true;
 		}
 		
 		return false;
