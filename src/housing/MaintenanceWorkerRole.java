@@ -55,25 +55,35 @@ public class MaintenanceWorkerRole extends Role {
 	}
 
 	//Scheduler
-	protected boolean pickAndExecuteAnAction() {
-		if (state == maintenanceState.Working) {
-			synchronized(Phonebook.getPhonebook().publicAllHousing) {
-				for (Housing h : Phonebook.getPhonebook().publicAllHousing) {
-					if (h.state == housingState.UrgentWorkOrder) {
-						checkHousing(h);
-						return true;
+	protected boolean pickAndExecuteAnAction() 
+	{
+		if (state == maintenanceState.Working) 
+		{
+			if(!Phonebook.getPhonebook().publicAllHousing.isEmpty())
+			{
+				synchronized(Phonebook.getPhonebook().publicAllHousing) 
+				{
+					for (Housing h : Phonebook.getPhonebook().publicAllHousing) 
+					{
+						if (h.state == housingState.UrgentWorkOrder) 
+						{
+							checkHousing(h);
+							return true;
+						}
 					}
-				}
-
-				for(Housing h : Phonebook.getPhonebook().publicAllHousing) {
-					if (h.state == housingState.CheckUpNeeded) {
-						checkHousing(h);
-						return true;
+	
+					for(Housing h : Phonebook.getPhonebook().publicAllHousing) 
+					{
+						if (h.state == housingState.CheckUpNeeded) 
+						{
+							checkHousing(h);
+							return true;
+						}
+	
 					}
-
+					resetHousingCheck();
+					return true;
 				}
-				resetHousingCheck();
-				return true;
 			}
 		}
 		return false;

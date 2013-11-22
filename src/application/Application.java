@@ -356,13 +356,11 @@ public class Application extends JPanel {
 		}
 		else if (type.equals("Deadbeat")) 
 		{
-			/*
-			DeadBeat newP = new DeadBeat(name, money);
+			Deadbeat newP = new Deadbeat(name, money);
 			allHousing.add(new Housing(newP, allHousing.size(), "Park"));
 			newP.setHome(allHousing.get(allHousing.size() - 1));
 			population.add(newP);
 			newP.startThread();
-			*/
 		}
 	}
 	
