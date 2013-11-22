@@ -1,37 +1,40 @@
 package application.gui.animation.agentGui;
 
-import bank.*;
-import application.gui.controlPanel.*;
+import restaurant.*;
+
 import java.awt.*;
-import java.io.*;
 
-import javax.imageio.*;
-
-import java.awt.image.BufferedImage;;
+import javax.swing.JLabel;
 
 public class RoleCustomerGui implements Gui{
-	
-	private BankCustomerRole role = null;
+
+	private RestaurantCustomerRole agent = null;
 	private boolean isPresent = false;
 	private boolean isHungry = false;
-	
-	ControlPanel gui;
-	
-    private int xPos = -40, yPos = -40;//default customer position
-    private int xDestination = -40, yDestination = -40;//default start position
-    public int home;
-    
-	private enum Command {noCommand, GoToRestaurant, GoToSeat, LeaveRestaurant, atCashier};
-	private Command command=Command.noCommand;
-    
-    static final int NTABLES = 5;
 
-	public RoleCustomerGui(BankCustomerRole c, ControlPanel gui){ //HostAgent m) {
-		role = c;
-		
-		this.gui = gui;
+	//RestaurantGui gui;
+
+	private int xPos, yPos;
+	private int xDestination, yDestination;
+	private int xHome, yHome;
+	private enum Command {noCommand, GoToSeat, GoToCashier, LeaveRestaurant, GoToRestaurant};
+	private Command command = Command.noCommand;
+
+	public static final int xTable = 200;
+	public static final int yTable = 250;
+
+	private enum CustomerState {nothing, readyToOrder, ordered, gotFood, askForCheck};
+	CustomerState state = CustomerState.nothing;
+
+	private String choice;
+
+	public RoleCustomerGui(RestaurantCustomerRole c/*, RestaurantGui gui*/){ //HostAgent m) {
+		agent = c;
+		xPos = -20;
+		yPos = -20;
+		//this.gui = gui;
 	}
-	
+
 	public void updatePosition() {
 		if (xPos < xDestination)
 			xPos++;
@@ -44,44 +47,64 @@ public class RoleCustomerGui implements Gui{
 			yPos--;
 
 		if (xPos == xDestination && yPos == yDestination) {
-			if (command==Command.GoToRestaurant) {
-				//role.msgAnimationFinishedGoToRest();
+			if (command == Command.GoToRestaurant) {
+				agent.gotHungry(xHome, yHome);
 			}
-			if (command==Command.GoToSeat) {
-				//role.msgAnimationFinishedGoToSeat();
+			if (command == Command.GoToSeat){
+				agent.msgAnimationFinishedGoToSeat();
 			}
-			else if (command==Command.LeaveRestaurant) {
-				//role.msgAnimationFinishedLeaveRestaurant();
-				System.out.println("about to call gui.setCustomerEnabled(role);");
+			else if (command == Command.GoToCashier) {
+				agent.msgAnimationFinishedGoToCashier();
+			}
+			else if (command == Command.LeaveRestaurant) {
+				agent.msgAnimationFinishedLeaveRestaurant();
+				System.out.println("about to call gui.setCustomerEnabled(agent);");
 				isHungry = false;
-				//gui.setCustomerEnabled(role);
+			//	gui.setCustomerEnabled(agent);
 			}
-			else if (command==Command.atCashier) {
-				//role.msgAtCashier();
-			}
-			command=Command.noCommand;
+			command = Command.noCommand;
 		}
-		/*
-		if (xPos == xDestination && yPos == yDestination
-				& (xDestination == 20) & (yDestination == 170) && ) {
-			role.msgAtCashier();
-			command=Command.noCommand;
-		}*/
 	}
 
 	public void draw(Graphics2D g) {
 		g.setColor(Color.GREEN);
 		g.fillRect(xPos, yPos, 20, 20);
+
+		if (state == CustomerState.readyToOrder) {
+			g.setColor(Color.RED);
+			g.drawString(" ?", xPos + 3, yPos + 15);
+		}
+
+		if (state == CustomerState.ordered) {
+			g.setColor(Color.RED);
+			g.drawString(" ?", xPos + 3, yPos + 15);
+			g.drawString(choice, xPos, yPos + 40);
+		}
+
+		if (state == CustomerState.gotFood) {
+			g.setColor(Color.WHITE);
+			g.drawString(choice, xPos, yPos + 40);
+		}
+
+		if (state == CustomerState.askForCheck) {
+			g.setColor(Color.RED);
+			g.drawString(" ?", xPos + 3, yPos + 15);
+			g.drawString("Check", xPos, yPos + 40);
+		}
 	}
 
 	public boolean isPresent() {
 		return isPresent;
 	}
+
 	public void setHungry() {
+		command = Command.GoToRestaurant;
 		isHungry = true;
-	//	role.gotHungry();
 		setPresent(true);
+		xDestination = xHome;
+		yDestination = yHome;
 	}
+
 	public boolean isHungry() {
 		return isHungry;
 	}
@@ -89,44 +112,74 @@ public class RoleCustomerGui implements Gui{
 	public void setPresent(boolean p) {
 		isPresent = p;
 	}
-	
-	public void SetHome(int startPos) {
-		home = startPos;
-	}
-	
-	public void DoGoToRestaurant() {
-		xDestination = 30*home + 20;
-		yDestination = 20;
-		command = Command.GoToRestaurant;
+
+	public void DoGoToSeat(int tableNumber) {//later you will map seatnumber to table coordinates.
+		if (tableNumber == 1)
+		{
+			xDestination = 50;
+			yDestination = 250;
+		}
+		else if (tableNumber == 2)	
+		{
+			xDestination = xTable;
+			yDestination = yTable;
+		}
+		else if (tableNumber == 3)	
+		{
+			xDestination = 350;
+			yDestination = 250;
+		}
+		else //if (tableNumber == 4)	
+		{
+			xDestination = 200;
+			yDestination = 75;
+		}
+		command = Command.GoToSeat;
 	}
 
-	public void DoGoToSeat(int seatnumber) {
-			xDestination = 50*seatnumber;
-			yDestination = 50;
-		//	gui.removeStart(this.role);
-		command = Command.GoToSeat;
-		 
+	public void DoReadyToOrder() {
+		state = CustomerState.readyToOrder;
 	}
-	
-	public void DoGotoCashier(){
-		xDestination = 20;
-    	yDestination = 170;
-    	command=Command.atCashier;
+
+	public void DoPlaceOrder(String choice) {
+		this.choice = choice;
+		state = CustomerState.ordered;
 	}
-	
-	public void DoGoToJail(){
-		xDestination = 400;
-    	yDestination = 400;
-    	System.out.println("about to call gui.setCustomerEnabled(role);");
-		isHungry = false;
-		//gui.setCustomerEnabled(role);
-		command=Command.noCommand;
+
+	public void DoEatFood(String choice) {
+		this.choice = choice;
+		state = CustomerState.gotFood;
+	}
+
+	public void DoAskForCheck() {
+		state = CustomerState.askForCheck;
+	}
+
+	public void DoGoToCashier() {
+		state = CustomerState.nothing;
+		xDestination = 285;
+		yDestination = 305;
+		command = Command.GoToCashier;
 	}
 
 	public void DoExitRestaurant() {
-		xDestination = -40;
-		yDestination = -40;
-		
+		state = CustomerState.nothing;
+		xDestination = -20;
+		yDestination = -20;
 		command = Command.LeaveRestaurant;
+	}
+
+
+	public void DoGoToJail() {
+		state = CustomerState.nothing;
+		xDestination = 415;
+		yDestination = 35;
+	}
+
+	public void setHomePosition(int x, int y) {
+		xHome = x;
+		yHome = y;
+		xDestination = xHome;
+		yDestination = yHome;
 	}
 }

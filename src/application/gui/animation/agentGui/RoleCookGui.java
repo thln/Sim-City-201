@@ -1,193 +1,185 @@
 package application.gui.animation.agentGui;
 
+import restaurant.*;
 
-import restaurant.CookAgent;
 import java.awt.*;
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
-import javax.imageio.*;
+import javax.swing.JLabel;
 
-import java.awt.image.BufferedImage;
+public class RoleCookGui implements Gui{
 
-public class CookGui implements Gui {
+	private RestaurantCustomerRole agent = null;
+	private boolean isPresent = false;
+	private boolean isHungry = false;
 
-    private CookAgent agent = null;
-    BufferedImage cookIcon = null;
-    BufferedImage fridge = null;
-	BufferedImage steak = null;
-	BufferedImage chicken = null;
-	BufferedImage salad = null;
-	BufferedImage pizza = null;
-	BufferedImage plate = null;
+	//RestaurantGui gui;
 
-	private List<CookingFood> cookingFoods = Collections.synchronizedList(new ArrayList<CookingFood>());
-	private enum Command {noCommand, atMarket, atFridge};
-	private Command command=Command.noCommand;
+	private int xPos, yPos;
+	private int xDestination, yDestination;
+	private int xHome, yHome;
+	private enum Command {noCommand, GoToSeat, GoToCashier, LeaveRestaurant, GoToRestaurant};
+	private Command command = Command.noCommand;
 
-    private int xPos = 450, yPos = 250;//default cook position
-    private int xDestination = 375, yDestination = 250;//default start position
-    
-    static final int NTABLES = 5;
-    int tables;
+	public static final int xTable = 200;
+	public static final int yTable = 250;
 
-    public CookGui(CookAgent agent) {
-        this.agent = agent;
-        try {
-            cookIcon = ImageIO.read(new File("chef.png"));
-        	} catch (IOException e) {
-        	}
-        try {
-            fridge = ImageIO.read(new File("fridge.png"));
-        	} catch (IOException e) {
-        	}
-		try {
-            chicken = ImageIO.read(new File("chicken.png"));
-        	} catch (IOException e) {
-        	}
-		try {
-            steak = ImageIO.read(new File("steak.png"));
-        	} catch (IOException e) {
-        	}
-		try {
-            salad = ImageIO.read(new File("salad.png"));
-        	} catch (IOException e) {
-        	}
-		try {
-            pizza = ImageIO.read(new File("pizza.png"));
-        	} catch (IOException e) {
-        	}
-		try {
-            plate = ImageIO.read(new File("plate.png"));
-        	} catch (IOException e) {
-        	}
-    }
+	private enum CustomerState {nothing, readyToOrder, ordered, gotFood, askForCheck};
+	CustomerState state = CustomerState.nothing;
 
-    public void updatePosition() {
-    	//for (int ix = 1; ix <= NTABLES; ix++) {
-    		if (xPos < xDestination)
-    			xPos++;
-    		else if (xPos > xDestination)
-    			xPos--;
+	private String choice;
 
-    		if (yPos < yDestination)
-    			yPos++;
-    		else if (yPos > yDestination)
-    			yPos--;
-    		   
-    		if (xPos == xDestination && yPos == yDestination
-    				/*& (xDestination == 375) & (yDestination == 150)*/) {
-    			if(command == Command.atMarket)
-    				agent.msgatMarket();
-    			else if(command == Command.atFridge)
-    				agent.msgatFridge();
-    			BacktoPosition();
-    			command = Command.noCommand;
-    			
-    		}
-    	for(int i = 0; i<cookingFoods.size();i++) {		
-    		if (cookingFoods.get(i).xfPos < cookingFoods.get(i).xfDestination)
-    			cookingFoods.get(i).xfPos++;
-    		else if (cookingFoods.get(i).xfPos >cookingFoods.get(i).xfDestination)
-    			cookingFoods.get(i).xfPos--;
+	public RoleCookGui(RestaurantCustomerRole c/*, RestaurantGui gui*/){ //HostAgent m) {
+		agent = c;
+		xPos = -20;
+		yPos = -20;
+		//this.gui = gui;
+	}
 
-    		if (cookingFoods.get(i).yfPos < cookingFoods.get(i).yfDestination)
-    			yPos++;
-    		else if (cookingFoods.get(i).yfPos > cookingFoods.get(i).yfDestination)
-    			cookingFoods.get(i).yfPos--;
-    		if (cookingFoods.get(i).xfPos == cookingFoods.get(i).xfDestination && cookingFoods.get(i).yfPos == cookingFoods.get(i).yfDestination
-    				&& (cookingFoods.get(i).xfDestination == 330 - 40*i) && (cookingFoods.get(i).yfDestination == 300)){
-    			cookingFoods.remove(cookingFoods.get(i));
-    			//cookingFoods.get(i).plateImg = null;
-    			/*
-    			cookingFoods.get(i).xfDestination = 360;
-    			cookingFoods.get(i).yfDestination = 300;
-    			*/
-    		}
-        }
-    }
+	public void updatePosition() {
+		if (xPos < xDestination)
+			xPos++;
+		else if (xPos > xDestination)
+			xPos--;
 
-    public void draw(Graphics2D g) {
-        g.setColor(Color.BLUE);
-        //g.drawImage(currImg2, 320, 295, null);
-        //g.drawImage(plate, 300, 295, null);
-        g.drawImage(cookIcon, xPos, yPos, null);
-        g.drawImage(fridge, 420, 200, null);
-        for(int i=0;i<cookingFoods.size();i++) {
-        	g.drawImage(cookingFoods.get(i).plateImg, 320 - 50*i, 295, null);
-        	g.drawImage(cookingFoods.get(i).foodImg,cookingFoods.get(i).xfPos - 50*i, cookingFoods.get(i).yfPos, null);
-        }
-        //g.fillRect(xPos, yPos, 20, 20);
-    }
+		if (yPos < yDestination)
+			yPos++;
+		else if (yPos > yDestination)
+			yPos--;
 
-    public boolean isPresent() {
-        return true;
-    }
-    
-    public void DoCooking(String Ochoice, int tablenum) {
-    	
-    switch (Ochoice){
-    	case "Steak": cookingFoods.add(new CookingFood(steak, tablenum));
-		break;
-    	case "Chicken": cookingFoods.add(new CookingFood(chicken, tablenum));
-		break;
-    	case "Salad": cookingFoods.add(new CookingFood(salad, tablenum));
-		break;
-    	case "Pizza": cookingFoods.add(new CookingFood(pizza, tablenum));
-		break;
-    	default:
-    	break;
-    	}
-    }
-    
-    public void GoToFridge(){
-    	yDestination = 230;
-    	command = Command.atFridge;
-    }
-    
-    
-    public void DoPlateIt(String Ochoice, int tablenum) {
-    	for(int i=0; i<cookingFoods.size();i++) {
-    		if(cookingFoods.get(i).table == tablenum) {
-    			cookingFoods.get(i).plateImg = plate;
-    			cookingFoods.get(i).xfDestination = 330 - 40*i;
-    			cookingFoods.get(i).yfDestination = 300;
-    		}
-    	}
-    }
-    
-    public void GotoMarket() {
-    	xDestination = 375;
-    	yDestination = 150;
-    	command = Command.atMarket;
-    }
-    
-    public void BacktoPosition() {
-    	xDestination = 375;
-    	yDestination = 250;
-    	//command = Command.noCommand;
-    }
+		if (xPos == xDestination && yPos == yDestination) {
+			if (command == Command.GoToRestaurant) {
+				agent.gotHungry(xHome, yHome);
+			}
+			if (command == Command.GoToSeat){
+				agent.msgAnimationFinishedGoToSeat();
+			}
+			else if (command == Command.GoToCashier) {
+				agent.msgAnimationFinishedGoToCashier();
+			}
+			else if (command == Command.LeaveRestaurant) {
+				agent.msgAnimationFinishedLeaveRestaurant();
+				System.out.println("about to call gui.setCustomerEnabled(agent);");
+				isHungry = false;
+			//	gui.setCustomerEnabled(agent);
+			}
+			command = Command.noCommand;
+		}
+	}
 
-    public int getXPos() {
-        return xPos;
-    }
+	public void draw(Graphics2D g) {
+		g.setColor(Color.GREEN);
+		g.fillRect(xPos, yPos, 20, 20);
 
-    public int getYPos() {
-        return yPos;
-    }
-    
-    private class CookingFood {
-    	int xfPos = 360, yfPos = 350; //default food position
-        int xfDestination = 360, yfDestination = 350; //default start position
-        int table;
-        BufferedImage foodImg = null;
-        BufferedImage plateImg = null;
-        
-        CookingFood(BufferedImage img, int tablenum) {
-        	table = tablenum;
-        	foodImg = img;
-        }
-    }
+		if (state == CustomerState.readyToOrder) {
+			g.setColor(Color.RED);
+			g.drawString(" ?", xPos + 3, yPos + 15);
+		}
+
+		if (state == CustomerState.ordered) {
+			g.setColor(Color.RED);
+			g.drawString(" ?", xPos + 3, yPos + 15);
+			g.drawString(choice, xPos, yPos + 40);
+		}
+
+		if (state == CustomerState.gotFood) {
+			g.setColor(Color.WHITE);
+			g.drawString(choice, xPos, yPos + 40);
+		}
+
+		if (state == CustomerState.askForCheck) {
+			g.setColor(Color.RED);
+			g.drawString(" ?", xPos + 3, yPos + 15);
+			g.drawString("Check", xPos, yPos + 40);
+		}
+	}
+
+	public boolean isPresent() {
+		return isPresent;
+	}
+
+	public void setHungry() {
+		command = Command.GoToRestaurant;
+		isHungry = true;
+		setPresent(true);
+		xDestination = xHome;
+		yDestination = yHome;
+	}
+
+	public boolean isHungry() {
+		return isHungry;
+	}
+
+	public void setPresent(boolean p) {
+		isPresent = p;
+	}
+
+	public void DoGoToSeat(int tableNumber) {//later you will map seatnumber to table coordinates.
+		if (tableNumber == 1)
+		{
+			xDestination = 50;
+			yDestination = 250;
+		}
+		else if (tableNumber == 2)	
+		{
+			xDestination = xTable;
+			yDestination = yTable;
+		}
+		else if (tableNumber == 3)	
+		{
+			xDestination = 350;
+			yDestination = 250;
+		}
+		else //if (tableNumber == 4)	
+		{
+			xDestination = 200;
+			yDestination = 75;
+		}
+		command = Command.GoToSeat;
+	}
+
+	public void DoReadyToOrder() {
+		state = CustomerState.readyToOrder;
+	}
+
+	public void DoPlaceOrder(String choice) {
+		this.choice = choice;
+		state = CustomerState.ordered;
+	}
+
+	public void DoEatFood(String choice) {
+		this.choice = choice;
+		state = CustomerState.gotFood;
+	}
+
+	public void DoAskForCheck() {
+		state = CustomerState.askForCheck;
+	}
+
+	public void DoGoToCashier() {
+		state = CustomerState.nothing;
+		xDestination = 285;
+		yDestination = 305;
+		command = Command.GoToCashier;
+	}
+
+	public void DoExitRestaurant() {
+		state = CustomerState.nothing;
+		xDestination = -20;
+		yDestination = -20;
+		command = Command.LeaveRestaurant;
+	}
+
+
+	public void DoGoToJail() {
+		state = CustomerState.nothing;
+		xDestination = 415;
+		yDestination = 35;
+	}
+
+	public void setHomePosition(int x, int y) {
+		xHome = x;
+		yHome = y;
+		xDestination = xHome;
+		yDestination = yHome;
+	}
 }

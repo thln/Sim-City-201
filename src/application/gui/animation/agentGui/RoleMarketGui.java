@@ -1,89 +1,185 @@
 package application.gui.animation.agentGui;
 
-
-import restaurant.MarketAgent;
+import restaurant.*;
 
 import java.awt.*;
-import java.io.*;
-import javax.imageio.*;
-import java.awt.image.BufferedImage;
 
-public class MarketGui implements Gui {
+import javax.swing.JLabel;
 
-    private MarketAgent agent = null;
-    BufferedImage img = null;
+public class RoleMarketGui implements Gui{
 
-    private int xPos = 450, yPos = 100;//default cook position
-    private int xDestination = 375, yDestination = 100;//default start position
-    
-    static final int NTABLES = 5;
-    int tables;
+	private RestaurantCustomerRole agent = null;
+	private boolean isPresent = false;
+	private boolean isHungry = false;
 
-    public MarketGui(MarketAgent agent) {
-        this.agent = agent;
-        
-        try {
-            img = ImageIO.read(new File("market.png"));
-        } catch (IOException e) {
-        }
-    }
+	//RestaurantGui gui;
 
-    public void updatePosition() {
-    	//for (int ix = 1; ix <= NTABLES; ix++) {
-    		if (xPos < xDestination)
-    			xPos++;
-    		else if (xPos > xDestination)
-    			xPos--;
+	private int xPos, yPos;
+	private int xDestination, yDestination;
+	private int xHome, yHome;
+	private enum Command {noCommand, GoToSeat, GoToCashier, LeaveRestaurant, GoToRestaurant};
+	private Command command = Command.noCommand;
 
-    		if (yPos < yDestination)
-    			yPos++;
-    		else if (yPos > yDestination)
-    			yPos--;
+	public static final int xTable = 200;
+	public static final int yTable = 250;
 
-    		if (xPos == xDestination && yPos == yDestination
-    				& (xDestination == 50*tables + 20) & (yDestination == 50 - 20)) {
-    		//	agent.msgAtTable();
-    		}
-        //}
-    }
+	private enum CustomerState {nothing, readyToOrder, ordered, gotFood, askForCheck};
+	CustomerState state = CustomerState.nothing;
 
-    public void draw(Graphics2D g) {
-        g.setColor(Color.CYAN);
-        g.drawImage(img, xPos, yPos, null);
-        //g.fillRect(xPos, yPos, 20, 20);
-    }
+	private String choice;
 
-    public boolean isPresent() {
-        return true;
-    }
-    
-    public void DoRestocking() {
-    	
-    	/*
-    	switch (Ochoice){
-    	case "Steak": System.out.print(Ochoice);
-    	break;
-    	case "Chicken": System.out.print(Ochoice);
-    	break;
-    	case "Salad": System.out.print(Ochoice);
-    	break;
-    	case "Pizza": System.out.print(Ochoice);
-    	break;
-    	default:
-    	break;
-    	}
-    	*/
-    }
-    
-    public void DoPlateIt() {
-    	
-    }
+	public RoleMarketGui(RestaurantCustomerRole c/*, RestaurantGui gui*/){ //HostAgent m) {
+		agent = c;
+		xPos = -20;
+		yPos = -20;
+		//this.gui = gui;
+	}
 
-    public int getXPos() {
-        return xPos;
-    }
+	public void updatePosition() {
+		if (xPos < xDestination)
+			xPos++;
+		else if (xPos > xDestination)
+			xPos--;
 
-    public int getYPos() {
-        return yPos;
-    }
+		if (yPos < yDestination)
+			yPos++;
+		else if (yPos > yDestination)
+			yPos--;
+
+		if (xPos == xDestination && yPos == yDestination) {
+			if (command == Command.GoToRestaurant) {
+				agent.gotHungry(xHome, yHome);
+			}
+			if (command == Command.GoToSeat){
+				agent.msgAnimationFinishedGoToSeat();
+			}
+			else if (command == Command.GoToCashier) {
+				agent.msgAnimationFinishedGoToCashier();
+			}
+			else if (command == Command.LeaveRestaurant) {
+				agent.msgAnimationFinishedLeaveRestaurant();
+				System.out.println("about to call gui.setCustomerEnabled(agent);");
+				isHungry = false;
+			//	gui.setCustomerEnabled(agent);
+			}
+			command = Command.noCommand;
+		}
+	}
+
+	public void draw(Graphics2D g) {
+		g.setColor(Color.GREEN);
+		g.fillRect(xPos, yPos, 20, 20);
+
+		if (state == CustomerState.readyToOrder) {
+			g.setColor(Color.RED);
+			g.drawString(" ?", xPos + 3, yPos + 15);
+		}
+
+		if (state == CustomerState.ordered) {
+			g.setColor(Color.RED);
+			g.drawString(" ?", xPos + 3, yPos + 15);
+			g.drawString(choice, xPos, yPos + 40);
+		}
+
+		if (state == CustomerState.gotFood) {
+			g.setColor(Color.WHITE);
+			g.drawString(choice, xPos, yPos + 40);
+		}
+
+		if (state == CustomerState.askForCheck) {
+			g.setColor(Color.RED);
+			g.drawString(" ?", xPos + 3, yPos + 15);
+			g.drawString("Check", xPos, yPos + 40);
+		}
+	}
+
+	public boolean isPresent() {
+		return isPresent;
+	}
+
+	public void setHungry() {
+		command = Command.GoToRestaurant;
+		isHungry = true;
+		setPresent(true);
+		xDestination = xHome;
+		yDestination = yHome;
+	}
+
+	public boolean isHungry() {
+		return isHungry;
+	}
+
+	public void setPresent(boolean p) {
+		isPresent = p;
+	}
+
+	public void DoGoToSeat(int tableNumber) {//later you will map seatnumber to table coordinates.
+		if (tableNumber == 1)
+		{
+			xDestination = 50;
+			yDestination = 250;
+		}
+		else if (tableNumber == 2)	
+		{
+			xDestination = xTable;
+			yDestination = yTable;
+		}
+		else if (tableNumber == 3)	
+		{
+			xDestination = 350;
+			yDestination = 250;
+		}
+		else //if (tableNumber == 4)	
+		{
+			xDestination = 200;
+			yDestination = 75;
+		}
+		command = Command.GoToSeat;
+	}
+
+	public void DoReadyToOrder() {
+		state = CustomerState.readyToOrder;
+	}
+
+	public void DoPlaceOrder(String choice) {
+		this.choice = choice;
+		state = CustomerState.ordered;
+	}
+
+	public void DoEatFood(String choice) {
+		this.choice = choice;
+		state = CustomerState.gotFood;
+	}
+
+	public void DoAskForCheck() {
+		state = CustomerState.askForCheck;
+	}
+
+	public void DoGoToCashier() {
+		state = CustomerState.nothing;
+		xDestination = 285;
+		yDestination = 305;
+		command = Command.GoToCashier;
+	}
+
+	public void DoExitRestaurant() {
+		state = CustomerState.nothing;
+		xDestination = -20;
+		yDestination = -20;
+		command = Command.LeaveRestaurant;
+	}
+
+
+	public void DoGoToJail() {
+		state = CustomerState.nothing;
+		xDestination = 415;
+		yDestination = 35;
+	}
+
+	public void setHomePosition(int x, int y) {
+		xHome = x;
+		yHome = y;
+		xDestination = xHome;
+		yDestination = yHome;
+	}
 }
