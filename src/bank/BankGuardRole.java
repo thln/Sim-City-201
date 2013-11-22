@@ -4,81 +4,83 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import bank.interfaces.BankCustomer;
+import bank.interfaces.BankGuard;
+import bank.interfaces.BankTeller;
 import application.Phonebook;
 import person.Person;
 import person.Role;
 import person.Worker;
 
-public class BankGuardRole extends Role {
+public class BankGuardRole extends Role implements BankGuard {
 
 	//DATA
 
 	String name;
-	List <BankCustomerRole> customers;
-	List <BankCustomerRole> robbers;
+	List <BankCustomer> customers;
+	List <BankCustomer> robbers;
 	List <MyTeller> tellers; 
 	
 	protected String roleName = "Bank Guard";
 
-	enum TellerState {available, busy};
+	public enum TellerState {available, busy};
 
-	class MyTeller {
-		TellerState state;
-		BankTellerRole tell1;
+	public class MyTeller {
+		private TellerState state;
+		BankTeller tell1;
 		
-		MyTeller (BankTellerRole t1) {
+		MyTeller (BankTeller t1) {
 			tell1 = t1;
-			state = TellerState.available;
+			setState(TellerState.available);
+		}
+
+		public TellerState getState() {
+			return state;
+		}
+
+		public TellerState setState(TellerState state) {
+			this.state = state;
+			return state;
 		}
 	}
 	
 	public BankGuardRole (String name, Person p1, String roleName) {
 		super(p1, name, roleName);
-		customers = Collections.synchronizedList(new ArrayList<BankCustomerRole>());
-		robbers = Collections.synchronizedList(new ArrayList<BankCustomerRole>());
+		customers = Collections.synchronizedList(new ArrayList<BankCustomer>());
+		robbers = Collections.synchronizedList(new ArrayList<BankCustomer>());
 		tellers = Collections.synchronizedList(new ArrayList<MyTeller>());
 	}
-	
-	public BankGuardRole (String roleName) {
-		super(roleName);
-		customers = Collections.synchronizedList(new ArrayList<BankCustomerRole>());
-		robbers = Collections.synchronizedList(new ArrayList<BankCustomerRole>());
+
+	public BankGuardRole (String name) {
+		super(name);
+		customers = Collections.synchronizedList(new ArrayList<BankCustomer>());
+		robbers = Collections.synchronizedList(new ArrayList<BankCustomer>());
 		tellers = Collections.synchronizedList(new ArrayList<MyTeller>());
 	}
 
 	//MESSAGES
 
-	public void msgTellerCameToWork (BankTellerRole t1) {
-		print("Adding teller to list");
+	public void msgTellerCameToWork (BankTeller t1) {
 		tellers.add(new MyTeller(t1));
+		stateChanged();
 	}
 	
-	public void msgTellerBecameAvailable (BankTellerRole t1){
-		print("Teller became available");
-		for (MyTeller teller: tellers) {
-			if (teller.tell1.equals(t1)) {
-				teller.state = TellerState.available;
-				stateChanged();
-				return;
-			}
-		}
-			
-	}
-	
-	public void msgRobbingBank(BankCustomerRole cust1) {
+	public void msgRobbingBank(BankCustomer cust1) {
 		robbers.add(cust1);
 		stateChanged();
 	}
 
-	public void msgArrivedAtBank(BankCustomerRole c1) {
+	public void msgArrivedAtBank(BankCustomer c1) {
 		print("New customer arrived");
 		customers.add(c1);
 		stateChanged();
 	}
 
-	public void msgLeavingBank (BankTellerRole t1) {
+	public void msgCustomerLeavingBank (BankTeller t1) {
+		//print("Teller became available");
+	
 		MyTeller correct = findTeller(t1);
-		correct.state = TellerState.available;
+		correct.setState(TellerState.available);
 		stateChanged();
 	}
 
@@ -86,13 +88,13 @@ public class BankGuardRole extends Role {
 	//SCHEDULER
 	 public boolean pickAndExecuteAnAction() {
 		 
-		for (BankCustomerRole cust1: robbers) {
+		for (BankCustomer cust1: robbers) {
 			catchRobber(cust1);
 			return true;
 		}
 
 
-		for (BankCustomerRole cust1: customers) {
+		for (BankCustomer cust1: customers) {
 			assignToTeller(cust1); 
 			return true;
 		}
@@ -108,11 +110,18 @@ public class BankGuardRole extends Role {
 
 	//ACTIONS
 
-	private MyTeller findTeller (BankTellerRole t1) {
-			return null;
+	private MyTeller findTeller (BankTeller t1) {
+		for (MyTeller teller: tellers) {
+			if (teller.tell1.equals(t1)) {
+				teller.setState(TellerState.available);
+				stateChanged();
+				return teller;
+			}
+		}
+		return null;
 	}
 
-	private void catchRobber(BankCustomerRole robber1) {
+	private void catchRobber(BankCustomer robber1) {
 		boolean caught = true;
 		//95% chance Robber is caught, 5% he gets away;
 		if (caught)
@@ -121,13 +130,22 @@ public class BankGuardRole extends Role {
 			robber1.msgGotAway();  
 	}
 
-	private void assignToTeller(BankCustomerRole cust1) {
+	private void assignToTeller(BankCustomer cust1) {
 		for (MyTeller teller1: tellers) {
-			if (teller1.state == TellerState.available) {
+			if (teller1.getState() == TellerState.available) {
 				cust1.msgGoToTeller(teller1.tell1);
-				teller1.state = TellerState.busy;
+				teller1.setState(TellerState.busy);
+				customers.remove(cust1);
 			}
 		}
+	}
+
+	public List <BankCustomer> getCustomers() {
+		return customers;
+	}
+
+	public List<MyTeller> getTellers() {
+		return tellers;
 	}
 
 }
