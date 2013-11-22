@@ -136,8 +136,11 @@ public class BankGuardRole extends Role implements BankGuard {
 				cust1.msgGoToTeller(teller1.tell1);
 				teller1.setState(TellerState.busy);
 				customers.remove(cust1);
+				return;
 			}
 		}
+		
+		cust1.msgNoTellerAvailable();
 	}
 
 	public List <BankCustomer> getCustomers() {

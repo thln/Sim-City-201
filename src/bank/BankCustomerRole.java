@@ -35,6 +35,10 @@ public class BankCustomerRole extends Role implements BankCustomer{
 		stateChanged();
 	}
 	
+	public void msgNoTellerAvailable(){
+		
+	}
+	
 	public void msgHereIsYourMoney(double amount) {
 		person.money += amount;
 		desire = BankCustomerDesire.leaveBank;
