@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import market.interfaces.MarketRunner;
 import application.Phonebook;
 import person.Person;
 import person.Role;
 import person.Worker;
 
-public class MarketRunnerRole extends Role {
+public class MarketRunnerRole extends Role implements MarketRunner {
 	
 	protected String roleName = "Market Runner";
 
