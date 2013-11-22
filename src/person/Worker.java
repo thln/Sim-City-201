@@ -128,20 +128,17 @@ public class Worker extends Person {
 
 	//Scheduler
 	public boolean pickAndExecuteAnAction() {
-<<<<<<< HEAD
+
 		if (hunger == HungerLevel.full) {
 			startHungerTimer();
 			return true;
 		}
-		
-=======
 		
 		//Checking the time
 		simulationTime = timeManager.getTime();
 		
 		//Decisions more urgent that role continuity (None for now)
 			
->>>>>>> c6240beb55e7e151d5506973cc773a2631e8ddf3
 		synchronized (roles) {
 			if (!roles.isEmpty()) {
 				for (Role r : roles) {
@@ -155,11 +152,8 @@ public class Worker extends Person {
 		}
 
 		//If no role is active
-<<<<<<< HEAD
 
-=======
 		
->>>>>>> c6240beb55e7e151d5506973cc773a2631e8ddf3
 		//Job Related
 		if ((myJob.getStartTime().hour - TimeManager.getTimeManager().getTime().dayHour) <= 1) {
 			prepareForWork();
