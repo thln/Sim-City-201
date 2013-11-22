@@ -76,4 +76,14 @@ public class Phonebook {
 		//this.seafoodRestaurant = seafoodRestaurant;
 
 	}
+	
+	public List<Housing> getAllHousing()
+	{
+		return publicAllHousing;
+	}
+	
+	public void setHousing(List<Housing> ApplicationHousing) 
+	{
+		this.publicAllHousing = ApplicationHousing;
+	}
 }

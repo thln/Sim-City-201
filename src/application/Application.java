@@ -177,6 +177,7 @@ public class Application extends JPanel {
 		Phonebook.getPhonebook().setBank(bank);
 		Phonebook.getPhonebook().setMarket(market);
 		Phonebook.getPhonebook().setRestaurant(restaurant);
+		Phonebook.getPhonebook().setHousing(allHousing);
 		//add list of things here
 		
 		//add all important workers to phonebook
@@ -345,16 +346,13 @@ public class Application extends JPanel {
 		}
 		else if (type.equals("Worker")) {
 
-			/*
-			Worker newP = new Worker(name, money, jobTitle, startT, lunchT, endT);
+			
+			Worker newP = new Worker(name, money, jobTitle, jobLocation, startT, lunchT, endT);
 			allHousing.add(new Housing(newP, allHousing.size(), "Apartment"));
 			newP.setHome(allHousing.get(allHousing.size() - 1));
 			population.add(newP);
-			Worker newP = new Worker(name, money, jobTitle, jobLocation, startT, lunchT, endT);
-			Population.add(newP);
-
 			newP.startThread();
-			*/
+			
 		}
 		else if (type.equals("Deadbeat")) {
 			/*
@@ -366,5 +364,5 @@ public class Application extends JPanel {
 			*/
 		}
 	}
-
+	
 }
