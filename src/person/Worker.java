@@ -122,7 +122,8 @@ public class Worker extends Person {
 	}
 	
 	public void roleFinishedWork(){ 		//from worker role
-		workerRole.setRoleInactive();
+		workerRole = null;
+		stateChanged();
 	}
 
 
@@ -135,13 +136,17 @@ public class Worker extends Person {
 		}
 	
 		//Decisions more urgent that role continuity (None for now)
-			
+		
+		if (workerRole.getState() == RoleState.active) {
+			if (((TimeManager.getTimeManager().getTime().dayHour - myJob.getEndTime().hour) <= 0)) 
+				workerRole.msgLeaveRole(); 
+			workerRole.pickAndExecuteAnAction();
+		}
+		
 		synchronized (roles) {
-			if (!roles.isEmpty()) {
+			if (!roles.isEmpty()) {				
 				for (Role r : roles) {
 					if (r.getState() == RoleState.active) {
-						if (r.equals(workerRole) && ((TimeManager.getTimeManager().getTime().dayHour - myJob.getEndTime().hour) <= 0)) 
-							workerRole.msgLeaveRole(); 
 						return r.pickAndExecuteAnAction();
 					}
 				}
@@ -210,7 +215,6 @@ public class Worker extends Person {
 
 		if (myJob.jobPlace == "bank") {
 			workerRole = Phonebook.getPhonebook().getBank().arrivedAtWork(this, myJob.title);
-			roles.add(workerRole);
 			workerRole.setRoleActive();
 			return;
 		}
@@ -280,12 +284,6 @@ public class Worker extends Person {
 	//				workerRole = new AltWaiterRole(myself, name, title);
 	//				roles.add(workerRole);
 	//			}
-
-	public void goOffWork() {
-		roles.remove(workerRole);
-		workerRole = null;
-		stateChanged();
-	}
 
 	public void setWorkerRole(Role workerRole) {
 		this.workerRole = workerRole;
