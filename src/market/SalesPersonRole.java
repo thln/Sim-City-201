@@ -137,7 +137,7 @@ public class SalesPersonRole extends Role implements SalesPerson {
 	}
 
 	//Actions
-	private void findItems(MarketOrder o) {
+	public void findItems(MarketOrder o) {
 		o.state = orderState.processing;
 		
 		if (market.inventory.get(o.item).amount == 0) {
@@ -151,14 +151,14 @@ public class SalesPersonRole extends Role implements SalesPerson {
 		stateChanged();
 	}
 
-	private void giveCustomerItems(MarketOrder o) {
+	public void giveCustomerItems(MarketOrder o) {
 		o.state = orderState.gaveToCustomer;
 		o.orderCost = market.inventory.get(o.item).price  * o.itemAmountFulfilled;
 		o.customer.msgHereAreYourThings(o.item, o.itemAmountFulfilled, o.orderCost);
 		stateChanged();
 	}
 
-	private void askForPayment(MarketOrder o) {
+	public void askForPayment(MarketOrder o) {
 		o.state = orderState.gaveToCustomer;
 		o.orderCost = market.inventory.get(o.item).price * o.itemAmountFulfilled;
 		o.restaurant.cashierRole.msgPleasePayForItems(o.item, o.itemAmountFulfilled, o.orderCost, this);
