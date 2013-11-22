@@ -105,7 +105,7 @@ public class BankTellerRole extends Role implements BankTeller {
 
 	//Scheduler
 
-	protected boolean pickAndExecuteAnAction() {
+	public boolean pickAndExecuteAnAction() {
 
 		for (Account account1: accounts) {
 			

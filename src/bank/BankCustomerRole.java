@@ -98,7 +98,7 @@ public class BankCustomerRole extends Role implements BankCustomer{
 
 	//Scheduler
 	
-	protected boolean pickAndExecuteAnAction () {
+	public boolean pickAndExecuteAnAction () {
 		
 	if (state == CustomerState.atBank)
 		MessageGuard();

@@ -55,4 +55,10 @@ public class CarGui implements Gui{
 		g.setColor(Color.GREEN);
 		g.fillRect(xPos, yPos, 20, 20);
 	}
+
+	@Override
+	public boolean isPresent() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

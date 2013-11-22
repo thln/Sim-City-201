@@ -13,6 +13,7 @@ import bank.interfaces.BankCustomer;
 import market.MarketCustomerRole;
 import person.Role;
 import person.Role.RoleState;
+import person.interfaces.PersonInterface;
 import restaurant.HostRole;
 import restaurant.RestaurantCustomerRole;
 import agent.Agent;
@@ -20,7 +21,7 @@ import application.Phonebook;
 import application.TimeManager;
 import application.TimeManager.Time;
 
-public abstract class Person extends Agent {
+public abstract class Person extends Agent implements PersonInterface {
 
 	//Data
 	String name;

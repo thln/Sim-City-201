@@ -54,7 +54,7 @@ public class LoanOfficerRole extends Role implements LoanOfficer {
 
 	// Scheduler
 
-	protected boolean pickAndExecuteAnAction () {
+	public boolean pickAndExecuteAnAction () {
 		
 		for (Loan loan1: loans) {
 			if (loan1.state == LoanState.requesting)
