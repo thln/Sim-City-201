@@ -45,7 +45,7 @@ public class GroupPanel extends JPanel implements ActionListener{
 		paneDim = new Dimension(this.getSize());
 		Dimension buttonSize = new Dimension(paneDim.width, (int) (paneDim.height /7));
 		buttonList.setLayout(new BoxLayout(buttonList, BoxLayout.Y_AXIS));
-		
+		/*
 		for(int i = 0; i<app.getPopulationSize();i++){
 			if(app.getPerson(i).getType()== type){
 				JButton button = new JButton();
@@ -55,7 +55,7 @@ public class GroupPanel extends JPanel implements ActionListener{
 		        list.add(button);
 	        }
 		}
-		
+		*/
 		pane.setViewportView(buttonList);
 		buttonSize = new Dimension(paneDim.width, (int) (paneDim.height /7));
         pane.setSize(paneDim);

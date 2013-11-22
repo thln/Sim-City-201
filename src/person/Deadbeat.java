@@ -1,21 +1,23 @@
 package person;
 
 import person.Role.RoleState;
-import bank.BankCustomerRole;
 import application.Phonebook;
 import application.TimeManager;
-import application.TimeManager.Day;
 
-public class Crook extends Person {
-	//These people become dishonest customers in the restaurant
+public class Deadbeat extends Person {
 
 	String name;
 
-	public Crook(String name,  int money) {
+	public Deadbeat(String name,  int money) {
 		super(name);
 		this.money = money;
 		this.name = name;
 	}
+
+	public void msgWelfareCheck() {
+		money += 50;
+	}
+
 
 	protected boolean pickAndExecuteAnAction() {
 		if (hunger == HungerLevel.full) {
@@ -34,10 +36,11 @@ public class Crook extends Person {
 		}
 
 		//If no role is active
-		//Checking the time
 
-		if (TimeManager.getTimeManager().getTime().day == Day.Friday && TimeManager.getTimeManager().getTime().dayHour == 12 && TimeManager.getTimeManager().getTime().dayMinute == 0) {
-			robBank();
+		//Park Related
+		//Start day in park for a couple hours
+		if (TimeManager.getTimeManager().getTime().dayHour == 10) {
+			visitPark();
 			return true;
 		}
 
@@ -88,28 +91,9 @@ public class Crook extends Person {
 		return false;
 	}
 
-	private void robBank() {
-		//GUI call to go to business
-		//		try {
-		//			atDestination.acquire();
-		//		} catch (InterruptedException e) {
-		//			// TODO Auto-generated catch block
-		//			e.printStackTrace();
-		//
-		//		}
-		//Once semaphore is released from GUI
 
-		for (Role cust1 : roles) {
-			if (cust1 instanceof BankCustomerRole) {
-				BankCustomerRole bankRobber = (BankCustomerRole) cust1;
-
-				bankRobber.setDesire("robBank");
-				Phonebook.getPhonebook().getBank().bankGuardRole.msgRobbingBank(bankRobber);
-				cust1.setRoleActive();
-				stateChanged();
-				return;
-			}
-		}
+	//Actions
+	public void visitPark() {
+		//Go visit the park (GUI)
 	}
 }
-

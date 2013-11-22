@@ -68,7 +68,7 @@ public class AddPanel implements ActionListener {
 		if (e.getSource() == addButton){
 				String name = firstName.getText() +" "  + lastName.getText();
 				String type = (String)typeBox.getSelectedItem();
-				app.addPerson(name, 500, type, null, 0, 0, 0);
+				app.addPerson(name, 500, type, "location", null, 0, 0, 0);
 				app.printLastPop();
 				System.out.println(type);
 		}
