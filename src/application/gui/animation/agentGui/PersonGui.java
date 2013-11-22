@@ -1,14 +1,14 @@
 package application.gui.animation.agentGui;
 
-import restaurant.*;
+import person.*;
 
 import java.awt.*;
 
 import javax.swing.JLabel;
 
-public class RoleCashierGui implements Gui{
+public class PersonGui implements Gui{
 
-	private RestaurantCustomerRole agent = null;
+	private Person agent = null;
 	private boolean isPresent = false;
 	private boolean isHungry = false;
 
@@ -28,8 +28,8 @@ public class RoleCashierGui implements Gui{
 
 	private String choice;
 
-	public RoleCashierGui(RestaurantCustomerRole c/*, RestaurantGui gui*/){ //HostAgent m) {
-		agent = c;
+	public PersonGui(Person p/*, RestaurantGui gui*/){ //HostAgent m) {
+		agent = p;
 		xPos = -20;
 		yPos = -20;
 		//this.gui = gui;
@@ -47,21 +47,6 @@ public class RoleCashierGui implements Gui{
 			yPos--;
 
 		if (xPos == xDestination && yPos == yDestination) {
-			if (command == Command.GoToRestaurant) {
-				agent.gotHungry(xHome, yHome);
-			}
-			if (command == Command.GoToSeat){
-				agent.msgAnimationFinishedGoToSeat();
-			}
-			else if (command == Command.GoToCashier) {
-				agent.msgAnimationFinishedGoToCashier();
-			}
-			else if (command == Command.LeaveRestaurant) {
-				agent.msgAnimationFinishedLeaveRestaurant();
-				System.out.println("about to call gui.setCustomerEnabled(agent);");
-				isHungry = false;
-			//	gui.setCustomerEnabled(agent);
-			}
 			command = Command.noCommand;
 		}
 	}
