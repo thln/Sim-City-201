@@ -1,33 +1,14 @@
 package person;
 
-import housing.MaintenanceWorker;
-
 import java.awt.Point;
-import java.util.Random;
-
 import person.Role.RoleState;
-import restaurant.AltWaiterRole;
-import restaurant.CashierRole;
-import restaurant.CookRole;
-import restaurant.HostRole;
-import restaurant.WaiterRole;
-import market.MarketCustomerRole;
-import market.MarketRunnerRole;
-import market.SalesPersonRole;
-import market.UPSmanRole;
 import application.Phonebook;
+import application.TimeManager;
 import application.WatchTime;
-import bank.Bank;
-import bank.BankCustomerRole;
-import bank.BankGuardRole;
-import bank.BankTellerRole;
-import bank.LoanOfficerRole;
 
 public class Worker extends Person {
 	//Data
 	protected Job myJob = null;
-	private int moneyMinThreshold = 20;
-	private int moneyMaxThreshold = 200;
 	protected Role workerRole = null;
 
 	public Worker (String name, int money, String jobTitle, String jobPlace, int startT, int lunchT, int endT) {
@@ -102,6 +83,7 @@ public class Worker extends Person {
 			//				workerRole = new AltWaiterRole(myself, name, title);
 			//				roles.add(workerRole);
 			//			}
+
 		}
 
 		WatchTime getStartTime() {
@@ -141,6 +123,11 @@ public class Worker extends Person {
 
 	//Scheduler
 	public boolean pickAndExecuteAnAction() {
+		if (hunger == HungerLevel.full) {
+			startHungerTimer();
+			return true;
+		}
+		
 		synchronized (roles) {
 			if (!roles.isEmpty()) {
 				for (Role r : roles) {
@@ -152,29 +139,27 @@ public class Worker extends Person {
 		}
 
 		//If no role is active
-		//Checking the time
-		simulationTime = timeManager.getTime();
 
 		//Job Related
-		if ((myJob.getStartTime().hour - simulationTime.dayHour) <= 1) {
+		if ((myJob.getStartTime().hour - TimeManager.getTimeManager().getTime().dayHour) <= 1) {
 			prepareForWork();
 			return true;
 		}
 
 		//Hunger Related
-		if (hungry) {
+		if (hunger == HungerLevel.hungry) {
 			//If you don't have food in the fridge
 			if (!hasFoodInFridge) {
 				if (money <= moneyMinThreshold) { 
 					//This if says go to the business if it is open and at least 1 hour before closing time
-					if ((simulationTime.dayHour >= Phonebook.getPhonebook().getBank().openTime.hour) &&
-							(simulationTime.dayHour < Phonebook.getPhonebook().getBank().closeTime.hour)) {
+					if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getBank().openTime.hour) &&
+							(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getBank().closeTime.hour)) {
 						prepareForBank();
 						return true;
 					}
 				}
-				else if ((simulationTime.dayHour >= Phonebook.getPhonebook().getRestaurant().openTime.hour) &&
-						(simulationTime.dayHour < Phonebook.getPhonebook().getRestaurant().closeTime.hour)) {
+				else if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getRestaurant().openTime.hour) &&
+						(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getRestaurant().closeTime.hour)) {
 					prepareForRestaurant();
 					return true;
 				}
@@ -189,21 +174,22 @@ public class Worker extends Person {
 		//Market Related
 		if (!hasFoodInFridge || carStatus == CarState.wantsCar) {
 			if (money <= moneyMinThreshold && !hasFoodInFridge) {
-				if ((simulationTime.dayHour >= Phonebook.getPhonebook().getBank().openTime.hour) &&
-						(simulationTime.dayHour < Phonebook.getPhonebook().getBank().closeTime.hour)) {
+				if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getBank().openTime.hour) &&
+						(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getBank().closeTime.hour)) {
 					prepareForBank();
 					return true;
 				}
 			}
 			else {
-				if ((simulationTime.dayHour >= Phonebook.getPhonebook().getMarket().openTime.hour) &&
-						(simulationTime.dayHour < Phonebook.getPhonebook().getMarket().closeTime.hour)) {
+				if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getMarket().openTime.hour) &&
+						(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getMarket().closeTime.hour)) {
 					prepareForMarket();
 					return true;
 				}
 			}
 		}
 
+		goToSleep();
 		return false;
 	}
 

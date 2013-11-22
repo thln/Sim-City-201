@@ -1,11 +1,10 @@
 package person;
 
-import person.Person.CarState;
 import person.Role.RoleState;
 import bank.BankCustomerRole;
 import application.Phonebook;
+import application.TimeManager;
 import application.TimeManager.Day;
-import application.TimeManager.Time;
 
 public class Crook extends Person {
 	//These people become dishonest customers in the restaurant
@@ -19,7 +18,11 @@ public class Crook extends Person {
 	}
 
 	protected boolean pickAndExecuteAnAction() {
-
+		if (hunger == HungerLevel.full) {
+			startHungerTimer();
+			return true;
+		}
+		
 		synchronized (roles) {
 			if (!roles.isEmpty()) {
 				for (Role r : roles) {
@@ -32,27 +35,26 @@ public class Crook extends Person {
 
 		//If no role is active
 		//Checking the time
-		simulationTime = timeManager.getTime();
 
-		if (simulationTime.day == Day.Friday && simulationTime.dayHour == 12 && simulationTime.dayMinute == 0) {
+		if (TimeManager.getTimeManager().getTime().day == Day.Friday && TimeManager.getTimeManager().getTime().dayHour == 12 && TimeManager.getTimeManager().getTime().dayMinute == 0) {
 			robBank();
 			return true;
 		}
 
 		//Hunger Related
-		if (hungry) {
+		if (hunger == HungerLevel.hungry) {
 			//If you don't have food in the fridge
 			if (!hasFoodInFridge) {
 				if (money <= moneyMinThreshold) { 
 					//This if says go to the business if it is open and at least 1 hour before closing time
-					if ((simulationTime.dayHour >= Phonebook.getPhonebook().getBank().openTime.hour) &&
-							(simulationTime.dayHour < Phonebook.getPhonebook().getBank().closeTime.hour)) {
+					if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getBank().openTime.hour) &&
+							(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getBank().closeTime.hour)) {
 						prepareForBank();
 						return true;
 					}
 				}
-				else if ((simulationTime.dayHour >= Phonebook.getPhonebook().getRestaurant().openTime.hour) &&
-						(simulationTime.dayHour < Phonebook.getPhonebook().getRestaurant().closeTime.hour)) {
+				else if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getRestaurant().openTime.hour) &&
+						(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getRestaurant().closeTime.hour)) {
 					prepareForRestaurant();
 					return true;
 				}
@@ -67,21 +69,22 @@ public class Crook extends Person {
 		//Market Related
 		if (!hasFoodInFridge || carStatus == CarState.wantsCar) {
 			if (money <= moneyMinThreshold && !hasFoodInFridge) {
-				if ((simulationTime.dayHour >= Phonebook.getPhonebook().getBank().openTime.hour) &&
-						(simulationTime.dayHour < Phonebook.getPhonebook().getBank().closeTime.hour)) {
+				if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getBank().openTime.hour) &&
+						(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getBank().closeTime.hour)) {
 					prepareForBank();
 					return true;
 				}
 			}
 			else {
-				if ((simulationTime.dayHour >= Phonebook.getPhonebook().getMarket().openTime.hour) &&
-						(simulationTime.dayHour < Phonebook.getPhonebook().getMarket().closeTime.hour)) {
+				if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getMarket().openTime.hour) &&
+						(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getMarket().closeTime.hour)) {
 					prepareForMarket();
 					return true;
 				}
 			}
 		}
 
+		goToSleep();
 		return false;
 	}
 

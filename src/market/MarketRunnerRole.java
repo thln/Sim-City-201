@@ -13,17 +13,19 @@ public class MarketRunnerRole extends Role {
 	protected String roleName = "Market Runner";
 
 	//Data
-	
 	String name;
+	Market market;
 	
 	private List<MarketOrder> orders = Collections.synchronizedList(new ArrayList<MarketOrder>());
 
-	MarketRunnerRole(Person person, String pName, String rName) {
+	MarketRunnerRole(Person person, String pName, String rName, Market market) {
 		super(person, pName, rName);
+		this.market = market;
 	}
 
-	public MarketRunnerRole(String roleName) {
+	public MarketRunnerRole(String roleName, Market market) {
 		super(roleName);
+		this.market = market;
 	}
 
 	//Messages
@@ -46,19 +48,19 @@ public class MarketRunnerRole extends Role {
 	//Actions
 	public void processOrder(MarketOrder o) {
 		if (o.customer != null) {
-			decreaseInventoryBy(o.item, o.totalItems);
-			Phonebook.getPhonebook().getMarket().salesPersonRole.msgOrderFulfilled(o);
+			decreaseInventoryBy(o.item, o.itemAmountOrdered);
+			market.salesPersonRole.msgOrderFulfilled(o);
 			orders.remove(o);
 		}
 		else { //o.customerType is an instance of business
-			decreaseInventoryBy(o.item, o.totalItems);
-			Phonebook.getPhonebook().getMarket().UPSmanRole.msgDeliverOrder(o);
+			decreaseInventoryBy(o.item, o.itemAmountOrdered);
+			market.UPSmanRole.msgDeliverOrder(o);
 			orders.remove(o);
 		}
 	}
 
 	public void decreaseInventoryBy(String item, int amount) {
-		int newAmount = Phonebook.getPhonebook().getMarket().inventory.get(item) - amount;
-		Phonebook.getPhonebook().getMarket().inventory.put(item, newAmount);
+		int newAmount = market.inventory.get(item).amount - amount;
+		market.inventory.get(item).setInventory(newAmount);
 	}
 }

@@ -1,6 +1,5 @@
 package person;
 
-import person.Person.CarState;
 import person.Role.RoleState;
 import application.Phonebook;
 import application.TimeManager;
@@ -22,6 +21,11 @@ public class Deadbeat extends Person {
 
 
 	protected boolean pickAndExecuteAnAction() {
+		if (hunger == HungerLevel.full) {
+			startHungerTimer();
+			return true;
+		}
+		
 		synchronized (roles) {
 			if (!roles.isEmpty()) {
 				for (Role r : roles) {
@@ -33,30 +37,28 @@ public class Deadbeat extends Person {
 		}
 
 		//If no role is active
-		//Checking the time
-		simulationTime = timeManager.getTime();
 
 		//Park Related
 		//Start day in park for a couple hours
-		if (simulationTime.dayHour == 10) {
+		if (TimeManager.getTimeManager().getTime().dayHour == 10) {
 			visitPark();
 			return true;
 		}
 
 		//Hunger Related
-		if (hungry) {
+		if (hunger == HungerLevel.hungry) {
 			//If you don't have food in the fridge
 			if (!hasFoodInFridge) {
 				if (money <= moneyMinThreshold) { 
 					//This if says go to the business if it is open and at least 1 hour before closing time
-					if ((simulationTime.dayHour >= Phonebook.getPhonebook().getBank().openTime.hour) &&
-							(simulationTime.dayHour < Phonebook.getPhonebook().getBank().closeTime.hour)) {
+					if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getBank().openTime.hour) &&
+							(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getBank().closeTime.hour)) {
 						prepareForBank();
 						return true;
 					}
 				}
-				else if ((simulationTime.dayHour >= Phonebook.getPhonebook().getRestaurant().openTime.hour) &&
-						(simulationTime.dayHour < Phonebook.getPhonebook().getRestaurant().closeTime.hour)) {
+				else if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getRestaurant().openTime.hour) &&
+						(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getRestaurant().closeTime.hour)) {
 					prepareForRestaurant();
 					return true;
 				}
@@ -71,21 +73,22 @@ public class Deadbeat extends Person {
 		//Market Related
 		if (!hasFoodInFridge || carStatus == CarState.wantsCar) {
 			if (money <= moneyMinThreshold && !hasFoodInFridge) {
-				if ((simulationTime.dayHour >= Phonebook.getPhonebook().getBank().openTime.hour) &&
-						(simulationTime.dayHour < Phonebook.getPhonebook().getBank().closeTime.hour)) {
+				if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getBank().openTime.hour) &&
+						(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getBank().closeTime.hour)) {
 					prepareForBank();
 					return true;
 				}
 			}
 			else {
-				if ((simulationTime.dayHour >= Phonebook.getPhonebook().getMarket().openTime.hour) &&
-						(simulationTime.dayHour < Phonebook.getPhonebook().getMarket().closeTime.hour)) {
+				if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getMarket().openTime.hour) &&
+						(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getMarket().closeTime.hour)) {
 					prepareForMarket();
 					return true;
 				}
 			}
 		}
 
+		goToSleep();
 		return false;
 	}
 

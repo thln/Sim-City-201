@@ -1,58 +1,64 @@
 package market;
 
+import application.Phonebook;
 import person.Person;
 import person.Role;
 
 public class MarketCustomerRole extends Role {
-	protected String RoleName = "Market Customer";
+	protected String roleName = "Market Customer";
 
 	//Data
-	boolean recievedItems = false;
+	
+	enum MarketCustomerState {waitingForOrders, recievedOrders, payed, disputingBill}
+	MarketCustomerState state;
+
 	double money;
 	double bill;
 	String item;
+	int itemAmount;
 	String name;
-	
-	//Agent correspondents
-	SalesPersonRole salesPerson;
-
-	//	enum CustomerDesire {none, buyCar, buyFood};
-	//	CustomerDesire desire = CustomerDesire.none;
 
 	public MarketCustomerRole(Person person, String pName, String rName) {
 		super(person, pName, rName);
 	}
 
 	//Messages
-	public void msgHereAreYouThings(String item, double orderCost, SalesPersonRole salesPerson) {
-		recievedItems = true;
+	public void msgHereAreYourThings(String item, int itemAmount, double orderCost) {
+		state = MarketCustomerState.recievedOrders;
+		this.itemAmount = itemAmount;
 		bill = orderCost;
-		this.salesPerson = salesPerson;
 	}
 
 	//Scheduler
 	@Override
 	protected boolean pickAndExecuteAnAction() {
-		if (recievedItems == true) {
+		if (state == MarketCustomerState.recievedOrders) {
 			payBill();
 			return true;
 		}
+		
+		if (state == MarketCustomerState.payed) {
+			exitMarket();
+			return true;
+		}
+		
 		return false;
 	}
 
 	//Actions
-	public void payBill(){
-		salesPerson.msgPayment(this, bill);
-		money -= bill;
-		recievedItems = false;
+	private void payBill(){
+		if (bill == Phonebook.getPhonebook().getMarket().inventory.get(item).price * itemAmount) {
+			Phonebook.getPhonebook().getMarket().salesPersonRole.msgPayment(this, bill);
+			money -= bill;
+			state = MarketCustomerState.payed;
+		}
+		else {
+			//message market that bill was wrong
+			state = MarketCustomerState.disputingBill;
+		}
 	}
-
-	//	public void setDesire(String string) {
-	//		if (string == "buyCar") {
-	//			desire = CustomerDesire.buyCar;
-	//		}
-	//		if (string == "buyFood") {
-	//			desire = CustomerDesire.buyCar;
-	//		}
-	//	}
+	
+	private void exitMarket() {
+		this.setRoleActive();
+	}
 }

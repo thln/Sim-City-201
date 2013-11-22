@@ -1,5 +1,7 @@
 package person;
 
+import housing.Housing;
+
 import java.util.*;
 import java.util.concurrent.Semaphore;
 
@@ -23,6 +25,9 @@ public abstract class Person extends Agent {
 	//Data
 	String name;
 	private Semaphore atDestination = new Semaphore(0,true);
+	private Housing home;
+	private Timer alarmClock = new Timer();
+	private Timer hungerTimer = new Timer();
 
 	//Role Related
 	public List<Role> roles = Collections.synchronizedList(new ArrayList<Role>()); 	//contains all the customer role
@@ -35,7 +40,8 @@ public abstract class Person extends Agent {
 	//Hunger Related
 	public HashMap <String, Integer> Inventory = new HashMap<String, Integer>(); 		//Food list
 	public boolean hasFoodInFridge;
-	public boolean hungry;
+	public enum HungerLevel {full, moderate, hungry, starving};
+	HungerLevel hunger = HungerLevel.full;
 
 	//Bank Related
 	public double money;
@@ -49,17 +55,12 @@ public abstract class Person extends Agent {
 
 	//Time Related
 	public int sleepTime = 22;
-	protected TimeManager timeManager;
-	protected Time simulationTime;
-
 
 	Person(String name) {
 		this.name = name;
 		roles.add(new BankCustomerRole(this, getName(), "Bank Customer"));
 		roles.add(new MarketCustomerRole(this, getName(), "Market Customer"));
 		roles.add(new RestaurantCustomerRole(this, getName(), "Restaurant Customer"));
-
-		timeManager = TimeManager.getTimeManager();
 	}
 
 	//Scheduler
@@ -190,21 +191,54 @@ public abstract class Person extends Agent {
 
 	}
 
-	public void goToSleep() {
-		//puts agent to sleep
+	protected void goToSleep() {
+		//		gui.goHome();
+		//		try {
+		//			atDestination.acquire();
+		//		} catch (InterruptedException e) {
+		//			// TODO Auto-generated catch block
+		//			e.printStackTrace();
+		//
+		//		}
+
+		//After arrives home
+		alarmClock.schedule(new TimerTask() {
+			public void run() {
+				stateChanged();
+			}
+		},
+		(((24 - TimeManager.getTimeManager().getTime().dayHour) + 8) * 500)); //Check this math please?
 	}
 
-	//	public Role getWorkerRole() {
-	//		return workerRole;
-	//	}
-	//
-	//	public void setWorkerRole(Role workerRole) {
-	//		this.workerRole = workerRole;
-	//	}
+	protected void startHungerTimer() {
+		//		gui.goHome();
+		//		try {
+		//			atDestination.acquire();
+		//		} catch (InterruptedException e) {
+		//			// TODO Auto-generated catch block
+		//			e.printStackTrace();
+		//
+		//		}
+		
+		hunger = HungerLevel.moderate;
+
+		//After arrives home
+		hungerTimer.schedule(new TimerTask() {
+			public void run() {
+				hunger = HungerLevel.hungry;
+				stateChanged();
+			}
+		},
+		(3000)); //Check this math please?
+	}
 
 	@Override
 	public String getName() {
 		return name;
+	}
+
+	public void setHome(Housing place) {
+		home = place;
 	}
 
 	/*
