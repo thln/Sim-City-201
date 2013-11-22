@@ -2,6 +2,8 @@ package restaurant.test.mock;
 
 import restaurant.CashierRole;
 import restaurant.interfaces.Market;
+import testing.LoggedEvent;
+import testing.Mock;
 
 /**
  * A sample MockCustomer built to unit test a CashierAgent.
