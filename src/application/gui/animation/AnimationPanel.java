@@ -59,7 +59,7 @@ public class AnimationPanel extends JPanel implements MouseListener {
     		b.setBuildingPanel(bp);
     		buildingView.add(bp, b.getName());
     	}
-    	testGuis();
+    	//testGuis();
     	testbutton.addMouseListener(this);
     	testbutton.setSize(100, 50);
     	cityPanel.add(testbutton);
@@ -73,7 +73,7 @@ public class AnimationPanel extends JPanel implements MouseListener {
 	}
 	
 	public void sampleLayout() {
-		//cityPanel.addBuilding("Bank", 1);
+		cityPanel.addBuilding("Bank", 1);
 		
     	cityPanel.addBuilding("Market", 1);
     	cityPanel.addBuilding("Market", 2);
@@ -107,10 +107,10 @@ public class AnimationPanel extends JPanel implements MouseListener {
 			cardLayout.show(buildingView, "blank");
 		}
 		if(e.getSource().equals(testbutton)) {
-			market.DoDeliverOrder();
+			//market.DoDeliverOrder();
 		}
 		if(e.getSource().equals(testbutton2)) {
-			market.DoGoToSalesPerson();
+		//	market.DoGoToSalesPerson();
 		}
 	}
 	

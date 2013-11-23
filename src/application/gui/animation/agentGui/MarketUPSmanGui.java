@@ -66,12 +66,14 @@ public class MarketUPSmanGui implements Gui{
     }
 	
 	//Actions
-	public void DoDeliverOrder() {
+	public void DoExit() { 
+		//going outside of market to deliver order
 		xDestination = 570;
 		yDestination = 200;
 	}
 	
-	public void DoGoToSalesPerson() {
+	public void DoGoToSalesPerson() { 
+		//goes to salesperson to pick up deliveries
     	xDestination = 200;
     	yDestination = 150;
 	}
