@@ -39,9 +39,4 @@ public class AltWaiterRole extends WaiterRole
 		theRevolvingStand.newOrder(new Order(MC.tableNumber, MC.choice, this));
 	}
 	
-	//NEED TO USE THIS SOMEWHERE
-	/*public void setRevolvingStand(RevolvingStand rs)
-	{
-		theRevolvingStand = rs;
-	}*/
 }

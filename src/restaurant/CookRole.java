@@ -8,6 +8,7 @@ import market.Market;
 import person.Person;
 import person.Role;
 import person.Worker;
+import restaurant.interfaces.Cook;
 
 /**
  * Restaurant Cook Role
@@ -15,7 +16,8 @@ import person.Worker;
  * No current Cook Gui
  */
 
-public class CookRole extends Role {
+public class CookRole extends Role implements Cook 
+{
 
 	private String name;
 	private Semaphore atDestination = new Semaphore(0,true);

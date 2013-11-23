@@ -12,7 +12,7 @@ public abstract class Role {
         protected String roleName = null;
         protected String personName = null;
         
-        enum RoleState {active, inActive, waitingToExecute};
+        public enum RoleState {active, inActive, waitingToExecute};
         //, waitingToExecute}
         private RoleState state = RoleState.inActive;
         protected boolean leaveRole = false;
@@ -126,8 +126,14 @@ public abstract class Role {
             return roleName;
     }
 
-        public void msgLeaveRole() {
-                leaveRole = true;
-        }
-
+    public void msgLeaveRole() 
+    {
+        leaveRole = true;
+    }
+    
+    public RoleState getRoleState()
+    {
+    	return state;
+    }
+    
 }

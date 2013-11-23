@@ -6,6 +6,7 @@ import restaurant.myCustomer.customerState;
 import java.util.*;
 import java.util.concurrent.Semaphore;
 
+import application.Phonebook;
 import person.Person;
 import person.Role;
 import person.Worker;
@@ -42,6 +43,9 @@ public class WaiterRole extends Role {
 	public WaiterRole(Person p1, String pName, String rName) 
 	{
 		super(p1, pName, rName);
+		cashierRole = Phonebook.getPhonebook().getRestaurant().cashierRole;
+		hostRole = Phonebook.getPhonebook().getRestaurant().hostRole;
+		cookRole = Phonebook.getPhonebook().getRestaurant().cookRole;
 	}
 
 	public String getMaitreDName() {

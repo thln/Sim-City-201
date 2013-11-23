@@ -82,11 +82,12 @@ public class ApplicationGui extends JFrame {
     }
 	
 	
-	//CONTROL PANEL CLASS
+	//CONTROL PANEL CLASS (for the trace panel)
     private class ControlPanel extends JPanel 
     {
-            TracePanel tp;        //Hack so I can easily call showAlertsWithLevel for this demo.
+            TracePanel tp;
             
+            //Look into JToggleButton
             JButton messagesButton;
             JButton errorButton;
             JButton restaurantMessagesButton;

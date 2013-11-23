@@ -163,13 +163,15 @@ public class Worker extends Person {
         //Actions
         public void prepareForWork() {
 
-                if (myJob.jobPlace == "bank") {
+                if (myJob.jobPlace == "bank") 
+                {
                         workerRole = Phonebook.getPhonebook().getBank().arrivedAtWork(this, myJob.title);
                         workerRole.setRoleActive();
                         return;
                 }
 
-                if (myJob.jobPlace == "market") {
+                if (myJob.jobPlace == "market") 
+                {
 
                         workerRole = Phonebook.getPhonebook().getMarket().arrivedAtWork(this, myJob.title);
                         roles.add(workerRole);
@@ -177,7 +179,8 @@ public class Worker extends Person {
                         return;
                 }
 
-                if (myJob.jobPlace == "restaurant") {
+                if (myJob.jobPlace == "restaurant") 
+                {
                         workerRole = Phonebook.getPhonebook().getRestaurant().arrivedAtWork(this, myJob.title);
                         roles.add(workerRole);
                         workerRole.setRoleActive();
@@ -194,6 +197,11 @@ public class Worker extends Person {
 
         public Role getWorkerRole() {
                 return workerRole;
+        }
+        
+        public Job getJob()
+        {
+        	return myJob;
         }
 }
 
