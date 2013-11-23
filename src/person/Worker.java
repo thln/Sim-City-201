@@ -104,8 +104,7 @@ public class Worker extends Person {
                 }
 
                 //If no role is active
-
-                
+   
                 //Job Related
                 if ((myJob.getStartTime().hour - TimeManager.getTimeManager().getTime().dayHour) <= 1) {
                         prepareForWork();
@@ -137,7 +136,11 @@ public class Worker extends Person {
                         }
                 }
 
-                //Making rules for the bank
+                //Bank Related
+                if (money <= moneyMinThreshold || money >= moneyMaxThreshold) {
+                	prepareForBank();
+                	return true;
+                }
                 
                 
                 //Market Related
@@ -164,33 +167,7 @@ public class Worker extends Person {
 
 
         //Actions
-        public void prepareForWork() {
-
-                if (myJob.jobPlace == "bank") {
-                        workerRole = Phonebook.getPhonebook().getBank().arrivedAtWork(this, myJob.title);
-                        workerRole.setRoleActive();
-                        return;
-                }
-
-                if (myJob.jobPlace == "market") {
-
-                        workerRole = Phonebook.getPhonebook().getMarket().arrivedAtWork(this, myJob.title);
-                        roles.add(workerRole);
-                        workerRole.setRoleActive();
-                        return;
-                }
-
-                if (myJob.jobPlace == "restaurant") {
-                        workerRole = Phonebook.getPhonebook().getRestaurant().arrivedAtWork(this, myJob.title);
-                        roles.add(workerRole);
-                        workerRole.setRoleActive();
-                        return;
-                }
-                //need to put in maintenance role
-                
-                return;
-        }
-
+ 
         public void setWorkerRole(Role workerRole) {
                 this.workerRole = workerRole;
         }
