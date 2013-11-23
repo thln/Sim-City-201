@@ -47,8 +47,7 @@ public class BankTellerMock extends Mock implements BankTeller {
 
 	@Override
 	public void msgThisLoanDenied(Account account1, double i) {
-		// TODO Auto-generated method stub
-		
+		log.add(new LoggedEvent("My customer's loan was denied, but can apply for a loan of less than " + i + " dollars"));
 	}
 
 	@Override

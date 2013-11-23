@@ -1,5 +1,10 @@
 package bank;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import bank.BankTellerRole.Account;
 import application.WatchTime;
 import person.Person;
 import person.Role;
@@ -15,8 +20,9 @@ public class Bank {
 	public WatchTime closeTime = new WatchTime(17);
 
 	//Data
-	public static double vault = 10000;
-	public static double vaultMinimum = 1000;
+	public double vault;
+	public double vaultMinimum;
+	List<Account> accounts;
 	
 	//Roles
 	public BankGuardRole bankGuardRole = new BankGuardRole("Bank Guard");
@@ -26,8 +32,12 @@ public class Bank {
 	//Constructor
 	public Bank(String name) {
 		this.name = name;
+		 vault = 10000;
+		 vaultMinimum = 1000;
+		 accounts = Collections.synchronizedList(new ArrayList<Account>());
 	}
-
+	
+	
 	//Methods
 	public Role arrivedAtWork(Person person, String title) {
 		if (title == "bankGuard") {
