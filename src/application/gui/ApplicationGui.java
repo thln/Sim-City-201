@@ -25,7 +25,7 @@ import application.gui.trace.TracePanel;
 
 public class ApplicationGui extends JFrame {
 	
-	Application app = new Application();
+	static Application app = new Application();
 	ApplicationPanel appPanel; 
 	AnimationPanel animPanel = new AnimationPanel();
 
@@ -78,7 +78,7 @@ public class ApplicationGui extends JFrame {
 		loanOffice.updateTime(8);
 		bankCust.updateTime(8);
 		*/
-        //simcity201 = new Application();
+        app = new Application();
     }
 	
 	

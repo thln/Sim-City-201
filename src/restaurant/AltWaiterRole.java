@@ -1,5 +1,6 @@
 package restaurant;
 
+import application.Phonebook;
 import person.Person;
 
 public class AltWaiterRole extends WaiterRole 
@@ -10,6 +11,7 @@ public class AltWaiterRole extends WaiterRole
 	public AltWaiterRole(Person p1, String pName, String rName) 
 	{
 		super(p1, pName, rName);
+		theRevolvingStand = Phonebook.getPhonebook().getRestaurant().getRevolvingStand();
 		//super(name);
 		//Waiter(name);
 	}
@@ -38,8 +40,8 @@ public class AltWaiterRole extends WaiterRole
 	}
 	
 	//NEED TO USE THIS SOMEWHERE
-	public void setRevolvingStand(RevolvingStand rs)
+	/*public void setRevolvingStand(RevolvingStand rs)
 	{
 		theRevolvingStand = rs;
-	}
+	}*/
 }

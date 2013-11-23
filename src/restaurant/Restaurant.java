@@ -18,6 +18,7 @@ public class Restaurant {
 	public HostRole hostRole = new HostRole("Host");
 	public CookRole cookRole = new CookRole("Cook", this);
 	public CashierRole cashierRole = new CashierRole("Cashier", this);
+	private RevolvingStand theRevolvingStand = new RevolvingStand();
 	
 	//IMPORTANTE!
 	//Should instantiate The Revolving Stand here? Could you make it a singleton
@@ -59,7 +60,7 @@ public class Restaurant {
 			cashierRole.setPerson(person);
 			return cashierRole;
 		}
-		else
+			
 			return null;
 	}
 
@@ -81,6 +82,11 @@ public class Restaurant {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public RevolvingStand getRevolvingStand()
+	{
+		return theRevolvingStand;
 	}
 
 }

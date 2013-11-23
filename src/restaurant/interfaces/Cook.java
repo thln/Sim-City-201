@@ -1,5 +1,6 @@
 package restaurant.interfaces;
 
-public interface Cook {
+public interface Cook 
+{
 
 }

@@ -3,6 +3,7 @@ package restaurant;
 import java.util.*;
 import java.util.concurrent.Semaphore;
 
+import application.Phonebook;
 import market.Market;
 import person.Person;
 import person.Role;
@@ -40,21 +41,29 @@ public class CookRole extends Role {
 		foodMap.put("Salad", new Food("Salad"));
 	}
 
-	public CookRole(Person p1, String pName, String rName, Restaurant resturant) {
+	public CookRole(Person p1, String pName, String rName, Restaurant resturant) 
+	{
 		super(p1, pName, rName);
 		this.restaurant = restaurant;
+		theRevolvingStand = Phonebook.getPhonebook().getRestaurant().getRevolvingStand();
+
 	}
 
-	public CookRole(String roleName, Restaurant restaurant) {
+	public CookRole(String roleName, Restaurant restaurant) 
+	{
 		super(roleName);
 		this.restaurant = restaurant;
+		theRevolvingStand = Phonebook.getPhonebook().getRestaurant().getRevolvingStand();
+
 	}
 
-	public String getMaitreDName() {
+	public String getMaitreDName() 
+	{
 		return name;
 	}
 
-	public String getName() {
+	public String getName() 
+	{
 		return name;
 	}
 
@@ -63,8 +72,10 @@ public class CookRole extends Role {
 	/**
 	 * Messages
 	 */
-	public void msgHeresAnOrder(int table, String choice, WaiterRole waiterRole) {
-		synchronized(myOrders){
+	public void msgHeresAnOrder(int table, String choice, WaiterRole waiterRole) 
+	{
+		synchronized(myOrders)
+		{
 
 			print("Order received for table " + table);
 			Order order = new Order(table, choice, waiterRole);
@@ -73,12 +84,14 @@ public class CookRole extends Role {
 		}
 	}
 
-	public void msgOrderDone(Order order) {
+	public void msgOrderDone(Order order) 
+	{
 		order.setDone();
 		stateChanged();
 	}
 
-	public void msgCantFulfill(String choice, int amount, int orderedAmount, Market market) {
+	public void msgCantFulfill(String choice, int amount, int orderedAmount, Market market) 
+	{
 		synchronized(stockFulfillment){
 			print("Market cannot fulfill order for " + choice + "-- Amount: " + amount + " Ordered: " + orderedAmount);
 			stockFulfillment.add(new Stock(choice, amount, orderedAmount, market));
@@ -86,15 +99,18 @@ public class CookRole extends Role {
 		}
 	}
 
-	public void msgOrderFulfillment(String choice, int amount, int orderedAmount, Market market) {
-		synchronized(stockFulfillment){
+	public void msgOrderFulfillment(String choice, int amount, int orderedAmount, Market market) 
+	{
+		synchronized(stockFulfillment)
+		{
 			print("Got fullfillment for " + choice + "-- Amount: " + amount + " Ordered: " + orderedAmount);
 			stockFulfillment.add(new Stock(choice, amount, orderedAmount, market));
 			stateChanged();
 		}
 	}
 
-	public void msgAtDestination() {//from animation
+	public void msgAtDestination() 
+	{//from animation
 		atDestination.release();// = true;
 		stateChanged();
 	}
@@ -104,7 +120,8 @@ public class CookRole extends Role {
 	/**
 	 * Scheduler
 	 */
-	protected boolean pickAndExecuteAnAction() {
+	protected boolean pickAndExecuteAnAction() 
+	{
 		/* Think of this next rule as:
             Does there exist a table and customer,
             so that table is unoccupied and customer is waiting.
@@ -113,7 +130,8 @@ public class CookRole extends Role {
 
 		inventoryChecker++;
 
-		if (inventoryChecker == 500) {
+		if (inventoryChecker == 500) 
+		{
 			checkInventory();
 			return true;
 		}
@@ -125,15 +143,20 @@ public class CookRole extends Role {
 			return true;
 		}
 		
-		synchronized(myOrders){
-			if (!myOrders.isEmpty()) {
-				for (Order order : myOrders) {
-					if (order.isOpen()) {
+		synchronized(myOrders)
+		{
+			if (!myOrders.isEmpty()) 
+			{
+				for (Order order : myOrders) 
+				{
+					if (order.isOpen()) 
+					{
 						cookOrder(order);
 						return true;//return true to the abstract agent to re-invoke the scheduler.
 					}
 
-					if (order.isDone()) {
+					if (order.isDone()) 
+					{
 						doneCooking(order);
 						return true;
 					}
@@ -141,14 +164,17 @@ public class CookRole extends Role {
 			}
 		}
 
-		synchronized(stockFulfillment){
-			if (!stockFulfillment.isEmpty()) {
+		synchronized(stockFulfillment)
+		{
+			if (!stockFulfillment.isEmpty()) 
+			{
 				updateStock();
 				return true;
 			}
 		}
 
-		if (leaveRole){
+		if (leaveRole)
+		{
 			((Worker) person).roleFinishedWork();
 			leaveRole = false;
 			return true;
@@ -165,9 +191,11 @@ public class CookRole extends Role {
 	/**
 	 * Actions
 	 */
-	private void cookOrder(final Order o) {
+	private void cookOrder(final Order o) 
+	{
 
-		if(!isInStock(o.choice)) {
+		if(!isInStock(o.choice)) 
+		{
 			checkInventory(o.choice);
 			myOrders.remove(o);
 			o.waiterRole.msgOrderIsNotAvailable(o.choice, o.tableNumber);
@@ -206,7 +234,8 @@ public class CookRole extends Role {
 
 		o.setCooking();
 		
-		timer.schedule(new TimerTask() {
+		timer.schedule(new TimerTask() 
+		{
 			public void run() {
 				msgOrderDone(o);
 			}
@@ -215,7 +244,8 @@ public class CookRole extends Role {
 
 	}
 
-	private void doneCooking(Order o) {
+	private void doneCooking(Order o) 
+	{
 		//print("Done cooking order for table " + o.tableNumber);
 
 		/* GUI stuff
@@ -371,10 +401,10 @@ public class CookRole extends Role {
 		foodMap.get("Pizza").quantity = 0;
 	//	print("Deleted all food inventory");
 	}
-
+/*
 	public void setRevolvingStand(RevolvingStand rs) {
 		theRevolvingStand = rs;
-	}
+	}*/
 	
 	//Food Class
 	public class Food {
