@@ -368,7 +368,7 @@ public class HostRole extends Role
 
 	}
 
-	private class myWaiter {
+	public class myWaiter {
 		public WaiterRole waiterRole;
 		public int totalCustomers;
 		boolean askedToGoOnBreak = false;

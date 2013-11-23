@@ -70,9 +70,13 @@ public class AlternativeWaiterTest extends TestCase
 		assertEquals("Person 1's worker Role should be active. It isn't.", person1.getWorkerRole().getRoleState(), RoleState.active);
 		assertEquals("Person 2's worker Role should be active. It isn't.", person2.getWorkerRole().getRoleState(), RoleState.active);
 		
-		assertEquals("The waiter on the host's list should be the same as person 1. It isn't.",Phonebook.getPhonebook().getRestaurant().hostRole.waiters.get(0), person1);
+		assertEquals("The waiter on the host's list should be the same as person 1. It isn't.",Phonebook.getPhonebook().getRestaurant().hostRole.waiters.get(0).waiterRole.getPerson(), person1);
 		assertEquals("The cook in the restaurant should be the same as person 2. It isn't.",Phonebook.getPhonebook().getRestaurant().cookRole.getPerson(), person2);
 
+		assertTrue("The waiter's list of orders should be empty. It isn't.", Phonebook.getPhonebook().getRestaurant().hostRole.waiters.get(0).waiterRole.readyOrders.isEmpty());
+		assertTrue("The waiter's list of customers should be empty. It isn't.", Phonebook.getPhonebook().getRestaurant().hostRole.waiters.get(0).waiterRole.myCustomers.isEmpty());
+
+		
 	}
 	
 	/**
