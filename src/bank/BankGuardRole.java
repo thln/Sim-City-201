@@ -95,8 +95,7 @@ public class BankGuardRole extends Role implements BankGuard {
 
 
 		for (BankCustomer cust1: customers) {
-			assignToTeller(cust1); 
-			return true;
+			return assignToTeller(cust1); 
 		}
 		
 		if (leaveRole){
@@ -130,17 +129,17 @@ public class BankGuardRole extends Role implements BankGuard {
 			robber1.msgGotAway();  
 	}
 
-	private void assignToTeller(BankCustomer cust1) {
+	private boolean assignToTeller(BankCustomer cust1) {
 		for (MyTeller teller1: tellers) {
 			if (teller1.getState() == TellerState.available) {
 				cust1.msgGoToTeller(teller1.tell1);
 				teller1.setState(TellerState.busy);
 				customers.remove(cust1);
-				return;
+				return true;
 			}
-		}
-		
+		}	
 		cust1.msgNoTellerAvailable();
+		return false;
 	}
 
 	public List <BankCustomer> getCustomers() {
