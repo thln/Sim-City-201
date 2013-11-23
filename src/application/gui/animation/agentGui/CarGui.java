@@ -10,21 +10,17 @@ public class CarGui implements Gui{
 
 	private Car agent = null;
 	private boolean isPresent = false;
-	private boolean isHungry = false;
 
 	//RestaurantGui gui;
 
 	private int xPos, yPos;
 	private int xDestination, yDestination;
 	private int xHome, yHome;
-	private enum Command {noCommand, GoToSeat, GoToCashier, LeaveRestaurant, GoToRestaurant};
+	private enum Command {noCommand};
 	private Command command = Command.noCommand;
 
-	public static final int xTable = 200;
-	public static final int yTable = 250;
-
-	private enum CustomerState {nothing, readyToOrder, ordered, gotFood, askForCheck};
-	CustomerState state = CustomerState.nothing;
+	private enum CarState {nothing};
+	CarState state = CarState.nothing;
 
 	private String choice;
 
@@ -52,7 +48,7 @@ public class CarGui implements Gui{
 	}
 
 	public void draw(Graphics2D g) {
-		g.setColor(Color.GREEN);
+		g.setColor(Color.BLUE);
 		g.fillRect(xPos, yPos, 20, 20);
 	}
 
