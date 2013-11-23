@@ -20,7 +20,9 @@ public class BankLoanerGui implements Gui{
 
 	private enum CustomerState {nothing};
 	CustomerState state = CustomerState.nothing;
-
+	public BankLoanerGui() {
+	}
+	
 	public BankLoanerGui(LoanOfficerRole c/*, RestaurantGui gui*/){
 		agent = c;
 		xPos = -20;

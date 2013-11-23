@@ -13,7 +13,7 @@ public class BankCustomerGui implements Gui {
     
     //RestaurantGui gui;
 
-    private int xPos = 300, yPos = 365;//default MarketCustomer position
+    private int xPos = 300, yPos = 365;//default Customer position
     private int xDestination = 300, yDestination = 320;//default start position
     
     private enum Command {noCommand};

@@ -109,7 +109,12 @@ public class BuildingPanel extends JPanel implements ActionListener {
     	return name;
     }
     
-    public void addGui(Gui gui) {
+    /*public void addGui(Gui gui) {
+        guis.add(gui);
+        
+    }*/
+    
+    public void addGui(MarketCustomerGui gui) {
         guis.add(gui);
         
     }
