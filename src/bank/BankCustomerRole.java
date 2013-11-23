@@ -90,6 +90,8 @@ public class BankCustomerRole extends Role implements BankCustomer{
 
 	public void msgLoanClosed() {
 		state = CustomerState.ready;
+		desire = BankCustomerDesire.leaveBank;
+		stateChanged();
 	}	
 	
 	public void msgCaughtYou() {

@@ -33,8 +33,7 @@ public class BankCustomerMock extends Mock implements BankCustomer {
 
 	@Override
 	public void msgLoanClosed() {
-		// TODO Auto-generated method stub
-		
+		log.add(new LoggedEvent("Loan payed for and closed"));
 	}
 
 	@Override

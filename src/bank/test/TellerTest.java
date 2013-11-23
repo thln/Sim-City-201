@@ -40,9 +40,9 @@ public class TellerTest extends TestCase
 		//check preconditions in teller's personal list of accounts
 		assertEquals("Teller should have 0 accounts in list. It doesn't.", teller.getAccounts().size(), 0);
 
-		Phonebook.getPhonebook().getBank().accountNumKeyList = 3000;
+		Phonebook.getPhonebook().getBank().accountNumKeyList = 1000;
 		assertEquals("Account hash key should be at base number 3000. It isn't.", 
-				Phonebook.getPhonebook().getBank().accountNumKeyList, 3000);
+				Phonebook.getPhonebook().getBank().accountNumKeyList, 1000);
 
 		//Step 1: Customer arrives and wants to open new account
 		teller.msgWantNewAccount(customer);
@@ -60,7 +60,7 @@ public class TellerTest extends TestCase
 
 		//Step 2 post-conditions
 		assertEquals("The list of account hash key should have increased ", 
-				Phonebook.getPhonebook().getBank().accountNumKeyList, 3001);
+				Phonebook.getPhonebook().getBank().accountNumKeyList, 1001);
 
 		assertEquals("New Account's 'accountNum' should be set to this new hashKey",
 				teller.getAccounts().get(0).getAccountNum(), Phonebook.getPhonebook().getBank().accountNumKeyList);	
@@ -126,13 +126,13 @@ public class TellerTest extends TestCase
 		//Create account in Phonebook.Bank's list of accounts to reference
 		Account a = new Account(customer);
 		a.balance = 500;
-		a.accountNum = 3000;
+		a.accountNum = 2000;
 		a.processingMoney = withdrawAmt;
 		Phonebook.getPhonebook().getBank().accounts.add(a);
 
 		//Preconditions
 		assertEquals("Teller should have 0 accounts in list. It doesn't.", teller.getAccounts().size(), 0);
-		
+
 		//Step 1: Customer arrives and wants to withdraw
 		teller.msgINeedMoney(withdrawAmt, a.accountNum);
 
@@ -163,7 +163,8 @@ public class TellerTest extends TestCase
 
 		//Step 3 post-conditions	
 		assertEquals("Teller should have 0 accounts in list. It doesn't.", teller.getAccounts().size(), 0);
-		
+
+		//Make sure unit tests don't affect real data
 		Phonebook.getPhonebook().getBank().accounts.remove(a);
 	}
 
@@ -186,6 +187,9 @@ public class TellerTest extends TestCase
 		a.processingMoney = withdrawAmt;
 		Phonebook.getPhonebook().getBank().accounts.add(a);
 
+		//check preconditions in teller's personal list of accounts
+		assertEquals("Teller should have 0 accounts in list. It doesn't.", teller.getAccounts().size(), 0);
+
 		//Step 1: Customer arrives and wants to withdraw
 		teller.msgINeedMoney(withdrawAmt, a.accountNum);
 
@@ -277,7 +281,8 @@ public class TellerTest extends TestCase
 		//Step 9 post-conditions
 
 		assertEquals("Teller should have 0 accounts in list. It doesn't.", teller.getAccounts().size(), 0);
-		
+
+		//Make sure unit tests don't affect real data
 		Phonebook.getPhonebook().getBank().accounts.remove(a);
 	}
 
@@ -296,9 +301,12 @@ public class TellerTest extends TestCase
 		double balance = 200;
 		a.balance = balance;
 		a.creditScore = 70;
-		a.accountNum = 3000;
+		a.accountNum = 4000;
 		a.processingMoney = withdrawAmt;
 		Phonebook.getPhonebook().getBank().accounts.add(a);
+
+		//check preconditions in teller's personal list of accounts
+		assertEquals("Teller should have 0 accounts in list. It doesn't.", teller.getAccounts().size(), 0);
 
 		//Step 1: Customer arrives and wants to withdraw
 		teller.msgINeedMoney(withdrawAmt, a.accountNum);
@@ -391,7 +399,68 @@ public class TellerTest extends TestCase
 		//Step 9 post-conditions
 
 		assertEquals("Teller should have 0 accounts in list. It doesn't.", teller.getAccounts().size(), 0);
-		
+
+		//Make sure unit tests don't affect real data
+		Phonebook.getPhonebook().getBank().accounts.remove(a);
+	}
+
+	public void testFiveCustomPaysOffLoan() {
+		try {
+			setUp();
+		}	catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		double loan = 500;
+		double creditScore = 70;
+		//Create account in Phonebook.Bank's list of accounts to reference
+		Account a = new Account(customer);
+		double balance = 200;
+		a.balance = balance;
+		a.creditScore = creditScore;
+		a.accountNum = 5000;
+		a.loan = loan;
+		a.processingMoney = loan;
+		Phonebook.getPhonebook().getBank().accounts.add(a);
+
+		//check preconditions in teller's personal list of accounts
+		assertEquals("Teller should have 0 accounts in list. It doesn't.", teller.getAccounts().size(), 0);
+
+		//Step 1: Customer arrives and wants to pay off loan
+		teller.msgPayingOffLoan(a.loan, a.accountNum);
+
+
+		//Step 1 post-conditions
+		assertEquals("Teller should have 1 account in list. It doesn't.", teller.getAccounts().size(), 1);
+
+		assertTrue("New account should have the state 'closingLoan' ", 
+				teller.getAccounts().get(0).getState() == AccountState.closingLoan);
+
+		//Step 2: Call scheduler, should execute method "closeLoan"
+		assertFalse("Teller's scheduler should have returned false, but didn't.", 
+				teller.pickAndExecuteAnAction());
+
+		//Step 2 post-conditions
+
+		//credit changes
+		assertEquals("Account credit score should have increased by 1/10 of the deposit amount",
+				teller.getAccounts().get(0).creditScore, creditScore + loan/10);
+
+		assertTrue("New account should have the state 'neutral' ", 
+				teller.getAccounts().get(0).getState() == AccountState.neutral);
+
+		assertTrue("MockCustomer should have logged an event for lack of account funds, but his last event logged reads instead: " 
+				+ customer.log.getLastLoggedEvent().toString(),
+				customer.log.containsString("Loan payed for and closed"));
+
+		//Step 3: customer leaves bank
+		teller.msgLeavingBank(teller.getAccounts().get(0).getAccountNum());
+
+		//Step 3 post-conditions
+
+		assertEquals("Teller should have 0 accounts in list. It doesn't.", teller.getAccounts().size(), 0);
+
+		//Make sure unit tests don't affect real data
 		Phonebook.getPhonebook().getBank().accounts.remove(a);
 	}
 }
