@@ -8,6 +8,8 @@ import testing.Mock;
 
 public class BankCustomerMock extends Mock implements BankCustomer {
 
+	double deposit = 200;
+	
 	public BankCustomerMock(String name) {
 		super(name);
 	}
@@ -49,8 +51,7 @@ public class BankCustomerMock extends Mock implements BankCustomer {
 
 	@Override
 	public void msgDepositReceived() {
-		// TODO Auto-generated method stub
-		
+		log.add(new LoggedEvent("Your deposit of $" + deposit + " was received."));
 	}
 
 	@Override
@@ -73,8 +74,7 @@ public class BankCustomerMock extends Mock implements BankCustomer {
 
 	@Override
 	public void msgHereIsNewAccount(int accountNum) {
-		// TODO Auto-generated method stub
-		
+		log.add(new LoggedEvent("New Account created"));
 	}
 
 	@Override

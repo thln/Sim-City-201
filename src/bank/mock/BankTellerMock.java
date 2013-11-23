@@ -55,4 +55,10 @@ public class BankTellerMock extends Mock implements BankTeller {
 		log.add(new LoggedEvent("My customer's loan was approved"));
 	}
 
+	@Override
+	public void msgLeavingBank(int accountNum) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

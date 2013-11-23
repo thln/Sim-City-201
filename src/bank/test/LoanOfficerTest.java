@@ -1,7 +1,6 @@
 package bank.test;
 
 import person.Worker;
-import application.Phonebook;
 import bank.LoanOfficerRole;
 import bank.BankTellerRole.Account;
 import bank.LoanOfficerRole.LoanState;

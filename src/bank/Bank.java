@@ -23,6 +23,7 @@ public class Bank {
 	public double vault;
 	public double vaultMinimum;
 	List<Account> accounts;
+	public int accountNumKeyList = 3000;
 	
 	//Roles
 	public BankGuardRole bankGuardRole = new BankGuardRole("Bank Guard");

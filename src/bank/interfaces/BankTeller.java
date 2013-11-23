@@ -20,4 +20,6 @@ public interface BankTeller {
 
 	void msgThisLoanApproved(Account account1);
 
+	void msgLeavingBank(int accountNum);
+
 }
