@@ -17,7 +17,6 @@ public class BankCustomerRole extends Role implements BankCustomer{
 	public BankTeller myTeller;
 
 	double desiredLoanAmount;
-	double loan; 	
 	public BankCustomerDesire desire;
 	public CustomerState state;
 	protected String RoleName = "Bank Customer";
@@ -175,8 +174,8 @@ public class BankCustomerRole extends Role implements BankCustomer{
 	}
 
 	void payOffLoan() {
-		person.money -= loan;
-		myTeller.msgPayingOffLoan(loan, person.accountNum);
+		person.money -= person.loan;
+		myTeller.msgPayingOffLoan(person.loan, person.accountNum);
 		state = CustomerState.waiting;
 	}
 
