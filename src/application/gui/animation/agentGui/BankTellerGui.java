@@ -20,11 +20,11 @@ public class BankTellerGui implements Gui{
 
 	private enum CustomerState {nothing};
 	CustomerState state = CustomerState.nothing;
-
+	public BankTellerGui(int i) {
+	}
+	
 	public BankTellerGui(BankTellerRole c/*, RestaurantGui gui*/){
 		agent = c;
-		xPos = -20;
-		yPos = -20;
 		//this.gui = gui;
 	}
 
