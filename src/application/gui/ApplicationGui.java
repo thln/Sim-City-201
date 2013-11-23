@@ -133,7 +133,7 @@ public class ApplicationGui extends JFrame {
                             setMaximumSize(getSize());
                         }
                     };
-                    housingMessagesButton = new JButton("Hide Tag: HOUSING") 
+                    housingMessagesButton = new JButton("Hide Tag: HOUSING")
                     {
                         {
                             setSize(200, 25);

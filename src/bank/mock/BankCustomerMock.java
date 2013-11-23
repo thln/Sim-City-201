@@ -8,6 +8,8 @@ import testing.Mock;
 
 public class BankCustomerMock extends Mock implements BankCustomer {
 
+	double deposit = 200;
+	
 	public BankCustomerMock(String name) {
 		super(name);
 	}
@@ -31,32 +33,27 @@ public class BankCustomerMock extends Mock implements BankCustomer {
 
 	@Override
 	public void msgLoanClosed() {
-		// TODO Auto-generated method stub
-		
+		log.add(new LoggedEvent("Loan payed for and closed"));
 	}
 
 	@Override
 	public void msgYourLoanWasApproved() {
-		// TODO Auto-generated method stub
-		
+		log.add(new LoggedEvent("Loan approved. Try withdrawal again."));
 	}
 
 	@Override
 	public void msgYourLoanWasDenied(double processingMoney) {
-		// TODO Auto-generated method stub
-		
+		log.add(new LoggedEvent("Your credit score is too low for the requested loan."));
 	}
 
 	@Override
 	public void msgDepositReceived() {
-		// TODO Auto-generated method stub
-		
+		log.add(new LoggedEvent("Your deposit of $" + deposit + " was received."));
 	}
 
 	@Override
 	public void msgInsufficentFunds() {
-		// TODO Auto-generated method stub
-		
+		log.add(new LoggedEvent("Account balance is too low for a withdrawal. Must open loan."));
 	}
 
 	@Override
@@ -67,14 +64,12 @@ public class BankCustomerMock extends Mock implements BankCustomer {
 
 	@Override
 	public void msgHereIsYourMoney(double processingMoney) {
-		// TODO Auto-generated method stub
-		
+		log.add(new LoggedEvent("Withdrawal succeeded"));
 	}
 
 	@Override
 	public void msgHereIsNewAccount(int accountNum) {
-		// TODO Auto-generated method stub
-		
+		log.add(new LoggedEvent("New Account created"));
 	}
 
 	@Override
