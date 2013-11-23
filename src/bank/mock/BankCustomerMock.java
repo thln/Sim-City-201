@@ -39,8 +39,7 @@ public class BankCustomerMock extends Mock implements BankCustomer {
 
 	@Override
 	public void msgYourLoanWasApproved() {
-		// TODO Auto-generated method stub
-		
+		log.add(new LoggedEvent("Loan approved. Try withdrawal again."));
 	}
 
 	@Override
@@ -56,8 +55,7 @@ public class BankCustomerMock extends Mock implements BankCustomer {
 
 	@Override
 	public void msgInsufficentFunds() {
-		// TODO Auto-generated method stub
-		
+		log.add(new LoggedEvent("Account balance is too low for a withdrawal. Must open loan."));
 	}
 
 	@Override
@@ -68,8 +66,7 @@ public class BankCustomerMock extends Mock implements BankCustomer {
 
 	@Override
 	public void msgHereIsYourMoney(double processingMoney) {
-		// TODO Auto-generated method stub
-		
+		log.add(new LoggedEvent("Withdrawal succeeded"));
 	}
 
 	@Override

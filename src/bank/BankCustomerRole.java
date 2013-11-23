@@ -57,6 +57,8 @@ public class BankCustomerRole extends Role implements BankCustomer{
 
 	public void msgBankrupt() {
 		state = CustomerState.ready;
+		desire = BankCustomerDesire.leaveBank;
+		stateChanged();
 	}
 
 	public void msgInsufficentFunds(){
@@ -82,6 +84,8 @@ public class BankCustomerRole extends Role implements BankCustomer{
 	public void msgYourLoanWasDenied(double amount) {
 		//decide whether or not to request another loan
 		state = CustomerState.ready;
+		desire = BankCustomerDesire.leaveBank;
+		stateChanged();
 	}
 
 	public void msgLoanClosed() {

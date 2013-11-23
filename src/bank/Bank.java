@@ -22,7 +22,7 @@ public class Bank {
 	//Data
 	public double vault;
 	public double vaultMinimum;
-	List<Account> accounts;
+	public List<Account> accounts;
 	public int accountNumKeyList = 3000;
 	
 	//Roles

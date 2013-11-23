@@ -36,164 +36,362 @@ public class TellerTest extends TestCase
 		}
 		double depositAmt = 200;
 		double vault = Phonebook.getPhonebook().getBank().vault;
-	
+
 		//check preconditions in teller's personal list of accounts
 		assertEquals("Teller should have 0 accounts in list. It doesn't.", teller.getAccounts().size(), 0);
-		
+
+		Phonebook.getPhonebook().getBank().accountNumKeyList = 3000;
 		assertEquals("Account hash key should be at base number 3000. It isn't.", 
 				Phonebook.getPhonebook().getBank().accountNumKeyList, 3000);
-	
+
 		//Step 1: Customer arrives and wants to open new account
 		teller.msgWantNewAccount(customer);
-		
+
 		//Step 1 post-conditions
 		assertEquals("Teller should have 1 account in list. It doesn't.", teller.getAccounts().size(), 1);
-		
+
 		assertTrue("New account should have the state 'newAccount' ", 
 				teller.getAccounts().get(0).getState() == AccountState.newAccount);
-				
-		
+
+
 		//Step 2: Call scheduler, should execute method "openAccount"
-		assertFalse("Guard's scheduler should have returned false, but didn't.", 
-								teller.pickAndExecuteAnAction());
-		
+		assertFalse("Teller's scheduler should have returned false, but didn't.", 
+				teller.pickAndExecuteAnAction());
+
 		//Step 2 post-conditions
 		assertEquals("The list of account hash key should have increased ", 
 				Phonebook.getPhonebook().getBank().accountNumKeyList, 3001);
-		
+
 		assertEquals("New Account's 'accountNum' should be set to this new hashKey",
 				teller.getAccounts().get(0).getAccountNum(), Phonebook.getPhonebook().getBank().accountNumKeyList);	
-		
+
 		assertTrue("MockCustomer should have logged an event for new account, but his last event logged reads instead: " 
-					+ customer.log.getLastLoggedEvent().toString(), customer.log.containsString("New Account created"));
-		
+				+ customer.log.getLastLoggedEvent().toString(), customer.log.containsString("New Account created"));
+
 		assertTrue("New account should have the state 'neutral' ", 
 				teller.getAccounts().get(0).getState() == AccountState.neutral);
-		
+
 		//Step 3: Customer wants to deposit money into new account
 		teller.msgHereIsMyDeposit(depositAmt, teller.getAccounts().get(0).accountNum);
-		
+
 		//Step 3 post-conditions
 		assertTrue("Account should have the state 'depositing' ", 
 				teller.getAccounts().get(0).getState() == AccountState.depositing);
-		
+
 		//Step 4: Call scheduler, should execute method "depositMoney"
-		assertFalse("Guard's scheduler should have returned false, but didn't.", 
+		assertFalse("Tellers's scheduler should have returned false, but didn't.", 
 				teller.pickAndExecuteAnAction());
-			
-		
+
+
 		//Step 4 post-conditions
-	
+
 		assertEquals("Bank vault should be equal to the original vault amount + deposit amount",
 				Phonebook.getPhonebook().getBank().vault, vault + depositAmt);	
-		
+
 		assertEquals("Account balance should have increased by the deposit amount",
 				teller.getAccounts().get(0).balance, depositAmt);
-		
+
+		//credit changes
 		assertEquals("Account credit score should have increased by 1/10 of the deposit amount",
 				teller.getAccounts().get(0).creditScore, depositAmt/10);
-		
+
 		assertTrue("MockCustomer should have logged an event for deposit received, but his last event logged reads instead: " 
 				+ customer.log.getLastLoggedEvent().toString(), 
 				customer.log.containsString("Your deposit of $" + depositAmt + " was received."));
-		
+
 		assertTrue("New account should have the state 'neutral' ", 
 				teller.getAccounts().get(0).getState() == AccountState.neutral);
-		
+
 		//Step 5: customer leaves bank
 		teller.msgLeavingBank(teller.getAccounts().get(0).getAccountNum());
-		
+
 		//Step 5 post-conditions
-		
+
 		assertEquals("Teller should have 0 accounts in list. It doesn't.", teller.getAccounts().size(), 0);
+
+		assertFalse("Tellers's scheduler should have returned false, but didn't.", 
+				teller.pickAndExecuteAnAction());
 	}
-	
-	public void testTwoCustomerWantsWithdrawal() {
+
+	public void testTwoCustomerWithdrawalSuccess() {
 		try {
 			setUp();
 		}	catch (Exception e) {
 			e.printStackTrace();
 		}
-		double depositAmt = 200;
+
+		double withdrawAmt = 200;
 		double vault = Phonebook.getPhonebook().getBank().vault;
-	
-		//check preconditions in teller's personal list of accounts
+
+		//Create account in Phonebook.Bank's list of accounts to reference
+		Account a = new Account(customer);
+		a.balance = 500;
+		a.accountNum = 3000;
+		a.processingMoney = withdrawAmt;
+		Phonebook.getPhonebook().getBank().accounts.add(a);
+
+		//Preconditions
 		assertEquals("Teller should have 0 accounts in list. It doesn't.", teller.getAccounts().size(), 0);
 		
-		assertEquals("Account hash key should be at base number 3000. It isn't.", 
-				Phonebook.getPhonebook().getBank().accountNumKeyList, 3000);
-	
-		//Step 1: Customer arrives and wants to open new account
-		teller.msgWantNewAccount(customer);
-		
+		//Step 1: Customer arrives and wants to withdraw
+		teller.msgINeedMoney(withdrawAmt, a.accountNum);
+
 		//Step 1 post-conditions
 		assertEquals("Teller should have 1 account in list. It doesn't.", teller.getAccounts().size(), 1);
-		
-		assertTrue("New account should have the state 'newAccount' ", 
-				teller.getAccounts().get(0).getState() == AccountState.newAccount);
-				
-		
-		//Step 2: Call scheduler, should execute method "openAccount"
-		assertFalse("Guard's scheduler should have returned false, but didn't.", 
-								teller.pickAndExecuteAnAction());
-		
-		//Step 2 post-conditions
-		assertEquals("The list of account hash key should have increased ", 
-				Phonebook.getPhonebook().getBank().accountNumKeyList, 3001);
-		
-		assertEquals("New Account's 'accountNum' should be set to this new hashKey",
-				teller.getAccounts().get(0).getAccountNum(), Phonebook.getPhonebook().getBank().accountNumKeyList);	
-		
-		assertTrue("MockCustomer should have logged an event for new account, but his last event logged reads instead: " 
-					+ customer.log.getLastLoggedEvent().toString(), customer.log.containsString("New Account created"));
-		
-		assertTrue("New account should have the state 'neutral' ", 
-				teller.getAccounts().get(0).getState() == AccountState.neutral);
-		
-		//Step 3: Customer wants to deposit money into new account
-		teller.msgHereIsMyDeposit(depositAmt, teller.getAccounts().get(0).accountNum);
-		
-		//Step 3 post-conditions
-		assertTrue("Account should have the state 'depositing' ", 
-				teller.getAccounts().get(0).getState() == AccountState.depositing);
-		
-		//Step 4: Call scheduler, should execute method "depositMoney"
-		assertFalse("Guard's scheduler should have returned false, but didn't.", 
+
+		assertTrue("New account should have the state 'withdrawing' ", 
+				teller.getAccounts().get(0).getState() == AccountState.withdrawing);
+
+
+		//Step 2: Call scheduler, should execute method "withdrawMoney"
+		assertFalse("Teller's scheduler should have returned false, but didn't.", 
 				teller.pickAndExecuteAnAction());
-			
-		
-		//Step 4 post-conditions
-	
-		assertEquals("Bank vault should be equal to the original vault amount + deposit amount",
-				Phonebook.getPhonebook().getBank().vault, vault + depositAmt);	
-		
-		assertEquals("Account balance should have increased by the deposit amount",
-				teller.getAccounts().get(0).balance, depositAmt);
-		
-		assertEquals("Account credit score should have increased by 1/10 of the deposit amount",
-				teller.getAccounts().get(0).creditScore, depositAmt/10);
-		
-		assertTrue("MockCustomer should have logged an event for deposit received, but his last event logged reads instead: " 
-				+ customer.log.getLastLoggedEvent().toString(), 
-				customer.log.containsString("Your deposit of $" + depositAmt + " was received."));
-		
-		assertTrue("New account should have the state 'neutral' ", 
+
+		//Step 2 post-conditions
+		assertEquals("Bank vault should be equal to the original vault amount minus withdrawal amount",
+				Phonebook.getPhonebook().getBank().vault, vault - withdrawAmt);	
+
+		assertTrue("Account should have the state 'neutral' ", 
 				teller.getAccounts().get(0).getState() == AccountState.neutral);
-		
-		//Step 5: customer leaves bank
+
+		assertTrue("MockCustomer should have logged an event for withdrawal success, but his last event logged reads instead: " 
+				+ customer.log.getLastLoggedEvent().toString(), customer.log.containsString("Withdrawal succeeded"));
+
+
+		//Step 3: customer leaves bank
 		teller.msgLeavingBank(teller.getAccounts().get(0).getAccountNum());
-		
-		//Step 5 post-conditions
-		
+
+		//Step 3 post-conditions	
 		assertEquals("Teller should have 0 accounts in list. It doesn't.", teller.getAccounts().size(), 0);
+		
+		Phonebook.getPhonebook().getBank().accounts.remove(a);
 	}
-	
-	public void testThreeCustomerWantsWithdrawalButNeedsLoan() {
+
+	public void testThreeCustomerWantsWithdrawalButNeedsLoanGetsLoan() {
 		try {
 			setUp();
 		}	catch (Exception e) {
 			e.printStackTrace();
 		}
+
+		double withdrawAmt = 500;
+		double vault = Phonebook.getPhonebook().getBank().vault;
+
+		//Create account in Phonebook.Bank's list of accounts to reference
+		Account a = new Account(customer);
+		double balance = 200;
+		a.balance = balance;
+		a.creditScore = 70;
+		a.accountNum = 3000;
+		a.processingMoney = withdrawAmt;
+		Phonebook.getPhonebook().getBank().accounts.add(a);
+
+		//Step 1: Customer arrives and wants to withdraw
+		teller.msgINeedMoney(withdrawAmt, a.accountNum);
+
+		//Step 1 post-conditions
+		assertEquals("Teller should have 1 account in list. It doesn't.", teller.getAccounts().size(), 1);
+
+		assertTrue("New account should have the state 'withdrawing' ", 
+				teller.getAccounts().get(0).getState() == AccountState.withdrawing);
+
+
+		//Step 2: Call scheduler, should execute method "withdrawMoney"
+		assertFalse("Teller's scheduler should have returned false, but didn't.", 
+				teller.pickAndExecuteAnAction());
+
+		//Step 2 post-conditions	
+		assertTrue("MockCustomer should have logged an event for lack of account funds, but his last event logged reads instead: " 
+				+ customer.log.getLastLoggedEvent().toString(),
+				customer.log.containsString("Account balance is too low for a withdrawal. Must open loan."));
+
+		assertTrue("New account should have the state 'neutral' ", 
+				teller.getAccounts().get(0).getState() == AccountState.neutral);
+
+		//Step 3: customer messages to request loan
+		double desiredLoan = withdrawAmt*10;
+		teller.msgINeedALoan(desiredLoan, a.accountNum);
+
+		//Step 3 post-conditions
+		assertTrue("New account should have the state 'withdrawing' ", 
+				teller.getAccounts().get(0).getState() == AccountState.requestingLoan);
+
+		//Step 4: Call scheduler, should execute method "requestLoan"
+		assertFalse("Teller's scheduler should have returned false, but didn't.", 
+				teller.pickAndExecuteAnAction());
+
+		//Step 4 post-conditions
+		assertTrue("New account should have the state 'waiting' ", 
+				teller.getAccounts().get(0).getState() == AccountState.waiting);
+
+		//Step 5: Loan officer messages -- loan approved
+		teller.msgThisLoanApproved(a);
+
+		//Step 5 post-conditions
+		assertTrue("New account should have the state 'loanApproved' ", 
+				teller.getAccounts().get(0).getState() == AccountState.loanApproved);
+
+		//Step 6: Call scheduler, should execute method "approveLoan"
+		assertFalse("Teller's scheduler should have returned false, but didn't.", 
+				teller.pickAndExecuteAnAction());
+
+		//Step 6 post-conditions
+		assertTrue("New account should have the state 'neutral' ", 
+				teller.getAccounts().get(0).getState() == AccountState.neutral);
+
+		assertEquals("Account's balance should have increased by desired loan amount",
+				teller.getAccounts().get(0).balance, balance+desiredLoan);	
+
+		assertTrue("MockCustomer should have logged an event for lack of account funds, but his last event logged reads instead: " 
+				+ customer.log.getLastLoggedEvent().toString(),
+				customer.log.containsString("Loan approved. Try withdrawal again."));
+
+		//Step 7: Customer tries to withdraw again
+
+		teller.msgINeedMoney(withdrawAmt, a.accountNum);
+
+		//Step 7 post-conditions
+		assertEquals("Teller should have 1 account in list. It doesn't.", teller.getAccounts().size(), 1);
+
+		assertTrue("Account should have the state 'withdrawing' ", 
+				teller.getAccounts().get(0).getState() == AccountState.withdrawing);
+
+
+		//Step 8: Call scheduler, should execute method "withdrawMoney"
+		assertFalse("Teller's scheduler should have returned false, but didn't.", 
+				teller.pickAndExecuteAnAction());
+
+		//Step 8 post-conditions
+		assertEquals("Bank vault should be equal to the original vault amount minus withdrawal amount",
+				Phonebook.getPhonebook().getBank().vault, vault - withdrawAmt);	
+
+		assertTrue("New account should have the state 'neutral' ", 
+				teller.getAccounts().get(0).getState() == AccountState.neutral);
+
+		assertTrue("MockCustomer should have logged an event for withdrawal success, but his last event logged reads instead: " 
+				+ customer.log.getLastLoggedEvent().toString(), customer.log.containsString("Withdrawal succeeded"));
+
+		//Step 9: customer leaves bank
+		teller.msgLeavingBank(teller.getAccounts().get(0).getAccountNum());
+
+		//Step 9 post-conditions
+
+		assertEquals("Teller should have 0 accounts in list. It doesn't.", teller.getAccounts().size(), 0);
+		
+		Phonebook.getPhonebook().getBank().accounts.remove(a);
+	}
+
+	public void testFourCustomerWantsWithdrawalNeedsLoanButDenied() {
+		try {
+			setUp();
+		}	catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		double withdrawAmt = 500;
+		double vault = Phonebook.getPhonebook().getBank().vault;
+
+		//Create account in Phonebook.Bank's list of accounts to reference
+		Account a = new Account(customer);
+		double balance = 200;
+		a.balance = balance;
+		a.creditScore = 70;
+		a.accountNum = 3000;
+		a.processingMoney = withdrawAmt;
+		Phonebook.getPhonebook().getBank().accounts.add(a);
+
+		//Step 1: Customer arrives and wants to withdraw
+		teller.msgINeedMoney(withdrawAmt, a.accountNum);
+
+		//Step 1 post-conditions
+		assertEquals("Teller should have 1 account in list. It doesn't.", teller.getAccounts().size(), 1);
+
+		assertTrue("New account should have the state 'withdrawing' ", 
+				teller.getAccounts().get(0).getState() == AccountState.withdrawing);
+
+
+		//Step 2: Call scheduler, should execute method "withdrawMoney"
+		assertFalse("Teller's scheduler should have returned false, but didn't.", 
+				teller.pickAndExecuteAnAction());
+
+		//Step 2 post-conditions	
+		assertTrue("MockCustomer should have logged an event for lack of account funds, but his last event logged reads instead: " 
+				+ customer.log.getLastLoggedEvent().toString(),
+				customer.log.containsString("Account balance is too low for a withdrawal. Must open loan."));
+
+		assertTrue("New account should have the state 'neutral' ", 
+				teller.getAccounts().get(0).getState() == AccountState.neutral);
+
+		//Step 3: customer messages to request loan
+		double desiredLoan = withdrawAmt*10;
+		teller.msgINeedALoan(desiredLoan, a.accountNum);
+
+		//Step 3 post-conditions
+		assertTrue("New account should have the state 'withdrawing' ", 
+				teller.getAccounts().get(0).getState() == AccountState.requestingLoan);
+
+		//Step 4: Call scheduler, should execute method "requestLoan"
+		assertFalse("Teller's scheduler should have returned false, but didn't.", 
+				teller.pickAndExecuteAnAction());
+
+		//Step 4 post-conditions
+		assertTrue("New account should have the state 'waiting' ", 
+				teller.getAccounts().get(0).getState() == AccountState.waiting);
+
+		//Step 5: Loan officer messages -- loan approved
+		teller.msgThisLoanApproved(a);
+
+		//Step 5 post-conditions
+		assertTrue("New account should have the state 'loanApproved' ", 
+				teller.getAccounts().get(0).getState() == AccountState.loanApproved);
+
+		//Step 6: Call scheduler, should execute method "approveLoan"
+		assertFalse("Teller's scheduler should have returned false, but didn't.", 
+				teller.pickAndExecuteAnAction());
+
+		//Step 6 post-conditions
+		assertTrue("New account should have the state 'neutral' ", 
+				teller.getAccounts().get(0).getState() == AccountState.neutral);
+
+		assertEquals("Account's balance should have increased by desired loan amount",
+				teller.getAccounts().get(0).balance, balance+desiredLoan);	
+
+		assertTrue("MockCustomer should have logged an event for lack of account funds, but his last event logged reads instead: " 
+				+ customer.log.getLastLoggedEvent().toString(),
+				customer.log.containsString("Loan approved. Try withdrawal again."));
+
+		//Step 7: Customer tries to withdraw again
+
+		teller.msgINeedMoney(withdrawAmt, a.accountNum);
+
+		//Step 7 post-conditions
+		assertEquals("Teller should have 1 account in list. It doesn't.", teller.getAccounts().size(), 1);
+
+		assertTrue("Account should have the state 'withdrawing' ", 
+				teller.getAccounts().get(0).getState() == AccountState.withdrawing);
+
+
+		//Step 8: Call scheduler, should execute method "withdrawMoney"
+		assertFalse("Teller's scheduler should have returned false, but didn't.", 
+				teller.pickAndExecuteAnAction());
+
+		//Step 8 post-conditions
+		assertEquals("Bank vault should be equal to the original vault amount minus withdrawal amount",
+				Phonebook.getPhonebook().getBank().vault, vault - withdrawAmt);	
+
+		assertTrue("New account should have the state 'neutral' ", 
+				teller.getAccounts().get(0).getState() == AccountState.neutral);
+
+		assertTrue("MockCustomer should have logged an event for withdrawal success, but his last event logged reads instead: " 
+				+ customer.log.getLastLoggedEvent().toString(), customer.log.containsString("Withdrawal succeeded"));
+
+		//Step 9: customer leaves bank
+		teller.msgLeavingBank(teller.getAccounts().get(0).getAccountNum());
+
+		//Step 9 post-conditions
+
+		assertEquals("Teller should have 0 accounts in list. It doesn't.", teller.getAccounts().size(), 0);
+		
+		Phonebook.getPhonebook().getBank().accounts.remove(a);
 	}
 }
-
