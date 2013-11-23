@@ -5,20 +5,11 @@ import housing.Housing;
 import java.util.*;
 import java.util.concurrent.Semaphore;
 
-import bank.Bank;
-import bank.BankCustomerRole;
-import bank.BankGuardRole;
-import bank.BankTellerRole;
-import bank.interfaces.BankCustomer;
-import market.MarketCustomerRole;
-import person.Role;
-import person.Role.RoleState;
-import restaurant.HostRole;
-import restaurant.RestaurantCustomerRole;
-import agent.Agent;
-import application.Phonebook;
-import application.TimeManager;
-import application.TimeManager.Time;
+import bank.*;
+import market.*;
+import restaurant.*;
+import agent.*;
+import application.*;
 
 public abstract class Person extends Agent{
 
