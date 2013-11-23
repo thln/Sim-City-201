@@ -32,8 +32,6 @@ public class BuildingPanel extends JPanel implements ActionListener {
         setLayout(null);
         name = buildName;
         panel = ap;
-    	Timer timer = new Timer(20, this );
-    	timer.start();
     }
 
 	public void actionPerformed(ActionEvent e) {
@@ -47,7 +45,7 @@ public class BuildingPanel extends JPanel implements ActionListener {
         if(name.toLowerCase().contains("restaurant"))
         	g2.setColor(Color.YELLOW);
         else if(name.toLowerCase().contains("market"))
-        	g2.setColor(Color.CYAN);
+        	g2.setColor(Color.WHITE);
         else if(name.toLowerCase().contains("house"))
         	g2.setColor(Color.ORANGE);
         else if(name.toLowerCase().contains("bank"))

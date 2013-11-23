@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 public class PersonGui implements Gui{
 
 	private Person agent = null;
-	private boolean isPresent = false;
+	private boolean isPresent = true;
 	private boolean isHungry = false;
 
 	//RestaurantGui gui;
@@ -72,6 +72,16 @@ public class PersonGui implements Gui{
 	public void setPresent(boolean p) {
 		isPresent = p;
 	}
+	
+	public int getXPos() {
+        return xPos;
+    }
+
+    public int getYPos() {
+        return yPos;
+    }
+    
+    //Actions
 
 	public void DoGoToBuilding(int location) {//later you will map seatnumber to table coordinates.
 		command = Command.GoToSeat;
