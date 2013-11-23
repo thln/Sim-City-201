@@ -4,15 +4,14 @@ import person.Person;
 import person.Role;
 import person.Worker;
 import application.Phonebook;
+import bank.interfaces.BankCustomer;
+import bank.interfaces.BankTeller;
 import bank.interfaces.LoanOfficer;
 
 import java.util.List;
 
-public class BankTellerRole extends Role {
+public class BankTellerRole extends Role implements BankTeller {
 
-//TODO
-	//Finish find account function,
-	
 	//DATA
 	int accountNumKeyList = 3000;
 	List<Account> accounts;
@@ -24,7 +23,7 @@ public class BankTellerRole extends Role {
 		closingLoan, loanApproved, loanDenied, leavingBank}
 
 	class Account {	
-		BankCustomerRole customer;
+		BankCustomer customer;
 		private int accountNum; 		//the hash key
 		double loan = 0;
 		double balance = 0;
@@ -32,7 +31,7 @@ public class BankTellerRole extends Role {
 		double processingMoney = 0;
 		AccountState state = AccountState.newAccount;
 		
-		Account (BankCustomerRole c1) {
+		Account (BankCustomer c1) {
 			customer = c1;
 		}
 		
@@ -56,13 +55,13 @@ public class BankTellerRole extends Role {
 
 	
 
-	void msgWantNewAccount (BankCustomerRole cust1) {	
+	public void msgWantNewAccount (BankCustomer cust1) {	
 		print("Customer wants new account");
 		accounts.add(new Account(cust1));
 		stateChanged();
 	}
 
-	void msgINeedMoney(double desiredAmount, int accountNum) {
+	public void msgINeedMoney(double desiredAmount, int accountNum) {
 		print("Customer approached Teller");
 		Account correct = FindAccount (accountNum);
 		correct.processingMoney = desiredAmount;
@@ -70,7 +69,7 @@ public class BankTellerRole extends Role {
 		stateChanged();
 	}
 
-	void msgHereIsMyDeposit(double amount, int accountNum) {
+	public void msgHereIsMyDeposit(double amount, int accountNum) {
 		print("Customer wants to deposit");
 		Account correct = FindAccount (accountNum);
 		correct.processingMoney = amount;
@@ -78,41 +77,35 @@ public class BankTellerRole extends Role {
 		stateChanged();
 	}
 
-	void msgINeedALoan(double desiredLoan, int accountNum) {
+	public void msgINeedALoan(double desiredLoan, int accountNum) {
 		Account correct = FindAccount (accountNum);
 		correct.processingMoney = desiredLoan;
 		correct.state = AccountState.requestingLoan;
 		stateChanged();
 	}
 
-	void msgPayingOffLoan(double loan, int accountNum) {
+	public void msgPayingOffLoan(double loan, int accountNum) {
 		Account correct = FindAccount (accountNum);
 		correct.processingMoney = loan;
 		correct.state = AccountState.closingLoan;
 		stateChanged();
 	}
 
-	void msgThisLoanApproved(Account account1) {
+	public void msgThisLoanApproved(Account account1) {
 		account1.state = AccountState.loanApproved;
 		stateChanged();
 	}
 
-	void msgThisLoanDenied (Account account1, double possibleLoan) {
+	public void msgThisLoanDenied (Account account1, double possibleLoan) {
 		account1.state = AccountState.loanDenied;
 		account1.processingMoney = possibleLoan;
 		stateChanged();
 	}
-	
-	void msgLeavingBank (int accountNum) {
-		print("Customer Leaving");
-		Account correct = FindAccount(accountNum);
-		correct.state = AccountState.leavingBank;
-		stateChanged();
-	}
+
 
 	//Scheduler
 
-	protected boolean pickAndExecuteAnAction() {
+	public boolean pickAndExecuteAnAction() {
 
 		for (Account account1: accounts) {
 			
@@ -148,10 +141,6 @@ public class BankTellerRole extends Role {
 				CloseLoan(account1);
 			}
 			
-			if (account1.state == AccountState.leavingBank) {
-				BecomeAvailable(account1);
-				return false;
-			}
 		}
 		
 		if (leaveRole){
@@ -234,13 +223,7 @@ public class BankTellerRole extends Role {
 		account1.customer.msgYourLoanWasDenied(account1.processingMoney);	//loan denied, but given your credit score you can have a loan of size (processingMoney)
 	}
 	
-	void BecomeAvailable (Account account1) {
-		account1.state = AccountState.neutral;
-		Phonebook.getPhonebook().getBank().bankGuardRole.msgTellerBecameAvailable(this);
-	}
-
 	public double getVault() {
 		return Phonebook.getPhonebook().getBank().vault;
 	}
-
 }

@@ -17,15 +17,10 @@ import restaurant.HostRole;
 import restaurant.RestaurantCustomerRole;
 import agent.Agent;
 import application.Phonebook;
-
-import application.gui.trace.AlertLog;
-import application.gui.trace.AlertTag;
-
 import application.TimeManager;
 import application.TimeManager.Time;
 
-
-public abstract class Person extends Agent {
+public abstract class Person extends Agent{
 
 	//Data
 	String name;
@@ -69,71 +64,15 @@ public abstract class Person extends Agent {
 	}
 
 	//Scheduler
-
-	protected boolean pickAndExecuteAnAction() {
-
-		synchronized (roles) {
-			if (!roles.isEmpty()) {
-				for (Role r : roles) {
-
-					if (newTime >= 0) {
-						updateTime(newTime);
-					}
-
-
-					if (r.getState() == RoleState.active) {
-						return r.pickAndExecuteAnAction();
-					}
-
-					if (r.getState() == RoleState.waitingToExecute) {
-
-						if (r.equals(workerRole)) {
-							//Do("Going to work");
-							print("Going to work");
-							prepareForWork(r);
-						}
-
-						if (r instanceof BankCustomerRole) {
-							//Do("Going to bank");
-							print("Going to bank");
-							if (this instanceof Crook)
-								robBank(r);
-							else
-								prepareForBank(r);
-						}
-						if (r instanceof MarketCustomerRole) {
-							prepareForMarket(r);
-						}
-						if (r instanceof RestaurantCustomerRole) {
-							prepareForRestaurant(r);
-						}
-
-						return true;
-					}
-				}
-				//goHome();
-				return false;
-			}
-			//goHome();
-			return false;
-		}
-	}
-
-	//protected abstract boolean pickAndExecuteAnAction();
+	protected abstract boolean pickAndExecuteAnAction();
 
 	//Actions
 	protected void eatAtHome() {
 
 	}
 
-
-	private void prepareForBank (Role r){
-		//Do("Becoming Bank Customer");
-		print("Becoming Bank Customer");
-/*
 	protected void prepareForBank () {
 		Do("Becoming Bank Customer");
-*/
 		//Do Gui method
 
 		/*GUI call to go to business
@@ -298,19 +237,30 @@ public abstract class Person extends Agent {
 		return name;
 	}
 
-	public String getType(){
-		return "";
-}
-
 	public void setHome(Housing place) {
 		home = place;
 	}
 
-	
-	public void print(String msg)
+	/*
+	public void print(String s)
 	{
-        AlertLog.getInstance().logInfo(AlertTag.PERSON, getName(), msg);
+		String roleName = "";
 
+		synchronized (roles) 
+		{
+			if (!roles.isEmpty()) 
+			{
+				for (Role r : roles) 
+				{
+					if (r.getState() == roleState.active) 
+					{
+						roleName = r.
+					}
+				}
+			}
+		}
+
+		System.out.println(getName() + ": " + s);
 	}
-	 
+	 */
 }

@@ -34,56 +34,6 @@ public class Worker extends Person {
 			endTime = new WatchTime(endT, 0);
 			this.title = title;
 			this.jobPlace = jobPlace;
-
-			//			if (title == "bankTeller") {
-			//				workerRole = new BankTellerRole(name, myself, title);
-			//				roles.add(workerRole);
-			//			}
-			//			if (title == "loanOfficer") {
-			//				workerRole = new LoanOfficerRole(name, myself, title);
-			//				roles.add(workerRole);			
-			//			}
-			//			if (title == "bankGuard") {
-			//				workerRole = new BankGuardRole(name, myself, title);
-			//				roles.add(workerRole);			
-			//			}
-			//			if (title == "marketRunner") {
-			//				//	workerRole = new MarketRunnerRole(myself,title);
-			//				roles.add(workerRole);
-			//			}
-			//			if (title == "marketSales") {
-			//				workerRole = new SalesPersonRole(myself, name, title);
-			//				roles.add(workerRole);
-			//			}
-			//			if (title == "UPSman") {
-			//				workerRole = new UPSmanRole(myself, name, title);
-			//				roles.add(workerRole);
-			//			}
-			//			if (title == "maintenance") {
-			//				workerRole = new MaintenanceWorker(myself, name, title);
-			//				roles.add(workerRole);
-			//			}
-			//			if (title == "cashier") {
-			//				workerRole = new CashierRole(myself, name, title);
-			//				roles.add(workerRole);
-			//			}
-			//			if (title == "host") {
-			//				workerRole = new HostRole(myself, name, title);
-			//				roles.add(workerRole);
-			//			}
-			//			if (title == "cook") {
-			//				workerRole = new CookRole(myself, name, title);		//need to input name not title
-			//				roles.add(workerRole);
-			//			}
-			//			if (title == "waiter") {
-			//				workerRole = new WaiterRole(myself, name, title);
-			//				roles.add(workerRole);
-			//			}
-			//			if (title == "altWaiter") {
-			//				workerRole = new AltWaiterRole(myself, name, title);
-			//				roles.add(workerRole);
-			//			}
-
 		}
 
 		WatchTime getStartTime() {
@@ -218,7 +168,7 @@ public class Worker extends Person {
 
 
 	//Actions
-	private void prepareForWork() {
+	public void prepareForWork() {
 
 		if (myJob.jobPlace == "bank") {
 			workerRole = Phonebook.getPhonebook().getBank().arrivedAtWork(this, myJob.title);
@@ -244,53 +194,6 @@ public class Worker extends Person {
 		
 		return;
 	}
-
-
-
-	//			else if (title == "loanOfficer") {
-	//				workerRole = new LoanOfficerRole(name, myself, title);
-	//				roles.add(workerRole);			
-	//			}
-	//			if (title == "bankGuard") {
-	//				workerRole = new BankGuardRole(name, myself, title);
-	//				roles.add(workerRole);			
-	//			}
-	//			if (title == "marketRunner") {
-	//				//	workerRole = new MarketRunnerRole(myself,title);
-	//				roles.add(workerRole);
-	//			}
-	//			if (title == "marketSales") {
-	//				workerRole = new SalesPersonRole(myself, name, title);
-	//				roles.add(workerRole);
-	//			}
-	//			if (title == "UPSman") {
-	//				workerRole = new UPSmanRole(myself, name, title);
-	//				roles.add(workerRole);
-	//			}
-	//			if (title == "maintenance") {
-	//				workerRole = new MaintenanceWorker(myself, name, title);
-	//				roles.add(workerRole);
-	//			}
-	//			if (title == "cashier") {
-	//				workerRole = new CashierRole(myself, name, title);
-	//				roles.add(workerRole);
-	//			}
-	//			if (title == "host") {
-	//				workerRole = new HostRole(myself, name, title);
-	//				roles.add(workerRole);
-	//			}
-	//			if (title == "cook") {
-	//				workerRole = new CookRole(myself, name, title);		//need to input name not title
-	//				roles.add(workerRole);
-	//			}
-	//			if (title == "waiter") {
-	//				workerRole = new WaiterRole(myself, name, title);
-	//				roles.add(workerRole);
-	//			}
-	//			if (title == "altWaiter") {
-	//				workerRole = new AltWaiterRole(myself, name, title);
-	//				roles.add(workerRole);
-	//			}
 
 	public void setWorkerRole(Role workerRole) {
 		this.workerRole = workerRole;

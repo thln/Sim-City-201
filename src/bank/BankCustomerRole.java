@@ -1,23 +1,21 @@
 package bank;
 
+import bank.interfaces.BankCustomer;
+import bank.interfaces.BankTeller;
 import application.Phonebook;
 import person.Person;
 import person.Role;
 import person.Worker;
 
-public class BankCustomerRole extends Role {
+public class BankCustomerRole extends Role implements BankCustomer{
 
 	//DATA
 
 	enum BankCustomerDesire {none, withdraw, deposit, wantLoan, closeLoan, openAccount, closeAccount, robBank, leaveBank}
 	enum CustomerState {atBank, none, waiting, ready};
 	
-	BankTellerRole myTeller;
-//	BankGuardRole myGuard;
+	BankTeller myTeller;
 
-//	double cash;
-//	int accountNum;
-//	double accountBalance;
 	double desiredLoanAmount;
 	double loan; 	
 	BankCustomerDesire desire;
@@ -32,20 +30,24 @@ public class BankCustomerRole extends Role {
 	
 	//Messages
 
-	void msgGoToTeller(BankTellerRole tell1) {
+	public void msgGoToTeller(BankTeller tell1) {
 		myTeller = tell1;
 		state = CustomerState.ready;
 		stateChanged();
 	}
 	
-	void msgHereIsYourMoney(double amount) {
+	public void msgNoTellerAvailable(){
+		
+	}
+	
+	public void msgHereIsYourMoney(double amount) {
 		person.money += amount;
 		desire = BankCustomerDesire.leaveBank;
 		state = CustomerState.ready;
 		stateChanged();
 	}
 
-	void msgHereIsNewAccount (int accountNum) {
+	public void msgHereIsNewAccount (int accountNum) {
 		print("Received new bank account");
 		person.accountNum = accountNum;
 		desire = BankCustomerDesire.deposit;
@@ -54,50 +56,50 @@ public class BankCustomerRole extends Role {
 		stateChanged();
 	}
 
-	void msgBankrupt() {
+	public void msgBankrupt() {
 		state = CustomerState.ready;
 	}
 
-	void msgInsufficentFunds(){
+	public void msgInsufficentFunds(){
 		state = CustomerState.ready;
 		desiredLoanAmount = person.withdrawAmount*10;
 		desire = BankCustomerDesire.wantLoan;
 		stateChanged();
 	}
 //finish setting loan and teller interactions, make sure everything is phonebook global or person data
-	void msgDepositReceived() {
+	public void msgDepositReceived() {
 		desire = BankCustomerDesire.leaveBank;
 		state = CustomerState.ready;
 		print("ready to leave bank");
 		stateChanged();
 	}
 
-	void msgYourLoanWasApproved() {
+	public void msgYourLoanWasApproved() {
 		desire = BankCustomerDesire.withdraw;
 		state = CustomerState.ready;
 		stateChanged();
 	}
 
-	void msgYourLoanWasDenied(double amount) {
+	public void msgYourLoanWasDenied(double amount) {
 		//decide whether or not to request another loan
 		state = CustomerState.ready;
 	}
 
-	void msgLoanClosed() {
+	public void msgLoanClosed() {
 		state = CustomerState.ready;
 	}	
 	
-	void msgCaughtYou() {
+	public void msgCaughtYou() {
 		state = CustomerState.ready;
 	}
 	
-	void msgGotAway() {
+	public void msgGotAway() {
 		state = CustomerState.ready;
 	}
 
 	//Scheduler
 	
-	protected boolean pickAndExecuteAnAction () {
+	public boolean pickAndExecuteAnAction () {
 		
 	if (state == CustomerState.atBank)
 		MessageGuard();
@@ -162,10 +164,11 @@ public class BankCustomerRole extends Role {
 	}
 	
 	void LeaveBank () {
-		desire = BankCustomerDesire.none;
-		myTeller.msgLeavingBank(person.accountNum);
-		state = CustomerState.waiting;
 		
+		//GUI operation
+		desire = BankCustomerDesire.none;
+		state = CustomerState.waiting;	
+		Phonebook.getPhonebook().getBank().bankGuardRole.msgCustomerLeavingBank(myTeller);
 		this.setRoleInactive();
 	}
 

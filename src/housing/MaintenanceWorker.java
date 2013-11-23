@@ -27,7 +27,7 @@ public class MaintenanceWorker extends Role
 		super(person, pName, rName);
 	}
 	
-	protected boolean pickAndExecuteAnAction() 
+	public boolean pickAndExecuteAnAction() 
 	{
 		return false;
 	}

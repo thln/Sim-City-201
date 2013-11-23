@@ -10,8 +10,9 @@ import java.util.List;
 
 import application.Phonebook;
 import bank.BankTellerRole.Account;
+import bank.interfaces.LoanOfficer;
 
-public class LoanOfficerRole extends Role {
+public class LoanOfficerRole extends Role implements LoanOfficer {
 
 
 	//Data
@@ -53,7 +54,7 @@ public class LoanOfficerRole extends Role {
 
 	// Scheduler
 
-	protected boolean pickAndExecuteAnAction () {
+	public boolean pickAndExecuteAnAction () {
 		
 		for (Loan loan1: loans) {
 			if (loan1.state == LoanState.requesting)

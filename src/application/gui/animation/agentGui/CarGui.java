@@ -55,7 +55,7 @@ public class CarGui implements Gui{
 		g.setColor(Color.GREEN);
 		g.fillRect(xPos, yPos, 20, 20);
 	}
-	
+
 	public boolean isPresent() {
 		return isPresent;
 	}
