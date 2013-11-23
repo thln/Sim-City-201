@@ -27,8 +27,7 @@ public class BankTellerMock extends Mock implements BankTeller {
 
 	@Override
 	public void msgINeedALoan(double desiredLoanAmount, int accountNum) {
-		// TODO Auto-generated method stub
-		
+		log.add(new LoggedEvent("Customer requested loan."));
 	}
 
 	@Override

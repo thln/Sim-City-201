@@ -16,7 +16,7 @@ public class BankCustomerRole extends Role implements BankCustomer{
 
 	public BankTeller myTeller;
 
-	double desiredLoanAmount;
+	public double desiredLoanAmount;
 	public BankCustomerDesire desire;
 	public CustomerState state;
 	protected String RoleName = "Bank Customer";
@@ -60,9 +60,8 @@ public class BankCustomerRole extends Role implements BankCustomer{
 		stateChanged();
 	}
 
-	public void msgInsufficentFunds(){
+	public void msgInsufficientFunds(){
 		state = CustomerState.ready;
-		desiredLoanAmount = person.withdrawAmount*10;
 		desire = BankCustomerDesire.wantLoan;
 		stateChanged();
 	}
