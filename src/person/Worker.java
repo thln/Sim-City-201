@@ -10,6 +10,7 @@ public class Worker extends Person {
 	//Data
 	protected Job myJob = null;
 	protected Role workerRole = null;
+	WatchTime newTime;
 
 	public Worker (String name, int money, String jobTitle, String jobPlace, int startT, int lunchT, int endT) {
 		super(name);

@@ -16,7 +16,7 @@ public abstract class Role {
 	protected String roleName = null;
 	protected String personName = null;
 	
-	enum RoleState {active, inActive};
+	enum RoleState {active, inActive, waitingToExecute};
 	//, waitingToExecute}
 	private RoleState state = RoleState.inActive;
 	protected boolean leaveRole = false;
@@ -54,6 +54,10 @@ public abstract class Role {
  
 	public String getName() {
 		return person.getName();
+	}
+	
+	public void setState(RoleState state) {
+		this.state = state;
 	}
     
 	public RoleState getState() {
