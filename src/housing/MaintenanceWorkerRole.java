@@ -55,7 +55,7 @@ public class MaintenanceWorkerRole extends Role {
 	}
 
 	//Scheduler
-	protected boolean pickAndExecuteAnAction() 
+	public boolean pickAndExecuteAnAction() 
 	{
 		if (state == maintenanceState.Working) 
 		{

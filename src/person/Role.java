@@ -42,7 +42,7 @@ public abstract class Role {
 	protected void stateChanged() {
         //calls Person scheduler
 		//do we just call the scheduler, or do we release the semaphore on stateChanged?
-		person.pickAndExecuteAnAction();
+		person.stateChanged();
     }
 
     protected abstract boolean pickAndExecuteAnAction();

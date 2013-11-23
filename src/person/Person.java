@@ -20,7 +20,7 @@ import application.Phonebook;
 import application.TimeManager;
 import application.TimeManager.Time;
 
-public abstract class Person extends Agent {
+public abstract class Person extends Agent{
 
 	//Data
 	String name;
