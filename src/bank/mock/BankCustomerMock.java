@@ -52,7 +52,7 @@ public class BankCustomerMock extends Mock implements BankCustomer {
 	}
 
 	@Override
-	public void msgInsufficentFunds() {
+	public void msgInsufficientFunds() {
 		log.add(new LoggedEvent("Account balance is too low for a withdrawal. Must open loan."));
 	}
 

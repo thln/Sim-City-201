@@ -16,7 +16,7 @@ public interface BankCustomer {
 
 	void msgDepositReceived();
 
-	void msgInsufficentFunds();
+	void msgInsufficientFunds();
 
 	void msgBankrupt();
 

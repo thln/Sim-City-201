@@ -1,5 +1,8 @@
 package person;
 
+import java.util.List;
+import java.util.Random;
+
 import person.Role.RoleState;
 import application.Phonebook;
 import application.TimeManager;
@@ -7,7 +10,7 @@ import application.TimeManager;
 public class Deadbeat extends Person {
 
 	String name;
-
+	
 	public Deadbeat(String name,  int money) {
 		super(name);
 		this.money = money;
@@ -36,57 +39,23 @@ public class Deadbeat extends Person {
 		}
 
 		//If no role is active
-
-		//Park Related
 		//Start day in park for a couple hours
 		if (TimeManager.getTimeManager().getTime().dayHour == 10) {
 			visitPark();
 			return true;
 		}
 
-		//Hunger Related
-		if (hunger == HungerLevel.hungry) {
-			//If you don't have food in the fridge
-			if (!hasFoodInFridge) {
-				if (money <= moneyMinThreshold) { 
-					//This if says go to the business if it is open and at least 1 hour before closing time
-					if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getBank().openTime.hour) &&
-							(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getBank().closeTime.hour)) {
-						prepareForBank();
-						return true;
-					}
-				}
-				else if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getRestaurant().openTime.hour) &&
-						(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getRestaurant().closeTime.hour)) {
-					prepareForRestaurant();
-					return true;
-				}
-			}
-			else //if you do have food in the fridge
-			{
-				eatAtHome(); //empty method for now...
-				return true;
-			}
-		}
-
-		//Market Related
-		if (!hasFoodInFridge || carStatus == CarState.wantsCar) {
-			if (money <= moneyMinThreshold && !hasFoodInFridge) {
-				if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getBank().openTime.hour) &&
-						(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getBank().closeTime.hour)) {
-					prepareForBank();
-					return true;
-				}
-			}
-			else {
-				if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getMarket().openTime.hour) &&
-						(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getMarket().closeTime.hour)) {
-					prepareForMarket();
-					return true;
-				}
-			}
-		}
-
+		//Otherwise, randomly wander to a sim city business
+		 Random rand = new Random();
+         int myRandomChoice = rand.nextInt(3);
+         if (myRandomChoice == 0)
+        	 prepareForBank();
+         if (myRandomChoice == 1)
+        	 prepareForMarket();
+         if (myRandomChoice == 2)
+        	 prepareForRestaurant();
+        	 
+	
 		goToSleep();
 		return false;
 	}

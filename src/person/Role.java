@@ -7,7 +7,7 @@ import application.gui.trace.AlertTag;
 
 public abstract class Role {
 
-        protected Person person = null;
+        public Person person = null;
         
         protected String roleName = null;
         protected String personName = null;

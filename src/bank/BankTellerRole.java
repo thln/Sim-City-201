@@ -230,7 +230,7 @@ public class BankTellerRole extends Role implements BankTeller {
 			account1.getCustomer().msgHereIsYourMoney(account1.processingMoney);
 		}
 		else
-			account1.getCustomer().msgInsufficentFunds();
+			account1.getCustomer().msgInsufficientFunds();
 
 		account1.processingMoney = 0;
 		account1.state = AccountState.neutral;
