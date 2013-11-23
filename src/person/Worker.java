@@ -181,6 +181,7 @@ public class Worker extends Person {
 
                 if (myJob.jobPlace == "restaurant") 
                 {
+                	//  
                         workerRole = Phonebook.getPhonebook().getRestaurant().arrivedAtWork(this, myJob.title);
                         roles.add(workerRole);
                         workerRole.setRoleActive();
