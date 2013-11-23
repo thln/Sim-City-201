@@ -1,14 +1,12 @@
 package restaurant;
 
-//import agent.Agent;
-//import restaurant.RestaurantCustomer.AgentState;
-//import restaurant.MarketAgent.Stock;
-
 import java.util.*;
 import java.util.concurrent.Semaphore;
 
+import market.Market;
 import person.Person;
 import person.Role;
+import person.Worker;
 
 /**
  * Restaurant Cook Role
@@ -20,7 +18,8 @@ public class CookRole extends Role {
 
 	private String name;
 	private Semaphore atDestination = new Semaphore(0,true);
-	protected String RoleName = "Cook";
+	protected String roleName = "Cook";
+	public Restaurant restaurant;
 
 	//public CookGui cookGui = null;
 
@@ -41,8 +40,14 @@ public class CookRole extends Role {
 		foodMap.put("Salad", new Food("Salad"));
 	}
 
-	public CookRole(Person p1, String pName, String rName) {
+	public CookRole(Person p1, String pName, String rName, Restaurant resturant) {
 		super(p1, pName, rName);
+		this.restaurant = restaurant;
+	}
+
+	public CookRole(String roleName, Restaurant restaurant) {
+		super(roleName);
+		this.restaurant = restaurant;
 	}
 
 	public String getMaitreDName() {
@@ -73,17 +78,17 @@ public class CookRole extends Role {
 		stateChanged();
 	}
 
-	public void msgCantFulfill(String choice, int amount, int orderedAmount, MarketAgent market) {
+	public void msgCantFulfill(String choice, int amount, int orderedAmount, Market market) {
 		synchronized(stockFulfillment){
-			//print("Market cannot fulfill order for " + choice + "-- Amount: " + amount + " Ordered: " + orderedAmount);
+			print("Market cannot fulfill order for " + choice + "-- Amount: " + amount + " Ordered: " + orderedAmount);
 			stockFulfillment.add(new Stock(choice, amount, orderedAmount, market));
 			stateChanged();
 		}
 	}
 
-	public void msgOrderFulfillment(String choice, int amount, int orderedAmount, MarketAgent market) {
+	public void msgOrderFulfillment(String choice, int amount, int orderedAmount, Market market) {
 		synchronized(stockFulfillment){
-			//print("Got fullfillment for " + choice + "-- Amount: " + amount + " Ordered: " + orderedAmount);
+			print("Got fullfillment for " + choice + "-- Amount: " + amount + " Ordered: " + orderedAmount);
 			stockFulfillment.add(new Stock(choice, amount, orderedAmount, market));
 			stateChanged();
 		}
@@ -143,6 +148,11 @@ public class CookRole extends Role {
 			}
 		}
 
+		if (leaveRole){
+			((Worker) person).roleFinishedWork();
+			leaveRole = false;
+			return true;
+		}
 
 		return false;
 		//we have tried all our rules and found
@@ -249,21 +259,21 @@ public class CookRole extends Role {
 			}
 
 			if (myMark == null) {
-				//print("Out of markets to order from for " + choice);
+				print("Out of markets to order from for " + choice);
 				return;
 			}
 
 			int stockOnHand;
 			stockOnHand = foodMap.get(choice).amountOrdered + foodMap.get(choice).quantity;
 
-			//print("Current stock on hand for " + choice + ": " + stockOnHand);
+			print("Current stock on hand for " + choice + ": " + stockOnHand);
 
 			if (stockOnHand < foodMap.get(choice).threshold) {
 				int orderAmount;
 				orderAmount = foodMap.get(choice).capacity - stockOnHand;
 				foodMap.get(choice).amountOrdered = orderAmount;
 
-				//print("Requesting " + myMark.market.getName() + " for " + orderAmount + " " + choice + "(s)");
+				print("Requesting " + myMark.market.getName() + " for " + orderAmount + " " + choice + "(s)");
 				//myMark.market.msgOutofItems(choice, orderAmount);
 				//CHEF AND MARKET
 			}
@@ -322,9 +332,8 @@ public class CookRole extends Role {
 				
 				int newOrderAmount;
 				newOrderAmount = stockFulfillment.get(0).orderedAmount - stockFulfillment.get(0).quantity;
-				//print("Requesting " + myMark.market.getName() + " for " + newOrderAmount + " " + stockFulfillment.get(0).choice + "(s)");
-				//CHEF AND MARKET
-				//myMark.market.msgOutofItems(stockFulfillment.get(0).choice, newOrderAmount);
+				print("Requesting " + myMark.market.getName() + " for " + newOrderAmount + " " + stockFulfillment.get(0).choice + "(s)");
+				myMark.market.salesPersonRole.msgIWantProducts(restaurant, stockFulfillment.get(0).choice, newOrderAmount);
 			}
 			
 			stockFulfillment.remove(0);
@@ -351,7 +360,7 @@ public class CookRole extends Role {
 			return false;
 	}
 
-	public void addMarket(MarketAgent market) {
+	public void addMarket(Market market) {
 		markets.add(new myMarket(market));
 	}
 
@@ -363,8 +372,7 @@ public class CookRole extends Role {
 	//	print("Deleted all food inventory");
 	}
 
-	public void setRevolvingStand(RevolvingStand rs)
-	{
+	public void setRevolvingStand(RevolvingStand rs) {
 		theRevolvingStand = rs;
 	}
 	
@@ -395,9 +403,9 @@ public class CookRole extends Role {
 		String choice;
 		int quantity;
 		int orderedAmount;
-		MarketAgent market;
+		Market market;
 
-		Stock(String choice, int quantity, int orderedAmount, MarketAgent market) {
+		Stock(String choice, int quantity, int orderedAmount, Market market) {
 			this.choice = choice;
 			this.quantity = quantity;
 			this.market = market;
@@ -406,7 +414,7 @@ public class CookRole extends Role {
 	}
 
 	public class myMarket {
-		MarketAgent market;
+		Market market;
 		Map<String, Boolean> availableChoices = new HashMap<String, Boolean>(); {
 			availableChoices.put("Chicken", true);
 			availableChoices.put("Steak", true);
@@ -414,7 +422,7 @@ public class CookRole extends Role {
 			availableChoices.put("Salad", true);
 		}
 
-		myMarket(MarketAgent market) {
+		myMarket(Market market) {
 			this.market = market;
 		}
 	}

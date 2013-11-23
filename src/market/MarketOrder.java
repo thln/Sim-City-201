@@ -1,27 +1,28 @@
 package market;
 
-import restaurant.CookRole;
+import restaurant.Restaurant;
 
 public class MarketOrder {
 
-	public enum orderState {open, processing, itemsFound, gaveToCustomer};
+	public enum orderState {open, processing, itemsFound, itemsDelivered, gaveToCustomer};
 	MarketCustomerRole customer = null;
-	CookRole cookRole = null;
+	Restaurant restaurant = null;
 	String item;
-	int totalItems;
+	int itemAmountOrdered;
+	int itemAmountFulfilled;
 	double orderCost;
 	orderState state = orderState.open;
 
-	MarketOrder(MarketCustomerRole customer, String item, int itemsWanted) {
+	MarketOrder(MarketCustomerRole customer, String item, int itemAmountOrdered) {
 		this.customer = customer;
 		this.item = item;
-		totalItems = itemsWanted;
+		this.itemAmountOrdered = itemAmountOrdered;
 	}
 
-	MarketOrder(CookRole cookRole, String item, int itemsWanted) {
-		this.cookRole = cookRole;
+	MarketOrder(Restaurant restaurant, String item, int itemAmountOrdered) {
+		this.restaurant = restaurant;
 		this.item = item;
-		totalItems = itemsWanted;
+		this.itemAmountOrdered = itemAmountOrdered;
 	}
 
 }

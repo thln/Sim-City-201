@@ -8,6 +8,7 @@ import java.util.concurrent.Semaphore;
 
 import person.Person;
 import person.Role;
+import person.Worker;
 
 /**
  * Restaurant Waiter Role
@@ -235,6 +236,12 @@ public class WaiterRole extends Role {
 			e.printStackTrace();
 			stateChanged();
 			return false;
+		}
+		
+		if (leaveRole){
+			((Worker) person).roleFinishedWork();
+			leaveRole = false;
+			return true;
 		}
 		
 		return false;

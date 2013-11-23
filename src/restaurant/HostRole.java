@@ -1,15 +1,14 @@
 package restaurant;
 
-import agent.Agent;
-
 import java.util.*;
-import java.util.concurrent.Semaphore;
+//import java.util.concurrent.Semaphore;
 
 import person.Person;
 import person.Role;
+import person.Worker;
 
 /**
- * Restaurant Host Agent
+ * Restaurant Host Role
  */
 //We only have 2 types of agents in this prototype. A customer and an agent that
 //does all the rest. Rather than calling the other agent a waiter, we called him
@@ -25,7 +24,7 @@ public class HostRole extends Role {
 
 
 	public Collection<Table> tables;
-	protected String RoleName = "Host";
+	protected String roleName = "Host";
 	//note that tables is typed with Collection semantics.
 	//Later we will see how it is implemented
 
@@ -43,7 +42,16 @@ public class HostRole extends Role {
 		for (int ix = 1; ix <= NTABLES; ix++) {
 			tables.add(new Table(ix));//how you add to a collections
 		}
+	}
 
+	public HostRole(String roleName) {
+		super(roleName);
+
+		// make some tables
+		tables = new ArrayList<Table>(NTABLES);
+		for (int ix = 1; ix <= NTABLES; ix++) {
+			tables.add(new Table(ix));//how you add to a collections
+		}
 	}
 
 	public String getMaitreDName() {
@@ -162,6 +170,12 @@ public class HostRole extends Role {
 			}
 		}
 
+		if (leaveRole){
+			((Worker) person).roleFinishedWork();
+			leaveRole = false;
+			return true;
+		}
+		
 		return false;
 		//we have tried all our rules and found
 		//nothing to do. So return false to main loop of abstract agent

@@ -2,11 +2,13 @@ package bank;
 
 import person.Person;
 import person.Role;
+import person.Worker;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import application.Phonebook;
 import bank.BankTellerRole.Account;
 
 public class LoanOfficerRole extends Role {
@@ -14,8 +16,6 @@ public class LoanOfficerRole extends Role {
 
 	//Data
 
-	double vault = 10000;
-	double vaultMinimum = 1000;
 	String name;
 	protected String RoleName = "Loan Officer";
 	enum LoanState {requesting, open, closed}
@@ -39,8 +39,13 @@ public class LoanOfficerRole extends Role {
 		accounts = Collections.synchronizedList(new ArrayList<Account>());
 	}
 	
+	public LoanOfficerRole(String roleName) {
+		super(roleName);
+		loans = Collections.synchronizedList(new ArrayList<Loan>());
+		accounts = Collections.synchronizedList(new ArrayList<Account>());
+	}
+	
 	//Messages
-
 	void msgIsLoanApproved(Account account1, BankTellerRole t1) {
 		loans.add( new Loan(account1, t1));
 	}
@@ -55,6 +60,12 @@ public class LoanOfficerRole extends Role {
 				ProcessLoan(loan1);
 		}
 		
+		if (leaveRole){
+			((Worker) person).roleFinishedWork();
+			leaveRole = false;
+			return true;
+		}
+		
 		return false;
 	}
 
@@ -64,7 +75,7 @@ public class LoanOfficerRole extends Role {
 	void ProcessLoan (Loan loan1) {
 
 		double loanAmount = loan1.account1.processingMoney;
-		if (vault <=  vaultMinimum + loanAmount) {
+		if (Phonebook.getPhonebook().getBank().vault <=  Phonebook.getPhonebook().getBank().vaultMinimum + loanAmount) {
 			loan1.teller1.msgThisLoanDenied(loan1.account1, 0);
 		}
 

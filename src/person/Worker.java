@@ -1,143 +1,117 @@
 package person;
 
-import housing.MaintenanceWorker;
-
 import java.awt.Point;
-
 import person.Role.RoleState;
-import restaurant.AltWaiterRole;
-import restaurant.CashierRole;
-import restaurant.CookRole;
-import restaurant.HostRole;
-import restaurant.WaiterRole;
-import market.MarketCustomerRole;
-import market.MarketRunnerRole;
-import market.SalesPersonRole;
-import market.UPSmanRole;
 import application.Phonebook;
-import bank.Bank;
-import bank.BankCustomerRole;
-import bank.BankGuardRole;
-import bank.BankTellerRole;
-import bank.LoanOfficerRole;
+import application.TimeManager;
+import application.WatchTime;
 
 public class Worker extends Person {
 	//Data
-	Job myJob = null;
-	int marketTime;
-	int bankTime = 900;
-	int sleepTime = 2200;
-	int moneyMinThreshold = 20;
-	int moneyMaxThreshold = 200;
-	
-	public Worker (String name, int money, String jobTitle, int startT, int lunchT, int endT) {
+	protected Job myJob = null;
+	protected Role workerRole = null;
+
+	public Worker (String name, int money, String jobTitle, String jobPlace, int startT, int lunchT, int endT) {
 		super(name);
 		this.money = money;
-		myJob = new Job(jobTitle, startT, lunchT, endT, this);
-		marketTime = myJob.getEndTime();
+		myJob = new Job(jobTitle, jobPlace ,startT, lunchT, endT, this);
 	}
-	
-	public Worker (String name, String type, int money, String jobTitle, int startT, int lunchT, int endT) {
-		super(name, type);
-		this.money = money;
-		myJob = new Job(jobTitle, startT, lunchT, endT, this);
-		marketTime = myJob.getEndTime();
-	}
-	
-	class Job {
-		String title;
-		int lunchBreakLength = 1; 
-		int wage;
-		Point workLocation;     //point has xCoor,yCoor
-		private int startTime, lunchTime, endTime;
-		Worker myself;
 
-		Job(String title, int startT, int lunchT, int endT, Worker me) {
+	public class Job {
+		public String title;
+		public String jobPlace;
+		public int lunchBreakLength = 1; 
+		public int wage;
+		public Point workLocation;     //point has xCoor,yCoor
+		public WatchTime startTime, lunchTime, endTime;
+		public Worker myself;
+
+		Job(String title, String jobPlace, int startT, int lunchT, int endT, Worker me) {
 
 			myself = me;
-			startTime = startT;
-			lunchTime = lunchT;
-			endTime = endT;
+			startTime = new WatchTime(startT, 0);
+			lunchTime = new WatchTime(lunchT, 0);
+			endTime = new WatchTime(endT, 0);
 			this.title = title;
+			this.jobPlace = jobPlace;
 
-			if (title == "bankTeller") {
-				workerRole = new BankTellerRole(name, myself, title);
-				roles.add(workerRole);
-			}
-			if (title == "loanOfficer") {
-				workerRole = new LoanOfficerRole(name, myself, title);
-				Phonebook.bank.loanOfficerRole = (LoanOfficerRole) workerRole;
-				roles.add(workerRole);			
-			}
-			if (title == "bankGuard") {
-				workerRole = new BankGuardRole(name, myself, title);
-				Phonebook.bank.bankGuardRole = (BankGuardRole) workerRole;
-				roles.add(workerRole);			
-			}
-			if (title == "marketRunner") {
-				//	workerRole = new MarketRunnerRole(myself,title);
-				roles.add(workerRole);
-			}
-			if (title == "marketSales") {
-				workerRole = new SalesPersonRole(myself, name, title);
-				roles.add(workerRole);
-			}
-			if (title == "UPSman") {
-				workerRole = new UPSmanRole(myself, name, title);
-				roles.add(workerRole);
-			}
-			if (title == "maintenance") {
-				workerRole = new MaintenanceWorker(myself, name, title);
-				roles.add(workerRole);
-			}
-			if (title == "cashier") {
-				workerRole = new CashierRole(myself, name, title);
-				roles.add(workerRole);
-			}
-			if (title == "host") {
-				workerRole = new HostRole(myself, name, title);
-				roles.add(workerRole);
-			}
-			if (title == "cook") {
-				workerRole = new CookRole(myself, name, title);		//need to input name not title
-				roles.add(workerRole);
-			}
-			if (title == "waiter") {
-				workerRole = new WaiterRole(myself, name, title);
-				roles.add(workerRole);
-			}
-			if (title == "altWaiter") {
-				workerRole = new AltWaiterRole(myself, name, title);
-				roles.add(workerRole);
-			}
+			//			if (title == "bankTeller") {
+			//				workerRole = new BankTellerRole(name, myself, title);
+			//				roles.add(workerRole);
+			//			}
+			//			if (title == "loanOfficer") {
+			//				workerRole = new LoanOfficerRole(name, myself, title);
+			//				roles.add(workerRole);			
+			//			}
+			//			if (title == "bankGuard") {
+			//				workerRole = new BankGuardRole(name, myself, title);
+			//				roles.add(workerRole);			
+			//			}
+			//			if (title == "marketRunner") {
+			//				//	workerRole = new MarketRunnerRole(myself,title);
+			//				roles.add(workerRole);
+			//			}
+			//			if (title == "marketSales") {
+			//				workerRole = new SalesPersonRole(myself, name, title);
+			//				roles.add(workerRole);
+			//			}
+			//			if (title == "UPSman") {
+			//				workerRole = new UPSmanRole(myself, name, title);
+			//				roles.add(workerRole);
+			//			}
+			//			if (title == "maintenance") {
+			//				workerRole = new MaintenanceWorker(myself, name, title);
+			//				roles.add(workerRole);
+			//			}
+			//			if (title == "cashier") {
+			//				workerRole = new CashierRole(myself, name, title);
+			//				roles.add(workerRole);
+			//			}
+			//			if (title == "host") {
+			//				workerRole = new HostRole(myself, name, title);
+			//				roles.add(workerRole);
+			//			}
+			//			if (title == "cook") {
+			//				workerRole = new CookRole(myself, name, title);		//need to input name not title
+			//				roles.add(workerRole);
+			//			}
+			//			if (title == "waiter") {
+			//				workerRole = new WaiterRole(myself, name, title);
+			//				roles.add(workerRole);
+			//			}
+			//			if (title == "altWaiter") {
+			//				workerRole = new AltWaiterRole(myself, name, title);
+			//				roles.add(workerRole);
+			//			}
+
 		}
 
-		int getStartTime() {
+		WatchTime getStartTime() {
 			return endTime;
 		}
 
 		void setStartTime(int t) {
-			endTime = t;
+			startTime.setTime(t, 0);
 		}
 
-		int getLunchTime() {
-			return endTime;
+		WatchTime getLunchTime() {
+			return lunchTime;
 		}
 
 		void setLunchTime(int t) {
-			endTime = t;
+			lunchTime.setTime(t, 0);
 		}
 
-		int getEndTime() {
+		WatchTime getEndTime() {
 			return endTime;
 		}
 
 		void setEndTime(int t) {
-			endTime = t;
+			endTime.setTime(t, 0);
 		}
 
-		int getBankTime() {
-			return bankTime;
+		void setTitle(String title) {
+			this.title = title;
 		}
 	}
 
@@ -146,58 +120,183 @@ public class Worker extends Person {
 	void msgHereIsPayCheck (double amount) {
 		money += amount;
 	}
+	
+	public void roleFinishedWork(){ 		//from worker role
+		workerRole = null;
+		stateChanged();
+	}
 
-	//Actions
+	//Scheduler
+	public boolean pickAndExecuteAnAction() {
 
-	public void updateTime(int newTime) {
-		if ((newTime == myJob.getBankTime()) && (money >= moneyMaxThreshold) || (money <= moneyMinThreshold)) {
-
-			for (Role r: roles) {
-				if (r instanceof BankCustomerRole) {
-					r.setState(RoleState.waitingToExecute);
-
+		if (hunger == HungerLevel.full) {
+			startHungerTimer();
+			return true;
+		}
+	
+		//Decisions more urgent that role continuity (None for now)
+		
+		if (workerRole.getState() == RoleState.active) {
+			if (((TimeManager.getTimeManager().getTime().dayHour - myJob.getEndTime().hour) <= 0)) 
+				workerRole.msgLeaveRole(); 
+			workerRole.pickAndExecuteAnAction();
+		}
+		
+		synchronized (roles) {
+			if (!roles.isEmpty()) {				
+				for (Role r : roles) {
+					if (r.getState() == RoleState.active) {
+						return r.pickAndExecuteAnAction();
+					}
 				}
 			}
-			stateChanged();
 		}
+
+		//If no role is active
+
+		
+		//Job Related
+		if ((myJob.getStartTime().hour - TimeManager.getTimeManager().getTime().dayHour) <= 1) {
+			prepareForWork();
+			return true;
+		}
+
+		//Hunger Related
+		if (hunger == HungerLevel.hungry) {
+			//If you don't have food in the fridge
+			if (!hasFoodInFridge) {
+				if (money <= moneyMinThreshold) { 
+					//This if says go to the business if it is open and at least 1 hour before closing time
+					if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getBank().openTime.hour) &&
+							(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getBank().closeTime.hour)) {
+						prepareForBank();
+						return true;
+					}
+				}
+				else if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getRestaurant().openTime.hour) &&
+						(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getRestaurant().closeTime.hour)) {
+					prepareForRestaurant();
+					return true;
+				}
+			}
+			else //if you do have food in the fridge
+			{
+				eatAtHome(); //empty method for now...
+				return true;
+			}
+		}
+
 		if (newTime == myJob.startTime) {
 			workerRole.setState(RoleState.waitingToExecute);
 			//System.out.println("Starting Job " + workerRole.getRoleName());
 			print("Starting Job " + workerRole.getRoleName());
 			stateChanged();
+/*
+
+		//Market Related
+		if (!hasFoodInFridge || carStatus == CarState.wantsCar) {
+			if (money <= moneyMinThreshold && !hasFoodInFridge) {
+				if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getBank().openTime.hour) &&
+						(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getBank().closeTime.hour)) {
+					prepareForBank();
+					return true;
+				}
+			}
+			else {
+				if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getMarket().openTime.hour) &&
+						(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getMarket().closeTime.hour)) {
+					prepareForMarket();
+					return true;
+				}
+			}
+*/
 		}
-		if (newTime == myJob.lunchTime) {
-			//	workerRole.msgLunchTime();
-			stateChanged();
-		}
 
-		if (newTime == myJob.lunchTime + myJob.lunchTime) {
-			//	workerRole.msgBackToWork();
-			stateChanged();
-		}
-
-		if (newTime == marketTime && !hasFoodInFridge) {
-			//	for (MarketCustomer role1: roles)
-			//role1.setState(roleState.waitingToExecute);
-			stateChanged();
-		}
-
-		if (newTime == myJob.endTime) {
-			//	workerRole.msgShiftOver();
-			//	roles.maintenance.msgShiftOver;
-			stateChanged();
-		} 
-
-		if (newTime == sleepTime) {
-			//GoToSleep();
-			stateChanged();
-		}  
-
-		newTime = -5;
-	}
-	
-	public String getType(){
-		return type;
+		goToSleep();
+		return false;
 	}
 
+
+	//Actions
+	private void prepareForWork() {
+
+		if (myJob.jobPlace == "bank") {
+			workerRole = Phonebook.getPhonebook().getBank().arrivedAtWork(this, myJob.title);
+			workerRole.setRoleActive();
+			return;
+		}
+
+		if (myJob.jobPlace == "market") {
+
+			workerRole = Phonebook.getPhonebook().getMarket().arrivedAtWork(this, myJob.title);
+			roles.add(workerRole);
+			workerRole.setRoleActive();
+			return;
+		}
+
+		if (myJob.jobPlace == "restaurant") {
+			workerRole = Phonebook.getPhonebook().getRestaurant().arrivedAtWork(this, myJob.title);
+			roles.add(workerRole);
+			workerRole.setRoleActive();
+			return;
+		}
+		//need to put in maintenance role
+		
+		return;
+	}
+
+
+
+	//			else if (title == "loanOfficer") {
+	//				workerRole = new LoanOfficerRole(name, myself, title);
+	//				roles.add(workerRole);			
+	//			}
+	//			if (title == "bankGuard") {
+	//				workerRole = new BankGuardRole(name, myself, title);
+	//				roles.add(workerRole);			
+	//			}
+	//			if (title == "marketRunner") {
+	//				//	workerRole = new MarketRunnerRole(myself,title);
+	//				roles.add(workerRole);
+	//			}
+	//			if (title == "marketSales") {
+	//				workerRole = new SalesPersonRole(myself, name, title);
+	//				roles.add(workerRole);
+	//			}
+	//			if (title == "UPSman") {
+	//				workerRole = new UPSmanRole(myself, name, title);
+	//				roles.add(workerRole);
+	//			}
+	//			if (title == "maintenance") {
+	//				workerRole = new MaintenanceWorker(myself, name, title);
+	//				roles.add(workerRole);
+	//			}
+	//			if (title == "cashier") {
+	//				workerRole = new CashierRole(myself, name, title);
+	//				roles.add(workerRole);
+	//			}
+	//			if (title == "host") {
+	//				workerRole = new HostRole(myself, name, title);
+	//				roles.add(workerRole);
+	//			}
+	//			if (title == "cook") {
+	//				workerRole = new CookRole(myself, name, title);		//need to input name not title
+	//				roles.add(workerRole);
+	//			}
+	//			if (title == "waiter") {
+	//				workerRole = new WaiterRole(myself, name, title);
+	//				roles.add(workerRole);
+	//			}
+	//			if (title == "altWaiter") {
+	//				workerRole = new AltWaiterRole(myself, name, title);
+	//				roles.add(workerRole);
+	//			}
+
+	public void setWorkerRole(Role workerRole) {
+		this.workerRole = workerRole;
+	}
+
+	public Role getWorkerRole() {
+		return workerRole;
+	}
 }

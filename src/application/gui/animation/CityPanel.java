@@ -6,8 +6,11 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.util.*;
+import java.util.List;
 
 import javax.imageio.*;
+
+import application.gui.animation.agentGui.Gui;
 
 import java.awt.image.BufferedImage;
 
@@ -15,6 +18,8 @@ public class CityPanel extends JPanel implements ActionListener{
 	
     private final int WINDOWX = 570;
     private final int WINDOWY = 360;
+    
+    private List<Gui> guis = new ArrayList<Gui>();
     
     //list of images representing our different buildings
     BufferedImage carIcon = null;
@@ -47,7 +52,19 @@ public class CityPanel extends JPanel implements ActionListener{
         //Here is the table
         //g2.setColor(Color.ORANGE);
         
+        for(Gui gui : guis) {
+            if (gui.isPresent()) {
+                gui.draw(g2);
+            }
+        }
+        
     }
+    
+    public void addGui(Gui gui) {
+        guis.add(gui);
+        
+    }
+    
     public String toString() {
     	return "City JPanel";
     }

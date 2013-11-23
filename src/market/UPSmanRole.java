@@ -4,25 +4,35 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import market.interfaces.UPSman;
 import person.Person;
 import person.Role;
+import person.Worker;
 
-public class UPSmanRole extends Role {
+public class UPSmanRole extends Role implements UPSman {
 
 	//Data
 	private List<MarketOrder> orders = Collections.synchronizedList(new ArrayList<MarketOrder>());
-	protected String RoleName = "UPS man";
+	protected String roleName = "UPS man";
 	String name;
-	
-	public UPSmanRole (Person p, String pName, String rName) {
+	Market market;
+
+	public UPSmanRole (Person p, String pName, String rName, Market market) {
 		super(p, pName, rName);
+		this.market = market;
 	}
+
+	public UPSmanRole(String roleName, Market market) {
+		super(roleName);
+		this.market = market;
+	}
+
 	//Messages
 	public void msgDeliverOrder(MarketOrder o) {
 		orders.add(o);
 		stateChanged();
 	}
-	
+
 	//Scheduler
 	protected boolean pickAndExecuteAnAction() {
 		if (!orders.isEmpty()) {
@@ -31,12 +41,20 @@ public class UPSmanRole extends Role {
 				return true;
 			}
 		}
+		
+		if (leaveRole){
+			((Worker) person).roleFinishedWork();
+			leaveRole = false;
+			return true;
+		}
+		
 		return false;
 	}
-	
+
 	//Actions
 	public void deliverOrder(MarketOrder o) {
-		//o.cook.HereIsOrder(o.item, o.totalItems);
+		o.restaurant.cookRole.msgOrderFulfillment(o.item, o.itemAmountFulfilled, o.itemAmountOrdered, market);
+		market.salesPersonRole.msgOrderDelivered(o);
 		orders.remove(o);
 	}
 

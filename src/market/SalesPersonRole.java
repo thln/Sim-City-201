@@ -3,59 +3,53 @@ package market;
 import java.util.*;
 
 import market.MarketOrder.orderState;
+import market.interfaces.SalesPerson;
 import person.Person;
 import person.Role;
-import restaurant.CookRole;
+import person.Worker;
+import restaurant.Restaurant;
+import testing.EventLog;
 
-public class SalesPersonRole extends Role {
+public class SalesPersonRole extends Role implements SalesPerson {
 	
-	protected String RoleName = "Sales Person";
+	protected String roleName = "Sales Person";
 	String name;
+	Market market;
 
-	public SalesPersonRole(Person person, String pName, String rName) {
-		super(person, pName, rName);
-	}
-
+	public EventLog log = new EventLog();
+	
 	//Data
-
-	//Correspondents
-	//MarketRunner marketRunner;
-
 	private List<MarketOrder> orders = Collections.synchronizedList(new ArrayList<MarketOrder>());
-	public double money;
 
-	public HashMap<String, Item> inventoryPrices = new HashMap<String, Item>(); {
-		//For people
-		inventoryPrices.put("Car", new Item("Car", 1000));
-		inventoryPrices.put("Pasta", new Item("Pasta", 1.99));
-		inventoryPrices.put("Ice Cream", new Item("Ice Cream", 5.99));
-		inventoryPrices.put("Chips", new Item("Chips", 2.99));
-		inventoryPrices.put("Milk", new Item("Milk", 2.50));
-		inventoryPrices.put("Eggs", new Item("Eggs", 1.50));
-		inventoryPrices.put("Lobster", new Item("Lobster", 12.99));
-		inventoryPrices.put("Cheese", new Item("Cheese", 4.99));
-
-		//For restaurants
-		inventoryPrices.put("Chicken", new Item("Chicken", 10.99));
-		inventoryPrices.put("Steak", new Item("Steak", 15.99));
-		inventoryPrices.put("Pizza", new Item("Pizza", 8.99));
-		inventoryPrices.put("Salad", new Item("Salad", 5.99));
+	//Constructors
+	public SalesPersonRole(Person person, String pName, String rName, Market market) {
+		super(person, pName, rName);
+		this.market = market;
+	}
+	
+	public SalesPersonRole(String roleName, Market market) {
+		super(roleName);
+		this.market = market;
 	}
 
 
 
 	//Messages
+
+	@Override
 	public void msgIWantProducts(MarketCustomerRole customer, String item, int numWanted) {
 		orders.add(new MarketOrder(customer, item, numWanted));
 		stateChanged();
 	}
 
-	public void msgIWantProducts(CookRole cookRole, String item, int numWanted, double payment) {
-		orders.add(new MarketOrder(cookRole, item, numWanted));
-		money += payment;
+
+	@Override
+	public void msgIWantProducts(Restaurant restaurant, String item, int numWanted) {
+		orders.add(new MarketOrder(restaurant, item, numWanted));
 		stateChanged();
 	}
 	
+	@Override
 	public void msgOrderFulfilled(MarketOrder o) {
 		for (MarketOrder MO : orders) {
 			if (MO.equals(o)) {
@@ -65,11 +59,39 @@ public class SalesPersonRole extends Role {
 			}
 		}
 	}
+	
 
+	@Override
+	public void msgOrderDelivered(MarketOrder o) {
+		for (MarketOrder MO : orders) {
+			if (MO.equals(o)) {
+				MO.state = orderState.itemsDelivered;
+				stateChanged();
+				return;
+			}
+		}
+	}
+
+
+	@Override
 	public void msgPayment(MarketCustomerRole customer, double payment) {
-		money += payment;
+		market.money += payment;
 		for (MarketOrder o : orders) {
 			if (o.customer.equals(customer)) {
+				orders.remove(o);
+				return;
+			}
+		}
+	}
+	
+	/* (non-Javadoc)
+	 * @see market.SalesPerson#msgPayment(restaurant.Restaurant, double)
+	 */
+	@Override
+	public void msgPayment(Restaurant restaurant, double payment) {
+		market.money += payment;
+		for (MarketOrder o : orders) {
+			if (o.customer.equals(restaurant)) {
 				orders.remove(o);
 				return;
 			}
@@ -88,33 +110,48 @@ public class SalesPersonRole extends Role {
 					giveCustomerItems(o);
 					return true;
 				}
+				if (o.state == orderState.itemsDelivered) {
+					askForPayment(o);
+					return true;
+				}
 			}
 		}
+		
+		if (leaveRole){
+			((Worker) person).roleFinishedWork();
+			leaveRole = false;
+			return true;
+		}
+		
 		return false;
 	}
 
 	//Actions
-	private void findItems(MarketOrder o) {
+	public void findItems(MarketOrder o) {
 		o.state = orderState.processing;
-		//marketRunner.msgHeresAnOrder(o);
-		stateChanged();
-	}
-
-	private void giveCustomerItems(MarketOrder o) {
-		o.state = orderState.gaveToCustomer;
-		o.orderCost = inventoryPrices.get(o.item).price;
-		//o.customer.msgHereAreYourThings(o.item, o.orderCost);		KRISTI: THIS LINE IS GIVING AN ERROR: PLZ FIX
-		stateChanged();
-	}
-
-	//Item Class
-	public class Item {
-		String itemName;
-		double  price;
-
-		Item(String choice, double price) {
-			itemName = choice;
-			this.price = price;
+		
+		if (market.inventory.get(o.item).amount == 0) {
+			o.restaurant.cookRole.msgCantFulfill(o.item, 0, o.itemAmountOrdered, market);
+			orders.remove(o);
+			stateChanged();
+			return;
 		}
+		
+		market.marketRunnerRole.msgHeresAnOrder(o);
+		stateChanged();
+	}
+
+	public void giveCustomerItems(MarketOrder o) {
+		o.state = orderState.gaveToCustomer;
+		o.orderCost = market.inventory.get(o.item).price  * o.itemAmountFulfilled;
+		o.customer.msgHereAreYourThings(o.item, o.itemAmountFulfilled, o.orderCost);
+		stateChanged();
+	}
+
+	public void askForPayment(MarketOrder o) {
+		o.state = orderState.gaveToCustomer;
+		o.orderCost = market.inventory.get(o.item).price * o.itemAmountFulfilled;
+		o.restaurant.cashierRole.msgPleasePayForItems(o.item, o.itemAmountFulfilled, o.orderCost, this);
+		stateChanged();
 	}
 }
