@@ -2,21 +2,26 @@ package application.gui;
 
 import javax.swing.*;
 
-import application.Application;
 //import bank.Bank;
 //import bank.BankGuardRole;
 //import bank.LoanOfficerRole;
 import application.*;
 import bank.*;
 import person.*;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import java.util.List;
+
 import application.*;
 import application.gui.*;
 import application.gui.animation.*;
 import application.gui.appView.*;
+import application.gui.trace.AlertLevel;
+import application.gui.trace.AlertTag;
+import application.gui.trace.TracePanel;
+//import application.gui.trace.DemoLauncher.ControlPanel;
 
 public class ApplicationGui extends JFrame {
 	
@@ -24,6 +29,9 @@ public class ApplicationGui extends JFrame {
 	ApplicationPanel appPanel; 
 	AnimationPanel animPanel = new AnimationPanel();
 
+  //  ControlPanel controlPanel;
+    //TracePanel tracePanel;
+	
 	final static int WINDOWX = 1200;
 	final static int WINDOWY = 800;
     final static int APPWIDTH = WINDOWX*(4/10); //Application View Panel Width 400
@@ -35,7 +43,8 @@ public class ApplicationGui extends JFrame {
 		setBounds(50,0, WINDOWX, WINDOWY);
 		//appPanel.getControlPanel().setApplication(app);
 		setLayout(new GridLayout(1,2)); //GridLayout with 2 columns and 1 row
-		setBounds(50, 50, WINDOWX, WINDOWY);    	
+		setBounds(50, 50, WINDOWX, WINDOWY);  
+		
     	//here's the main application
 		//MainView 
 		appPanel.setVisible(true);
@@ -69,7 +78,205 @@ public class ApplicationGui extends JFrame {
 		loanOffice.updateTime(8);
 		bankCust.updateTime(8);
 		*/
-      //  simcity201 = new Application();
+        //simcity201 = new Application();
     }
 	
+	
+	//CONTROL PANEL CLASS
+    private class ControlPanel extends JPanel 
+    {
+            TracePanel tp;        //Hack so I can easily call showAlertsWithLevel for this demo.
+            
+            JButton messagesButton;
+            JButton errorButton;
+            JButton restaurantMessagesButton;
+            JButton bankMessagesButton;
+            JButton housingMessagesButton;
+            JButton marketMessagesButton;
+            JButton generalCityMessagesButton;
+            boolean showMessageBool = true;
+            boolean showErrorBool = true;
+            boolean showRestaurantMsgBool = true;
+            boolean showBankMsgBool = true;
+            boolean showHousingMsgBool = true;
+            boolean showMarketMsgBool = true;
+            boolean showGeneralCityMsgBool = true;
+            
+            public ControlPanel(final TracePanel tracePanel) 
+            {
+                    this.tp = tracePanel;
+                    messagesButton = new JButton("Hide Level: MESSAGE");
+                    errorButton = new JButton("Hide Level : ERROR");
+                    restaurantMessagesButton = new JButton("Hide Tag: RESTAURANT");
+                    bankMessagesButton = new JButton("Hide Tag: BANK");
+                    housingMessagesButton = new JButton("Hide Tag: HOUSING");
+                    marketMessagesButton = new JButton("Hide Tag: MARKET");
+                    generalCityMessagesButton = new JButton("Hide Tag: GENERAL CITY");
+
+                   messagesButton.addActionListener(new ActionListener() 
+                   {
+                        @Override
+                        public void actionPerformed(ActionEvent e) 
+                        {
+                                //============================ TUTORIAL ==========================================
+                                //This is how you make messages with a certain Level (normal MESSAGE here) show up in the trace panel.
+                               if(!showMessageBool)
+                               {
+                            	   showMessageBool = true;
+                            	   tracePanel.showAlertsWithLevel(AlertLevel.MESSAGE);
+                            	   messagesButton.setText("Hide Level: MESSAGE");
+                               }
+                               else if (showMessageBool)
+                               {
+                                   showMessageBool = false;
+                            	   tracePanel.hideAlertsWithLevel(AlertLevel.MESSAGE);
+                            	   messagesButton.setText("Show Level: MESSAGE");
+                               }
+                                //================================================================================
+                        }
+                   });
+                   errorButton.addActionListener(new ActionListener() 
+                   {
+                       @Override
+                       public void actionPerformed(ActionEvent e) 
+                       {
+                               //============================ TUTORIAL ==========================================
+                               //This is how you make messages with a certain Level (normal MESSAGE here) show up in the trace panel.
+                              if(!showErrorBool)
+                              {
+                           	   showErrorBool = true;
+                           	   tracePanel.showAlertsWithLevel(AlertLevel.ERROR);
+                           	   errorButton.setText("Hide Level: ERROR");
+                              }
+                              else if (showErrorBool)
+                              {
+                                  showErrorBool = false;
+                           	   tracePanel.hideAlertsWithLevel(AlertLevel.ERROR);
+                           	   errorButton.setText("Show Level: ERROR");
+                              }
+                               //================================================================================
+                       }
+                  });
+                   restaurantMessagesButton.addActionListener(new ActionListener() 
+                   {
+                       @Override
+                       public void actionPerformed(ActionEvent e) 
+                       {
+                               //============================ TUTORIAL ==========================================
+                               //This is how you make messages with a certain Level (normal MESSAGE here) show up in the trace panel.
+                              if(!showRestaurantMsgBool)
+                              {
+                           	   showRestaurantMsgBool = true;
+                               tracePanel.showAlertsWithTag(AlertTag.RESTAURANT);
+                           	   restaurantMessagesButton.setText("Hide Tag : RESTAURANT");
+                              }
+                              else if (showRestaurantMsgBool)
+                              {
+                                  showRestaurantMsgBool = false;
+                                  tracePanel.hideAlertsWithTag(AlertTag.RESTAURANT);
+                           	   restaurantMessagesButton.setText("Show Tag : RESTAURANT");
+                              }
+                               //================================================================================
+                       }
+                  });
+                   bankMessagesButton.addActionListener(new ActionListener() 
+                   {
+                       @Override
+                       public void actionPerformed(ActionEvent e) 
+                       {
+                           //============================ TUTORIAL ==========================================
+                           //This is how you make messages with a certain Level (normal MESSAGE here) show up in the trace panel.
+                          if(!showBankMsgBool)
+                          {
+                       	   showBankMsgBool = true;
+                           tracePanel.showAlertsWithTag(AlertTag.BANK);
+                       	   bankMessagesButton.setText("Hide Tag : BANK");
+                          }
+                          else if (showBankMsgBool)
+                          {
+                              showBankMsgBool = false;
+                              tracePanel.hideAlertsWithTag(AlertTag.BANK);
+                       	   bankMessagesButton.setText("Show Tag : BANK");
+                          }
+                           //================================================================================
+                   }
+                  });
+                   marketMessagesButton.addActionListener(new ActionListener() 
+                   {
+                       @Override
+                       public void actionPerformed(ActionEvent e) 
+                       {
+                           //============================ TUTORIAL ==========================================
+                           //This is how you make messages with a certain Level (normal MESSAGE here) show up in the trace panel.
+                          if(!showMarketMsgBool)
+                          {
+                       	   showMarketMsgBool = true;
+                           tracePanel.showAlertsWithTag(AlertTag.MARKET);
+                       	   marketMessagesButton.setText("Hide Tag : MARKET");
+                          }
+                          else if (showMarketMsgBool)
+                          {
+                              showMarketMsgBool = false;
+                              tracePanel.hideAlertsWithTag(AlertTag.MARKET);
+                       	   marketMessagesButton.setText("Show Tag : MARKET");
+                          }
+                           //================================================================================
+                   }
+                  });
+                   housingMessagesButton.addActionListener(new ActionListener() 
+                   {
+                       @Override
+                       public void actionPerformed(ActionEvent e) 
+                       {
+                           //============================ TUTORIAL ==========================================
+                           //This is how you make messages with a certain Level (normal MESSAGE here) show up in the trace panel.
+                          if(!showHousingMsgBool)
+                          {
+                       	   showHousingMsgBool = true;
+                           tracePanel.showAlertsWithTag(AlertTag.HOUSING);
+                       	   housingMessagesButton.setText("Hide Tag : HOUSING");
+                          }
+                          else if (showHousingMsgBool)
+                          {
+                              showHousingMsgBool = false;
+                              tracePanel.hideAlertsWithTag(AlertTag.HOUSING);
+                       	   housingMessagesButton.setText("Show Tag : HOUSING");
+                          }
+                           //================================================================================
+                   }
+                  });
+                   generalCityMessagesButton.addActionListener(new ActionListener() 
+                   {
+                       @Override
+                       public void actionPerformed(ActionEvent e) 
+                       {
+                           //============================ TUTORIAL ==========================================
+                           //This is how you make messages with a certain Level (normal MESSAGE here) show up in the trace panel.
+                          if(!showGeneralCityMsgBool)
+                          {
+                       	   showGeneralCityMsgBool = true;
+                           tracePanel.showAlertsWithTag(AlertTag.GENERAL_CITY);
+                       	   generalCityMessagesButton.setText("Hide Tag : GENERAL CITY");
+                          }
+                          else if (showGeneralCityMsgBool)
+                          {
+                              showGeneralCityMsgBool = false;
+                              tracePanel.hideAlertsWithTag(AlertTag.GENERAL_CITY);
+                       	   generalCityMessagesButton.setText("Show Tag : GENERAL CITY");
+                          }
+                           //================================================================================
+                   }
+                  });
+                    
+                    this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+                    this.add(messagesButton);
+                    this.add(errorButton);
+                    this.add(restaurantMessagesButton);
+                    this.add(bankMessagesButton);
+                    this.add(housingMessagesButton);
+                    this.add(marketMessagesButton);
+                    this.add(generalCityMessagesButton);
+                    this.setMinimumSize(new Dimension(50, 600));
+            }
+    }
 }

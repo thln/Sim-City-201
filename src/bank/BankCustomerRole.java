@@ -20,6 +20,7 @@ public class BankCustomerRole extends Role implements BankCustomer{
 	double loan; 	
 	BankCustomerDesire desire;
 	CustomerState state;
+	protected String RoleName = "Bank Customer";
 
 	public BankCustomerRole (Person p1, String pName, String rName) {
 		super(p1, pName, rName);

@@ -155,14 +155,16 @@ public class Application extends JPanel {
 		v.startThread();
 		w.startThread();
 
-		//b.updateTime(800);
-		//c.updateTime(800);
-		//a.updateTime(800);
-		m.updateTime(800);
-		
+
+		b.updateTime(800);
+		c.updateTime(800);
+		a.updateTime(800);
+		m.updateTime(900);
 	}
-	 */	
-	public Application() {
+*/	
+	public Application() 
+	{
+		//sampleProgram();
 
 	}
 
