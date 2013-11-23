@@ -35,7 +35,6 @@ public class AddPanel implements ActionListener {
 		c.gridx = 0;
 		c.gridy = 1;
 		mainPanel.add(firstName);
-		
 		c.gridx = 0;
 		c.gridy	= 2;
 		addButton.addActionListener(this);
@@ -56,7 +55,7 @@ public class AddPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == addButton){
-				String name = firstName.getText();
+				String name = firstName.getText() +" ";
 				String type = (String)typeBox.getSelectedItem();
 				app.addPerson(name, 500, type, "location", null, 0, 0, 0);
 				app.printLastPop();
