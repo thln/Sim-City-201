@@ -75,7 +75,7 @@ public class MarketCustomerGui implements Gui {
     	yDestination = 150;
     }
     
-    public void DoExitMarket() {
+    public void DoExit() {
     	xDestination = 300;
     	yDestination = 360;
     }
