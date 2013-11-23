@@ -36,12 +36,7 @@ public class AnimationPanel extends JPanel implements MouseListener {
     	cityPanel.setVisible(true);
     	add(cityPanel);
     	
-    	cityPanel.addBuilding("bank", 1);
-    	cityPanel.addBuilding("market", 1);
-    	cityPanel.addBuilding("market", 2);
-    	for(int j=0; j<5; j++) {
-    		cityPanel.addBuilding("restaurant", j+1);
-    	}
+    	sampleLayout();
     	
     	buildingView.setBounds(10, 400, WINDOWX, WINDOWY);
     	buildingView.setBackground(Color.CYAN);
@@ -64,6 +59,17 @@ public class AnimationPanel extends JPanel implements MouseListener {
 	
 	public void displayBuildingPanel( BuildingPanel bp ) {
         cardLayout.show(buildingView, bp.getName() );
+	}
+	
+	public void sampleLayout(){
+		cityPanel.addBuilding("bank", 1);
+		
+    	cityPanel.addBuilding("market", 1);
+    	cityPanel.addBuilding("market", 2);
+    	
+    	for(int j=0; j<5; j++) {
+    		cityPanel.addBuilding("restaurant", j+1);
+    	}
 	}
 	
 	@Override

@@ -21,6 +21,8 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener{
     
     private List<Gui> guis = new ArrayList<Gui>();
 	public List<Building> buildings = new ArrayList<Building>();
+	Dimension Msize = new Dimension(75, 75);
+	Dimension Bsize = new Dimension(75, 75);
     
     //list of images representing our different buildings
     BufferedImage carIcon = null;
@@ -41,7 +43,7 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener{
         setVisible(true);
         setLayout(null);
         try {
-            background = ImageIO.read(new File("docs/asphalt.jpg"));
+            background = ImageIO.read(new File("docs/concrete.jpg"));
         	} catch (IOException e) {
         	}
 	}
@@ -71,13 +73,23 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener{
     	Building building = new Building();
     	if(name.toLowerCase().contains("bank")) {
     		building.setIcon(bank);
-    		Dimension banksize = building.getPreferredSize();
-    		building.setBounds(WINDOWX - banksize.width, WINDOWY/2 - banksize.height/2, banksize.width, banksize.height);
+    		Bsize = building.getPreferredSize();
+    		building.setBounds(WINDOWX - Bsize.width, WINDOWY/2 - Bsize.height/2, Bsize.width, Bsize.height);
+    	}
+    	else if(name.toLowerCase().contains("market")) {
+    		building.setIcon(market);
+    		Msize = building.getPreferredSize();
+    		int yLoc;
+    		if(i == 1)
+    			yLoc = 0;
+    		else 
+    			yLoc = WINDOWY - Msize.height;
+    		building.setBounds(WINDOWX/2-Msize.width/2, yLoc, Msize.width, Msize.height);
     	}
     	else if(name.toLowerCase().contains("restaurant")) {
     		building.setIcon(restaurant);
     		Dimension size = building.getPreferredSize();
-    		building.setBounds(size.width*i + 150, 100, size.width, size.height);
+    		building.setBounds(WINDOWX/2+Msize.width/2+size.width*(i-1), WINDOWY - size.height, size.width, size.height);
     	}
     	else if(name.toLowerCase().contains("house")) {
     		building.setIcon(house);
@@ -86,11 +98,6 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener{
     			building.setBounds(size.width*(i), 0, size.width, size.height);
     		else
     			building.setBounds(size.width*(i-10), WINDOWY - size.height, size.width, size.height);
-    	}
-    	else if(name.toLowerCase().contains("market")) {
-    		building.setIcon(market);
-    		Dimension size = building.getPreferredSize();
-    		building.setBounds(size.width*i + 150, 200, size.width, size.height);
     	}
     	building.setName(name + " " + i);
     	
