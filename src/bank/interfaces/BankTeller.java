@@ -1,5 +1,7 @@
 package bank.interfaces;
 
+import bank.BankTellerRole.Account;
+
 public interface BankTeller {
 
 	String getName();
@@ -13,5 +15,9 @@ public interface BankTeller {
 	void msgPayingOffLoan(double loan, int accountNum);
 
 	void msgWantNewAccount(BankCustomer bankCustomer);
+
+	void msgThisLoanDenied(Account account1, double i);
+
+	void msgThisLoanApproved(Account account1);
 
 }

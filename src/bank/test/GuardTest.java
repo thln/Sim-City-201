@@ -1,7 +1,6 @@
 package bank.test;
 
 import person.Worker;
-import bank.Bank;
 import bank.BankGuardRole;
 import bank.mock.BankCustomerMock;
 import bank.mock.BankTellerMock;
@@ -35,7 +34,7 @@ public class GuardTest extends TestCase
 
 		//Step 1: Teller comes to work, add teller to the bank guard's list
 		guard.msgTellerCameToWork (teller); 
-		
+
 		//Step 1 post-conditions
 		assertEquals("Guard should have 1 teller in list. It doesn't.", guard.getTellers().size(), 1);
 
@@ -54,7 +53,7 @@ public class GuardTest extends TestCase
 		assertEquals("Guard should have 1 customer in list. It doesn't.", guard.getCustomers().size(), 1);
 
 		//Step 3: Scheduler runs...should execute method "assignToTeller"
-		assertTrue("Guard's scheduler should have returned true (must check for other customers)  but didn't.", 
+		assertFalse("Guard's scheduler should have returned false, but didn't.", 
 				guard.pickAndExecuteAnAction());
 
 		//Step 3 post-conditions
@@ -67,7 +66,7 @@ public class GuardTest extends TestCase
 
 		assertEquals("Guard should have 0 customers in list. It doesn't.", guard.getCustomers().size(), 0);
 
-		assertFalse("Guard's scheduler should have returned false, but didn't.", 
+		assertFalse("Guard's scheduler should have returned false (no teller available), but didn't.", 
 				guard.pickAndExecuteAnAction());
 
 		//Step 4: customer leaves bank
@@ -126,7 +125,8 @@ public class GuardTest extends TestCase
 		assertEquals("Guard should have 1 customer in list. It doesn't.", guard.getCustomers().size(), 1);
 
 		//Step 3: Scheduler runs...should execute method "assignToTeller"
-		guard.pickAndExecuteAnAction();
+		assertFalse("Guard's scheduler should have returned false, but didn't.", 
+				guard.pickAndExecuteAnAction());
 
 		//Step 3 post-conditions
 		assertTrue("MockCustomer should have logged an event for being assigned to teller, but his last event logged reads instead: " 
@@ -167,7 +167,7 @@ public class GuardTest extends TestCase
 		assertTrue("1st MockTeller should have the state 'available' ", 
 				guard.getTellers().get(0).getState() == BankGuardRole.TellerState.available);
 
-		assertTrue("Guard's scheduler should have returned true (must check everytime a teller becomes available)  but didn't.", 
+		assertFalse("Guard's scheduler should have returned false, but didn't.", 
 				guard.pickAndExecuteAnAction());
 
 		//step 7: assigning customer 2 to the teller
@@ -192,29 +192,35 @@ public class GuardTest extends TestCase
 		assertEquals("Guard should have 0 customers in list. It doesn't.", guard.getCustomers().size(), 0);
 		assertEquals("Guard should have 0 tellers in list. It doesn't.", guard.getTellers().size(), 0); 
 
-		//Step 1: Teller comes to work, add teller to the bank guard's list
-		guard.msgTellerCameToWork (teller); 
 
-		//Step 1a
-
-		assertFalse("Guard's scheduler should have returned false (no new customers)  but didn't.", 
-				guard.pickAndExecuteAnAction());
+		//Step 1: Customer arrives at bank
+		guard.msgArrivedAtBank(customer);
 
 		//Step 1 post-conditions
+		assertEquals("Guard should have 1 customer in list. It doesn't.", guard.getCustomers().size(), 1);
+
+		//Step 2: Scheduler runs...should execute method "assignToTeller"
+		assertFalse("Guard's scheduler should have returned false (no teller available), but didn't.", 
+				guard.pickAndExecuteAnAction());
+
+		//Step 2 post-conditions
+		assertTrue("MockCustomer should have logged an event for no teller available, but his last event logged reads instead: " 
+				+ customer.log.getLastLoggedEvent().toString(), customer.log.containsString("No teller available, must wait"));
+
+		//Step 3: Teller arrives at work
+		guard.msgTellerCameToWork (teller); 
+		
+		//Step 3 post-conditions
+		
 		assertEquals("Guard should have 1 teller in list. It doesn't.", guard.getTellers().size(), 1); 	
 		assertTrue("1st MockTeller should have the state 'available' ", 
 				guard.getTellers().get(0).getState() == BankGuardRole.TellerState.available);
-
-		//Step 2: Customer arrives at bank
-		guard.msgArrivedAtBank(customer);
-
-		//Step 2 post-conditions
-		assertEquals("Guard should have 1 customer in list. It doesn't.", guard.getCustomers().size(), 1);
-
-		//Step 3: Scheduler runs...should execute method "assignToTeller"
-		guard.pickAndExecuteAnAction();
-
-		//Step 3 post-conditions
+		
+		//Step 4: run scheduler and execute method "assignToTeller"
+		assertFalse("Guard's scheduler should have returned false (no new customers)  but didn't.", 
+				guard.pickAndExecuteAnAction());
+		
+		//Step 4 post-conditions
 		assertTrue("MockCustomer should have logged an event for being assigned to teller, but his last event logged reads instead: " 
 				+ customer.log.getLastLoggedEvent().toString(), 
 				customer.log.containsString("Assigned to bank teller " + teller.getName()));
@@ -222,16 +228,74 @@ public class GuardTest extends TestCase
 		assertTrue("MockTeller shoudl have the state 'busy'",
 				guard.getTellers().get(0).getState() == BankGuardRole.TellerState.busy);
 
-		assertEquals("Guard should have 0 customers in list. It doesn't.", guard.getCustomers().size(), 0);
-
-		assertFalse("Guard's scheduler should have returned false, but didn't.", 
-				guard.pickAndExecuteAnAction());
-
-		//Step 4: customer leaves bank
+	
+		//Step 5: customer leaves bank
 
 		guard.msgCustomerLeavingBank(teller) ;
 
+		//Step 5 post-conditions
+
+		assertTrue("1st MockTeller should have the state 'available' ", 
+				guard.getTellers().get(0).getState() == BankGuardRole.TellerState.available);
+
+		assertFalse("Guard's scheduler should have returned false (no new customers)  but didn't.", 
+				guard.pickAndExecuteAnAction());
+	}
+	
+	//TODO THIS METHOD
+	public void testFourTwoCustomersArriveBeforeWorkingTeller() {
+		try {
+			setUp();
+		}	catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		//check preconditions
+		assertEquals("Guard should have 0 customers in list. It doesn't.", guard.getCustomers().size(), 0);
+		assertEquals("Guard should have 0 tellers in list. It doesn't.", guard.getTellers().size(), 0); 
+
+
+		//Step 1: Customer arrives at bank
+		guard.msgArrivedAtBank(customer);
+
+		//Step 1 post-conditions
+		assertEquals("Guard should have 1 customer in list. It doesn't.", guard.getCustomers().size(), 1);
+
+		//Step 2: Scheduler runs...should execute method "assignToTeller"
+		assertFalse("Guard's scheduler should have returned false (no teller available), but didn't.", 
+				guard.pickAndExecuteAnAction());
+
+		//Step 2 post-conditions
+		assertTrue("MockCustomer should have logged an event for no teller available, but his last event logged reads instead: " 
+				+ customer.log.getLastLoggedEvent().toString(), customer.log.containsString("No teller available, must wait"));
+
+		//Step 3: Teller arrives at work
+		guard.msgTellerCameToWork (teller); 
+		
+		//Step 3 post-conditions
+		
+		assertEquals("Guard should have 1 teller in list. It doesn't.", guard.getTellers().size(), 1); 	
+		assertTrue("1st MockTeller should have the state 'available' ", 
+				guard.getTellers().get(0).getState() == BankGuardRole.TellerState.available);
+		
+		//Step 4: run scheduler and execute method "assignToTeller"
+		assertFalse("Guard's scheduler should have returned false (no new customers)  but didn't.", 
+				guard.pickAndExecuteAnAction());
+		
 		//Step 4 post-conditions
+		assertTrue("MockCustomer should have logged an event for being assigned to teller, but his last event logged reads instead: " 
+				+ customer.log.getLastLoggedEvent().toString(), 
+				customer.log.containsString("Assigned to bank teller " + teller.getName()));
+
+		assertTrue("MockTeller shoudl have the state 'busy'",
+				guard.getTellers().get(0).getState() == BankGuardRole.TellerState.busy);
+
+	
+		//Step 5: customer leaves bank
+
+		guard.msgCustomerLeavingBank(teller) ;
+
+		//Step 5 post-conditions
 
 		assertTrue("1st MockTeller should have the state 'available' ", 
 				guard.getTellers().get(0).getState() == BankGuardRole.TellerState.available);

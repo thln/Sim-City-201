@@ -22,8 +22,8 @@ public class BankTellerRole extends Role implements BankTeller {
 	enum AccountState {neutral, newAccount, waiting, depositing, withdrawing, requestingLoan, 
 		closingLoan, loanApproved, loanDenied, leavingBank}
 
-	class Account {	
-		BankCustomer customer;
+	static public class Account {	
+		private BankCustomer customer;
 		private int accountNum; 		//the hash key
 		double loan = 0;
 		double balance = 0;
@@ -31,12 +31,20 @@ public class BankTellerRole extends Role implements BankTeller {
 		double processingMoney = 0;
 		AccountState state = AccountState.newAccount;
 		
-		Account (BankCustomer c1) {
-			customer = c1;
+		public Account (BankCustomer c1) {
+			setCustomer(c1);
 		}
 		
 		public void setAccountNum (int n){
 			accountNum = n;
+		}
+
+		public BankCustomer getCustomer() {
+			return customer;
+		}
+
+		public void setCustomer(BankCustomer customer) {
+			this.customer = customer;
 		}
 	}
 
@@ -170,7 +178,7 @@ public class BankTellerRole extends Role implements BankTeller {
 	void OpenAccount (Account account1) {
 		accountNumKeyList++;
 		account1.setAccountNum(accountNumKeyList);
-		account1.customer.msgHereIsNewAccount(account1.accountNum);
+		account1.getCustomer().msgHereIsNewAccount(account1.accountNum);
 		account1.state = AccountState.neutral;
 	}
 
@@ -179,12 +187,12 @@ public class BankTellerRole extends Role implements BankTeller {
 				(account1.processingMoney < (Phonebook.getPhonebook().getBank().vault - Phonebook.getPhonebook().getBank().vaultMinimum))) {
 			Phonebook.getPhonebook().getBank().vault -= account1.processingMoney;
 			account1.state = AccountState.neutral;
-			account1.customer.msgHereIsYourMoney(account1.processingMoney);
+			account1.getCustomer().msgHereIsYourMoney(account1.processingMoney);
 		}
 		else if (account1.processingMoney > (Phonebook.getPhonebook().getBank().vault-Phonebook.getPhonebook().getBank().vaultMinimum))
-			account1.customer.msgBankrupt();
+			account1.getCustomer().msgBankrupt();
 		else
-			account1.customer.msgInsufficentFunds();
+			account1.getCustomer().msgInsufficentFunds();
 
 		account1.processingMoney = 0;
 		account1.state = AccountState.neutral;
@@ -195,7 +203,7 @@ public class BankTellerRole extends Role implements BankTeller {
 		print("$" + account1.processingMoney + " deposited into bank vault");
 		account1.balance +=  account1.processingMoney;
 		account1.creditScore += account1.processingMoney/10;	//every time you deposit money, your credit goes up the bank can trust that you have money
-		account1.customer.msgDepositReceived();
+		account1.getCustomer().msgDepositReceived();
 		account1.state = AccountState.neutral;	
 	}
 
@@ -208,19 +216,19 @@ public class BankTellerRole extends Role implements BankTeller {
 		account1.creditScore += account1.loan/10;
 		account1.loan = 0;
 		account1.state = AccountState.neutral;
-		account1.customer.msgLoanClosed();
+		account1.getCustomer().msgLoanClosed();
 	}
 
 	void ApproveLoan (Account account1) {
 		account1.state = AccountState.neutral;
 		account1.loan = account1.processingMoney;
 		account1.balance += account1.loan;
-		account1.customer.msgYourLoanWasApproved();
+		account1.getCustomer().msgYourLoanWasApproved();
 	}
 
 	void DenyLoan (Account account1) {
 		account1.state = AccountState.neutral;	
-		account1.customer.msgYourLoanWasDenied(account1.processingMoney);	//loan denied, but given your credit score you can have a loan of size (processingMoney)
+		account1.getCustomer().msgYourLoanWasDenied(account1.processingMoney);	//loan denied, but given your credit score you can have a loan of size (processingMoney)
 	}
 	
 	public double getVault() {

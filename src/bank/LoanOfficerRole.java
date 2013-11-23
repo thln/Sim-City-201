@@ -10,6 +10,7 @@ import java.util.List;
 
 import application.Phonebook;
 import bank.BankTellerRole.Account;
+import bank.interfaces.BankTeller;
 import bank.interfaces.LoanOfficer;
 
 public class LoanOfficerRole extends Role implements LoanOfficer {
@@ -19,15 +20,19 @@ public class LoanOfficerRole extends Role implements LoanOfficer {
 
 	String name;
 	protected String RoleName = "Loan Officer";
-	enum LoanState {requesting, open, closed}
-	class Loan {
+	public enum LoanState {requesting, open, closed}
+	public class Loan {
 		Account account1;
 		LoanState state = LoanState.requesting;
-		BankTellerRole teller1;
+		BankTeller teller1;
 		
-		Loan(Account acc1, BankTellerRole t1) {
+		Loan(Account acc1, BankTeller t1) {
 			account1 = acc1;
 			teller1 = t1;
+		}
+		
+		public LoanState getState() {
+			return state;
 		}
 	}
 	
@@ -47,10 +52,9 @@ public class LoanOfficerRole extends Role implements LoanOfficer {
 	}
 	
 	//Messages
-	void msgIsLoanApproved(Account account1, BankTellerRole t1) {
+	public void msgIsLoanApproved(Account account1, BankTeller t1) {
 		loans.add( new Loan(account1, t1));
 	}
-
 
 	// Scheduler
 
@@ -76,7 +80,7 @@ public class LoanOfficerRole extends Role implements LoanOfficer {
 	void ProcessLoan (Loan loan1) {
 
 		double loanAmount = loan1.account1.processingMoney;
-		if (Phonebook.getPhonebook().getBank().vault <=  Phonebook.getPhonebook().getBank().vaultMinimum + loanAmount) {
+		if (Bank.vault <=  Bank.vaultMinimum + loanAmount) {
 			loan1.teller1.msgThisLoanDenied(loan1.account1, 0);
 		}
 
@@ -86,10 +90,15 @@ public class LoanOfficerRole extends Role implements LoanOfficer {
 		else
 			loan1.teller1.msgThisLoanDenied(loan1.account1, loan1.account1.creditScore*10); 
 
+		loans.remove(loan1);
 	}
 
 	public List<Account> getAccounts() {
 		return accounts;
+	}
+
+	public List<Loan> getLoans() {
+		return loans;
 	}
 
 }

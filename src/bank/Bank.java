@@ -15,8 +15,8 @@ public class Bank {
 	public WatchTime closeTime = new WatchTime(17);
 
 	//Data
-	public double vault = 10000;
-	public double vaultMinimum = 1000;
+	public static double vault = 10000;
+	public static double vaultMinimum = 1000;
 	
 	//Roles
 	public BankGuardRole bankGuardRole = new BankGuardRole("Bank Guard");
