@@ -2,6 +2,7 @@ package restaurant;
 
 //import agent.Agent;
 import restaurant.myCustomer.customerState;
+import restaurant.interfaces.RestaurantCustomer;
 
 import java.util.*;
 import java.util.concurrent.Semaphore;
@@ -86,7 +87,7 @@ public class WaiterRole extends Role {
 		}
 	}
 
-	public void msgHeresMyOrder(RestaurantCustomerRole customer, String choice) {
+	public void msgHeresMyOrder(RestaurantCustomer customer, String choice) {
 		for (myCustomer myCust : myCustomers) {
 			if (myCust.customer == customer) {
 				myCust.setChoice(choice);

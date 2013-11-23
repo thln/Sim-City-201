@@ -32,7 +32,7 @@ public class CookRole extends Role implements Cook
 
 	int inventoryChecker = 0;
 
-	private List<Order> myOrders = Collections.synchronizedList(new ArrayList<Order>());
+	public List<Order> myOrders = Collections.synchronizedList(new ArrayList<Order>());
 	private List<myMarket> markets = Collections.synchronizedList(new ArrayList<myMarket>());
 	private List<Stock> stockFulfillment = Collections.synchronizedList(new ArrayList<Stock>());
 
