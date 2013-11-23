@@ -137,6 +137,9 @@ public class Worker extends Person {
                         }
                 }
 
+                //Making rules for the bank
+                
+                
                 //Market Related
                 if (!hasFoodInFridge || carStatus == CarState.wantsCar) {
                         if (money <= moneyMinThreshold && !hasFoodInFridge) {

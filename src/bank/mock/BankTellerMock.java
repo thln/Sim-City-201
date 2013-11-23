@@ -17,14 +17,12 @@ public class BankTellerMock extends Mock implements BankTeller {
 
 	@Override
 	public void msgINeedMoney(double desiredCash, int accountNum) {
-		// TODO Auto-generated method stub
-		
+		log.add(new LoggedEvent("Customer wants to withdraw from account."));
 	}
 
 	@Override
 	public void msgHereIsMyDeposit(double depositAmount, int accountNum) {
-		// TODO Auto-generated method stub
-		
+		log.add(new LoggedEvent("Received deposit of $" +depositAmount));
 	}
 
 	@Override
@@ -35,14 +33,12 @@ public class BankTellerMock extends Mock implements BankTeller {
 
 	@Override
 	public void msgPayingOffLoan(double loan, int accountNum) {
-		// TODO Auto-generated method stub
-		
+		log.add(new LoggedEvent("Customer paid off loan."));
 	}
 
 	@Override
 	public void msgWantNewAccount(BankCustomer bankCustomer) {
-		// TODO Auto-generated method stub
-		
+		log.add(new LoggedEvent("Customer wants new account."));
 	}
 
 	@Override
@@ -57,8 +53,7 @@ public class BankTellerMock extends Mock implements BankTeller {
 
 	@Override
 	public void msgLeavingBank(int accountNum) {
-		// TODO Auto-generated method stub
-		
+		log.add(new LoggedEvent("Customer left bank."));
 	}
 
 }
