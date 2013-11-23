@@ -13,11 +13,13 @@ package application.gui.trace;
  * @modified Tam Henry Le Nguyen
  */
 public enum AlertTag {
-        PERSON,
-        BANK_TELLER,
-        BANK_CUSTOMER,
-        BUS_STOP,
+        PERSON, 					//Purely to use Demo Launcher
+        BANK_TELLER, 				//Purely to use Demo Launcher
+        BANK_CUSTOMER, 				//Purely to use Demo Launcher
+        BUS_STOP, 					//Purely to use Demo Launcher
         RESTAURANT,                //For the demo code where you make a new restaurant
-        BANK,                        //For the demo code where you make a new bank
+        BANK,						//For the demo code where you make a new bank
+        HOUSING, 
+        MARKET,
         GENERAL_CITY
 }

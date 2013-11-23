@@ -136,6 +136,13 @@ public class Worker extends Person {
 			}
 		}
 
+		if (newTime == myJob.startTime) {
+			workerRole.setState(RoleState.waitingToExecute);
+			//System.out.println("Starting Job " + workerRole.getRoleName());
+			print("Starting Job " + workerRole.getRoleName());
+			stateChanged();
+/*
+
 		//Market Related
 		if (!hasFoodInFridge || carStatus == CarState.wantsCar) {
 			if (money <= moneyMinThreshold && !hasFoodInFridge) {
@@ -152,6 +159,7 @@ public class Worker extends Person {
 					return true;
 				}
 			}
+*/
 		}
 
 		goToSleep();

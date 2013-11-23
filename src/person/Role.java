@@ -1,8 +1,13 @@
 package person;
 
 import agent.StringUtil;
+
+import application.gui.trace.AlertLog;
+import application.gui.trace.AlertTag;
+
 import application.TimeManager;
 import application.TimeManager.Time;
+
 
 public abstract class Role {
 
@@ -68,7 +73,37 @@ public abstract class Role {
      */
     protected void print(String msg) 
     {
-    	System.out.println(roleName + " " + getName() + " : " + msg);
+    	//System.out.println(roleName + " " + getName() + " : " + msg);
+    	if (roleName.equals("Bank Customer") || roleName.equals("Bank Guard") 
+    			|| roleName.equals("Bank Teller") || roleName.equals("Loan Officer"))
+    	{
+            AlertLog.getInstance().logInfo(AlertTag.BANK, roleName + " " + getName(), msg);
+
+    	}
+    	else if (roleName.equals("Maintenance Worker"))
+    	{
+            AlertLog.getInstance().logInfo(AlertTag.HOUSING, "Mouse", msg);
+
+    	}
+    	else if (roleName.equals("Market Customer") || roleName.equals("Market Runner") 
+    			|| roleName.equals("Sales Person") || roleName.equals("UPS Man"))
+    	{
+            AlertLog.getInstance().logInfo(AlertTag.MARKET, roleName + " " + getName(), msg);
+
+    	}
+    	else if (roleName.equals("Alternative Waiter") || roleName.equals("Cashier")
+    			|| roleName.equals("Cook") || roleName.equals("Host") 
+    			|| roleName.equals("Restaurant Customer") || roleName.equals("Normal Waiter"))
+    	{
+            AlertLog.getInstance().logInfo(AlertTag.RESTAURANT, roleName + " " + getName(), msg);
+
+    	}
+    	else
+    	{
+            AlertLog.getInstance().logInfo(AlertTag.PERSON, roleName + " " + getName(), msg);
+    		
+    	}
+    		
     }
 
     /**

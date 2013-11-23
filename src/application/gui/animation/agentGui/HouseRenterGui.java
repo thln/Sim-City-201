@@ -1,30 +1,27 @@
 package application.gui.animation.agentGui;
 
-import transportation.*;
+import housing.*;
 
 import java.awt.*;
+import javax.swing.*;
 
-import javax.swing.JLabel;
+public class HouseRenterGui implements Gui{
 
-public class CarGui implements Gui{
-
-	private Car agent = null;
+	private MaintenanceWorker agent = null;
 	private boolean isPresent = false;
 
 	//RestaurantGui gui;
 
 	private int xPos, yPos;
 	private int xDestination, yDestination;
-	private int xHome, yHome;
+	
 	private enum Command {noCommand};
 	private Command command = Command.noCommand;
 
-	private enum CarState {nothing};
-	CarState state = CarState.nothing;
+	private enum CustomerState {nothing};
+	CustomerState state = CustomerState.nothing;
 
-	private String choice;
-
-	public CarGui(Car c/*, RestaurantGui gui*/){ //HostAgent m) {
+	public HouseRenterGui(MaintenanceWorker c/*, RestaurantGui gui*/){
 		agent = c;
 		xPos = -20;
 		yPos = -20;
@@ -48,7 +45,7 @@ public class CarGui implements Gui{
 	}
 
 	public void draw(Graphics2D g) {
-		g.setColor(Color.BLUE);
+		g.setColor(Color.GREEN);
 		g.fillRect(xPos, yPos, 20, 20);
 	}
 
@@ -59,4 +56,7 @@ public class CarGui implements Gui{
 	public void setPresent(boolean p) {
 		isPresent = p;
 	}
+	
+	//Actions
+	
 }
