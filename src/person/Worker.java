@@ -162,7 +162,8 @@ public class Worker extends Person {
 		}
 		if (newTime == myJob.startTime) {
 			workerRole.setState(RoleState.waitingToExecute);
-			System.out.println("Starting Job " + workerRole.getRoleName());
+			//System.out.println("Starting Job " + workerRole.getRoleName());
+			print("Starting Job " + workerRole.getRoleName());
 			stateChanged();
 		}
 		if (newTime == myJob.lunchTime) {

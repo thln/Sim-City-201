@@ -109,7 +109,7 @@ public class Application extends JPanel {
 */	
 	public Application() 
 	{
-		
+		sampleProgram();
 	}
 	
 	public void sampleProgram() {
