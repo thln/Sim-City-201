@@ -43,6 +43,7 @@ public abstract class Person extends Agent{
         public double desiredCash;
         public double depositAmount;
         public double withdrawAmount;
+        public double loan;
         int moneyMinThreshold = 20;
         int moneyMaxThreshold = 200;
 
