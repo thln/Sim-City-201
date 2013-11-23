@@ -58,6 +58,8 @@ public class BankCustomerRole extends Role implements BankCustomer{
 
 	public void msgBankrupt() {
 		state = CustomerState.ready;
+		desire = BankCustomerDesire.leaveBank;
+		stateChanged();
 	}
 
 	public void msgInsufficentFunds(){
@@ -66,7 +68,7 @@ public class BankCustomerRole extends Role implements BankCustomer{
 		desire = BankCustomerDesire.wantLoan;
 		stateChanged();
 	}
-//finish setting loan and teller interactions, make sure everything is phonebook global or person data
+
 	public void msgDepositReceived() {
 		desire = BankCustomerDesire.leaveBank;
 		state = CustomerState.ready;
@@ -83,10 +85,14 @@ public class BankCustomerRole extends Role implements BankCustomer{
 	public void msgYourLoanWasDenied(double amount) {
 		//decide whether or not to request another loan
 		state = CustomerState.ready;
+		desire = BankCustomerDesire.leaveBank;
+		stateChanged();
 	}
 
 	public void msgLoanClosed() {
 		state = CustomerState.ready;
+		desire = BankCustomerDesire.leaveBank;
+		stateChanged();
 	}	
 	
 	public void msgCaughtYou() {
@@ -104,6 +110,9 @@ public class BankCustomerRole extends Role implements BankCustomer{
 	if (state == CustomerState.atBank)
 		MessageGuard();
 
+	if (desire == BankCustomerDesire.openAccount && state == CustomerState.ready)
+		OpenAccount();
+	
 	if (desire == BankCustomerDesire.withdraw && state == CustomerState.ready)
 		WithdrawCash();
 
@@ -115,9 +124,6 @@ public class BankCustomerRole extends Role implements BankCustomer{
 
 	if (desire == BankCustomerDesire.closeLoan && state == CustomerState.ready)
 		PayOffLoan();
-
-	if (desire == BankCustomerDesire.openAccount && state == CustomerState.ready)
-		OpenAccount();
 
 	if (desire == BankCustomerDesire.leaveBank && state == CustomerState.ready)
 		LeaveBank();
@@ -163,11 +169,11 @@ public class BankCustomerRole extends Role implements BankCustomer{
 		state = CustomerState.waiting;
 	}
 	
-	void LeaveBank () {
-		
+	void LeaveBank () {	
 		//GUI operation
 		desire = BankCustomerDesire.none;
 		state = CustomerState.waiting;	
+		myTeller.msgLeavingBank(person.accountNum);
 		Phonebook.getPhonebook().getBank().bankGuardRole.msgCustomerLeavingBank(myTeller);
 		this.setRoleInactive();
 	}

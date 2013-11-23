@@ -28,6 +28,7 @@ public class Phonebook {
 	private static Phonebook phonebook;
 
 	private Phonebook() {
+		bank = new Bank(null);
 	}
 	
 	public static Phonebook getPhonebook() {

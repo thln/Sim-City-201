@@ -28,6 +28,6 @@ public class MaintenanceWorkerTest extends TestCase
 	
 	public void testNormativeScenarioOne()
 	{
-		
+		//assertTrue();
 	}
 }

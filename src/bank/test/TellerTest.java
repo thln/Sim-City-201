@@ -1,603 +1,437 @@
 package bank.test;
 
+import person.Worker;
+import application.Phonebook;
+import bank.BankTellerRole;
+import bank.BankTellerRole.Account;
+import bank.BankTellerRole.AccountState;
 import bank.mock.BankCustomerMock;
+import bank.mock.BankGuardMock;
+import bank.mock.LoanOfficerMock;
 import junit.framework.TestCase;
 
 public class TellerTest extends TestCase 
 {
+
+	BankGuardMock guard;
 	BankCustomerMock customer;
-	
+	LoanOfficerMock officer;
+	BankTellerRole teller;
+	Worker person;
+
 	public void setUp() throws Exception {
 		super.setUp();
-		customer = new BankCustomerMock("mockcustomer");
-	}
-	/*
-	 * package restaurant.test;
-
-
-
-	 *
-	 * 
-	 * This class is a JUnit test class to unit test the CashierAgent's basic interaction
-	 * with waiters, customers, and the host.
-	 * It is provided as an example to students in CS201 for their unit testing lab.
-	 *
-	 * @author Monroe Ekilah
-
-public class CashierTest extends TestCase
-{
-	//these are instantiated for each test separately via the setUp() method.
-	CashierAgent cashier;
-	MockWaiter waiter;
-	MockCustomer customer;
-	MockHost host;
-	MockMarket market;
-
-	/**
-	 * This method is run before each test. You can use it to instantiate the class variables
-	 * for your agent and mocks, etc.
-
-	public void setUp() throws Exception{
-		super.setUp();    
-		host = new MockHost("mockhost");
-		cashier = new CashierAgent(host);                
-		customer = new MockCustomer("mockcustomer");                
-		waiter = new MockWaiter("mockwaiter"); 	
-		market = new MockMarket("mockmarket");
-	}        
-	/**
-	 * This tests the cashier under very simple terms: one customer is ready to pay the exact bill.
-
-	public void testOneNormalCustomerScenario()
-	{
-		//setUp() runs first before this test!
-		try {
-			setUp();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		customer.cashier = cashier;//You can do almost anything in a unit test.                        
-
-		//check preconditions
-		assertEquals("Cashier should have 0 bills in it. It doesn't.",cashier.getChecks().size(), 0);                
-		assertEquals("CashierAgent should have an empty event log before the Cashier's HereIsBill is called. Instead, the Cashier's event log reads: "
-				+ cashier.log.toString(), 0, cashier.log.size());
-
-		int check = 20;
-		int cash = 30;
-
-		//step 1 of the test
-
-		cashier.msgComputeBill(waiter, customer, "steak");//send the message from a waiter
-
-
-		//check postconditions for step 1 and preconditions for step 2
-		assertEquals("MockWaiter should have an empty event log before the Cashier's scheduler is called. Instead, the MockWaiter's event log reads: "
-				+ waiter.log.toString(), 0, waiter.log.size());
-
-		assertEquals("Cashier should have 1 bill in it. It doesn't.", cashier.getChecks().size(), 1);
-
-		assertEquals(
-				"MockWaiter should have an empty event log before the Cashier's scheduler is called for the first time. Instead, the MockWaiter's event log reads: "
-						+ waiter.log.toString(), 0, waiter.log.size());
-
-		assertEquals(
-				"MockCustomer should have an empty event log after the Cashier's scheduler is called for the first time. Instead, the MockCustomer's event log reads: "
-						+ waiter.log.toString(), 0, waiter.log.size());
-
-		//step 2 of test
-
-		assertTrue("Cashier's scheduler should have returned true (needs to react to new check), but didn't.", 
-				cashier.pickAndExecuteAnAction());
-
-		assertTrue("MockWaiter should have logged event: HereIsCheck, after Cashier's scheduler is called" , waiter.log.containsString("Received HereIsCheck from cashier. Check = "+ check));
-
-		//step 3 of test, waiter gives bill to customer
-
-		//preconditions
-
-		assertTrue("CashierBill should contain a bill with state: waitingForCust. Instead, the state is " + cashier.getChecks().get(0).getState(),
-				cashier.getChecks().get(0).getState() == CashierAgent.checkState.waitingForCust);
-
-		assertEquals("MockCustomer should have an empty event log before the message is called. Instead, the MockCustomer's event log reads: "
-				+ customer.log.toString(), 0, customer.log.size());
-
-		//step 4
-
-		customer.msgPleasePayBill();
-
-		assertTrue("MockCustomer should have logged an event for receiving \"HereIsYourTotal\" with the correct bill, but his last event logged reads instead: " 
-				+ customer.log.getLastLoggedEvent().toString(), customer.log.containsString("Received HereIsYourTotal from waiter. Total = " + check));
-
-
-		assertTrue("CashierBill should contain a bill with state: paying. Instead, the state is " + cashier.getChecks().get(0).getState(),
-				cashier.getChecks().get(0).getState() == CashierAgent.checkState.paying);
-
-
-		assertTrue("Cashier should have logged \"Received ReadyToPay\" but didn't. His log reads instead: " 
-				+ cashier.log.getLastLoggedEvent().toString(), cashier.log.containsString("Received ReadyToPay"));
-
-		assertTrue("CashierBill should contain a bill of price = $20. It contains something else instead: $" 
-				+ cashier.getChecks().get(0).getCheck(), cashier.getChecks().get(0).getCheck() == 20);
-
-		assertTrue("CashierBill should contain a bill with the right customer in it. It doesn't.", 
-				cashier.getChecks().get(0).getCust1() == customer);
-
-
-		//step 4
-		//NOTE: I called the scheduler in the assertTrue statement below (to succintly check the return value at the same time)
-
-		//step 4
-		assertTrue("Cashier's scheduler should have returned true (needs to react to customer's ReadyToPay), but didn't.", 
-				cashier.pickAndExecuteAnAction());
-
-		//check postconditions for step 4
-		assertTrue("MockCustomer should have logged an event for receiving \"HereIsYourChange\" with the correct change, but his last event logged reads instead: " 
-				+ customer.log.getLastLoggedEvent().toString(), customer.log.containsString("Received HereIsYourChange from cashier. Change = " + (cash-check)));
-
-
-		assertEquals("CashierBill should contain 0 bills. It doesn't.", cashier.getChecks().size(), 0);
-
-		assertFalse("Cashier's scheduler should have returned false (no actions left to do), but didn't.", 
-				cashier.pickAndExecuteAnAction());
-
-
-	}//end one normal customer scenario
-
-	public void testTwoDishonestCustomerScenario() {
-		//setUp() runs first before this test!
-
-		try {
-			setUp();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		customer.setName("thief");
-		customer.cashier = cashier;                        
-
-		//check preconditions
-		assertEquals("Cashier should have 0 bills in it. It doesn't.",cashier.getChecks().size(), 0);                
-		assertEquals("CashierAgent should have an empty event log before the Cashier's HereIsBill is called. Instead, the Cashier's event log reads: "
-				+ cashier.log.toString(), 0, cashier.log.size());
-
-		int check = 20;
-		int cash = 0;
-
-		cashier.msgComputeBill(waiter, customer, "steak");//send the message from a waiter
-
-
-		//check postconditions for step 1 and preconditions for step 2
-		assertEquals("MockWaiter should have an empty event log before the Cashier's scheduler is called. Instead, the MockWaiter's event log reads: "
-				+ waiter.log.toString(), 0, waiter.log.size());
-
-		assertEquals("Cashier should have 1 bill in it. It doesn't.", cashier.getChecks().size(), 1);
-
-		assertEquals(
-				"MockWaiter should have an empty event log before the Cashier's scheduler is called for the first time. Instead, the MockWaiter's event log reads: "
-						+ waiter.log.toString(), 0, waiter.log.size());
-
-		assertEquals(
-				"MockCustomer should have an empty event log after the Cashier's scheduler is called for the first time. Instead, the MockCustomer's event log reads: "
-						+ waiter.log.toString(), 0, waiter.log.size());
-
-		//step 2 of test
-
-		assertTrue("Cashier's scheduler should have returned true (needs to react to new check), but didn't.", 
-				cashier.pickAndExecuteAnAction());
-
-		assertTrue("MockWaiter should have logged event: HereIsCheck, after Cashier's scheduler is called" , waiter.log.containsString("Received HereIsCheck from cashier. Check = "+ check));
-
-		//step 3 of test, waiter gives bill to customer
-
-		//preconditions
-
-		assertTrue("CashierBill should contain a bill with state: waitingForCust. Instead, the state is " + cashier.getChecks().get(0).getState(),
-				cashier.getChecks().get(0).getState() == CashierAgent.checkState.waitingForCust);
-
-		assertEquals("MockCustomer should have an empty event log before the message is called. Instead, the MockCustomer's event log reads: "
-				+ customer.log.toString(), 0, customer.log.size());
-
-		//step 4
-
-		customer.msgPleasePayBill();
-
-		assertTrue("MockCustomer should have logged an event for receiving \"HereIsYourTotal\" with the correct bill, but his last event logged reads instead: " 
-				+ customer.log.getLastLoggedEvent().toString(), customer.log.containsString("Received HereIsYourTotal from waiter. Total = " + check));
-
-
-		assertTrue("CashierBill should contain a bill with state: unpaid. Instead, the state is " + cashier.getChecks().get(0).getState(),
-				cashier.getChecks().get(0).getState() == CashierAgent.checkState.unpaid);
-
-		assertTrue("Cashier should have logged \"Received NotEnoughMoney\" but didn't. His log reads instead: " 
-				+ cashier.log.getLastLoggedEvent().toString(), cashier.log.containsString("Received NotEnoughMoney"));
-
-		assertTrue("Cashier's scheduler should have returned true (needs to react to new check), but didn't.", 
-				cashier.pickAndExecuteAnAction());
-
-		//step 5
-
-		assertTrue("MockCustomer should have logged an event for received \"you are in debt\" but his last event log reads: " + 
-				customer.log.getLastLoggedEvent().toString(), customer.log.containsString("Received YouOweUs from cashier. Debt = "+ (cash-check)));
-
-		assertTrue("MockHost should have logged an event for received \"watch this cust\" but his last event log reads: " + 
-				host.log.getLastLoggedEvent().toString(), host.log.containsString("Watch this customer: "+ customer.getName()));
-
-		assertFalse("Cashier's scheduler should have returned false (no actions left to do), but didn't.", 
-				cashier.pickAndExecuteAnAction());
-
-
+		person = new Worker("Josh", 200, "bankTeller", "bank", 800, 1200, 1500);
+		guard = new BankGuardMock ("mockguard");
+		customer = new BankCustomerMock ("mockcustomer");
+		officer = new LoanOfficerMock ("mockofficer");
+		teller = new BankTellerRole (person.getName(), person, "bankteller");		
 	}
 
-	public void testThreeNormalMarketScenario() {
-
+	public void testOneCustomerArrivesWantsDepositOpensAccount() {
 		try {
 			setUp();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
+		}	catch (Exception e) {
 			e.printStackTrace();
 		}
+		double depositAmt = 200;
+		double vault = Phonebook.getPhonebook().getBank().vault;
+
+		//check preconditions in teller's personal list of accounts
+		assertEquals("Teller should have 0 accounts in list. It doesn't.", teller.getAccounts().size(), 0);
+
+		Phonebook.getPhonebook().getBank().accountNumKeyList = 1000;
+		assertEquals("Account hash key should be at base number 3000. It isn't.", 
+				Phonebook.getPhonebook().getBank().accountNumKeyList, 1000);
+
+		//Step 1: Customer arrives and wants to open new account
+		teller.msgWantNewAccount(customer);
+
+		//Step 1 post-conditions
+		assertEquals("Teller should have 1 account in list. It doesn't.", teller.getAccounts().size(), 1);
+
+		assertTrue("New account should have the state 'newAccount' ", 
+				teller.getAccounts().get(0).getState() == AccountState.newAccount);
 
 
-		cashier.setCashRegister(300);
-		market.cashier = cashier;
-		//Step 1 preconditions
+		//Step 2: Call scheduler, should execute method "openAccount"
+		assertFalse("Teller's scheduler should have returned false, but didn't.", 
+				teller.pickAndExecuteAnAction());
 
-		assertEquals("Cashier should have 0 market bills in it. It doesn't.",cashier.getMarketBills().size(), 0);                
-		assertEquals("CashierAgent should have an empty event log before the Cashier's HereIsBill is called. Instead, the Cashier's event log reads: "
-				+ cashier.log.toString(), 0, cashier.log.size());
-		assertEquals("MarketAgent should have an empty event log. Instead, the Market's event log reads: "
-				+ market.log.toString(), 0,  market.log.size());
+		//Step 2 post-conditions
+		assertEquals("The list of account hash key should have increased ", 
+				Phonebook.getPhonebook().getBank().accountNumKeyList, 1001);
 
-		//Step 1
+		assertEquals("New Account's 'accountNum' should be set to this new hashKey",
+				teller.getAccounts().get(0).getAccountNum(), Phonebook.getPhonebook().getBank().accountNumKeyList);	
 
-		int bill = 20;
-		cashier.msgPayMarketBill(market, bill);
+		assertTrue("MockCustomer should have logged an event for new account, but his last event logged reads instead: " 
+				+ customer.log.getLastLoggedEvent().toString(), customer.log.containsString("New Account created"));
 
-		assertTrue("Cashier should have logged \"Received PayMarketBill\" but didn't. His log reads instead: " 
-				+ cashier.log.getLastLoggedEvent().toString(), cashier.log.containsString("Received PayMarketBill"));
+		assertTrue("New account should have the state 'neutral' ", 
+				teller.getAccounts().get(0).getState() == AccountState.neutral);
 
-		assertEquals("Cashier should have 1 market bill. It doesnt.", cashier.getMarketBills().size(), 1);
+		//Step 3: Customer wants to deposit money into new account
+		teller.msgHereIsMyDeposit(depositAmt, teller.getAccounts().get(0).accountNum);
 
+		//Step 3 post-conditions
+		assertTrue("Account should have the state 'depositing' ", 
+				teller.getAccounts().get(0).getState() == AccountState.depositing);
 
-		//Step 2 preconditions
+		//Step 4: Call scheduler, should execute method "depositMoney"
+		assertFalse("Tellers's scheduler should have returned false, but didn't.", 
+				teller.pickAndExecuteAnAction());
 
-		assertEquals("Cashier market bill should contain the correct market. It doesnt.", cashier.getMarketBills().get(0).getMarket(), market);
-		assertEquals("Cashier bill should contain the correct bill amount. It doesnt.", cashier.getMarketBills().get(0).getBill(), bill);
-
-		//Step 2, cashier pays market bill
-
-		assertFalse("Cashier's scheduler should have returned false but didn't.", 
-				cashier.pickAndExecuteAnAction());
-
-		//Step 3, market received bills
-
-		assertTrue("Market should have logged \"Received HereIsPayment with $20\" but didn't. His log reads instead: " 
-				+ market.log.getLastLoggedEvent().toString(), market.log.containsString("Received HereIsPayment with $" + bill));
-
-		//Step 3 post-condition, cashier removes bill
-
-		assertEquals("Cashier should have 0 market bills in it. It doesn't.",cashier.getMarketBills().size(), 0);      
-
-		assertFalse("Cashier's scheduler should have returned false (no actions left to do), but didn't.", 
-				cashier.pickAndExecuteAnAction());
-	}
-
-	public void testFourCustomerBillInterruptMarketBillScenario() {
-
-		try {
-			setUp();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		//data initialization
-
-		cashier.setCashRegister(300);
-		customer.cashier = cashier;
-		market.cashier = cashier;
-		int marketBill = 20;
-		int check = 20;
-		int cash = 30;
-
-		//Step 1 preconditions
-
-		assertEquals("Cashier should have 0 customer's bills in it. It doesn't.",cashier.getChecks().size(), 0); 
-		assertEquals("CashierAgent should have an empty event log before the Cashier's HereIsBill is called. Instead, the Cashier's event log reads: "
-				+ cashier.log.toString(), 0, cashier.log.size());
-
-		//Step 1, receives customer's bill from waiter
-
-		cashier.msgComputeBill(waiter, customer, "steak");//send the message from a waiter
-
-
-		//check postconditions for step 1 and preconditions for step 2	
-
-		assertEquals("Cashier should have 1 customer's check in it. It doesn't.", cashier.getChecks().size(), 1);
-
-		assertTrue("CashierBill should contain a bill with the right customer in it. It doesn't.", 
-				cashier.getChecks().get(0).getCust1() == customer);
-
-		assertEquals("MockCustomer should have an empty event log after the Cashier's scheduler is called for the first time. "
-				+ "Instead, the MockCustomer's event log reads: " + waiter.log.toString(), 0, waiter.log.size());
-
-		assertEquals("MockWaiter should have an empty event log before the Cashier's scheduler is called. Instead, the MockWaiter's event log reads: "
-				+ waiter.log.toString(), 0, waiter.log.size());
-
-
-		//step 2 of test, message waiter with check
-
-		assertTrue("Cashier's scheduler should have returned true (needs to react to new check), but didn't.", 
-				cashier.pickAndExecuteAnAction());
-
-		assertTrue("MockWaiter should have logged event: HereIsCheck, after Cashier's scheduler is called" , waiter.log.containsString("Received HereIsCheck from cashier. Check = "+ check));
-
-		assertTrue("CashierBill should contain a bill with state: waitingForCust. Instead, the state is " + cashier.getChecks().get(0).getState(),
-				cashier.getChecks().get(0).getState() == CashierAgent.checkState.waitingForCust);
-
-		assertEquals("MockCustomer should have an empty event log before the message is called. Instead, the MockCustomer's event log reads: "
-				+ customer.log.toString(), 0, customer.log.size());
-
-		//step 3 of test, waiter gives bill to customer
-
-		customer.msgPleasePayBill();
-
-		assertTrue("MockCustomer should have logged an event for receiving \"HereIsYourTotal\" with the correct bill, but his last event logged reads instead: " 
-				+ customer.log.getLastLoggedEvent().toString(), customer.log.containsString("Received HereIsYourTotal from waiter. Total = " + check));
-
-
-		//customer automatically messages cashier 
-
-		assertTrue("CashierBill should contain a check of price = $20. It contains something else instead: $" 
-				+ cashier.getChecks().get(0).getCheck(), cashier.getChecks().get(0).getCheck() == 20);
-
-		assertTrue("CashierBill should contain a bill with state: paying. Instead, the state is " + cashier.getChecks().get(0).getState(),
-				cashier.getChecks().get(0).getState() == CashierAgent.checkState.paying);
-
-		assertTrue("Cashier should have logged \"Received ReadyToPay\" but didn't. His log reads instead: " 
-				+ cashier.log.getLastLoggedEvent().toString(), cashier.log.containsString("Received ReadyToPay"));
-
-		//step 3 (market bill interrupts customer) pre-conditions
-
-		assertEquals("Cashier should have 0 market bills in it. It doesn't.",cashier.getMarketBills().size(), 0);                
-		assertEquals("MarketAgent should have an empty event log. Instead, the Market's event log reads: "
-				+ market.log.toString(), 0,  market.log.size());
-
-		//Step 3, market bill interrupts customer
-
-		cashier.msgPayMarketBill(market, marketBill);
-
-		assertEquals("Cashier should have 1 market bill, it doesn't.", 1, cashier.getMarketBills().size());
-		assertEquals("Cashier's market bill should contain the correct market. It doesnt.", cashier.getMarketBills().get(0).getMarket(), market);
-		assertEquals("Cashier's customer bill should contain the correct bill amount. It doesnt.", cashier.getMarketBills().get(0).getBill(), marketBill);
-
-		//Step 4, message customer first
-
-		assertTrue("Cashier's scheduler should have returned true (needs to react to customer's ReadyToPay), but didn't.", 
-				cashier.pickAndExecuteAnAction());
 
 		//Step 4 post-conditions
 
-		assertTrue("MockCustomer should have logged an event for receiving \"HereIsYourChange\" with the correct change, but his last event logged reads instead: " 
-				+ customer.log.getLastLoggedEvent().toString(), customer.log.containsString("Received HereIsYourChange from cashier. Change = " + (cash-check)));
+		assertEquals("Bank vault should be equal to the original vault amount + deposit amount",
+				Phonebook.getPhonebook().getBank().vault, vault + depositAmt);	
 
-		assertEquals("CashierBill should contain 0 customer's bills. It doesn't.", cashier.getChecks().size(), 0);
+		assertEquals("Account balance should have increased by the deposit amount",
+				teller.getAccounts().get(0).balance, depositAmt);
 
-		//Step 5, pay market bill
+		//credit changes
+		assertEquals("Account credit score should have increased by 1/10 of the deposit amount",
+				teller.getAccounts().get(0).creditScore, depositAmt/10);
 
-		assertFalse("Cashier's scheduler should have returned false but didn't.", 
-				cashier.pickAndExecuteAnAction());
+		assertTrue("MockCustomer should have logged an event for deposit received, but his last event logged reads instead: " 
+				+ customer.log.getLastLoggedEvent().toString(), 
+				customer.log.containsString("Your deposit of $" + depositAmt + " was received."));
 
-		//step 5 post-conditions
+		assertTrue("New account should have the state 'neutral' ", 
+				teller.getAccounts().get(0).getState() == AccountState.neutral);
 
-		assertTrue("Market should have logged \"Received HereIsPayment with $20\" but didn't. His log reads instead: " 
-				+ market.log.getLastLoggedEvent().toString(), market.log.containsString("Received HereIsPayment with $" + marketBill));
+		//Step 5: customer leaves bank
+		teller.msgLeavingBank(teller.getAccounts().get(0).getAccountNum());
 
-		assertEquals("Cashier should have 0 market bills, it doesn't.", 0 , cashier.getMarketBills().size());
+		//Step 5 post-conditions
 
-		assertFalse("Cashier's scheduler should have returned false (no actions left to do), but didn't.", 
-				cashier.pickAndExecuteAnAction());
+		assertEquals("Teller should have 0 accounts in list. It doesn't.", teller.getAccounts().size(), 0);
+
+		assertFalse("Tellers's scheduler should have returned false, but didn't.", 
+				teller.pickAndExecuteAnAction());
 	}
 
-	public void testFiveTwoMarketBillScenario() {
-
+	public void testTwoCustomerWithdrawalSuccess() {
 		try {
 			setUp();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
+		}	catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		cashier.setCashRegister(300);
-		market.cashier = cashier;
-		//Step 1 preconditions
+		double withdrawAmt = 200;
+		double vault = Phonebook.getPhonebook().getBank().vault;
 
-		assertEquals("Cashier should have 0 market bills in it. It doesn't.",cashier.getMarketBills().size(), 0);                
-		assertEquals("CashierAgent should have an empty event log before the Cashier's HereIsBill is called. Instead, the Cashier's event log reads: "
-				+ cashier.log.toString(), 0, cashier.log.size());
-		assertEquals("MarketAgent should have an empty event log. Instead, the Market's event log reads: "
-				+ market.log.toString(), 0,  market.log.size());
+		//Create account in Phonebook.Bank's list of accounts to reference
+		Account a = new Account(customer);
+		a.balance = 500;
+		a.accountNum = 2000;
+		a.processingMoney = withdrawAmt;
+		Phonebook.getPhonebook().getBank().accounts.add(a);
 
-		//Step 1
+		//Preconditions
+		assertEquals("Teller should have 0 accounts in list. It doesn't.", teller.getAccounts().size(), 0);
 
-		int bill1 = 20;
-		int bill2 = 30;
+		//Step 1: Customer arrives and wants to withdraw
+		teller.msgINeedMoney(withdrawAmt, a.accountNum);
 
-		cashier.msgPayMarketBill(market, bill1);
+		//Step 1 post-conditions
+		assertEquals("Teller should have 1 account in list. It doesn't.", teller.getAccounts().size(), 1);
 
-		assertTrue("Cashier should have logged \"Received PayMarketBill\" but didn't. His log reads instead: " 
-				+ cashier.log.getLastLoggedEvent().toString(), cashier.log.containsString("Received PayMarketBill"));
-
-		assertEquals("Cashier should have 1 market bill. It doesnt.", cashier.getMarketBills().size(), 1);
-
-		//Step 2 pre-conditions 
-
-		assertEquals("Cashier market bill should contain the correct market. It doesnt.", cashier.getMarketBills().get(0).getMarket(), market);
-		assertEquals("Cashier bill should contain the correct bill amount. It doesnt.", cashier.getMarketBills().get(0).getBill(), bill1);
-
-		//Step 2
-
-		cashier.msgPayMarketBill(market, bill2);
-
-		assertEquals("Cashier should have 2 market bills. It doesnt.", cashier.getMarketBills().size(), 2);
-		assertEquals("Cashier market bill 2 should contain the correct market. It doesnt.", cashier.getMarketBills().get(1).getMarket(), market);
-		assertEquals("Cashier bill should contain the correct bill amount. It doesnt.", cashier.getMarketBills().get(1).getBill(), bill2);
-
-		//Step 3a, cashier pays bill 1
-
-		assertFalse("Cashier's scheduler should have returned false but didn't.", 
-				cashier.pickAndExecuteAnAction());
-
-		//Step 3b, market received bill 1
-
-		assertTrue("Market should have logged \"Received HereIsPayment with $20\" but didn't. His log reads instead: " 
-				+ market.log.getLastLoggedEvent().toString(), market.log.containsString("Received HereIsPayment with $" + bill1));
-
-		//Step 3 post-condition, cashier removes bill 1
-
-		assertEquals("Cashier should have 1 market bill in it. It doesn't.",cashier.getMarketBills().size(), 1);      
-
-		//step 4a, cashier pays bill 2
-
-		assertFalse("Cashier's scheduler should have returned false but didn't.", 
-				cashier.pickAndExecuteAnAction());
-
-		//step 4b, market received bill 2
-
-		assertTrue("Market should have logged \"Received HereIsPayment with $20\" but didn't. His log reads instead: " 
-				+ market.log.getLastLoggedEvent().toString(), market.log.containsString("Received HereIsPayment with $" + bill2));
+		assertTrue("New account should have the state 'withdrawing' ", 
+				teller.getAccounts().get(0).getState() == AccountState.withdrawing);
 
 
-		//step 4 post-condition, cashier removes bill 2
+		//Step 2: Call scheduler, should execute method "withdrawMoney"
+		assertFalse("Teller's scheduler should have returned false, but didn't.", 
+				teller.pickAndExecuteAnAction());
 
-		assertEquals("Cashier should have 0 market bills in it. It doesn't.",cashier.getMarketBills().size(), 0); 
+		//Step 2 post-conditions
+		assertEquals("Bank vault should be equal to the original vault amount minus withdrawal amount",
+				Phonebook.getPhonebook().getBank().vault, vault - withdrawAmt);	
 
-		assertFalse("Cashier's scheduler should have returned false (no actions left to do), but didn't.", 
-				cashier.pickAndExecuteAnAction());
+		assertTrue("Account should have the state 'neutral' ", 
+				teller.getAccounts().get(0).getState() == AccountState.neutral);
+
+		assertTrue("MockCustomer should have logged an event for withdrawal success, but his last event logged reads instead: " 
+				+ customer.log.getLastLoggedEvent().toString(), customer.log.containsString("Withdrawal succeeded"));
+
+
+		//Step 3: customer leaves bank
+		teller.msgLeavingBank(teller.getAccounts().get(0).getAccountNum());
+
+		//Step 3 post-conditions	
+		assertEquals("Teller should have 0 accounts in list. It doesn't.", teller.getAccounts().size(), 0);
+
+		//Make sure unit tests don't affect real data
+		Phonebook.getPhonebook().getBank().accounts.remove(a);
 	}
 
-	public void testSixMarketBillInterruptSecondCustomerBillScenario() {
-
+	public void testThreeCustomerWantsWithdrawalButNeedsLoanGetsLoan() {
 		try {
 			setUp();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
+		}	catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		//data initialization
+		double withdrawAmt = 500;
+		double vault = Phonebook.getPhonebook().getBank().vault;
 
-		cashier.setCashRegister(300);
-		customer.cashier = cashier;
-		market.cashier = cashier;
-		int marketBill = 20;
-		int check = 20;
-		int cash = 30;
+		//Create account in Phonebook.Bank's list of accounts to reference
+		Account a = new Account(customer);
+		double balance = 200;
+		a.balance = balance;
+		a.creditScore = 70;
+		a.accountNum = 3000;
+		a.processingMoney = withdrawAmt;
+		Phonebook.getPhonebook().getBank().accounts.add(a);
 
-		//Step 1 preconditions
+		//check preconditions in teller's personal list of accounts
+		assertEquals("Teller should have 0 accounts in list. It doesn't.", teller.getAccounts().size(), 0);
 
-		assertEquals("Cashier should have 0 customer's bills in it. It doesn't.",cashier.getChecks().size(), 0); 
-		assertEquals("CashierAgent should have an empty event log before the Cashier's HereIsBill is called. Instead, the Cashier's event log reads: "
-				+ cashier.log.toString(), 0, cashier.log.size());
+		//Step 1: Customer arrives and wants to withdraw
+		teller.msgINeedMoney(withdrawAmt, a.accountNum);
 
-		//Step 1, receives customer's bill from waiter
+		//Step 1 post-conditions
+		assertEquals("Teller should have 1 account in list. It doesn't.", teller.getAccounts().size(), 1);
 
-		cashier.msgComputeBill(waiter, customer, "steak");//send the message from a waiter
-
-
-		//check postconditions for step 1 and preconditions for step 2	
-
-		assertEquals("Cashier should have 1 customer's check in it. It doesn't.", cashier.getChecks().size(), 1);
-
-		assertTrue("CashierBill should contain a bill with the right customer in it. It doesn't.", 
-				cashier.getChecks().get(0).getCust1() == customer);
-
-		assertEquals("MockCustomer should have an empty event log after the Cashier's scheduler is called for the first time. "
-				+ "Instead, the MockCustomer's event log reads: " + waiter.log.toString(), 0, waiter.log.size());
-
-		assertEquals("MockWaiter should have an empty event log before the Cashier's scheduler is called. Instead, the MockWaiter's event log reads: "
-				+ waiter.log.toString(), 0, waiter.log.size());
+		assertTrue("New account should have the state 'withdrawing' ", 
+				teller.getAccounts().get(0).getState() == AccountState.withdrawing);
 
 
-		//step 2 of test, message waiter with check
+		//Step 2: Call scheduler, should execute method "withdrawMoney"
+		assertFalse("Teller's scheduler should have returned false, but didn't.", 
+				teller.pickAndExecuteAnAction());
 
-		assertTrue("Cashier's scheduler should have returned true (needs to react to new check), but didn't.", 
-				cashier.pickAndExecuteAnAction());
+		//Step 2 post-conditions	
+		assertTrue("MockCustomer should have logged an event for lack of account funds, but his last event logged reads instead: " 
+				+ customer.log.getLastLoggedEvent().toString(),
+				customer.log.containsString("Account balance is too low for a withdrawal. Must open loan."));
 
-		assertTrue("MockWaiter should have logged event: HereIsCheck, after Cashier's scheduler is called" , waiter.log.containsString("Received HereIsCheck from cashier. Check = "+ check));
+		assertTrue("New account should have the state 'neutral' ", 
+				teller.getAccounts().get(0).getState() == AccountState.neutral);
 
-		assertTrue("CashierBill should contain a bill with state: waitingForCust. Instead, the state is " + cashier.getChecks().get(0).getState(),
-				cashier.getChecks().get(0).getState() == CashierAgent.checkState.waitingForCust);
+		//Step 3: customer messages to request loan
+		double desiredLoan = withdrawAmt*10;
+		teller.msgINeedALoan(desiredLoan, a.accountNum);
 
-		assertEquals("MockCustomer should have an empty event log before the message is called. Instead, the MockCustomer's event log reads: "
-				+ customer.log.toString(), 0, customer.log.size());
+		//Step 3 post-conditions
+		assertTrue("New account should have the state 'withdrawing' ", 
+				teller.getAccounts().get(0).getState() == AccountState.requestingLoan);
 
-		//step 3 of test, waiter gives bill to customer
-
-		customer.msgPleasePayBill();
-
-		assertTrue("MockCustomer should have logged an event for receiving \"HereIsYourTotal\" with the correct bill, but his last event logged reads instead: " 
-				+ customer.log.getLastLoggedEvent().toString(), customer.log.containsString("Received HereIsYourTotal from waiter. Total = " + check));
-
-
-		//customer automatically messages cashier 
-
-		assertTrue("CashierBill should contain a check of price = $20. It contains something else instead: $" 
-				+ cashier.getChecks().get(0).getCheck(), cashier.getChecks().get(0).getCheck() == 20);
-
-		assertTrue("CashierBill should contain a bill with state: paying. Instead, the state is " + cashier.getChecks().get(0).getState(),
-				cashier.getChecks().get(0).getState() == CashierAgent.checkState.paying);
-
-		assertTrue("Cashier should have logged \"Received ReadyToPay\" but didn't. His log reads instead: " 
-				+ cashier.log.getLastLoggedEvent().toString(), cashier.log.containsString("Received ReadyToPay"));
-
-		//step 3 (market bill interrupts customer) pre-conditions
-
-		assertEquals("Cashier should have 0 market bills in it. It doesn't.",cashier.getMarketBills().size(), 0);                
-		assertEquals("MarketAgent should have an empty event log. Instead, the Market's event log reads: "
-				+ market.log.toString(), 0,  market.log.size());
-
-		//Step 3, market bill interrupts customer
-
-		cashier.msgPayMarketBill(market, marketBill);
-
-		assertEquals("Cashier should have 1 market bill, it doesn't.", 1, cashier.getMarketBills().size());
-		assertEquals("Cashier's market bill should contain the correct market. It doesnt.", cashier.getMarketBills().get(0).getMarket(), market);
-		assertEquals("Cashier's customer bill should contain the correct bill amount. It doesnt.", cashier.getMarketBills().get(0).getBill(), marketBill);
-
-		//Step 4, message customer first
-
-		assertTrue("Cashier's scheduler should have returned true (needs to react to customer's ReadyToPay), but didn't.", 
-				cashier.pickAndExecuteAnAction());
+		//Step 4: Call scheduler, should execute method "requestLoan"
+		assertFalse("Teller's scheduler should have returned false, but didn't.", 
+				teller.pickAndExecuteAnAction());
 
 		//Step 4 post-conditions
+		assertTrue("New account should have the state 'waiting' ", 
+				teller.getAccounts().get(0).getState() == AccountState.waiting);
 
-		assertTrue("MockCustomer should have logged an event for receiving \"HereIsYourChange\" with the correct change, but his last event logged reads instead: " 
-				+ customer.log.getLastLoggedEvent().toString(), customer.log.containsString("Received HereIsYourChange from cashier. Change = " + (cash-check)));
+		//Step 5: Loan officer messages -- loan approved
+		teller.msgThisLoanApproved(a);
 
-		assertEquals("CashierBill should contain 0 customer's bills. It doesn't.", cashier.getChecks().size(), 0);
+		//Step 5 post-conditions
+		assertTrue("New account should have the state 'loanApproved' ", 
+				teller.getAccounts().get(0).getState() == AccountState.loanApproved);
 
-		//Step 5, pay market bill
+		//Step 6: Call scheduler, should execute method "approveLoan"
+		assertFalse("Teller's scheduler should have returned false, but didn't.", 
+				teller.pickAndExecuteAnAction());
 
-		assertFalse("Cashier's scheduler should have returned false but didn't.", 
-				cashier.pickAndExecuteAnAction());
+		//Step 6 post-conditions
+		assertTrue("New account should have the state 'neutral' ", 
+				teller.getAccounts().get(0).getState() == AccountState.neutral);
 
-		//step 5 post-conditions
+		assertEquals("Account's balance should have increased by desired loan amount",
+				teller.getAccounts().get(0).balance, balance+desiredLoan);	
 
-		assertTrue("Market should have logged \"Received HereIsPayment with $20\" but didn't. His log reads instead: " 
-				+ market.log.getLastLoggedEvent().toString(), market.log.containsString("Received HereIsPayment with $" + marketBill));
+		assertTrue("MockCustomer should have logged an event for lack of account funds, but his last event logged reads instead: " 
+				+ customer.log.getLastLoggedEvent().toString(),
+				customer.log.containsString("Loan approved. Try withdrawal again."));
 
-		assertEquals("Cashier should have 0 market bills, it doesn't.", 0 , cashier.getMarketBills().size());
+		//Step 7: Customer tries to withdraw again
 
-		assertFalse("Cashier's scheduler should have returned false (no actions left to do), but didn't.", 
-				cashier.pickAndExecuteAnAction());
+		teller.msgINeedMoney(withdrawAmt, a.accountNum);
 
+		//Step 7 post-conditions
+		assertEquals("Teller should have 1 account in list. It doesn't.", teller.getAccounts().size(), 1);
+
+		assertTrue("Account should have the state 'withdrawing' ", 
+				teller.getAccounts().get(0).getState() == AccountState.withdrawing);
+
+
+		//Step 8: Call scheduler, should execute method "withdrawMoney"
+		assertFalse("Teller's scheduler should have returned false, but didn't.", 
+				teller.pickAndExecuteAnAction());
+
+		//Step 8 post-conditions
+		assertEquals("Bank vault should be equal to the original vault amount minus withdrawal amount",
+				Phonebook.getPhonebook().getBank().vault, vault - withdrawAmt);	
+
+		assertTrue("New account should have the state 'neutral' ", 
+				teller.getAccounts().get(0).getState() == AccountState.neutral);
+
+		assertTrue("MockCustomer should have logged an event for withdrawal success, but his last event logged reads instead: " 
+				+ customer.log.getLastLoggedEvent().toString(), customer.log.containsString("Withdrawal succeeded"));
+
+		//Step 9: customer leaves bank
+		teller.msgLeavingBank(teller.getAccounts().get(0).getAccountNum());
+
+		//Step 9 post-conditions
+
+		assertEquals("Teller should have 0 accounts in list. It doesn't.", teller.getAccounts().size(), 0);
+
+		//Make sure unit tests don't affect real data
+		Phonebook.getPhonebook().getBank().accounts.remove(a);
 	}
 
-}
-	 */
+	public void testFourCustomerWantsWithdrawalNeedsLoanButDenied() {
+		try {
+			setUp();
+		}	catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		double withdrawAmt = 500;
+
+		//Create account in Phonebook.Bank's list of accounts to reference
+		Account a = new Account(customer);
+		double balance = 200;
+		a.balance = balance;
+		a.creditScore = 30;
+		a.accountNum = 4000;
+		a.processingMoney = withdrawAmt;
+		Phonebook.getPhonebook().getBank().accounts.add(a);
+
+		//check preconditions in teller's personal list of accounts
+		assertEquals("Teller should have 0 accounts in list. It doesn't.", teller.getAccounts().size(), 0);
+
+		//Step 1: Customer arrives and wants to withdraw
+		teller.msgINeedMoney(withdrawAmt, a.accountNum);
+
+		//Step 1 post-conditions
+		assertEquals("Teller should have 1 account in list. It doesn't.", teller.getAccounts().size(), 1);
+
+		assertTrue("New account should have the state 'withdrawing' ", 
+				teller.getAccounts().get(0).getState() == AccountState.withdrawing);
+
+
+		//Step 2: Call scheduler, should execute method "withdrawMoney"
+		assertFalse("Teller's scheduler should have returned false, but didn't.", 
+				teller.pickAndExecuteAnAction());
+
+		//Step 2 post-conditions	
+		assertTrue("MockCustomer should have logged an event for lack of account funds, but his last event logged reads instead: " 
+				+ customer.log.getLastLoggedEvent().toString(),
+				customer.log.containsString("Account balance is too low for a withdrawal. Must open loan."));
+
+		assertTrue("New account should have the state 'neutral' ", 
+				teller.getAccounts().get(0).getState() == AccountState.neutral);
+
+		//Step 3: customer messages to request loan
+		double desiredLoan = withdrawAmt*10;
+		teller.msgINeedALoan(desiredLoan, a.accountNum);
+
+		//Step 3 post-conditions
+		assertTrue("New account should have the state 'requestingLoan' ", 
+				teller.getAccounts().get(0).getState() == AccountState.requestingLoan);
+
+		//Step 4: Call scheduler, should execute method "requestLoan"
+		assertFalse("Teller's scheduler should have returned false, but didn't.", 
+				teller.pickAndExecuteAnAction());
+
+		//Step 4 post-conditions
+		assertTrue("New account should have the state 'waiting' ", 
+				teller.getAccounts().get(0).getState() == AccountState.waiting);
+
+		//Step 5: Loan officer messages -- loan denied
+		teller.msgThisLoanDenied(a, a.creditScore*10);
+
+		//Step 5 post-conditions
+		assertTrue("New account should have the state 'loanDenied' ", 
+				teller.getAccounts().get(0).getState() == AccountState.loanDenied);
+
+		//Step 6: Call scheduler, should execute method "denyLoan"
+		assertFalse("Teller's scheduler should have returned false, but didn't.", 
+				teller.pickAndExecuteAnAction());
+
+		//Step 6 post-conditions
+		assertTrue("New account should have the state 'neutral' ", 
+				teller.getAccounts().get(0).getState() == AccountState.neutral);
+
+		assertTrue("MockCustomer should have logged an event for poor credit score, but his last event logged reads instead: " 
+				+ customer.log.getLastLoggedEvent().toString(),
+				customer.log.containsString("Your credit score is too low for the requested loan."));
+
+		//Step 7: customer leaves bank
+		teller.msgLeavingBank(teller.getAccounts().get(0).getAccountNum());
+
+		//Step 7 post-conditions
+
+		assertEquals("Teller should have 0 accounts in list. It doesn't.", teller.getAccounts().size(), 0);
+
+		//Make sure unit tests don't affect real data
+		Phonebook.getPhonebook().getBank().accounts.remove(a);
+	}
+
+	public void testFiveCustomPaysOffLoan() {
+		try {
+			setUp();
+		}	catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		double loan = 500;
+		double creditScore = 70;
+		//Create account in Phonebook.Bank's list of accounts to reference
+		Account a = new Account(customer);
+		double balance = 200;
+		a.balance = balance;
+		a.creditScore = creditScore;
+		a.accountNum = 5000;
+		a.loan = loan;
+		a.processingMoney = loan;
+		Phonebook.getPhonebook().getBank().accounts.add(a);
+
+		//check preconditions in teller's personal list of accounts
+		assertEquals("Teller should have 0 accounts in list. It doesn't.", teller.getAccounts().size(), 0);
+
+		//Step 1: Customer arrives and wants to pay off loan
+		teller.msgPayingOffLoan(a.loan, a.accountNum);
+
+
+		//Step 1 post-conditions
+		assertEquals("Teller should have 1 account in list. It doesn't.", teller.getAccounts().size(), 1);
+
+		assertTrue("New account should have the state 'closingLoan' ", 
+				teller.getAccounts().get(0).getState() == AccountState.closingLoan);
+
+		//Step 2: Call scheduler, should execute method "closeLoan"
+		assertFalse("Teller's scheduler should have returned false, but didn't.", 
+				teller.pickAndExecuteAnAction());
+
+		//Step 2 post-conditions
+
+		//credit changes
+		assertEquals("Account credit score should have increased by 1/10 of the deposit amount",
+				teller.getAccounts().get(0).creditScore, creditScore + loan/10);
+
+		assertTrue("New account should have the state 'neutral' ", 
+				teller.getAccounts().get(0).getState() == AccountState.neutral);
+
+		assertTrue("MockCustomer should have logged an event for lack of account funds, but his last event logged reads instead: " 
+				+ customer.log.getLastLoggedEvent().toString(),
+				customer.log.containsString("Loan payed for and closed"));
+
+		//Step 3: customer leaves bank
+		teller.msgLeavingBank(teller.getAccounts().get(0).getAccountNum());
+
+		//Step 3 post-conditions
+
+		assertEquals("Teller should have 0 accounts in list. It doesn't.", teller.getAccounts().size(), 0);
+
+		//Make sure unit tests don't affect real data
+		Phonebook.getPhonebook().getBank().accounts.remove(a);
+	}
 }
