@@ -43,8 +43,7 @@ public class BankCustomerMock extends Mock implements BankCustomer {
 
 	@Override
 	public void msgYourLoanWasDenied(double processingMoney) {
-		// TODO Auto-generated method stub
-		
+		log.add(new LoggedEvent("Your credit score is too low for the requested loan."));
 	}
 
 	@Override

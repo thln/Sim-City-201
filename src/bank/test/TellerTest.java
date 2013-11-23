@@ -294,13 +294,12 @@ public class TellerTest extends TestCase
 		}
 
 		double withdrawAmt = 500;
-		double vault = Phonebook.getPhonebook().getBank().vault;
 
 		//Create account in Phonebook.Bank's list of accounts to reference
 		Account a = new Account(customer);
 		double balance = 200;
 		a.balance = balance;
-		a.creditScore = 70;
+		a.creditScore = 30;
 		a.accountNum = 4000;
 		a.processingMoney = withdrawAmt;
 		Phonebook.getPhonebook().getBank().accounts.add(a);
@@ -335,7 +334,7 @@ public class TellerTest extends TestCase
 		teller.msgINeedALoan(desiredLoan, a.accountNum);
 
 		//Step 3 post-conditions
-		assertTrue("New account should have the state 'withdrawing' ", 
+		assertTrue("New account should have the state 'requestingLoan' ", 
 				teller.getAccounts().get(0).getState() == AccountState.requestingLoan);
 
 		//Step 4: Call scheduler, should execute method "requestLoan"
@@ -346,14 +345,14 @@ public class TellerTest extends TestCase
 		assertTrue("New account should have the state 'waiting' ", 
 				teller.getAccounts().get(0).getState() == AccountState.waiting);
 
-		//Step 5: Loan officer messages -- loan approved
-		teller.msgThisLoanApproved(a);
+		//Step 5: Loan officer messages -- loan denied
+		teller.msgThisLoanDenied(a, a.creditScore*10);
 
 		//Step 5 post-conditions
-		assertTrue("New account should have the state 'loanApproved' ", 
-				teller.getAccounts().get(0).getState() == AccountState.loanApproved);
+		assertTrue("New account should have the state 'loanDenied' ", 
+				teller.getAccounts().get(0).getState() == AccountState.loanDenied);
 
-		//Step 6: Call scheduler, should execute method "approveLoan"
+		//Step 6: Call scheduler, should execute method "denyLoan"
 		assertFalse("Teller's scheduler should have returned false, but didn't.", 
 				teller.pickAndExecuteAnAction());
 
@@ -361,42 +360,14 @@ public class TellerTest extends TestCase
 		assertTrue("New account should have the state 'neutral' ", 
 				teller.getAccounts().get(0).getState() == AccountState.neutral);
 
-		assertEquals("Account's balance should have increased by desired loan amount",
-				teller.getAccounts().get(0).balance, balance+desiredLoan);	
-
-		assertTrue("MockCustomer should have logged an event for lack of account funds, but his last event logged reads instead: " 
+		assertTrue("MockCustomer should have logged an event for poor credit score, but his last event logged reads instead: " 
 				+ customer.log.getLastLoggedEvent().toString(),
-				customer.log.containsString("Loan approved. Try withdrawal again."));
+				customer.log.containsString("Your credit score is too low for the requested loan."));
 
-		//Step 7: Customer tries to withdraw again
-
-		teller.msgINeedMoney(withdrawAmt, a.accountNum);
-
-		//Step 7 post-conditions
-		assertEquals("Teller should have 1 account in list. It doesn't.", teller.getAccounts().size(), 1);
-
-		assertTrue("Account should have the state 'withdrawing' ", 
-				teller.getAccounts().get(0).getState() == AccountState.withdrawing);
-
-
-		//Step 8: Call scheduler, should execute method "withdrawMoney"
-		assertFalse("Teller's scheduler should have returned false, but didn't.", 
-				teller.pickAndExecuteAnAction());
-
-		//Step 8 post-conditions
-		assertEquals("Bank vault should be equal to the original vault amount minus withdrawal amount",
-				Phonebook.getPhonebook().getBank().vault, vault - withdrawAmt);	
-
-		assertTrue("New account should have the state 'neutral' ", 
-				teller.getAccounts().get(0).getState() == AccountState.neutral);
-
-		assertTrue("MockCustomer should have logged an event for withdrawal success, but his last event logged reads instead: " 
-				+ customer.log.getLastLoggedEvent().toString(), customer.log.containsString("Withdrawal succeeded"));
-
-		//Step 9: customer leaves bank
+		//Step 7: customer leaves bank
 		teller.msgLeavingBank(teller.getAccounts().get(0).getAccountNum());
 
-		//Step 9 post-conditions
+		//Step 7 post-conditions
 
 		assertEquals("Teller should have 0 accounts in list. It doesn't.", teller.getAccounts().size(), 0);
 
