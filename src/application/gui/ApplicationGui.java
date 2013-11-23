@@ -105,13 +105,55 @@ public class ApplicationGui extends JFrame {
             public ControlPanel(final TracePanel tracePanel) 
             {
                     this.tp = tracePanel;
-                    messagesButton = new JButton("Hide Level: MESSAGE");
-                    errorButton = new JButton("Hide Level : ERROR");
-                    restaurantMessagesButton = new JButton("Hide Tag: RESTAURANT");
-                    bankMessagesButton = new JButton("Hide Tag: BANK");
-                    housingMessagesButton = new JButton("Hide Tag: HOUSING");
-                    marketMessagesButton = new JButton("Hide Tag: MARKET");
-                    generalCityMessagesButton = new JButton("Hide Tag: GENERAL CITY");
+                    messagesButton = new JButton("Hide Level: MESSAGE")
+                    {
+                        {
+                            setSize(200, 25);
+                            setMaximumSize(getSize());
+                        }
+                    };
+                    errorButton = new JButton("Hide Level : ERROR")
+                    {
+                        {
+                            setSize(200, 25);
+                            setMaximumSize(getSize());
+                        }
+                    };
+                    restaurantMessagesButton = new JButton("Hide Tag: RESTAURANT")
+                    {
+                        {
+                            setSize(200, 25);
+                            setMaximumSize(getSize());
+                        }
+                    };
+                    bankMessagesButton = new JButton("Hide Tag: BANK")
+                    {
+                        {
+                            setSize(200, 25);
+                            setMaximumSize(getSize());
+                        }
+                    };
+                    housingMessagesButton = new JButton("Hide Tag: HOUSING")
+                    {
+                        {
+                            setSize(200, 25);
+                            setMaximumSize(getSize());
+                        }
+                    };
+                    marketMessagesButton = new JButton("Hide Tag: MARKET")
+                    {
+                        {
+                            setSize(200, 25);
+                            setMaximumSize(getSize());
+                        }
+                    };
+                    generalCityMessagesButton = new JButton("Hide Tag: GENERAL CITY")
+                    {
+                        {
+                            setSize(200, 25);
+                            setMaximumSize(getSize());
+                        }
+                    };
 
                    messagesButton.addActionListener(new ActionListener() 
                    {
