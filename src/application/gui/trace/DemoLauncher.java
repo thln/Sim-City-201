@@ -244,14 +244,44 @@ public class DemoLauncher extends JFrame {
                         this.tp = tracePanel;
                         //enableMessagesButton = new JButton("Show Level: MESSAGE");
                         //disableMessagesButton = new JButton("Hide Level: MESSAGE");
-                        MessagesButton = new JButton("Hide Level: MESSAGE");
-                        enableErrorButton = new JButton("Show Level: ERROR");
-                        disableErrorButton = new JButton("Hide Level: ERROR");
-                        enableBankCustTagButton = new JButton("Show Tag: BANK_CUSTOMER");
-                        disableBankCustTagButton = new JButton("Hide Tag: BANK_CUSTOMER");
+                        MessagesButton = new JButton("Hide Level: MESSAGE")
+                        {
+                            {
+                                setSize(200, 25);
+                                setMaximumSize(getSize());
+                            }
+                        };
+                        enableErrorButton = new JButton("Show Level: ERROR")
+                        {
+                            {
+                                setSize(200, 20);
+                                setMaximumSize(getSize());
+                            }
+                        };
+                        disableErrorButton = new JButton("Hide Level: ERROR")
+                        {
+                            {
+                                setSize(200, 25);
+                                setMaximumSize(getSize());
+                            }
+                        };
+                        enableBankCustTagButton = new JButton("Show Tag: BANK_CUSTOMER")
+                        {
+                            {
+                                setSize(200, 25);
+                                setMaximumSize(getSize());
+                            }
+                        };
+                        disableBankCustTagButton = new JButton("Hide Tag: BANK_CUSTOMER")
+                        {
+                            {
+                                setSize(200, 25);
+                                setMaximumSize(getSize());
+                            }
+                        };
                         
                         //MessagesButton.setSize(40, 10);
-                        MessagesButton.setPreferredSize(new Dimension(40,10));
+                        //MessagesButton.setPreferredSize(new Dimension(50,50));
                         
                         MessagesButton.addActionListener(new ActionListener() {
                             @Override
