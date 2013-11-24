@@ -24,13 +24,10 @@ import application.gui.trace.TracePanel;
 //import application.gui.trace.DemoLauncher.ControlPanel;
 
 public class ApplicationGui extends JFrame {
-<<<<<<< HEAD
-	
-	static Application app = new Application();
-=======
+
 
 	Application app = new Application();
->>>>>>> master
+
 	ApplicationPanel appPanel; 
 	AnimationPanel animPanel = new AnimationPanel();
 
@@ -84,7 +81,7 @@ public class ApplicationGui extends JFrame {
 		bankCust.updateTime(8);
 <<<<<<< HEAD
 		*/
-        app = new Application();
+       // app = new Application();
     }
 	
 	
@@ -161,11 +158,9 @@ public class ApplicationGui extends JFrame {
                             setMaximumSize(getSize());
                         }
                     };
-=======
-		 */
+
 		//simcity201 = new Application();
 	}
->>>>>>> master
 
 
 	//CONTROL PANEL CLASS
@@ -488,3 +483,4 @@ public class ApplicationGui extends JFrame {
 //			}
 //		}
 	}
+}

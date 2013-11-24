@@ -124,51 +124,7 @@ public class Application extends JPanel {
 	//	m.setHome(allHousing.get(allHousing.size() - 1));
 		allHousing.add(new Housing(t, allHousing.size(), "Mansion"));
 		t.setHome(allHousing.get(allHousing.size() - 1));
-		
-		
-<<<<<<< HEAD
-		//Starting Thread
-		a.startThread();
-		b.startThread();
-		c.startThread();
-		//	d.startThread();
-		e.startThread();
-		f.startThread();
-		g.startThread();
-		h.startThread();
-		i.startThread();
-		j.startThread();
-		k.startThread();
-		//	l.startThread();
-		//m.startThread();
-		t.startThread();
-		v.startThread();
-		w.startThread();
 
-
-//
-//		b.updateTime(800);
-//		c.updateTime(800);
-//		a.updateTime(800);
-//		m.updateTime(900);
-	}
-	
-//	public Application() 
-//	{
-//		//sampleProgram();
-//
-//	}
-//
-//	public void sampleProgram() {
-//		//Worker(String name, int money, String jobTitle, int startT, int lunchT, int endT);
-//		//Standard Workers
-//
-//		Phonebook.getPhonebook().setBank(bank);
-//		Phonebook.getPhonebook().setMarket(market);
-//		Phonebook.getPhonebook().setRestaurant(restaurant);
-//		Phonebook.getPhonebook().setHousing(allHousing);
-		//add list of things here
-=======
 		allHousing.add(new Housing(bank2a, allHousing.size(), "Apartment"));
 		bank2a.setHome(allHousing.get(allHousing.size() - 1));
 		allHousing.add(new Housing(bank2b, allHousing.size(), "Apartment"));
@@ -192,7 +148,7 @@ public class Application extends JPanel {
 		allHousing.add(new Housing(rest2k, allHousing.size(), "Apartment"));
 		rest2k.setHome(allHousing.get(allHousing.size() - 1));
 		
->>>>>>> master
+
 		
 		//Adding to Vector
 		population.add(bank1a);
