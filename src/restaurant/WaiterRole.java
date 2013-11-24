@@ -171,82 +171,99 @@ public class WaiterRole extends Role implements Waiter{
 	/**
 	 * Scheduler
 	 */
-	public boolean pickAndExecuteAnAction() {
+	public boolean pickAndExecuteAnAction() 
+	{
 
 		//if an order is ready, deliver it
 
-		if (state == breakStatus.askedToGoOnBreak) {
+		if (state == breakStatus.askedToGoOnBreak) 
+		{
 			//print("Scheduled to ask for break");
 			askToGoOnBreak();
 			return true;
 		}
 
-		if ((PermissionToBreak == false) && (state == breakStatus.receivedReply)) {
+		if ((PermissionToBreak == false) && (state == breakStatus.receivedReply)) 
+		{
 			breakDenied();
 			return true;
 		}
 
-		if ((myCustomers.isEmpty()) && (PermissionToBreak == true) && (state == breakStatus.receivedReply)) {
+		if ((myCustomers.isEmpty()) && (PermissionToBreak == true) && (state == breakStatus.receivedReply)) 
+		{
 			goOnBreak();
 			return true;
 		}
 
-		if (state == breakStatus.goOffBreak) {
+		if (state == breakStatus.goOffBreak) 
+		{
 			goOffBreak();
 			return true;
 		}
 
-		synchronized(readyOrders) {
-			while (!readyOrders.isEmpty()) {
+		synchronized(readyOrders) 
+		{
+			while (!readyOrders.isEmpty()) 
+			{
 				deliverOrder();
 				return true;
 			}
 		}
 
 		try {
-			for (myCustomer myCust : myCustomers) {
-				if (myCust.isFinished()) {
+			for (myCustomer myCust : myCustomers) 
+			{
+				if (myCust.isFinished()) 
+				{
 					clearTable(myCust);
 					return true;
 				}
 
 				//if a customer is waiting
-				if (myCust.isWaiting()) {
-					if (isInLobby == true) {
+				if (myCust.isWaiting()) 
+				{
+					if (isInLobby == true) 
+					{
 						seatCustomer(myCust);
 						return true;
 					}
 					return true;
 				} //return true to the abstract agent to re-invoke the scheduler.
 
-				if (myCust.isReadyToOrder()) {
+				if (myCust.isReadyToOrder()) 
+				{
 					takeOrder(myCust);
 					return true;
 				}
 
-				if (myCust.isOrdered()) {
+				if (myCust.isOrdered()) 
+				{
 					placeOrder(myCust);
 					return true;
 				}
 
-				if (myCust.isReorder()) {
+				if (myCust.isReorder()) 
+				{
 					retakeOrder(myCust);
 					return true;
 				}
 
-				if (myCust.isWantCheck()) {
+				if (myCust.isWantCheck()) 
+				{
 					giveCheck(myCust);
 					return true;
 				}
 			}
 		}
-		catch (ConcurrentModificationException e) {
+		catch (ConcurrentModificationException e) 
+		{
 			e.printStackTrace();
 			stateChanged();
 			return false;
 		}
 		
-		if (leaveRole){
+		if (leaveRole)
+		{
 			((Worker) person).roleFinishedWork();
 			leaveRole = false;
 			return true;

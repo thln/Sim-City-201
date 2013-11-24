@@ -1,12 +1,13 @@
 package restaurant.test;
 
-import bank.BankGuardRole;
+//import bank.BankGuardRole;
 import application.Phonebook;
-import person.Role.RoleState;
+//import person.Role.RoleState;
 import person.Worker;
 import restaurant.AltWaiterRole;
 import restaurant.CookRole;
 import restaurant.RevolvingStand;
+//import restaurant.RevolvingStand;
 import restaurant.myCustomer.customerState;
 import restaurant.test.mock.MockCustomer;
 import junit.framework.TestCase;
@@ -41,7 +42,7 @@ public class AlternativeWaiterTest extends TestCase
         person2 = new Worker("testCook", 200, "cook", "restaurant", 800, 1200, 1500);
 		altWaiter = new AltWaiterRole ( person1, person1.getName(), "Alternative Waiter");
 		cook = new CookRole(person2, person2.getName(), "cook", Phonebook.getPhonebook().getRestaurant());
-		//rs = Phonebook.getPhonebook().getRestaurant().theRevolvingStand;
+		rs = Phonebook.getPhonebook().getRestaurant().theRevolvingStand;
 		//cook = new MockCook("mockcook");
 	}
 	
@@ -65,6 +66,8 @@ public class AlternativeWaiterTest extends TestCase
 			e.printStackTrace();
 		}
 		//person3.prepareForWork();
+	
+		//assertTrue("This is the error", false);
 		
 		assertEquals("Person 1's job Title should be Alternative Waiter. It isn't.", "alternative waiter", person1.getJob().title);
 		assertEquals("Person 2's job Title should be Cook. It isn't.","cook", person2.getJob().title);
@@ -74,7 +77,7 @@ public class AlternativeWaiterTest extends TestCase
 		//Should not be in worker role yet
 		assertEquals("Person 1's worker Role should not be active. It is.", null, person1.getWorkerRole());
 		assertEquals("Person 2's worker Role should not be active. It is.", null, person2.getWorkerRole());
-
+		
 		//assertTrue("There should be no waiters in the host's list of waiters. There are.",Phonebook.getPhonebook().getRestaurant().hostRole.waiters.isEmpty());
 		//assertEquals("There should be no cook in the restaurant. There is.",Phonebook.getPhonebook().getRestaurant().cookRole.getPerson(), null);
 		
@@ -93,36 +96,36 @@ public class AlternativeWaiterTest extends TestCase
 		assertTrue("The waiter's list of customers should be empty. It isn't.", altWaiter.myCustomers.isEmpty());
 		assertTrue("The cook's list of orders should be empty. It isn't.", cook.myOrders.isEmpty());
 		assertTrue("The revolving stand's list of orders should be empty. It isn't.", Phonebook.getPhonebook().getRestaurant().getRevolvingStand().isStandEmpty());
-
 		
 		//altWaiter = Phonebook.getPhonebook().getRestaurant().hostRole.waiters.get(0).waiterRole;
 		//altWaiter.msgPleaseSeatCustomer(tableNumber, customer, xHome, yHome);
 		
 		altWaiter.msgPleaseSeatCustomer(0, customer, 0, 0);
 		//altWaiter.msgHeresMyOrder(customer, "Steak");
-		
 		assertEquals("The waiter's list of customers should be 1. It isn't.", 1, altWaiter.myCustomers.size());
 		//assertEquals("The first order on the waiter's list should be steak. It isn't.", "Steak", altWaiter.readyOrders.get(1).choice);
 		//assertTrue("The waiter's list of customers should still be empty. It isn't.", altWaiter.myCustomers.isEmpty());
 		assertTrue("The cook's list of orders should be empty. It isn't.", cook.myOrders.isEmpty());
 		assertEquals("The customer's state should be Waiting. It isn't.", customerState.Waiting, altWaiter.myCustomers.get(0).state );
 		assertTrue("The revolving stand's list of orders should be empty. It isn't.", Phonebook.getPhonebook().getRestaurant().getRevolvingStand().isStandEmpty());
-
 		
 		altWaiter.msgHeresMyOrder(customer, "steak");
 		
 		assertTrue("The cook's list of orders should be empty. It isn't.", cook.myOrders.isEmpty());
 		assertEquals("The customer's state should be Waiting. It isn't.", customerState.Ordered, altWaiter.myCustomers.get(0).state );
 		assertTrue("The revolving stand's list of orders should be empty. It isn't.", Phonebook.getPhonebook().getRestaurant().getRevolvingStand().isStandEmpty());
-
 		
+		//WHY ISNT PICK AND EXECUTING NOT WORKINGGGGGGGGGGG
 		assertTrue("Alternative Waiter's PickAndExecuteAction should have returned true. It didn't.", altWaiter.pickAndExecuteAnAction());
 
+		assertTrue("This is the error", false);
+		
 		assertEquals("The waiter's list of customers should be 1. It isn't.", 1, altWaiter.myCustomers.size());
 		assertTrue("The cook's list of orders should be empty. It isn't.", cook.myOrders.isEmpty());
 		assertEquals("The customer's state should be Waiting. It isn't.", customerState.Ordered, altWaiter.myCustomers.get(0).state);
 		assertEquals("The revolving stand's list of orders should be 1. It isn't.", 1, Phonebook.getPhonebook().getRestaurant().getRevolvingStand().getSize());
 
+		assertTrue("You reached the end", false);
 	}
 	
 	/**
@@ -130,8 +133,8 @@ public class AlternativeWaiterTest extends TestCase
 	 * if there are two orders placed on the revolving stand the chef will take
 	 * the orders in the correct sort and remove them accordingly 
 	 */
-	public void testNormativeScenarioTwo()
-	{
+	//public void testNormativeScenarioTwo()
+	//{
 		
-	}
+	//}
 }
