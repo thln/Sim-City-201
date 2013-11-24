@@ -36,7 +36,7 @@ public class Phonebook{
 		bank = new Bank("Bank");
 		market = new Market("Market");
 		restaurant = new Restaurant("Restaurant");
-		housingMaintenanceCompany = new HousingMaintenanceCompany("Housing Maintenance Company");
+		housingMaintenanceCompany = new HousingMaintenanceCompany("Housing maintenance company");
 	}
 	
 	public static Phonebook getPhonebook() 

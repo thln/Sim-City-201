@@ -211,15 +211,18 @@ public class Worker extends Person {
                 return;
         }
 
-        public void setWorkerRole(Role workerRole) {
+        public void setWorkerRole(Role workerRole) 
+        {
                 this.workerRole = workerRole;
         }
 
-        public Role getWorkerRole() {
+        public Role getWorkerRole() 
+        {
                 return workerRole;
         }
 
-                public Job getJob() {
+                public Job getJob() 
+                {
                         return myJob;
                 }
 }
