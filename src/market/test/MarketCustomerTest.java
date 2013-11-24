@@ -1,7 +1,6 @@
 package market.test;
 
 import person.Wealthy;
-import person.Worker;
 import market.MarketCustomerRole;
 import market.test.mock.MockSalesPerson;
 import junit.framework.*;
