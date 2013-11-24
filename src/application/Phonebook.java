@@ -8,11 +8,13 @@ import bank.Bank;
 import market.Market;
 import restaurant.Restaurant;
 
-public class Phonebook {
+public class Phonebook{
 
-	private Bank bank;
-	private Market market;
+	static private Bank bank;
+	static private Market market;
+	//mockmarket
 	private Restaurant restaurant;
+	//mockrestaurant
 
 	public List<Housing> publicAllHousing; //= Collections.synchronizedList(new ArrayList<Housing>());
 
@@ -28,7 +30,7 @@ public class Phonebook {
 	private static Phonebook phonebook;
 
 	private Phonebook() {
-		bank = new Bank(null);
+		bank = new Bank("Bank");
 		market = new Market("Market");
 		restaurant = new Restaurant("Restaurant");
 	}
@@ -44,11 +46,11 @@ public class Phonebook {
 	}
 
 	public Bank getBank() {
-		return bank;
+			return bank;
 	}
 
 	public void setBank(Bank bank) {
-		this.bank = bank;
+		Phonebook.bank = bank;
 	}
 
 	public Market getMarket() {
@@ -56,7 +58,7 @@ public class Phonebook {
 	}
 
 	public void setMarket(Market market) {
-		this.market = market;
+		Phonebook.market = market;
 	}
 
 	public Restaurant getRestaurant() {

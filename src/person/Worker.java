@@ -121,11 +121,11 @@ public class Worker extends Person {
                         if (!hasFoodInFridge) {
                                 if (money <= moneyMinThreshold) { 
                                         //This if says go to the business if it is open and at least 1 hour before closing time
-                                        if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getBank().openTime.hour) &&
-                                                        (TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getBank().closeTime.hour)) {
+                                       // if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getBank().openTime.hour) &&
+                                                     //   (TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getBank().closeTime.hour)) {
                                                 prepareForBank();
                                                 return true;
-                                        }
+                                       // }
                                 }
                                 else { //if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getRestaurant().openTime.hour) &&
                                                 //(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getRestaurant().closeTime.hour)) {
@@ -151,11 +151,11 @@ public class Worker extends Person {
                 //Market Related
                 if (!hasFoodInFridge || carStatus == CarState.wantsCar) {
                         if (money <= moneyMinThreshold && !hasFoodInFridge) {
-                                if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getBank().openTime.hour) &&
-                                                (TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getBank().closeTime.hour)) {
+                               // if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getBank().openTime.hour) &&
+                                             //   (TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getBank().closeTime.hour)) {
                                         prepareForBank();
                                         return true;
-                                }
+                             //   }
                         }
                         else {
                                 if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getMarket().openTime.hour) &&
