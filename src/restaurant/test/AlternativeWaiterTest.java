@@ -1,6 +1,7 @@
 package restaurant.test;
 
 //import bank.BankGuardRole;
+import junit.framework.TestCase;
 import application.Phonebook;
 //import person.Role.RoleState;
 import person.Worker;
@@ -10,7 +11,6 @@ import restaurant.RevolvingStand;
 //import restaurant.RevolvingStand;
 import restaurant.myCustomer.customerState;
 import restaurant.test.mock.MockCustomer;
-import junit.framework.TestCase;
 /**
  * Alternative Waiter Test
  * @author Tam Henry Le Nguyen
