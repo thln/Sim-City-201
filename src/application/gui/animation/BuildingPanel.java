@@ -19,7 +19,7 @@ import application.gui.animation.agentGui.*;
 
 public class BuildingPanel extends JPanel implements ActionListener {
 
-    private final int WINDOWX = 570;
+    private final int WINDOWX = 590;
     private final int WINDOWY = 360;
  
     private String name;
@@ -34,6 +34,8 @@ public class BuildingPanel extends JPanel implements ActionListener {
         setLayout(null);
         name = buildName;
         myCity = ap;
+        Timer timer = new Timer(20, this );
+    	timer.start();
     }
 
 	public void actionPerformed(ActionEvent e) {
@@ -63,6 +65,8 @@ public class BuildingPanel extends JPanel implements ActionListener {
         	g.drawString("", 10, 10);
         else
         	g.drawString(name, 10, 10);
+        
+        //different layouts based on their type       
         g2.setColor(Color.BLACK);
         
         if (name.toLowerCase().contains("restaurant")) {
@@ -183,27 +187,35 @@ public class BuildingPanel extends JPanel implements ActionListener {
             
         }
         else if (name.toLowerCase().contains("market")) {
-        	g.drawString("Inventory",WINDOWX/2, 60 );
+        	g2.drawString("Inventory",WINDOWX/2, 60 );
         	g2.fillRect(0, 80, WINDOWX - 100, 10); //inventory
+        	g2.fillRect(90, 125, WINDOWX/2+20, 10); //table top
         	g2.setColor(Color.CYAN);
-        	g2.fillRect(100, 125, WINDOWX/2, 20); //table
+        	g2.fillRect(100, 135, WINDOWX/2, 40); //table bottom
         }
         else if (name.toLowerCase().contains("house")) {
         	
         }
         else if (name.toLowerCase().contains("bank")) {
         	g2.fillRect(WINDOWX - 100, 0, 20, WINDOWY*3/4);
-        	for (int j=0; j<4;j++)
-        	g2.fillRect(WINDOWX - 100, 50*(j+1), 100, 10);
-        	g2.fillRect(WINDOWX/4, WINDOWY/2, 10, 50); //back of chair
+        	
+        	//chair to sit at loan officer
+        	g2.fillRect(WINDOWX/4, WINDOWY/2, 10, 60); //back of chair
         	g2.fillRect(WINDOWX/4 -20, WINDOWY/2, 20, 10);
-        	g2.fillRect(WINDOWX/4 -20, WINDOWY/2+40, 20, 10);
+        	g2.fillRect(WINDOWX/4 -20, WINDOWY/2+50, 20, 10);
+        	
+        	for (int j=1; j<5;j++) {
+        		g2.setColor(Color.BLACK);
+        		g2.fillRect(WINDOWX - 100, 50*j, 100, 10); //teller windows
+        		g2.setColor(Color.RED);
+        		g2.drawString(""+j,WINDOWX - 95, 50*j);
+        	}
         	
         	//Vault
         	g2.setColor(Color.CYAN);
         	g2.fillRect(10, 10, 150, 100);
         	g2.setColor(Color.BLACK);
-        	g.drawString("Bank Vault", 50, 50);
+        	g2.drawString("Bank Vault", 50, 50);
         }
         
         for(Gui gui : guis) {
@@ -228,12 +240,7 @@ public class BuildingPanel extends JPanel implements ActionListener {
     	return name;
     }
     
-    /*public void addGui(Gui gui) {
-        guis.add(gui);
-        
-    }*/
-    
-    public void addGui(MarketCustomerGui gui) {
+    public void addGui(Gui gui) {
         guis.add(gui);
         
     }

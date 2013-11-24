@@ -1,13 +1,13 @@
 package application.gui.animation.agentGui;
 
-import housing.*;
+//import housing.\*;
 
 import java.awt.*;
 import javax.swing.*;
 
 public class HouseLandlordGui implements Gui{
 
-	private MaintenanceWorker agent = null;
+	//private MaintenanceWorker agent = null;
 	private boolean isPresent = true;
 
 	//RestaurantGui gui;
@@ -21,8 +21,8 @@ public class HouseLandlordGui implements Gui{
 	private enum CustomerState {nothing};
 	CustomerState state = CustomerState.nothing;
 
-	public HouseLandlordGui(MaintenanceWorker c/*, RestaurantGui gui*/){
-		agent = c;
+	public HouseLandlordGui(/*MaintenanceWorker c, RestaurantGui gui*/){
+		//agent = c;
 		xPos = -20;
 		yPos = -20;
 		//this.gui = gui;
@@ -66,5 +66,8 @@ public class HouseLandlordGui implements Gui{
     }
 	
 	//Actions
-	
+    public void DoExit() {
+    	xDestination = 300;
+    	yDestination = 360;
+    }
 }

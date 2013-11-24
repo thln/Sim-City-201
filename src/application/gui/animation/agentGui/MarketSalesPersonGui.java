@@ -1,13 +1,13 @@
 package application.gui.animation.agentGui;
 
-import market.*;
+//import market.\*;
 
 import java.awt.*;
 import javax.swing.*;
 
 public class MarketSalesPersonGui implements Gui{
 
-	private SalesPersonRole agent = null;
+	//private SalesPersonRole agent = null;
 	private boolean isPresent = true;
 
 	//RestaurantGui gui;
@@ -20,12 +20,9 @@ public class MarketSalesPersonGui implements Gui{
 
 	private enum CustomerState {nothing};
 	CustomerState state = CustomerState.nothing;
-	
-	public MarketSalesPersonGui() {
-	}
 
-	public MarketSalesPersonGui(SalesPersonRole c/*, RestaurantGui gui*/){
-		agent = c;
+	public MarketSalesPersonGui(/*SalesPersonRole c, RestaurantGui gui*/){
+		//agent = c;
 		//this.gui = gui;
 	}
 
@@ -67,5 +64,8 @@ public class MarketSalesPersonGui implements Gui{
     }
 	
 	//Actions
-	
+    public void DoExit() {
+    	xDestination = 300;
+    	yDestination = 360;
+    }
 }
