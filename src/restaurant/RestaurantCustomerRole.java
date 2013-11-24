@@ -225,7 +225,7 @@ public class RestaurantCustomerRole extends Role {
 	 */
 	private void goToRestaurant() {
 		state = AgentState.WaitingInRestaurant;
-		System.out.println("Going to restaurant");
+		print("Going to restaurant");
 		hostRole.msgIWantFood(this, xHome, yHome);
 	}
 	
