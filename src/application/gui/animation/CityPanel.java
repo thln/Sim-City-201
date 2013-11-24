@@ -53,9 +53,10 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		setPreferredSize(new Dimension(WINDOWX, WINDOWY));
 		setMaximumSize(new Dimension(WINDOWX,WINDOWY));
 		setMinimumSize(new Dimension(WINDOWX, WINDOWY));
+		setBorder(BorderFactory.createLoweredBevelBorder());
 		setVisible(true);
 		setLayout(null);
-		setBorder(BorderFactory.createTitledBorder("Los Angeles"));
+		
 
 		try {
 			background = ImageIO.read(new File("docs/concrete.jpg"));
