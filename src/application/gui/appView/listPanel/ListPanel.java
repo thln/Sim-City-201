@@ -3,7 +3,7 @@ package application.gui.appView.listPanel;
 import javax.swing.*;
 
 import person.Crook;
-import person.DeadBeat;
+import person.Deadbeat;
 import person.Person;
 import person.Wealthy;
 import person.Worker;
