@@ -5,17 +5,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Vector;
-import java.io.*;
-
-import javax.imageio.*;
-
-import java.awt.image.BufferedImage;
-
-import application.gui.animation.agentGui.*;
 
 public class AnimationPanel extends JPanel implements MouseListener {
 
@@ -25,16 +14,6 @@ public class AnimationPanel extends JPanel implements MouseListener {
 	CityPanel cityPanel;
 	JPanel buildingPanels;
 	CardLayout cardLayout;
-
-	//	CityPanel cityPanel = new CityPanel();
-	//	JPanel buildingView = new JPanel();
-	//    CardLayout cardLayout = new CardLayout();
-	//    List<Building> buildings;
-
-	//testing mechanisms
-	//    JButton testbutton = new JButton("test");
-	//    JButton testbutton2 = new JButton("test2");
-	//    MarketUPSmanGui market = new MarketUPSmanGui();
 
 	public AnimationPanel() {
 		setVisible(true);
@@ -51,18 +30,22 @@ public class AnimationPanel extends JPanel implements MouseListener {
 		cardLayout = new CardLayout();
 
 		buildingPanels = new JPanel();
-		buildingPanels.setLayout( cardLayout );
+		buildingPanels.setLayout(cardLayout);
 		buildingPanels.setMinimumSize(new Dimension(WINDOWX, WINDOWY));
 		buildingPanels.setMaximumSize(new Dimension(WINDOWX, WINDOWY));
 		buildingPanels.setPreferredSize(new Dimension(WINDOWX, WINDOWY));
 
+		//Adding a blank building panel
+		BuildingPanel blank = new BuildingPanel("Blank", this);
+		buildingPanels.add(blank, blank.getName());
+		
 		//Create the BuildingPanel for each Building object
 		ArrayList<Building> buildings = cityPanel.getBuildings();
 		for ( int i=0; i<buildings.size(); i++ ) {
 			Building b = buildings.get(i);
 			BuildingPanel bp = new BuildingPanel(b.getName(), this );
-			b.setBuildingPanel(bp);
-			buildingPanels.add(bp);
+			b.setMyBuildingPanel(bp);
+			buildingPanels.add(bp, bp.getName());
 
 			add(BorderLayout.NORTH, cityPanel);
 			add(BorderLayout.SOUTH, buildingPanels);
@@ -73,7 +56,22 @@ public class AnimationPanel extends JPanel implements MouseListener {
 		System.out.println("Showing panel: " + bp.getName());
 		cardLayout.show(buildingPanels, bp.getName());
 	}
+	
+	public void displayBlankBuildingPanel() {
+		System.out.println("Showing panel: Blank");
+		cardLayout.show(buildingPanels, "Blank");
+	}
 
+	//	CityPanel cityPanel = new CityPanel();
+	//	JPanel buildingView = new JPanel();
+	//    CardLayout cardLayout = new CardLayout();
+	//    List<Building> buildings;
+
+	//testing mechanisms
+	//    JButton testbutton = new JButton("test");
+	//    JButton testbutton2 = new JButton("test2");
+	//    MarketUPSmanGui market = new MarketUPSmanGui();
+	
 	//=======
 	//	//here we have the main city view
 	//	cityPanel.setBounds(10, 20, WINDOWX, WINDOWY); //x & y positions in animation panel, x & y sizes
