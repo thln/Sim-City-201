@@ -30,9 +30,9 @@ public class ApplicationGui extends JFrame {
 
 	ApplicationPanel appPanel; 
 	AnimationPanel animPanel = new AnimationPanel();
-
-	//  ControlPanel controlPanel;
 	//TracePanel tracePanel;
+	//ControlPanel controlPanel;
+	
 
 	final static int WINDOWX = 1200;
 	final static int WINDOWY = 800;
