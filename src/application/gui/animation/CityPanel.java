@@ -41,10 +41,10 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 
 	BufferedImage background = null;
 
-	ImageIcon bank = new ImageIcon("src/resources/bank.png", "bank");
-	ImageIcon restaurant = new ImageIcon("src/resources/restaurant.png", "restaurant");
-	ImageIcon market = new ImageIcon("src/resources/market.png", "market");
-	ImageIcon house = new ImageIcon("src/resources/house.png", "house");
+	ImageIcon bank = new ImageIcon("docs/bank.png", "bank");
+	ImageIcon restaurant = new ImageIcon("docs/restaurant.png", "restaurant");
+	ImageIcon market = new ImageIcon("docs/market.png", "market");
+	ImageIcon house = new ImageIcon("docs/house.png", "house");
 
 	public CityPanel(AnimationPanel animationPanel) {
 
@@ -68,8 +68,8 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		addBuilding("Bank", 20, 170);
 		addBuilding("House", 20, 250);
 		
-		Timer timer = new Timer(20, this );
-    	timer.start();
+//		Timer timer = new Timer(20, this );
+//    	timer.start();
 	}
 
 	public void paintComponent(Graphics g) {

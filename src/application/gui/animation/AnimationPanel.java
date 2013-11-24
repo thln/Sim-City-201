@@ -59,15 +59,15 @@ public class AnimationPanel extends JPanel implements MouseListener {
 		}
 		
 		
-		testGuis();
-		
-		//testing mechanisms
-		testbutton.addMouseListener(this);
-    	testbutton.setSize(100, 50);
-    	cityPanel.add(testbutton);
-    	testbutton2.addMouseListener(this);
-    	testbutton2.setBounds(100, 0, 100, 50);
-    	cityPanel.add(testbutton2);
+//		testGuis();
+//		
+//		//testing mechanisms
+//		testbutton.addMouseListener(this);
+//    	testbutton.setSize(100, 50);
+//    	cityPanel.add(testbutton);
+//    	testbutton2.addMouseListener(this);
+//    	testbutton2.setBounds(100, 0, 100, 50);
+//    	cityPanel.add(testbutton2);
     	
 	}
 
