@@ -15,7 +15,8 @@ import person.Person;
 import person.Role;
 import person.Worker;
 
-public class Bank{
+public class Bank
+{
 
 	//Data
 	String name;

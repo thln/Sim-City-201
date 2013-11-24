@@ -142,24 +142,29 @@ public class Worker extends Person {
                 }
 
                 //Bank Related
-                if (money <= moneyMinThreshold || money >= moneyMaxThreshold) {
+                if (money <= moneyMinThreshold || money >= moneyMaxThreshold) 
+                {
                         prepareForBank();
                         return true;
                 }
 
 
                 //Market Related
-                if (!hasFoodInFridge || carStatus == CarState.wantsCar) {
-                        if (money <= moneyMinThreshold && !hasFoodInFridge) {
+                if (!hasFoodInFridge || carStatus == CarState.wantsCar) 
+                {
+                        if (money <= moneyMinThreshold && !hasFoodInFridge) 
+                        {
                                // if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getBank().openTime.hour) &&
                                              //   (TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getBank().closeTime.hour)) {
                                         prepareForBank();
                                         return true;
                              //   }
                         }
-                        else {
+                        else 
+                        {
                                 if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getMarket().openTime.hour) &&
-                                                (TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getMarket().closeTime.hour)) {
+                                                (TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getMarket().closeTime.hour)) 
+                                {
                                         prepareForMarket();
                                         return true;
                                 }
@@ -175,37 +180,49 @@ public class Worker extends Person {
         //Actions
         public void prepareForWork() {
 
-                if (myJob.jobPlace == "bank") {
+                if (myJob.jobPlace == "bank") 
+                {
                         workerRole = Phonebook.getPhonebook().getBank().arrivedAtWork(this, myJob.title);
                         workerRole.setRoleActive();
                         return;
                 }
 
-                if (myJob.jobPlace == "market") {
+                if (myJob.jobPlace == "market") 
+                {
                         workerRole = Phonebook.getPhonebook().getMarket().arrivedAtWork(this, myJob.title);
                         workerRole.setRoleActive();
                         return;
                 }
 
-                if (myJob.jobPlace == "restaurant") {
+                if (myJob.jobPlace == "restaurant") 
+                {
                         workerRole = Phonebook.getPhonebook().getRestaurant().arrivedAtWork(this, myJob.title);
                         workerRole.setRoleActive();
                         return;
+                }
+                if (myJob.jobPlace == "housing maintenance company")
+                {
+                	workerRole = Phonebook.getPhonebook().getHousingMaintenanceCompany().arrivedAtWork(this, myJob.title);
+                	workerRole.setRoleActive();
+                	return;
                 }
                 //need to put in maintenance role
 
                 return;
         }
 
-        public void setWorkerRole(Role workerRole) {
+        public void setWorkerRole(Role workerRole) 
+        {
                 this.workerRole = workerRole;
         }
 
-        public Role getWorkerRole() {
+        public Role getWorkerRole() 
+        {
                 return workerRole;
         }
 
-                public Job getJob() {
+                public Job getJob() 
+                {
                         return myJob;
                 }
 }
