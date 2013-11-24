@@ -8,7 +8,7 @@ import javax.swing.*;
 public class HouseLandlordGui implements Gui{
 
 	private MaintenanceWorker agent = null;
-	private boolean isPresent = false;
+	private boolean isPresent = true;
 
 	//RestaurantGui gui;
 
@@ -56,6 +56,14 @@ public class HouseLandlordGui implements Gui{
 	public void setPresent(boolean p) {
 		isPresent = p;
 	}
+	
+	public int getXPos() {
+        return xPos;
+    }
+
+    public int getYPos() {
+        return yPos;
+    }
 	
 	//Actions
 	

@@ -8,23 +8,24 @@ import javax.swing.*;
 public class MarketSalesPersonGui implements Gui{
 
 	private SalesPersonRole agent = null;
-	private boolean isPresent = false;
+	private boolean isPresent = true;
 
 	//RestaurantGui gui;
 
-	private int xPos, yPos;
-	private int xDestination, yDestination;
+    private int xPos = 150, yPos = 100;//default MarketRunner position
+    private int xDestination = 150, yDestination = 100;//default start position
 	
 	private enum Command {noCommand};
 	private Command command = Command.noCommand;
 
 	private enum CustomerState {nothing};
 	CustomerState state = CustomerState.nothing;
+	
+	public MarketSalesPersonGui() {
+	}
 
 	public MarketSalesPersonGui(SalesPersonRole c/*, RestaurantGui gui*/){
 		agent = c;
-		xPos = -20;
-		yPos = -20;
 		//this.gui = gui;
 	}
 
@@ -45,7 +46,7 @@ public class MarketSalesPersonGui implements Gui{
 	}
 
 	public void draw(Graphics2D g) {
-		g.setColor(Color.GREEN);
+		g.setColor(Color.ORANGE);
 		g.fillRect(xPos, yPos, 20, 20);
 	}
 
@@ -56,6 +57,14 @@ public class MarketSalesPersonGui implements Gui{
 	public void setPresent(boolean p) {
 		isPresent = p;
 	}
+	
+	public int getXPos() {
+        return xPos;
+    }
+
+    public int getYPos() {
+        return yPos;
+    }
 	
 	//Actions
 	

@@ -67,6 +67,8 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer {
 		
 		these need to just pass in money, or become dishonest if instanceof crook
 		*/
+		state = AgentState.DoingNothing; 
+		event = AgentEvent.gotHungry;
 	}
 
 	/**

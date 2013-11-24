@@ -8,7 +8,7 @@ import javax.swing.*;
 public class BankLoanerGui implements Gui{
 
 	private LoanOfficerRole agent = null;
-	private boolean isPresent = false;
+	private boolean isPresent = true;
 
 	//RestaurantGui gui;
 
@@ -20,7 +20,9 @@ public class BankLoanerGui implements Gui{
 
 	private enum CustomerState {nothing};
 	CustomerState state = CustomerState.nothing;
-
+	public BankLoanerGui() {
+	}
+	
 	public BankLoanerGui(LoanOfficerRole c/*, RestaurantGui gui*/){
 		agent = c;
 		xPos = -20;
@@ -56,6 +58,14 @@ public class BankLoanerGui implements Gui{
 	public void setPresent(boolean p) {
 		isPresent = p;
 	}
+	
+	public int getXPos() {
+        return xPos;
+    }
+
+    public int getYPos() {
+        return yPos;
+    }
 	
 	//Actions
 	

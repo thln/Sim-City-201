@@ -26,7 +26,7 @@ public class BankTellerRole extends Role implements BankTeller {
 		public int accountNum; 		//the hash key
 		public double loan = 0;
 		public double balance = 0;
-		public double creditScore = 0;
+		public double creditScore = 150;
 		public double processingMoney = 0;
 		AccountState state;
 
@@ -74,6 +74,7 @@ public class BankTellerRole extends Role implements BankTeller {
 
 	public BankTellerRole(String roleName) {
 		super(roleName);
+		myAccounts = new ArrayList<>();
 	}
 
 	//MESSAGES
@@ -88,7 +89,7 @@ public class BankTellerRole extends Role implements BankTeller {
 	}
 
 	public void msgINeedMoney(double desiredAmount, int accountNum) {
-		print("Customer approached Teller");
+		print("Customer needs money");
 		Account correct = findMyAccount (accountNum);
 		correct.processingMoney = desiredAmount;
 		correct.state = AccountState.withdrawing;
@@ -107,6 +108,7 @@ public class BankTellerRole extends Role implements BankTeller {
 		Account correct = findMyAccount (accountNum);
 		correct.processingMoney = desiredLoan;
 		correct.state = AccountState.requestingLoan;
+		print("Customer requesting loan of $" + correct.processingMoney);
 		stateChanged();
 	}
 
@@ -118,11 +120,13 @@ public class BankTellerRole extends Role implements BankTeller {
 	}
 
 	public void msgThisLoanApproved(Account account1) {
+		print("Loan approved.");
 		account1.state = AccountState.loanApproved;
 		stateChanged();
 	}
 
 	public void msgThisLoanDenied (Account account1, double possibleLoan) {
+		print("Loan denied.");
 		account1.state = AccountState.loanDenied;
 		account1.processingMoney = possibleLoan;
 		stateChanged();
@@ -246,7 +250,7 @@ public class BankTellerRole extends Role implements BankTeller {
 	}
 
 	void requestLoan (Account account1) {
-		if (account1.customer instanceof Role)
+		if (account1.customer instanceof Role) 
 			Phonebook.getPhonebook().getBank().loanOfficerRole.msgIsLoanApproved(account1, this);
 		account1.state = AccountState.waiting;
 	}

@@ -8,23 +8,23 @@ import javax.swing.*;
 public class BankGuardGui implements Gui{
 
 	private LoanOfficerRole agent = null;
-	private boolean isPresent = false;
+	private boolean isPresent = true;
 
 	//RestaurantGui gui;
 
-	private int xPos, yPos;
-	private int xDestination, yDestination;
+    private int xPos = 300, yPos = 300;//default BankGuard position
+    private int xDestination = 300, yDestination = 300;//default start position
 	
 	private enum Command {noCommand};
 	private Command command = Command.noCommand;
 
 	private enum CustomerState {nothing};
 	CustomerState state = CustomerState.nothing;
-
+	public BankGuardGui() {
+	}
+	
 	public BankGuardGui(LoanOfficerRole c/*, RestaurantGui gui*/){
 		agent = c;
-		xPos = -20;
-		yPos = -20;
 		//this.gui = gui;
 	}
 
@@ -56,6 +56,14 @@ public class BankGuardGui implements Gui{
 	public void setPresent(boolean p) {
 		isPresent = p;
 	}
+	
+	public int getXPos() {
+        return xPos;
+    }
+
+    public int getYPos() {
+        return yPos;
+    }
 	
 	//Actions
 	

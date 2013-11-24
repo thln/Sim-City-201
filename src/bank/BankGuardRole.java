@@ -62,7 +62,7 @@ public class BankGuardRole extends Role implements BankGuard {
 
 	public void msgTellerCameToWork (BankTeller t1) {
 		tellers.add(new MyTeller(t1));
-		stateChanged();
+		//stateChanged();
 	}
 	
 	public void msgRobbingBank(BankCustomer cust1) {
@@ -131,6 +131,7 @@ public class BankGuardRole extends Role implements BankGuard {
 	}
 
 	private void assignToTeller(BankCustomer cust1) {
+		print("Assigning to teller");
 		for (MyTeller teller1: tellers) {
 			if (teller1.getState() == TellerState.available) {
 				cust1.msgGoToTeller(teller1.tell1);
