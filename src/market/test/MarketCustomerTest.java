@@ -19,7 +19,7 @@ public class MarketCustomerTest extends TestCase {
 
 	public void setUp() throws Exception {
 		super.setUp();
-		Wealthy wealthy = new Wealthy("Wealthy Person", 10);
+		wealthy = new Wealthy("Wealthy Person", 10);
 		marketCustomer = new MarketCustomerRole(wealthy, "Customer", "Market Customer");
 		marketSalesPerson = new MockSalesPerson("MockSalesPerson");
 	}
