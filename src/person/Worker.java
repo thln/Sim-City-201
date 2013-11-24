@@ -40,7 +40,7 @@ public class Worker extends Person {
                 }
 
                 WatchTime getStartTime() {
-                        return endTime;
+                        return startTime;
                 }
 
                 void setStartTime(int t) {
@@ -73,7 +73,7 @@ public class Worker extends Person {
         void msgHereIsPayCheck (double amount) {
                 money += amount;
         }
-        
+
         public void roleFinishedWork(){                 //from worker role
                 workerRole = null;
                 stateChanged();
@@ -86,15 +86,17 @@ public class Worker extends Person {
                         startHungerTimer();
                         return true;
                 }
-        
+
                 //Decisions more urgent that role continuity (None for now)
                 
-                if (workerRole.getState() == RoleState.active) {
-                        if (((TimeManager.getTimeManager().getTime().dayHour - myJob.getEndTime().hour) <= 0)) 
-                                workerRole.msgLeaveRole(); 
-                        workerRole.pickAndExecuteAnAction();
+                if (workerRole != null){
+                        if (workerRole.getState() == RoleState.active) {
+                                if (((myJob.getEndTime().hour - TimeManager.getTimeManager().getTime().dayHour) <= 0)) 
+                                        workerRole.msgLeaveRole(); 
+                                return workerRole.pickAndExecuteAnAction();
+                        }
                 }
-                
+
                 synchronized (roles) {
                         if (!roles.isEmpty()) {                                
                                 for (Role r : roles) {
@@ -106,7 +108,7 @@ public class Worker extends Person {
                 }
 
                 //If no role is active
-   
+
                 //Job Related
                 if ((myJob.getStartTime().hour - TimeManager.getTimeManager().getTime().dayHour) <= 1) {
                         prepareForWork();
@@ -125,9 +127,10 @@ public class Worker extends Person {
                                                 return true;
                                         }
                                 }
-                                else if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getRestaurant().openTime.hour) &&
-                                                (TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getRestaurant().closeTime.hour)) {
+                                else { //if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getRestaurant().openTime.hour) &&
+                                                //(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getRestaurant().closeTime.hour)) {
                                         prepareForRestaurant();
+                                        //
                                         return true;
                                 }
                         }
@@ -140,11 +143,11 @@ public class Worker extends Person {
 
                 //Bank Related
                 if (money <= moneyMinThreshold || money >= moneyMaxThreshold) {
-                	prepareForBank();
-                	return true;
+                        prepareForBank();
+                        return true;
                 }
-                
-                
+
+
                 //Market Related
                 if (!hasFoodInFridge || carStatus == CarState.wantsCar) {
                         if (money <= moneyMinThreshold && !hasFoodInFridge) {
@@ -172,35 +175,28 @@ public class Worker extends Person {
         //Actions
         public void prepareForWork() {
 
-                if (myJob.jobPlace == "bank") 
-                {
+                if (myJob.jobPlace == "bank") {
                         workerRole = Phonebook.getPhonebook().getBank().arrivedAtWork(this, myJob.title);
                         workerRole.setRoleActive();
                         return;
                 }
 
-                if (myJob.jobPlace == "market") 
-                {
-
+                if (myJob.jobPlace == "market") {
                         workerRole = Phonebook.getPhonebook().getMarket().arrivedAtWork(this, myJob.title);
-                        roles.add(workerRole);
                         workerRole.setRoleActive();
                         return;
                 }
 
-                if (myJob.jobPlace == "restaurant") 
-                {
-                	//  
+                if (myJob.jobPlace == "restaurant") {
                         workerRole = Phonebook.getPhonebook().getRestaurant().arrivedAtWork(this, myJob.title);
-                        roles.add(workerRole);
                         workerRole.setRoleActive();
                         return;
                 }
                 //need to put in maintenance role
-                
+
                 return;
         }
-        
+
         public void setWorkerRole(Role workerRole) {
                 this.workerRole = workerRole;
         }
@@ -208,12 +204,8 @@ public class Worker extends Person {
         public Role getWorkerRole() {
                 return workerRole;
         }
-        
-        public Job getJob()
-        {
-        	return myJob;
-        }
 
+		public Job getJob() {
+			return myJob;
+		}
 }
-
-
