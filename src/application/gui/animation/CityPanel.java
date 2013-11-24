@@ -40,10 +40,10 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 
 	BufferedImage background = null;
 
-	ImageIcon bank = new ImageIcon("/Users/kristihupka/Desktop/resources/bank.png", "bank");
-	ImageIcon restaurant = new ImageIcon("/Users/kristihupka/Desktop/resources/restaurant.png", "restaurant");
-	ImageIcon market = new ImageIcon("/Users/kristihupka/Desktop/resources/market.png", "market");
-	ImageIcon house = new ImageIcon("/Users/kristihupka/Desktop/resources/house.png", "house");
+	ImageIcon bank = new ImageIcon("resources/bank.png", "bank");
+	ImageIcon restaurant = new ImageIcon("resources/restaurant.png", "restaurant");
+	ImageIcon market = new ImageIcon("resources/market.png", "market");
+	ImageIcon house = new ImageIcon("resources/house.png", "house");
 
 	public CityPanel(AnimationPanel animationPanel) {
 		
