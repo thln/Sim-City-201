@@ -42,6 +42,11 @@ public class MaintenanceWorkerRole extends Role {
 		//this.RoleName = rTitle;
 		//this.name = pName;
 	}
+	
+	public MaintenanceWorkerRole (String name)
+	{
+		super(name);
+	}
 
 	//Messages
 	public void msgNeedMaintenance(Housing houseNeedMain) {
