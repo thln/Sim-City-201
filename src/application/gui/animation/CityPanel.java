@@ -17,12 +17,13 @@ import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 import application.gui.animation.agentGui.Gui;
 
 public class CityPanel extends JPanel implements ActionListener, MouseListener {
 
-	private final int WINDOWX = 570;
+	private final int WINDOWX = 600;
 	private final int WINDOWY = 360;
 
 	AnimationPanel animationPanel;
@@ -40,23 +41,22 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 
 	BufferedImage background = null;
 
-	ImageIcon bank = new ImageIcon("/src/resources/bank.png", "bank");
-	ImageIcon restaurant = new ImageIcon("/src/resources/restaurant.png", "restaurant");
-	ImageIcon market = new ImageIcon("/src/resources/market.png", "market");
-	ImageIcon house = new ImageIcon("/src/resources/house.png", "house");
+	ImageIcon bank = new ImageIcon("docs/bank.png", "bank");
+	ImageIcon restaurant = new ImageIcon("docs/restaurant.png", "restaurant");
+	ImageIcon market = new ImageIcon("docs/market.png", "market");
+	ImageIcon house = new ImageIcon("docs/house.png", "house");
 
 	public CityPanel(AnimationPanel animationPanel) {
-		
+
 		this.animationPanel = animationPanel;
 		addMouseListener(this);
-		
+
 		setPreferredSize(new Dimension(WINDOWX, WINDOWY));
 		setMaximumSize(new Dimension(WINDOWX,WINDOWY));
 		setMinimumSize(new Dimension(WINDOWX, WINDOWY));
 		setBorder(BorderFactory.createLoweredBevelBorder());
 		setVisible(true);
 		setLayout(null);
-		
 
 		try {
 			background = ImageIO.read(new File("docs/concrete.jpg"));
@@ -66,6 +66,10 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		addBuilding("Restaurant", 20, 50);
 		addBuilding("Market", 20, 100);
 		addBuilding("Bank", 20, 170);
+		addBuilding("House", 20, 250);
+		
+//		Timer timer = new Timer(20, this );
+//    	timer.start();
 	}
 
 	public void paintComponent(Graphics g) {
@@ -81,12 +85,17 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 			Building b = buildings.get(i);
 			g2.drawImage(b.getMyImage().getImage(), b.getxLocation(), b.getyLocation(), null);
 		}
-		
-		for (Gui gui : guis) {
-			if (gui.isPresent()) {
-				gui.draw(g2);
-			}
-		}
+
+		for(Gui gui : guis) {
+            if (gui.isPresent()) {
+                gui.updatePosition();
+            }
+        }
+		for(Gui gui : guis) {
+            if (gui.isPresent()) {
+                gui.draw(g2);
+            }
+        }
 	}
 
 	public void addGui(Gui gui) {
@@ -145,7 +154,7 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 				return;
 			}
 		}
-		
+
 		animationPanel.displayBlankBuildingPanel();
 	}
 

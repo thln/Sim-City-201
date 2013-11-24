@@ -330,8 +330,10 @@ public class HostRole extends Role
 	{
 		//Finding first waiter that is not on break
 		myWaiter lowestWaiter = null;
-		for (myWaiter lowWaiter: waiters) {
-			if (lowWaiter.onBreak == false) {
+		for (myWaiter lowWaiter: waiters) 
+		{
+			if (lowWaiter.onBreak == false) 
+			{
 				lowestWaiter = lowWaiter;
 				break;
 			}

@@ -19,10 +19,6 @@ public class Restaurant {
 	public CookRole cookRole = new CookRole("Cook", this);
 	public CashierRole cashierRole = new CashierRole("Cashier", this);
 	public RevolvingStand theRevolvingStand = new RevolvingStand();
-	
-	//IMPORTANTE!
-	//Should instantiate The Revolving Stand here? Could you make it a singleton
-	// ~reminder~
 
 	public Restaurant(String name) {
 		this.name = name;

@@ -1,12 +1,12 @@
 package application.gui.animation.agentGui;
 
-import market.*;
+//import market.\*;
 import java.awt.*;
 import javax.swing.*;
 
 public class MarketUPSmanGui implements Gui{
 
-	private UPSmanRole agent = null;
+	//private UPSmanRole agent = null;
 	private boolean isPresent = true;
 
 	//RestaurantGui gui;
@@ -20,11 +20,8 @@ public class MarketUPSmanGui implements Gui{
 	private enum CustomerState {nothing};
 	CustomerState state = CustomerState.nothing;
 	
-	public MarketUPSmanGui() {
-	}
-	
-	public MarketUPSmanGui(UPSmanRole c/*, RestaurantGui gui*/){
-		agent = c;
+	public MarketUPSmanGui(/*UPSmanRole c, RestaurantGui gui*/){
+		//agent = c;
 		//this.gui = gui;
 	}
 
@@ -46,7 +43,9 @@ public class MarketUPSmanGui implements Gui{
 
 	public void draw(Graphics2D g) {
 		g.setColor(new Color(102, 51, 0));
-		g.fillRect(xPos, yPos, 20, 20);
+		g.fillRect(xPos, yPos, 30, 30);
+		g.setColor(Color.YELLOW);
+		g.drawString("UPS", xPos, yPos+20);
 	}
 
 	public boolean isPresent() {
@@ -66,15 +65,16 @@ public class MarketUPSmanGui implements Gui{
     }
 	
 	//Actions
-	public void DoExit() { 
-		//going outside of market to deliver order
-		xDestination = 570;
-		yDestination = 200;
-	}
 	
 	public void DoGoToSalesPerson() { 
 		//goes to salesperson to pick up deliveries
     	xDestination = 200;
     	yDestination = 150;
+	}
+	
+	public void DoExit() { 
+		//going outside of market to deliver order
+		xDestination = 600;
+		yDestination = 200;
 	}
 }

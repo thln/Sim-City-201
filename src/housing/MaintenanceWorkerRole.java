@@ -10,7 +10,8 @@ import application.Phonebook;
 import person.Person;
 import person.Role;
 
-public class MaintenanceWorkerRole extends Role {
+public class MaintenanceWorkerRole extends Role 
+{
 	//List of housing
 	//Need to talk more about housing. 
 	//Dynamic number of housing? Cant go through X a day
@@ -28,26 +29,38 @@ public class MaintenanceWorkerRole extends Role {
 	public maintenanceState state = maintenanceState.Working;
 	//private Semaphore workingOnResidence = new Semaphore(0, true);
 
-
-	class WorkOrder {
+	/* Shit isn't really necessary
+	class WorkOrder 
+	{
 		int HomeNumber;
-		WorkOrder(int n) {
+		WorkOrder(int n) 
+		{
 			HomeNumber = n;
 		} 
-	};
+	};*/
 	//List  WorkOrders;
 
-	public MaintenanceWorkerRole (Person person, String pName, String rTitle)  {
+	public MaintenanceWorkerRole (Person person, String pName, String rTitle)  
+	{
 		super(person, pName, rTitle);
 		//this.RoleName = rTitle;
 		//this.name = pName;
 	}
+	
+	public MaintenanceWorkerRole (String name)
+	{
+		super(name);
+	}
 
 	//Messages
-	public void msgNeedMaintenance(Housing houseNeedMain) {
-		synchronized(Phonebook.getPhonebook().publicAllHousing) {
-			for (Housing h : Phonebook.getPhonebook().publicAllHousing) {
-				if (h == houseNeedMain) {
+	public void msgNeedMaintenance(Housing houseNeedMain) 
+	{
+		synchronized(Phonebook.getPhonebook().publicAllHousing) 
+		{
+			for (Housing h : Phonebook.getPhonebook().publicAllHousing) 
+			{
+				if (h == houseNeedMain) 
+				{
 					h.state = housingState.UrgentWorkOrder;
 				}
 			}
@@ -90,30 +103,31 @@ public class MaintenanceWorkerRole extends Role {
 	}
 
 	//Actions
-	public void checkHousing(final Housing h) {
-		//For some reason this only runs once
+	public void checkHousing(final Housing h) 
+	{
+		//All good now, I believe
 		state = maintenanceState.CheckingHouse;
 		h.state = housingState.Checking;
 		print("Checking housing " + h.housingNumber + " in state " + h.state);
-		//print("The number of semaphores is: " + workingOnResidence.availablePermits());
-		FixingTimer.schedule(new TimerTask() {
-			public void run() {
-				//o.state = FoodState.Ready;
+		FixingTimer.schedule(new TimerTask() 
+		{
+			public void run() 
+			{
 				state = maintenanceState.Working;
 				h.state = housingState.RecentlyChecked;
 				print("Done checking " + h.housingNumber + " in state " + h.state);
-				//print("The number of semaphores is: " + workingOnResidence.availablePermits());
-				//workingOnResidence.release();
-				//print("The number of semaphores is: " + workingOnResidence.availablePermits());
 				stateChanged();
 			}
 		},
 		2000);
 	}
 
-	public void resetHousingCheck() {
-		synchronized(Phonebook.getPhonebook().publicAllHousing) {
-			for (Housing h : Phonebook.getPhonebook().publicAllHousing) {
+	public void resetHousingCheck() 
+	{
+		synchronized(Phonebook.getPhonebook().publicAllHousing) 
+		{
+			for (Housing h : Phonebook.getPhonebook().publicAllHousing) 
+			{
 				print("All houses are finished! Rechecking houses");
 				h.state = housingState.CheckUpNeeded;
 			}

@@ -1,6 +1,6 @@
 package application.gui.animation.agentGui;
 
-import market.*;
+//import market.\*;
 
 import java.awt.*;
 
@@ -8,7 +8,7 @@ import javax.swing.*;
 
 public class MarketCustomerGui implements Gui {
 
-    private MarketCustomerRole agent = null;
+    //private MarketCustomerRole agent = null;
     private boolean isPresent = true;
     
     //RestaurantGui gui;
@@ -21,17 +21,14 @@ public class MarketCustomerGui implements Gui {
 
 	private enum CustomerState {nothing};
 	CustomerState state = CustomerState.nothing;
-	
-    public MarketCustomerGui() {
-    }
     
-    public MarketCustomerGui(MarketCustomerRole agent/*, RestaurantGui gui*/) {
-        this.agent = agent;
+    public MarketCustomerGui(/*MarketCustomerRole agent, RestaurantGui gui*/) {
+        //this.agent = agent;
       //this.gui = gui;
     }
 
     public void updatePosition() {
-    	//for (int ix = 1; ix <= NTABLES; ix++) {
+    	 
     		if (xPos < xDestination)
     			xPos++;
     		else if (xPos > xDestination)
@@ -45,7 +42,6 @@ public class MarketCustomerGui implements Gui {
     		if (xPos == xDestination && yPos == yDestination) {
     			
     		}
-        //}
     }
 
     public void draw(Graphics2D g) {
@@ -72,7 +68,7 @@ public class MarketCustomerGui implements Gui {
     //Actions
     public void DoGoToSalesPerson() {
     	xDestination = 150;
-    	yDestination = 150;
+    	yDestination = 180;
     }
     
     public void DoExit() {

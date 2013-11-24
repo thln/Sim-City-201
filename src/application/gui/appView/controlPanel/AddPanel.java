@@ -17,7 +17,7 @@ public class AddPanel implements ActionListener {
 	private JButton addButton = new JButton("Add");
 	private ControlPanel cp;
 	private Application app;
-	JComboBox typeBox;
+	private JComboBox typeBox;
 
 	private String[] personType = {"Crook", "Deadbeat", "Worker", "Wealthy"};
 	
@@ -25,41 +25,44 @@ public class AddPanel implements ActionListener {
 		this.cp = cp;
 		this.app = app;
 		GridBagConstraints c = new GridBagConstraints();
-		c.fill = GridBagConstraints.HORIZONTAL;
+		c.fill = GridBagConstraints.VERTICAL;
 		c.anchor = GridBagConstraints.CENTER;
 		
 		c.gridx = 0;
 		c.gridy = 0;
 		mainPanel.add(first,c);
+		c.gridx = 1;
+		c.gridy = 0;
+		mainPanel.add(firstName,c);
 		
 		c.gridx = 0;
-		c.gridy = 1;
-		mainPanel.add(firstName);
-		c.gridx = 0;
-		c.gridy	= 2;
-		addButton.addActionListener(this);
-		mainPanel.add(addButton,c);
-	
-		c.gridx = 0;
-		c.gridy = 3;
+		c.gridy = 2;
 		JLabel typeLabel = new JLabel("Select Type");
 		mainPanel.add(typeLabel,c);
 		
 		c.gridx = 1;
-		c.gridy = 3;
+		c.gridy = 2;
 		typeBox = new JComboBox(personType);
 		typeBox.setSelectedIndex(0);
 		typeBox.addActionListener(this);
 		mainPanel.add(typeBox,c);
+		
+		c.gridx = 0;
+		c.gridy	= 3;
+		addButton.addActionListener(this);
+		mainPanel.add(addButton,c);
+	
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == addButton){
-				String name = firstName.getText() +" ";
-				String type = (String)typeBox.getSelectedItem();
-				app.addPerson(name, 500, type, "location", null, 0, 0, 0);
-				app.printLastPop();
-				System.out.println(type);
+			String name = firstName.getText();
+			String type = (String)typeBox.getSelectedItem();
+			app.addPerson(name, 500, type, null, null, 0, 0, 0);
+			app.printLastPop();
+			
+			System.out.println(type);
+			System.out.println(app.getPopulationSize());
 		}
 	}
 	
