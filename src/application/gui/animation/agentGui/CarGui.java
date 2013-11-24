@@ -67,4 +67,7 @@ public class CarGui implements Gui{
     }
     
     //Actions
+    public void GoToGarage(int garage) {
+    	
+    }
 }
