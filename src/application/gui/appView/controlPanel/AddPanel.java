@@ -27,7 +27,7 @@ public class AddPanel implements ActionListener {
 		this.cp = cp;
 		this.app = app;
 		GridBagConstraints c = new GridBagConstraints();
-		c.fill = GridBagConstraints.HORIZONTAL;
+		c.fill = GridBagConstraints.VERTICAL;
 		c.anchor = GridBagConstraints.CENTER;
 		
 		c.gridx = 0;
