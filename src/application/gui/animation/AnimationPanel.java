@@ -36,7 +36,7 @@ public class AnimationPanel extends JPanel implements MouseListener {
 		buildingPanels.setPreferredSize(new Dimension(WINDOWX, WINDOWY));
 
 		//Adding a blank building panel
-		BuildingPanel blank = new BuildingPanel("Blank", this);
+		BuildingPanel blank = new BuildingPanel("", this);
 		buildingPanels.add(blank, blank.getName());
 		
 		//Create the BuildingPanel for each Building object
@@ -53,13 +53,11 @@ public class AnimationPanel extends JPanel implements MouseListener {
 	}
 
 	public void displayBuildingPanel(BuildingPanel bp) {
-		System.out.println("Showing panel: " + bp.getName());
 		cardLayout.show(buildingPanels, bp.getName());
 	}
 	
 	public void displayBlankBuildingPanel() {
-		System.out.println("Showing panel: Blank");
-		cardLayout.show(buildingPanels, "Blank");
+		cardLayout.show(buildingPanels, "");
 	}
 
 	//	CityPanel cityPanel = new CityPanel();

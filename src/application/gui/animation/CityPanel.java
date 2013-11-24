@@ -154,7 +154,6 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		System.err.println("I'm clicking this mother fucker.");
 		//If any of the icons are clicked, it will find and display its corresponding animation panel
 		for ( int i = 0; i<buildings.size(); i++ ) {
 			Building b = buildings.get(i);
