@@ -43,6 +43,7 @@ public abstract class Person extends Agent{
         public double desiredCash;
         public double depositAmount;
         public double withdrawAmount;
+        public double loan;
         int moneyMinThreshold = 20;
         int moneyMaxThreshold = 200;
 
@@ -78,10 +79,6 @@ public abstract class Person extends Agent{
                 }
                  */
                 //Once semaphore is released from GUI
-
-                //Checking if customer has enough money for a car
-
-
                 for (Role cust1 : roles) {
                         if (cust1 instanceof BankCustomerRole) {
                                 BankCustomerRole BCR = (BankCustomerRole) cust1;
@@ -103,8 +100,6 @@ public abstract class Person extends Agent{
                                 return;
                         }
                 }
-                //(String name, Person p1, BankGuard guard1, int desiredCash, int deposit, int accNum, int cash)
-                //if bank customer role hasn't already been instantiated, instatiate it
         }
 
         protected void prepareForMarket() {
@@ -164,6 +159,7 @@ public abstract class Person extends Agent{
 
         protected void prepareForRestaurant() {
                 //GUI call to go to business
+        	/*
                 try {
                         atDestination.acquire();
                 } catch (InterruptedException e) {
@@ -171,6 +167,7 @@ public abstract class Person extends Agent{
                         e.printStackTrace();
 
                 }
+                */
                 //Once semaphore is released from GUI
                 for (Role cust1 : roles) {
                         if (cust1 instanceof RestaurantCustomerRole) {

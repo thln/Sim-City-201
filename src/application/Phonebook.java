@@ -29,6 +29,8 @@ public class Phonebook {
 
 	private Phonebook() {
 		bank = new Bank(null);
+		market = new Market("Market");
+		restaurant = new Restaurant("Restaurant");
 	}
 	
 	public static Phonebook getPhonebook() {

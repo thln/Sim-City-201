@@ -74,9 +74,8 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		g2.setColor(getBackground());
 		g2.fillRect(0, 0, WINDOWX, WINDOWY );
 		g2.drawImage(background, 0, 0, null);
-		//Here is the table
-		//g2.setColor(Color.ORANGE);
 
+		//Drawing all buildings
 		for ( int i=0; i<buildings.size(); i++ ) {
 			Building b = buildings.get(i);
 			g2.drawImage(b.getMyImage().getImage(), b.getxLocation(), b.getyLocation(), null);
@@ -87,7 +86,6 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 				gui.draw(g2);
 			}
 		}
-
 	}
 
 	public void addGui(Gui gui) {
@@ -101,42 +99,26 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		if (name.toLowerCase().contains("bank")) {
 			building.setMyImage(bank);
 			building.setLocation(x, y);
-//			Bsize = building.getPreferredSize();
-//			building.setBounds(WINDOWX - Bsize.width, WINDOWY/2 - Bsize.height/2, Bsize.width, Bsize.height);
 		}
 		//Market building
 		else if (name.toLowerCase().contains("market")) {
 			building.setMyImage(market);
 			building.setLocation(x, y);
-			//Msize = building.getPreferredSize();
-//			int yLoc;
-//			if (i == 1)
-//				yLoc = 0;
-//			else 
-//				yLoc = WINDOWY - Msize.height;
-			//building.setBounds(WINDOWX/2-Msize.width/2, yLoc, Msize.width, Msize.height);
 		}
 		//Restaurant building
 		else if (name.toLowerCase().contains("restaurant")) {
 			building.setMyImage(restaurant);
 			building.setLocation(x, y);
-//			Dimension size = building.getPreferredSize();
-//			building.setBounds(WINDOWX/2+Msize.width/2+size.width*(i-1), WINDOWY - size.height, size.width, size.height);
+
 		}
 		//House building
 		else if (name.toLowerCase().contains("house")) {
 			building.setMyImage(house);
 			building.setLocation(x, y);
-//			Dimension size = building.getPreferredSize();
-//			if (i < 10)
-//				building.setBounds(size.width*(i), 0, size.width, size.height);
-//			else
-//				building.setBounds(size.width*(i-10), WINDOWY - size.height, size.width, size.height);
 		}
 
 		building.setName(name);
 		buildings.add(building);
-//		add(building);
 	}
 
 	public String toString() {

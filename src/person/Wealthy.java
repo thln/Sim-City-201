@@ -9,7 +9,6 @@ public class Wealthy extends Person {
 	boolean needToDeposit;
 	String name;
 
-
 	public Wealthy(String name,  int money) {
 		super(name);
 		this.money = money;
@@ -37,6 +36,12 @@ public class Wealthy extends Person {
 
 		//If no role is active
 
+		//Bank Related
+        if (money <= moneyMinThreshold || money >= moneyMaxThreshold) {
+        	prepareForBank();
+        	return true;
+        }
+        
 		//Rent Related
 		if (TimeManager.getTimeManager().getTime().day == TimeManager.Day.Monday) {
 			prepareForRentCollection();

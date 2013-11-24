@@ -104,8 +104,7 @@ public class Worker extends Person {
                 }
 
                 //If no role is active
-
-                
+   
                 //Job Related
                 if ((myJob.getStartTime().hour - TimeManager.getTimeManager().getTime().dayHour) <= 1) {
                         prepareForWork();
@@ -137,6 +136,13 @@ public class Worker extends Person {
                         }
                 }
 
+                //Bank Related
+                if (money <= moneyMinThreshold || money >= moneyMaxThreshold) {
+                	prepareForBank();
+                	return true;
+                }
+                
+                
                 //Market Related
                 if (!hasFoodInFridge || carStatus == CarState.wantsCar) {
                         if (money <= moneyMinThreshold && !hasFoodInFridge) {
@@ -160,6 +166,7 @@ public class Worker extends Person {
         }
 
 
+        //Actions
         //Actions
         public void prepareForWork() {
 
@@ -187,7 +194,7 @@ public class Worker extends Person {
                 
                 return;
         }
-
+        
         public void setWorkerRole(Role workerRole) {
                 this.workerRole = workerRole;
         }
