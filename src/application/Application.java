@@ -27,7 +27,7 @@ public class Application extends JPanel {
 	public Application() {
 
 		
-		Phonebook.getPhonebook().setHousing(allHousing);
+		Phonebook.getPhonebook().setHousingList(allHousing);
 		
 		//String name, int money, String jobTitle, String jobPlace, int startT, int lunchT, int endT
 		
