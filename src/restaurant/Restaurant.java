@@ -83,23 +83,42 @@ public class Restaurant {
 			return null;
 	}
 
-	public void msgIWantFood(RestaurantCustomerRole cust, int xHome, int yHome) {
+	public void msgIWantFood(RestaurantCustomerRole cust, int xHome, int yHome) 
+	{
 		hostRole.msgIWantFood(cust, xHome, yHome);
 	}
 
-	public void goingOffWork(Person person) {
+	public void goingOffWork(Person person) 
+	{
 		Worker worker = (Worker) person;
 
-		if (worker.getWorkerRole().equals(hostRole)) {
+		if (worker.getWorkerRole().equals(hostRole)) 
+		{
 			hostRole = null;
 		}
+		if (worker.getWorkerRole().equals(cashierRole))
+		{
+			cashierRole = null;
+		}
+		if (worker.getWorkerRole().equals(cookRole))
+		{
+			cookRole = null;
+		}
+		//WAITERS AND ALT WAITERS
+		//finish the "leave work" in Role.java 
+		//make function in host to delete waiter
+		//waiters have to finish duties before finishing waiter & no assignments
+		//look at onBreak code to follow
+		
 	}
 
-	public String getName() {
+	public String getName() 
+	{
 		return name;
 	}
 
-	public void setName(String name) {
+	public void setName(String name) 
+	{
 		this.name = name;
 	}
 	

@@ -35,7 +35,8 @@ public class HostRole extends Role
 	//GUI stuff
 	//public HostGui hostGui = null;
 
-	public HostRole(Person p1, String pName, String rName) {
+	public HostRole(Person p1, String pName, String rName) 
+	{
 		super(p1, pName, rName);
 
 		// make some tables
@@ -45,7 +46,8 @@ public class HostRole extends Role
 		}
 	}
 
-	public HostRole(String roleName) {
+	public HostRole(String roleName) 
+	{
 		super(roleName);
 
 		// make some tables
@@ -90,16 +92,21 @@ public class HostRole extends Role
 		}
 	}
 
-	public void msgLeavingTable(RestaurantCustomer cust, WaiterRole waiterRole) {
-		for (Table table : tables) {
-			if (table.getOccupant() == cust) {
-				//print(cust.getName() + " is leaving table " + table);
+	public void msgLeavingTable(RestaurantCustomer cust, WaiterRole waiterRole) 
+	{
+		for (Table table : tables) 
+		{
+			if (table.getOccupant() == cust) 
+			{
+				print(cust.getName() + " is leaving table " + table);
 				table.setUnoccupied();
 			}
 		}
 
-		for (myWaiter MW: waiters) {
-			if (MW.waiterRole == waiterRole) {
+		for (myWaiter MW: waiters) 
+		{
+			if (MW.waiterRole == waiterRole) 
+			{
 				MW.totalCustomers--;
 			}
 		}
@@ -107,10 +114,13 @@ public class HostRole extends Role
 		stateChanged();
 	}
 
-	public void msgMayIGoOnBreak(WaiterRole waiterRole) {
-		//print(waiter.getName() + " asked to go on break");
-		for (myWaiter MW: waiters) {
-			if (MW.waiterRole == waiterRole) {
+	public void msgMayIGoOnBreak(WaiterRole waiterRole) 
+	{
+		print(waiterRole.getName() + " asked to go on break");
+		for (myWaiter MW: waiters) 
+		{
+			if (MW.waiterRole == waiterRole)
+			{
 				MW.askedToGoOnBreak = true;
 				stateChanged();
 			}
@@ -228,7 +238,7 @@ public class HostRole extends Role
 
 	private void assignCustomer(myCustomer MC, Table table, WaiterRole waiterRole) 
 	{
-		//print("Assigning customer " + MC.customer.getCustomerName() + " to waiter");
+		print("Assigning customer " + MC.customer.getCustomerName() + " to waiter");
 		addCustomerToWaiter(waiterRole);
 		waiterRole.msgPleaseSeatCustomer(table.tableNumber, MC.customer, MC.xHome, MC.yHome);
 		table.setOccupant(MC.customer);
@@ -247,7 +257,7 @@ public class HostRole extends Role
 		{
 			MW.askedToGoOnBreak = false;
 			MW.waiterRole.msgPermissionToBreak(false);
-			//print("Telling " + MW.waiter.getName() + " he/she cannot go on break");
+			print("Telling " + MW.waiterRole.getName() + " he/she cannot go on break");
 			return;
 		}
 
@@ -263,14 +273,14 @@ public class HostRole extends Role
 		if (workingWaiterCount > 1) 
 		{
 			MW.askedToGoOnBreak = false;
-			//print("Allowing " + MW.waiter.getName() + " to go on break");
+			print("Allowing " + MW.waiterRole.getName() + " to go on break");
 			MW.waiterRole.msgPermissionToBreak(true);
 			MW.onBreak = true;
 		}
 		else 
 		{
 			MW.askedToGoOnBreak = false;
-			//print("Deny " + MW.waiter.getName() + " to go on break");
+			print("Deny " + MW.waiterRole.getName() + " to go on break");
 			MW.waiterRole.msgPermissionToBreak(false);
 		}
 	}
@@ -304,7 +314,7 @@ public class HostRole extends Role
 	public void addWaiter(WaiterRole waiterRole) 
 	{
 		waiters.add(new myWaiter(waiterRole));
-		//print("Hired new waiter, " + waiter.getName());
+		print("Hired new waiter, " + waiterRole.getName());
 		stateChanged();
 	}
 

@@ -16,20 +16,26 @@ public class AltWaiterRole extends WaiterRole
 		//Waiter(name);
 	}
 	
-	protected void placeOrder(myCustomer MC) {
+	protected void placeOrder(myCustomer MC) 
+	{
 		isInLobby = false;
-		//print("Placing " + MC.customer.getCustomerName() + "'s order");
+		print("Placing " + MC.customer.getCustomerName() + "'s order");
 
-		for (myCustomer myCust : myCustomers) {
-			if (myCust.customer == MC.customer) {
+		for (myCustomer myCust : myCustomers) 
+		{
+			if (myCust.customer == MC.customer) 
+			{
 				myCust.setWaitingForFood();
 			}
 		}
 
 		//waiterGui.DoGoToKitchen();
-		try {
+		try 
+		{
 			atDestination.acquire();
-		} catch (InterruptedException e) {
+		} 
+		catch (InterruptedException e) 
+		{
 			e.printStackTrace();
 
 		}

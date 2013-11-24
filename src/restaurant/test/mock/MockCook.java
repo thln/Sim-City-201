@@ -29,18 +29,20 @@ public class MockCook extends Mock implements Cook
 		
 	}
 
-	public void msgCantFulfill(String choice, int amount, int orderedAmount, Market market)
-	{
-		
-	}
-
-	public void msgOrderFulfillment(String choice, int amount, int orderedAmount, Market market)
-	{
-		
-	}
-
 	public void msgAtDestination()
 	{
+		
+	}
+
+	@Override
+	public void msgCantFulfill(String choice, int amount, int orderedAmount) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void msgOrderFulfillment(String choice, int amount, int orderedAmount) {
+		// TODO Auto-generated method stub
 		
 	}
 }
