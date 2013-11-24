@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 public class BusGui implements Gui{
 
 	private Bus agent = null;
-	private boolean isPresent = false;
+	private boolean isPresent = true;
 	private boolean isHungry = false;
 
 	//RestaurantGui gui;
@@ -97,6 +97,14 @@ public class BusGui implements Gui{
 	public void setPresent(boolean p) {
 		isPresent = p;
 	}
+
+	public int getXPos() {
+        return xPos;
+    }
+
+    public int getYPos() {
+        return yPos;
+    }
 
 	public void DoGoToSeat(int tableNumber) {//later you will map seatnumber to table coordinates.
 		if (tableNumber == 1)

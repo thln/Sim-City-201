@@ -1,149 +1,166 @@
 package application.gui.animation;
 
-import javax.swing.*;
-
-import java.awt.*;
-import java.awt.event.*;
-import java.io.*;
-import java.util.*;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.imageio.*;
+import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JPanel;
 
 import application.gui.animation.agentGui.Gui;
 
-import java.awt.image.BufferedImage;
+public class CityPanel extends JPanel implements ActionListener, MouseListener {
 
-public class CityPanel extends JPanel implements ActionListener, MouseListener{
-	
-    private final int WINDOWX = 570;
-    private final int WINDOWY = 360;
-    
-    private List<Gui> guis = new ArrayList<Gui>();
-	public List<Building> buildings = new ArrayList<Building>();
+	private final int WINDOWX = 570;
+	private final int WINDOWY = 360;
+
+	AnimationPanel animationPanel;
+	private List<Gui> guis = new ArrayList<Gui>();
+	public ArrayList<Building> buildings = new ArrayList<Building>();
 	Dimension Msize = new Dimension(75, 75);
 	Dimension Bsize = new Dimension(75, 75);
-    
-    //list of images representing our different buildings
-    BufferedImage carIcon = null;
-    BufferedImage bankIcon = null;
-    BufferedImage marketIcon = null;
-    BufferedImage houseIcon = null;
-    BufferedImage restaurantIcon = null;
-    
-    BufferedImage background = null;
-    
-    ImageIcon bank = new ImageIcon("/images/docs/bank.png", "bank");
-	ImageIcon restaurant = new ImageIcon("/images/docs/restaurant.png", "restaurant");
-	ImageIcon market = new ImageIcon("/images/docs/market.png", "market");
-	ImageIcon house = new ImageIcon("/images/docs/house.png", "house");
-	
-	public CityPanel() {
-	   	setSize(WINDOWX, WINDOWY);
-        setVisible(true);
-        setLayout(null);
-        try {
-            background = ImageIO.read(new File("docs/concrete.jpg"));
-        	} catch (IOException e) {
-        	}
-	}
-	
-    public void paintComponent(Graphics g) {
-        Graphics2D g2 = (Graphics2D)g;
-        //Clear the screen by painting a rectangle the size of the frame
-        g2.setColor(getBackground());
-        g2.fillRect(0, 0, WINDOWX, WINDOWY );
-        g2.drawImage(background, 0, 0, null);
-        //Here is the table
-        //g2.setColor(Color.ORANGE);
-        
-        for(Gui gui : guis) {
-            if (gui.isPresent()) {
-                gui.draw(g2);
-            }
-        }
-        
-    }
-    
-    public void addGui(Gui gui) {
-        guis.add(gui);   
-    }
-    
-    public void addBuilding(String name, int i) {
-    	Building building = new Building();
-    	if(name.toLowerCase().contains("bank")) {
-    		building.setIcon(bank);
-    		Bsize = building.getPreferredSize();
-    		building.setBounds(WINDOWX - Bsize.width, WINDOWY/2 - Bsize.height/2, Bsize.width, Bsize.height);
-    	}
-    	else if(name.toLowerCase().contains("market")) {
-    		building.setIcon(market);
-    		Msize = building.getPreferredSize();
-    		int yLoc;
-    		if(i == 1)
-    			yLoc = 0;
-    		else 
-    			yLoc = WINDOWY - Msize.height;
-    		building.setBounds(WINDOWX/2-Msize.width/2, yLoc, Msize.width, Msize.height);
-    	}
-    	else if(name.toLowerCase().contains("restaurant")) {
-    		building.setIcon(restaurant);
-    		Dimension size = building.getPreferredSize();
-    		building.setBounds(WINDOWX/2+Msize.width/2+size.width*(i-1), WINDOWY - size.height, size.width, size.height);
-    	}
-    	else if(name.toLowerCase().contains("house")) {
-    		building.setIcon(house);
-    		Dimension size = building.getPreferredSize();
-    		if(i < 10)
-    			building.setBounds(size.width*(i), 0, size.width, size.height);
-    		else
-    			building.setBounds(size.width*(i-10), WINDOWY - size.height, size.width, size.height);
-    	}
-    	building.setName(name + " " + i);
-    	
-    	buildings.add(building);
-    	building.addMouseListener(this);
-    	add(building);
-    }
-    
-    public String toString() {
-    	return "City JPanel";
-    }
-    
-    public List<Building> getBuildings() {
-    	return buildings;
-    }
-    
-    @Override
-    public void actionPerformed(ActionEvent e) {
-		repaint();
-	}
-    
-    @Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
+
+	//list of images representing our different buildings
+	BufferedImage carIcon = null;
+	BufferedImage bankIcon = null;
+	BufferedImage marketIcon = null;
+	BufferedImage houseIcon = null;
+	BufferedImage restaurantIcon = null;
+
+	BufferedImage background = null;
+
+	ImageIcon bank = new ImageIcon("/src/resources/bank.png", "bank");
+	ImageIcon restaurant = new ImageIcon("/src/resources/restaurant.png", "restaurant");
+	ImageIcon market = new ImageIcon("/src/resources/market.png", "market");
+	ImageIcon house = new ImageIcon("/src/resources/house.png", "house");
+
+	public CityPanel(AnimationPanel animationPanel) {
 		
-		//If any of the icons are clicked, it will find and display its corresponding animation panel
-		for(int i=0; i<buildings.size();i++) {
-			if(e.getSource() == buildings.get(i)) {
-				buildings.get(i).displayBuilding();
+		this.animationPanel = animationPanel;
+		addMouseListener(this);
+		
+		setPreferredSize(new Dimension(WINDOWX, WINDOWY));
+		setMaximumSize(new Dimension(WINDOWX,WINDOWY));
+		setMinimumSize(new Dimension(WINDOWX, WINDOWY));
+		setVisible(true);
+		setLayout(null);
+		setBorder(BorderFactory.createTitledBorder("Los Angeles"));
+
+		try {
+			background = ImageIO.read(new File("docs/concrete.jpg"));
+		} catch (IOException e) {
+		}
+
+		addBuilding("Restaurant", 20, 50);
+		addBuilding("Market", 20, 100);
+		addBuilding("Bank", 20, 170);
+	}
+
+	public void paintComponent(Graphics g) {
+		Graphics2D g2 = (Graphics2D)g;
+
+		//Clear the screen by painting a rectangle the size of the frame
+		g2.setColor(getBackground());
+		g2.fillRect(0, 0, WINDOWX, WINDOWY );
+		g2.drawImage(background, 0, 0, null);
+
+		//Drawing all buildings
+		for ( int i=0; i<buildings.size(); i++ ) {
+			Building b = buildings.get(i);
+			g2.drawImage(b.getMyImage().getImage(), b.getxLocation(), b.getyLocation(), null);
+		}
+		
+		for (Gui gui : guis) {
+			if (gui.isPresent()) {
+				gui.draw(g2);
 			}
 		}
 	}
-	
+
+	public void addGui(Gui gui) {
+		guis.add(gui);   
+	}
+
+	public void addBuilding(String name, int x, int y) {
+		Building building = new Building();
+
+		//Bank building
+		if (name.toLowerCase().contains("bank")) {
+			building.setMyImage(bank);
+			building.setLocation(x, y);
+		}
+		//Market building
+		else if (name.toLowerCase().contains("market")) {
+			building.setMyImage(market);
+			building.setLocation(x, y);
+		}
+		//Restaurant building
+		else if (name.toLowerCase().contains("restaurant")) {
+			building.setMyImage(restaurant);
+			building.setLocation(x, y);
+
+		}
+		//House building
+		else if (name.toLowerCase().contains("house")) {
+			building.setMyImage(house);
+			building.setLocation(x, y);
+		}
+
+		building.setName(name);
+		buildings.add(building);
+	}
+
+	public String toString() {
+		return "City JPanel";
+	}
+
+	public ArrayList<Building> getBuildings() {
+		return buildings;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		repaint();
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		//If any of the icons are clicked, it will find and display its corresponding animation panel
+		for ( int i = 0; i<buildings.size(); i++ ) {
+			Building b = buildings.get(i);
+			if (b.getRect().contains(e.getX(), e.getY())) {
+				b.displayBuilding();
+				return;
+			}
+		}
+		
+		animationPanel.displayBlankBuildingPanel();
+	}
+
 	public void mousePressed(MouseEvent e) {
-		
+
 	}
-	
+
 	public void mouseReleased(MouseEvent e) {
-		
+
 	}
-	
+
 	public void mouseEntered(MouseEvent e) {
-		
+
 	}
-	
+
 	public void mouseExited(MouseEvent e) {
-		
+
 	}
 }

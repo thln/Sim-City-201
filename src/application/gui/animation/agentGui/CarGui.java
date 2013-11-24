@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 public class CarGui implements Gui{
 
 	private Car agent = null;
-	private boolean isPresent = false;
+	private boolean isPresent = true;
 
 	//RestaurantGui gui;
 
@@ -55,8 +55,18 @@ public class CarGui implements Gui{
 	public boolean isPresent() {
 		return isPresent;
 	}
-
+	
 	public void setPresent(boolean p) {
 		isPresent = p;
 	}
+
+	public int getXPos() {
+        return xPos;
+    }
+
+    public int getYPos() {
+        return yPos;
+    }
+    
+    //Actions
 }

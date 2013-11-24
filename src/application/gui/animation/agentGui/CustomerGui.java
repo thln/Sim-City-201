@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 public class CustomerGui implements Gui{
 
 	private RestaurantCustomerRole agent = null;
-	private boolean isPresent = false;
+	private boolean isPresent = true;
 	private boolean isHungry = false;
 
 	//RestaurantGui gui;
