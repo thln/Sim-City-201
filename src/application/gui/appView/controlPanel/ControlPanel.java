@@ -29,14 +29,10 @@ public class ControlPanel extends JPanel{
 		addP = new AddPanel(this, app);
 		addPersonTab =  addP.mainPanel;
 		
-		
 		ControlPane.addTab("Add Person", addPersonTab);
-		
-		
 		ControlPane.addTab("Option 2", panel2);
-		
-		
 		ControlPane.addTab("Option 3", panel3);
+		
 		add(ControlPane);
 	}	
 	
