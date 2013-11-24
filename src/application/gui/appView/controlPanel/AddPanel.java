@@ -14,8 +14,6 @@ public class AddPanel implements ActionListener {
 	public static JPanel mainPanel = new JPanel();
 	private JLabel first = new JLabel("First Name: ");
 	private JTextField firstName = new JTextField(10);
-	private JLabel last = new JLabel("Last Name: ");
-	private JTextField lastName = new JTextField(10);
 	private JButton addButton = new JButton("Add");
 	private ControlPanel cp;
 	private Application app;
@@ -37,15 +35,6 @@ public class AddPanel implements ActionListener {
 		c.gridx = 0;
 		c.gridy = 1;
 		mainPanel.add(firstName);
-		
-		c.gridx = 1;
-		c.gridy = 0;
-		mainPanel.add(last,c);
-		
-		c.gridx = 1;
-		c.gridy = 1;
-		mainPanel.add(lastName,c);
-		
 		c.gridx = 0;
 		c.gridy	= 2;
 		addButton.addActionListener(this);

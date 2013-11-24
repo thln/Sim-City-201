@@ -1,177 +1,213 @@
 package bank;
 
+import bank.interfaces.BankCustomer;
+import bank.interfaces.BankTeller;
 import application.Phonebook;
 import person.Person;
 import person.Role;
+import person.Worker;
 
-public class BankCustomerRole extends Role {
+public class BankCustomerRole extends Role implements BankCustomer{
 
 	//DATA
 
-	enum BankCustomerDesire {none, withdraw, deposit, wantLoan, closeLoan, openAccount, closeAccount, robBank, leaveBank}
-	enum CustomerState {atBank, none, waiting, ready};
-	
-	BankTellerRole myTeller;
-//	BankGuardRole myGuard;
+	public enum BankCustomerDesire {none, withdraw, deposit, wantLoan, closeLoan, openAccount, closeAccount, robBank, leaveBank}
+	public enum CustomerState {atBank, none, waiting, ready};
 
-//	double cash;
-//	int accountNum;
-//	double accountBalance;
-	double desiredLoanAmount;
-	double loan; 	
-	BankCustomerDesire desire;
-	CustomerState state;
+	public BankTeller myTeller;
+
+	public double desiredLoanAmount;
+	public BankCustomerDesire desire;
+	public CustomerState state;
+	protected String RoleName = "Bank Customer";
 
 	public BankCustomerRole (Person p1, String pName, String rName) {
 		super(p1, pName, rName);
 		desire = BankCustomerDesire.openAccount;
 		state = CustomerState.atBank;
 	}
-	
+
 	//Messages
 
-	void msgGoToTeller(BankTellerRole tell1) {
+	public void msgGoToTeller(BankTeller tell1) {
+		print ("Assigned to teller" + tell1.getName());
 		myTeller = tell1;
 		state = CustomerState.ready;
 		stateChanged();
 	}
-	
-	void msgHereIsYourMoney(double amount) {
+
+	public void msgNoTellerAvailable(){
+
+	}
+
+	public void msgHereIsYourMoney(double amount) {
+		print("Got my money! Leaving bank");
 		person.money += amount;
 		desire = BankCustomerDesire.leaveBank;
 		state = CustomerState.ready;
 		stateChanged();
 	}
 
-	void msgHereIsNewAccount (int accountNum) {
+	public void msgHereIsNewAccount (int accountNum) {
 		print("Received new bank account");
 		person.accountNum = accountNum;
-		desire = BankCustomerDesire.deposit;
-		person.depositAmount = 100;
+		if (person.money <= person.moneyMinThreshold)
+			desire = BankCustomerDesire.withdraw;
+		else if (person.money >= person.moneyMaxThreshold)
+			desire = BankCustomerDesire.deposit;
+		else	
+			desire = BankCustomerDesire.leaveBank;
 		state = CustomerState.ready;
 		stateChanged();
 	}
 
-	void msgBankrupt() {
+	public void msgBankrupt() {
 		state = CustomerState.ready;
+		desire = BankCustomerDesire.leaveBank;
+		stateChanged();
 	}
 
-	void msgInsufficentFunds(){
+	public void msgInsufficientFunds(){
+		print("Not enough money in account: need loan");
 		state = CustomerState.ready;
-		desiredLoanAmount = person.withdrawAmount*10;
 		desire = BankCustomerDesire.wantLoan;
 		stateChanged();
 	}
-//finish setting loan and teller interactions, make sure everything is phonebook global or person data
-	void msgDepositReceived() {
+
+	public void msgDepositReceived() {
 		desire = BankCustomerDesire.leaveBank;
 		state = CustomerState.ready;
 		print("ready to leave bank");
 		stateChanged();
 	}
 
-	void msgYourLoanWasApproved() {
+	public void msgYourLoanWasApproved() {
 		desire = BankCustomerDesire.withdraw;
 		state = CustomerState.ready;
 		stateChanged();
 	}
 
-	void msgYourLoanWasDenied(double amount) {
+	public void msgYourLoanWasDenied(double amount) {
 		//decide whether or not to request another loan
+		state = CustomerState.ready;
+		desire = BankCustomerDesire.leaveBank;
+		stateChanged();
+	}
+
+	public void msgLoanClosed() {
+		state = CustomerState.ready;
+		desire = BankCustomerDesire.leaveBank;
+		stateChanged();
+	}	
+
+	public void msgCaughtYou() {
 		state = CustomerState.ready;
 	}
 
-	void msgLoanClosed() {
-		state = CustomerState.ready;
-	}	
-	
-	void msgCaughtYou() {
-		state = CustomerState.ready;
-	}
-	
-	void msgGotAway() {
+	public void msgGotAway() {
 		state = CustomerState.ready;
 	}
 
 	//Scheduler
-	
-	protected boolean pickAndExecuteAnAction () {
-		
-	if (state == CustomerState.atBank)
-		MessageGuard();
 
-	if (desire == BankCustomerDesire.withdraw && state == CustomerState.ready)
-		WithdrawCash();
+	public boolean pickAndExecuteAnAction () {
 
-	if (desire == BankCustomerDesire.deposit && state == CustomerState.ready)
-		DepositCash();
+		if (state == CustomerState.atBank) {
+			messageGuard();
+			return false;
+		}
 
-	if (desire == BankCustomerDesire.wantLoan && state == CustomerState.ready)
-		RequestLoan();
+		if (desire == BankCustomerDesire.openAccount && state == CustomerState.ready){
+			openAccount();
+			return false;
+		}
 
-	if (desire == BankCustomerDesire.closeLoan && state == CustomerState.ready)
-		PayOffLoan();
+		if (desire == BankCustomerDesire.withdraw && state == CustomerState.ready){
+			withdrawCash();
+			return false;
+		}
 
-	if (desire == BankCustomerDesire.openAccount && state == CustomerState.ready)
-		OpenAccount();
+		if (desire == BankCustomerDesire.deposit && state == CustomerState.ready){
+			depositCash();
+			return false;
+		}
 
-	if (desire == BankCustomerDesire.leaveBank && state == CustomerState.ready)
-		LeaveBank();
-	
-	if (desire == BankCustomerDesire.robBank && state == CustomerState.ready)
-		RobBank();
+		if (desire == BankCustomerDesire.wantLoan && state == CustomerState.ready){
+			requestLoan();
+			return false;
+		}
 
-	return false;
+		if (desire == BankCustomerDesire.closeLoan && state == CustomerState.ready){
+			payOffLoan();
+			return false;
+		}
+
+		if (desire == BankCustomerDesire.leaveBank && state == CustomerState.ready){
+			leaveBank();
+			return false;
+		}
+
+		if (desire == BankCustomerDesire.robBank && state == CustomerState.ready){
+			robBank();
+			return false;
+		}
+
+		return false;
 	}
 
 	//Actions
 
-	void MessageGuard () {
+	void messageGuard () {
 		print("Arrived at bank");
-		Phonebook.bank.bankGuardRole.msgArrivedAtBank(this);
+		if (myTeller instanceof Role)
+			Phonebook.getPhonebook().getBank().bankGuardRole.msgArrivedAtBank(this);
 		state = CustomerState.waiting;
 	}
-	
-	void WithdrawCash() {
+
+	void withdrawCash() {
 		myTeller.msgINeedMoney(person.desiredCash,person.accountNum);
 		state = CustomerState.waiting;
 	}
 
-	void DepositCash () {
+	void depositCash () {
 		myTeller.msgHereIsMyDeposit(person.depositAmount, person.accountNum);
 		state = CustomerState.waiting;
 	}
 
-	void RequestLoan () {
-		desiredLoanAmount = 10*person.withdrawAmount;
+	void requestLoan () {
+		desiredLoanAmount = 10*person.desiredCash;
 		myTeller.msgINeedALoan(desiredLoanAmount, person.accountNum);
 		state = CustomerState.waiting;
 	}
 
-	void PayOffLoan() {
-		person.money -= loan;
-		myTeller.msgPayingOffLoan(loan, person.accountNum);
+	void payOffLoan() {
+		person.money -= person.loan;
+		myTeller.msgPayingOffLoan(person.loan, person.accountNum);
 		state = CustomerState.waiting;
 	}
 
-	void OpenAccount () {
+	void openAccount () {
 		myTeller.msgWantNewAccount(this);
 		state = CustomerState.waiting;
 	}
-	
-	void LeaveBank () {
+
+	void leaveBank () {	
+		//GUI operation
 		desire = BankCustomerDesire.none;
+		state = CustomerState.waiting;	
 		myTeller.msgLeavingBank(person.accountNum);
-		state = CustomerState.waiting;
-		person.setRoleInactive(this);
+		if (myTeller instanceof Role)
+			Phonebook.getPhonebook().getBank().bankGuardRole.msgCustomerLeavingBank(myTeller);
+		myTeller = null;
+		this.setRoleInactive();
 	}
 
-	void RobBank() {
+	void robBank() {
 		//Animation();
-		Phonebook.bank.bankGuardRole.msgRobbingBank(this);
+		Phonebook.getPhonebook().getBank().bankGuardRole.msgRobbingBank(this);
 		state = CustomerState.waiting;
 	}
-	
+
 	public void setDesire(String d1){
 		if (d1 == "deposit")
 			desire = BankCustomerDesire.deposit;

@@ -11,6 +11,7 @@ public class MaintenanceWorker extends Role
 	//Or automatically X number of housing every day?
 	
 	String name; 
+	protected String RoleName = "Maintenance Worker";
 	
 	class WorkOrder 
 	{
@@ -26,7 +27,7 @@ public class MaintenanceWorker extends Role
 		super(person, pName, rName);
 	}
 	
-	protected boolean pickAndExecuteAnAction() 
+	public boolean pickAndExecuteAnAction() 
 	{
 		return false;
 	}

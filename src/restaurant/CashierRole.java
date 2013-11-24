@@ -3,9 +3,10 @@ package restaurant;
 
 import java.util.*;
 
-import market.SalesPersonRole;
+import market.interfaces.SalesPerson;
 import person.Person;
 import person.Role;
+import person.Worker;
 
 
 /**
@@ -15,7 +16,8 @@ import person.Role;
 public class CashierRole extends Role {
 
 	private String name;
-	protected String RoleName = "Cashier";
+	protected String roleName = "Cashier";
+	public Restaurant restaurant;
 	//private Semaphore atTable = new Semaphore(0,true);
 
 	//Keeps a list of checks
@@ -31,8 +33,14 @@ public class CashierRole extends Role {
 		foodPrices.put("Salad", 5.99);
 	}
 
-	public CashierRole(Person p1, String pName, String rName) {
+	public CashierRole(Person p1, String pName, String rName, Restaurant restaurant) {
 		super(p1, pName, rName);
+		this.restaurant = restaurant;
+	}
+
+	public CashierRole(String roleName, Restaurant restaurant) {
+		super(roleName);
+		this.restaurant = restaurant;
 	}
 
 	public String getName() {
@@ -46,7 +54,7 @@ public class CashierRole extends Role {
 	 */
 	public void msgComputeBill(String choice, int tableNumber, WaiterRole waiterRole) {
 		synchronized(Checks){
-			//print("Calculating bill for table " + tableNumber);
+			print("Calculating bill for table " + tableNumber);
 			//log.add(new LoggedEvent("Calculating bill for table"));
 			Checks.add(new Check(choice, tableNumber, waiterRole));
 			stateChanged();
@@ -55,21 +63,20 @@ public class CashierRole extends Role {
 
 	public void msgPayment(String choice, double amount, RestaurantCustomerRole customer) {
 		synchronized(Payments){
-			//print("Received payment from " + customer.getCustomerName());
+			print("Received payment from " + customer.getCustomerName());
 			//log.add(new LoggedEvent("Received payment from " + customer.getCustomerName()));
 			Payments.add(new Payment(choice, amount, customer));
 			stateChanged();
 		}
 	}
 
-	public void msgOrderFulfilled(String choice, int amount, SalesPersonRole market) {
+	public void msgPleasePayForItems(String choice, int amount, double bill, SalesPerson market) {
 		synchronized(OrdersToPay){
-			OrdersToPay.add(new Order(choice, amount, market));
+			OrdersToPay.add(new Order(choice, amount, bill, market));
 			//log.add(new LoggedEvent("Received msgOrderFulfilled from " + market.getName()));
 			stateChanged();
 		}
 	}
-
 
 
 	/**
@@ -102,6 +109,12 @@ public class CashierRole extends Role {
 			}
 		}
 
+		if (leaveRole){
+			((Worker) person).roleFinishedWork();
+			leaveRole = false;
+			return true;
+		}
+		
 		return false;
 		//we have tried all our rules and found
 		//nothing to do. So return false to main loop of abstract agent
@@ -126,26 +139,29 @@ public class CashierRole extends Role {
 			Payments.remove(0);
 			return;
 		}
-		
+
 		double change;
 		change = Payments.get(0).payment - foodPrices.get(Payments.get(0).choice);
 		change = Math.round(change * 100.0) / 100.0;
 		Payments.get(0).customer.msgHeresYourChange(change);
-		//print("Gave change to customer " + Payments.get(0).customer.getName());
+		print("Gave change to customer " + Payments.get(0).customer.getName());
 		Payments.remove(0);
 	}
-	
+
 	private void PayMarket() {
-		double payment;
-		payment = OrdersToPay.get(0).amountOrdered * foodPrices.get(OrdersToPay.get(0).choice);
-		payment = Math.round(payment * 100.0) / 100.0;
-		//print("Giving Market " + OrdersToPay.get(0).market + " for " + OrdersToPay.get(0).amountOrdered + " " + OrdersToPay.get(0).choice + "(s) x $" + foodPrices.get(OrdersToPay.get(0).choice) + " = $" + payment);
-		//OrdersToPay.get(0).market.msgPayment(this, payment); How to make cashier a MarketCustomer
-		OrdersToPay.remove(0);
+		if (OrdersToPay.get(0).bill == OrdersToPay.get(0).amountOrdered * foodPrices.get(OrdersToPay.get(0).choice)) {
+			OrdersToPay.get(0).setBill(Math.round(OrdersToPay.get(0).bill * 100.0) / 100.0);
+			print("Giving Market " + OrdersToPay.get(0).market + " for " + OrdersToPay.get(0).amountOrdered + " " + OrdersToPay.get(0).choice + "(s) x $" + foodPrices.get(OrdersToPay.get(0).choice) + " = $" + OrdersToPay.get(0).bill);
+			OrdersToPay.get(0).market.msgPayment(restaurant, OrdersToPay.get(0).bill);
+			OrdersToPay.remove(0);
+		}
+		else {
+			//Dispute bill?
+		}
 	}
 
-	
-	
+
+
 	//Check Class
 	public class Check {
 		String choice;
@@ -171,17 +187,23 @@ public class CashierRole extends Role {
 			this.customer = customer;
 		}
 	}
-	
+
 	//Order Class
 	public class Order {
 		String choice;
 		int amountOrdered;
-		SalesPersonRole market; //The market
+		double bill;
+		SalesPerson market; //The market
 
-		Order(String choice, int amountOrdered, SalesPersonRole market) {
+		Order(String choice, int amountOrdered, double bill, SalesPerson market) {
 			this.choice = choice;
 			this.amountOrdered = amountOrdered;
+			this.bill = bill;
 			this.market = market;
+		}
+		
+		public void setBill(double newBill) {
+			bill = newBill;
 		}
 	}
 }

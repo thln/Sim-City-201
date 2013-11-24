@@ -1,230 +1,284 @@
 package bank;
 
-import person.Person;
-import person.Role;
-import application.Phonebook;
+import java.util.ArrayList;
 import java.util.List;
 
-public class BankTellerRole extends Role {
+import person.Person;
+import person.Role;
+import person.Worker;
+import application.Phonebook;
+import bank.interfaces.BankCustomer;
+import bank.interfaces.BankTeller;
 
-//TODO
-	//Finish find account function,
-	
+public class BankTellerRole extends Role implements BankTeller {
+
 	//DATA
-	int accountNumKeyList = 3000;
-	List<Account> accounts;
-	LoanOfficerRole myLoaner;
 	protected String RoleName = "Bank Teller";
 	int balanceMinimum = 5;
 	String name;
-	
-	enum AccountState {neutral, newAccount, waiting, depositing, withdrawing, requestingLoan, 
-		closingLoan, loanApproved, loanDenied, leavingBank}
+	List<Account> myAccounts;		//A list of the accounts that only this teller will handle
 
-	class Account {	
-		BankCustomerRole customer;
-		private int accountNum; 		//the hash key
-		double loan = 0;
-		double balance = 0;
-		double creditScore = 0;
-		double processingMoney = 0;
-		AccountState state = AccountState.newAccount;
-		
-		Account (BankCustomerRole c1) {
-			customer = c1;
+	public enum AccountState {neutral, newAccount, waiting, depositing, withdrawing, requestingLoan, 
+		closingLoan, loanApproved, loanDenied, bankEmpty, leavingBank}
+
+	static public class Account {	
+		private BankCustomer customer;
+		public int accountNum; 		//the hash key
+		public double loan = 0;
+		public double balance = 0;
+		public double creditScore = 150;
+		public double processingMoney = 0;
+		AccountState state;
+
+		public Account (BankCustomer c1) {
+			setCustomer(c1);
 		}
-		
+
 		public void setAccountNum (int n){
 			accountNum = n;
+		}
+
+		public BankCustomer getCustomer() {
+			return customer;
+		}
+
+		public void setCustomer(BankCustomer customer) {
+			this.customer = customer;
+		}
+
+		public void setCredit (double cred){
+			creditScore = cred;
+		}
+
+		public void setProcessingMoney (double m) {
+			processingMoney = m;
+		}
+
+		public void setState(AccountState s1) {
+			state = s1;
+		}
+
+		public AccountState getState() {
+			return state;
+		}
+
+		public int getAccountNum() {
+			return accountNum;
 		}
 	}
 
 	public BankTellerRole (String name, Person p1, String roleName) {
 		super(p1, name, roleName);
-		myLoaner = Phonebook.bank.loanOfficerRole;
-		accounts = myLoaner.getAccounts();
+		myAccounts = new ArrayList<>();
 	}
-	
+
+	public BankTellerRole(String roleName) {
+		super(roleName);
+		myAccounts = new ArrayList<>();
+	}
+
 	//MESSAGES
 
-	void msgWantNewAccount (BankCustomerRole cust1) {	
+	public void msgWantNewAccount (BankCustomer cust1) {	
 		print("Customer wants new account");
-		accounts.add(new Account(cust1));
+		Account a1 = new Account(cust1);
+		Phonebook.getPhonebook().getBank().accounts.add(a1);
+		a1.setState(AccountState.newAccount);
+		myAccounts.add(a1);
 		stateChanged();
 	}
 
-	void msgINeedMoney(double desiredAmount, int accountNum) {
-		print("Customer approached Teller");
-		Account correct = FindAccount (accountNum);
+	public void msgINeedMoney(double desiredAmount, int accountNum) {
+		print("Customer needs money");
+		Account correct = findMyAccount (accountNum);
 		correct.processingMoney = desiredAmount;
 		correct.state = AccountState.withdrawing;
 		stateChanged();
 	}
 
-	void msgHereIsMyDeposit(double amount, int accountNum) {
+	public void msgHereIsMyDeposit(double amount, int accountNum) {
 		print("Customer wants to deposit");
-		Account correct = FindAccount (accountNum);
+		Account correct = findMyAccount (accountNum);
 		correct.processingMoney = amount;
 		correct.state = AccountState.depositing;
 		stateChanged();
 	}
 
-	void msgINeedALoan(double desiredLoan, int accountNum) {
-		Account correct = FindAccount (accountNum);
+	public void msgINeedALoan(double desiredLoan, int accountNum) {
+		Account correct = findMyAccount (accountNum);
 		correct.processingMoney = desiredLoan;
 		correct.state = AccountState.requestingLoan;
+		print("Customer requesting loan of $" + correct.processingMoney);
 		stateChanged();
 	}
 
-	void msgPayingOffLoan(double loan, int accountNum) {
-		Account correct = FindAccount (accountNum);
+	public void msgPayingOffLoan(double loan, int accountNum) {
+		Account correct = findMyAccount (accountNum);
 		correct.processingMoney = loan;
 		correct.state = AccountState.closingLoan;
 		stateChanged();
 	}
 
-	void msgThisLoanApproved(Account account1) {
+	public void msgThisLoanApproved(Account account1) {
+		print("Loan approved.");
 		account1.state = AccountState.loanApproved;
 		stateChanged();
 	}
 
-	void msgThisLoanDenied (Account account1, double possibleLoan) {
+	public void msgThisLoanDenied (Account account1, double possibleLoan) {
+		print("Loan denied.");
 		account1.state = AccountState.loanDenied;
 		account1.processingMoney = possibleLoan;
 		stateChanged();
 	}
-	
-	void msgLeavingBank (int accountNum) {
-		print("Customer Leaving");
-		Account correct = FindAccount(accountNum);
-		correct.state = AccountState.leavingBank;
-		stateChanged();
+
+	public void msgLeavingBank(int accountNum) {
+		Account correct = findMyAccount (accountNum);
+		myAccounts.remove(correct);
 	}
 
 	//Scheduler
 
-	protected boolean pickAndExecuteAnAction() {
+	public boolean pickAndExecuteAnAction() {
 
-		for (Account account1: accounts) {
-			
+		for (Account account1: myAccounts) {
+
 			if (account1.state == AccountState.newAccount)	{
-				OpenAccount(account1);
-			}
-			
-			if (account1.state == AccountState.withdrawing)	{
-				WithdrawMoney(account1);
-			}
-			
-			if (account1.state == AccountState.depositing)	{
-				DepositMoney(account1);
-			}
-			
-			if (account1.state == AccountState.requestingLoan)	{
-				RequestLoan(account1);
-			}
-			
-			if (account1.state == AccountState.closingLoan)	{
-				CloseLoan(account1);
-			}
-			
-			if (account1.state == AccountState.loanApproved) {	
-				ApproveLoan(account1);
-			}
-			
-			if (account1.state == AccountState.loanDenied)	{
-				DenyLoan(account1);
-			}
-			
-			if (account1.state == AccountState.closingLoan)	{
-				CloseLoan(account1);
-			}
-			
-			if (account1.state == AccountState.leavingBank) {
-				BecomeAvailable(account1);
+				openAccount(account1);
 				return false;
 			}
-		}
-		
-		return false;
 
+			if (account1.state == AccountState.withdrawing)	{
+				withdrawMoney(account1);
+				return false;
+			}
+
+			if (account1.state == AccountState.depositing)	{
+				depositMoney(account1);
+				return false;
+			}
+
+			if (account1.state == AccountState.requestingLoan)	{
+				requestLoan(account1);
+				return false;
+			}
+
+			if (account1.state == AccountState.closingLoan)	{
+				closeLoan(account1);
+				return false;
+			}
+
+			if (account1.state == AccountState.loanApproved) {	
+				approveLoan(account1);
+				return false;
+			}
+
+			if (account1.state == AccountState.loanDenied)	{
+				denyLoan(account1);
+				return false;
+			}
+
+			if (account1.state == AccountState.closingLoan)	{
+				closeLoan(account1);
+				return false;
+			}
+
+		}
+
+		if (leaveRole){
+			Worker myself = (Worker) person;
+			myself.roleFinishedWork();
+			leaveRole = false;
+			return true;
+		}
+
+		return false;
 	}
 
 
-
 	//Actions
-
-	Account FindAccount (int accNum) {
-		for (Account a: accounts) {
-			if (a.accountNum == accNum) {
+	Account findMyAccount (int accNum) {
+		for (Account a: myAccounts) {
+			if (a.getAccountNum() == accNum) {
 				return a;		
+			}
+		}
+		//If can't find the account in my current set of accounts, look in the global list
+		return findPhonebookAccount(accNum);
+	}
+
+	Account findPhonebookAccount (int accNum) {
+		synchronized(Phonebook.getPhonebook().getBank().accounts) {
+			for (Account a: Phonebook.getPhonebook().getBank().accounts) {
+				if (a.getAccountNum() == accNum) {
+					myAccounts.add(a);		//Anytime we must search through the global list, 		
+					return a;						//we need add account to the local one for easy future access
+				}
 			}
 		}
 		return null;
 	}
 
-	void OpenAccount (Account account1) {
-		accountNumKeyList++;
-		account1.setAccountNum(accountNumKeyList);
-		account1.customer.msgHereIsNewAccount(account1.accountNum);
+
+
+	void openAccount (Account account1) {
+		int hashKey = ++Phonebook.getPhonebook().getBank().accountNumKeyList;
+		account1.setAccountNum(hashKey);
+		account1.getCustomer().msgHereIsNewAccount(account1.getAccountNum());
 		account1.state = AccountState.neutral;
 	}
 
-	void WithdrawMoney(Account account1) {
-		if (account1.balance > (account1.processingMoney + balanceMinimum) &&
-				(account1.processingMoney < (myLoaner.vault - myLoaner.vaultMinimum))) {
-			myLoaner.vault -= account1.processingMoney;
-			account1.state = AccountState.neutral;
-			account1.customer.msgHereIsYourMoney(account1.processingMoney);
+	void withdrawMoney(Account account1) {
+		if (account1.balance > (account1.processingMoney + balanceMinimum))  {
+			Phonebook.getPhonebook().getBank().vault -= account1.processingMoney;
+			account1.getCustomer().msgHereIsYourMoney(account1.processingMoney);
 		}
-		else if (account1.processingMoney > (myLoaner.vault-myLoaner.vaultMinimum))
-			account1.customer.msgBankrupt();
 		else
-			account1.customer.msgInsufficentFunds();
+			account1.getCustomer().msgInsufficientFunds();
 
 		account1.processingMoney = 0;
 		account1.state = AccountState.neutral;
 	}
 
-	void DepositMoney(Account account1) {
-		myLoaner.vault += account1.processingMoney;
+	void depositMoney(Account account1) {
+		Phonebook.getPhonebook().getBank().vault += account1.processingMoney;
 		print("$" + account1.processingMoney + " deposited into bank vault");
 		account1.balance +=  account1.processingMoney;
 		account1.creditScore += account1.processingMoney/10;	//every time you deposit money, your credit goes up the bank can trust that you have money
-		account1.customer.msgDepositReceived();
+		account1.getCustomer().msgDepositReceived();
 		account1.state = AccountState.neutral;	
 	}
 
-	void RequestLoan (Account account1) {
-		myLoaner.msgIsLoanApproved(account1, this);
+	void requestLoan (Account account1) {
+		if (account1.customer instanceof Role) 
+			Phonebook.getPhonebook().getBank().loanOfficerRole.msgIsLoanApproved(account1, this);
 		account1.state = AccountState.waiting;
 	}
 
-	void CloseLoan (Account account1) {	
+	void closeLoan (Account account1) {	
 		account1.creditScore += account1.loan/10;
 		account1.loan = 0;
 		account1.state = AccountState.neutral;
-		account1.customer.msgLoanClosed();
+		account1.getCustomer().msgLoanClosed();
 	}
 
-	void ApproveLoan (Account account1) {
+	void approveLoan (Account account1) {
 		account1.state = AccountState.neutral;
 		account1.loan = account1.processingMoney;
 		account1.balance += account1.loan;
-		account1.customer.msgYourLoanWasApproved();
+		account1.getCustomer().msgYourLoanWasApproved();
 	}
 
-	void DenyLoan (Account account1) {
+	void denyLoan (Account account1) {
 		account1.state = AccountState.neutral;	
-		account1.customer.msgYourLoanWasDenied(account1.processingMoney);	//loan denied, but given your credit score you can have a loan of size (processingMoney)
-	}
-	
-	void BecomeAvailable (Account account1) {
-		account1.state = AccountState.neutral;
-		Phonebook.bank.bankGuardRole.msgTellerBecameAvailable(this);
+		account1.getCustomer().msgYourLoanWasDenied(account1.processingMoney);	//loan denied, but given your credit score you can have a loan of size (processingMoney)
 	}
 
 	public double getVault() {
-		return myLoaner.vault;
+		return Phonebook.getPhonebook().getBank().vault;
 	}
 
+	public List<Account> getAccounts() {
+		return myAccounts;
+	}
 }

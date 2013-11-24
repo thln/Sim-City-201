@@ -1,45 +1,115 @@
 package person;
 
+import person.Role.RoleState;
+import bank.BankCustomerRole;
+import application.Phonebook;
+import application.TimeManager;
+import application.TimeManager.Day;
+
 public class Crook extends Person {
 	//These people become dishonest customers in the restaurant
 
-	int time2RobDaBank = 8;
-	int eatTime = 12;
-	int marketTime = 15;
 	String name;
-	String type = "Crook";
 
-    public Crook(String name,  int money)
-    {
+	public Crook(String name,  int money) {
 		super(name);
 		this.money = money;
 		this.name = name;
-    }
-    
-    public Crook(String name, String type, int money)
-    {
-		super(name, type);
-		this.money = money;
-		this.name = name;
-    }
-
-	
-	public void updateTime(int newTime) {
-		if (this.newTime == time2RobDaBank) {
-			//RobberRole.state = waitingToExecute;
-		}
-		if (this.newTime == eatTime) {
-			//RestaurantCustomer.state = waitingToExecute;
-		}
-		if (this.newTime == marketTime && !hasFoodInFridge) {
-			//MarketCustomer.state = waitingToExecute;
-		}
-		if (this.newTime == sleepTime) {
-			//GoToSleep();
-		}
 	}
-	public String getType(){
-		return type;
+
+	protected boolean pickAndExecuteAnAction() {
+		if (hunger == HungerLevel.full) {
+			startHungerTimer();
+			return true;
+		}
+		
+		synchronized (roles) {
+			if (!roles.isEmpty()) {
+				for (Role r : roles) {
+					if (r.getState() == RoleState.active) {
+						return r.pickAndExecuteAnAction();
+					}
+				}
+			}
+		}
+
+		//If no role is active
+		//Checking the time
+
+		if (TimeManager.getTimeManager().getTime().day == Day.Friday && TimeManager.getTimeManager().getTime().dayHour == 12 && TimeManager.getTimeManager().getTime().dayMinute == 0) {
+			robBank();
+			return true;
+		}
+
+		//Hunger Related
+		if (hunger == HungerLevel.hungry) {
+			//If you don't have food in the fridge
+			if (!hasFoodInFridge) {
+				if (money <= moneyMinThreshold) { 
+					//This if says go to the business if it is open and at least 1 hour before closing time
+					if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getBank().openTime.hour) &&
+							(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getBank().closeTime.hour)) {
+						prepareForBank();
+						return true;
+					}
+				}
+				else if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getRestaurant().openTime.hour) &&
+						(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getRestaurant().closeTime.hour)) {
+					prepareForRestaurant();
+					return true;
+				}
+			}
+			else //if you do have food in the fridge
+			{
+				eatAtHome(); //empty method for now...
+				return true;
+			}
+		}
+
+		//Market Related
+		if (!hasFoodInFridge || carStatus == CarState.wantsCar) {
+			if (money <= moneyMinThreshold && !hasFoodInFridge) {
+				if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getBank().openTime.hour) &&
+						(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getBank().closeTime.hour)) {
+					prepareForBank();
+					return true;
+				}
+			}
+			else {
+				if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getMarket().openTime.hour) &&
+						(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getMarket().closeTime.hour)) {
+					prepareForMarket();
+					return true;
+				}
+			}
+		}
+
+		goToSleep();
+		return false;
+	}
+
+	private void robBank() {
+		//GUI call to go to business
+		//		try {
+		//			atDestination.acquire();
+		//		} catch (InterruptedException e) {
+		//			// TODO Auto-generated catch block
+		//			e.printStackTrace();
+		//
+		//		}
+		//Once semaphore is released from GUI
+
+		for (Role cust1 : roles) {
+			if (cust1 instanceof BankCustomerRole) {
+				BankCustomerRole bankRobber = (BankCustomerRole) cust1;
+
+				bankRobber.setDesire("robBank");
+				Phonebook.getPhonebook().getBank().bankGuardRole.msgRobbingBank(bankRobber);
+				cust1.setRoleActive();
+				stateChanged();
+				return;
+			}
+		}
 	}
 }
 

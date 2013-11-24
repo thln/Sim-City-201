@@ -1,55 +1,108 @@
 package person;
 
+import application.Phonebook;
+import application.TimeManager;
 import person.Role.RoleState;
 
-public class Wealthy extends Person 
-{
-    int eatTime1 = 10;
-    int eatTime2 = 16;
-    int bankTime = 10;
-    int sleepTime = 22;
-    boolean needToDeposit;
-    String name;
-    String type = "Wealthy";
-    
-    public Wealthy(String name,  int money)
-    {
+public class Wealthy extends Person {
+
+	boolean needToDeposit;
+	String name;
+
+	public Wealthy(String name,  int money) {
 		super(name);
 		this.money = money;
 		this.name = name;
-    }
-    
-    public Wealthy(String name, String type, int money)
-    {
-		super(name, type);
-		this.money = money;
-		this.name = name;
-    }
-    
-    //Messages
-    void msgRentDue () 
-    {
-	    //roles.landlord.waitingToExecute;
+		//roles.add(new LandlordRole());
 	}
-    
-    public void updateTime(int newTime) 
-    {
-		if (newTime == eatTime1)
-		{		
-			//Need to turn Restaurant into a "Role"
-			//RestaurantCustomer.state = roleState.waitingToExecute;
+
+
+	//Scheduler
+	protected boolean pickAndExecuteAnAction() {
+		if (hunger == HungerLevel.full) {
+			startHungerTimer();
+			return true;
 		}
-		if (newTime == eatTime2)
-		{
-			//RestaurantCustomer.state = roleState.waitingToExecute;
+		
+		synchronized (roles) {
+			if (!roles.isEmpty()) {
+				for (Role r : roles) {
+					if (r.getState() == RoleState.active) {
+						return r.pickAndExecuteAnAction();
+					}
+				}
+			}
 		}
-		if (newTime == sleepTime)
-		{
-		    //GoToSleep();
+
+		//If no role is active
+
+		//Bank Related
+        if (money <= moneyMinThreshold || money >= moneyMaxThreshold) {
+        	prepareForBank();
+        	return true;
+        }
+        
+		//Rent Related
+		if (TimeManager.getTimeManager().getTime().day == TimeManager.Day.Monday) {
+			prepareForRentCollection();
+			return true;
 		}
-    }
-    
-    public String getType(){
-		return type;
+
+		//Hunger Related
+		if (hunger == HungerLevel.hungry) {
+			//If you don't have food in the fridge
+			if (!hasFoodInFridge) {
+				if (money <= moneyMinThreshold) { 
+					//This if says go to the business if it is open and at least 1 hour before closing time
+					if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getBank().openTime.hour) &&
+							(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getBank().closeTime.hour)) {
+						prepareForBank();
+						return true;
+					}
+				}
+				else if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getRestaurant().openTime.hour) &&
+						(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getRestaurant().closeTime.hour)) {
+					prepareForRestaurant();
+					return true;
+				}
+			}
+			else //if you do have food in the fridge
+			{
+				eatAtHome(); //empty method for now...
+				return true;
+			}
+		}
+
+		//Market Related
+		if (!hasFoodInFridge || carStatus == CarState.wantsCar) {
+			if (money <= moneyMinThreshold && !hasFoodInFridge) {
+				if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getBank().openTime.hour) &&
+						(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getBank().closeTime.hour)) {
+					prepareForBank();
+					return true;
+				}
+			}
+			else {
+				if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getMarket().openTime.hour) &&
+						(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getMarket().closeTime.hour)) {
+					prepareForMarket();
+					return true;
+				}
+			}
+		}
+
+		goToSleep();
+		return false;
+	}
+
+	//Actions
+	public void prepareForRentCollection() {
+//		for (Role landlord: roles) {
+//			//			if (landlord instanceof LandlordRole) {
+//			//				landlord.setRoleActive();
+//			//				stateChanged();
+//			//				return;
+//			//			}
+//		}
 	}
 }

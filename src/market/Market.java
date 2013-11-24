@@ -2,78 +2,130 @@ package market;
 
 import java.util.*;
 
+import application.WatchTime;
 import person.Person;
+import person.Role;
+import person.Worker;
 
 public class Market {
 
-	//Roles
-	public SalesPersonRole salesPersonRole;
-	public UPSmanRole UPSmanRole;
-	
-	
-	double money;
-	HashMap<String, Integer> inventory = new HashMap<String, Integer>(); {
-		//For people
-		inventory.put("Car", 100);
-		inventory.put("Pasta", 100);
-		inventory.put("Ice Cream", 100);
-		inventory.put("Chips", 100);
-		inventory.put("Milk", 100);
-		inventory.put("Eggs", 100);
-		inventory.put("Lobster", 100);
-		inventory.put("Cheese", 100);
+	//Data
+	String name;
 
+	//Open and closing times
+	public WatchTime openTime = new WatchTime(9);
+	public WatchTime closeTime = new WatchTime(18);
+
+	//Roles
+	public SalesPersonRole salesPersonRole = new SalesPersonRole("Sales Person", this);
+	public MarketRunnerRole marketRunnerRole = new MarketRunnerRole("Market Runner", this);
+	public UPSmanRole UPSmanRole = new UPSmanRole("UPS Man", this);
+
+	double money;
+	public HashMap<Integer, Product> marketItemsForSale = new HashMap<Integer, Product>(); {
+		//For people
+		marketItemsForSale.put(0, new Product("Car", 1000.00));
+		marketItemsForSale.put(1, new Product("Pasta", 1.99));
+		marketItemsForSale.put(2, new Product("Ice Cream", 4.99));
+		marketItemsForSale.put(3, new Product("Chips", 2.99));
+		marketItemsForSale.put(4, new Product("Milk", 2.50));
+		marketItemsForSale.put(5, new Product("Eggs", 1.50));
+		marketItemsForSale.put(6, new Product("Lobster", 12.99));
+		marketItemsForSale.put(7, new Product("Cheese", 3.99));
+	}
+
+	public HashMap<Integer, Item> inventory = new HashMap<Integer, Item>(); {
+		//For people
+		inventory.put(0, new Item("Car", 1000.00, 1000));
+		inventory.put(1, new Item("Pasta", 1.99, 1000));
+		inventory.put(2, new Item("Ice Cream", 4.99, 1000));
+		inventory.put(3, new Item("Chips", 2.99, 1000));
+		inventory.put(4, new Item("Milk", 2.50, 1000));
+		inventory.put(5, new Item("Eggs", 1.50, 1000));
+		inventory.put(6, new Item("Lobster", 12.99, 1000));
+		inventory.put(7, new Item("Cheese", 3.99, 1000));
+		
 		//For restaurants
-		inventory.put("Chicken", 100);
-		inventory.put("Steak", 100);
-		inventory.put("Pizza", 100);
-		inventory.put("Salad", 100);
+		inventory.put(8, new Item("Chicken", 10.99, 1000));
+		inventory.put(9, new Item("Steak", 15.99, 1000));
+		inventory.put(10, new Item("Pizza", 8.99, 1000));
+		inventory.put(11, new Item("Salad", 5.99, 1000));
 	}
-	
-	public HashMap<Integer, Item> marketItemsForSale = new HashMap<Integer, Item>(); {
-		//For people shopping
-		marketItemsForSale.put(0, new Item("Car", 1000));
-		marketItemsForSale.put(1, new Item("Pasta", 1.99));
-		marketItemsForSale.put(2, new Item("Ice Cream", 5.99));
-		marketItemsForSale.put(3, new Item("Chips", 2.99));
-		marketItemsForSale.put(4, new Item("Milk", 2.50));
-		marketItemsForSale.put(5, new Item("Eggs", 1.50));
-		marketItemsForSale.put(6, new Item("Lobster", 12.99));
-		marketItemsForSale.put(7, new Item("Cheese", 4.99));
+
+	//Constructor
+	public Market(String name) {
+		this.name = name;
 	}
-	
-	public SalesPersonRole arrivedAtWorkSalesPerson(Person person) {
-		return salesPersonRole;
-	}
-	
-	public UPSmanRole arrivedAtWorkUPSman(Person person) {
-		return UPSmanRole;
-	}
-	
-	public void setSalesPersonRole(Person person) {
-		person.setWorkerRole(salesPersonRole);
-	}
-	
-	public void setUPSmanRole(Person person) {
-		person.setWorkerRole(UPSmanRole);
-	}
-	
-	public void goingOffWork(Person person) {
-		if (person.getWorkerRole().equals(salesPersonRole)) {
-			salesPersonRole = null;
+
+
+	//Methods
+	public Role arrivedAtWork(Person person, String title) {
+		if (title == "salesPerson") {
+			//Setting previous bank guard role to inactive
+			if (salesPersonRole.getPerson() != null) {
+				Worker worker = (Worker) salesPersonRole.getPerson();
+				worker.roleFinishedWork();
+			}
+			//Setting bank guard role to new role
+			salesPersonRole.setPerson(person);
+			return salesPersonRole;
 		}
-		else if (person.getWorkerRole().equals(UPSmanRole)) {
-			UPSmanRole = null;
+		else if (title == "marketRunner") {
+			//Setting previous bank guard role to inactive
+			if (marketRunnerRole.getPerson() != null) {
+				Worker worker = (Worker) marketRunnerRole.getPerson();
+				worker.roleFinishedWork();
+			}
+			//Setting bank guard role to new role
+			marketRunnerRole.setPerson(person);
+			return marketRunnerRole;
 		}
+		else if (title == "UPSman") {
+			//Setting previous bank guard role to inactive
+			if (UPSmanRole.getPerson() != null) {
+				Worker worker = (Worker) UPSmanRole.getPerson();
+				worker.roleFinishedWork();
+			}
+			//Setting bank guard role to new role
+			UPSmanRole.setPerson(person);
+			return UPSmanRole;
+		}
+		else
+			return null;
 	}
-	
+
+
 	public class Item {
 		public String itemName;
 		public double  price;
+		public int amount;
 
-		Item(String choice, double price) {
+		Item(String choice, double price, int amount) {
+			itemName = choice;
+			this.price = price;
+			this.amount = amount;
+		}
+		
+		public void setInventory(int newAmount) {
+			this.amount = newAmount;
+		}
+	}
+	
+	public class Product {
+		public String itemName;
+		public double  price;
+
+		public Product (String choice, double price) {
 			itemName = choice;
 			this.price = price;
 		}
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }
