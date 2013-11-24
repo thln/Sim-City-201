@@ -35,7 +35,8 @@ public class HostRole extends Role
 	//GUI stuff
 	//public HostGui hostGui = null;
 
-	public HostRole(Person p1, String pName, String rName) {
+	public HostRole(Person p1, String pName, String rName) 
+	{
 		super(p1, pName, rName);
 
 		// make some tables
@@ -45,7 +46,8 @@ public class HostRole extends Role
 		}
 	}
 
-	public HostRole(String roleName) {
+	public HostRole(String roleName) 
+	{
 		super(roleName);
 
 		// make some tables
@@ -90,16 +92,21 @@ public class HostRole extends Role
 		}
 	}
 
-	public void msgLeavingTable(RestaurantCustomer cust, WaiterRole waiterRole) {
-		for (Table table : tables) {
-			if (table.getOccupant() == cust) {
+	public void msgLeavingTable(RestaurantCustomer cust, WaiterRole waiterRole) 
+	{
+		for (Table table : tables) 
+		{
+			if (table.getOccupant() == cust) 
+			{
 				//print(cust.getName() + " is leaving table " + table);
 				table.setUnoccupied();
 			}
 		}
 
-		for (myWaiter MW: waiters) {
-			if (MW.waiterRole == waiterRole) {
+		for (myWaiter MW: waiters) 
+		{
+			if (MW.waiterRole == waiterRole) 
+			{
 				MW.totalCustomers--;
 			}
 		}
@@ -107,10 +114,13 @@ public class HostRole extends Role
 		stateChanged();
 	}
 
-	public void msgMayIGoOnBreak(WaiterRole waiterRole) {
+	public void msgMayIGoOnBreak(WaiterRole waiterRole) 
+	{
 		//print(waiter.getName() + " asked to go on break");
-		for (myWaiter MW: waiters) {
-			if (MW.waiterRole == waiterRole) {
+		for (myWaiter MW: waiters) 
+		{
+			if (MW.waiterRole == waiterRole)
+			{
 				MW.askedToGoOnBreak = true;
 				stateChanged();
 			}

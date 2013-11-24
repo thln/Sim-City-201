@@ -89,9 +89,12 @@ public class Worker extends Person {
         
                 //Decisions more urgent that role continuity (None for now)
                 
-                if (workerRole.getState() == RoleState.active) {
+                if (workerRole.getState() == RoleState.active) 
+                {
                         if (((TimeManager.getTimeManager().getTime().dayHour - myJob.getEndTime().hour) <= 0)) 
+                        {
                                 workerRole.msgLeaveRole(); 
+                        }
                         workerRole.pickAndExecuteAnAction();
                 }
                 
