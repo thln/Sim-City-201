@@ -34,7 +34,7 @@ public class AltWaiterRole extends WaiterRole
 
 		}
 		//waiterGui.DoLeaveCustomer();
- 
+  
 		//cook.msgHeresAnOrder(MC.tableNumber, MC.choice, this);
 		Phonebook.getPhonebook().getRestaurant().getRevolvingStand().newOrder(new Order(MC.tableNumber, MC.choice, this));
 	}
