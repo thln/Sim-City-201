@@ -34,7 +34,7 @@ public abstract class Person extends Agent{
 	public HashMap <String, Integer> Inventory = new HashMap<String, Integer>();                 //Food list
 	public boolean hasFoodInFridge = false;
 	public enum HungerLevel {full, moderate, hungry, starving};
-	HungerLevel hunger = HungerLevel.hungry;
+	HungerLevel hunger = HungerLevel.full;
 
 	//Bank Related
 	public double money;
