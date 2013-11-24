@@ -3,7 +3,7 @@ package restaurant.test.mock;
 
 import restaurant.Menu;
 import restaurant.interfaces.Cashier;
-import restaurant.interfaces.Customer;
+import restaurant.interfaces.RestaurantCustomer;
 import restaurant.interfaces.Host;
 import restaurant.interfaces.Waiter;
 import testing.LoggedEvent;
@@ -15,7 +15,7 @@ import testing.Mock;
  * @author Kristi Hupka
  *
  */
-public class MockCustomer extends Mock implements Customer {
+public class MockCustomer extends Mock implements RestaurantCustomer {
 
 	public Cashier cashier;
 

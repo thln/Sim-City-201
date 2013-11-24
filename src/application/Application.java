@@ -124,8 +124,7 @@ public class Application extends JPanel {
 	//	m.setHome(allHousing.get(allHousing.size() - 1));
 		allHousing.add(new Housing(t, allHousing.size(), "Mansion"));
 		t.setHome(allHousing.get(allHousing.size() - 1));
-		
-		
+
 		allHousing.add(new Housing(bank2a, allHousing.size(), "Apartment"));
 		bank2a.setHome(allHousing.get(allHousing.size() - 1));
 		allHousing.add(new Housing(bank2b, allHousing.size(), "Apartment"));
@@ -149,6 +148,7 @@ public class Application extends JPanel {
 		allHousing.add(new Housing(rest2k, allHousing.size(), "Apartment"));
 		rest2k.setHome(allHousing.get(allHousing.size() - 1));
 		
+
 		
 		//Adding to Vector
 		population.add(bank1a);

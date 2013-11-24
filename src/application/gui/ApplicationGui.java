@@ -25,7 +25,9 @@ import application.gui.trace.TracePanel;
 
 public class ApplicationGui extends JFrame {
 
+
 	Application app = new Application();
+
 	ApplicationPanel appPanel; 
 	AnimationPanel animPanel = new AnimationPanel();
 
@@ -77,7 +79,86 @@ public class ApplicationGui extends JFrame {
 		bankGuard.updateTime(8);
 		loanOffice.updateTime(8);
 		bankCust.updateTime(8);
-		 */
+<<<<<<< HEAD
+		*/
+       // app = new Application();
+    }
+	
+	
+	//CONTROL PANEL CLASS (for the trace panel)
+    private class ControlPanel extends JPanel 
+    {
+            TracePanel tp;
+            
+            //Look into JToggleButton
+            JButton messagesButton;
+            JButton errorButton;
+            JButton restaurantMessagesButton;
+            JButton bankMessagesButton;
+            JButton housingMessagesButton;
+            JButton marketMessagesButton;
+            JButton generalCityMessagesButton;
+            boolean showMessageBool = true;
+            boolean showErrorBool = true;
+            boolean showRestaurantMsgBool = true;
+            boolean showBankMsgBool = true;
+            boolean showHousingMsgBool = true;
+            boolean showMarketMsgBool = true;
+            boolean showGeneralCityMsgBool = true;
+            
+            public ControlPanel(final TracePanel tracePanel) 
+            {
+                    this.tp = tracePanel;
+                    messagesButton = new JButton("Hide Level: MESSAGE")
+                    {
+                        {
+                            setSize(200, 25);
+                            setMaximumSize(getSize());
+                        }
+                    };
+                    errorButton = new JButton("Hide Level : ERROR")
+                    {
+                        {
+                            setSize(200, 25);
+                            setMaximumSize(getSize());
+                        }
+                    };
+                    restaurantMessagesButton = new JButton("Hide Tag: RESTAURANT")
+                    {
+                        {
+                            setSize(200, 25);
+                            setMaximumSize(getSize());
+                        }
+                    };
+                    bankMessagesButton = new JButton("Hide Tag: BANK")
+                    {
+                        {
+                            setSize(200, 25);
+                            setMaximumSize(getSize());
+                        }
+                    };
+                    housingMessagesButton = new JButton("Hide Tag: HOUSING")
+                    {
+                        {
+                            setSize(200, 25);
+                            setMaximumSize(getSize());
+                        }
+                    };
+                    marketMessagesButton = new JButton("Hide Tag: MARKET")
+                    {
+                        {
+                            setSize(200, 25);
+                            setMaximumSize(getSize());
+                        }
+                    };
+                    generalCityMessagesButton = new JButton("Hide Tag: GENERAL CITY")
+                    {
+                        {
+                            setSize(200, 25);
+                            setMaximumSize(getSize());
+                        }
+                    };
+
 		//simcity201 = new Application();
 	}
 
@@ -402,3 +483,4 @@ public class ApplicationGui extends JFrame {
 //			}
 //		}
 	}
+}

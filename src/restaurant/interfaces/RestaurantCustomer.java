@@ -10,7 +10,7 @@ import restaurant.interfaces.Waiter;
  * @author Kristi Hupka
  *
  */
-public interface Customer {
+public interface RestaurantCustomer {
 
 	public abstract void setHost(Host host);
 

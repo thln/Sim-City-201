@@ -1,6 +1,6 @@
 package restaurant.test.mock;
 
-import restaurant.interfaces.Customer;
+import restaurant.interfaces.RestaurantCustomer;
 import restaurant.interfaces.Cashier;
 import restaurant.interfaces.Cook;
 import restaurant.interfaces.Host;
@@ -34,13 +34,13 @@ public class MockWaiter extends Mock implements Waiter {
 	}
 
 	
-	public void msgReadyToOrder(Customer customer) {
+	public void msgReadyToOrder(RestaurantCustomer customer) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	
-	public void msgHeresMyOrder(Customer customer, String choice) {
+	public void msgHeresMyOrder(RestaurantCustomer customer, String choice) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -58,13 +58,13 @@ public class MockWaiter extends Mock implements Waiter {
 	}
 
 
-	public void msgIWantMyCheck(Customer cust) {
+	public void msgIWantMyCheck(RestaurantCustomer cust) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	
-	public void msgLeavingTable(Customer cust) {
+	public void msgLeavingTable(RestaurantCustomer cust) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -115,7 +115,7 @@ public class MockWaiter extends Mock implements Waiter {
 	}
 
 
-	public void msgPleaseSeatCustomer(int tableNumber, Customer customer, int xHome, int yHome) {
+	public void msgPleaseSeatCustomer(int tableNumber, RestaurantCustomer customer, int xHome, int yHome) {
 		// TODO Auto-generated method stub
 		
 	}

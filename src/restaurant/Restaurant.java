@@ -18,6 +18,7 @@ public class Restaurant {
 	public HostRole hostRole = new HostRole("Host");
 	public CookRole cookRole = new CookRole("Cook", this);
 	public CashierRole cashierRole = new CashierRole("Cashier", this);
+	public RevolvingStand theRevolvingStand = new RevolvingStand();
 	
 	//IMPORTANTE!
 	//Should instantiate The Revolving Stand here? Could you make it a singleton
@@ -28,8 +29,10 @@ public class Restaurant {
 	}
 
 	//Methods
-	public Role arrivedAtWork(Person person, String title) {
-		if (title == "host") {
+	public Role arrivedAtWork(Person person, String title) 
+	{
+		if (title == "host") 
+		{
 			//Setting previous bank guard role to inactive
 			if (hostRole.getPerson() != null) {
 				Worker worker = (Worker) hostRole.getPerson();
@@ -39,9 +42,11 @@ public class Restaurant {
 			hostRole.setPerson(person);
 			return hostRole;
 		}
-		else if (title == "cook") {
+		else if (title == "cook") 
+		{
 			//Setting previous bank guard role to inactive
-			if (cookRole.getPerson() != null) {
+			if (cookRole.getPerson() != null) 
+			{
 				Worker worker = (Worker) cookRole.getPerson();
 				worker.roleFinishedWork();
 			}
@@ -49,9 +54,11 @@ public class Restaurant {
 			cookRole.setPerson(person);
 			return cookRole;
 		}
-		else if (title == "cashier") {
+		else if (title == "cashier") 
+		{
 			//Setting previous bank guard role to inactive
-			if (cashierRole.getPerson() != null) {
+			if (cashierRole.getPerson() != null) 
+			{
 				Worker worker = (Worker) cashierRole.getPerson();
 				worker.roleFinishedWork();
 			}
@@ -59,7 +66,20 @@ public class Restaurant {
 			cashierRole.setPerson(person);
 			return cashierRole;
 		}
-		else
+		else if (title == "waiter")
+		{	
+			WaiterRole waiter = new WaiterRole(person, person.getName(), title);
+			hostRole.addWaiter(waiter);
+			return waiter;
+		}
+		else if (title == "alternative waiter")
+		{
+			AltWaiterRole altWaiter = new AltWaiterRole(person, person.getName(), title);
+			hostRole.addWaiter(altWaiter);
+			return altWaiter;
+			//hostRole.addWaiter();
+		}
+			//for waiter and alternative waiters, you message the host
 			return null;
 	}
 
@@ -81,6 +101,11 @@ public class Restaurant {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public RevolvingStand getRevolvingStand()
+	{
+		return theRevolvingStand;
 	}
 
 }
