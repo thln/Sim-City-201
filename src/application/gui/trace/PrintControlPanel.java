@@ -1,6 +1,7 @@
 package application.gui.trace;
 
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -11,7 +12,10 @@ import javax.swing.JPanel;
 public class PrintControlPanel extends JPanel {
 
 	TracePanel tp;
-
+	
+	JPanel leftPanel = new JPanel();
+	JPanel rightPanel = new JPanel();
+	
 	//Look into JToggleButton
 	JButton messagesButton;
 	JButton errorButton;
@@ -237,14 +241,16 @@ public class PrintControlPanel extends JPanel {
 			}
 		});
 
-		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		this.add(messagesButton);
-		this.add(errorButton);
-		this.add(restaurantMessagesButton);
-		this.add(bankMessagesButton);
-		this.add(housingMessagesButton);
-		this.add(marketMessagesButton);
-		this.add(generalCityMessagesButton);
+		this.setLayout(new GridLayout(0, 2));
+		
+		add(restaurantMessagesButton);
+		add(bankMessagesButton);
+		add(marketMessagesButton);
+		add(housingMessagesButton);
+		add(generalCityMessagesButton);
+		add(messagesButton);
+		add(errorButton);
+		
 		this.setMinimumSize(new Dimension(50, 600));
 	}
 }
