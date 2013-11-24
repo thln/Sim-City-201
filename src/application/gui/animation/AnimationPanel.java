@@ -20,6 +20,7 @@ public class AnimationPanel extends JPanel implements MouseListener {
 	JButton testbutton2 = new JButton("test2");
 	MarketRunnerGui market = new MarketRunnerGui();
 	BankLoanerGui bank = new BankLoanerGui();
+	HouseMaintenanceGui house = new HouseMaintenanceGui();
 	BusGui bus = new BusGui();
 
 	public AnimationPanel() {
@@ -59,15 +60,15 @@ public class AnimationPanel extends JPanel implements MouseListener {
 		}
 		
 		
-//		testGuis();
-//		
-//		//testing mechanisms
-//		testbutton.addMouseListener(this);
-//    	testbutton.setSize(100, 50);
-//    	cityPanel.add(testbutton);
-//    	testbutton2.addMouseListener(this);
-//    	testbutton2.setBounds(100, 0, 100, 50);
-//    	cityPanel.add(testbutton2);
+		testGuis();
+		
+		//testing mechanisms
+		testbutton.addMouseListener(this);
+    	testbutton.setSize(100, 50);
+    	cityPanel.add(testbutton);
+    	testbutton2.addMouseListener(this);
+    	testbutton2.setBounds(100, 0, 100, 50);
+    	cityPanel.add(testbutton2);
     	
 	}
 
@@ -91,11 +92,19 @@ public class AnimationPanel extends JPanel implements MouseListener {
 		}
 		for(int i=0; i< buildings.size();i++) {
 			if(buildings.get(i).getName().toLowerCase().contains("bank")) {
-				buildings.get(i).myBuildingPanel.addGui(bank);
+			//	buildings.get(i).myBuildingPanel.addGui(bank);
 				buildings.get(i).myBuildingPanel.addGui(new BankCustomerGui());
 				buildings.get(i).myBuildingPanel.addGui(new BankTellerGui());
-			//	buildings.get(i).myBuildingPanel.addGui(new BankLoanerGui());
+				buildings.get(i).myBuildingPanel.addGui(new BankLoanerGui());
 				buildings.get(i).myBuildingPanel.addGui(new BankGuardGui());
+			}
+		}
+		for(int i=0; i< buildings.size();i++) {
+			if(buildings.get(i).getName().toLowerCase().contains("house")) {
+				buildings.get(i).myBuildingPanel.addGui(house);
+				buildings.get(i).myBuildingPanel.addGui(new HouseRenterGui());
+			//	buildings.get(i).myBuildingPanel.addGui(new HouseMaintenanceGui());
+				buildings.get(i).myBuildingPanel.addGui(new HouseLandlordGui());
 			}
 		}
 		
@@ -195,10 +204,10 @@ public class AnimationPanel extends JPanel implements MouseListener {
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getSource().equals(testbutton)) {
-			bus.GoToStopA();
+			house.DoGoToBathroom();
 		}
 		if(e.getSource().equals(testbutton2)) {
-			bus.GoToStopB();
+			house.DoGoToKitchen();
 		}
 	}
 

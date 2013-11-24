@@ -50,11 +50,11 @@ public class BuildingPanel extends JPanel implements ActionListener {
         if(name.toLowerCase().contains("restaurant"))
         	g2.setColor(getBackground());
         else if(name.toLowerCase().contains("market"))
-        	g2.setColor(Color.WHITE);
+        	g2.setColor(new Color(255, 255, 204));
         else if(name.toLowerCase().contains("house"))
-        	g2.setColor(Color.ORANGE);
+        	g2.setColor(new Color(255, 229, 204));
         else if(name.toLowerCase().contains("bank"))
-        	g2.setColor(Color.LIGHT_GRAY);
+        	g2.setColor(new Color(184, 229, 227));
         else
         	g2.setColor(getBackground());
         
@@ -62,9 +62,9 @@ public class BuildingPanel extends JPanel implements ActionListener {
         g2.setColor(Color.RED);
        
         if(name == "name")
-        	g.drawString("", 10, 10);
+        	g.drawString("", WINDOWX/2, 10);
         else
-        	g.drawString(name, 10, 10);
+        	g.drawString(name, WINDOWX/2, 10);
         
         //different layouts based on their type       
         g2.setColor(Color.BLACK);
@@ -81,7 +81,7 @@ public class BuildingPanel extends JPanel implements ActionListener {
         	int KitchenTileHeight = 20;
         	
         	int xBreakRoomLocation = 310;
-        	int yBreakRoomLocation = 7;
+        	int yBreakRoomLocation = 10;
         	int BreakRoomWidth = 75;
         	int BreakRoomHeight = 40;
         	
@@ -194,6 +194,40 @@ public class BuildingPanel extends JPanel implements ActionListener {
         	g2.fillRect(100, 135, WINDOWX/2, 40); //table bottom
         }
         else if (name.toLowerCase().contains("house")) {
+        	//drawing the different rooms
+        	g2.setColor(Color.LIGHT_GRAY);
+        	g2.fillRect(0, 0, 150, 100);
+        	g2.fillRect(0, WINDOWY-150, 200, 150);
+        	
+        	//bed
+        	g2.fillRect(WINDOWX - 100, WINDOWY - 120, 60, 100);
+        	g2.setColor(Color.PINK);
+        	g2.fillRect(WINDOWX - 100, WINDOWY - 80, 60, 70);
+        	g2.setColor(Color.WHITE);
+        	g2.fillRect(WINDOWX - 90, WINDOWY - 110, 40, 20);
+        	
+        	//KITCHEN/////
+        	//fridge
+        	g2.fillRect(WINDOWX*3/4, 20, 40, 20);
+        	//dining room table
+        	g2.setColor(Color.ORANGE);
+        	g2.fillOval(WINDOWX/2, 20, 60, 50);
+        	
+        	//labellings
+        	g2.setColor(Color.BLACK);
+        	g2.drawString("Bathroom", 20, 20);
+        	g2.drawString("Living Room", 20, WINDOWY - 100);
+        	g2.drawString("Kitchen", WINDOWX - 100, 130);
+        	g2.drawString("table", WINDOWX/2+20, 50);
+
+        	//stove
+        	g2.fillRect(WINDOWX - 100, 20, 60, 55);
+        	g2.setColor(Color.RED);
+        	g2.fillOval(WINDOWX-90, 30, 15, 15);
+        	g2.fillOval(WINDOWX-65, 30, 15, 15);
+        	g2.fillOval(WINDOWX-90, 50, 15, 15);
+        	g2.fillOval(WINDOWX-65, 50, 15, 15);
+        	
         	
         }
         else if (name.toLowerCase().contains("bank")) {

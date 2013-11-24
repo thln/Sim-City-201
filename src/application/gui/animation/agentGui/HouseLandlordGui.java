@@ -12,8 +12,8 @@ public class HouseLandlordGui implements Gui{
 
 	//RestaurantGui gui;
 
-	private int xPos, yPos;
-	private int xDestination, yDestination;
+    private int xPos = 300, yPos = 365;//default House Landlord position
+    private int xDestination = 270, yDestination = 320;//default start position
 	
 	private enum Command {noCommand};
 	private Command command = Command.noCommand;
@@ -23,8 +23,6 @@ public class HouseLandlordGui implements Gui{
 
 	public HouseLandlordGui(/*MaintenanceWorker c, RestaurantGui gui*/){
 		//agent = c;
-		xPos = -20;
-		yPos = -20;
 		//this.gui = gui;
 	}
 
@@ -45,7 +43,7 @@ public class HouseLandlordGui implements Gui{
 	}
 
 	public void draw(Graphics2D g) {
-		g.setColor(Color.GREEN);
+		g.setColor(Color.ORANGE);
 		g.fillRect(xPos, yPos, 20, 20);
 	}
 
@@ -66,6 +64,11 @@ public class HouseLandlordGui implements Gui{
     }
 	
 	//Actions
+    public void DoGoToLivingRoom() {
+    	xDestination = 150;
+    	yDestination = 300;
+    }
+    
     public void DoExit() {
     	xDestination = 300;
     	yDestination = 360;

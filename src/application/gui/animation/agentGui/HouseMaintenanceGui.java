@@ -12,8 +12,8 @@ public class HouseMaintenanceGui implements Gui{
 
 	//RestaurantGui gui;
 
-	private int xPos, yPos;
-	private int xDestination, yDestination;
+    private int xPos = 300, yPos = 365;//default MarketCustomer position
+    private int xDestination = 330, yDestination = 320;//default start position
 	
 	private enum Command {noCommand};
 	private Command command = Command.noCommand;
@@ -23,8 +23,6 @@ public class HouseMaintenanceGui implements Gui{
 
 	public HouseMaintenanceGui(/*MaintenanceWorker c, RestaurantGui gui*/){
 		//agent = c;
-		xPos = -20;
-		yPos = -20;
 		//this.gui = gui;
 	}
 
@@ -66,6 +64,26 @@ public class HouseMaintenanceGui implements Gui{
     }
 	
 	//Actions
+    public void DoGoToKitchen() {
+    	xDestination = 510;
+    	yDestination = 85;
+    }
+    
+    public void DoGoToBedRoom() {
+    	xDestination = 450;
+    	yDestination = 300;
+    }
+    
+    public void DoGoToBathroom() {
+    	xDestination = 100;
+    	yDestination = 50;
+    }
+    
+    public void DoGoToLivingRoom() {
+    	xDestination = 100;
+    	yDestination = 300;
+    }
+    
     public void DoExit() {
     	xDestination = 300;
     	yDestination = 360;
