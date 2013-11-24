@@ -228,8 +228,6 @@ public class Application extends JPanel {
 			Population.add(newP);
 			newP.startThread();
 		}
-		
-
 	}
 	
 	//function used to test gui functionality

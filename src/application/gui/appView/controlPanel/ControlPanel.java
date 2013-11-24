@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import application.*;
 import application.gui.*;
+import application.gui.appView.*;
 
 public class ControlPanel extends JPanel{
 	private AddPanel addP;
@@ -19,10 +20,12 @@ public class ControlPanel extends JPanel{
 	private JPanel tempPanel = new JPanel();
 	private JTabbedPane ControlPane = new JTabbedPane();
 	private Application app;
+	private ApplicationPanel appPanel;
 	
-	public ControlPanel(Application app){
+	public ControlPanel(ApplicationPanel appPanel, Application app){
 		setLayout(new GridLayout(1,1));
 		this.app = app;
+		this.appPanel = appPanel;
 		addP = new AddPanel(this, app);
 		addPersonTab =  addP.mainPanel;
 		
@@ -36,4 +39,8 @@ public class ControlPanel extends JPanel{
 		ControlPane.addTab("Option 3", panel3);
 		add(ControlPane);
 	}	
+	
+	public ApplicationPanel getAppPanel(){
+		return appPanel;
+	}
 }

@@ -19,7 +19,7 @@ public class AddPanel implements ActionListener {
 	private JButton addButton = new JButton("Add");
 	private ControlPanel cp;
 	private Application app;
-	JComboBox typeBox;
+	private JComboBox typeBox;
 
 	private String[] personType = {"Crook", "Deadbeat", "Worker", "Wealthy"};
 	
@@ -66,11 +66,13 @@ public class AddPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == addButton){
-				String name = firstName.getText() +" "  + lastName.getText();
-				String type = (String)typeBox.getSelectedItem();
-				app.addPerson(name, 500, type, null, 0, 0, 0);
-				app.printLastPop();
-				System.out.println(type);
+			String name = firstName.getText() +" "  + lastName.getText();
+			String type = (String)typeBox.getSelectedItem();
+			app.addPerson(name, 500, type, null, 0, 0, 0);
+			app.printLastPop();
+			
+			System.out.println(type);
+			System.out.println(app.getPopulationSize());
 		}
 	}
 	
