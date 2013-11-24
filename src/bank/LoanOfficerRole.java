@@ -50,6 +50,7 @@ public class LoanOfficerRole extends Role implements LoanOfficer {
 
 	//Messages
 	public void msgIsLoanApproved(Account account1, BankTeller t1) {
+		print("Received loan request");
 		loans.add(new Loan(account1, t1));
 		stateChanged();
 	}

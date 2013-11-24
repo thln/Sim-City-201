@@ -46,16 +46,16 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 	ImageIcon house = new ImageIcon("/src/resources/house.png", "house");
 
 	public CityPanel(AnimationPanel animationPanel) {
-		
+
 		this.animationPanel = animationPanel;
 		addMouseListener(this);
-		
+
 		setPreferredSize(new Dimension(WINDOWX, WINDOWY));
 		setMaximumSize(new Dimension(WINDOWX,WINDOWY));
 		setMinimumSize(new Dimension(WINDOWX, WINDOWY));
+		setBorder(BorderFactory.createLoweredBevelBorder());
 		setVisible(true);
 		setLayout(null);
-		setBorder(BorderFactory.createTitledBorder("Los Angeles"));
 
 		try {
 			background = ImageIO.read(new File("docs/concrete.jpg"));
@@ -80,7 +80,7 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 			Building b = buildings.get(i);
 			g2.drawImage(b.getMyImage().getImage(), b.getxLocation(), b.getyLocation(), null);
 		}
-		
+
 		for (Gui gui : guis) {
 			if (gui.isPresent()) {
 				gui.draw(g2);
@@ -144,7 +144,7 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 				return;
 			}
 		}
-		
+
 		animationPanel.displayBlankBuildingPanel();
 	}
 
