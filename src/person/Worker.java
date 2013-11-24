@@ -205,7 +205,7 @@ public class Worker extends Person {
                 return workerRole;
         }
 
-		public Job getJob() {
-			return myJob;
-		}
+                public Job getJob() {
+                        return myJob;
+                }
 }

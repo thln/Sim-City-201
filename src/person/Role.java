@@ -30,45 +30,54 @@ public abstract class Role {
         }
         
         //For business roles
-        protected  Role(String rName) {
+        protected  Role(String rName) 
+        {
                 roleName = rName;
                 state = RoleState.inActive;
         }
         
-        public Person getPerson() {
+        public Person getPerson()
+        {
                 return person;
         }
         
-        public void setPerson(Person person) {
+        public void setPerson(Person person) 
+        {
                 this.person = person;
                 personName = person.getName();
         }
         
-        protected void stateChanged() {
+        protected void stateChanged()
+        {
         //calls Person scheduler
                 //do we just call the scheduler, or do we release the semaphore on stateChanged?
                 person.stateChanged();
-    }
+        }
 
     protected abstract boolean pickAndExecuteAnAction();
  
-        public String getName() {
+        public String getName() 
+        {
                 return person.getName();
         }
         
-        public void setState(RoleState state) {
+        public void setState(RoleState state) 
+        {
                 this.state = state;
         }
     
-        public RoleState getState() {
+        public RoleState getState() 
+        {
                 return state;
         }
 
-        public void setRoleInactive() {
+        public void setRoleInactive() 
+        {
                 this.state = RoleState.inActive;
         }
         
-        public void setRoleActive() {
+        public void setRoleActive()
+        {
                 this.state = RoleState.active;
         }
         

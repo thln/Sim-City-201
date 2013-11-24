@@ -9,7 +9,7 @@ import person.Worker;
 import restaurant.Order;
 import restaurant.WaiterRole;
 import restaurant.CookRole.Stock;
-import restaurant.CookRole.myMarket;
+//import restaurant.CookRole.myMarket;
 
 public interface Cook 
 {
@@ -17,9 +17,9 @@ public interface Cook
 
 	public abstract void msgOrderDone(Order order);
 
-	public abstract void msgCantFulfill(String choice, int amount, int orderedAmount, Market market);
+	public abstract void msgCantFulfill(String choice, int amount, int orderedAmount);
 
-	public abstract void msgOrderFulfillment(String choice, int amount, int orderedAmount, Market market);
+	public abstract void msgOrderFulfillment(String choice, int amount, int orderedAmount);
 
 	public abstract void msgAtDestination();
 }
