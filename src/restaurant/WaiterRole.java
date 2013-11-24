@@ -64,32 +64,39 @@ public class WaiterRole extends Role implements Waiter
 	/**
 	 * Messages
 	 */
-	public void msgPleaseSeatCustomer(int tableNumber, RestaurantCustomer customer, int xHome, int yHome) {
+	public void msgPleaseSeatCustomer(int tableNumber, RestaurantCustomer customer, int xHome, int yHome) 
+	{
 		myCustomers.add(new myCustomer(customer, tableNumber, xHome, yHome));
-		//print(customer.getCustomerName() + " was added to myCustomers list");
+		print(customer.getCustomerName() + " was added to myCustomers list");
 		stateChanged();
 	}
 
-	public void msgAtDestination() {//from animation
+	public void msgAtDestination() 
+	{//from animation
 		atDestination.release();// = true;
 		stateChanged();
 	}
 
-	public void msgIsInLobby() {
+	public void msgIsInLobby() 
+	{
 		isInLobby = true;
 		stateChanged();
 	}
 
-	public void msgReadyToOrder(RestaurantCustomerRole customer) {
-		for (myCustomer myCust : myCustomers) {
-			if (myCust.customer == customer) {
+	public void msgReadyToOrder(RestaurantCustomerRole customer) 
+	{
+		for (myCustomer myCust : myCustomers) 
+		{
+			if (myCust.customer == customer) 
+			{
 				myCust.setReadyToOrder();
 				stateChanged();
 			}
 		}
 	}
 
-	public void msgHeresMyOrder(RestaurantCustomer customer, String choice) {
+	public void msgHeresMyOrder(RestaurantCustomer customer, String choice) 
+	{
 		for (myCustomer myCust : myCustomers) 
 		{
 			if (myCust.customer == customer) 
@@ -130,31 +137,37 @@ public class WaiterRole extends Role implements Waiter
 		}
 	}
 
-	public void msgLeavingTable(RestaurantCustomerRole cust) {
-		for (myCustomer myCust : myCustomers) {
-			if (myCust.customer == cust) {
+	public void msgLeavingTable(RestaurantCustomerRole cust) 
+	{
+		for (myCustomer myCust : myCustomers) 
+		{
+			if (myCust.customer == cust) 
+			{
 				myCust.setFinished();
 				stateChanged();
 			}
 		}
 	}
 
-	public void msgWantToGoOnBreak() {
+	public void msgWantToGoOnBreak() 
+	{
 		state = breakStatus.askedToGoOnBreak;
-		//print("Got message to go on break");
+		print("Got message to go on break");
 		stateChanged();
 	}
 
-	public void msgPermissionToBreak(boolean reply) {
+	public void msgPermissionToBreak(boolean reply) 
+	{
 		PermissionToBreak = reply;
-		//print("Recieved reply and it is: " + reply);
+		print("Recieved reply and it is: " + reply);
 		state = breakStatus.receivedReply;
 		stateChanged();
 	}
 
-	public void msgGoOffBreak() {
+	public void msgGoOffBreak() 
+	{
 		state = breakStatus.goOffBreak;
-		//print("Got message to go off break");
+		print("Got message to go off break");
 		stateChanged();
 	}
 
@@ -162,7 +175,7 @@ public class WaiterRole extends Role implements Waiter
 		for (myCustomer myCust : myCustomers) {
 			if (myCust.tableNumber == tableNumber) {
 				myCust.CheckAmount = checkAmount;
-				//print("Recieved " + myCust.customer.getCustomerName() + "'s check of $" + myCust.CheckAmount);
+				print("Recieved " + myCust.customer.getCustomerName() + "'s check of $" + myCust.CheckAmount);
 				stateChanged();
 			}
 		}
@@ -179,7 +192,7 @@ public class WaiterRole extends Role implements Waiter
 
 		if (state == breakStatus.askedToGoOnBreak) 
 		{
-			//print("Scheduled to ask for break");
+			print("Scheduled to ask for break");
 			askToGoOnBreak();
 			return true;
 		}
@@ -281,25 +294,29 @@ public class WaiterRole extends Role implements Waiter
 	/**
 	 * Actions
 	 */
-	protected void seatCustomer(myCustomer MC) {
+	protected void seatCustomer(myCustomer MC) 
+	{
 		//waiterGui.DoPickUpCustomer(MC.xHome, MC.yHome);
 		try {
 			atDestination.acquire();
-		} catch (InterruptedException e) {
+		} catch (InterruptedException e) 
+		{
 			e.printStackTrace();
 
 		}
 		MC.customer.msgPleaseFollowMe(MC.tableNumber, menu, this);
 		isInLobby = false;
 		DoSeatCustomer(MC.customer, MC.tableNumber);
-		try {
+		try 
+		{
 			atDestination.acquire();
-		} catch (InterruptedException e) {
+		} catch (InterruptedException e) 
+		{
 			e.printStackTrace();
 
 		}
 		//waiterGui.DoLeaveCustomer();
-		//print("Finished seating " + MC.customer.getCustomerName());
+		print("Finished seating " + MC.customer.getCustomerName());
 		MC.setSeated();
 	}
 
@@ -308,16 +325,18 @@ public class WaiterRole extends Role implements Waiter
 		//Notice how we print "customer" directly. It's toString method will do it.
 		//Same with "table"
 		isInLobby = false;
-		//print("Seating " + customer + " at " + table);
+		print("Seating " + customer + " at " + table);
 		//waiterGui.DoBringToTable(customer, table);
 	}
 
 	protected void takeOrder(myCustomer MC) {
 		isInLobby = false;
-		//print(MC.customer.getCustomerName() + " wants to order");
+		print(MC.customer.getCustomerName() + " wants to order");
 
-		for (myCustomer myCust : myCustomers) {
-			if (myCust.customer == MC.customer) {
+		for (myCustomer myCust : myCustomers) 
+		{
+			if (myCust.customer == MC.customer)
+			{
 				myCust.setRequestedToOrder();
 			}
 		}
@@ -336,7 +355,7 @@ public class WaiterRole extends Role implements Waiter
 
 	protected void placeOrder(myCustomer MC) {
 		isInLobby = false;
-		//print("Placing " + MC.customer.getCustomerName() + "'s order");
+		print("Placing " + MC.customer.getCustomerName() + "'s order");
 
 		for (myCustomer myCust : myCustomers) {
 			if (myCust.customer == MC.customer) {
@@ -370,7 +389,7 @@ public class WaiterRole extends Role implements Waiter
 		//waiterGui.DoLeaveCustomer();
 		MC.setSeated();
 
-		//print("Asking " + MC.customer.getCustomerName() + " for a re-order");
+		print("Asking " + MC.customer.getCustomerName() + " for a re-order");
 		MC.customer.msgPleaseReorder(new Menu().remove(MC.choice));
 
 	}
@@ -386,7 +405,7 @@ public class WaiterRole extends Role implements Waiter
 
 		}
 		//waiterGui.DoDeliverOrder(readyOrders.get(0).tableNumber, readyOrders.get(0).choice);
-		System.err.println("waiter called msgGotOrder");
+		print("waiter called msgGotOrder");
 		//cookGui.msgGotOrder(readyOrders.get(0).choice);
 		try {
 			atDestination.acquire();
@@ -423,19 +442,22 @@ public class WaiterRole extends Role implements Waiter
 		MC.state = customerState.GaveCheck;
 	}
 
-	protected void clearTable(myCustomer MC){
-		//print(MC.customer.getCustomerName() + " is leaving " + MC.tableNumber);
+	protected void clearTable(myCustomer MC)
+	{
+		print(MC.customer.getCustomerName() + " is leaving " + MC.tableNumber);
 		Phonebook.getPhonebook().getRestaurant().hostRole.msgLeavingTable(MC.customer, this);
 		myCustomers.remove(MC);
 	}
 
-	protected void askToGoOnBreak() {
-		//print("Asking host for break");
+	protected void askToGoOnBreak() 
+	{
+		print("Asking host for break");
 		Phonebook.getPhonebook().getRestaurant().hostRole.msgMayIGoOnBreak(this);
 		state = breakStatus.waitingForReply;
 	}
 
-	protected void goOnBreak() {
+	protected void goOnBreak() 
+	{
 		isInLobby = false;
 		state = breakStatus.onBreak;
 		PermissionToBreak = false;

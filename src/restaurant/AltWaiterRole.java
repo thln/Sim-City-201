@@ -19,7 +19,7 @@ public class AltWaiterRole extends WaiterRole
 	protected void placeOrder(myCustomer MC) 
 	{
 		isInLobby = false;
-		//print("Placing " + MC.customer.getCustomerName() + "'s order");
+		print("Placing " + MC.customer.getCustomerName() + "'s order");
 
 		for (myCustomer myCust : myCustomers) 
 		{

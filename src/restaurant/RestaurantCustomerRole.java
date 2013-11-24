@@ -340,7 +340,7 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer
 	private void EatFood() {
 		state = AgentState.Eating;
 		//customerGui.DoEatFood(choice);
-		System.out.println("Eating Food");
+		print("Eating Food");
 		//This next complicated line creates and starts a timer thread.
 		//We schedule a deadline of getHungerLevel()*1000 milliseconds.
 		//When that time elapses, it will call back to the run routine
@@ -352,7 +352,7 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer
 		timer.schedule(new TimerTask() {
 			//Object cookie = 1;
 			public void run() {
-				//print("Done eating " + choice);
+				print("Done eating " + choice);
 				event = AgentEvent.doneEating;
 				//isHungry = false;
 				stateChanged();
