@@ -17,7 +17,8 @@ import person.Worker;
  * Restaurant Waiter Role
  */
 
-public class WaiterRole extends Role implements Waiter{
+public class WaiterRole extends Role implements Waiter
+{
 
 	//Keeps  a list of customers
 	public List<myCustomer> myCustomers = Collections.synchronizedList(new ArrayList<myCustomer>());

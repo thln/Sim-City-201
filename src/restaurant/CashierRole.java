@@ -3,21 +3,25 @@ package restaurant;
 
 import java.util.*;
 
+import application.Phonebook;
 import market.interfaces.SalesPerson;
 import person.Person;
 import person.Role;
 import person.Worker;
+import restaurant.interfaces.RestaurantCustomer;
+import restaurant.interfaces.Waiter;
 
 
 /**
  * Restaurant Cashier Role
  */
 
-public class CashierRole extends Role {
+public class CashierRole extends Role 
+{
 
 	private String name;
 	protected String roleName = "Cashier";
-	public Restaurant restaurant;
+	//public Restaurant restaurant;
 	//private Semaphore atTable = new Semaphore(0,true);
 
 	//Keeps a list of checks
@@ -26,21 +30,24 @@ public class CashierRole extends Role {
 	public List<Order> OrdersToPay = Collections.synchronizedList(new ArrayList<Order>());
 
 	//Map of food prices
-	private Map<String, Double> foodPrices = new HashMap<String, Double>(); {
+	private Map<String, Double> foodPrices = new HashMap<String, Double>(); 
+	{
 		foodPrices.put("Chicken", 10.99);
 		foodPrices.put("Steak", 15.99);
 		foodPrices.put("Pizza", 8.99);
 		foodPrices.put("Salad", 5.99);
 	}
 
-	public CashierRole(Person p1, String pName, String rName, Restaurant restaurant) {
+	public CashierRole(Person p1, String pName, String rName, Restaurant restaurant) 
+	{
 		super(p1, pName, rName);
-		this.restaurant = restaurant;
+		//this.restaurant = restaurant;
 	}
 
-	public CashierRole(String roleName, Restaurant restaurant) {
+	public CashierRole(String roleName, Restaurant restaurant) 
+	{
 		super(roleName);
-		this.restaurant = restaurant;
+		//this.restaurant = restaurant;
 	}
 
 	public String getName() {
@@ -52,8 +59,10 @@ public class CashierRole extends Role {
 	/**
 	 * Messages
 	 */
-	public void msgComputeBill(String choice, int tableNumber, WaiterRole waiterRole) {
-		synchronized(Checks){
+	public void msgComputeBill(String choice, int tableNumber, WaiterRole waiterRole) 
+	{
+		synchronized(Checks)
+		{
 			print("Calculating bill for table " + tableNumber);
 			//log.add(new LoggedEvent("Calculating bill for table"));
 			Checks.add(new Check(choice, tableNumber, waiterRole));
@@ -61,8 +70,10 @@ public class CashierRole extends Role {
 		}
 	}
 
-	public void msgPayment(String choice, double amount, RestaurantCustomerRole customer) {
-		synchronized(Payments){
+	public void msgPayment(String choice, double amount, RestaurantCustomer customer) 
+	{
+		synchronized(Payments)
+		{
 			print("Received payment from " + customer.getCustomerName());
 			//log.add(new LoggedEvent("Received payment from " + customer.getCustomerName()));
 			Payments.add(new Payment(choice, amount, customer));
@@ -70,8 +81,10 @@ public class CashierRole extends Role {
 		}
 	}
 
-	public void msgPleasePayForItems(String choice, int amount, double bill, SalesPerson market) {
-		synchronized(OrdersToPay){
+	public void msgPleasePayForItems(String choice, int amount, double bill, SalesPerson market) 
+	{
+		synchronized(OrdersToPay)
+		{
 			OrdersToPay.add(new Order(choice, amount, bill, market));
 			//log.add(new LoggedEvent("Received msgOrderFulfilled from " + market.getName()));
 			stateChanged();
@@ -82,34 +95,42 @@ public class CashierRole extends Role {
 	/**
 	 * Scheduler
 	 */
-	public boolean pickAndExecuteAnAction() {
+	public boolean pickAndExecuteAnAction() 
+	{
 		/* Think of this next rule as:
             Does there exist a table and customer,
             so that table is unoccupied and customer is waiting.
             If so seat him at the table.
 		 */
-		synchronized(Checks){
-			if (!Checks.isEmpty()) {
+		synchronized(Checks)
+		{
+			if (!Checks.isEmpty()) 
+			{
 				ComputeBill();
 				return true;
 			}
 		}
 
-		synchronized(Payments){
-			if (!Payments.isEmpty()) {
+		synchronized(Payments)
+		{
+			if (!Payments.isEmpty()) 
+			{
 				GiveChange();
 				return true;
 			}
 		}
 
-		synchronized(OrdersToPay){
-			if (!OrdersToPay.isEmpty()) {
+		synchronized(OrdersToPay)
+		{
+			if (!OrdersToPay.isEmpty()) 
+			{
 				PayMarket();
 				return true;
 			}
 		}
 
-		if (leaveRole){
+		if (leaveRole)
+		{
 			((Worker) person).roleFinishedWork();
 			leaveRole = false;
 			return true;
@@ -127,14 +148,17 @@ public class CashierRole extends Role {
 	 * Actions
 	 */
 
-	public void ComputeBill() {
+	public void ComputeBill() 
+	{
 		double checkAmount = foodPrices.get(Checks.get(0).choice);
 		Checks.get(0).waiterRole.msgHereIsCheck(Checks.get(0).tableNumber, checkAmount);
 		Checks.remove(0);
 	}
 
-	private void GiveChange() {
-		if (Payments.get(0).payment < foodPrices.get(Payments.get(0).choice)) {
+	private void GiveChange() 
+	{
+		if (Payments.get(0).payment < foodPrices.get(Payments.get(0).choice)) 
+		{
 			Payments.get(0).customer.msgGoToJail();
 			Payments.remove(0);
 			return;
@@ -148,11 +172,14 @@ public class CashierRole extends Role {
 		Payments.remove(0);
 	}
 
-	private void PayMarket() {
-		if (OrdersToPay.get(0).bill == OrdersToPay.get(0).amountOrdered * foodPrices.get(OrdersToPay.get(0).choice)) {
+	private void PayMarket() 
+	{
+		if (OrdersToPay.get(0).bill == OrdersToPay.get(0).amountOrdered * foodPrices.get(OrdersToPay.get(0).choice)) 
+		{
 			OrdersToPay.get(0).setBill(Math.round(OrdersToPay.get(0).bill * 100.0) / 100.0);
 			print("Giving Market " + OrdersToPay.get(0).market + " for " + OrdersToPay.get(0).amountOrdered + " " + OrdersToPay.get(0).choice + "(s) x $" + foodPrices.get(OrdersToPay.get(0).choice) + " = $" + OrdersToPay.get(0).bill);
-			OrdersToPay.get(0).market.msgPayment(restaurant, OrdersToPay.get(0).bill);
+			OrdersToPay.get(0).market.msgPayment(Phonebook.getPhonebook().getRestaurant(), OrdersToPay.get(0).bill);
+			//change above if implementing multiple markets
 			OrdersToPay.remove(0);
 		}
 		else {
@@ -163,12 +190,14 @@ public class CashierRole extends Role {
 
 
 	//Check Class
-	public class Check {
+	public class Check 
+	{
 		String choice;
 		int tableNumber;
-		WaiterRole waiterRole;
+		Waiter waiterRole;
 
-		Check(String choice, int tableNumber, WaiterRole waiterRole) {
+		Check(String choice, int tableNumber, Waiter waiter) 
+		{
 			this.choice = choice;
 			this.tableNumber = tableNumber;
 			this.waiterRole = waiterRole;
@@ -176,12 +205,14 @@ public class CashierRole extends Role {
 	}
 
 	//Payment Class
-	public class Payment {
+	public class Payment 
+	{
 		public String choice;
 		public double payment;
-		public RestaurantCustomerRole customer;
+		public RestaurantCustomer customer;
 
-		Payment(String choice, double payment, RestaurantCustomerRole customer) {
+		Payment(String choice, double payment, RestaurantCustomer customer) 
+		{
 			this.choice = choice;
 			this.payment = payment;
 			this.customer = customer;
@@ -195,7 +226,8 @@ public class CashierRole extends Role {
 		double bill;
 		SalesPerson market; //The market
 
-		Order(String choice, int amountOrdered, double bill, SalesPerson market) {
+		Order(String choice, int amountOrdered, double bill, SalesPerson market) 
+		{
 			this.choice = choice;
 			this.amountOrdered = amountOrdered;
 			this.bill = bill;
