@@ -14,8 +14,8 @@ public class PersonGui implements Gui{
 
 	//RestaurantGui gui;
 
-	private int xPos, yPos;
-	private int xDestination, yDestination;
+	private int xPos = -20, yPos = 50;//default bus position
+	private int xDestination = 100, yDestination = 50;//default start position
 	private int xHome, yHome;
 	private enum Command {noCommand, GoToBuilding, GoToBusStop, GoOnBus, LeaveBuilding};
 	private Command command = Command.noCommand;

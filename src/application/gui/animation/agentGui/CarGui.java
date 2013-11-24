@@ -22,8 +22,6 @@ public class CarGui implements Gui{
 	private enum CarState {nothing};
 	CarState state = CarState.nothing;
 
-	private String choice;
-
 	public CarGui(/*Car c, RestaurantGui gui*/){ //HostAgent m) {
 		//agent = c;
 		//this.gui = gui;
@@ -67,7 +65,13 @@ public class CarGui implements Gui{
     }
     
     //Actions
-    public void GoToGarage(int garage) {
-    	
+    public void GoToParkingGarage(int garage) {
+    	xDestination = 200;
+    	yDestination = 300;
+    }
+    
+    public void GoToHomeGarage(int garage) {
+    	xDestination = 100;
+    	yDestination = 300;
     }
 }

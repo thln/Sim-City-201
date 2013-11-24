@@ -16,12 +16,17 @@ public class AnimationPanel extends JPanel implements MouseListener {
 	JPanel buildingPanels;
 	CardLayout cardLayout;
 	ArrayList<Building> buildings;
+	
+	//begin list of mechanisms for testing agent guis
 	JButton testbutton = new JButton("test");
 	JButton testbutton2 = new JButton("test2");
 	MarketRunnerGui market = new MarketRunnerGui();
 	BankLoanerGui bank = new BankLoanerGui();
 	HouseMaintenanceGui house = new HouseMaintenanceGui();
 	BusGui bus = new BusGui();
+	CarGui car = new CarGui();
+	PersonGui person = new PersonGui();
+	//end list of testing mechanisms
 
 	public AnimationPanel() {
 		setVisible(true);
@@ -59,7 +64,8 @@ public class AnimationPanel extends JPanel implements MouseListener {
 			add(BorderLayout.SOUTH, buildingPanels);
 		}
 		
-		
+		/*
+		//UNCOMMENT THE FOLLOWING FOR TESTING ONLY!! re-comment to display final product
 		testGuis();
 		
 		//testing mechanisms
@@ -69,7 +75,7 @@ public class AnimationPanel extends JPanel implements MouseListener {
     	testbutton2.addMouseListener(this);
     	testbutton2.setBounds(100, 0, 100, 50);
     	cityPanel.add(testbutton2);
-    	
+    	*/
 	}
 
 	public void displayBuildingPanel(BuildingPanel bp) {
@@ -101,35 +107,23 @@ public class AnimationPanel extends JPanel implements MouseListener {
 		}
 		for(int i=0; i< buildings.size();i++) {
 			if(buildings.get(i).getName().toLowerCase().contains("house")) {
-				buildings.get(i).myBuildingPanel.addGui(house);
+			//	buildings.get(i).myBuildingPanel.addGui(house);
 				buildings.get(i).myBuildingPanel.addGui(new HouseRenterGui());
-			//	buildings.get(i).myBuildingPanel.addGui(new HouseMaintenanceGui());
+				buildings.get(i).myBuildingPanel.addGui(new HouseMaintenanceGui());
 				buildings.get(i).myBuildingPanel.addGui(new HouseLandlordGui());
 			}
 		}
 		
-		cityPanel.addGui(new CarGui());
+		cityPanel.addGui(car);
 		cityPanel.addGui(bus);
-		cityPanel.addGui(new PersonGui());
+		cityPanel.addGui(person);
 	}
-	/*
-		CityPanel cityPanel = new CityPanel();
-		JPanel buildingView = new JPanel();
-	    CardLayout cardLayout = new CardLayout();
-	    List<Building> buildings;
-
-	testing mechanisms
-	    JButton testbutton = new JButton("test");
-	    JButton testbutton2 = new JButton("test2");
-	    MarketUPSmanGui market = new MarketUPSmanGui();
-	    
+	/*  OLD. Delete later?
 		here we have the main city view
 		cityPanel.setBounds(10, 20, WINDOWX, WINDOWY); //x & y positions in animation panel, x & y sizes
 		cityPanel.addMouseListener(this);
 		cityPanel.setVisible(true);
 		add(cityPanel);
-		
-		sampleLayout();
 		
 		buildingView.setBounds(10, 400, WINDOWX, WINDOWY);
 		buildingView.setBackground(Color.CYAN);
@@ -148,66 +142,15 @@ public class AnimationPanel extends JPanel implements MouseListener {
 			b.setBuildingPanel(bp);
 			buildingView.add(bp, b.getName());
 		}
-		testGuis();
-		testbutton.addMouseListener(this);
-		testbutton.setSize(100, 50);
-		cityPanel.add(testbutton);
-		testbutton2.addMouseListener(this);
-		testbutton2.setBounds(100, 0, 100, 50);
-		cityPanel.add(testbutton2);
-	}
-	
-	public void displayBuildingPanel( BuildingPanel bp ) {
-	    cardLayout.show(buildingView, bp.getName() );
-	}
-	
-	public void sampleLayout() {
-		cityPanel.addBuilding("Bank", 1);
-		
-		cityPanel.addBuilding("Market", 1);
-		cityPanel.addBuilding("Market", 2);
-		
-		for(int j=0; j<5; j++) {
-			cityPanel.addBuilding("Restaurant", j+1);
-		}
-	}
-
-	    	sampleLayout();
-	    	
-	    	buildingView.setBounds(10, 400, WINDOWX, WINDOWY);
-	    	buildingView.setBackground(Color.CYAN);
-	    	buildingView.setVisible(true);
-	    	add(buildingView);
-	    	
-	    	stacking the building animations
-	    	buildingView.setLayout(cardLayout);
-	    	BuildingPanel blank = new BuildingPanel("name", this);
-	    	buildingView.add(blank, "blank");
-	    	
-	    	buildings = cityPanel.getBuildings();
-	    	for (int i=0; i<buildings.size(); i++) {
-	    		Building b = buildings.get(i);
-	    		BuildingPanel bp = new BuildingPanel(b.getName(), this);
-	    		b.setBuildingPanel(bp);
-	    		buildingView.add(bp, b.getName());
-	    	}
-	    	testGuis();
-	    	testbutton.addMouseListener(this);
-	    	testbutton.setSize(100, 50);
-	    	cityPanel.add(testbutton);
-	    	testbutton2.addMouseListener(this);
-	    	testbutton2.setBounds(100, 0, 100, 50);
-	    	cityPanel.add(testbutton2);
-		}
 */
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getSource().equals(testbutton)) {
-			house.DoGoToBathroom();
+			car.GoToHomeGarage(1);
 		}
 		if(e.getSource().equals(testbutton2)) {
-			house.DoGoToKitchen();
+			car.GoToParkingGarage(1);
 		}
 	}
 

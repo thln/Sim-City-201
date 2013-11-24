@@ -68,8 +68,8 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		addBuilding("Bank", 20, 170);
 		addBuilding("House", 20, 250);
 		
-//		Timer timer = new Timer(20, this );
-//    	timer.start();
+		Timer timer = new Timer(20, this );
+    	timer.start();
 	}
 
 	public void paintComponent(Graphics g) {

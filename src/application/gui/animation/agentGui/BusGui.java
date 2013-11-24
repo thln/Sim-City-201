@@ -15,7 +15,7 @@ public class BusGui implements Gui{
 
 	private int xPos = 100, yPos = 100;//default bus position
 	private int xDestination = 100, yDestination = 100;//default start position
-	private int currWidth = 20, currHeight = 40; //default bus size
+	private int currWidth = 20, currHeight = 20; //default bus size
 	private int newWidth = 20, newHeight = 40; //default start size
 	
 	private enum Command {noCommand, beHorizontal, beVertical};
@@ -23,9 +23,7 @@ public class BusGui implements Gui{
 
 	private enum BusState {nothing};
 	BusState state = BusState.nothing;
-
-	private String choice;
-
+	
 	public BusGui(/*Bus b, RestaurantGui gui*/){ //HostAgent m) {
 		//agent = b;
 		//this.gui = gui;
