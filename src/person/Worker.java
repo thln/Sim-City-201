@@ -40,7 +40,7 @@ public class Worker extends Person {
                 }
 
                 WatchTime getStartTime() {
-                        return endTime;
+                        return startTime;
                 }
 
                 void setStartTime(int t) {
@@ -73,7 +73,7 @@ public class Worker extends Person {
         void msgHereIsPayCheck (double amount) {
                 money += amount;
         }
-        
+
         public void roleFinishedWork(){                 //from worker role
                 workerRole = null;
                 stateChanged();
@@ -86,15 +86,17 @@ public class Worker extends Person {
                         startHungerTimer();
                         return true;
                 }
-        
+
                 //Decisions more urgent that role continuity (None for now)
                 
-                if (workerRole.getState() == RoleState.active) {
-                        if (((TimeManager.getTimeManager().getTime().dayHour - myJob.getEndTime().hour) <= 0)) 
-                                workerRole.msgLeaveRole(); 
-                        workerRole.pickAndExecuteAnAction();
+                if (workerRole != null){
+                        if (workerRole.getState() == RoleState.active) {
+                                if (((myJob.getEndTime().hour - TimeManager.getTimeManager().getTime().dayHour) <= 0)) 
+                                        workerRole.msgLeaveRole(); 
+                                return workerRole.pickAndExecuteAnAction();
+                        }
                 }
-                
+
                 synchronized (roles) {
                         if (!roles.isEmpty()) {                                
                                 for (Role r : roles) {
@@ -106,7 +108,7 @@ public class Worker extends Person {
                 }
 
                 //If no role is active
-   
+
                 //Job Related
                 if ((myJob.getStartTime().hour - TimeManager.getTimeManager().getTime().dayHour) <= 1) {
                         prepareForWork();
@@ -119,15 +121,16 @@ public class Worker extends Person {
                         if (!hasFoodInFridge) {
                                 if (money <= moneyMinThreshold) { 
                                         //This if says go to the business if it is open and at least 1 hour before closing time
-                                        if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getBank().openTime.hour) &&
-                                                        (TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getBank().closeTime.hour)) {
+                                       // if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getBank().openTime.hour) &&
+                                                     //   (TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getBank().closeTime.hour)) {
                                                 prepareForBank();
                                                 return true;
-                                        }
+                                       // }
                                 }
-                                else if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getRestaurant().openTime.hour) &&
-                                                (TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getRestaurant().closeTime.hour)) {
+                                else { //if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getRestaurant().openTime.hour) &&
+                                                //(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getRestaurant().closeTime.hour)) {
                                         prepareForRestaurant();
+                                        //
                                         return true;
                                 }
                         }
@@ -139,24 +142,29 @@ public class Worker extends Person {
                 }
 
                 //Bank Related
-                if (money <= moneyMinThreshold || money >= moneyMaxThreshold) {
-                	prepareForBank();
-                	return true;
+                if (money <= moneyMinThreshold || money >= moneyMaxThreshold) 
+                {
+                        prepareForBank();
+                        return true;
                 }
-                
-                
+
+
                 //Market Related
-                if (!hasFoodInFridge || carStatus == CarState.wantsCar) {
-                        if (money <= moneyMinThreshold && !hasFoodInFridge) {
-                                if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getBank().openTime.hour) &&
-                                                (TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getBank().closeTime.hour)) {
+                if (!hasFoodInFridge || carStatus == CarState.wantsCar) 
+                {
+                        if (money <= moneyMinThreshold && !hasFoodInFridge) 
+                        {
+                               // if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getBank().openTime.hour) &&
+                                             //   (TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getBank().closeTime.hour)) {
                                         prepareForBank();
                                         return true;
-                                }
+                             //   }
                         }
-                        else {
+                        else 
+                        {
                                 if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getMarket().openTime.hour) &&
-                                                (TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getMarket().closeTime.hour)) {
+                                                (TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getMarket().closeTime.hour)) 
+                                {
                                         prepareForMarket();
                                         return true;
                                 }
@@ -181,39 +189,40 @@ public class Worker extends Person {
 
                 if (myJob.jobPlace == "market") 
                 {
-
                         workerRole = Phonebook.getPhonebook().getMarket().arrivedAtWork(this, myJob.title);
-                        roles.add(workerRole);
                         workerRole.setRoleActive();
                         return;
                 }
 
                 if (myJob.jobPlace == "restaurant") 
                 {
-                	//  
                         workerRole = Phonebook.getPhonebook().getRestaurant().arrivedAtWork(this, myJob.title);
-                        roles.add(workerRole);
                         workerRole.setRoleActive();
                         return;
                 }
+                if (myJob.jobPlace == "housing maintenance company")
+                {
+                	workerRole = Phonebook.getPhonebook().getHousingMaintenanceCompany().arrivedAtWork(this, myJob.title);
+                	workerRole.setRoleActive();
+                	return;
+                }
                 //need to put in maintenance role
-                
+
                 return;
         }
-        
-        public void setWorkerRole(Role workerRole) {
+
+        public void setWorkerRole(Role workerRole) 
+        {
                 this.workerRole = workerRole;
         }
 
-        public Role getWorkerRole() {
+        public Role getWorkerRole() 
+        {
                 return workerRole;
         }
-        
-        public Job getJob()
-        {
-        	return myJob;
-        }
 
+                public Job getJob() 
+                {
+                        return myJob;
+                }
 }
-
-

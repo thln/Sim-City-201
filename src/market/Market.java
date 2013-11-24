@@ -22,47 +22,52 @@ public class Market {
 	public UPSmanRole UPSmanRole = new UPSmanRole("UPS Man", this);
 
 	double money;
-	public HashMap<Integer, Product> marketItemsForSale = new HashMap<Integer, Product>(); {
+	public HashMap<String, Product> marketItemsForSale = new HashMap<String, Product>(); 
+	{
 		//For people
-		marketItemsForSale.put(0, new Product("Car", 1000.00));
-		marketItemsForSale.put(1, new Product("Pasta", 1.99));
-		marketItemsForSale.put(2, new Product("Ice Cream", 4.99));
-		marketItemsForSale.put(3, new Product("Chips", 2.99));
-		marketItemsForSale.put(4, new Product("Milk", 2.50));
-		marketItemsForSale.put(5, new Product("Eggs", 1.50));
-		marketItemsForSale.put(6, new Product("Lobster", 12.99));
-		marketItemsForSale.put(7, new Product("Cheese", 3.99));
+		marketItemsForSale.put("Car", new Product("Car", 1000.00));
+		marketItemsForSale.put("Pasta", new Product("Pasta", 1.99));
+		marketItemsForSale.put("Ice Cream", new Product("Ice Cream", 4.99));
+		marketItemsForSale.put("Chips", new Product("Chips", 2.99));
+		marketItemsForSale.put("Milk", new Product("Milk", 2.50));
+		marketItemsForSale.put("Eggs", new Product("Eggs", 1.50));
+		marketItemsForSale.put("Lobster", new Product("Lobster", 12.99));
+		marketItemsForSale.put("Cheese", new Product("Cheese", 3.99));
 	}
 
-	public HashMap<Integer, Item> inventory = new HashMap<Integer, Item>(); {
+	public HashMap<String, Item> inventory = new HashMap<String, Item>(); {
 		//For people
-		inventory.put(0, new Item("Car", 1000.00, 1000));
-		inventory.put(1, new Item("Pasta", 1.99, 1000));
-		inventory.put(2, new Item("Ice Cream", 4.99, 1000));
-		inventory.put(3, new Item("Chips", 2.99, 1000));
-		inventory.put(4, new Item("Milk", 2.50, 1000));
-		inventory.put(5, new Item("Eggs", 1.50, 1000));
-		inventory.put(6, new Item("Lobster", 12.99, 1000));
-		inventory.put(7, new Item("Cheese", 3.99, 1000));
+		inventory.put("Car", new Item("Car", 1000.00, 1000));
+		inventory.put("Pasta", new Item("Pasta", 1.99, 1000));
+		inventory.put("Ice Cream", new Item("Ice Cream", 4.99, 1000));
+		inventory.put("Chips", new Item("Chips", 2.99, 1000));
+		inventory.put("Milk", new Item("Milk", 2.50, 1000));
+		inventory.put("Eggs", new Item("Eggs", 1.50, 1000));
+		inventory.put("Lobster", new Item("Lobster", 12.99, 1000));
+		inventory.put("Cheese", new Item("Cheese", 3.99, 1000));
 		
 		//For restaurants
-		inventory.put(8, new Item("Chicken", 10.99, 1000));
-		inventory.put(9, new Item("Steak", 15.99, 1000));
-		inventory.put(10, new Item("Pizza", 8.99, 1000));
-		inventory.put(11, new Item("Salad", 5.99, 1000));
+		inventory.put("Chicken", new Item("Chicken", 10.99, 1000));
+		inventory.put("Steak", new Item("Steak", 15.99, 1000));
+		inventory.put("Pizza", new Item("Pizza", 8.99, 1000));
+		inventory.put("Salad", new Item("Salad", 5.99, 1000));
 	}
 
 	//Constructor
-	public Market(String name) {
+	public Market(String name) 
+	{
 		this.name = name;
 	}
 
 
 	//Methods
-	public Role arrivedAtWork(Person person, String title) {
-		if (title == "salesPerson") {
+	public Role arrivedAtWork(Person person, String title) 
+	{
+		if (title == "salesPerson") 
+		{
 			//Setting previous bank guard role to inactive
-			if (salesPersonRole.getPerson() != null) {
+			if (salesPersonRole.getPerson() != null) 
+			{
 				Worker worker = (Worker) salesPersonRole.getPerson();
 				worker.roleFinishedWork();
 			}
@@ -70,9 +75,11 @@ public class Market {
 			salesPersonRole.setPerson(person);
 			return salesPersonRole;
 		}
-		else if (title == "marketRunner") {
+		else if (title == "marketRunner") 
+		{
 			//Setting previous bank guard role to inactive
-			if (marketRunnerRole.getPerson() != null) {
+			if (marketRunnerRole.getPerson() != null) 
+			{
 				Worker worker = (Worker) marketRunnerRole.getPerson();
 				worker.roleFinishedWork();
 			}
@@ -95,37 +102,44 @@ public class Market {
 	}
 
 
-	public class Item {
+	public class Item 
+	{
 		public String itemName;
 		public double  price;
 		public int amount;
 
-		Item(String choice, double price, int amount) {
+		Item(String choice, double price, int amount) 
+		{
 			itemName = choice;
 			this.price = price;
 			this.amount = amount;
 		}
 		
-		public void setInventory(int newAmount) {
+		public void setInventory(int newAmount) 
+		{
 			this.amount = newAmount;
 		}
 	}
 	
-	public class Product {
+	public class Product 
+	{
 		public String itemName;
 		public double  price;
 
-		public Product (String choice, double price) {
+		public Product (String choice, double price) 
+		{
 			itemName = choice;
 			this.price = price;
 		}
 	}
 
-	public String getName() {
+	public String getName() 
+	{
 		return name;
 	}
 
-	public void setName(String name) {
+	public void setName(String name) 
+	{
 		this.name = name;
 	}
 }

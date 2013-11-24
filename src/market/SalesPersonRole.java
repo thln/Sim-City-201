@@ -131,7 +131,7 @@ public class SalesPersonRole extends Role implements SalesPerson {
 		o.state = orderState.processing;
 		
 		if (market.inventory.get(o.item).amount == 0) {
-			o.restaurant.cookRole.msgCantFulfill(o.item, 0, o.itemAmountOrdered, market);
+			o.restaurant.cookRole.msgCantFulfill(o.item, 0, o.itemAmountOrdered);
 			orders.remove(o);
 			stateChanged();
 			return;

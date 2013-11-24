@@ -1,30 +1,28 @@
 package application.gui.animation.agentGui;
 
-import bank.*;
+//import bank.\*;
 
 import java.awt.*;
 import javax.swing.*;
 
 public class BankTellerGui implements Gui{
 
-	private BankTellerRole agent = null;
+	//private BankTellerRole agent = null;
 	private boolean isPresent = true;
 
 	//RestaurantGui gui;
 
-	private int xPos, yPos;
-	private int xDestination, yDestination;
+    private int xPos = 600, yPos = 0;//default bank teller position
+    private int xDestination = 600, yDestination = 0;//default start position
 	
 	private enum Command {noCommand};
 	private Command command = Command.noCommand;
 
 	private enum CustomerState {nothing};
 	CustomerState state = CustomerState.nothing;
-	public BankTellerGui(int i) {
-	}
 	
-	public BankTellerGui(BankTellerRole c/*, RestaurantGui gui*/){
-		agent = c;
+	public BankTellerGui(/*BankTellerRole c, RestaurantGui gui*/){
+		//agent = c;
 		//this.gui = gui;
 	}
 
@@ -66,5 +64,18 @@ public class BankTellerGui implements Gui{
     }
 	
 	//Actions
+	public void DoGoToWindow(int window) {
+		xDestination = 550;
+    	yDestination = 20*window+30*(window-1);
+	}
 	
+	public void DoGoToVault() {
+    	xDestination = 120;
+    	yDestination = 70;
+    }
+	
+    public void DoExit() {
+    	xDestination = 300;
+    	yDestination = 360;
+    }
 }

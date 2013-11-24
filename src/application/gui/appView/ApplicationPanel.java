@@ -10,24 +10,17 @@ import application.gui.*;
 import application.gui.animation.*;
 import application.gui.animation.agentGui.*;
 import application.gui.appView.controlPanel.*;
-import application.gui.appView.groupPanel.*;
+import application.gui.appView.listPanel.*;
 
 
 public class ApplicationPanel extends JPanel{
 	
 	private ControlPanel cp;
-	private JPanel infoPanel = new JPanel();
-	private GroupPanel crookPanel;
-	private GroupPanel deadbeatPanel;
-	private GroupPanel workerPanel;
-	private GroupPanel wealthyPanel;
+	private ListPanel lp;
 	
 	public ApplicationPanel(Application app){
-		cp = new ControlPanel(app);
-		crookPanel = new GroupPanel("Crook",Color.WHITE, this, app);
-		deadbeatPanel = new GroupPanel("Deadbeat", Color.LIGHT_GRAY, this, app);
-		workerPanel = new GroupPanel("Worker", Color.LIGHT_GRAY, this, app);
-		wealthyPanel = new GroupPanel("Wealthy",Color.WHITE, this, app);
+		cp = new ControlPanel(this, app);
+		lp = new ListPanel();
 		
 		setLayout(new GridLayout(2,1));
 		
@@ -45,42 +38,15 @@ public class ApplicationPanel extends JPanel{
 		c.gridx = 0;
 		c.gridy = 1;
 		
-		infoPanel.setLayout(new GridLayout(2,2));
-		infoPanel.setVisible(true);
-		infoPanel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
-			infoPanel.add(crookPanel);
-			infoPanel.add(deadbeatPanel);
-			infoPanel.add(workerPanel);
-			infoPanel.add(wealthyPanel);
-		
-		add(infoPanel);
+		lp.setBorder(BorderFactory.createLineBorder(Color.BLUE));
+		add(lp,c);
 	}
 	
 	public ControlPanel getControlPanel(){
 		return cp;
 	}
 	
-	public void addPerson(String name, int money, String type,
-			String jobTitle, int startT, int lunchT, int endT)
-	{
-		if(type == "Crook"){
-			crookPanel.addPerson(name, money, type, jobTitle, startT, lunchT, endT);
-		}
-		else if(type == "Deadbeat"){
-			deadbeatPanel.addPerson(name, money, type, jobTitle, startT, lunchT, endT);
-		}
-		else if(type == "Worker"){
-			workerPanel.addPerson(name, money, type, jobTitle, startT, lunchT, endT);			
-		}
-		else if(type == "Wealthy"){
-			wealthyPanel.addPerson(name, money, type, jobTitle, startT, lunchT, endT);
-		}	
-	}
-	
 	public void updateGroups(){
-		crookPanel.updatePersonList();
-		deadbeatPanel.updatePersonList();
-		workerPanel.updatePersonList();
-		wealthyPanel.updatePersonList();
+		System.out.println("Here");
 	}
 }

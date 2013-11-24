@@ -59,7 +59,7 @@ public class TracePanel extends JScrollPane implements AlertListener {
         public TracePanel() {
                 super();
                 this.setBorder(new BevelBorder(EtchedBorder.LOWERED));
-                this.size = new Dimension(500, 100);
+                this.size = new Dimension(500, 200);
                 traceTextPane = new JTextPane();
                 traceTextPane.setEditable(false);
                 traceTextPane.setPreferredSize(size);

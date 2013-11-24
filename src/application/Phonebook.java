@@ -1,6 +1,7 @@
 package application;
 
 import housing.Housing;
+import housing.HousingMaintenanceCompany;
 
 import java.util.List;
 
@@ -8,11 +9,14 @@ import bank.Bank;
 import market.Market;
 import restaurant.Restaurant;
 
-public class Phonebook {
+public class Phonebook{
 
-	private Bank bank;
-	private Market market;
+	static private Bank bank;
+	static private Market market;
+	//mockmarket
 	private Restaurant restaurant;
+	private HousingMaintenanceCompany housingMaintenanceCompany;
+	//mockrestaurant
 
 	public List<Housing> publicAllHousing; //= Collections.synchronizedList(new ArrayList<Housing>());
 
@@ -27,43 +31,54 @@ public class Phonebook {
 
 	private static Phonebook phonebook;
 
-	private Phonebook() {
-		bank = new Bank(null);
+	private Phonebook() 
+	{
+		bank = new Bank("Bank");
 		market = new Market("Market");
 		restaurant = new Restaurant("Restaurant");
+		housingMaintenanceCompany = new HousingMaintenanceCompany("Housing maintenance company");
 	}
 	
-	public static Phonebook getPhonebook() {
-		if (phonebook == null) {
+	public static Phonebook getPhonebook() 
+	{
+		if (phonebook == null) 
+		{
 			phonebook = new Phonebook();
 			return phonebook;
 		}
-		else {
+		else 
+		{
 			return phonebook;
 		}
 	}
 
-	public Bank getBank() {
-		return bank;
+	public Bank getBank() 
+	{
+			return bank;
 	}
 
-	public void setBank(Bank bank) {
-		this.bank = bank;
+	public void setBank(Bank bank) 
+	{
+		Phonebook.bank = bank;
 	}
 
-	public Market getMarket() {
+	public Market getMarket() 
+	{
 		return market;
 	}
 
-	public void setMarket(Market market) {
-		this.market = market;
+	public void setMarket(Market market) 
+	{
+		Phonebook.market = market;
 	}
 
-	public Restaurant getRestaurant() {
+	public Restaurant getRestaurant() 
+	{
 		return restaurant;
 	}
 
-	public void setRestaurant(Restaurant restaurant) {
+	public void setRestaurant(Restaurant restaurant) 
+	{
 		this.restaurant = restaurant;
 
 	//Phonebook(Bank bank, Market market, Restaurant restaurant, List<Housing> passHousing) {
@@ -85,8 +100,18 @@ public class Phonebook {
 		return publicAllHousing;
 	}
 	
-	public void setHousing(List<Housing> ApplicationHousing) 
+	public void setHousingList(List<Housing> ApplicationHousing) 
 	{
 		this.publicAllHousing = ApplicationHousing;
+	}
+	
+	public HousingMaintenanceCompany getHousingMaintenanceCompany()
+	{
+		return housingMaintenanceCompany;
+	}
+	
+	public void setHousingMaintenanceCompany(HousingMaintenanceCompany HMC)
+	{
+		this.housingMaintenanceCompany = HMC;
 	}
 }

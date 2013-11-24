@@ -159,8 +159,7 @@ public class BankCustomerRole extends Role implements BankCustomer{
 
 	void messageGuard () {
 		print("Arrived at bank");
-		if (myTeller instanceof Role)
-			Phonebook.getPhonebook().getBank().bankGuardRole.msgArrivedAtBank(this);
+		Phonebook.getPhonebook().getBank().getBankGuard(test).msgArrivedAtBank(this);
 		state = CustomerState.waiting;
 	}
 
@@ -196,15 +195,14 @@ public class BankCustomerRole extends Role implements BankCustomer{
 		desire = BankCustomerDesire.none;
 		state = CustomerState.waiting;	
 		myTeller.msgLeavingBank(person.accountNum);
-		if (myTeller instanceof Role)
-			Phonebook.getPhonebook().getBank().bankGuardRole.msgCustomerLeavingBank(myTeller);
+		Phonebook.getPhonebook().getBank().getBankGuard(test).msgCustomerLeavingBank(myTeller);
 		myTeller = null;
 		this.setRoleInactive();
 	}
 
 	void robBank() {
 		//Animation();
-		Phonebook.getPhonebook().getBank().bankGuardRole.msgRobbingBank(this);
+		Phonebook.getPhonebook().getBank().getBankGuard(test).msgRobbingBank(this);
 		state = CustomerState.waiting;
 	}
 

@@ -1,6 +1,6 @@
 package application.gui.animation.agentGui;
 
-import transportation.*;
+//import transportation.\*;
 
 import java.awt.*;
 
@@ -8,14 +8,14 @@ import javax.swing.JLabel;
 
 public class CarGui implements Gui{
 
-	private Car agent = null;
+	//private Car agent = null;
 	private boolean isPresent = true;
 
 	//RestaurantGui gui;
 
-	private int xPos, yPos;
-	private int xDestination, yDestination;
-	private int xHome, yHome;
+	private int xPos = 200, yPos = 100;//default bus position
+	private int xDestination = 200, yDestination = 100;//default start position
+	
 	private enum Command {noCommand};
 	private Command command = Command.noCommand;
 
@@ -24,10 +24,8 @@ public class CarGui implements Gui{
 
 	private String choice;
 
-	public CarGui(Car c/*, RestaurantGui gui*/){ //HostAgent m) {
-		agent = c;
-		xPos = -20;
-		yPos = -20;
+	public CarGui(/*Car c, RestaurantGui gui*/){ //HostAgent m) {
+		//agent = c;
 		//this.gui = gui;
 	}
 
