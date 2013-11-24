@@ -9,6 +9,7 @@ import person.Role;
 import person.Worker;
 import restaurant.Restaurant;
 import testing.EventLog;
+import testing.LoggedEvent;
 
 public class SalesPersonRole extends Role implements SalesPerson {
 	
@@ -75,6 +76,7 @@ public class SalesPersonRole extends Role implements SalesPerson {
 
 	@Override
 	public void msgPayment(MarketCustomerRole customer, double payment) {
+		log.add(new LoggedEvent("Recieved msgPayment"));
 		market.money += payment;
 		for (MarketOrder o : orders) {
 			if (o.customer.equals(customer)) {
@@ -84,9 +86,7 @@ public class SalesPersonRole extends Role implements SalesPerson {
 		}
 	}
 	
-	/* (non-Javadoc)
-	 * @see market.SalesPerson#msgPayment(restaurant.Restaurant, double)
-	 */
+
 	@Override
 	public void msgPayment(Restaurant restaurant, double payment) {
 		market.money += payment;

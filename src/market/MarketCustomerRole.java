@@ -37,7 +37,7 @@ public class MarketCustomerRole extends Role implements MarketCustomer {
 
 	//Scheduler
 	@Override
-	protected boolean pickAndExecuteAnAction() {
+	public boolean pickAndExecuteAnAction() {
 		if (state == MarketCustomerState.recievedOrders) {
 			payBill();
 			return true;
@@ -62,6 +62,10 @@ public class MarketCustomerRole extends Role implements MarketCustomer {
 			//message market that bill was wrong
 			state = MarketCustomerState.disputingBill;
 		}
+	}
+	
+	public void setItem(String item) {
+		this.item = item;
 	}
 	
 	public void exitMarket() {
