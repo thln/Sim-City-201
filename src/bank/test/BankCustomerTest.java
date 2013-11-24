@@ -162,7 +162,7 @@ public class BankCustomerTest extends TestCase{
 		customer.state = CustomerState.ready;
 		customer.desire = BankCustomerDesire.withdraw;
 		double withdrawAmt = 200;
-		customer.person.withdrawAmount = withdrawAmt;
+		customer.person.desiredCash = withdrawAmt;
 		double baseMoney = customer.person.money = 10;
 
 		//Preconditions
@@ -234,7 +234,7 @@ public class BankCustomerTest extends TestCase{
 		customer.state = CustomerState.ready;
 		customer.desire = BankCustomerDesire.withdraw;
 		double withdrawAmt = 200;
-		customer.person.withdrawAmount = withdrawAmt;
+		customer.person.desiredCash = withdrawAmt;
 		double baseMoney = customer.person.money = 10;
 
 		//Preconditions
@@ -351,7 +351,7 @@ public class BankCustomerTest extends TestCase{
 		customer.state = CustomerState.ready;
 		customer.desire = BankCustomerDesire.withdraw;
 		double withdrawAmt = 200;
-		customer.person.withdrawAmount = withdrawAmt;
+		customer.person.desiredCash = withdrawAmt;
 		double baseMoney = customer.person.money = 10;
 		double creditScore = 150;
 

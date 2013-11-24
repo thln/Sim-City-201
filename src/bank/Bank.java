@@ -24,21 +24,25 @@ public class Bank {
 	public double vaultMinimum;
 	public List<Account> accounts;
 	public int accountNumKeyList = 3000;
-	
+
 	//Roles
 	public BankGuardRole bankGuardRole = new BankGuardRole("Bank Guard");
 	public LoanOfficerRole loanOfficerRole = new LoanOfficerRole("Loan Officer");
+	List <BankTellerRole> tellers = new ArrayList<>();
 
 
 	//Constructor
 	public Bank(String name) {
 		this.name = name;
-		 vault = 10000;
-		 vaultMinimum = 1000;
-		 accounts = Collections.synchronizedList(new ArrayList<Account>());
+		vault = 10000;
+		vaultMinimum = 1000;
+		accounts = Collections.synchronizedList(new ArrayList<Account>());
+		BankTellerRole t1 = new BankTellerRole ("BankTeller 1");
+		tellers.add(t1);
+		bankGuardRole.msgTellerCameToWork(t1);
 	}
-	
-	
+
+
 	//Methods
 	public Role arrivedAtWork(Person person, String title) {
 		if (title == "bankGuard") {
@@ -60,6 +64,18 @@ public class Bank {
 			//Setting bank guard role to new role
 			loanOfficerRole.setPerson(person);
 			return loanOfficerRole;
+		}
+		else if (title == "bankTeller") {
+			//Setting previous bank guard role to inactive
+			for (BankTellerRole r1: tellers) {
+				if (r1.getPerson() != null) {
+					Worker worker = (Worker) loanOfficerRole.getPerson();
+					worker.roleFinishedWork();
+				}
+			}
+			//Setting bank guard role to new role
+			tellers.get(0).setPerson(person);
+			return tellers.get(0);
 		}
 		else
 			return null;

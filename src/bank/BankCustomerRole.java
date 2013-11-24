@@ -30,6 +30,7 @@ public class BankCustomerRole extends Role implements BankCustomer{
 	//Messages
 
 	public void msgGoToTeller(BankTeller tell1) {
+		print ("Assigned to teller" + tell1.getName());
 		myTeller = tell1;
 		state = CustomerState.ready;
 		stateChanged();
@@ -40,6 +41,7 @@ public class BankCustomerRole extends Role implements BankCustomer{
 	}
 
 	public void msgHereIsYourMoney(double amount) {
+		print("Got my money! Leaving bank");
 		person.money += amount;
 		desire = BankCustomerDesire.leaveBank;
 		state = CustomerState.ready;
@@ -49,7 +51,12 @@ public class BankCustomerRole extends Role implements BankCustomer{
 	public void msgHereIsNewAccount (int accountNum) {
 		print("Received new bank account");
 		person.accountNum = accountNum;
-		desire = BankCustomerDesire.deposit;
+		if (person.money <= person.moneyMinThreshold)
+			desire = BankCustomerDesire.withdraw;
+		else if (person.money >= person.moneyMaxThreshold)
+			desire = BankCustomerDesire.deposit;
+		else	
+			desire = BankCustomerDesire.leaveBank;
 		state = CustomerState.ready;
 		stateChanged();
 	}
@@ -61,6 +68,7 @@ public class BankCustomerRole extends Role implements BankCustomer{
 	}
 
 	public void msgInsufficientFunds(){
+		print("Not enough money in account: need loan");
 		state = CustomerState.ready;
 		desire = BankCustomerDesire.wantLoan;
 		stateChanged();
@@ -167,7 +175,7 @@ public class BankCustomerRole extends Role implements BankCustomer{
 	}
 
 	void requestLoan () {
-		desiredLoanAmount = 10*person.withdrawAmount;
+		desiredLoanAmount = 10*person.desiredCash;
 		myTeller.msgINeedALoan(desiredLoanAmount, person.accountNum);
 		state = CustomerState.waiting;
 	}
