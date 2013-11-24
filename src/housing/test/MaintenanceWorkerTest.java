@@ -20,7 +20,7 @@ public class MaintenanceWorkerTest extends TestCase
 	{
 		super.setUp();
 		testHousing = Collections.synchronizedList(new ArrayList<Housing>());
-		Phonebook.getPhonebook().setHousing(testHousing);
+		Phonebook.getPhonebook().setHousingList(testHousing);
 		testingMaintenanceWorker = new Worker("Henry", 500, "Maintenance", "Maintenance Company", 800, 1200, 1800);
 	}
 	

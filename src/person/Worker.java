@@ -142,24 +142,29 @@ public class Worker extends Person {
                 }
 
                 //Bank Related
-                if (money <= moneyMinThreshold || money >= moneyMaxThreshold) {
+                if (money <= moneyMinThreshold || money >= moneyMaxThreshold) 
+                {
                         prepareForBank();
                         return true;
                 }
 
 
                 //Market Related
-                if (!hasFoodInFridge || carStatus == CarState.wantsCar) {
-                        if (money <= moneyMinThreshold && !hasFoodInFridge) {
+                if (!hasFoodInFridge || carStatus == CarState.wantsCar) 
+                {
+                        if (money <= moneyMinThreshold && !hasFoodInFridge) 
+                        {
                                // if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getBank().openTime.hour) &&
                                              //   (TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getBank().closeTime.hour)) {
                                         prepareForBank();
                                         return true;
                              //   }
                         }
-                        else {
+                        else 
+                        {
                                 if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getMarket().openTime.hour) &&
-                                                (TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getMarket().closeTime.hour)) {
+                                                (TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getMarket().closeTime.hour)) 
+                                {
                                         prepareForMarket();
                                         return true;
                                 }
@@ -194,6 +199,12 @@ public class Worker extends Person {
                         workerRole = Phonebook.getPhonebook().getRestaurant().arrivedAtWork(this, myJob.title);
                         workerRole.setRoleActive();
                         return;
+                }
+                if (myJob.jobPlace == "housing maintenance company")
+                {
+                	workerRole = Phonebook.getPhonebook().getHousingMaintenanceCompany().arrivedAtWork(this, myJob.title);
+                	workerRole.setRoleActive();
+                	return;
                 }
                 //need to put in maintenance role
 
