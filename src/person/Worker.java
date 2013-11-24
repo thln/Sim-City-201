@@ -14,13 +14,15 @@ public class Worker extends Person {
         protected Job myJob = null;
         protected Role workerRole = null;
 
-        public Worker (String name, int money, String jobTitle, String jobPlace, int startT, int lunchT, int endT) {
+        public Worker (String name, int money, String jobTitle, String jobPlace, int startT, int lunchT, int endT) 
+        {
                 super(name);
                 this.money = money;
                 myJob = new Job(jobTitle, jobPlace ,startT, lunchT, endT, this);
         }
 
-        public class Job {
+        public class Job 
+        {
                 public String title;
                 public String jobPlace;
                 public int lunchBreakLength = 1; 
@@ -29,7 +31,8 @@ public class Worker extends Person {
                 public WatchTime startTime, lunchTime, endTime;
                 public Worker myself;
 
-                Job(String title, String jobPlace, int startT, int lunchT, int endT, Worker me) {
+                Job(String title, String jobPlace, int startT, int lunchT, int endT, Worker me) 
+                {
 
                         myself = me;
                         startTime = new WatchTime(startT, 0);
@@ -39,50 +42,61 @@ public class Worker extends Person {
                         this.jobPlace = jobPlace;
                 }
 
-                WatchTime getStartTime() {
+                WatchTime getStartTime() 
+                {
                         return endTime;
                 }
 
-                void setStartTime(int t) {
+                void setStartTime(int t) 
+                {
                         startTime.setTime(t, 0);
                 }
 
-                WatchTime getLunchTime() {
+                WatchTime getLunchTime() 
+                {
                         return lunchTime;
                 }
 
-                void setLunchTime(int t) {
+                void setLunchTime(int t) 
+                {
                         lunchTime.setTime(t, 0);
                 }
 
-                WatchTime getEndTime() {
+                WatchTime getEndTime() 
+                {
                         return endTime;
                 }
 
-                void setEndTime(int t) {
+                void setEndTime(int t) 
+                {
                         endTime.setTime(t, 0);
                 }
 
-                void setTitle(String title) {
+                void setTitle(String title) 
+                {
                         this.title = title;
                 }
         }
 
 
         //Messages
-        void msgHereIsPayCheck (double amount) {
+        void msgHereIsPayCheck (double amount) 
+        {
                 money += amount;
         }
         
-        public void roleFinishedWork(){                 //from worker role
+        public void roleFinishedWork()
+        {                 //from worker role
                 workerRole = null;
                 stateChanged();
         }
 
         //Scheduler
-        public boolean pickAndExecuteAnAction() {
+        public boolean pickAndExecuteAnAction() 
+        {
 
-                if (hunger == HungerLevel.full) {
+                if (hunger == HungerLevel.full) 
+                {
                         startHungerTimer();
                         return true;
                 }

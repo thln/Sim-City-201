@@ -105,6 +105,10 @@ public class Restaurant {
 			cookRole = null;
 		}
 		//WAITERS AND ALT WAITERS
+		//finish the "leave work" in Role.java 
+		//make function in host to delete waiter
+		//waiters have to finish duties before finishing waiter & no assignments
+		//look at onBreak code to follow
 		
 	}
 
