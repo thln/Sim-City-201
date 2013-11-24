@@ -1,11 +1,11 @@
 package restaurant;
 
 import java.util.*;
-//import java.util.concurrent.Semaphore;
 
 import person.Person;
 import person.Role;
 import person.Worker;
+import restaurant.interfaces.RestaurantCustomer;
 
 /**
  * Restaurant Host Role
@@ -90,7 +90,7 @@ public class HostRole extends Role
 		}
 	}
 
-	public void msgLeavingTable(RestaurantCustomerRole cust, WaiterRole waiterRole) {
+	public void msgLeavingTable(RestaurantCustomer cust, WaiterRole waiterRole) {
 		for (Table table : tables) {
 			if (table.getOccupant() == cust) {
 				//print(cust.getName() + " is leaving table " + table);

@@ -3,6 +3,7 @@ package restaurant;
 //import agent.Agent;
 import restaurant.myCustomer.customerState;
 import restaurant.interfaces.RestaurantCustomer;
+import restaurant.interfaces.Waiter;
 
 import java.util.*;
 import java.util.concurrent.Semaphore;
@@ -16,7 +17,7 @@ import person.Worker;
  * Restaurant Waiter Role
  */
 
-public class WaiterRole extends Role {
+public class WaiterRole extends Role implements Waiter{
 
 	//Keeps  a list of customers
 	public List<myCustomer> myCustomers = Collections.synchronizedList(new ArrayList<myCustomer>());
@@ -31,9 +32,9 @@ public class WaiterRole extends Role {
 	Timer breakTimer = new Timer();
 
 	//Agent Correspondents
-	protected HostRole hostRole;
-	protected CookRole cookRole;
-	protected CashierRole cashierRole;
+	//protected HostRole hostRole;
+	//protected CookRole cookRole;
+	//protected CashierRole cashierRole;
 
 	protected boolean isInLobby = true;
 	protected enum breakStatus{working, askedToGoOnBreak, waitingForReply, receivedReply, onBreak, goOffBreak};
@@ -44,9 +45,9 @@ public class WaiterRole extends Role {
 	public WaiterRole(Person p1, String pName, String rName) 
 	{
 		super(p1, pName, rName);
-		cashierRole = Phonebook.getPhonebook().getRestaurant().cashierRole;
-		hostRole = Phonebook.getPhonebook().getRestaurant().hostRole;
-		cookRole = Phonebook.getPhonebook().getRestaurant().cookRole;
+		//cashierRole = Phonebook.getPhonebook().getRestaurant().cashierRole;
+		//hostRole = Phonebook.getPhonebook().getRestaurant().hostRole;
+		//cookRole = Phonebook.getPhonebook().getRestaurant().cookRole;
 	}
 
 	public String getMaitreDName() {
@@ -62,7 +63,7 @@ public class WaiterRole extends Role {
 	/**
 	 * Messages
 	 */
-	public void msgPleaseSeatCustomer(int tableNumber, RestaurantCustomerRole customer, int xHome, int yHome) {
+	public void msgPleaseSeatCustomer(int tableNumber, RestaurantCustomer customer, int xHome, int yHome) {
 		myCustomers.add(new myCustomer(customer, tableNumber, xHome, yHome));
 		//print(customer.getCustomerName() + " was added to myCustomers list");
 		stateChanged();
@@ -88,8 +89,10 @@ public class WaiterRole extends Role {
 	}
 
 	public void msgHeresMyOrder(RestaurantCustomer customer, String choice) {
-		for (myCustomer myCust : myCustomers) {
-			if (myCust.customer == customer) {
+		for (myCustomer myCust : myCustomers) 
+		{
+			if (myCust.customer == customer) 
+			{
 				myCust.setChoice(choice);
 				myCust.setOrdered();
 				stateChanged();
@@ -168,7 +171,7 @@ public class WaiterRole extends Role {
 	/**
 	 * Scheduler
 	 */
-	protected boolean pickAndExecuteAnAction() {
+	public boolean pickAndExecuteAnAction() {
 
 		//if an order is ready, deliver it
 
@@ -283,7 +286,7 @@ public class WaiterRole extends Role {
 	}
 
 	// The animation DoXYZ() routines
-	protected void DoSeatCustomer(RestaurantCustomerRole customer, int table) {
+	protected void DoSeatCustomer(RestaurantCustomer customer, int table) {
 		//Notice how we print "customer" directly. It's toString method will do it.
 		//Same with "table"
 		isInLobby = false;
@@ -332,7 +335,7 @@ public class WaiterRole extends Role {
 		}
 		//waiterGui.DoLeaveCustomer();
 
-		cookRole.msgHeresAnOrder(MC.tableNumber, MC.choice, this);
+		Phonebook.getPhonebook().getRestaurant().cookRole.msgHeresAnOrder(MC.tableNumber, MC.choice, this);
 
 	}
 
@@ -375,7 +378,7 @@ public class WaiterRole extends Role {
 		}
 		//waiterGui.DoLeaveCustomer();
 		readyOrders.get(0).customer.msgHeresYourOrder(readyOrders.get(0).choice);
-		cashierRole.msgComputeBill(readyOrders.get(0).choice, readyOrders.get(0).tableNumber, this);
+		Phonebook.getPhonebook().getRestaurant().cashierRole.msgComputeBill(readyOrders.get(0).choice, readyOrders.get(0).tableNumber, this);
 
 		//Changing customer state to "Got Food"
 		for (myCustomer MC : myCustomers) {
@@ -404,13 +407,13 @@ public class WaiterRole extends Role {
 
 	protected void clearTable(myCustomer MC){
 		//print(MC.customer.getCustomerName() + " is leaving " + MC.tableNumber);
-		hostRole.msgLeavingTable(MC.customer, this);
+		Phonebook.getPhonebook().getRestaurant().hostRole.msgLeavingTable(MC.customer, this);
 		myCustomers.remove(MC);
 	}
 
 	protected void askToGoOnBreak() {
 		//print("Asking host for break");
-		hostRole.msgMayIGoOnBreak(this);
+		Phonebook.getPhonebook().getRestaurant().hostRole.msgMayIGoOnBreak(this);
 		state = breakStatus.waitingForReply;
 	}
 
@@ -425,7 +428,7 @@ public class WaiterRole extends Role {
 	protected void goOffBreak() {
 		isInLobby = false;
 		//waiterGui.DoLeaveCustomer();
-		hostRole.msgOffBreak(this);
+		Phonebook.getPhonebook().getRestaurant().hostRole.msgOffBreak(this);
 		state = breakStatus.working;
 		//waiterGui.denyBreak();
 		stateChanged();
@@ -451,23 +454,23 @@ public class WaiterRole extends Role {
 		return waiterGui;
 	}*/
 
-	public void setHost(HostRole hostRole) {
+	/*public void setHost(HostRole hostRole) {
 		this.hostRole = hostRole;
 	}
 
 	public void setCook(CookRole cookRole) {
 		this.cookRole = cookRole;
-	}
+	}*/
 	
 	/*
 	public void setCookGui(CookGui cookGui) {
 		this.cookGui = cookGui;
 	}
 	*/
-
+	/*
 	public void setCashier(CashierRole cashierRole) {
 		this.cashierRole = cashierRole;
-	}
+	}*/
 
 	public boolean isOnBreak() {
 		if (state == breakStatus.onBreak)

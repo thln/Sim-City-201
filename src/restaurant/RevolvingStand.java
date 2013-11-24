@@ -34,4 +34,9 @@ public class RevolvingStand
 			return AllOrders.isEmpty();
 		}
 	}
+	
+	public int getSize()
+	{
+		return AllOrders.size();
+	}
 }

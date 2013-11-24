@@ -5,13 +5,13 @@ import person.Person;
 
 public class AltWaiterRole extends WaiterRole 
 {
-	private RevolvingStand theRevolvingStand;
+	//private RevolvingStand theRevolvingStand;
 	protected String RoleName = "Alternative Waiter";
 	
 	public AltWaiterRole(Person p1, String pName, String rName) 
 	{
 		super(p1, pName, rName);
-		theRevolvingStand = Phonebook.getPhonebook().getRestaurant().getRevolvingStand();
+		//theRevolvingStand = Phonebook.getPhonebook().getRestaurant().getRevolvingStand();
 		//super(name);
 		//Waiter(name);
 	}
@@ -36,7 +36,7 @@ public class AltWaiterRole extends WaiterRole
 		//waiterGui.DoLeaveCustomer();
 
 		//cook.msgHeresAnOrder(MC.tableNumber, MC.choice, this);
-		theRevolvingStand.newOrder(new Order(MC.tableNumber, MC.choice, this));
+		Phonebook.getPhonebook().getRestaurant().getRevolvingStand().newOrder(new Order(MC.tableNumber, MC.choice, this));
 	}
 	
 }

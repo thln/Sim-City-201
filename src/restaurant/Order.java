@@ -1,9 +1,11 @@
 package restaurant;
 
+import restaurant.interfaces.RestaurantCustomer;
+
 public class Order {
 
 	WaiterRole waiterRole;
-	public RestaurantCustomerRole customer;
+	public RestaurantCustomer customer;
 
 	int tableNumber;
 
@@ -18,7 +20,7 @@ public class Order {
 		this.waiterRole = waiterRole;
 	}
 
-	Order(int tableNumber, String choice, RestaurantCustomerRole customer) {
+	Order(int tableNumber, String choice, RestaurantCustomer customer) {
 		this.tableNumber = tableNumber;
 		this.choice = choice;
 		this.customer = customer;

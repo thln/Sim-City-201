@@ -28,7 +28,7 @@ public class CookRole extends Role implements Cook
 
 	Timer timer = new Timer();
 	private int cookTime;
-	private RevolvingStand theRevolvingStand;
+	//private RevolvingStand theRevolvingStand;
 
 	int inventoryChecker = 0;
 
@@ -47,7 +47,7 @@ public class CookRole extends Role implements Cook
 	{
 		super(p1, pName, rName);
 		this.restaurant = restaurant;
-		theRevolvingStand = Phonebook.getPhonebook().getRestaurant().getRevolvingStand();
+		//theRevolvingStand = Phonebook.getPhonebook().getRestaurant().getRevolvingStand();
 
 	}
 
@@ -55,7 +55,7 @@ public class CookRole extends Role implements Cook
 	{
 		super(roleName);
 		this.restaurant = restaurant;
-		theRevolvingStand = Phonebook.getPhonebook().getRestaurant().getRevolvingStand();
+		//theRevolvingStand = Phonebook.getPhonebook().getRestaurant().getRevolvingStand();
 
 	}
 
@@ -139,9 +139,9 @@ public class CookRole extends Role implements Cook
 		}
 
 
-		if(!theRevolvingStand.isStandEmpty())
+		if(!Phonebook.getPhonebook().getRestaurant().getRevolvingStand().isStandEmpty())
 		{
-			myOrders.add(theRevolvingStand.takeOrder());
+			myOrders.add(Phonebook.getPhonebook().getRestaurant().getRevolvingStand().takeOrder());
 			return true;
 		}
 		

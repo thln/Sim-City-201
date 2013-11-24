@@ -1,15 +1,17 @@
 package restaurant;
 
+import restaurant.interfaces.RestaurantCustomer;
+
 public class myCustomer {
 	
-	RestaurantCustomerRole customer;
+	RestaurantCustomer customer;
 	
 	int tableNumber;
 	double CheckAmount = 0;
 	int xHome, yHome;
 	
-	enum customerState {Waiting, Seated, ReadyToOrder, RequestedToOrder, Ordered, Reorder, WaitingForFood, FoodReady, GotFood, WantCheck, GaveCheck, Finished};
-	customerState state = customerState.Waiting;
+	public enum customerState {Waiting, Seated, ReadyToOrder, RequestedToOrder, Ordered, Reorder, WaitingForFood, FoodReady, GotFood, WantCheck, GaveCheck, Finished};
+	public customerState state = customerState.Waiting;
 	
 	String choice;
 	
@@ -17,7 +19,7 @@ public class myCustomer {
 	 * Constructor for myCustomer class
 	 */
 	
-	myCustomer (RestaurantCustomerRole customer, int tableNumber, int xHome, int yHome) {
+	myCustomer (RestaurantCustomer customer, int tableNumber, int xHome, int yHome) {
 		this.customer = customer;
 		this.tableNumber = tableNumber;
 		this.xHome = xHome;
@@ -28,7 +30,7 @@ public class myCustomer {
 	
 	//Utilities
 	
-	RestaurantCustomerRole getCustomer() {
+	RestaurantCustomer getCustomer() {
 		return customer;
 	}
 
