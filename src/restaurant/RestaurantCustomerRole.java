@@ -7,11 +7,14 @@ import java.util.concurrent.Semaphore;
 
 import person.Person;
 import person.Role;
+import restaurant.interfaces.Host;
+import restaurant.interfaces.RestaurantCustomer;
+import restaurant.interfaces.Waiter;
 
 /**
  * Restaurant customer agent.
  */
-public class RestaurantCustomerRole extends Role {
+public class RestaurantCustomerRole extends Role implements RestaurantCustomer {
 	private int hungerLevel = 5;        // determines length of meal
 	Timer timer = new Timer();
 	protected String RoleName = "Restaurant Customer";
@@ -418,6 +421,18 @@ public class RestaurantCustomerRole extends Role {
 	
 	public double getMoney() {
 		return money;
+	}
+
+	@Override
+	public void setHost(Host host) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void msgPleaseFollowMe(int tableNumber, Menu menu, Waiter waiter) {
+		// TODO Auto-generated method stub
+		
 	}
 }
 

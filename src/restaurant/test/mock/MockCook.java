@@ -1,5 +1,8 @@
 package restaurant.test.mock;
 
+import market.Market;
+import restaurant.Order;
+import restaurant.WaiterRole;
 import restaurant.interfaces.Cook;
 import testing.Mock;
 
@@ -14,5 +17,30 @@ public class MockCook extends Mock implements Cook
 	public MockCook(String name)
 	{
 		super(name);
+	}
+	
+	public void msgHeresAnOrder(int table, String choice, WaiterRole waiterRole)
+	{
+		
+	}
+
+	public void msgOrderDone(Order order)
+	{
+		
+	}
+
+	public void msgCantFulfill(String choice, int amount, int orderedAmount, Market market)
+	{
+		
+	}
+
+	public void msgOrderFulfillment(String choice, int amount, int orderedAmount, Market market)
+	{
+		
+	}
+
+	public void msgAtDestination()
+	{
+		
 	}
 }

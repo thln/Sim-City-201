@@ -1,11 +1,11 @@
 package restaurant;
 
 import java.util.*;
-//import java.util.concurrent.Semaphore;
 
 import person.Person;
 import person.Role;
 import person.Worker;
+import restaurant.interfaces.RestaurantCustomer;
 
 /**
  * Restaurant Host Role
@@ -14,7 +14,8 @@ import person.Worker;
 //does all the rest. Rather than calling the other agent a waiter, we called him
 //the HostAgent. A Host is the manager of a restaurant who sees that all
 //is proceeded as he wishes.
-public class HostRole extends Role {
+public class HostRole extends Role 
+{
 	static final int NTABLES = 4;//a global for the number of tables.
 	//Notice that we implement waitingCustomers using ArrayList, but type it
 	//with List semantics.
@@ -89,7 +90,7 @@ public class HostRole extends Role {
 		}
 	}
 
-	public void msgLeavingTable(RestaurantCustomerRole cust, WaiterRole waiterRole) {
+	public void msgLeavingTable(RestaurantCustomer cust, WaiterRole waiterRole) {
 		for (Table table : tables) {
 			if (table.getOccupant() == cust) {
 				//print(cust.getName() + " is leaving table " + table);
@@ -129,27 +130,37 @@ public class HostRole extends Role {
 	/**
 	 * Scheduler.  Determine what action is called for, and do it.
 	 */
-	protected boolean pickAndExecuteAnAction() {
+	protected boolean pickAndExecuteAnAction() 
+	{
 		/* Think of this next rule as:
             Does there exist a table and customer,
             so that table is unoccupied and customer is waiting.
             If so seat him at the table.
 		 */		
-		synchronized(newCustomers){
-			synchronized(waitingCustomers){
-				if (!newCustomers.isEmpty()) {
+		synchronized(newCustomers)
+		{
+			synchronized(waitingCustomers)
+			{
+				if (!newCustomers.isEmpty()) 
+				{
 					greetCustomer();
 					return true;
 				}
 			}
 		}
 
-		synchronized(waiters){
-			synchronized(waitingCustomers){
-				for (Table table : tables) {
-					if (!table.isOccupied()) {
-						if (!waiters.isEmpty()) {
-							if (!waitingCustomers.isEmpty()) {
+		synchronized(waiters)
+		{
+			synchronized(waitingCustomers)
+			{
+				for (Table table : tables) 
+				{
+					if (!table.isOccupied()) 
+					{
+						if (!waiters.isEmpty()) 
+						{
+							if (!waitingCustomers.isEmpty()) 
+							{
 								assignCustomer(waitingCustomers.get(0), table, findWaiterWithLeastCustomers());//the action
 								return true;//return true to the abstract agent to re-invoke the scheduler.
 							}
@@ -159,10 +170,14 @@ public class HostRole extends Role {
 			}
 		}
 
-		synchronized(waiters){
-			if (!waiters.isEmpty()) {
-				for (myWaiter MW : waiters) {
-					if (MW.askedToGoOnBreak == true) {
+		synchronized(waiters)
+		{
+			if (!waiters.isEmpty()) 
+			{
+				for (myWaiter MW : waiters) 
+				{
+					if (MW.askedToGoOnBreak == true) 
+					{
 						replyToBreakRequest(MW);
 						return true;
 					}
@@ -170,7 +185,8 @@ public class HostRole extends Role {
 			}
 		}
 
-		if (leaveRole){
+		if (leaveRole)
+		{
 			((Worker) person).roleFinishedWork();
 			leaveRole = false;
 			return true;
@@ -187,25 +203,31 @@ public class HostRole extends Role {
 	/** Actions
 	 *
 	 */
-	private void greetCustomer() {
+	private void greetCustomer() 
+	{
 		int fullTableIterator = 0;
 
-		for (Table table : tables) {
-			if (table.isOccupied()) {
+		for (Table table : tables) 
+		{
+			if (table.isOccupied()) 
+			{
 				fullTableIterator++;
 			}
 		}
 
-		if (fullTableIterator == NTABLES) {
+		if (fullTableIterator == NTABLES) 
+		{
 			informCustomerRestaurantFull(newCustomers.get(0).customer);
 		}
-		else {
+		else 
+		{
 			waitingCustomers.add(newCustomers.get(0));
 			newCustomers.remove(0);
 		}
 	}
 
-	private void assignCustomer(myCustomer MC, Table table, WaiterRole waiterRole) {
+	private void assignCustomer(myCustomer MC, Table table, WaiterRole waiterRole) 
+	{
 		//print("Assigning customer " + MC.customer.getCustomerName() + " to waiter");
 		addCustomerToWaiter(waiterRole);
 		waiterRole.msgPleaseSeatCustomer(table.tableNumber, MC.customer, MC.xHome, MC.yHome);
@@ -218,9 +240,11 @@ public class HostRole extends Role {
 		}
 	}
 
-	private void replyToBreakRequest(myWaiter MW) {
+	private void replyToBreakRequest(myWaiter MW) 
+	{
 
-		if (waiters.size() == 1) {
+		if (waiters.size() == 1) 
+		{
 			MW.askedToGoOnBreak = false;
 			MW.waiterRole.msgPermissionToBreak(false);
 			//print("Telling " + MW.waiter.getName() + " he/she cannot go on break");
@@ -230,28 +254,34 @@ public class HostRole extends Role {
 		int workingWaiterCount = 0;
 
 		//Determining how many working waiters there are
-		for (myWaiter wait: waiters) {
+		for (myWaiter wait: waiters)
+		{
 			if (wait.onBreak == false)
 				workingWaiterCount++;
 		}
 
-		if (workingWaiterCount > 1) {
+		if (workingWaiterCount > 1) 
+		{
 			MW.askedToGoOnBreak = false;
 			//print("Allowing " + MW.waiter.getName() + " to go on break");
 			MW.waiterRole.msgPermissionToBreak(true);
 			MW.onBreak = true;
 		}
-		else {
+		else 
+		{
 			MW.askedToGoOnBreak = false;
 			//print("Deny " + MW.waiter.getName() + " to go on break");
 			MW.waiterRole.msgPermissionToBreak(false);
 		}
 	}
 
-	private void informCustomerRestaurantFull(RestaurantCustomerRole customer) {
+	private void informCustomerRestaurantFull(RestaurantCustomerRole customer)
+	{
 		customer.msgTablesAreFull();
-		for(myCustomer MC : newCustomers) {
-			if (MC.customer.equals(customer)) {
+		for(myCustomer MC : newCustomers) 
+		{
+			if (MC.customer.equals(customer))
+			{
 				newCustomers.remove(MC);
 				return;
 			}
@@ -271,20 +301,23 @@ public class HostRole extends Role {
 		return hostGui;
 	}*/
 
-	public void addWaiter(WaiterRole waiterRole) {
+	public void addWaiter(WaiterRole waiterRole) 
+	{
 		waiters.add(new myWaiter(waiterRole));
 		//print("Hired new waiter, " + waiter.getName());
 		stateChanged();
 	}
 
-	public void addCustomerToWaiter(WaiterRole waiterRole) {
+	public void addCustomerToWaiter(WaiterRole waiterRole) 
+	{
 		for (myWaiter MW: waiters) {
 			if (MW.waiterRole == waiterRole)
 				MW.totalCustomers++;
 		}
 	}
 
-	private WaiterRole findWaiterWithLeastCustomers() {
+	private WaiterRole findWaiterWithLeastCustomers() 
+	{
 		//Finding first waiter that is not on break
 		myWaiter lowestWaiter = null;
 		for (myWaiter lowWaiter: waiters) {
@@ -295,7 +328,8 @@ public class HostRole extends Role {
 		}
 
 		//Spreading customers equally
-		for (int i = 1; i < waiters.size(); i++) {
+		for (int i = 1; i < waiters.size(); i++) 
+		{
 			if ((lowestWaiter.totalCustomers > waiters.get(i).totalCustomers) && (waiters.get(i).onBreak == false))
 				lowestWaiter = waiters.get(i);
 		}
@@ -334,7 +368,7 @@ public class HostRole extends Role {
 
 	}
 
-	private class myWaiter {
+	public class myWaiter {
 		public WaiterRole waiterRole;
 		public int totalCustomers;
 		boolean askedToGoOnBreak = false;
