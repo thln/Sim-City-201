@@ -90,4 +90,8 @@ public class PersonGui implements Gui{
 		xDestination = 100;
 		yDestination = 100;
 	}
+	
+	public void DoGoHome(int home) { //the person's assigned home number. Maybe use coordinates instead?
+		
+	}
 }

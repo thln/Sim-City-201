@@ -20,6 +20,7 @@ public class AnimationPanel extends JPanel implements MouseListener {
 	JButton testbutton2 = new JButton("test2");
 	MarketRunnerGui market = new MarketRunnerGui();
 	BankLoanerGui bank = new BankLoanerGui();
+	BusGui bus = new BusGui();
 
 	public AnimationPanel() {
 		setVisible(true);
@@ -57,17 +58,17 @@ public class AnimationPanel extends JPanel implements MouseListener {
 			add(BorderLayout.SOUTH, buildingPanels);
 		}
 		
-		/*
-		testGuis();
 		
-		//testing mechanisms
-		testbutton.addMouseListener(this);
-    	testbutton.setSize(100, 50);
-    	cityPanel.add(testbutton);
-    	testbutton2.addMouseListener(this);
-    	testbutton2.setBounds(100, 0, 100, 50);
-    	cityPanel.add(testbutton2);
-    	*/
+//		testGuis();
+//		
+//		//testing mechanisms
+//		testbutton.addMouseListener(this);
+//    	testbutton.setSize(100, 50);
+//    	cityPanel.add(testbutton);
+//    	testbutton2.addMouseListener(this);
+//    	testbutton2.setBounds(100, 0, 100, 50);
+//    	cityPanel.add(testbutton2);
+    	
 	}
 
 	public void displayBuildingPanel(BuildingPanel bp) {
@@ -99,7 +100,7 @@ public class AnimationPanel extends JPanel implements MouseListener {
 		}
 		
 		cityPanel.addGui(new CarGui());
-		cityPanel.addGui(new BusGui());
+		cityPanel.addGui(bus);
 		cityPanel.addGui(new PersonGui());
 	}
 	/*
@@ -112,8 +113,7 @@ public class AnimationPanel extends JPanel implements MouseListener {
 	    JButton testbutton = new JButton("test");
 	    JButton testbutton2 = new JButton("test2");
 	    MarketUPSmanGui market = new MarketUPSmanGui();
-	
-	=======
+	    
 		here we have the main city view
 		cityPanel.setBounds(10, 20, WINDOWX, WINDOWY); //x & y positions in animation panel, x & y sizes
 		cityPanel.addMouseListener(this);
@@ -162,27 +162,6 @@ public class AnimationPanel extends JPanel implements MouseListener {
 			cityPanel.addBuilding("Restaurant", j+1);
 		}
 	}
-	
-	public void testGuis() {
-		
-		for(int i=0; i< buildings.size();i++) {
-			if(buildings.get(i).getName().contains("Market")) {
-				buildings.get(i).myBuildingPanel.addGui(market);
-				buildings.get(i).myBuildingPanel.addGui(new MarketCustomerGui());
-				buildings.get(i).myBuildingPanel.addGui(new MarketSalesPersonGui());
-				buildings.get(i).myBuildingPanel.addGui(new MarketRunnerGui());
-			}
-			if(buildings.get(i).getName().contains("Bank")) {
-				buildings.get(i).myBuildingPanel.addGui(new BankCustomerGui());
-				buildings.get(i).myBuildingPanel.addGui(new BankTellerGui(1));
-				buildings.get(i).myBuildingPanel.addGui(new BankGuardGui());
-			}
-	>>>>>>> 99d516450476262d5ea55226685b56927fafd900
-		}
-
-
-	cityPanel.addMouseListener(this);
-	add( BorderLayout.SOUTH, buildingPanels );
 
 	    	sampleLayout();
 	    	
@@ -216,10 +195,10 @@ public class AnimationPanel extends JPanel implements MouseListener {
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getSource().equals(testbutton)) {
-			bank.DoGoToTellers();
+			bus.GoToStopA();
 		}
 		if(e.getSource().equals(testbutton2)) {
-			bank.BacktoPosition();
+			bus.GoToStopB();
 		}
 	}
 
