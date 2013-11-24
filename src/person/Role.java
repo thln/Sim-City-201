@@ -18,6 +18,9 @@ public abstract class Role {
         private RoleState state = RoleState.inActive;
         protected boolean leaveRole = false;
         
+        //Testing
+        public boolean test;
+        
         //For customer roles
         protected Role(Person person, String pName, String rName) {
                 this.person = person;
