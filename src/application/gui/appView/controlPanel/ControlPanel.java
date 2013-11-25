@@ -17,6 +17,7 @@ public class ControlPanel extends JPanel {
 	//Add Panel
 	private AddPanel addP;
 	private EditPanel editP;
+	private DashboardPanel dashboardP;
 	
 	//Trace Panel
 	private PrintPanel printPanel;
@@ -34,16 +35,18 @@ public class ControlPanel extends JPanel {
 		this.appPanel = appPanel;
 		addP = new AddPanel(this, app);
 		editP = new EditPanel(this, app, appPanel);
+		dashboardP = new DashboardPanel(app);
 		
 		printPanel = new PrintPanel();
 		printPanelTab = printPanel;
 		
 		
+		ControlPane.addTab("Dashboard", dashboardP);
 		ControlPane.addTab("Add Person", addP);
-		ControlPane.addTab("Trace Panel", printPanelTab);
 		ControlPane.addTab("Edit Panel", editP);
 		ControlPane.addTab("Select Building", panel4);
-		ControlPane.addTab("System Statistics", panel5);
+		ControlPane.addTab("Trace Panel", printPanelTab);
+		
 		
 		add(ControlPane);
 	

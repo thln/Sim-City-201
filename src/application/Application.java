@@ -261,6 +261,9 @@ public class Application extends JPanel {
 		return population.size();
 	}
 	
+	public int getNumberHomes(){
+		return allHousing.size();
+	}
 	public Person getPerson(int personIndex){
 		return population.get(personIndex);
 	}

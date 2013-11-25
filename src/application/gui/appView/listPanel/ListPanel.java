@@ -130,6 +130,7 @@ public class ListPanel extends JPanel implements ActionListener{
 			buttons.add(button);
 			listPane.add(button);
 			validate();
+			System.out.println("listPanel: " + getListSize());
 		}
 		
 	}

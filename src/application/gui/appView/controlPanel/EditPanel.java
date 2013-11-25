@@ -1,11 +1,9 @@
 package application.gui.appView.controlPanel;
 
 import javax.swing.*;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
-
 import application.*;
 import application.gui.appView.*;
 import application.gui.appView.listPanel.ListPanel.Profile;
@@ -71,11 +69,13 @@ public class EditPanel extends JPanel implements ActionListener {
 	
 	public void updateNamesList(){
 		//TODO Fix this Function
-		for(int i = 0; i<appPanel.getListPanel().getListSize(); i++){
-			String name = appPanel.getListPanel().getProfile(i).getName();
-			selectPerson.addItem(name);
+		if(app.getPopulationSize()> 0){
+			for(int i = 0; i<app.getPopulationSize(); i++){
+				String tempName = app.getPerson(i).getName();
+				selectPerson.addItem((String) tempName);
+			}
+			validate();
 		}
-		validate();
 	}
 	
 	public void updateTextFields(){
