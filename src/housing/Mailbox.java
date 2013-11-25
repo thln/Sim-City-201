@@ -7,5 +7,6 @@ package housing;
 
 public class Mailbox 
 {
+	private int PaymentCash;
 
 }
