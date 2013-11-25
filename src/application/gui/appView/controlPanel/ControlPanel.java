@@ -12,41 +12,53 @@ import application.gui.appView.*;
 import application.gui.trace.PrintControlPanel;
 
 public class ControlPanel extends JPanel {
+	JPanel panel4 = new JPanel();
+	JPanel panel5 = new JPanel();
 	//Add Panel
 	private AddPanel addP;
-	private JPanel addPersonTab;
+	private EditPanel editP;
+	private DashboardPanel dashboardP;
 	
 	//Trace Panel
 	private PrintPanel printPanel;
 	private JPanel printPanelTab;
 	
-	private JPanel panel2 = new JPanel();
-	private JPanel panel3 = new JPanel();
-	private JPanel panel4 = new JPanel();
 	private ImageIcon picture;
 	private JPanel tempPanel = new JPanel();
 	private JTabbedPane ControlPane = new JTabbedPane();
 	private Application app;
 	private ApplicationPanel appPanel;
+	private SelectBuilding selectP;
 	
 	public ControlPanel(ApplicationPanel appPanel, Application app){
 		setLayout(new GridLayout(1,1));
 		this.app = app;
 		this.appPanel = appPanel;
 		addP = new AddPanel(this, app);
-		addPersonTab =  addP.mainPanel;
+		editP = new EditPanel(this, app, appPanel);
+		//selectP = new SelectBuilding(appPanel.getAppGui().getAnimationPanel());
+		dashboardP = new DashboardPanel(app);
+		
 		printPanel = new PrintPanel();
 		printPanelTab = printPanel;
 		
 		
-		ControlPane.addTab("Add Person", addPersonTab);
+		ControlPane.addTab("Dashboard", dashboardP);
+		ControlPane.addTab("Add Person", addP);
+		ControlPane.addTab("Edit Panel", editP);
+		ControlPane.addTab("Select Building", panel4);
 		ControlPane.addTab("Trace Panel", printPanelTab);
-		ControlPane.addTab("Option 3", panel3);
+		
 		
 		add(ControlPane);
+	
 	}	
 	
 	public ApplicationPanel getAppPanel(){
 		return appPanel;
+	}
+	
+	public EditPanel getEditPanel(){
+		return editP;
 	}
 }

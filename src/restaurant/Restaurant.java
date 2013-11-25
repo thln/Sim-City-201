@@ -4,7 +4,12 @@ import application.WatchTime;
 import person.Person;
 import person.Role;
 import person.Worker;
+
+import application.gui.animation.*;
+
+import restaurant.interfaces.Cashier;
 import restaurant.interfaces.Cook;
+import restaurant.test.mock.MockCashier;
 import restaurant.test.mock.MockCook;
 
 public class Restaurant {
@@ -21,9 +26,11 @@ public class Restaurant {
 	public CookRole cookRole = new CookRole("Cook", this);
 	public CashierRole cashierRole = new CashierRole("Cashier", this);
 	public RevolvingStand theRevolvingStand = new RevolvingStand();
+	private BuildingPanel restPanel;
 
 	//Mocks
-	public MockCook mockCook = new MockCook("Mock Cook");
+	public MockCook mockCook = new MockCook("MockCook");
+	public MockCashier mockCashier = new MockCashier("MockCashier");
 
 	public Restaurant(String name) {
 		this.name = name;
@@ -108,7 +115,6 @@ public class Restaurant {
 		//make function in host to delete waiter
 		//waiters have to finish duties before finishing waiter & no assignments
 		//look at onBreak code to follow
-
 	}
 
 	public String getName() 
@@ -126,10 +132,22 @@ public class Restaurant {
 		return theRevolvingStand;
 	}
 
+	public void setPanel(BuildingPanel panel) {
+		restPanel = panel;
+	}
+
 	public Cook getCook(boolean test) {
 		if (test) {
 			return mockCook;
 		}
 		return cookRole;
+	}
+
+	public Cashier getCashier(boolean test) {
+		if (test) {
+			return mockCashier;
+		}
+		return cashierRole;
+
 	}
 }

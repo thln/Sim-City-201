@@ -87,7 +87,7 @@ public class SalesPersonRole extends Role implements SalesPerson {
 	public void msgPayment(Restaurant restaurant, double payment) {
 		market.money += payment;
 		for (MarketOrder o : orders) {
-			if (o.customer.equals(restaurant)) {
+			if (o.restaurant.equals(restaurant)) {
 				orders.remove(o);
 				return;
 			}
@@ -127,7 +127,7 @@ public class SalesPersonRole extends Role implements SalesPerson {
 		o.state = orderState.processing;
 		
 		if (market.inventory.get(o.item).amount == 0) {
-			o.restaurant.cookRole.msgCantFulfill(o.item, 0, o.itemAmountOrdered);
+			o.restaurant.getCook(test).msgCantFulfill(o.item, 0, o.itemAmountOrdered);
 			orders.remove(o);
 			stateChanged();
 			return;
@@ -147,7 +147,7 @@ public class SalesPersonRole extends Role implements SalesPerson {
 	public void askForPayment(MarketOrder o) {
 		o.state = orderState.gaveToCustomer;
 		o.orderCost = market.inventory.get(o.item).price * o.itemAmountFulfilled;
-		o.restaurant.cashierRole.msgPleasePayForItems(o.item, o.itemAmountFulfilled, o.orderCost, this);
+		o.restaurant.getCashier(true).msgPleasePayForItems(o.item, o.itemAmountFulfilled, o.orderCost, this);
 		stateChanged();
 	}
 }

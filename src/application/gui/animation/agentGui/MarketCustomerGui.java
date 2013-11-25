@@ -1,20 +1,20 @@
 package application.gui.animation.agentGui;
 
-//import market.\*;
+import market.*;
 
 import java.awt.*;
 
 import javax.swing.*;
 
-public class MarketCustomerGui implements Gui {
+public class MarketCustomerGui extends MarketGui {
 
-    //private MarketCustomerRole agent = null;
+    private MarketCustomerRole agent = null;
     private boolean isPresent = true;
     
     //RestaurantGui gui;
 
-    private int xPos = 300, yPos = 365;//default MarketCustomer position
-    private int xDestination = 300, yDestination = 320;//default start position
+    private int xPos = 300, yPos = 300;//default MarketCustomer position
+    private int xDestination = 300, yDestination = 260;//default start position
     
     private enum Command {noCommand};
 	private Command command = Command.noCommand;
@@ -22,8 +22,11 @@ public class MarketCustomerGui implements Gui {
 	private enum CustomerState {nothing};
 	CustomerState state = CustomerState.nothing;
     
-    public MarketCustomerGui(/*MarketCustomerRole agent, RestaurantGui gui*/) {
-        //this.agent = agent;
+	public MarketCustomerGui() {
+	}
+	
+    public MarketCustomerGui(MarketCustomerRole agent/*, RestaurantGui gui*/) {
+        this.agent = agent;
       //this.gui = gui;
     }
 
@@ -73,6 +76,6 @@ public class MarketCustomerGui implements Gui {
     
     public void DoExit() {
     	xDestination = 300;
-    	yDestination = 360;
+    	yDestination = 300;
     }
 }

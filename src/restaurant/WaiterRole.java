@@ -183,6 +183,10 @@ public class WaiterRole extends Role implements Waiter
 	{
 
 		//if an order is ready, deliver it
+		if (leaveRole)
+		{
+			AskHostToLeave();
+		}
 
 		if (state == breakStatus.askedToGoOnBreak) 
 		{
@@ -271,13 +275,6 @@ public class WaiterRole extends Role implements Waiter
 	//			stateChanged();
 	//			return false;
 	//		}
-
-	if (leaveRole)
-	{
-		((Worker) person).roleFinishedWork();
-		leaveRole = false;
-		return true;
-	}
 
 	return false;
 	//we have tried all our rules and found
@@ -476,7 +473,16 @@ protected void breakDenied() {
 	stateChanged();
 }
 
-
+protected void AskHostToLeave()
+{
+	Phonebook.getPhonebook().getRestaurant().hostRole.msgIAmLeavingSoon(this);
+	 if(myCustomers.isEmpty())
+	{
+		Phonebook.getPhonebook().getRestaurant().hostRole.msgIAmLeavingWork(this);
+		((Worker) person).roleFinishedWork();
+		leaveRole = false;
+	}
+}
 
 /**
  * Utilities

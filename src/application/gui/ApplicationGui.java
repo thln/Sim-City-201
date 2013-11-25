@@ -26,7 +26,7 @@ import application.gui.trace.TracePanel;
 public class ApplicationGui extends JFrame {
 
 
-	Application app = new Application();
+	Application app;
 
 	ApplicationPanel appPanel; 
 	AnimationPanel animPanel = new AnimationPanel();
@@ -35,17 +35,18 @@ public class ApplicationGui extends JFrame {
 	
 
 	final static int WINDOWX = 1200;
-	final static int WINDOWY = 800;
+	final static int WINDOWY = 680;
 	final static int APPWIDTH = WINDOWX*(4/10); //Application View Panel Width 400
 	final static int ANIMWIDTH = WINDOWX*(6/10); //Animation View Panel Width 600
 	//final static int AnimPanelY = WINDOWY; //Animation View Panel Height 600	
 
 	ApplicationGui() {
-		appPanel = new ApplicationPanel(app);
-		setBounds(50,0, WINDOWX, WINDOWY);
+		app = new Application(animPanel);
+		appPanel = new ApplicationPanel(this, app);
+		setBounds(0,0, WINDOWX, WINDOWY);
 		//appPanel.getControlPanel().setApplication(app);
 		setLayout(new GridLayout(1,2)); //GridLayout with 2 columns and 1 row
-		setBounds(50, 50, WINDOWX, WINDOWY);  
+		setBounds(0, 0, WINDOWX, WINDOWY);  
 
 		//here's the main application
 		//MainView 
@@ -64,5 +65,9 @@ public class ApplicationGui extends JFrame {
 		gui.setVisible(true);
 		gui.setResizable(true);
 		gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+	
+	public AnimationPanel getAnimationPanel(){
+		return animPanel;
 	}
 }

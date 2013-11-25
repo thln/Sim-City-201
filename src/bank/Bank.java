@@ -16,6 +16,7 @@ import application.WatchTime;
 import person.Person;
 import person.Role;
 import person.Worker;
+import application.gui.animation.*;
 
 public class Bank
 {
@@ -43,6 +44,7 @@ public class Bank
 	public BankGuardMock bankGuardMock = new BankGuardMock("Bank Guard");
 	public LoanOfficerMock loanOfficerMock = new LoanOfficerMock("Loan Officer");
 	public List <BankTellerMock> mockTellers = new ArrayList<>();
+	private BuildingPanel bankPanel;
 	
 	//Constructor
 	public Bank(String name) {
@@ -148,5 +150,9 @@ public class Bank
 			return loanOfficerMock;
 		else 
 			return loanOfficerRole;
+	}
+	
+	public void setPanel(BuildingPanel panel) {
+		bankPanel = panel;
 	}
 }

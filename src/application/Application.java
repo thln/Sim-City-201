@@ -10,13 +10,17 @@ import person.*;
 import restaurant.Restaurant;
 
 import java.util.*;
+import application.gui.animation.*;
+import application.gui.animation.agentGui.*;
+import application.gui.appView.listPanel.*;
+
 
 public class Application extends JPanel {
 	
 	private ArrayList<Person> population = new ArrayList<Person>();
 	private static List<Housing> allHousing = Collections.synchronizedList(new ArrayList<Housing>());
 
-
+	private AnimationPanel animPanel;
 	public Bank bank;
 	public Market market;
 	public Restaurant restaurant;
@@ -24,9 +28,9 @@ public class Application extends JPanel {
 	//public static Phonebook phonebook = new Phonebook(bank, market, restaurant, allHousing);
 
 	
-	public Application() {
+	public Application(AnimationPanel ap) {
 
-		
+		animPanel = ap;
 		Phonebook.getPhonebook().setHousingList(allHousing);
 		
 		//String name, int money, String jobTitle, String jobPlace, int startT, int lunchT, int endT
@@ -49,6 +53,7 @@ public class Application extends JPanel {
 		Worker bank1a = new Worker("Alex", 100, "bankTeller", "bank", 0, 6, 12);
 		Worker bank1b = new Worker("Ben", 100, "loanOfficer", "bank", 0, 6, 12);
 		Worker bank1c = new Worker("Caitlyn", 100, "bankGuard", "bank", 0, 6, 12);
+		
 		//SHIFT 2
 		Worker bank2a = new Worker("Andy", 100, "bankTeller", "bank", 12, 18, 24);
 		Worker bank2b = new Worker("Billy", 100, "loanOfficer", "bank", 12, 18, 24);
@@ -177,6 +182,13 @@ public class Application extends JPanel {
 //		population.add(rest2j);
 //		population.add(rest2k);
 		
+		for(Person person : population) {
+			person.setPanel(animPanel);
+			PersonGui pg = new PersonGui(person);
+			person.setGui(pg);
+			animPanel.addGui(pg);
+		}
+		
 		//Starting Threads
 		bank1a.startThread();
 		bank1b.startThread();
@@ -224,6 +236,7 @@ public class Application extends JPanel {
 			newP.setHome(allHousing.get(allHousing.size() - 1));
 			population.add(newP);
 			newP.startThread();
+			System.out.println("ayyy");
 		}
 		else if (type.equals("Worker")) 
 		{
@@ -243,6 +256,11 @@ public class Application extends JPanel {
 		}
 	}
 	
+	public void editPerson(int index, String name, int money){
+		population.get(index).setName(name);
+		population.get(index).setMoney(money);
+	}
+	
 	//function used to test gui functionality
 	public void printLastPop(){
 		System.out.println(population.get(population.size()-1).getName());
@@ -252,6 +270,9 @@ public class Application extends JPanel {
 		return population.size();
 	}
 	
+	public int getNumberHomes(){
+		return allHousing.size();
+	}
 	public Person getPerson(int personIndex){
 		return population.get(personIndex);
 	}

@@ -6,15 +6,15 @@ import java.awt.*;
 
 import javax.swing.*;
 
-public class HouseRenterGui implements Gui {
+public class HouseRenterGui extends HouseGui {
 
     //private MaintenanceWorker agent = null;
     private boolean isPresent = true;
     
     //RestaurantGui gui;
 
-    private int xPos = 300, yPos = 365;//default MarketCustomer position
-    private int xDestination = 300, yDestination = 320;//default start position
+    private int xPos = 300, yPos = 300;//default HouseRenter position
+    private int xDestination = 300, yDestination = 260;//default start position
     
     private enum Command {noCommand};
 	private Command command = Command.noCommand;
@@ -67,13 +67,43 @@ public class HouseRenterGui implements Gui {
     }
     
     //Actions
-    public void DoGoToSalesPerson() {
-    	xDestination = 150;
-    	yDestination = 150;
+    public void DoGoToKitchen() {
+    	xDestination = 510;
+    	yDestination = 85;
+    }
+    
+    public void DoGoToFridge() {
+    	xDestination = 450;
+    	yDestination = 50;
+    }
+    
+    public void DoCooking() {
+    	xDestination = 510;
+    	yDestination = 75;
+    }
+    
+    public void DoGoToBed() {
+    	xDestination = 510;
+    	yDestination = 300;
+    }
+    
+    public void DoGoToBedRoom() {
+    	xDestination = 450;
+    	yDestination = 200;
+    }
+    
+    public void DoGoToBathroom() {
+    	xDestination = 100;
+    	yDestination = 50;
+    }
+    
+    public void DoGoToLivingRoom() {
+    	xDestination = 100;
+    	yDestination = 200;
     }
     
     public void DoExit() {
     	xDestination = 300;
-    	yDestination = 360;
+    	yDestination = 300;
     }
 }

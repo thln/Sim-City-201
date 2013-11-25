@@ -26,4 +26,6 @@ public class MockMarketRunner extends Mock implements MarketRunner {
 
 	public void decreaseInventoryBy(String item, int amount) {
 	}
+	
+
 }
