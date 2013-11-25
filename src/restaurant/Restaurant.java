@@ -27,6 +27,7 @@ public class Restaurant {
 	//Methods
 	public Role arrivedAtWork(Person person, String title) 
 	{
+		
 		if (title == "host") 
 		{
 			//Setting previous bank guard role to inactive
@@ -73,7 +74,6 @@ public class Restaurant {
 			AltWaiterRole altWaiter = new AltWaiterRole(person, person.getName(), title);
 			hostRole.addWaiter(altWaiter);
 			return altWaiter;
-			//hostRole.addWaiter();
 		}
 			//for waiter and alternative waiters, you message the host
 			return null;

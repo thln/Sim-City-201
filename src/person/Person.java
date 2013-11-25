@@ -12,6 +12,8 @@ import restaurant.RestaurantCustomerRole;
 import agent.Agent;
 import application.Phonebook;
 import application.TimeManager;
+import application.gui.trace.AlertLog;
+import application.gui.trace.AlertTag;
 
 public abstract class Person extends Agent{
 
@@ -24,7 +26,8 @@ public abstract class Person extends Agent{
 
 	//Role Related
 	public List<Role> roles = Collections.synchronizedList(new ArrayList<Role>());         //contains all the customer role
-
+	protected String currentRoleName;
+	
 	//Car Related
 	public enum CarState {noCar, wantsCar, hasCar};
 	public CarState carStatus = CarState.noCar;
@@ -34,7 +37,7 @@ public abstract class Person extends Agent{
 	public HashMap <String, Integer> Inventory = new HashMap<String, Integer>();                 //Food list
 	public boolean hasFoodInFridge = false;
 	public enum HungerLevel {full, moderate, hungry, starving};
-	HungerLevel hunger = HungerLevel.hungry;
+	HungerLevel hunger = HungerLevel.full;
 
 	//Bank Related
 	public double money;
@@ -61,6 +64,7 @@ public abstract class Person extends Agent{
 
 	//Actions
 	protected void eatAtHome() {
+		currentRoleName = "";
 		print("Going to eat at home");
 	}
 
@@ -79,9 +83,11 @@ public abstract class Person extends Agent{
 		 */
 		//Once semaphore is released from GUI
 		for (Role cust1 : roles) {
-			if (cust1 instanceof BankCustomerRole) {
+			if (cust1 instanceof BankCustomerRole) 
+			{
 				BankCustomerRole BCR = (BankCustomerRole) cust1;
-
+				currentRoleName = "Bank Customer";
+				
 				if (money <= moneyMinThreshold)
 					desiredCash = 100;
 				else if (money >= moneyMaxThreshold)
@@ -130,6 +136,7 @@ public abstract class Person extends Agent{
 				if (cust1 instanceof MarketCustomerRole) {
 					Phonebook.getPhonebook().getMarket().salesPersonRole.msgIWantProducts((MarketCustomerRole) cust1, item, 3);
 					cust1.setRoleActive();
+					currentRoleName = "Market Customer";
 					stateChanged();
 					return;
 				}
@@ -175,6 +182,7 @@ public abstract class Person extends Agent{
 			if (cust1 instanceof RestaurantCustomerRole) {
 				//Must be changed because doesn't have xHome, yHome
 				//Phonebook.getPhonebook().getRestaurant().msgIWantFood(cust1, xHome, yHome);
+				currentRoleName = "Restaurant Customer";
 				cust1.setRoleActive();
 				stateChanged();
 				return;
@@ -192,7 +200,7 @@ public abstract class Person extends Agent{
 		//                        e.printStackTrace();
 		//
 		//                }
-
+		currentRoleName = " ";
 		//After arrives home
 		alarmClock.schedule(new TimerTask() {
 			public void run() {
@@ -232,27 +240,14 @@ public abstract class Person extends Agent{
 	public void setHome(Housing place) {
 		home = place;
 	}
+	
+	public String getCurrentRoleName()
+	{
+		return currentRoleName;
+	}
 
-	/*
-        public void print(String s)
-        {
-                String roleName = "";
-
-                synchronized (roles) 
-                {
-                        if (!roles.isEmpty()) 
-                        {
-                                for (Role r : roles) 
-                                {
-                                        if (r.getState() == roleState.active) 
-                                        {
-                                                roleName = r.
-                                        }
-                                }
-                        }
-                }
-
-                System.out.println(getName() + ": " + s);
-        }
-	 */
+    public void print(String msg)
+    {
+        AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, msg);
+    }
 }

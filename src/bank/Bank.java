@@ -6,6 +6,7 @@ import java.util.List;
 
 import bank.BankTellerRole.Account;
 import bank.interfaces.BankGuard;
+import bank.interfaces.LoanOfficer;
 import bank.mock.BankGuardMock;
 import bank.mock.BankTellerMock;
 import bank.mock.LoanOfficerMock;
@@ -120,5 +121,12 @@ public class Bank
 			return bankGuardMock;
 		else
 			return bankGuardRole;
+	}
+	
+	public LoanOfficer getLoanOfficer(boolean test) {
+		if (test)
+			return loanOfficerMock;
+		else 
+			return loanOfficerRole;
 	}
 }
