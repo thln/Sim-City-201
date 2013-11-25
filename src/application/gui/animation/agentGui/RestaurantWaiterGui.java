@@ -8,7 +8,7 @@ import java.awt.*;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class WaiterGui implements Gui {
+public class RestaurantWaiterGui extends RestaurantGui {
 
 	private WaiterRole agent = null;
 	//RestaurantGui gui;
@@ -24,8 +24,11 @@ public class WaiterGui implements Gui {
 
 	private boolean deliveringOrder = false;
 	private String currentDelivery;
-
-	public WaiterGui(WaiterRole agent/*, RestaurantGui gui*/) {
+	
+	public RestaurantWaiterGui() {
+	}
+	
+	public RestaurantWaiterGui(WaiterRole agent/*, RestaurantGui gui*/) {
 		this.agent = agent;
 		//this.gui = gui;
 	}
@@ -48,16 +51,16 @@ public class WaiterGui implements Gui {
 			}
 
 			if (xPos != xHome && yPos != yHome) {
-				agent.msgAtDestination();
+	//			agent.msgAtDestination();
 				deliveringOrder = false;
 			}
 		}
 
 		if (xPos == xHome && yPos == yHome) {
-			agent.msgIsInLobby();
-			if (agent.isOnBreak()) {
-				denyBreak();
-			}
+	//		agent.msgIsInLobby();
+			//if (agent.isOnBreak()) {
+		//		denyBreak();
+		//	}
 		}
 
 	}
@@ -79,7 +82,7 @@ public class WaiterGui implements Gui {
 
 	public void askForBreak() {
 		onBreak = true;
-		agent.msgWantToGoOnBreak();
+	//	agent.msgWantToGoOnBreak();
 	}
 	
 	private void enableOffBreakBox() {
@@ -96,7 +99,7 @@ public class WaiterGui implements Gui {
 	
 	
 	public void setOffBreak() {
-		agent.msgGoOffBreak();
+	//	agent.msgGoOffBreak();
 	}
 	
 	public void denyBreak() {

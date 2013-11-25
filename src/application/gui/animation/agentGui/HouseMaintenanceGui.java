@@ -3,17 +3,18 @@ package application.gui.animation.agentGui;
 //import housing.\*;
 
 import java.awt.*;
+
 import javax.swing.*;
 
-public class HouseMaintenanceGui implements Gui{
+public class HouseMaintenanceGui extends HouseGui{
 
 	//private MaintenanceWorker agent = null;
 	private boolean isPresent = true;
 
 	//RestaurantGui gui;
 
-	private int xPos, yPos;
-	private int xDestination, yDestination;
+    private int xPos = 300, yPos = 300;//default MarketCustomer position
+    private int xDestination = 330, yDestination = 260;//default start position
 	
 	private enum Command {noCommand};
 	private Command command = Command.noCommand;
@@ -23,8 +24,6 @@ public class HouseMaintenanceGui implements Gui{
 
 	public HouseMaintenanceGui(/*MaintenanceWorker c, RestaurantGui gui*/){
 		//agent = c;
-		xPos = -20;
-		yPos = -20;
 		//this.gui = gui;
 	}
 
@@ -66,8 +65,28 @@ public class HouseMaintenanceGui implements Gui{
     }
 	
 	//Actions
+    public void DoGoToKitchen() {
+    	xDestination = 510;
+    	yDestination = 85;
+    }
+    
+    public void DoGoToBedRoom() {
+    	xDestination = 450;
+    	yDestination = 200;
+    }
+    
+    public void DoGoToBathroom() {
+    	xDestination = 100;
+    	yDestination = 50;
+    }
+    
+    public void DoGoToLivingRoom() {
+    	xDestination = 100;
+    	yDestination = 200;
+    }
+    
     public void DoExit() {
     	xDestination = 300;
-    	yDestination = 360;
+    	yDestination = 300;
     }
 }

@@ -114,25 +114,24 @@ public class Worker extends Person {
                         prepareForWork();
                         return true;
                 }
+                
+              //Bank Related
+                if (money <= moneyMinThreshold || money >= moneyMaxThreshold) 
+                {
+                        prepareForBank();
+                        return true;
+                }
 
                 //Hunger Related
                 if (hunger == HungerLevel.hungry) {
                         //If you don't have food in the fridge
                         if (!hasFoodInFridge) {
-                                if (money <= moneyMinThreshold) { 
-                                        //This if says go to the business if it is open and at least 1 hour before closing time
-                                       // if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getBank().openTime.hour) &&
-                                                     //   (TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getBank().closeTime.hour)) {
-                                                prepareForBank();
-                                                return true;
-                                       // }
-                                }
-                                else { //if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getRestaurant().openTime.hour) &&
+                        		//if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getRestaurant().openTime.hour) &&
                                                 //(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getRestaurant().closeTime.hour)) {
                                         prepareForRestaurant();
                                         //
                                         return true;
-                                }
+                                
                         }
                         else //if you do have food in the fridge
                         {
@@ -141,26 +140,10 @@ public class Worker extends Person {
                         }
                 }
 
-                //Bank Related
-                if (money <= moneyMinThreshold || money >= moneyMaxThreshold) 
-                {
-                        prepareForBank();
-                        return true;
-                }
-
 
                 //Market Related
                 if (!hasFoodInFridge || carStatus == CarState.wantsCar) 
-                {
-                        if (money <= moneyMinThreshold && !hasFoodInFridge) 
-                        {
-                               // if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getBank().openTime.hour) &&
-                                             //   (TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getBank().closeTime.hour)) {
-                                        prepareForBank();
-                                        return true;
-                             //   }
-                        }
-                        else 
+                { 
                         {
                                 if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getMarket().openTime.hour) &&
                                                 (TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getMarket().closeTime.hour)) 

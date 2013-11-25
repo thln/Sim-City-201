@@ -1,32 +1,65 @@
 package application.gui.animation.agentGui;
 
-//import person.\*;
+import person.*;
 
 import java.awt.*;
 
 import javax.swing.JLabel;
 
-public class PersonGui implements Gui{
+public class PersonGui extends CityGui{
 
-	//private Person agent = null;
-	private boolean isPresent = true;
+	private Person agent = null;
 	private boolean isHungry = false;
 
 	//RestaurantGui gui;
 
-	private int xPos, yPos;
-	private int xDestination, yDestination;
+	private int xPos, yPos;//default person position
+	private int xDestination, yDestination;//default start position
 	private int xHome, yHome;
-	private enum Command {noCommand, GoToBuilding, GoToBusStop, GoOnBus, LeaveBuilding};
+	private enum Command {noCommand, GoToBuilding, GoToBusStop, GoOnBus, GoHome};
 	private Command command = Command.noCommand;
 
 	private enum PersonState {nothing};
 	PersonState state = PersonState.nothing;
 
 	private String choice;
-
-	public PersonGui(/*Person p, RestaurantGui gui*/){ //HostAgent m) {
-		//this.agent = p;
+	public PersonGui() {
+	}
+	
+	public PersonGui(Person p/*, RestaurantGui gui*/){ //HostAgent m) {
+		this.agent = p;
+		if(p instanceof Worker) {
+			xPos = 0;
+			yPos = 25;
+			xHome = 0;
+			yHome = 25;
+			xDestination = 25;
+			yDestination = 25;
+		}
+		if(p instanceof Wealthy) {
+			xPos = 0;
+			yPos = 125;
+			xHome = 0;
+			yHome = 125;
+			xDestination = 25;
+			yDestination = 125;
+		}
+		if(p instanceof Crook) {
+			xPos = 280;
+			yPos = 250;
+			xHome = 280;
+			yHome = 250;
+			xDestination = 300;
+			yDestination = 250;
+		}
+		if(p instanceof Deadbeat) {
+			xPos = 280;
+			yPos = 250;
+			xHome = 280;
+			yHome = 250;
+			xDestination = 300;
+			yDestination = 250;
+		}
 		//this.gui = gui;
 	}
 
@@ -42,6 +75,14 @@ public class PersonGui implements Gui{
 			yPos--;
 
 		if (xPos == xDestination && yPos == yDestination) {
+			if(agent != null) {
+				if(command == Command.GoToBuilding) {
+					agent.msgAtDestination();
+				}
+				if(command == Command.GoHome) {
+					agent.msgAtDestination();
+				}
+			}
 			command = Command.noCommand;
 		}
 	}
@@ -49,10 +90,10 @@ public class PersonGui implements Gui{
 	public void draw(Graphics2D g) {
 		g.setColor(Color.GREEN);
 		g.fillRect(xPos, yPos, 20, 20);
-	}
-
-	public boolean isPresent() {
-		return isPresent;
+		g.setColor(Color.RED);
+		if(agent != null) {
+			g.drawString(agent.getName(), xPos, yPos);
+		}
 	}
 
 	public void setHungry() {
@@ -65,18 +106,6 @@ public class PersonGui implements Gui{
 	public boolean isHungry() {
 		return isHungry;
 	}
-
-	public void setPresent(boolean p) {
-		isPresent = p;
-	}
-	
-	public int getXPos() {
-        return xPos;
-    }
-
-    public int getYPos() {
-        return yPos;
-    }
     
     //Actions
 
@@ -91,7 +120,13 @@ public class PersonGui implements Gui{
 		yDestination = 100;
 	}
 	
-	public void DoGoHome(int home) { //the person's assigned home number. Maybe use coordinates instead?
-		
+	public void DoGoHome() { //the person's assigned home number. Maybe use coordinates instead?
+		xDestination = xHome;
+		yDestination = yHome;
+		command = Command.GoHome;
+	}
+	
+	public String toString() {
+		return "Person Gui";
 	}
 }

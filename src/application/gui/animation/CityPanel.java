@@ -24,7 +24,7 @@ import application.gui.animation.agentGui.Gui;
 public class CityPanel extends JPanel implements ActionListener, MouseListener {
 
 	private final int WINDOWX = 600;
-	private final int WINDOWY = 360;
+	private final int WINDOWY = 350;
 
 	AnimationPanel animationPanel;
 	private List<Gui> guis = new ArrayList<Gui>();
@@ -45,6 +45,7 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 	ImageIcon restaurant = new ImageIcon("res/restaurant.png", "restaurant");
 	ImageIcon market = new ImageIcon("res/market.png", "market");
 	ImageIcon house = new ImageIcon("res/house.png", "house");
+	ImageIcon apartment = new ImageIcon("res/apartment.png", "bank");
 
 	public CityPanel(AnimationPanel animationPanel) {
 
@@ -63,13 +64,14 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		} catch (IOException e) {
 		}
 
-		addBuilding("Restaurant", 20, 50);
-		addBuilding("Market", 20, 100);
-		addBuilding("Bank", 20, 170);
-		addBuilding("House", 20, 250);
+		addBuilding("Restaurant", WINDOWX - 200, 50);
+		addBuilding("Market", WINDOWX - 200, 100);
+		addBuilding("Bank", WINDOWX - 200, 170);
+		addBuilding("House", 20, 100);
+		addBuilding("Apartment", 0, 0);
 		
-//		Timer timer = new Timer(20, this );
-//    	timer.start();
+		Timer timer = new Timer(20, this );
+    	timer.start();
 	}
 
 	public void paintComponent(Graphics g) {
@@ -126,6 +128,12 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 			building.setMyImage(house);
 			building.setLocation(x, y);
 		}
+		
+		//Apartment building
+		else if (name.toLowerCase().contains("apartment")) {
+			building.setMyImage(apartment);
+			building.setLocation(x, y);
+		}
 
 		building.setName(name);
 		buildings.add(building);
@@ -173,4 +181,6 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 	public void mouseExited(MouseEvent e) {
 
 	}
+	
+	
 }

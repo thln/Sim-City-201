@@ -1,19 +1,20 @@
 package application.gui.animation.agentGui;
 
-//import bank.\*;
+import bank.*;
 
 import java.awt.*;
+
 import javax.swing.*;
 
-public class BankLoanerGui implements Gui{
+public class BankLoanerGui extends BankGui{
 
-	//private LoanOfficerRole agent = null;
+	private LoanOfficerRole agent = null;
 	private boolean isPresent = true;
 
 	//RestaurantGui gui;
 
-    private int xPos = 0, yPos = 200;//default Loan Officer position
-    private int xDestination = 50, yDestination = 200;//default start position
+    private int xPos = 0, yPos = 170;//default Loan Officer position
+    private int xDestination = 50, yDestination = 170;//default start position
 	
 	private enum Command {noCommand};
 	private Command command = Command.noCommand;
@@ -21,8 +22,11 @@ public class BankLoanerGui implements Gui{
 	private enum CustomerState {nothing};
 	CustomerState state = CustomerState.nothing;
 	
-	public BankLoanerGui(/*LoanOfficerRole c, RestaurantGui gui*/){
-		//agent = c;
+	public BankLoanerGui() {
+	}
+	
+	public BankLoanerGui(LoanOfficerRole c/*, RestaurantGui gui*/){
+		agent = c;
 		//this.gui = gui;
 	}
 
@@ -71,11 +75,11 @@ public class BankLoanerGui implements Gui{
     
     public void BacktoPosition() {
     	xDestination = 50;
-    	yDestination = 200;
+    	yDestination = 170;
     }
     
     public void DoExit() {
     	xDestination = 300;
-    	yDestination = 360;
+    	yDestination = 300;
     }
 }
