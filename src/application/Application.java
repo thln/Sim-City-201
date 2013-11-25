@@ -60,9 +60,9 @@ public class Application extends JPanel {
 		Worker market1e = new Worker("Erin", 1000, "marketSales", "market", 1000, 1400, 2000);
 		Worker market1f = new Worker("Fred", 100, "UPSman", "market", 1000, 1400, 2000);	
 		//SHIFT 2
-		Worker market2d = new Worker("Derrick", 100, "marketRunner", "market", 2000, 400, 1000);
-		Worker market2e = new Worker("Erin", 200, "marketSales", "market", 2000, 400, 1000);
-		Worker market2f = new Worker("Fred", 100, "UPSman", "market", 2000, 400, 1000);	
+		Worker market2d = new Worker("Daniel", 100, "marketRunner", "market", 2000, 400, 1000);
+		Worker market2e = new Worker("Elle", 200, "marketSales", "market", 2000, 400, 1000);
+		Worker market2f = new Worker("Frenchy", 100, "UPSman", "market", 2000, 400, 1000);	
 		
 		//Restaurant Workers
 		//SHIFT 1
@@ -72,11 +72,11 @@ public class Application extends JPanel {
 		Worker rest1j = new Worker("Josh", 100, "waiter", "restaurant", 0, 1800, 1200);
 		Worker rest1k = new Worker("Kristi", 100, "altWaiter", "restaurant", 0, 1800, 1200);
 		//SHIFT 2
-		Worker rest2g = new Worker("Greg", 100, "cashier", "restaurant", 2400, 600, 1200);
-		Worker rest2h = new Worker("Henry", 100, "host", "restaurant", 2400, 600, 1200);
-		Worker rest2i = new Worker("Iris", 100, "cook", "restaurant", 2400, 600, 1200);
-		Worker rest2j = new Worker("Josh", 100, "waiter", "restaurant", 2400, 600, 1200);
-		Worker rest2k = new Worker("Kristi", 100, "altWaiter", "restaurant", 2400, 600, 1200);
+		Worker rest2g = new Worker("Gil", 100, "cashier", "restaurant", 2400, 600, 1200);
+		Worker rest2h = new Worker("Hannah", 100, "host", "restaurant", 2400, 600, 1200);
+		Worker rest2i = new Worker("Isaac", 100, "cook", "restaurant", 2400, 600, 1200);
+		Worker rest2j = new Worker("Jacob", 100, "waiter", "restaurant", 2400, 600, 1200);
+		Worker rest2k = new Worker("Ken", 100, "altWaiter", "restaurant", 2400, 600, 1200);
 		
 		
 
