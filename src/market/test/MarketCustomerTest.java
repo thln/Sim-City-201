@@ -27,7 +27,6 @@ public class MarketCustomerTest extends TestCase {
 		marketCustomer.test = true;
 	}
 
-
 	public void testOneMarketCustomerPaymentNormativeScenerio() {
 		try {
 			setUp();
