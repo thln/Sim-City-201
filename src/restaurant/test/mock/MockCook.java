@@ -4,6 +4,8 @@ import market.Market;
 import restaurant.Order;
 import restaurant.WaiterRole;
 import restaurant.interfaces.Cook;
+import testing.EventLog;
+import testing.LoggedEvent;
 import testing.Mock;
 
 	/**
@@ -12,8 +14,10 @@ import testing.Mock;
 	 *
 	 */
 
-public class MockCook extends Mock implements Cook
-{
+public class MockCook extends Mock implements Cook {
+	
+	public EventLog log = new EventLog();
+	
 	public MockCook(String name)
 	{
 		super(name);
@@ -42,7 +46,6 @@ public class MockCook extends Mock implements Cook
 
 	@Override
 	public void msgOrderFulfillment(String choice, int amount, int orderedAmount) {
-		// TODO Auto-generated method stub
-		
+		log.add(new LoggedEvent("Recieved msgOrderFulfillment"));
 	}
 }

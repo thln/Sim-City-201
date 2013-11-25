@@ -29,6 +29,7 @@ public class MockSalesPerson extends Mock implements SalesPerson {
 	}
 
 	public void msgOrderDelivered(MarketOrder o) {
+		log.add(new LoggedEvent("Recieved msgOrderDelivered"));
 	}
 
 	public void msgPayment(MarketCustomer customer, double payment) {
