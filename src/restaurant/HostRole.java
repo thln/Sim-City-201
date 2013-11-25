@@ -234,7 +234,7 @@ public class HostRole extends Role
 
 	private void assignCustomer(myCustomer MC, Table table, WaiterRole waiterRole) 
 	{
-		print("Assigning customer " + MC.customer.getCustomerName() + " to waiter");
+		print("Assigning customer " + MC.customer.getCustomerName() + " to waiter" + waiterRole.getName());
 		addCustomerToWaiter(waiterRole);
 		waiterRole.msgPleaseSeatCustomer(table.tableNumber, MC.customer, MC.xHome, MC.yHome);
 		table.setOccupant(MC.customer);
@@ -326,22 +326,23 @@ public class HostRole extends Role
 	{
 		//Finding first waiter that is not on break
 		myWaiter lowestWaiter = null;
+
 		for (myWaiter lowWaiter: waiters) 
 		{
 			if (lowWaiter.onBreak == false) 
 			{
-				lowestWaiter = lowWaiter;
+				lowestWaiter = lowWaiter;	
 				break;
 			}
 		}
-
+		
+		
 		//Spreading customers equally
-		for (int i = 1; i < waiters.size(); i++) 
-		{
+		for (int i = 0; i < waiters.size(); i++) 
+		{	
 			if ((lowestWaiter.totalCustomers > waiters.get(i).totalCustomers) && (waiters.get(i).onBreak == false))
 				lowestWaiter = waiters.get(i);
 		}
-
 		return lowestWaiter.waiterRole;
 	}
 

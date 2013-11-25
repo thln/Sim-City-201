@@ -54,13 +54,7 @@ public class WaiterRole extends Role implements Waiter
 	public String getMaitreDName() {
 		return name;
 	}
-
-	public String getName() {
-		return name;
-	}
-
-
-
+	
 	/**
 	 * Messages
 	 */
