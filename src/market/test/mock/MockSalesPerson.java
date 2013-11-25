@@ -1,20 +1,24 @@
 package market.test.mock;
 
 import restaurant.Restaurant;
+import testing.EventLog;
+import testing.LoggedEvent;
 import testing.Mock;
 import market.MarketCustomerRole;
 import market.MarketOrder;
+import market.interfaces.MarketCustomer;
 import market.interfaces.SalesPerson;
 
 public class MockSalesPerson extends Mock implements SalesPerson {
 
-
+	public EventLog log = new EventLog();
+	
 	public MockSalesPerson(String name) {
 		super(name);
 	}
 
 	//Messages
-	public void msgIWantProducts(MarketCustomerRole customer, String item, int numWanted) {
+	public void msgIWantProducts(MarketCustomer customer, String item, int numWanted) {
 	}
 
 	public void msgIWantProducts(Restaurant restaurant, String item, int numWanted) {
@@ -26,8 +30,8 @@ public class MockSalesPerson extends Mock implements SalesPerson {
 	public void msgOrderDelivered(MarketOrder o) {
 	}
 
-	public void msgPayment(MarketCustomerRole customer, double payment) {
-
+	public void msgPayment(MarketCustomer customer, double payment) {
+		log.add(new LoggedEvent("Recieved msgPayment"));
 	}
 
 	public void msgPayment(Restaurant restaurant, double payment) {

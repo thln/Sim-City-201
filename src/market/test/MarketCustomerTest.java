@@ -1,7 +1,9 @@
 package market.test;
 
+import application.Phonebook;
 import person.Wealthy;
 import market.MarketCustomerRole;
+import market.MarketCustomerRole.MarketCustomerState;
 import market.test.mock.MockSalesPerson;
 import junit.framework.*;
 
@@ -21,7 +23,8 @@ public class MarketCustomerTest extends TestCase {
 		super.setUp();
 		wealthy = new Wealthy("Wealthy Person", 10);
 		marketCustomer = new MarketCustomerRole(wealthy, "Customer", "Market Customer");
-		marketSalesPerson = new MockSalesPerson("MockSalesPerson");
+		marketSalesPerson = (MockSalesPerson) Phonebook.getPhonebook().getMarket().getSalesPerson(true);
+		marketCustomer.test = true;
 	}
 
 
@@ -45,18 +48,18 @@ public class MarketCustomerTest extends TestCase {
 		assertEquals("MarketCustomer should have logged \"Recieved msgHereAreYourThings\". Instead, the MarketCustomer's event log reads: "
 				+ marketCustomer.log.toString(), true, marketCustomer.log.containsString("Recieved msgHereAreYourThings"));
 
+		//Step 2
 		assertTrue("MarketCustomer's scheduler should have returned true (has an action to do on a bill from a SalesPerson), but didn't.", marketCustomer.pickAndExecuteAnAction());
 
-		//After scheduler is called
+		//check postconditions for step 2
 		assertEquals("MockSalesPerson should not have an empty event log after the MarketCustomer's scheduler is called for the first time. It doesn't.", 1, marketSalesPerson.log.size());
 
-
-		//check postconditions for step 1	
-		
 		assertEquals("MarketCustomer's person's money should have decreased", marketCustomer.person.money, (10-4.99));
 
-		assertFalse("MarketCustomer's scheduler should have returned false (no actions left to do), but didn't.", 
+		assertTrue("MarketCustomer's scheduler should have returned true, has to exit the market, but didn't.", 
 				marketCustomer.pickAndExecuteAnAction());
+		
+		assertEquals("MarketCustomer's state should go back to original state of waiting for orders", marketCustomer.state, MarketCustomerState.waitingForOrders);
 
 	}// end testOneMarketCustomerPaymentNormativeScenerio
 }

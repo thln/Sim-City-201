@@ -3,6 +3,7 @@ package market;
 import java.util.*;
 
 import market.MarketOrder.orderState;
+import market.interfaces.MarketCustomer;
 import market.interfaces.SalesPerson;
 import person.Person;
 import person.Role;
@@ -20,7 +21,7 @@ public class SalesPersonRole extends Role implements SalesPerson {
 	public EventLog log = new EventLog();
 	
 	//Data
-	private List<MarketOrder> orders = Collections.synchronizedList(new ArrayList<MarketOrder>());
+	public List<MarketOrder> orders = Collections.synchronizedList(new ArrayList<MarketOrder>());
 
 	//Constructors
 	public SalesPersonRole(Person person, String pName, String rName, Market market) {
@@ -36,21 +37,19 @@ public class SalesPersonRole extends Role implements SalesPerson {
 
 
 	//Messages
-
-	@Override
-	public void msgIWantProducts(MarketCustomerRole customer, String item, int numWanted) {
+	public void msgIWantProducts(MarketCustomer customer, String item, int numWanted) {
+		log.add(new LoggedEvent("Recieved msgIWantProducts"));
 		orders.add(new MarketOrder(customer, item, numWanted));
 		stateChanged();
 	}
 
 
-	@Override
 	public void msgIWantProducts(Restaurant restaurant, String item, int numWanted) {
+		log.add(new LoggedEvent("Recieved msgIWantProducts"));
 		orders.add(new MarketOrder(restaurant, item, numWanted));
 		stateChanged();
 	}
 	
-	@Override
 	public void msgOrderFulfilled(MarketOrder o) {
 		for (MarketOrder MO : orders) {
 			if (MO.equals(o)) {
@@ -62,7 +61,6 @@ public class SalesPersonRole extends Role implements SalesPerson {
 	}
 	
 
-	@Override
 	public void msgOrderDelivered(MarketOrder o) {
 		for (MarketOrder MO : orders) {
 			if (MO.equals(o)) {
@@ -74,8 +72,7 @@ public class SalesPersonRole extends Role implements SalesPerson {
 	}
 
 
-	@Override
-	public void msgPayment(MarketCustomerRole customer, double payment) {
+	public void msgPayment(MarketCustomer customer, double payment) {
 		log.add(new LoggedEvent("Recieved msgPayment"));
 		market.money += payment;
 		for (MarketOrder o : orders) {
@@ -87,7 +84,6 @@ public class SalesPersonRole extends Role implements SalesPerson {
 	}
 	
 
-	@Override
 	public void msgPayment(Restaurant restaurant, double payment) {
 		market.money += payment;
 		for (MarketOrder o : orders) {

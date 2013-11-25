@@ -13,8 +13,8 @@ public class MarketCustomerRole extends Role implements MarketCustomer {
 	public EventLog log = new EventLog();
 	
 	//Data
-	enum MarketCustomerState {waitingForOrders, recievedOrders, payed, disputingBill}
-	MarketCustomerState state = MarketCustomerState.waitingForOrders;
+	public enum MarketCustomerState {waitingForOrders, recievedOrders, payed, disputingBill}
+	public MarketCustomerState state = MarketCustomerState.waitingForOrders;
 	
 	public double bill = 0;
 	String item;
@@ -54,13 +54,13 @@ public class MarketCustomerRole extends Role implements MarketCustomer {
 	//Actions
 	public void payBill(){
 		if (bill == Phonebook.getPhonebook().getMarket().inventory.get(item).price * itemAmount) {
-			Phonebook.getPhonebook().getMarket().salesPersonRole.msgPayment(this, bill);
+			Phonebook.getPhonebook().getMarket().getSalesPerson(test).msgPayment(this, bill);
 			person.money -= bill;
 			state = MarketCustomerState.payed;
 		}
 		else {
 			//message market that bill was wrong
-			state = MarketCustomerState.disputingBill;
+			state = MarketCustomerState.payed;
 		}
 	}
 	
@@ -69,6 +69,7 @@ public class MarketCustomerRole extends Role implements MarketCustomer {
 	}
 	
 	public void exitMarket() {
-		this.setRoleActive();
+		state = MarketCustomerState.waitingForOrders;
+		this.setRoleInactive();
 	}
 }
