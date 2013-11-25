@@ -92,6 +92,9 @@ public class PrintControlPanel extends JPanel {
 		tracePanel.showAlertsWithLevel(AlertLevel.ERROR);
 		tracePanel.showAlertsWithTag(AlertTag.GENERAL_CITY);
 		
+		//Testing Restaurant
+		//tracePanel.showAlertsWithTag(AlertTag.RESTAURANT);
+		
 		/*
 		messagesButton.addActionListener(new ActionListener()
 		{
