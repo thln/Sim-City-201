@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import bank.BankTellerRole.Account;
+import bank.interfaces.BankCustomer;
 import bank.interfaces.BankGuard;
 import bank.interfaces.LoanOfficer;
 import bank.mock.BankGuardMock;
@@ -65,6 +66,7 @@ public class Bank
 
 	//Methods
 	public Role arrivedAtWork(Person person, String title) {
+		
 		if (title == "bankGuard") {
 			//Setting previous bank guard role to inactive
 			if (bankGuardRole.getPerson() != null) {
@@ -73,6 +75,8 @@ public class Bank
 			}
 			//Setting bank guard role to new role
 			bankGuardRole.setPerson(person);
+			if (isOpen())
+				bankGuardRole.msgBankOpen();
 			return bankGuardRole;
 		}
 		else if (title == "loanOfficer") {
@@ -83,6 +87,8 @@ public class Bank
 			}
 			//Setting bank guard role to new role
 			loanOfficerRole.setPerson(person);
+			if (isOpen())
+				bankGuardRole.msgBankOpen();
 			return loanOfficerRole;
 		}
 		else if (title == "bankTeller") {
@@ -95,12 +101,13 @@ public class Bank
 			}
 			//Setting bank guard role to new role
 			tellers.get(0).setPerson(person);
+			if (isOpen())
+				bankGuardRole.msgBankOpen();
 			return tellers.get(0);
 		}
 		else
 			return null;
 	}
-
 
 	public void goingOffWork(Person person) {
 		Worker worker = (Worker) person;
@@ -119,6 +126,13 @@ public class Bank
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public boolean isOpen(){
+		if (loanOfficerRole.getPerson() != null && bankGuardRole.getPerson() != null && tellers.get(0) != null)
+			return true;
+		else 
+			return false;
 	}
 
 

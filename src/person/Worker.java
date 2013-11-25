@@ -114,6 +114,13 @@ public class Worker extends Person {
                         prepareForWork();
                         return true;
                 }
+                
+              //Bank Related
+                if (money <= moneyMinThreshold || money >= moneyMaxThreshold) 
+                {
+                        prepareForBank();
+                        return true;
+                }
 
                 //Hunger Related
                 if (hunger == HungerLevel.hungry) {
@@ -131,13 +138,6 @@ public class Worker extends Person {
                                 eatAtHome(); //empty method for now...
                                 return true;
                         }
-                }
-
-                //Bank Related
-                if (money <= moneyMinThreshold || money >= moneyMaxThreshold) 
-                {
-                        prepareForBank();
-                        return true;
                 }
 
 

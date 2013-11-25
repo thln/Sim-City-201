@@ -28,7 +28,10 @@ public class BankCustomerRole extends Role implements BankCustomer{
 	}
 
 	//Messages
-
+	public void msgComeIn() {
+		stateChanged();
+	}
+	
 	public void msgGoToTeller(BankTeller tell1) {
 		print ("Assigned to teller " + tell1.getName());
 		myTeller = tell1;
@@ -37,12 +40,12 @@ public class BankCustomerRole extends Role implements BankCustomer{
 	}
 
 	public void msgNoTellerAvailable(){
-		print ("No tellers available, I will wait");
+		print("No teller available, must wait");
 		state = CustomerState.waiting;
 	}
 
 	public void msgHereIsYourMoney(double amount) {
-		print("Got my money!");
+		print("Got my $" + amount);
 		person.money += amount;
 		desire = BankCustomerDesire.leaveBank;
 		state = CustomerState.ready;
@@ -164,7 +167,11 @@ public class BankCustomerRole extends Role implements BankCustomer{
 	//Actions
 
 	void messageGuard () {
-		print("Arrived at bank");
+		if (!Phonebook.getPhonebook().getBank().isOpen()) 
+			print("No bankguard on duty, waiting for bank to open.");
+		else
+			print("Arrived at bank");
+			
 		Phonebook.getPhonebook().getBank().getBankGuard(test).msgArrivedAtBank(this);
 		state = CustomerState.waiting;
 	}
@@ -175,6 +182,7 @@ public class BankCustomerRole extends Role implements BankCustomer{
 	}
 
 	void depositCash () {
+		person.money -= person.depositAmount;
 		myTeller.msgHereIsMyDeposit(person.depositAmount, person.accountNum);
 		state = CustomerState.waiting;
 	}
