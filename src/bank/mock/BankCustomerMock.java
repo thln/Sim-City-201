@@ -77,4 +77,10 @@ public class BankCustomerMock extends Mock implements BankCustomer {
 		log.add(new LoggedEvent("No teller available, must wait"));
 	}
 
+	@Override
+	public void msgComeIn() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

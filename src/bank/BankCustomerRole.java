@@ -28,20 +28,24 @@ public class BankCustomerRole extends Role implements BankCustomer{
 	}
 
 	//Messages
-
+	public void msgComeIn() {
+		stateChanged();
+	}
+	
 	public void msgGoToTeller(BankTeller tell1) {
-		print ("Assigned to teller" + tell1.getName());
+		print ("Assigned to teller " + tell1.getName());
 		myTeller = tell1;
 		state = CustomerState.ready;
 		stateChanged();
 	}
 
 	public void msgNoTellerAvailable(){
-
+		print("No teller available, must wait");
+		state = CustomerState.waiting;
 	}
 
 	public void msgHereIsYourMoney(double amount) {
-		print("Got my money! Leaving bank");
+		print("Got my $" + amount);
 		person.money += amount;
 		desire = BankCustomerDesire.leaveBank;
 		state = CustomerState.ready;
@@ -112,53 +116,62 @@ public class BankCustomerRole extends Role implements BankCustomer{
 
 	public boolean pickAndExecuteAnAction () {
 
+		if (state == CustomerState.waiting) {
+			return false;
+		}
+		
 		if (state == CustomerState.atBank) {
 			messageGuard();
 			return false;
 		}
+			
+		if (state == CustomerState.ready) {
+			if (desire == BankCustomerDesire.openAccount){
+				openAccount();
+				return false;
+			}
 
-		if (desire == BankCustomerDesire.openAccount && state == CustomerState.ready){
-			openAccount();
-			return false;
+			if (desire == BankCustomerDesire.withdraw){
+				withdrawCash();
+				return false;
+			}
+
+			if (desire == BankCustomerDesire.deposit){
+				depositCash();
+				return false;
+			}
+
+			if (desire == BankCustomerDesire.wantLoan){
+				requestLoan();
+				return false;
+			}
+
+			if (desire == BankCustomerDesire.closeLoan){
+				payOffLoan();
+				return false;
+			}
+
+			if (desire == BankCustomerDesire.leaveBank){
+				leaveBank();
+				return false;
+			}
+
+			if (desire == BankCustomerDesire.robBank){
+				robBank();
+				return false;
+			}
 		}
-
-		if (desire == BankCustomerDesire.withdraw && state == CustomerState.ready){
-			withdrawCash();
 			return false;
-		}
-
-		if (desire == BankCustomerDesire.deposit && state == CustomerState.ready){
-			depositCash();
-			return false;
-		}
-
-		if (desire == BankCustomerDesire.wantLoan && state == CustomerState.ready){
-			requestLoan();
-			return false;
-		}
-
-		if (desire == BankCustomerDesire.closeLoan && state == CustomerState.ready){
-			payOffLoan();
-			return false;
-		}
-
-		if (desire == BankCustomerDesire.leaveBank && state == CustomerState.ready){
-			leaveBank();
-			return false;
-		}
-
-		if (desire == BankCustomerDesire.robBank && state == CustomerState.ready){
-			robBank();
-			return false;
-		}
-
-		return false;
 	}
 
 	//Actions
 
 	void messageGuard () {
-		print("Arrived at bank");
+		if (!Phonebook.getPhonebook().getBank().isOpen()) 
+			print("No bankguard on duty, waiting for bank to open.");
+		else
+			print("Arrived at bank");
+			
 		Phonebook.getPhonebook().getBank().getBankGuard(test).msgArrivedAtBank(this);
 		state = CustomerState.waiting;
 	}
@@ -169,6 +182,7 @@ public class BankCustomerRole extends Role implements BankCustomer{
 	}
 
 	void depositCash () {
+		person.money -= person.depositAmount;
 		myTeller.msgHereIsMyDeposit(person.depositAmount, person.accountNum);
 		state = CustomerState.waiting;
 	}
@@ -192,12 +206,14 @@ public class BankCustomerRole extends Role implements BankCustomer{
 
 	void leaveBank () {	
 		//GUI operation
+		print("Leaving bank");
 		desire = BankCustomerDesire.none;
 		state = CustomerState.waiting;	
 		myTeller.msgLeavingBank(person.accountNum);
 		Phonebook.getPhonebook().getBank().getBankGuard(test).msgCustomerLeavingBank(myTeller);
 		myTeller = null;
 		this.setRoleInactive();
+		stateChanged();
 	}
 
 	void robBank() {
