@@ -180,6 +180,7 @@ public class Worker extends Person {
         //Actions
         public void prepareForWork() {
 
+        	currentRoleName = myJob.title;
         	print("Preparing for work as " + myJob.title);
                 if (myJob.jobPlace == "bank") 
                 {
