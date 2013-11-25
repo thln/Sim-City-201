@@ -70,7 +70,7 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		addBuilding("House", 20, 100);
 		addBuilding("Apartment", 0, 0);
 		
-		Timer timer = new Timer(20, this );
+		Timer timer = new Timer(10, this );
     	timer.start();
 	}
 

@@ -19,14 +19,18 @@ import application.gui.appView.*;
 import application.gui.appView.controlPanel.*;
 
 public class ListPanel extends JPanel implements ActionListener{
-	private JPanel listPane;
-	private JPanel infoPane;
 	private Application app;
-	private List<JButton> buttons = new ArrayList<JButton>(); 
-	private List<Profile> people = new ArrayList<Profile>();
+	
+	//Scroll Panel
 	public JScrollPane pane =
 	            new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 	                    		JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+	private JPanel listPane;
+	private List<JButton> buttons = new ArrayList<JButton>(); 
+	
+	//Info Panel
+	private JPanel infoPane;
+	private List<Profile> people = new ArrayList<Profile>();
 	private JTextArea personInfoArea = new JTextArea();
 	
 	public ListPanel(ApplicationPanel appPanel, Application app){
@@ -35,10 +39,15 @@ public class ListPanel extends JPanel implements ActionListener{
 		
 		listPane = new JPanel();
 		listPane.setLayout(new BoxLayout((Container)listPane, BoxLayout.Y_AXIS));
-		updateList();
 		pane.setViewportView(listPane);
-		
-		listPane.setPreferredSize(new Dimension((1/4)*(this.getWidth()),this.getHeight()));
+        pane.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        
+        Dimension paneDim = new Dimension((1/4)*(this.getWidth()),this.getHeight());
+		pane.setPreferredSize(paneDim);
+		pane.setMinimumSize(paneDim);
+		pane.setMaximumSize(paneDim);
+		updateList();
+        
 		add(pane);
 		
 		infoPane = new JPanel();
@@ -85,7 +94,7 @@ public class ListPanel extends JPanel implements ActionListener{
 			buttons.add(button);
 			listPane.add(button);
 			people.add(new Profile(name, money, type, jobTitle,jobLocation,startT,lunchT,endT));
-			validate();
+			//validate();
 		}
 	}
 	
