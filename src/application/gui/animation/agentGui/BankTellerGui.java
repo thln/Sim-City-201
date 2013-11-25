@@ -5,7 +5,7 @@ package application.gui.animation.agentGui;
 import java.awt.*;
 import javax.swing.*;
 
-public class BankTellerGui implements Gui{
+public class BankTellerGui extends BankGui{
 
 	//private BankTellerRole agent = null;
 	private boolean isPresent = true;

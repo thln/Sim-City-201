@@ -8,7 +8,7 @@ import java.awt.*;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class RestaurantWaiterGui implements Gui {
+public class RestaurantWaiterGui extends RestaurantGui {
 
 	private WaiterRole agent = null;
 	//RestaurantGui gui;

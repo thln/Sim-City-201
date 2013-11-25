@@ -3,9 +3,10 @@ package application.gui.animation.agentGui;
 //import housing.\*;
 
 import java.awt.*;
+
 import javax.swing.*;
 
-public class HouseLandlordGui implements Gui{
+public class HouseLandlordGui extends HouseGui{
 
 	//private MaintenanceWorker agent = null;
 	private boolean isPresent = true;

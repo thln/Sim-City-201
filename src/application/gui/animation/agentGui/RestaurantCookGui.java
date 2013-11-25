@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class RestaurantCookGui implements Gui {
+public class RestaurantCookGui extends RestaurantGui {
 
 	private CookRole agent = null;
 

@@ -6,7 +6,7 @@ import java.awt.*;
 
 import javax.swing.*;
 
-public class HouseRenterGui implements Gui {
+public class HouseRenterGui extends HouseGui {
 
     //private MaintenanceWorker agent = null;
     private boolean isPresent = true;

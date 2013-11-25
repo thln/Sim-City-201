@@ -1,14 +1,14 @@
 package application.gui.animation.agentGui;
 
-//import transportation.\*;
+import transportation.*;
 
 import java.awt.*;
 
 import javax.swing.JLabel;
 
-public class BusGui implements Gui{
+public class BusGui extends CityGui{
 
-	//private Bus agent = null;
+	private Bus agent = null;
 	private boolean isPresent = true;
 
 	//RestaurantGui gui;
@@ -24,8 +24,10 @@ public class BusGui implements Gui{
 	private enum BusState {nothing};
 	BusState state = BusState.nothing;
 	
-	public BusGui(/*Bus b, RestaurantGui gui*/){ //HostAgent m) {
-		//agent = b;
+	public BusGui(){
+	}
+	public BusGui(Bus b/*, RestaurantGui gui*/){ //HostAgent m) {
+		agent = b;
 		//this.gui = gui;
 	}
 
@@ -70,22 +72,6 @@ public class BusGui implements Gui{
 		g.setColor(Color.YELLOW);
 		g.fillRect(xPos, yPos, currWidth, currHeight);
 	}
-
-	public boolean isPresent() {
-		return isPresent;
-	}
-
-	public void setPresent(boolean p) {
-		isPresent = p;
-	}
-
-	public int getXPos() {
-        return xPos;
-    }
-
-    public int getYPos() {
-        return yPos;
-    }
 
     //Actions
     public void GoToStopA() {
