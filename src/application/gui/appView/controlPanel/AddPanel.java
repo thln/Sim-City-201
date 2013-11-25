@@ -11,6 +11,7 @@ import application.*;
 import application.gui.appView.listPanel.ListPanel.Profile;
 
 public class AddPanel extends JPanel implements ActionListener {
+	private DashboardPanel dashboard;
 	public static JPanel mainPanel = new JPanel();
 	private JLabel first = new JLabel("Name: ");
 	private JTextField firstName = new JTextField(10);
@@ -24,6 +25,9 @@ public class AddPanel extends JPanel implements ActionListener {
 	public AddPanel(ControlPanel cp, Application app){
 		this.cp = cp;
 		this.app = app;
+		setLayout(new GridLayout(1,0));
+		dashboard = new DashboardPanel(app);
+		add(dashboard);
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.VERTICAL;
 		c.anchor = GridBagConstraints.CENTER;
