@@ -25,4 +25,6 @@ public interface BankCustomer {
 	void msgHereIsNewAccount(int accountNum);
 
 	void msgNoTellerAvailable();
+
+	void msgComeIn();
 }
