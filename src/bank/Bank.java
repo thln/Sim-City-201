@@ -34,9 +34,9 @@ public class Bank
 	public int accountNumKeyList = 3000;
 
 	//Roles
-	public BankGuardRole bankGuardRole = new BankGuardRole("Bank Guard");
-	public LoanOfficerRole loanOfficerRole = new LoanOfficerRole("Loan Officer");
-	public List <BankTellerRole> tellers = new ArrayList<>();
+	public BankGuardRole bankGuardRole;
+	public LoanOfficerRole loanOfficerRole;
+	public List <BankTellerRole> tellers;
 
 	//Mocks roles for test
 	public BankGuardMock bankGuardMock = new BankGuardMock("Bank Guard");
@@ -45,6 +45,11 @@ public class Bank
 	
 	//Constructor
 	public Bank(String name) {
+		bankGuardRole  = new BankGuardRole("Bank Guard");
+		loanOfficerRole =  new LoanOfficerRole("Loan Officer");
+		tellers  = new ArrayList<>();
+		
+		
 		this.name = name;
 		vault = 10000;
 		vaultMinimum = 1000;
