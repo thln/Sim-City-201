@@ -3,10 +3,12 @@ package application;
 import housing.Housing;
 
 import javax.swing.*;
+
 import market.*;
 import bank.*;
 import person.*;
 import restaurant.Restaurant;
+
 import java.util.*;
 import application.gui.animation.*;
 import application.gui.animation.agentGui.*;
@@ -233,6 +235,7 @@ public class Application extends JPanel {
 			newP.setHome(allHousing.get(allHousing.size() - 1));
 			population.add(newP);
 			newP.startThread();
+			System.out.println("ayyy");
 		}
 		else if (type.equals("Worker")) 
 		{
@@ -252,6 +255,11 @@ public class Application extends JPanel {
 		}
 	}
 	
+	public void editPerson(int index, String name, int money){
+		population.get(index).setName(name);
+		population.get(index).setMoney(money);
+	}
+	
 	//function used to test gui functionality
 	public void printLastPop(){
 		System.out.println(population.get(population.size()-1).getName());
@@ -261,6 +269,9 @@ public class Application extends JPanel {
 		return population.size();
 	}
 	
+	public int getNumberHomes(){
+		return allHousing.size();
+	}
 	public Person getPerson(int personIndex){
 		return population.get(personIndex);
 	}

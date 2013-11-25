@@ -42,7 +42,7 @@ public class ApplicationGui extends JFrame {
 
 	ApplicationGui() {
 		app = new Application(animPanel);
-		appPanel = new ApplicationPanel(app);
+		appPanel = new ApplicationPanel(this, app);
 		setBounds(0,0, WINDOWX, WINDOWY);
 		//appPanel.getControlPanel().setApplication(app);
 		setLayout(new GridLayout(1,2)); //GridLayout with 2 columns and 1 row
@@ -65,5 +65,9 @@ public class ApplicationGui extends JFrame {
 		gui.setVisible(true);
 		gui.setResizable(true);
 		gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+	
+	public AnimationPanel getAnimationPanel(){
+		return animPanel;
 	}
 }

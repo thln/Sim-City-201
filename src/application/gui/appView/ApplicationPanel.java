@@ -17,11 +17,11 @@ public class ApplicationPanel extends JPanel{
 	
 	private ControlPanel cp;
 	private ListPanel lp;
-	
-	public ApplicationPanel(Application app){
+	private ApplicationGui appGui;
+	public ApplicationPanel(ApplicationGui appGui, Application app){
 		cp = new ControlPanel(this, app);
 		lp = new ListPanel(this, app);
-		
+		this.appGui = appGui;
 		setLayout(new GridLayout(2,1));
 		
 		GridBagConstraints c = new GridBagConstraints();
@@ -52,5 +52,8 @@ public class ApplicationPanel extends JPanel{
 	
 	public void updateGroups(){
 		System.out.println("Here");
+	}
+	public ApplicationGui getAppGui(){
+		return appGui;
 	}
 }

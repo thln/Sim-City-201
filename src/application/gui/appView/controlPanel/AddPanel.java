@@ -2,8 +2,11 @@ package application.gui.appView.controlPanel;
 
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+
 import application.*;
 import application.gui.appView.listPanel.ListPanel.Profile;
 
@@ -18,7 +21,7 @@ public class AddPanel extends JPanel implements ActionListener {
 	private Application app;
 	private JComboBox typeBox;
 
-	private String[] personType = {"Crook", "Deadbeat", "Worker", "Wealthy"};
+	private String[] personType = {"Deadbeat", "Worker", "Wealthy"};
 	
 	public AddPanel(ControlPanel cp, Application app){
 		this.cp = cp;
@@ -65,7 +68,8 @@ public class AddPanel extends JPanel implements ActionListener {
 			String name = firstName.getText() + " " + lastName.getText();
 			String type = (String)typeBox.getSelectedItem();
 			app.addPerson(name, 500, type, null, null, 0, 0, 0);
-			cp.getAppPanel().getListPanel().addPerson(name, 500, type, null, null, 0, 0, 0);
+			//cp.getAppPanel().getListPanel().addPerson(name, 500, type, null, null, 0, 0, 0);
+			cp.getAppPanel().getListPanel().updateList();
 			
 			app.printLastPop();
 			System.out.println(type);
@@ -76,4 +80,6 @@ public class AddPanel extends JPanel implements ActionListener {
 	public void setApplication(Application app){
 		this.app = app; 
 	}
+	
+	
 }

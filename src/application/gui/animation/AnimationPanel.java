@@ -237,6 +237,7 @@ public class AnimationPanel extends JPanel implements MouseListener {
 		return "Animation Panel";
 	}
 	
+<<<<<<< HEAD
 	public ArrayList<Building> getBuildings() {
 		return buildings;
 	}
@@ -277,5 +278,13 @@ public class AnimationPanel extends JPanel implements MouseListener {
 		if(gui instanceof RestaurantGui) {
 			restaurantPanel.addGui(gui);
 		}
+=======
+	public void getBuildingName(int index){
+		buildings.get(index).getName();
+	}
+	
+	public int getNumBuildings(){
+		return buildings.size();
+>>>>>>> 0ec3505c2237c3563f7abe2a0b1ff28cbef5df62
 	}
 }
