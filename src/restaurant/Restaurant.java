@@ -4,7 +4,9 @@ import application.WatchTime;
 import person.Person;
 import person.Role;
 import person.Worker;
+import restaurant.interfaces.Cashier;
 import restaurant.interfaces.Cook;
+import restaurant.test.mock.MockCashier;
 import restaurant.test.mock.MockCook;
 
 public class Restaurant {
@@ -23,7 +25,8 @@ public class Restaurant {
 	public RevolvingStand theRevolvingStand = new RevolvingStand();
 
 	//Mocks
-	public MockCook mockCook = new MockCook("Mock Cook");
+	public MockCook mockCook = new MockCook("MockCook");
+	public MockCashier mockCashier = new MockCashier("MockCashier");
 
 	public Restaurant(String name) {
 		this.name = name;
@@ -131,5 +134,12 @@ public class Restaurant {
 			return mockCook;
 		}
 		return cookRole;
+	}
+	
+	public Cashier getCashier(boolean test) {
+		if (test) {
+			return mockCashier;
+		}
+		return cashierRole;
 	}
 }
