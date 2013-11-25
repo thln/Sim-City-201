@@ -85,8 +85,9 @@ public abstract class Person extends Agent{
 		//Once semaphore is released from GUI
 		for (Role cust1 : roles) {
 			if (cust1 instanceof BankCustomerRole) 
+
 			{	
-				
+
 				BankCustomerRole BCR = (BankCustomerRole) cust1;
 				currentRoleName = "Bank Customer";
 
