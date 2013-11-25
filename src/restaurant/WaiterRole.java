@@ -25,7 +25,7 @@ public class WaiterRole extends Role implements Waiter
 	public List<Order> readyOrders = Collections.synchronizedList(new ArrayList<Order>());
 
 	protected String name;
-	protected String RoleName = "Normal Waiter";
+	protected String RoleName = "Waiter";
 	protected Semaphore atDestination = new Semaphore(0,true);
 
 	public Menu menu = new Menu();
@@ -54,12 +54,6 @@ public class WaiterRole extends Role implements Waiter
 	public String getMaitreDName() {
 		return name;
 	}
-
-	public String getName() {
-		return name;
-	}
-
-
 
 	/**
 	 * Messages
@@ -237,7 +231,7 @@ public class WaiterRole extends Role implements Waiter
 				if (myCust.isWaiting()) 
 				{
 					if (isInLobby == true) 
-					{
+					{	
 						seatCustomer(myCust);
 						return true;
 					}
@@ -297,24 +291,25 @@ public class WaiterRole extends Role implements Waiter
 	protected void seatCustomer(myCustomer MC) 
 	{
 		//waiterGui.DoPickUpCustomer(MC.xHome, MC.yHome);
-		try {
-			atDestination.acquire();
-		} catch (InterruptedException e) 
-		{
-			e.printStackTrace();
-
-		}
+//		try {
+//			atDestination.acquire();
+//		} catch (InterruptedException e) 
+//		{
+//			e.printStackTrace();
+//
+//		}
+		
 		MC.customer.msgPleaseFollowMe(MC.tableNumber, menu, this);
 		isInLobby = false;
 		DoSeatCustomer(MC.customer, MC.tableNumber);
-		try 
-		{
-			atDestination.acquire();
-		} catch (InterruptedException e) 
-		{
-			e.printStackTrace();
-
-		}
+//		try 
+//		{
+//			atDestination.acquire();
+//		} catch (InterruptedException e) 
+//		{
+//			e.printStackTrace();
+//
+//		}
 		//waiterGui.DoLeaveCustomer();
 		print("Finished seating " + MC.customer.getCustomerName());
 		MC.setSeated();
@@ -342,12 +337,12 @@ public class WaiterRole extends Role implements Waiter
 		}
 
 		//waiterGui.DoTakeOrder(MC.tableNumber);
-		try {
-			atDestination.acquire();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-
-		}
+//		try {
+//			atDestination.acquire();
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//
+//		}
 		//waiterGui.DoLeaveCustomer();
 
 		MC.customer.msgWhatWouldYouLike();
@@ -364,12 +359,12 @@ public class WaiterRole extends Role implements Waiter
 		}
 
 		//waiterGui.DoGoToKitchen();
-		try {
-			atDestination.acquire();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-
-		}
+//		try {
+//			atDestination.acquire();
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//
+//		}
 		//waiterGui.DoLeaveCustomer();
 
 		Phonebook.getPhonebook().getRestaurant().cookRole.msgHeresAnOrder(MC.tableNumber, MC.choice, this);

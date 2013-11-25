@@ -250,8 +250,7 @@ public class BankTellerRole extends Role implements BankTeller {
 	}
 
 	void requestLoan (Account account1) {
-		if (account1.customer instanceof Role) 
-			Phonebook.getPhonebook().getBank().loanOfficerRole.msgIsLoanApproved(account1, this);
+		Phonebook.getPhonebook().getBank().getLoanOfficer(test).msgIsLoanApproved(account1, this);
 		account1.state = AccountState.waiting;
 	}
 
