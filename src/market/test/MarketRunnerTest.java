@@ -31,11 +31,11 @@ public class MarketRunnerTest extends TestCase {
 		super.setUp();
 		market = Phonebook.getPhonebook().getMarket();
 		restaurant = Phonebook.getPhonebook().getRestaurant();
-		worker = new Worker("Worker", 50, "SalesPerson", "Market", 8, 12, 24);
 		salesPerson = (MockSalesPerson) Phonebook.getPhonebook().getMarket().getSalesPerson(true);
 		marketCustomer = new MockMarketCustomer("MockMarketCustomer");
 		UPSman = (MockUPSman) Phonebook.getPhonebook().getMarket().getUPSman(true);
 		
+		worker = new Worker("Worker", 50, "Market Runner", "Market", 8, 12, 24);
 		marketRunner = new MarketRunnerRole(worker, "Market Runner", "Market Runner", market);
 		marketRunner.test = true;
 	}

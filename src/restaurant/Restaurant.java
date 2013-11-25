@@ -4,6 +4,8 @@ import application.WatchTime;
 import person.Person;
 import person.Role;
 import person.Worker;
+import restaurant.interfaces.Cook;
+import restaurant.test.mock.MockCook;
 
 public class Restaurant {
 
@@ -20,16 +22,17 @@ public class Restaurant {
 	public CashierRole cashierRole = new CashierRole("Cashier", this);
 	public RevolvingStand theRevolvingStand = new RevolvingStand();
 
+	//Mocks
+	public MockCook mockCook = new MockCook("Mock Cook");
+
 	public Restaurant(String name) {
 		this.name = name;
 	}
 
 	//Methods
-	public Role arrivedAtWork(Person person, String title) 
-	{
-		
-		if (title == "host") 
-		{
+	public Role arrivedAtWork(Person person, String title)  {
+
+		if (title == "host") {
 			//Setting previous bank guard role to inactive
 			if (hostRole.getPerson() != null) {
 				Worker worker = (Worker) hostRole.getPerson();
@@ -75,8 +78,8 @@ public class Restaurant {
 			hostRole.addWaiter(altWaiter);
 			return altWaiter;
 		}
-			//for waiter and alternative waiters, you message the host
-			return null;
+		//for waiter and alternative waiters, you message the host
+		return null;
 	}
 
 	public void msgIWantFood(RestaurantCustomerRole cust, int xHome, int yHome) 
@@ -105,7 +108,7 @@ public class Restaurant {
 		//make function in host to delete waiter
 		//waiters have to finish duties before finishing waiter & no assignments
 		//look at onBreak code to follow
-		
+
 	}
 
 	public String getName() 
@@ -117,10 +120,16 @@ public class Restaurant {
 	{
 		this.name = name;
 	}
-	
+
 	public RevolvingStand getRevolvingStand()
 	{
 		return theRevolvingStand;
 	}
 
+	public Cook getCook(boolean test) {
+		if (test) {
+			return mockCook;
+		}
+		return cookRole;
+	}
 }
