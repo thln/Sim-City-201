@@ -13,6 +13,23 @@ public class PersonGui extends CityGui{
 
 	//RestaurantGui gui;
 
+	private int xRestaurant1Location = 400;
+	private int yRestaurant1Location = 50;
+	//This is going to be used for future restaurants
+	//	private int xRestaurant2Location;
+	//	private int yRestaurant2Location;
+	//	private int xRestaurant3Location;
+	//	private int yRestaurant3Location;
+	//	private int xRestaurant4Location;
+	//	private int yRestaurant4Location;
+	//	private int xRestaurant5Location;
+	//	private int yRestaurant5Location;
+	private int xMarketLocation = 400;
+	private int yMarketLocation = 100;
+	private int xBankLocation = 400;
+	private int yBankLocation = 170;
+
+
 	private int xPos, yPos;//default person position
 	private int xDestination, yDestination;//default start position
 	private int xHome, yHome;
@@ -25,7 +42,7 @@ public class PersonGui extends CityGui{
 	private String choice;
 	public PersonGui() {
 	}
-	
+
 	public PersonGui(Person p/*, RestaurantGui gui*/){ //HostAgent m) {
 		this.agent = p;
 		if(p instanceof Worker) {
@@ -106,26 +123,42 @@ public class PersonGui extends CityGui{
 	public boolean isHungry() {
 		return isHungry;
 	}
-    
-    //Actions
 
-	public void DoGoToBuilding(int bLocX, int bLocY) {//later you will map building to map coordinates.
-		xDestination = bLocX;
-		yDestination = bLocY;
+	//Actions
+	public void DoGoToRestaurant() {//later you will map building to map coordinates.
+		xDestination = xRestaurant1Location;
+		yDestination = yRestaurant1Location;
 		command = Command.GoToBuilding;
 	}
-	
+
+	public void DoGoToMarket() {//later you will map building to map coordinates.
+		xDestination = xMarketLocation;
+		yDestination = yMarketLocation;
+		command = Command.GoToBuilding;
+	}
+
+	public void DoGoToBank() {//later you will map building to map coordinates.
+		xDestination = xBankLocation;
+		yDestination = yBankLocation;
+		command = Command.GoToBuilding;
+	}
+
 	public void DoGoToBusStop(int stopNum) {//later you will map stop number to map coordinates.
 		xDestination = 100;
 		yDestination = 100;
 	}
-	
+
 	public void DoGoHome() { //the person's assigned home number. Maybe use coordinates instead?
 		xDestination = xHome;
 		yDestination = yHome;
 		command = Command.GoHome;
 	}
-	
+
+	public void setHomeLocation(int x, int y) {
+		xHome = x;
+		yHome = y;
+	}
+
 	public String toString() {
 		return "Person Gui";
 	}
