@@ -34,7 +34,7 @@ public class BuildingPanel extends JPanel implements ActionListener {
         setLayout(null);
         name = buildName;
         myCity = ap;
-        Timer timer = new Timer(20, this );
+        Timer timer = new Timer(10, this );
     	timer.start();
     }
 

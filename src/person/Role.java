@@ -21,7 +21,7 @@ public abstract class Role {
         protected boolean leaveRole = false;
         
         //Testing
-        public boolean test = false;
+        public boolean test;
         
         //For customer roles
         protected Role(Person person, String pName, String rName) {
