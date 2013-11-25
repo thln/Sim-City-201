@@ -25,7 +25,7 @@ public class WaiterRole extends Role implements Waiter
 	public List<Order> readyOrders = Collections.synchronizedList(new ArrayList<Order>());
 
 	protected String name;
-	protected String RoleName = "Normal Waiter";
+	protected String RoleName = "Waiter";
 	protected Semaphore atDestination = new Semaphore(0,true);
 
 	public Menu menu = new Menu();
