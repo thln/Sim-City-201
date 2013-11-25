@@ -73,23 +73,5 @@ public class DashboardPanel extends JPanel implements AWTEventListener{
 		add(banks);
 		add(homeless);
 		add(unemployed);
-		
-//		mainArea.setText(title +"\n"
-//				 +description +"\n"
-//				 +"Population: " + population +"\n"
-//				 +"Number of Homes: "+numHomes +"\n"
-//				 //+"% Occupancy: " +occupiedHomes +"\n"
-//				 +"# of Markets: " +numMarkets +"\n"
-//				 +"# of Banks: " +numBanks +"\n"
-//				 +"% Homeless: " + numHomeless + "\n"
-//				 +"% Unemployed: " + numUnemployed + "\n"
-//				);
-//		validate();
-//		mainArea.setEditable(false);
-		//mainArea.setBackground((getBackground()));
-
 	}
-
-	
-	
 }
