@@ -88,10 +88,12 @@ public abstract class Person extends Agent{
 				BankCustomerRole BCR = (BankCustomerRole) cust1;
 				currentRoleName = "Bank Customer";
 
-				if (money <= moneyMinThreshold)
+				if (money <= moneyMinThreshold) {
 					desiredCash = 100;
-				else if (money >= moneyMaxThreshold)
-					depositAmount = money-moneyMaxThreshold+100;
+				}
+				else if (money >= moneyMaxThreshold) {
+					depositAmount = (money-moneyMaxThreshold+100);
+				}
 
 				if (accountNum != 0) {
 					if (money <= moneyMinThreshold){
@@ -101,7 +103,6 @@ public abstract class Person extends Agent{
 						BCR.setDesire("deposit");
 					}
 				}
-
 				cust1.setRoleActive();
 				Phonebook.getPhonebook().getBank().getBankGuard(cust1.test).msgArrivedAtBank(BCR);		
 				return;
