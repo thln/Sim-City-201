@@ -4,6 +4,9 @@ import java.util.*;
 import java.util.concurrent.Semaphore;
 
 import application.Phonebook;
+import application.gui.animation.agentGui.RestaurantCookGui;
+import application.gui.animation.agentGui.RestaurantCustomerGui;
+import application.gui.animation.agentGui.RestaurantWaiterGui;
 import market.Market;
 import person.Person;
 import person.Role;
@@ -22,6 +25,8 @@ public class CookRole extends Role implements Cook
 	private String name;
 	private Semaphore atDestination = new Semaphore(0,true);
 	protected String roleName = "Cook";
+	RestaurantCookGui cookGui = (RestaurantCookGui) gui;
+	
 	//public Restaurant restaurant;
 
 	//public CookGui cookGui = null;
@@ -36,28 +41,24 @@ public class CookRole extends Role implements Cook
 	//private List<myMarket> markets = Collections.synchronizedList(new ArrayList<myMarket>());
 	private List<Stock> stockFulfillment = Collections.synchronizedList(new ArrayList<Stock>());
 
-	private Map<String, Food> foodMap = new HashMap<String, Food>(); 
-	{
+	private Map<String, Food> foodMap = new HashMap<String, Food>(); {
 		foodMap.put("Chicken", new Food("Chicken"));
 		foodMap.put("Steak", new Food("Steak"));
 		foodMap.put("Pizza", new Food("Pizza"));
 		foodMap.put("Salad", new Food("Salad"));
 	}
 
-	public CookRole(Person p1, String pName, String rName, Restaurant resturant) 
-	{
+	public CookRole(Person p1, String pName, String rName, Restaurant resturant) {
 		super(p1, pName, rName);
 		//this.restaurant = restaurant;
 		//theRevolvingStand = Phonebook.getPhonebook().getRestaurant().getRevolvingStand();
 
 	}
 
-	public CookRole(String roleName, Restaurant restaurant) 
-	{
+	public CookRole(String roleName, Restaurant restaurant) {
 		super(roleName);
 		//this.restaurant = restaurant;
 		//theRevolvingStand = Phonebook.getPhonebook().getRestaurant().getRevolvingStand();
-
 	}
 
 	public String getMaitreDName() 
@@ -75,8 +76,7 @@ public class CookRole extends Role implements Cook
 	/**
 	 * Messages
 	 */
-	public void msgHeresAnOrder(int table, String choice, WaiterRole waiterRole) 
-	{
+	public void msgHeresAnOrder(int table, String choice, WaiterRole waiterRole) {
 		synchronized(myOrders)
 		{
 
@@ -194,18 +194,16 @@ public class CookRole extends Role implements Cook
 	/**
 	 * Actions
 	 */
-	private void cookOrder(final Order o) 
-	{
+	private void cookOrder(final Order o) {
 
-		if(!isInStock(o.choice)) 
-		{
+		if(!isInStock(o.choice)) {
 			checkInventory(o.choice);
 			myOrders.remove(o);
 			o.waiterRole.msgOrderIsNotAvailable(o.choice, o.tableNumber);
 			return;
 		}
 
-		/*
+		
 		cookGui.DoGetIngredients();
 		try {
 			atDestination.acquire();
@@ -221,7 +219,6 @@ public class CookRole extends Role implements Cook
 
 		}
 		cookGui.DoGoToHomePosition();
-		*/
 		
 		foodMap.get(o.choice).quantity--;
 		checkInventory(o.choice);
@@ -237,8 +234,7 @@ public class CookRole extends Role implements Cook
 
 		o.setCooking();
 		
-		timer.schedule(new TimerTask() 
-		{
+		timer.schedule(new TimerTask() {
 			public void run() {
 				msgOrderDone(o);
 			}
@@ -247,11 +243,9 @@ public class CookRole extends Role implements Cook
 
 	}
 
-	private void doneCooking(Order o) 
-	{
+	private void doneCooking(Order o) {
 		print("Done cooking order for table " + o.tableNumber);
 
-		/* GUI stuff
 		cookGui.DoPickUpFood();
 		try {
 			atDestination.acquire();
@@ -267,10 +261,9 @@ public class CookRole extends Role implements Cook
 			e.printStackTrace();
 
 		}
-		o.waiter.msgOrderIsReady(o.tableNumber, o.choice);
+		o.waiterRole.msgOrderIsReady(o.tableNumber, o.choice);
 		myOrders.remove(o);
 		cookGui.DoGoToHomePosition();
-		*/
 	}
 
 	public void checkInventory() {
@@ -282,8 +275,7 @@ public class CookRole extends Role implements Cook
 	}
 
 	private void checkInventory(String choice) {
-		if (foodMap.get(choice).quantity < foodMap.get(choice).threshold) 
-		{
+		if (foodMap.get(choice).quantity < foodMap.get(choice).threshold) {
 			
 			Market myMark = null;
 
@@ -441,8 +433,7 @@ public class CookRole extends Role implements Cook
 		}
 	}
 
-	public class Stock 
-	{
+	public class Stock {
 		String choice;
 		int quantity;
 		int orderedAmount;
