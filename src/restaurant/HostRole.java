@@ -234,9 +234,10 @@ public class HostRole extends Role
 
 	private void assignCustomer(myCustomer MC, Table table, WaiterRole waiterRole) 
 	{
-		print("Assigning customer " + MC.customer.getCustomerName() + " to waiter");
+		print("Assigning customer " + MC.customer.getCustomerName() + " to waiter " + waiters.get(0).waiterRole.getName());
 		addCustomerToWaiter(waiterRole);
-		waiterRole.msgPleaseSeatCustomer(table.tableNumber, MC.customer, MC.xHome, MC.yHome);
+		//waiterR
+		waiters.get(0).waiterRole.msgPleaseSeatCustomer(table.tableNumber, MC.customer, MC.xHome, MC.yHome);
 		table.setOccupant(MC.customer);
 		for (myCustomer MyCust : waitingCustomers) {
 			if (MyCust.equals(MC)) {

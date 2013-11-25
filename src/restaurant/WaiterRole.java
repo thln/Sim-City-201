@@ -55,11 +55,6 @@ public class WaiterRole extends Role implements Waiter
 		return name;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-
 
 	/**
 	 * Messages

@@ -88,7 +88,8 @@ public abstract class Role {
     {
             //System.out.println(roleName + " " + getName() + " : " + msg);
             if (roleName.equals("Bank Customer") || roleName.equals("Bank Guard") 
-                            || roleName.equals("Bank Teller") || roleName.equals("Loan Officer"))
+                            || roleName.equals("Bank Teller") || roleName.equals("Loan Officer")
+                            || roleName.contains("BankTeller"))
             {
             AlertLog.getInstance().logInfo(AlertTag.BANK, roleName + " " + getName(), msg);
 
@@ -106,14 +107,14 @@ public abstract class Role {
             }
             else if (roleName.equals("Alternative Waiter") || roleName.equals("Cashier")
                             || roleName.equals("Cook") || roleName.equals("Host") 
-                            || roleName.equals("Restaurant Customer") || roleName.equals("Normal Waiter"))
+                            || roleName.equals("Restaurant Customer") || roleName.equals("waiter") )
             {
             AlertLog.getInstance().logInfo(AlertTag.RESTAURANT, roleName + " " + getName(), msg);
 
             }
             else
             {
-            AlertLog.getInstance().logInfo(AlertTag.PERSON, roleName + " " + getName(), msg);
+            AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, roleName + " " + getName(), msg);
                     
             }
                     
