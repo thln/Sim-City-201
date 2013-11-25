@@ -34,7 +34,7 @@ public class ControlPanel extends JPanel {
 		this.app = app;
 		this.appPanel = appPanel;
 		addP = new AddPanel(this, app);
-		editP = new EditPanel();
+		//editP = new EditPanel();
 		printPanel = new PrintPanel();
 		printPanelTab = printPanel;
 		
