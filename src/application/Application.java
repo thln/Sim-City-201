@@ -56,9 +56,9 @@ public class Application extends JPanel {
 
 		//Market Workers
 		//SHIFT 1
-		Worker market1d = new Worker("Derrick", 10, "marketRunner", "market", 1000, 1400, 2000);
-		Worker market1e = new Worker("Erin", 1000, "marketSales", "market", 1000, 1400, 2000);
-		Worker market1f = new Worker("Fred", 10, "UPSman", "market", 1000, 1400, 2000);	
+		Worker market1d = new Worker("Derrick", 10, "marketRunner", "market", 100000, 1400, 2000);
+		Worker market1e = new Worker("Erin", 1000, "marketSales", "market", 100000, 1400, 2000);
+		Worker market1f = new Worker("Fred", 10, "UPSman", "market", 100000, 1400, 2000);	
 	
 		//SHIFT 2
 		Worker market2d = new Worker("Daniel", 100, "marketRunner", "market", 2000, 400, 1000);

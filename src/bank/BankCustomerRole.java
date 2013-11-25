@@ -167,8 +167,10 @@ public class BankCustomerRole extends Role implements BankCustomer{
 	//Actions
 
 	void messageGuard () {
-		if (!Phonebook.getPhonebook().getBank().isOpen()) 
+		if (!Phonebook.getPhonebook().getBank().isOpen()) {
 			print("Bank closed, waiting for bank to open.");
+			return;
+		}
 		else
 			print("Arrived at bank");
 			

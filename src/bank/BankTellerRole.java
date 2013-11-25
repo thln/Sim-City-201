@@ -187,9 +187,9 @@ public class BankTellerRole extends Role implements BankTeller {
 		}
 
 		if (leaveRole){
-			Worker myself = (Worker) person;
-			myself.roleFinishedWork();
 			leaveRole = false;
+			Worker myself = (Worker) person;
+			myself.roleFinishedWork();		
 			return true;
 		}
 

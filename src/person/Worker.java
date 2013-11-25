@@ -1,6 +1,8 @@
 package person;
 
 import java.awt.Point;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import bank.BankTellerRole;
 import person.Role.RoleState;
@@ -18,7 +20,11 @@ public class Worker extends Person {
                 super(name);
                 this.money = money;
                 myJob = new Job(jobTitle, jobPlace ,startT, lunchT, endT, this);
+                nextTask = new Timer();
         }
+        
+        private Timer nextTask;
+        boolean upcomingTask = false;
 
         public class Job {
                 public String title;
@@ -75,6 +81,7 @@ public class Worker extends Person {
         }
 
         public void roleFinishedWork(){                 //from worker role
+        		print("Finished working");
                 workerRole = null;
                 stateChanged();
         }
@@ -82,18 +89,27 @@ public class Worker extends Person {
         //Scheduler
         public boolean pickAndExecuteAnAction() {
 
-                if (hunger == HungerLevel.full) {
-                        startHungerTimer();
-                        return true;
-                }
+        	
+        	//Problem: if you are in a worker role, and that is not receiving any messages, it will never run again to check if it's time to leave work
+//                if (hunger == HungerLevel.full) {
+//                        startHungerTimer();
+//                        return true;
+//                }
 
                 //Decisions more urgent that role continuity (None for now)
-                
+        	if (!upcomingTask) {
+        		 if (((myJob.getEndTime().hour - TimeManager.getTimeManager().getTime().dayHour) > 0)) 
+        			 	scheduleNextTask(myJob.getEndTime().hour);
+        	}
+        	
                 if (workerRole != null){
                         if (workerRole.getState() == RoleState.active) {
-                                if (((myJob.getEndTime().hour - TimeManager.getTimeManager().getTime().dayHour) <= 0)) 
+                                if (((myJob.getEndTime().hour - TimeManager.getTimeManager().getTime().dayHour) <= 0) && !workerRole.leaveRole) {
+                                		print("Shift is over, time to leave work");
                                         workerRole.msgLeaveRole(); 
-                                return workerRole.pickAndExecuteAnAction();
+                                        return true;
+                                }
+                                return workerRole.pickAndExecuteAnAction();                      
                         }
                 }
 
@@ -110,7 +126,11 @@ public class Worker extends Person {
                 //If no role is active
 
                 //Job Related
-                if ((myJob.getStartTime().hour - TimeManager.getTimeManager().getTime().dayHour) <= 1) {
+                if ((myJob.getStartTime().hour - TimeManager.getTimeManager().getTime().dayHour) <= 1 && 
+                		(myJob.getStartTime().hour - TimeManager.getTimeManager().getTime().dayHour) >= 0) {
+                	
+                	
+                	//print("Job time = " + myJob.getStartTime().hour + " Current time = " + TimeManager.getTimeManager().getTime().dayHour);
                         prepareForWork();
                         return true;
                 }
@@ -160,7 +180,17 @@ public class Worker extends Person {
 
 
         //Actions
-        //Actions
+        private void scheduleNextTask(int nextTaskTime) {
+        	upcomingTask = true;
+        	nextTask.schedule(new TimerTask() {
+    			public void run() {
+    				upcomingTask = false;
+    				stateChanged();
+    			}
+    		},
+    		(nextTaskTime - TimeManager.getTimeManager().getTime().dayHour));
+		}
+        
         public void prepareForWork() {
 
         	currentRoleName = myJob.title;

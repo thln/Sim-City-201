@@ -97,8 +97,8 @@ public class BankGuardRole extends Role implements BankGuard {
 		}
 		
 		if (leaveRole){
-			((Worker) person).roleFinishedWork();
 			leaveRole = false;
+			((Worker) person).roleFinishedWork();		
 			return true;
 		}
 		
