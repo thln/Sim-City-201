@@ -21,11 +21,11 @@ public abstract class Person extends Agent{
 
 	//Data
 	String name;
-	private Semaphore atDestination = new Semaphore(0,true);
+	protected Semaphore atDestination = new Semaphore(0,true);
 	private Housing home;
 	private Timer alarmClock = new Timer();
 	private Timer hungerTimer = new Timer();
-	private PersonGui gui;
+	protected PersonGui gui;
 	BuildingPanel marketPanel = null;
 	BuildingPanel bankPanel = null;
 	BuildingPanel housePanel = null;
