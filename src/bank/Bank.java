@@ -5,12 +5,19 @@ import java.util.Collections;
 import java.util.List;
 
 import bank.BankTellerRole.Account;
+import bank.interfaces.BankGuard;
+import bank.interfaces.LoanOfficer;
+import bank.mock.BankGuardMock;
+import bank.mock.BankTellerMock;
+import bank.mock.LoanOfficerMock;
+import application.Phonebook;
 import application.WatchTime;
 import person.Person;
 import person.Role;
 import person.Worker;
 
-public class Bank {
+public class Bank
+{
 
 	//Data
 	String name;
@@ -19,6 +26,7 @@ public class Bank {
 	public WatchTime openTime = new WatchTime(8);
 	public WatchTime closeTime = new WatchTime(17);
 
+	//	Phonebook.getPhonebook().getBank().bankGuardRole.msgCustomerLeavingBank(myTeller);
 	//Data
 	public double vault;
 	public double vaultMinimum;
@@ -28,9 +36,13 @@ public class Bank {
 	//Roles
 	public BankGuardRole bankGuardRole = new BankGuardRole("Bank Guard");
 	public LoanOfficerRole loanOfficerRole = new LoanOfficerRole("Loan Officer");
-	List <BankTellerRole> tellers = new ArrayList<>();
+	public List <BankTellerRole> tellers = new ArrayList<>();
 
-
+	//Mocks roles for test
+	public BankGuardMock bankGuardMock = new BankGuardMock("Bank Guard");
+	public LoanOfficerMock loanOfficerMock = new LoanOfficerMock("Loan Officer");
+	public List <BankTellerMock> mockTellers = new ArrayList<>();
+	
 	//Constructor
 	public Bank(String name) {
 		this.name = name;
@@ -39,6 +51,8 @@ public class Bank {
 		accounts = Collections.synchronizedList(new ArrayList<Account>());
 		BankTellerRole t1 = new BankTellerRole ("BankTeller 1");
 		tellers.add(t1);
+		BankTellerMock t2 = new BankTellerMock ("BankTellerMock");
+		mockTellers.add(t2);
 		bankGuardRole.msgTellerCameToWork(t1);
 	}
 
@@ -101,4 +115,18 @@ public class Bank {
 		this.name = name;
 	}
 
+
+	public BankGuard getBankGuard(boolean test) {
+		if (test)
+			return bankGuardMock;
+		else
+			return bankGuardRole;
+	}
+	
+	public LoanOfficer getLoanOfficer(boolean test) {
+		if (test)
+			return loanOfficerMock;
+		else 
+			return loanOfficerRole;
+	}
 }

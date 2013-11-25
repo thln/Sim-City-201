@@ -25,7 +25,9 @@ public class TellerTest extends TestCase
 		guard = new BankGuardMock ("mockguard");
 		customer = new BankCustomerMock ("mockcustomer");
 		officer = new LoanOfficerMock ("mockofficer");
-		teller = new BankTellerRole (person.getName(), person, "bankteller");		
+		officer = (LoanOfficerMock) Phonebook.getPhonebook().getBank().getLoanOfficer(true);		
+		teller = new BankTellerRole (person.getName(), person, "bankteller");	
+		teller.test = true;
 	}
 
 	public void testOneCustomerArrivesWantsDepositOpensAccount() {
@@ -77,6 +79,8 @@ public class TellerTest extends TestCase
 		//Step 3 post-conditions
 		assertTrue("Account should have the state 'depositing' ", 
 				teller.getAccounts().get(0).getState() == AccountState.depositing);
+		
+		double credit = teller.getAccounts().get(0).creditScore;
 
 		//Step 4: Call scheduler, should execute method "depositMoney"
 		assertFalse("Tellers's scheduler should have returned false, but didn't.", 
@@ -93,7 +97,7 @@ public class TellerTest extends TestCase
 
 		//credit changes
 		assertEquals("Account credit score should have increased by 1/10 of the deposit amount",
-				teller.getAccounts().get(0).creditScore, depositAmt/10);
+				teller.getAccounts().get(0).creditScore, credit + (depositAmt/10));
 
 		assertTrue("MockCustomer should have logged an event for deposit received, but his last event logged reads instead: " 
 				+ customer.log.getLastLoggedEvent().toString(), 
@@ -228,6 +232,10 @@ public class TellerTest extends TestCase
 		assertTrue("New account should have the state 'waiting' ", 
 				teller.getAccounts().get(0).getState() == AccountState.waiting);
 
+		assertTrue("Mock loanOfficer should have logged an event for loan request, but his last event logged reads instead: " 
+				+ officer.log.getLastLoggedEvent().toString(), 
+				officer.log.containsString("Received loan request"));
+		
 		//Step 5: Loan officer messages -- loan approved
 		teller.msgThisLoanApproved(a);
 
@@ -344,6 +352,10 @@ public class TellerTest extends TestCase
 		//Step 4 post-conditions
 		assertTrue("New account should have the state 'waiting' ", 
 				teller.getAccounts().get(0).getState() == AccountState.waiting);
+		
+		assertTrue("Mock loanOfficer should have logged an event for loan request, but his last event logged reads instead: " 
+				+ officer.log.getLastLoggedEvent().toString(), 
+				officer.log.containsString("Received loan request"));
 
 		//Step 5: Loan officer messages -- loan denied
 		teller.msgThisLoanDenied(a, a.creditScore*10);

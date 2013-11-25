@@ -1,6 +1,7 @@
 package application.gui.trace;
 
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -11,33 +12,37 @@ import javax.swing.JPanel;
 public class PrintControlPanel extends JPanel {
 
 	TracePanel tp;
-
+	
+	JPanel leftPanel = new JPanel();
+	JPanel rightPanel = new JPanel();
+	
 	//Look into JToggleButton
-	JButton messagesButton;
+	//JButton messagesButton;
 	JButton errorButton;
 	JButton restaurantMessagesButton;
 	JButton bankMessagesButton;
 	JButton housingMessagesButton;
 	JButton marketMessagesButton;
 	JButton generalCityMessagesButton;
-	boolean showMessageBool = true;
+	//boolean showMessageBool = true;
 	boolean showErrorBool = true;
-	boolean showRestaurantMsgBool = true;
-	boolean showBankMsgBool = true;
-	boolean showHousingMsgBool = true;
-	boolean showMarketMsgBool = true;
+	boolean showRestaurantMsgBool = false;
+	boolean showBankMsgBool = false;
+	boolean showHousingMsgBool = false;
+	boolean showMarketMsgBool = false;
 	boolean showGeneralCityMsgBool = true;
 
 	public PrintControlPanel(final TracePanel tracePanel) 
 	{
 		this.tp = tracePanel;
+		/*
 		messagesButton = new JButton("Hide Level: MESSAGE")
 		{
 			{
 				setSize(200, 25);
 				setMaximumSize(getSize());
 			}
-		};
+		};*/
 		errorButton = new JButton("Hide Level : ERROR")
 		{
 			{
@@ -45,28 +50,28 @@ public class PrintControlPanel extends JPanel {
 				setMaximumSize(getSize());
 			}
 		};
-		restaurantMessagesButton = new JButton("Hide Tag: RESTAURANT")
+		restaurantMessagesButton = new JButton("Show Tag: RESTAURANT")
 		{
 			{
 				setSize(200, 25);
 				setMaximumSize(getSize());
 			}
 		};
-		bankMessagesButton = new JButton("Hide Tag: BANK")
+		bankMessagesButton = new JButton("Show Tag: BANK")
 		{
 			{
 				setSize(200, 25);
 				setMaximumSize(getSize());
 			}
 		};
-		housingMessagesButton = new JButton("Hide Tag: HOUSING")
+		housingMessagesButton = new JButton("Show Tag: HOUSING")
 		{
 			{
 				setSize(200, 25);
 				setMaximumSize(getSize());
 			}
 		};
-		marketMessagesButton = new JButton("Hide Tag: MARKET")
+		marketMessagesButton = new JButton("Show Tag: MARKET")
 		{
 			{
 				setSize(200, 25);
@@ -81,7 +86,13 @@ public class PrintControlPanel extends JPanel {
 			}
 		};
 
-
+		//Messages you want to see immediately
+		//City
+		//Error
+		tracePanel.showAlertsWithLevel(AlertLevel.ERROR);
+		tracePanel.showAlertsWithTag(AlertTag.GENERAL_CITY);
+		
+		/*
 		messagesButton.addActionListener(new ActionListener()
 		{
 			@Override
@@ -104,6 +115,7 @@ public class PrintControlPanel extends JPanel {
 				//================================================================================
 			}
 		});
+		*/
 		errorButton.addActionListener(new ActionListener() 
 		{
 			@Override
@@ -237,14 +249,16 @@ public class PrintControlPanel extends JPanel {
 			}
 		});
 
-		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		this.add(messagesButton);
-		this.add(errorButton);
-		this.add(restaurantMessagesButton);
-		this.add(bankMessagesButton);
-		this.add(housingMessagesButton);
-		this.add(marketMessagesButton);
-		this.add(generalCityMessagesButton);
+		this.setLayout(new GridLayout(0, 2));
+		
+		add(restaurantMessagesButton);
+		add(bankMessagesButton);
+		add(marketMessagesButton);
+		add(housingMessagesButton);
+		add(generalCityMessagesButton);
+		//add(messagesButton);
+		add(errorButton);
+		
 		this.setMinimumSize(new Dimension(50, 600));
 	}
 }

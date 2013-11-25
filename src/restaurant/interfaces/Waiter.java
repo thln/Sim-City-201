@@ -6,6 +6,8 @@ package restaurant.interfaces;
 //import restaurant.Host;
 //
 public interface Waiter {
+
+	public abstract void msgHereIsCheck(int tableNumber, double checkAmount);
 //
 //	public String getName();
 //	

@@ -1,6 +1,7 @@
 package bank.test;
 
 import person.Worker;
+import application.Phonebook;
 import bank.BankCustomerRole;
 import bank.BankCustomerRole.BankCustomerDesire;
 import bank.BankCustomerRole.CustomerState;
@@ -20,7 +21,8 @@ public class BankCustomerTest extends TestCase{
 		super.setUp();
 		person = new Worker("Josh", 200, "bankTeller", "bank", 800, 1200, 1500);
 		customer = new BankCustomerRole (person, person.getName(), "mockcustomer");
-		guard = new BankGuardMock ("mockguard");		
+		customer.test = true;
+		guard = (BankGuardMock) Phonebook.getPhonebook().getBank().getBankGuard(true);		
 		officer = new LoanOfficerMock ("mockofficer");
 		teller = new BankTellerMock ("teller");		
 	}
@@ -39,7 +41,7 @@ public class BankCustomerTest extends TestCase{
 		assertTrue("Customer should not have a teller yet ", 
 				customer.myTeller == null);
 
-		//Step 1: Call scheduler, should execute method "openAccount"
+		//Step 1: Call scheduler, should execute method "messageGuard"
 		assertFalse("Customer's scheduler should have returned false, but didn't.", 
 				customer.pickAndExecuteAnAction());
 
@@ -47,6 +49,9 @@ public class BankCustomerTest extends TestCase{
 		assertTrue("Customer should have the state 'waiting' ", 
 				customer.state == CustomerState.waiting);	
 
+		assertTrue("Guard should logged event, customer arrives at bank, but instead says" + guard.log.getLastLoggedEvent().toString(),
+				guard.log.containsString("New customer arrived at Bank"));
+		
 		//Step 2: Guard assigns customer to teller
 		customer.msgGoToTeller(teller);
 

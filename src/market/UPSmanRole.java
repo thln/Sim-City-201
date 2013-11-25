@@ -53,7 +53,7 @@ public class UPSmanRole extends Role implements UPSman {
 
 	//Actions
 	public void deliverOrder(MarketOrder o) {
-		o.restaurant.cookRole.msgOrderFulfillment(o.item, o.itemAmountFulfilled, o.itemAmountOrdered, market);
+		o.restaurant.cookRole.msgOrderFulfillment(o.item, o.itemAmountFulfilled, o.itemAmountOrdered);
 		market.salesPersonRole.msgOrderDelivered(o);
 		orders.remove(o);
 	}

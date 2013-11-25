@@ -1,30 +1,28 @@
 package application.gui.animation.agentGui;
 
-import bank.*;
+//import bank.\*;
 
 import java.awt.*;
 import javax.swing.*;
 
 public class BankGuardGui implements Gui{
 
-	private LoanOfficerRole agent = null;
+	//private LoanOfficerRole agent = null;
 	private boolean isPresent = true;
 
 	//RestaurantGui gui;
 
-    private int xPos = 300, yPos = 300;//default BankGuard position
-    private int xDestination = 300, yDestination = 300;//default start position
+    private int xPos = 260, yPos = 300;//default BankGuard position
+    private int xDestination = 260, yDestination = 300;//default start position
 	
 	private enum Command {noCommand};
 	private Command command = Command.noCommand;
 
 	private enum CustomerState {nothing};
 	CustomerState state = CustomerState.nothing;
-	public BankGuardGui() {
-	}
 	
-	public BankGuardGui(LoanOfficerRole c/*, RestaurantGui gui*/){
-		agent = c;
+	public BankGuardGui(/*LoanOfficerRole c, RestaurantGui gui*/){
+		//agent = c;
 		//this.gui = gui;
 	}
 
@@ -45,7 +43,7 @@ public class BankGuardGui implements Gui{
 	}
 
 	public void draw(Graphics2D g) {
-		g.setColor(Color.GREEN);
+		g.setColor(Color.ORANGE);
 		g.fillRect(xPos, yPos, 20, 20);
 	}
 
@@ -66,5 +64,28 @@ public class BankGuardGui implements Gui{
     }
 	
 	//Actions
-	
+    public void GoToTellers() {
+    	xDestination = 450;
+    	yDestination = 280;
+    }
+    
+    public void BacktoPosition() {
+    	xDestination = 260;
+    	yDestination = 300;
+    }
+    
+    public void DoCatchRobber() {
+    	xDestination = 120;
+    	yDestination = 50;
+    }
+    
+    public void BringToJail() {
+    	xDestination = 300;
+    	yDestination = -20;
+    }
+    
+    public void DoExit() {
+    	xDestination = 300;
+    	yDestination = 360;
+    }
 }
