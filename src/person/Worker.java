@@ -143,16 +143,7 @@ public class Worker extends Person {
 
                 //Market Related
                 if (!hasFoodInFridge || carStatus == CarState.wantsCar) 
-                {
-                        if (money <= moneyMinThreshold && !hasFoodInFridge) 
-                        {
-                               // if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getBank().openTime.hour) &&
-                                             //   (TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getBank().closeTime.hour)) {
-                                        prepareForBank();
-                                        return true;
-                             //   }
-                        }
-                        else 
+                { 
                         {
                                 if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getMarket().openTime.hour) &&
                                                 (TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getMarket().closeTime.hour)) 
