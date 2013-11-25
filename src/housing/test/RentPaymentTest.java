@@ -188,5 +188,33 @@ public class RentPaymentTest extends TestCase
 		assertEquals("There should be 0 in the mailbox. There isn't.", 0, Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.getCurrentPaymentAmount());
 		assertTrue("Landlord's checkedMailbox should return true. it doesn't.", landlord.checkedMailbox);
 		assertEquals("Landlord should have $500. It doesn't.", 350.0, landlord.money);
+	
+		
+		
+		////////
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 }
