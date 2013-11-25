@@ -6,7 +6,7 @@ import java.awt.*;
 
 import javax.swing.JLabel;
 
-public class CustomerGui implements Gui{
+public class RestaurantCustomerGui implements Gui{
 
 	private RestaurantCustomerRole agent = null;
 	private boolean isPresent = true;
@@ -27,8 +27,11 @@ public class CustomerGui implements Gui{
 	CustomerState state = CustomerState.nothing;
 
 	private String choice;
-
-	public CustomerGui(RestaurantCustomerRole c/*, RestaurantGui gui*/){ //HostAgent m) {
+	
+	public RestaurantCustomerGui() {
+	}
+	
+	public RestaurantCustomerGui(RestaurantCustomerRole c/*, RestaurantGui gui*/){ //HostAgent m) {
 		agent = c;
 		xPos = -20;
 		yPos = -20;
@@ -48,16 +51,16 @@ public class CustomerGui implements Gui{
 
 		if (xPos == xDestination && yPos == yDestination) {
 			if (command == Command.GoToRestaurant) {
-				agent.gotHungry(xHome, yHome);
+	//			agent.gotHungry(xHome, yHome);
 			}
 			if (command == Command.GoToSeat){
-				agent.msgAnimationFinishedGoToSeat();
+	//			agent.msgAnimationFinishedGoToSeat();
 			}
 			else if (command == Command.GoToCashier) {
-				agent.msgAnimationFinishedGoToCashier();
+	//			agent.msgAnimationFinishedGoToCashier();
 			}
 			else if (command == Command.LeaveRestaurant) {
-				agent.msgAnimationFinishedLeaveRestaurant();
+	//			agent.msgAnimationFinishedLeaveRestaurant();
 				System.out.println("about to call gui.setCustomerEnabled(agent);");
 				isHungry = false;
 			//	gui.setCustomerEnabled(agent);

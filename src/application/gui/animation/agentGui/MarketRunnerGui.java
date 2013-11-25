@@ -74,6 +74,6 @@ public class MarketRunnerGui implements Gui{
     
     public void DoExit() {
     	xDestination = 300;
-    	yDestination = 360;
+    	yDestination = 300;
     }
 }

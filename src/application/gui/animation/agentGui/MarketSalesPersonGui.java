@@ -66,6 +66,6 @@ public class MarketSalesPersonGui implements Gui{
 	//Actions
     public void DoExit() {
     	xDestination = 300;
-    	yDestination = 360;
+    	yDestination = 300;
     }
 }

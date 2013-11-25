@@ -13,8 +13,8 @@ public class HouseRenterGui implements Gui {
     
     //RestaurantGui gui;
 
-    private int xPos = 300, yPos = 365;//default HouseRenter position
-    private int xDestination = 300, yDestination = 320;//default start position
+    private int xPos = 300, yPos = 300;//default HouseRenter position
+    private int xDestination = 300, yDestination = 260;//default start position
     
     private enum Command {noCommand};
 	private Command command = Command.noCommand;
@@ -82,14 +82,14 @@ public class HouseRenterGui implements Gui {
     	yDestination = 75;
     }
     
-    public void DoGoToBedRoom() {
-    	xDestination = 450;
-    	yDestination = 300;
-    }
-    
     public void DoGoToBed() {
     	xDestination = 510;
     	yDestination = 300;
+    }
+    
+    public void DoGoToBedRoom() {
+    	xDestination = 450;
+    	yDestination = 200;
     }
     
     public void DoGoToBathroom() {
@@ -99,11 +99,11 @@ public class HouseRenterGui implements Gui {
     
     public void DoGoToLivingRoom() {
     	xDestination = 100;
-    	yDestination = 300;
+    	yDestination = 200;
     }
     
     public void DoExit() {
     	xDestination = 300;
-    	yDestination = 360;
+    	yDestination = 300;
     }
 }

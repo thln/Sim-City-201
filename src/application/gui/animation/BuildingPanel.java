@@ -20,7 +20,7 @@ import application.gui.animation.agentGui.*;
 public class BuildingPanel extends JPanel implements ActionListener {
 
     private final int WINDOWX = 590;
-    private final int WINDOWY = 360;
+    private final int WINDOWY = 300;
  
     private String name;
     private List<Gui> guis = new ArrayList<Gui>();
@@ -96,7 +96,7 @@ public class BuildingPanel extends JPanel implements ActionListener {
         	int JailHeight = 60;
         	int JailBarsWidth = 3;
         	
-        	int xLobbyLocation = 5;
+        	int xLobbyLocation = 0;
         	int yLobbyLocation = 10;
         	int LobbyWidth = 300;
         	int LobbyHeight = 50;

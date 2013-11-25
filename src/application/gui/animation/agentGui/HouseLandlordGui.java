@@ -12,8 +12,8 @@ public class HouseLandlordGui implements Gui{
 
 	//RestaurantGui gui;
 
-    private int xPos = 300, yPos = 365;//default House Landlord position
-    private int xDestination = 270, yDestination = 320;//default start position
+    private int xPos = 300, yPos = 300;//default House Landlord position
+    private int xDestination = 270, yDestination = 260;//default start position
 	
 	private enum Command {noCommand};
 	private Command command = Command.noCommand;
@@ -71,6 +71,6 @@ public class HouseLandlordGui implements Gui{
     
     public void DoExit() {
     	xDestination = 300;
-    	yDestination = 360;
+    	yDestination = 300;
     }
 }

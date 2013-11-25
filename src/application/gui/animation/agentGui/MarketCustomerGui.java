@@ -13,8 +13,8 @@ public class MarketCustomerGui implements Gui {
     
     //RestaurantGui gui;
 
-    private int xPos = 300, yPos = 365;//default MarketCustomer position
-    private int xDestination = 300, yDestination = 320;//default start position
+    private int xPos = 300, yPos = 300;//default MarketCustomer position
+    private int xDestination = 300, yDestination = 260;//default start position
     
     private enum Command {noCommand};
 	private Command command = Command.noCommand;
@@ -73,6 +73,6 @@ public class MarketCustomerGui implements Gui {
     
     public void DoExit() {
     	xDestination = 300;
-    	yDestination = 360;
+    	yDestination = 300;
     }
 }

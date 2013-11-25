@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CookGui implements Gui {
+public class RestaurantCookGui implements Gui {
 
 	private CookRole agent = null;
 
@@ -27,8 +27,11 @@ public class CookGui implements Gui {
 	CookState state = CookState.nothing;
 	
 	private List<String> platedFood = Collections.synchronizedList(new ArrayList<String>());
-
-	public CookGui(CookRole agent) {
+	
+	public RestaurantCookGui() {	
+	}
+	
+	public RestaurantCookGui(CookRole agent) {
 		this.agent = agent;
 	}
 	
@@ -75,7 +78,7 @@ public class CookGui implements Gui {
 					state = CookState.nothing;
 				}
 				
-				agent.msgAtDestination();
+		//		agent.msgAtDestination();
 			}
 		}
 	}

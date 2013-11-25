@@ -10,7 +10,7 @@ import application.gui.animation.agentGui.*;
 public class AnimationPanel extends JPanel implements MouseListener {
 
 	final static int WINDOWX = 600;
-	final static int WINDOWY = 360;
+	final static int WINDOWY = 300;
 
 	CityPanel cityPanel;
 	JPanel buildingPanels;
@@ -23,6 +23,7 @@ public class AnimationPanel extends JPanel implements MouseListener {
 	MarketRunnerGui market = new MarketRunnerGui();
 	BankLoanerGui bank = new BankLoanerGui();
 	HouseMaintenanceGui house = new HouseMaintenanceGui();
+	RestaurantCookGui restaurant = new RestaurantCookGui();
 	BusGui bus = new BusGui();
 	CarGui car = new CarGui();
 	PersonGui person = new PersonGui();
@@ -64,7 +65,7 @@ public class AnimationPanel extends JPanel implements MouseListener {
 			add(BorderLayout.SOUTH, buildingPanels);
 		}
 		
-		/*
+		
 		//UNCOMMENT THE FOLLOWING FOR TESTING ONLY!! re-comment to display final product
 		testGuis();
 		
@@ -75,7 +76,7 @@ public class AnimationPanel extends JPanel implements MouseListener {
     	testbutton2.addMouseListener(this);
     	testbutton2.setBounds(100, 0, 100, 50);
     	cityPanel.add(testbutton2);
-    	*/
+    	
 	}
 
 	public void displayBuildingPanel(BuildingPanel bp) {
@@ -114,6 +115,15 @@ public class AnimationPanel extends JPanel implements MouseListener {
 			}
 		}
 		
+		for(int i=0; i< buildings.size();i++) {
+			if(buildings.get(i).getName().toLowerCase().contains("restaurant")) {
+				buildings.get(i).myBuildingPanel.addGui(restaurant);
+				buildings.get(i).myBuildingPanel.addGui(new RestaurantCustomerGui());
+			//	buildings.get(i).myBuildingPanel.addGui(new RestaurantCookGui());
+				buildings.get(i).myBuildingPanel.addGui(new RestaurantWaiterGui());
+			}
+		}
+		
 		cityPanel.addGui(car);
 		cityPanel.addGui(bus);
 		cityPanel.addGui(person);
@@ -147,10 +157,10 @@ public class AnimationPanel extends JPanel implements MouseListener {
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getSource().equals(testbutton)) {
-			car.GoToHomeGarage(1);
+			restaurant.DoGoToGrill();
 		}
 		if(e.getSource().equals(testbutton2)) {
-			car.GoToParkingGarage(1);
+			restaurant.DoPickUpFood();
 		}
 	}
 

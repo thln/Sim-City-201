@@ -67,11 +67,11 @@ public class CarGui implements Gui{
     //Actions
     public void GoToParkingGarage(int garage) {
     	xDestination = 200;
-    	yDestination = 300;
+    	yDestination = 200;
     }
     
     public void GoToHomeGarage(int garage) {
     	xDestination = 100;
-    	yDestination = 300;
+    	yDestination = 200;
     }
 }

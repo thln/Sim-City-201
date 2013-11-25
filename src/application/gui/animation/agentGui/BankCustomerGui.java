@@ -13,8 +13,8 @@ public class BankCustomerGui implements Gui {
     
     //RestaurantGui gui;
 
-    private int xPos = 300, yPos = 365;//default Customer position
-    private int xDestination = 300, yDestination = 320;//default start position
+    private int xPos = 300, yPos = 300;//default Customer position
+    private int xDestination = 300, yDestination = 260;//default start position
     
     private enum Command {noCommand};
 	private Command command = Command.noCommand;
@@ -93,11 +93,11 @@ public class BankCustomerGui implements Gui {
     
     public void WaitLoanLine(int pos) {
     	xDestination = 30*pos;
-    	yDestination = 270;
+    	yDestination = 230;
     }
     
     public void DoExit() {
     	xDestination = 300;
-    	yDestination = 360;
+    	yDestination = 300;
     }
 }

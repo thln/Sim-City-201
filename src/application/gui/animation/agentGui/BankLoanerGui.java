@@ -12,8 +12,8 @@ public class BankLoanerGui implements Gui{
 
 	//RestaurantGui gui;
 
-    private int xPos = 0, yPos = 200;//default Loan Officer position
-    private int xDestination = 50, yDestination = 200;//default start position
+    private int xPos = 0, yPos = 170;//default Loan Officer position
+    private int xDestination = 50, yDestination = 170;//default start position
 	
 	private enum Command {noCommand};
 	private Command command = Command.noCommand;
@@ -71,11 +71,11 @@ public class BankLoanerGui implements Gui{
     
     public void BacktoPosition() {
     	xDestination = 50;
-    	yDestination = 200;
+    	yDestination = 170;
     }
     
     public void DoExit() {
     	xDestination = 300;
-    	yDestination = 360;
+    	yDestination = 300;
     }
 }

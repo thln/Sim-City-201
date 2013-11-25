@@ -12,8 +12,8 @@ public class BankGuardGui implements Gui{
 
 	//RestaurantGui gui;
 
-    private int xPos = 260, yPos = 300;//default BankGuard position
-    private int xDestination = 260, yDestination = 300;//default start position
+    private int xPos = 260, yPos = 260;//default BankGuard position
+    private int xDestination = 260, yDestination = 260;//default start position
 	
 	private enum Command {noCommand};
 	private Command command = Command.noCommand;
@@ -66,12 +66,12 @@ public class BankGuardGui implements Gui{
 	//Actions
     public void GoToTellers() {
     	xDestination = 450;
-    	yDestination = 280;
+    	yDestination = 250;
     }
     
     public void BacktoPosition() {
     	xDestination = 260;
-    	yDestination = 300;
+    	yDestination = 260;
     }
     
     public void DoCatchRobber() {
@@ -86,6 +86,6 @@ public class BankGuardGui implements Gui{
     
     public void DoExit() {
     	xDestination = 300;
-    	yDestination = 360;
+    	yDestination = 300;
     }
 }
