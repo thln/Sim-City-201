@@ -52,4 +52,8 @@ public class ControlPanel extends JPanel {
 	public ApplicationPanel getAppPanel(){
 		return appPanel;
 	}
+	
+	public EditPanel getEditPanel(){
+		return editP;
+	}
 }

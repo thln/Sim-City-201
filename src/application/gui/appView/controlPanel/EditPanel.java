@@ -70,6 +70,7 @@ public class EditPanel extends JPanel implements ActionListener {
 	}
 	
 	public void updateNamesList(){
+		//TODO Fix this Function
 		for(int i = 0; i<appPanel.getListPanel().getListSize(); i++){
 			String name = appPanel.getListPanel().getProfile(i).getName();
 			selectPerson.addItem(name);
@@ -78,9 +79,10 @@ public class EditPanel extends JPanel implements ActionListener {
 	}
 	
 	public void updateTextFields(){
-		nameField = new JTextField(appPanel.getListPanel().getProfile(editIndex).getName(), 10);
-		nameField = new JTextField(Integer.toString(appPanel.getListPanel().getProfile(editIndex).getMoney()), 10);
-
+		if(appPanel.getListPanel().getListSize()>0){
+			nameField = new JTextField(appPanel.getListPanel().getProfile(editIndex).getName(), 10);
+			nameField = new JTextField(Integer.toString(appPanel.getListPanel().getProfile(editIndex).getMoney()), 10);
+		}
 	}
 
 }

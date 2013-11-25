@@ -131,6 +131,7 @@ public class ListPanel extends JPanel implements ActionListener{
 			listPane.add(button);
 			validate();
 		}
+		
 	}
 	public void editProfile(Profile pf, int index){
 		
@@ -138,7 +139,6 @@ public class ListPanel extends JPanel implements ActionListener{
 	
 	public int findIndex(String name, String type){
 		int index = 0;
-		
 		for (index = 0; index<people.size(); index++){
 			if(people.get(index).getName()== name && people.get(index).getType()== type){
 				break;
