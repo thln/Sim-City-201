@@ -66,8 +66,4 @@ public class ApplicationGui extends JFrame {
 		gui.setResizable(true);
 		gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
-	
-	public AnimationPanel getAnimationPanel(){
-		return animPanel;
-	}
 }

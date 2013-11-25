@@ -25,15 +25,11 @@ public abstract class Person extends Agent{
 	private Housing home;
 	private Timer alarmClock = new Timer();
 	private Timer hungerTimer = new Timer();
-
 	private PersonGui gui;
 	BuildingPanel marketPanel = null;
 	BuildingPanel bankPanel = null;
 	BuildingPanel housePanel = null;
 	BuildingPanel restPanel = null;
-
-	boolean inProcess;
-
 
 	//Role Related
 	public List<Role> roles = Collections.synchronizedList(new ArrayList<Role>());         //contains all the customer role
@@ -49,7 +45,7 @@ public abstract class Person extends Agent{
 	public HashMap <String, Integer> Inventory = new HashMap<String, Integer>();                 //Food list
 	public boolean hasFoodInFridge = false;
 	public enum HungerLevel {full, moderate, hungry, starving};
-	HungerLevel hunger; // = HungerLevel.full;
+	HungerLevel hunger = HungerLevel.full;
 
 	//Bank Related
 	public double money;
@@ -88,11 +84,9 @@ public abstract class Person extends Agent{
 		print("Going to eat at home");
 	}
 
-	protected void prepareForBank() {
-		print("Becoming Bank Customer");
-		//Do Gui method
-		gui.DoGoToBuilding(400, 170);
-		//GUI call to go to business
+	protected void prepareForBank () {
+		Do("Becoming Bank Customer");
+		gui.DoGoToBank();
 		try {
 			atDestination.acquire();
 		} catch (InterruptedException e) {
@@ -101,26 +95,18 @@ public abstract class Person extends Agent{
 
 		}
 
-		//Once semaphore is released from GUI
 		for (Role cust1 : roles) {
 			if (cust1 instanceof BankCustomerRole) 
-
-			{	
-
+			{
 				BankCustomerRole BCR = (BankCustomerRole) cust1;
 				BankCustomerGui bg = new BankCustomerGui(BCR);
 				BCR.setGui(bg);
 				currentRoleName = "Bank Customer";
 
-				if (money <= moneyMinThreshold) {
-					if (name == "Fred")
-						desiredCash = 200;
-					else
-						desiredCash = 100;
-				}
-				else if (money >= moneyMaxThreshold) {
-					depositAmount = (money-moneyMaxThreshold+100);
-				}
+				if (money <= moneyMinThreshold)
+					desiredCash = 100;
+				else if (money >= moneyMaxThreshold)
+					depositAmount = money-moneyMaxThreshold+100;
 
 				if (accountNum != 0) {
 					if (money <= moneyMinThreshold){
@@ -129,11 +115,10 @@ public abstract class Person extends Agent{
 					if (money >= moneyMaxThreshold){
 						BCR.setDesire("deposit");
 					}
-				}			
+				}
 				cust1.setRoleActive();
-				bankPanel.addGui(bg);
+				//bankPanel.addGui(bg);
 				stateChanged();
-
 				return;
 			}
 		}
@@ -166,8 +151,7 @@ public abstract class Person extends Agent{
     }
 	
 	protected void prepareForMarket() {
-		//GUI call to go to business
-		gui.DoGoToBuilding(400, 100);
+		gui.DoGoToMarket();
 		try {
 			atDestination.acquire();
 		} catch (InterruptedException e) {
@@ -175,7 +159,6 @@ public abstract class Person extends Agent{
 			e.printStackTrace();
 
 		}
-		//Once semaphore is released from GUI
 
 		//Checking if have enough money for car
 		if (accountBalance >= (carCost + 100)) {
@@ -231,9 +214,7 @@ public abstract class Person extends Agent{
 	}
 
 	protected void prepareForRestaurant() {
-		//GUI call to go to business
-		gui.DoGoToBuilding(400, 50);
-
+		gui.DoGoToRestaurant();
 		try {
 			atDestination.acquire();
 		} catch (InterruptedException e) {
@@ -242,7 +223,6 @@ public abstract class Person extends Agent{
 
 		}
 
-		//Once semaphore is released from GUI
 		for (Role cust1 : roles) {
 			if (cust1 instanceof RestaurantCustomerRole) {
 				RestaurantCustomerRole RCR = (RestaurantCustomerRole) cust1;
@@ -269,6 +249,7 @@ public abstract class Person extends Agent{
 			e.printStackTrace();
 			//
 		}
+
 		currentRoleName = " ";
 		//After arrives home
 		alarmClock.schedule(new TimerTask() {
@@ -280,14 +261,6 @@ public abstract class Person extends Agent{
 	}
 
 	protected void startHungerTimer() {
-		gui.DoGoHome();
-		try {
-			atDestination.acquire();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
 		hunger = HungerLevel.moderate;
 
 		//After arrives home
@@ -327,15 +300,9 @@ public abstract class Person extends Agent{
 		AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, msg);
 	}
 
-
-	public void setName(String name){
-		this.name = name;
-	}
-
 	public Housing getHousing()
 	{
 		return home;
-
 	}
 
 	public void setGui(PersonGui gui) {

@@ -6,6 +6,8 @@ import java.util.Random;
 import java.util.concurrent.Semaphore;
 
 import application.Phonebook;
+import application.gui.animation.agentGui.RestaurantCustomerGui;
+import application.gui.animation.agentGui.RestaurantWaiterGui;
 import person.Person;
 import person.Role;
 import restaurant.interfaces.Host;
@@ -20,9 +22,10 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer
 	private int hungerLevel = 5;        // determines length of meal
 	Timer timer = new Timer();
 	protected String RoleName = "Restaurant Customer";
-	//private CustomerGui customerGui;
 	int xHome, yHome;
 
+	RestaurantCustomerGui customerGui = (RestaurantCustomerGui) gui;
+	
 	private Menu menu;
 
 	//Agent Correspondents
@@ -90,8 +93,7 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer
 	/**
 	 * Messages
 	 */
-	public void gotHungry(int xHome, int yHome) 
-	{//from animation
+	public void gotHungry(int xHome, int yHome) {//from animation
 		print("I'm hungry");
 		this.xHome = xHome;
 		this.yHome = yHome;
@@ -99,15 +101,13 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer
 		stateChanged();
 	}
 
-	public void msgTablesAreFull() 
-	{
+	public void msgTablesAreFull() {
 		print("Got message that all tables are full");
 		state = AgentState.TablesFull;
 		stateChanged();
 	}
 	
-	public void msgPleaseFollowMe(int tableNumber, Menu menu, WaiterRole waiterRole) 
-	{
+	public void msgPleaseFollowMe(int tableNumber, Menu menu, WaiterRole waiterRole) {
 		this.tableNumber = tableNumber;
 		this.menu = menu;
 		this.waiterRole = waiterRole; //to establish connection to waiter
@@ -116,62 +116,53 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer
 		stateChanged();
 	}
 
-	public void msgAnimationFinishedGoToSeat() 
-	{ //from animation
+	public void msgAnimationFinishedGoToSeat() { //from animation
 		event = AgentEvent.seated;
 		stateChanged();
 	}
 
-	public void msgWhatWouldYouLike() 
-	{
+	public void msgWhatWouldYouLike() {
 		event = AgentEvent.askedToOrder;
 		stateChanged();
 	}
 
-	public void msgPleaseReorder(Menu newMenu) 
-	{
+	public void msgPleaseReorder(Menu newMenu) {
 		this.menu = newMenu;
 		event = AgentEvent.seated;
 		state = AgentState.BeingSeated;
 		stateChanged();
 	}
 
-	public void msgHeresYourOrder (String choice) 
-	{
+	public void msgHeresYourOrder (String choice) {
 		this.choice = choice;
 		event = AgentEvent.gotFood;
 		stateChanged();
 	}
 
-	public void msgHeresYourCheck(double check) 
-	{
+	public void msgHeresYourCheck(double check) {
 		this.check = check;
 		event = AgentEvent.gotCheck;
 		stateChanged();
 	}
 
-	public void msgAnimationFinishedGoToCashier() 
-	{ //from animation
+	public void msgAnimationFinishedGoToCashier() { //from animation
 		event = AgentEvent.atCashier;
 		stateChanged();
 	}
 
-	public void msgHeresYourChange(double change) 
-	{
+	public void msgHeresYourChange(double change) {
 		event = AgentEvent.gotChange;
 		money = change;
 		print("Recieved my change of $" + change + ". I have now $" + money);
 		stateChanged();
 	}
 	
-	public void msgGoToJail() 
-	{
+	public void msgGoToJail() {
 		event = AgentEvent.sentToJail;
 		stateChanged();
 	}
 
-	public void msgAnimationFinishedLeaveRestaurant() 
-	{ //from animation
+	public void msgAnimationFinishedLeaveRestaurant() { //from animation
 		event = AgentEvent.doneLeaving;
 		stateChanged();
 	}
@@ -181,32 +172,26 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer
 	/**
 	 * Scheduler
 	 */
-	protected boolean pickAndExecuteAnAction() 
-	{
+	protected boolean pickAndExecuteAnAction() {
 		//	CustomerAgent is a finite state machine
 
-		if (state == AgentState.DoingNothing && event == AgentEvent.gotHungry )
-		{
+		if (state == AgentState.DoingNothing && event == AgentEvent.gotHungry ) {
 			goToRestaurant();
 			return true;
 		}
-		if (state == AgentState.TablesFull && event == AgentEvent.gotHungry) 
-		{
+		if (state == AgentState.TablesFull && event == AgentEvent.gotHungry) {
 			DecidingToStay();
 			return true;
 		}
-		if (state == AgentState.WaitingInRestaurant && event == AgentEvent.followHost ) 
-		{
+		if (state == AgentState.WaitingInRestaurant && event == AgentEvent.followHost ) {
 			SitDown();
 			return true;
 		}
-		if (state == AgentState.BeingSeated && event == AgentEvent.seated)
-		{
+		if (state == AgentState.BeingSeated && event == AgentEvent.seated) {
 			MakeChoice();
 			return true;
 		}
-		if (state == AgentState.DoneDeciding && event == AgentEvent.askedToOrder)
-		{
+		if (state == AgentState.DoneDeciding && event == AgentEvent.askedToOrder) {
 			PlaceOrder();
 			return true;
 		}
@@ -215,33 +200,27 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer
 			EatFood();
 			return true;
 		}		
-		if (state == AgentState.Eating && event == AgentEvent.doneEating) 
-		{
+		if (state == AgentState.Eating && event == AgentEvent.doneEating) {
 			AskForCheck();
 			return true;
 		}
-		if (state == AgentState.AskedForCheck && event == AgentEvent.gotCheck) 
-		{
+		if (state == AgentState.AskedForCheck && event == AgentEvent.gotCheck) {
 			PayingCheck();
 			return true;
 		}
-		if (state == AgentState.PayingCheck && event == AgentEvent.atCashier) 
-		{
+		if (state == AgentState.PayingCheck && event == AgentEvent.atCashier) {
 			PayCheck();
 			return true;
 		}
-		if (state == AgentState.PayedCheck && event == AgentEvent.gotChange) 
-		{
+		if (state == AgentState.PayedCheck && event == AgentEvent.gotChange) {
 			LeaveRestaurant();
 			return true;
 		}
-		if (state == AgentState.PayedCheck && event == AgentEvent.sentToJail) 
-		{
+		if (state == AgentState.PayedCheck && event == AgentEvent.sentToJail) {
 			GoToJail();
 			return true;
 		}
-		if (state == AgentState.Leaving && event == AgentEvent.doneLeaving)
-		{
+		if (state == AgentState.Leaving && event == AgentEvent.doneLeaving) {
 			ResetState();
 			return true;
 		}
@@ -254,15 +233,13 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer
 	/**
 	 * Actions
 	 */
-	private void goToRestaurant() 
-	{
+	private void goToRestaurant() {
 		state = AgentState.WaitingInRestaurant;
 		print("Going to restaurant");
 		Phonebook.getPhonebook().getRestaurant().hostRole.msgIWantFood(this, xHome, yHome);
 	}
 	
-	private void DecidingToStay() 
-	{
+	private void DecidingToStay() {
 		state = AgentState.DecidingToStayInRestaurant;
 
 		Random rand = new Random();
@@ -274,7 +251,7 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer
 		if (myRandomChoice == 0) {
 			state = AgentState.Leaving;
 			print("I don't want to wait, bailing from this stupid restaurant");
-			//customerGui.DoExitRestaurant();
+			customerGui.DoExitRestaurant();
 			stateChanged();
 		}
 		else {
@@ -288,20 +265,18 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer
 	private void SitDown() {
 		state = AgentState.BeingSeated;
 		print("Being seated. Going to table");
-		//customerGui.DoGoToSeat(tableNumber);
+		customerGui.DoGoToSeat(tableNumber);
 	}
 
 	private void MakeChoice() {
 		state = AgentState.DecidingChoice;
 		
 		print("Deciding what I want...");
-		timer.schedule(new TimerTask() 
-		{
+		timer.schedule(new TimerTask() {
 			public void run() 
 			{
 				
-				if (money < menu.lowestPricedItem) 
-				{
+				if (money < menu.lowestPricedItem) {
 					print("I can't afford anything on the menu");
 					LeaveRestaurant();
 					ResetState();
@@ -320,7 +295,7 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer
 				
 				state = AgentState.DoneDeciding;
 				AskToOrder();
-				//customerGui.DoReadyToOrder();
+				customerGui.DoReadyToOrder();
 				stateChanged();
 			}
 		},
@@ -332,14 +307,14 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer
 	}
 
 	private void PlaceOrder() {
-		//customerGui.DoPlaceOrder(choice); //GUI call
+		customerGui.DoPlaceOrder(choice); //GUI call
 		state = AgentState.Ordered;
 		waiterRole.msgHeresMyOrder(this, choice);
 	}
 
 	private void EatFood() {
 		state = AgentState.Eating;
-		//customerGui.DoEatFood(choice);
+		customerGui.DoEatFood(choice);
 		print("Eating Food");
 		//This next complicated line creates and starts a timer thread.
 		//We schedule a deadline of getHungerLevel()*1000 milliseconds.
@@ -362,7 +337,7 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer
 	}
 
 	private void AskForCheck() {
-		//customerGui.DoAskForCheck();
+		customerGui.DoAskForCheck();
 		state = AgentState.AskedForCheck;
 		print("Asking for my check");
 		waiterRole.msgIWantMyCheck(this);
@@ -371,7 +346,7 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer
 	private void PayingCheck() {
 		state = AgentState.PayingCheck;
 		print("Going to the cashier");
-		//customerGui.DoGoToCashier();
+		customerGui.DoGoToCashier();
 	}
 
 	private void PayCheck() {
@@ -394,13 +369,13 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer
 
 		print("Leaving.");
 		waiterRole.msgLeavingTable(this);
-		//customerGui.DoExitRestaurant();
+		customerGui.DoExitRestaurant();
 	}
 	
 	private void GoToJail() {
 		state = AgentState.inJail;
 		waiterRole.msgLeavingTable(this);
-		//customerGui.DoGoToJail();
+		customerGui.DoGoToJail();
 		
 		timer.schedule(new TimerTask() {
 			public void run() {
@@ -412,7 +387,7 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer
 	
 	private void walkOfShame() {
 		state = AgentState.Leaving;
-		//customerGui.DoExitRestaurant();
+		customerGui.DoExitRestaurant();
 		stateChanged();
 	}
 

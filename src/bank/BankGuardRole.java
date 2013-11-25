@@ -20,7 +20,7 @@ public class BankGuardRole extends Role implements BankGuard {
 	List <BankCustomer> customers;
 	List <BankCustomer> robbers;
 	List <MyTeller> tellers; 
-	
+
 	protected String roleName = "Bank Guard";
 
 	public enum TellerState {available, busy};
@@ -28,13 +28,13 @@ public class BankGuardRole extends Role implements BankGuard {
 	public class MyTeller {
 		public TellerState state;
 		BankTeller tell1;
-		
+
 		MyTeller (BankTeller t1) {
 			tell1 = t1;
 			state = TellerState.available;
 		}
 	}
-	
+
 	public BankGuardRole (String name, Person p1, String roleName) {
 		super(p1, name, roleName);
 		customers = Collections.synchronizedList(new ArrayList<BankCustomer>());
@@ -53,9 +53,8 @@ public class BankGuardRole extends Role implements BankGuard {
 
 	public void msgTellerCameToWork (BankTeller t1) {
 		tellers.add(new MyTeller(t1));
-		//stateChanged();
 	}
-	
+
 	public void msgRobbingBank(BankCustomer cust1) {
 		robbers.add(cust1);
 		stateChanged();
@@ -63,12 +62,11 @@ public class BankGuardRole extends Role implements BankGuard {
 
 	public void msgArrivedAtBank(BankCustomer c1) {
 		try {
-		print("New customer " + ((BankCustomerRole) c1).getName() + " arrived");
+			print("New customer " + ((BankCustomerRole) c1).getName() + " arrived");
 		}
 		catch (Exception e) {
-			
+
 		}
-		
 		customers.add(c1);
 		stateChanged();
 	}
@@ -82,26 +80,25 @@ public class BankGuardRole extends Role implements BankGuard {
 
 
 	//SCHEDULER
-	 public boolean pickAndExecuteAnAction() {
-		 
+	public boolean pickAndExecuteAnAction() {
+
 		for (BankCustomer cust1: robbers) {
 			catchRobber(cust1);
 			return true;
 		}
 
-
-		for (BankCustomer cust1: customers) {
-
-			return assignToTeller(cust1); 
-
+		if (customers.size() != 0){
+			for (BankCustomer cust1: customers) {
+				return assignToTeller(cust1); 
+			}
 		}
-		
+
 		if (leaveRole){
-			((Worker) person).roleFinishedWork();
 			leaveRole = false;
+			((Worker) person).roleFinishedWork();		
 			return true;
 		}
-		
+
 		return false;
 	}
 
@@ -133,13 +130,11 @@ public class BankGuardRole extends Role implements BankGuard {
 				cust1.msgGoToTeller(teller1.tell1);
 				teller1.state = TellerState.busy;
 				customers.remove(cust1);
-				return true;
+				return false;
 			}
 		}	
 		cust1.msgNoTellerAvailable();
-
 		return false;
-
 	}
 
 	public List <BankCustomer> getCustomers() {

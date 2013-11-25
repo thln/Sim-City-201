@@ -27,7 +27,6 @@ public class TimeManager {
 		//Could implement a "time slider"
 		long runTime;
 		runTime = System.currentTimeMillis() - startTime;
-
 		long simulationMinutes;
 		simulationMinutes = runTime/speedOfTime;
 		Time time = new Time((int) simulationMinutes);
