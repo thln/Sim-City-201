@@ -61,10 +61,6 @@ public class HostRole extends Role
 		return name;
 	}
 
-	public String getName() {
-		return name;
-	}
-
 	public List getWaitingCustomers() {
 		return waitingCustomers;
 	}
@@ -314,7 +310,7 @@ public class HostRole extends Role
 	public void addWaiter(WaiterRole waiterRole) 
 	{
 		waiters.add(new myWaiter(waiterRole));
-		print("Hired new waiter, " + waiterRole.getName());
+		print("Hired new waiter, " + waiterRole.getPerson().getName());
 		stateChanged();
 	}
 
