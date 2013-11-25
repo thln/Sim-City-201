@@ -3,6 +3,8 @@ package application;
 import housing.Housing;
 import housing.HousingMaintenanceCompany;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import bank.Bank;
@@ -18,8 +20,8 @@ public class Phonebook{
 	private HousingMaintenanceCompany housingMaintenanceCompany;
 	//mockrestaurant
 
-	public List<Housing> publicAllHousing; //= Collections.synchronizedList(new ArrayList<Housing>());
-
+	private List<Housing> publicAllHousing; //= Collections.synchronizedList(new ArrayList<Housing>());
+	private List<Housing> testHousing;// = Collections.synchronizedList(new ArrayList<Housing>());
 
 	
 	//ChineseRestaurant chineseRestaurant;
@@ -95,14 +97,26 @@ public class Phonebook{
 
 	}
 	
-	public List<Housing> getAllHousing()
+	public List<Housing> getAllHousing(boolean test)
 	{
-		return publicAllHousing;
+		if(test)
+		{
+			return testHousing;
+		}
+		else
+		{
+			return publicAllHousing;
+		}
 	}
 	
 	public void setHousingList(List<Housing> ApplicationHousing) 
 	{
 		this.publicAllHousing = ApplicationHousing;
+	}
+	
+	public void setTestHousingList(List<Housing> testingHMC)
+	{
+		this.testHousing = testingHMC;
 	}
 	
 	public HousingMaintenanceCompany getHousingMaintenanceCompany()

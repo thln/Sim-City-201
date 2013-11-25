@@ -13,6 +13,11 @@ public class Housing
 	int xCordinate;
 	int yCordinate;
 	
+	public Housing()
+	{
+		state = housingState.CheckUpNeeded;
+	}
+	
 	public Housing(Person newP, int Address, String type)
 	{
 		occupant = newP;

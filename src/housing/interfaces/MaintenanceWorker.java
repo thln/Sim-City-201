@@ -1,5 +1,6 @@
 package housing.interfaces;
 
-public interface MaintenanceWorker {
+public interface MaintenanceWorker 
+{
 
 }
