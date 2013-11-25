@@ -14,7 +14,7 @@ import application.gui.trace.PrintControlPanel;
 public class ControlPanel extends JPanel {
 	//Add Panel
 	private AddPanel addP;
-	private JPanel addPersonTab;
+	private EditPanel editP;
 	
 	//Trace Panel
 	private PrintPanel printPanel;
@@ -34,14 +34,14 @@ public class ControlPanel extends JPanel {
 		this.app = app;
 		this.appPanel = appPanel;
 		addP = new AddPanel(this, app);
-		addPersonTab =  addP.mainPanel;
+		editP = new EditPanel();
 		printPanel = new PrintPanel();
 		printPanelTab = printPanel;
 		
 		
-		ControlPane.addTab("Add Person", addPersonTab);
+		ControlPane.addTab("Add Person", addP);
 		ControlPane.addTab("Trace Panel", printPanelTab);
-		ControlPane.addTab("Option 3", panel3);
+		ControlPane.addTab("Edit Panel", panel3);
 		
 		add(ControlPane);
 	}	

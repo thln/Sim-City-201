@@ -20,7 +20,7 @@ public class ApplicationPanel extends JPanel{
 	
 	public ApplicationPanel(Application app){
 		cp = new ControlPanel(this, app);
-		lp = new ListPanel();
+		lp = new ListPanel(this, app);
 		
 		setLayout(new GridLayout(2,1));
 		
@@ -44,6 +44,10 @@ public class ApplicationPanel extends JPanel{
 	
 	public ControlPanel getControlPanel(){
 		return cp;
+	}
+	
+	public ListPanel getListPanel(){
+		return lp;
 	}
 	
 	public void updateGroups(){

@@ -3,13 +3,13 @@ package application;
 import housing.Housing;
 
 import javax.swing.*;
-
 import market.*;
 import bank.*;
 import person.*;
 import restaurant.Restaurant;
-
 import java.util.*;
+import application.gui.appView.listPanel.ListPanel.Profile;
+
 
 public class Application extends JPanel {
 	
