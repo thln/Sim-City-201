@@ -278,12 +278,4 @@ public class AnimationPanel extends JPanel implements MouseListener {
 			restaurantPanel.addGui(gui);
 		}
 	}
-	
-	public void getBuildingName(int index){
-		buildings.get(index).getName();
-	}
-	
-	public int getNumBuildings(){
-		return buildings.size();
-	}
 }
