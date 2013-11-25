@@ -1,10 +1,12 @@
 package market.test.mock;
 
 import market.interfaces.MarketCustomer;
+import testing.EventLog;
 import testing.Mock;
 
 public class MockMarketCustomer extends Mock implements MarketCustomer {
 
+	public EventLog log = new EventLog();
 
 	public MockMarketCustomer(String name) {
 		super(name);

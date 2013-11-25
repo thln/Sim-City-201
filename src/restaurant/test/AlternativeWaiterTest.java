@@ -100,7 +100,7 @@ public class AlternativeWaiterTest extends TestCase
 		//altWaiter = Phonebook.getPhonebook().getRestaurant().hostRole.waiters.get(0).waiterRole;
 		//altWaiter.msgPleaseSeatCustomer(tableNumber, customer, xHome, yHome);
 		
-		altWaiter.msgPleaseSeatCustomer(0, customer, 0, 0);
+		//altWaiter.msgPleaseSeatCustomer(0, customer, 0, 0);
 		//altWaiter.msgHeresMyOrder(customer, "Steak");
 		assertEquals("The waiter's list of customers should be 1. It isn't.", 1, altWaiter.myCustomers.size());
 		//assertEquals("The first order on the waiter's list should be steak. It isn't.", "Steak", altWaiter.readyOrders.get(1).choice);
