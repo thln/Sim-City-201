@@ -98,13 +98,16 @@ public class ListPanel extends JPanel implements ActionListener{
 		for(int i = 0; i<app.getPopulationSize();i++){
 			Person temp = app.getPerson(i);
 			if(temp instanceof Crook){
-				people.add(new Profile(temp.getName(), (int) temp.getMoney(), "Crook", null, null, 0,0,0));
+				people.add(new Profile(temp.getName(), (int) temp.getMoney(), "Crook", temp.getCurrentRoleName(), null, 0,0,0));
 			}
 			else if(temp instanceof Deadbeat){
+				people.add(new Profile(temp.getName(), (int) temp.getMoney(), "Deadbeat", temp.getCurrentRoleName(), null, 0,0,0));
 			}
 			else if(temp instanceof Worker){
+				people.add(new Profile(temp.getName(), (int) temp.getMoney(), "Worker", temp.getCurrentRoleName(), null, 0,0,0));
 			}
 			else if(temp instanceof Wealthy){
+				people.add(new Profile(temp.getName(), (int) temp.getMoney(), "Wealthy", temp.getCurrentRoleName(), null, 0,0,0));
 			}
 		}
 		
