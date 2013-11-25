@@ -1,11 +1,12 @@
 package market;
 
+import market.interfaces.MarketCustomer;
 import restaurant.Restaurant;
 
 public class MarketOrder {
 
 	public enum orderState {open, processing, itemsFound, itemsDelivered, gaveToCustomer};
-	MarketCustomerRole customer = null;
+	MarketCustomer customer = null;
 	Restaurant restaurant = null;
 	String item;
 	int itemAmountOrdered;
@@ -13,8 +14,8 @@ public class MarketOrder {
 	double orderCost;
 	orderState state = orderState.open;
 
-	MarketOrder(MarketCustomerRole customer, String item, int itemAmountOrdered) {
-		this.customer = customer;
+	MarketOrder(MarketCustomer customer1, String item, int itemAmountOrdered) {
+		this.customer = customer1;
 		this.item = item;
 		this.itemAmountOrdered = itemAmountOrdered;
 	}

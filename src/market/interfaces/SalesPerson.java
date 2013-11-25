@@ -8,7 +8,7 @@ import restaurant.Restaurant;
 public interface SalesPerson {
 
 	//Messages
-	public void msgIWantProducts(MarketCustomerRole customer, String item,
+	public void msgIWantProducts(MarketCustomer customer, String item,
 			int numWanted);
 
 	public void msgIWantProducts(Restaurant restaurant, String item,
@@ -18,7 +18,7 @@ public interface SalesPerson {
 
 	public void msgOrderDelivered(MarketOrder o);
 
-	public void msgPayment(MarketCustomerRole customer, double payment);
+	public void msgPayment(MarketCustomer customer, double payment);
 
 	public void msgPayment(Restaurant restaurant, double payment);
 
