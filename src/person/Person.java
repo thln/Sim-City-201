@@ -117,8 +117,6 @@ public abstract class Person extends Agent{
 						BCR.setDesire("deposit");
 					}
 				}
-
-				Phonebook.getPhonebook().getBank().bankGuardRole.msgArrivedAtBank(BCR);
 				cust1.setRoleActive();
 				//bankPanel.addGui(bg);
 				stateChanged();
@@ -234,7 +232,6 @@ public abstract class Person extends Agent{
 		        e.printStackTrace();
 		//
 		}
-
 		currentRoleName = " ";
 		//After arrives home
 		alarmClock.schedule(new TimerTask() {

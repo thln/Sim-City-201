@@ -53,7 +53,6 @@ public class BankGuardRole extends Role implements BankGuard {
 
 	public void msgTellerCameToWork (BankTeller t1) {
 		tellers.add(new MyTeller(t1));
-		//stateChanged();
 	}
 
 	public void msgRobbingBank(BankCustomer cust1) {
@@ -68,7 +67,6 @@ public class BankGuardRole extends Role implements BankGuard {
 		catch (Exception e) {
 
 		}
-
 		customers.add(c1);
 		stateChanged();
 	}
@@ -91,9 +89,7 @@ public class BankGuardRole extends Role implements BankGuard {
 
 		if (customers.size() != 0){
 			for (BankCustomer cust1: customers) {
-
 				return assignToTeller(cust1); 
-
 			}
 		}
 
@@ -134,13 +130,11 @@ public class BankGuardRole extends Role implements BankGuard {
 				cust1.msgGoToTeller(teller1.tell1);
 				teller1.state = TellerState.busy;
 				customers.remove(cust1);
-				return true;
+				return false;
 			}
 		}	
 		cust1.msgNoTellerAvailable();
-
 		return false;
-
 	}
 
 	public List <BankCustomer> getCustomers() {
