@@ -28,6 +28,7 @@ public class ControlPanel extends JPanel {
 	private JTabbedPane ControlPane = new JTabbedPane();
 	private Application app;
 	private ApplicationPanel appPanel;
+	private SelectBuilding selectP;
 	
 	public ControlPanel(ApplicationPanel appPanel, Application app){
 		setLayout(new GridLayout(1,1));
@@ -35,6 +36,7 @@ public class ControlPanel extends JPanel {
 		this.appPanel = appPanel;
 		addP = new AddPanel(this, app);
 		editP = new EditPanel(this, app, appPanel);
+		//selectP = new SelectBuilding(appPanel.getAppGui().getAnimationPanel());
 		dashboardP = new DashboardPanel(app);
 		
 		printPanel = new PrintPanel();

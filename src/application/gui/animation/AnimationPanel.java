@@ -236,4 +236,12 @@ public class AnimationPanel extends JPanel implements MouseListener {
 	public String toString() {
 		return "Animation Panel";
 	}
+	
+	public void getBuildingName(int index){
+		buildings.get(index).getName();
+	}
+	
+	public int getNumBuildings(){
+		return buildings.size();
+	}
 }
