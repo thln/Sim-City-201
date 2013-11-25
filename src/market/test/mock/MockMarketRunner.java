@@ -6,7 +6,7 @@ import testing.Mock;
 
 public class MockMarketRunner extends Mock implements MarketRunner {
 
-	MockMarketRunner(String name) {
+	public MockMarketRunner(String name) {
 		super(name);
 	}
 

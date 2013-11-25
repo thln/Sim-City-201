@@ -2,6 +2,12 @@ package market;
 
 import java.util.*;
 
+import market.interfaces.MarketRunner;
+import market.interfaces.SalesPerson;
+import market.interfaces.UPSman;
+import market.test.mock.MockMarketRunner;
+import market.test.mock.MockSalesPerson;
+import market.test.mock.MockUPSman;
 import application.WatchTime;
 import person.Person;
 import person.Role;
@@ -21,6 +27,11 @@ public class Market {
 	public MarketRunnerRole marketRunnerRole = new MarketRunnerRole("Market Runner", this);
 	public UPSmanRole UPSmanRole = new UPSmanRole("UPS Man", this);
 
+	//Mocks
+	public MockSalesPerson mockSalesPerson = new MockSalesPerson("MockSalesPerson");
+	public MockMarketRunner mockMarketRunner = new MockMarketRunner("MockMarketRunner");
+	public MockUPSman mockUPSman = new MockUPSman("MockUPSMan");
+	
 	double money;
 	public HashMap<String, Product> marketItemsForSale = new HashMap<String, Product>(); 
 	{
@@ -141,5 +152,27 @@ public class Market {
 	public void setName(String name) 
 	{
 		this.name = name;
+	}
+
+
+	public SalesPerson getSalesPerson(boolean test) {
+		if (test) {
+			return mockSalesPerson;
+		}
+		return salesPersonRole;
+	}
+	
+	public MarketRunner getMarketRunner(boolean test) {
+		if (test) {
+			return mockMarketRunner;
+		}
+		return marketRunnerRole;
+	}
+	
+	public UPSman getUPSman(boolean test) {
+		if (test) {
+			return mockUPSman;
+		}
+		return UPSmanRole;
 	}
 }
