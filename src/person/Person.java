@@ -87,7 +87,7 @@ public abstract class Person extends Agent{
 				if (money <= moneyMinThreshold)
 					desiredCash = 100;
 				else if (money >= moneyMaxThreshold)
-					depositAmount = 100;
+					depositAmount = money-moneyMaxThreshold+100;
 
 				if (accountNum != 0) {
 					if (money <= moneyMinThreshold){

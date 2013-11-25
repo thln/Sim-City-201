@@ -57,7 +57,7 @@ public class Application extends JPanel {
 		//Market Workers
 		//SHIFT 1
 		Worker market1d = new Worker("Derrick", 10, "marketRunner", "market", 1000, 1400, 2000);
-		Worker market1e = new Worker("Erin", 100, "marketSales", "market", 1000, 1400, 2000);
+		Worker market1e = new Worker("Erin", 1000, "marketSales", "market", 1000, 1400, 2000);
 		Worker market1f = new Worker("Fred", 100, "UPSman", "market", 1000, 1400, 2000);	
 		//SHIFT 2
 		Worker market2d = new Worker("Derrick", 100, "marketRunner", "market", 2000, 400, 1000);
@@ -180,9 +180,9 @@ public class Application extends JPanel {
 		bank1a.startThread();
 		bank1b.startThread();
 		bank1c.startThread();
-//		market1d.startThread();
-//		market1e.startThread();
-		market1f.startThread();
+		market1d.startThread();
+		market1e.startThread();
+//		market1f.startThread();
 		rest1h.startThread();
 		rest1g.startThread();	
 		rest1i.startThread();
