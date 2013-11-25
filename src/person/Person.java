@@ -28,7 +28,7 @@ public abstract class Person extends Agent{
 	//Role Related
 	public List<Role> roles = Collections.synchronizedList(new ArrayList<Role>());         //contains all the customer role
 	protected String currentRoleName;
-	
+
 	//Car Related
 	public enum CarState {noCar, wantsCar, hasCar};
 	public CarState carStatus = CarState.noCar;
@@ -92,7 +92,10 @@ public abstract class Person extends Agent{
 				currentRoleName = "Bank Customer";
 
 				if (money <= moneyMinThreshold) {
-					desiredCash = 100;
+					if (name == "Fred")
+						desiredCash = 200;
+					else
+						desiredCash = 100;
 				}
 				else if (money >= moneyMaxThreshold) {
 					depositAmount = (money-moneyMaxThreshold+100);
@@ -242,19 +245,19 @@ public abstract class Person extends Agent{
 	public void setHome(Housing place) {
 		home = place;
 	}
-	
+
 	public String getCurrentRoleName()
 	{
 		return currentRoleName;
 	}
 
-    public void print(String msg)
-    {
-        AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, msg);
-    }
-    
-    public Housing getHousing()
-    {
-    	return home;
-    }
+	public void print(String msg)
+	{
+		AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, msg);
+	}
+
+	public Housing getHousing()
+	{
+		return home;
+	}
 }
