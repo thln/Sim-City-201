@@ -8,7 +8,9 @@ import bank.*;
 import person.*;
 import restaurant.Restaurant;
 import java.util.*;
-import application.gui.appView.listPanel.ListPanel.Profile;
+import application.gui.animation.*;
+import application.gui.animation.agentGui.*;
+import application.gui.appView.listPanel.*;
 
 
 public class Application extends JPanel {
@@ -16,7 +18,7 @@ public class Application extends JPanel {
 	private ArrayList<Person> population = new ArrayList<Person>();
 	private static List<Housing> allHousing = Collections.synchronizedList(new ArrayList<Housing>());
 
-
+	private AnimationPanel animPanel;
 	public Bank bank;
 	public Market market;
 	public Restaurant restaurant;
@@ -24,9 +26,9 @@ public class Application extends JPanel {
 	//public static Phonebook phonebook = new Phonebook(bank, market, restaurant, allHousing);
 
 	
-	public Application() {
+	public Application(AnimationPanel ap) {
 
-		
+		animPanel = ap;
 		Phonebook.getPhonebook().setHousingList(allHousing);
 		
 		//String name, int money, String jobTitle, String jobPlace, int startT, int lunchT, int endT
@@ -176,6 +178,13 @@ public class Application extends JPanel {
 		population.add(rest2i);
 		population.add(rest2j);
 		population.add(rest2k);
+		
+		for(Person person : population) {
+			person.setPanel(animPanel);
+			PersonGui pg = new PersonGui(person);
+			person.setGui(pg);
+			animPanel.addGui(pg);
+		}
 		
 		//Starting Threads
 		bank1a.startThread();

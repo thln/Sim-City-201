@@ -16,7 +16,7 @@ public class PersonGui extends CityGui{
 	private int xPos, yPos;//default person position
 	private int xDestination, yDestination;//default start position
 	private int xHome, yHome;
-	private enum Command {noCommand, GoToBuilding, GoToBusStop, GoOnBus, LeaveBuilding};
+	private enum Command {noCommand, GoToBuilding, GoToBusStop, GoOnBus, GoHome};
 	private Command command = Command.noCommand;
 
 	private enum PersonState {nothing};
@@ -31,24 +31,32 @@ public class PersonGui extends CityGui{
 		if(p instanceof Worker) {
 			xPos = 0;
 			yPos = 25;
+			xHome = 0;
+			yHome = 25;
 			xDestination = 25;
 			yDestination = 25;
 		}
 		if(p instanceof Wealthy) {
 			xPos = 0;
 			yPos = 125;
+			xHome = 0;
+			yHome = 125;
 			xDestination = 25;
 			yDestination = 125;
 		}
 		if(p instanceof Crook) {
 			xPos = 280;
 			yPos = 250;
+			xHome = 280;
+			yHome = 250;
 			xDestination = 300;
 			yDestination = 250;
 		}
 		if(p instanceof Deadbeat) {
 			xPos = 280;
 			yPos = 250;
+			xHome = 280;
+			yHome = 250;
 			xDestination = 300;
 			yDestination = 250;
 		}
@@ -69,6 +77,9 @@ public class PersonGui extends CityGui{
 		if (xPos == xDestination && yPos == yDestination) {
 			if(agent != null) {
 				if(command == Command.GoToBuilding) {
+					agent.msgAtDestination();
+				}
+				if(command == Command.GoHome) {
 					agent.msgAtDestination();
 				}
 			}
@@ -109,7 +120,13 @@ public class PersonGui extends CityGui{
 		yDestination = 100;
 	}
 	
-	public void DoGoHome(int home) { //the person's assigned home number. Maybe use coordinates instead?
-		
+	public void DoGoHome() { //the person's assigned home number. Maybe use coordinates instead?
+		xDestination = xHome;
+		yDestination = yHome;
+		command = Command.GoHome;
+	}
+	
+	public String toString() {
+		return "Person Gui";
 	}
 }

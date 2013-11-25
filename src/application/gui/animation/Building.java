@@ -8,7 +8,7 @@ import javax.swing.*;
 
 public class Building {
 	
-	BuildingPanel myBuildingPanel;
+	public BuildingPanel myBuildingPanel;
 	private String name;
 	ImageIcon myImage;
 	int xLocation;

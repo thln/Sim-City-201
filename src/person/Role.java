@@ -4,11 +4,13 @@ import agent.StringUtil;
 
 import application.gui.trace.AlertLog;
 import application.gui.trace.AlertTag;
+import application.gui.animation.agentGui.*;
 
 public abstract class Role {
 
 
         public Person person = null;
+        public Gui gui = null;
         
         protected String roleName = null;
         protected String personName = null;
@@ -148,6 +150,10 @@ public abstract class Role {
     public RoleState getRoleState()
     {
     	return state;
+    }
+    
+    public void setGui(Gui gui) {
+    	this.gui = gui;
     }
     
 }

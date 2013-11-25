@@ -4,6 +4,7 @@ import application.WatchTime;
 import person.Person;
 import person.Role;
 import person.Worker;
+import application.gui.animation.*;
 
 public class Restaurant {
 
@@ -19,6 +20,7 @@ public class Restaurant {
 	public CookRole cookRole = new CookRole("Cook", this);
 	public CashierRole cashierRole = new CashierRole("Cashier", this);
 	public RevolvingStand theRevolvingStand = new RevolvingStand();
+	private BuildingPanel restPanel;
 
 	public Restaurant(String name) {
 		this.name = name;
@@ -122,5 +124,8 @@ public class Restaurant {
 	{
 		return theRevolvingStand;
 	}
-
+	
+	public void setPanel(BuildingPanel panel) {
+		restPanel = panel;
+	}
 }

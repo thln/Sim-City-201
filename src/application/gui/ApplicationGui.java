@@ -26,7 +26,7 @@ import application.gui.trace.TracePanel;
 public class ApplicationGui extends JFrame {
 
 
-	Application app = new Application();
+	Application app;
 
 	ApplicationPanel appPanel; 
 	AnimationPanel animPanel = new AnimationPanel();
@@ -41,6 +41,7 @@ public class ApplicationGui extends JFrame {
 	//final static int AnimPanelY = WINDOWY; //Animation View Panel Height 600	
 
 	ApplicationGui() {
+		app = new Application(animPanel);
 		appPanel = new ApplicationPanel(app);
 		setBounds(0,0, WINDOWX, WINDOWY);
 		//appPanel.getControlPanel().setApplication(app);

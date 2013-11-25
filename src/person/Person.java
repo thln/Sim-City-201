@@ -14,6 +14,8 @@ import application.Phonebook;
 import application.TimeManager;
 import application.gui.trace.AlertLog;
 import application.gui.trace.AlertTag;
+import application.gui.animation.*;
+import application.gui.animation.agentGui.*;
 
 public abstract class Person extends Agent{
 
@@ -23,9 +25,15 @@ public abstract class Person extends Agent{
 	private Housing home;
 	private Timer alarmClock = new Timer();
 	private Timer hungerTimer = new Timer();
+	private PersonGui gui;
+	BuildingPanel marketPanel = null;
+	BuildingPanel bankPanel = null;
+	BuildingPanel housePanel = null;
+	BuildingPanel restPanel = null;
 
 	//Role Related
 	public List<Role> roles = Collections.synchronizedList(new ArrayList<Role>());         //contains all the customer role
+	public List<Gui> guis = Collections.synchronizedList(new ArrayList<Gui>());
 	protected String currentRoleName;
 	
 	//Car Related
@@ -76,8 +84,8 @@ public abstract class Person extends Agent{
 	protected void prepareForBank () {
 		Do("Becoming Bank Customer");
 		//Do Gui method
-
-		/*GUI call to go to business
+		gui.DoGoToBuilding(400, 170);
+		//GUI call to go to business
                 try {
                         atDestination.acquire();
                 } catch (InterruptedException e) {
@@ -85,12 +93,14 @@ public abstract class Person extends Agent{
                         e.printStackTrace();
 
                 }
-		 */
+		 
 		//Once semaphore is released from GUI
 		for (Role cust1 : roles) {
 			if (cust1 instanceof BankCustomerRole) 
 			{
 				BankCustomerRole BCR = (BankCustomerRole) cust1;
+				BankCustomerGui bg = new BankCustomerGui(BCR);
+				BCR.setGui(bg);
 				currentRoleName = "Bank Customer";
 				
 				if (money <= moneyMinThreshold)
@@ -109,6 +119,7 @@ public abstract class Person extends Agent{
 
 				Phonebook.getPhonebook().getBank().bankGuardRole.msgArrivedAtBank(BCR);
 				cust1.setRoleActive();
+				bankPanel.addGui(bg);
 				stateChanged();
 				return;
 			}
@@ -116,15 +127,16 @@ public abstract class Person extends Agent{
 	}
 
 	protected void prepareForMarket() {
-		//                //GUI call to go to business
-		//                try {
-		//                        atDestination.acquire();
-		//                } catch (InterruptedException e) {
-		//                        // TODO Auto-generated catch block
-		//                        e.printStackTrace();
-		//
-		//                }
-		//                //Once semaphore is released from GUI
+                //GUI call to go to business
+			gui.DoGoToBuilding(400, 100);
+                try {
+                        atDestination.acquire();
+                } catch (InterruptedException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+
+                }
+                //Once semaphore is released from GUI
 
 		//Checking if have enough money for car
 		if (accountBalance >= (carCost + 100)) {
@@ -139,8 +151,12 @@ public abstract class Person extends Agent{
 			item = chooseMarketItem();
 			for (Role cust1 : roles) {
 				if (cust1 instanceof MarketCustomerRole) {
+					MarketCustomerRole MCR = (MarketCustomerRole) cust1;
+					MarketCustomerGui mg = new MarketCustomerGui(MCR);
+					MCR.setGui(mg);
 					Phonebook.getPhonebook().getMarket().salesPersonRole.msgIWantProducts((MarketCustomerRole) cust1, item, 3);
 					cust1.setRoleActive();
+					marketPanel.addGui(mg);
 					currentRoleName = "Market Customer";
 					stateChanged();
 					return;
@@ -150,8 +166,12 @@ public abstract class Person extends Agent{
 		else if (carStatus == CarState.wantsCar) {
 			for (Role cust1 : roles) {
 				if (cust1 instanceof MarketCustomerRole) {
+					MarketCustomerRole MCR = (MarketCustomerRole) cust1;
+					MarketCustomerGui mg = new MarketCustomerGui(MCR);
+					MCR.setGui(mg);
 					Phonebook.getPhonebook().getMarket().salesPersonRole.msgIWantProducts((MarketCustomerRole) cust1, "Car", 3);
 					cust1.setRoleActive();
+					marketPanel.addGui(mg);
 					stateChanged();
 					return;
 				}
@@ -173,7 +193,8 @@ public abstract class Person extends Agent{
 
 	protected void prepareForRestaurant() {
 		//GUI call to go to business
-		/*
+		gui.DoGoToBuilding(400, 50);
+		
                 try {
                         atDestination.acquire();
                 } catch (InterruptedException e) {
@@ -181,14 +202,18 @@ public abstract class Person extends Agent{
                         e.printStackTrace();
 
                 }
-		 */
+		 
 		//Once semaphore is released from GUI
 		for (Role cust1 : roles) {
 			if (cust1 instanceof RestaurantCustomerRole) {
+				RestaurantCustomerRole RCR = (RestaurantCustomerRole) cust1;
+				RestaurantCustomerGui rg = new RestaurantCustomerGui(RCR);
+				RCR.setGui(rg);
 				//Must be changed because doesn't have xHome, yHome
 				//Phonebook.getPhonebook().getRestaurant().msgIWantFood(cust1, xHome, yHome);
 				currentRoleName = "Restaurant Customer";
 				cust1.setRoleActive();
+				restPanel.addGui(rg);
 				stateChanged();
 				return;
 			}
@@ -197,14 +222,14 @@ public abstract class Person extends Agent{
 	}
 
 	protected void goToSleep() {
-		//                gui.goHome();
-		//                try {
-		//                        atDestination.acquire();
-		//                } catch (InterruptedException e) {
-		//                        // TODO Auto-generated catch block
-		//                        e.printStackTrace();
+		gui.DoGoHome();
+		try {
+		        atDestination.acquire();
+		} catch (InterruptedException e) {
+		        // TODO Auto-generated catch block
+		        e.printStackTrace();
 		//
-		//                }
+		}
 		currentRoleName = " ";
 		//After arrives home
 		alarmClock.schedule(new TimerTask() {
@@ -216,14 +241,13 @@ public abstract class Person extends Agent{
 	}
 
 	protected void startHungerTimer() {
-		//                gui.goHome();
-		//                try {
-		//                        atDestination.acquire();
-		//                } catch (InterruptedException e) {
-		//                        // TODO Auto-generated catch block
-		//                        e.printStackTrace();
-		//
-		//                }
+		gui.DoGoHome();
+		try {
+			atDestination.acquire();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		hunger = HungerLevel.moderate;
 
@@ -267,5 +291,27 @@ public abstract class Person extends Agent{
     public Housing getHousing()
     {
     	return home;
+    }
+    
+    public void setGui(PersonGui gui) {
+    	this.gui = gui;
+    }
+    
+    public void setPanel(AnimationPanel ap) {
+    	ArrayList<Building> buildings = ap.getBuildings();
+    	for(Building building : buildings) {
+    		if(building.getName().toLowerCase().contains("market")) {
+				marketPanel = building.myBuildingPanel;
+			}
+			if(building.getName().toLowerCase().contains("bank")) {
+				bankPanel = building.myBuildingPanel;
+			}
+			if(building.getName().toLowerCase().contains("house")) {
+				housePanel = building.myBuildingPanel;
+			}
+			if(building.getName().toLowerCase().contains("restaurant")) {
+				restPanel = building.myBuildingPanel;
+			}
+    	}
     }
 }

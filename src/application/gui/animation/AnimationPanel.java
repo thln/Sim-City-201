@@ -77,7 +77,7 @@ public class AnimationPanel extends JPanel implements MouseListener {
     	testbutton2.setBounds(100, 0, 100, 50);
     	cityPanel.add(testbutton2);
     	*/
-    	testGuisTwo();
+    	//testGuisTwo();
 	}
 
 	public void displayBuildingPanel(BuildingPanel bp) {
@@ -235,5 +235,47 @@ public class AnimationPanel extends JPanel implements MouseListener {
 
 	public String toString() {
 		return "Animation Panel";
+	}
+	
+	public ArrayList<Building> getBuildings() {
+		return buildings;
+	}
+	
+	public void addGui(Gui gui) {
+		BuildingPanel marketPanel = null;
+		BuildingPanel bankPanel = null;
+		BuildingPanel housePanel = null;
+		BuildingPanel restaurantPanel = null;
+		
+		for(Building building : buildings) {
+			if(building.getName().toLowerCase().contains("market")) {
+				marketPanel = building.myBuildingPanel;
+			}
+			if(building.getName().toLowerCase().contains("bank")) {
+				bankPanel = building.myBuildingPanel;
+			}
+			if(building.getName().toLowerCase().contains("house")) {
+				housePanel = building.myBuildingPanel;
+			}
+			if(building.getName().toLowerCase().contains("restaurant")) {
+				restaurantPanel = building.myBuildingPanel;
+			}
+		}
+		
+		if(gui instanceof CityGui) {
+			cityPanel.addGui(gui);
+		}
+		if(gui instanceof BankGui) {
+			bankPanel.addGui(gui);
+		}
+		if(gui instanceof MarketGui) {
+			marketPanel.addGui(gui);
+		}
+		if(gui instanceof HouseGui) {
+			housePanel.addGui(gui);
+		}
+		if(gui instanceof RestaurantGui) {
+			restaurantPanel.addGui(gui);
+		}
 	}
 }

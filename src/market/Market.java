@@ -12,6 +12,7 @@ import application.WatchTime;
 import person.Person;
 import person.Role;
 import person.Worker;
+import application.gui.animation.*;
 
 public class Market {
 
@@ -31,6 +32,7 @@ public class Market {
 	public MockSalesPerson mockSalesPerson = new MockSalesPerson("MockSalesPerson");
 	public MockMarketRunner mockMarketRunner = new MockMarketRunner("MockMarketRunner");
 	public MockUPSman mockUPSman = new MockUPSman("MockUPSMan");
+	private BuildingPanel marketPanel;
 	
 	double money;
 	public HashMap<String, Product> marketItemsForSale = new HashMap<String, Product>(); 
@@ -174,5 +176,9 @@ public class Market {
 			return mockUPSman;
 		}
 		return UPSmanRole;
+	}
+	
+	public void setPanel(BuildingPanel panel) {
+		marketPanel = panel;
 	}
 }
