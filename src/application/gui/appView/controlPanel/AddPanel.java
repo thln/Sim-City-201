@@ -65,7 +65,8 @@ public class AddPanel extends JPanel implements ActionListener {
 			String name = firstName.getText() + " " + lastName.getText();
 			String type = (String)typeBox.getSelectedItem();
 			app.addPerson(name, 500, type, null, null, 0, 0, 0);
-			cp.getAppPanel().getListPanel().addPerson(name, 500, type, null, null, 0, 0, 0);
+			//cp.getAppPanel().getListPanel().addPerson(name, 500, type, null, null, 0, 0, 0);
+			cp.getAppPanel().getListPanel().updateList();
 			
 			app.printLastPop();
 			System.out.println(type);

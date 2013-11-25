@@ -7,6 +7,7 @@ import person.Deadbeat;
 import person.Person;
 import person.Wealthy;
 import person.Worker;
+import person.Worker.Job;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -34,6 +35,7 @@ public class ListPanel extends JPanel implements ActionListener{
 		
 		listPane = new JPanel();
 		listPane.setLayout(new BoxLayout((Container)listPane, BoxLayout.Y_AXIS));
+		updateList();
 		pane.setViewportView(listPane);
 		
 		listPane.setPreferredSize(new Dimension((1/4)*(this.getWidth()),this.getHeight()));
@@ -85,9 +87,8 @@ public class ListPanel extends JPanel implements ActionListener{
 			people.add(new Profile(name, money, type, jobTitle,jobLocation,startT,lunchT,endT));
 			validate();
 		}
-	
-	
 	}
+	
 	public void updateInfoPane(Profile pf, int index){
 		if(pf != null){
 			personInfoArea.setText("Name: " + pf.getName() +"\nIndex: "+ index);
@@ -97,20 +98,35 @@ public class ListPanel extends JPanel implements ActionListener{
 	public void updateList(){
 		for(int i = 0; i<app.getPopulationSize();i++){
 			Person temp = app.getPerson(i);
+			JButton button = new JButton(temp.getName());
 			if(temp instanceof Crook){
 				people.add(new Profile(temp.getName(), (int) temp.getMoney(), "Crook", temp.getCurrentRoleName(), null, 0,0,0));
+				button.setBackground(Color.lightGray);
 			}
 			else if(temp instanceof Deadbeat){
 				people.add(new Profile(temp.getName(), (int) temp.getMoney(), "Deadbeat", temp.getCurrentRoleName(), null, 0,0,0));
+				button.setBackground(Color.orange);
 			}
 			else if(temp instanceof Worker){
+				//Job tempJob = ((Worker) temp).getJob();
 				people.add(new Profile(temp.getName(), (int) temp.getMoney(), "Worker", temp.getCurrentRoleName(), null, 0,0,0));
+				button.setBackground(Color.white);
 			}
 			else if(temp instanceof Wealthy){
 				people.add(new Profile(temp.getName(), (int) temp.getMoney(), "Wealthy", temp.getCurrentRoleName(), null, 0,0,0));
+				button.setBackground(Color.green);
 			}
+			else {
+				//if the person is none of the types of the type can't be detected, output a black button to indicate an error
+				people.add(new Profile(temp.getName(), (int) temp.getMoney(), "None", temp.getCurrentRoleName(), null, 0,0,0));
+				button.setBackground(Color.black);
+			}
+			//Dimension buttonSize = new Dimension(listPane.getSize().width, (1/7)* (listPane.getSize().height));
+			//button.setPreferredSize(buttonSize);
+			button.addActionListener(this);
+			buttons.add(button);
+			listPane.add(button);
 		}
-		
 	}
 	public void editProfile(Profile pf, int index){
 		

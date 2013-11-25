@@ -3,11 +3,14 @@ package application;
 import housing.Housing;
 
 import javax.swing.*;
+
 import market.*;
 import bank.*;
 import person.*;
 import restaurant.Restaurant;
+
 import java.util.*;
+
 import application.gui.appView.listPanel.ListPanel.Profile;
 
 
@@ -223,6 +226,7 @@ public class Application extends JPanel {
 			newP.setHome(allHousing.get(allHousing.size() - 1));
 			population.add(newP);
 			newP.startThread();
+			System.out.println("ayyy");
 		}
 		else if (type.equals("Worker")) 
 		{
