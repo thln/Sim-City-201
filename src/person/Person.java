@@ -12,6 +12,8 @@ import restaurant.RestaurantCustomerRole;
 import agent.Agent;
 import application.Phonebook;
 import application.TimeManager;
+import application.gui.trace.AlertLog;
+import application.gui.trace.AlertTag;
 
 public abstract class Person extends Agent{
 
@@ -233,26 +235,8 @@ public abstract class Person extends Agent{
 		home = place;
 	}
 
-	/*
-        public void print(String s)
+        public void print(String msg)
         {
-                String roleName = "";
-
-                synchronized (roles) 
-                {
-                        if (!roles.isEmpty()) 
-                        {
-                                for (Role r : roles) 
-                                {
-                                        if (r.getState() == roleState.active) 
-                                        {
-                                                roleName = r.
-                                        }
-                                }
-                        }
-                }
-
-                System.out.println(getName() + ": " + s);
+            AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, msg);
         }
-	 */
 }
