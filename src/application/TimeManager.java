@@ -7,6 +7,8 @@ public class TimeManager {
 	private static TimeManager timeManager;
 
 	public enum Day{Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday};
+	
+	private int speedOfTime = 500;
 
 	private TimeManager() {
 	}
@@ -27,12 +29,34 @@ public class TimeManager {
 		runTime = System.currentTimeMillis() - startTime;
 
 		long simulationMinutes;
-		simulationMinutes = runTime/500;
+		simulationMinutes = runTime/speedOfTime;
 		Time time = new Time((int) simulationMinutes);
 
 		return time;
 	}
+/*
+	public Time getTime(int faster)
+	{
+		long runTime;
+		runTime = System.currentTimeMillis() - startTime;
 
+		long simulationMinutes;
+		simulationMinutes = runTime/faster;
+		Time time = new Time((int) simulationMinutes);
+
+		return time;
+	}*/
+	
+	public void fastForward(int faster)
+	{
+		speedOfTime = faster;
+	}
+	
+	public void resetTimeSpeed()
+	{
+		speedOfTime = 500;
+	}
+	
 	public class Time {
 		public final int dayMinute;
 		public final int dayHour;

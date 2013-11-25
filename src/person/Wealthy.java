@@ -104,6 +104,7 @@ public class Wealthy extends Person {
 	//Actions
 	public void prepareForRentCollection() 
 	{
+		checkedMailbox = true;
 		print("I am picking up all the rent money.");
 		money += Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.pickUpRentMoney(this);
 		

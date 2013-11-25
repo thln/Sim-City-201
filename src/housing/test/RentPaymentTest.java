@@ -19,7 +19,7 @@ public class RentPaymentTest extends TestCase
 		super.setUp();
 		worker = new Worker("testworker", 100, "waiter", "restaurant", 800, 1200, 1700);
 		crook = new Crook("testcrook", 100);
-		landlord = new Wealthy("testlandlord", 500);
+		landlord = new Wealthy("testlandlord", 100);
 	}
 	
 	//Test that people deposit money
@@ -123,7 +123,9 @@ public class RentPaymentTest extends TestCase
 		{
 			e.printStackTrace();
 		}
+		System.out.println(TimeManager.getTimeManager().getTime().dayMinute + " " + TimeManager.getTimeManager().getTime().dayHour + " " + TimeManager.getTimeManager().getTime().day);
 		
+		//System.out.println(TimeManager.getTimeManager().getTime().dayMinute + " " + TimeManager.getTimeManager().getTime(300).dayHour + " " + TimeManager.getTimeManager().getTime().day);
 
 	  	  /******************************/
 		 /***Testing preconditions******/
@@ -163,26 +165,28 @@ public class RentPaymentTest extends TestCase
 		assertEquals("Test Crook should have $50 less. It doesn't.", 50.0, crook.money);
 		assertTrue("Test Crook's checkedMailbox should return true. it doesn't.", crook.checkedMailbox);
 		
-
+		//This is to make the time fast forward to Monday.
+		TimeManager.getTimeManager().fastForward(25);		
 		try 
 		{
-			Thread.sleep(720);
+			Thread.sleep(50000);
 		} 
 		catch (InterruptedException e) 
 		{
 			e.printStackTrace();
 		}
+		
+		System.out.println(TimeManager.getTimeManager().getTime().dayMinute + " " + TimeManager.getTimeManager().getTime().dayHour + " " + TimeManager.getTimeManager().getTime().day);
 
-		//How to make Monday ?????????
 		assertEquals("Today should be Monday. It isn't.", Day.Monday, TimeManager.getTimeManager().getTime().day);
 		assertEquals("There should be $250 in the mailbox. There isn't.", 250, Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.getCurrentPaymentAmount());
 		assertFalse("Landlord's checkedMailbox should return false. it doesn't.", landlord.checkedMailbox);
-		assertEquals("Landlord should have $500. It doesn't.", 500.0, landlord.money);
+		assertEquals("Landlord should have $500. It doesn't.", 100.0, landlord.money);
 
 		assertTrue("Landlord's pickandexecute action should return true to pay rent. It doesn't.", landlord.pickAndExecuteAnAction());
 
 		assertEquals("There should be 0 in the mailbox. There isn't.", 0, Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.getCurrentPaymentAmount());
 		assertTrue("Landlord's checkedMailbox should return true. it doesn't.", landlord.checkedMailbox);
-		assertEquals("Landlord should have $500. It doesn't.", 550.0, landlord.money);
+		assertEquals("Landlord should have $500. It doesn't.", 350.0, landlord.money);
 	}
 }
