@@ -259,4 +259,8 @@ public abstract class Person extends Agent{
     {
         AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, msg);
     }
+    
+    public void setName(String name){
+    	this.name = name;
+    }
 }

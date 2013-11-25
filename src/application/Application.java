@@ -246,6 +246,11 @@ public class Application extends JPanel {
 		}
 	}
 	
+	public void editPerson(int index, String name, int money){
+		population.get(index).setName(name);
+		population.get(index).setMoney(money);
+	}
+	
 	//function used to test gui functionality
 	public void printLastPop(){
 		System.out.println(population.get(population.size()-1).getName());

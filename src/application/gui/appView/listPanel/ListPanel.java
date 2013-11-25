@@ -96,6 +96,9 @@ public class ListPanel extends JPanel implements ActionListener{
 	}
 	
 	public void updateList(){
+		people.clear();
+		buttons.clear();
+		listPane.removeAll();
 		for(int i = 0; i<app.getPopulationSize();i++){
 			Person temp = app.getPerson(i);
 			JButton button = new JButton(temp.getName());
@@ -126,6 +129,7 @@ public class ListPanel extends JPanel implements ActionListener{
 			button.addActionListener(this);
 			buttons.add(button);
 			listPane.add(button);
+			validate();
 		}
 	}
 	public void editProfile(Profile pf, int index){
@@ -144,6 +148,15 @@ public class ListPanel extends JPanel implements ActionListener{
 			index = -1;
 		}
 		return index;
+	}
+	public Profile getProfile(int index){
+		return people.get(index);
+	}
+	public String getName(int index){
+		return people.get(index).getName();
+	}
+	public int getListSize(){
+		return people.size();
 	}
 	
 	public class Profile{

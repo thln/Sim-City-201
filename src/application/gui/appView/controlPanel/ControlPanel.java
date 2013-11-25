@@ -12,6 +12,8 @@ import application.gui.appView.*;
 import application.gui.trace.PrintControlPanel;
 
 public class ControlPanel extends JPanel {
+	JPanel panel4 = new JPanel();
+	JPanel panel5 = new JPanel();
 	//Add Panel
 	private AddPanel addP;
 	private EditPanel editP;
@@ -20,9 +22,6 @@ public class ControlPanel extends JPanel {
 	private PrintPanel printPanel;
 	private JPanel printPanelTab;
 	
-	private JPanel panel2 = new JPanel();
-	private JPanel panel3 = new JPanel();
-	private JPanel panel4 = new JPanel();
 	private ImageIcon picture;
 	private JPanel tempPanel = new JPanel();
 	private JTabbedPane ControlPane = new JTabbedPane();
@@ -34,16 +33,20 @@ public class ControlPanel extends JPanel {
 		this.app = app;
 		this.appPanel = appPanel;
 		addP = new AddPanel(this, app);
-		//editP = new EditPanel();
+		editP = new EditPanel(this, app, appPanel);
+		
 		printPanel = new PrintPanel();
 		printPanelTab = printPanel;
 		
 		
 		ControlPane.addTab("Add Person", addP);
 		ControlPane.addTab("Trace Panel", printPanelTab);
-		ControlPane.addTab("Edit Panel", panel3);
+		ControlPane.addTab("Edit Panel", editP);
+		ControlPane.addTab("Select Building", panel4);
+		ControlPane.addTab("System Statistics", panel5);
 		
 		add(ControlPane);
+	
 	}	
 	
 	public ApplicationPanel getAppPanel(){
