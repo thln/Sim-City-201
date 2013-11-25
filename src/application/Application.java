@@ -201,7 +201,7 @@ public class Application extends JPanel {
 //		rest1i.startThread();
 //		rest1j.startThread();
 //		rest1k.startThread();
-		t.startThread();
+//		t.startThread();
 		
 //		bank2a.startThread();
 //		bank2b.startThread();

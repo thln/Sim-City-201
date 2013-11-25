@@ -88,15 +88,15 @@ public abstract class Person extends Agent{
 	protected void prepareForBank() {
 		print("Becoming Bank Customer");
 		//Do Gui method
-		gui.DoGoToBuilding(400, 170);
-		//GUI call to go to business
-		try {
-			atDestination.acquire();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-
-		}
+//		gui.DoGoToBuilding(400, 170);
+//		//GUI call to go to business
+//		try {
+//			atDestination.acquire();
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//
+//		}
 
 		//Once semaphore is released from GUI
 		for (Role cust1 : roles) {
@@ -128,7 +128,7 @@ public abstract class Person extends Agent{
 					}
 				}			
 				cust1.setRoleActive();
-				bankPanel.addGui(bg);
+				//bankPanel.addGui(bg);
 				stateChanged();
 
 				return;
@@ -138,14 +138,14 @@ public abstract class Person extends Agent{
 
 	protected void prepareForMarket() {
 		//GUI call to go to business
-		gui.DoGoToBuilding(400, 100);
-		try {
-			atDestination.acquire();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-
-		}
+//		gui.DoGoToBuilding(400, 100);
+//		try {
+//			atDestination.acquire();
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//
+//		}
 		//Once semaphore is released from GUI
 
 		//Checking if have enough money for car
@@ -203,15 +203,15 @@ public abstract class Person extends Agent{
 
 	protected void prepareForRestaurant() {
 		//GUI call to go to business
-		gui.DoGoToBuilding(400, 50);
-
-		try {
-			atDestination.acquire();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-
-		}
+//		gui.DoGoToBuilding(400, 50);
+//
+//		try {
+//			atDestination.acquire();
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//
+//		}
 
 		//Once semaphore is released from GUI
 		for (Role cust1 : roles) {
@@ -232,14 +232,14 @@ public abstract class Person extends Agent{
 	}
 
 	protected void goToSleep() {
-		gui.DoGoHome();
-		try {
-			atDestination.acquire();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			//
-		}
+//		gui.DoGoHome();
+//		try {
+//			atDestination.acquire();
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			//
+//		}
 		currentRoleName = " ";
 		//After arrives home
 		alarmClock.schedule(new TimerTask() {
