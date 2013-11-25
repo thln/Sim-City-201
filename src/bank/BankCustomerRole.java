@@ -38,6 +38,7 @@ public class BankCustomerRole extends Role implements BankCustomer{
 
 	public void msgNoTellerAvailable(){
 		print ("No tellers available, I will wait");
+		state = CustomerState.waiting;
 	}
 
 	public void msgHereIsYourMoney(double amount) {
@@ -112,10 +113,15 @@ public class BankCustomerRole extends Role implements BankCustomer{
 
 	public boolean pickAndExecuteAnAction () {
 
+		if (state == CustomerState.waiting) {
+			return false;
+		}
+		
 		if (state == CustomerState.atBank) {
 			messageGuard();
 			return false;
 		}
+			
 		if (state == CustomerState.ready) {
 			if (desire == BankCustomerDesire.openAccount){
 				openAccount();
@@ -152,7 +158,6 @@ public class BankCustomerRole extends Role implements BankCustomer{
 				return false;
 			}
 		}
-		
 			return false;
 	}
 

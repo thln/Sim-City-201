@@ -23,6 +23,7 @@ public abstract class Person extends Agent{
 	private Housing home;
 	private Timer alarmClock = new Timer();
 	private Timer hungerTimer = new Timer();
+	boolean inProcess;
 
 	//Role Related
 	public List<Role> roles = Collections.synchronizedList(new ArrayList<Role>());         //contains all the customer role
@@ -37,7 +38,7 @@ public abstract class Person extends Agent{
 	public HashMap <String, Integer> Inventory = new HashMap<String, Integer>();                 //Food list
 	public boolean hasFoodInFridge = false;
 	public enum HungerLevel {full, moderate, hungry, starving};
-	HungerLevel hunger = HungerLevel.full;
+	HungerLevel hunger; // = HungerLevel.full;
 
 	//Bank Related
 	public double money;
@@ -84,7 +85,8 @@ public abstract class Person extends Agent{
 		//Once semaphore is released from GUI
 		for (Role cust1 : roles) {
 			if (cust1 instanceof BankCustomerRole) 
-			{
+			{	
+				
 				BankCustomerRole BCR = (BankCustomerRole) cust1;
 				currentRoleName = "Bank Customer";
 
@@ -102,9 +104,8 @@ public abstract class Person extends Agent{
 					if (money >= moneyMaxThreshold){
 						BCR.setDesire("deposit");
 					}
-				}
+				}			
 				cust1.setRoleActive();
-				Phonebook.getPhonebook().getBank().getBankGuard(cust1.test).msgArrivedAtBank(BCR);		
 				return;
 			}
 		}
