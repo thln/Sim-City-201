@@ -38,6 +38,7 @@ public abstract class Person extends Agent{
 
 	//Bank Related
 	public double money;
+	
 	public int accountNum;
 	public double accountBalance;
 	public double desiredCash;
@@ -227,6 +228,14 @@ public abstract class Person extends Agent{
 	@Override
 	public String getName() {
 		return name;
+	}
+	
+	public double getMoney() {
+		return money;
+	}
+
+	public void setMoney(double money) {
+		this.money = money;
 	}
 
 	public void setHome(Housing place) {

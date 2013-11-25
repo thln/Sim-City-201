@@ -13,9 +13,14 @@ import java.awt.event.*;
 import java.util.List;
 import java.util.ArrayList;
 
+import application.*;
+import application.gui.appView.*;
+import application.gui.appView.controlPanel.*;
+
 public class ListPanel extends JPanel implements ActionListener{
 	private JPanel listPane;
 	private JPanel infoPane;
+	private Application app;
 	private List<JButton> buttons = new ArrayList<JButton>(); 
 	private List<Profile> people = new ArrayList<Profile>();
 	public JScrollPane pane =
@@ -23,19 +28,20 @@ public class ListPanel extends JPanel implements ActionListener{
 	                    		JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 	private JTextArea personInfoArea = new JTextArea();
 	
-	public ListPanel(){
-		
+	public ListPanel(ApplicationPanel appPanel, Application app){
+		this.app = app;
 		setLayout(new GridLayout(1,2));
 		
 		listPane = new JPanel();
 		listPane.setLayout(new BoxLayout((Container)listPane, BoxLayout.Y_AXIS));
-		listPane.setPreferredSize(new Dimension((this.getWidth())*(1/4),this.getHeight()));
 		pane.setViewportView(listPane);
+		
+		listPane.setPreferredSize(new Dimension((1/4)*(this.getWidth()),this.getHeight()));
 		add(pane);
 		
 		infoPane = new JPanel();
 		personInfoArea.setText("Select A Person");
-		listPane.setPreferredSize(new Dimension((this.getWidth())*(3/4),this.getHeight()));
+		infoPane.add(personInfoArea);
 		add(infoPane);
 		
 	}
@@ -56,19 +62,22 @@ public class ListPanel extends JPanel implements ActionListener{
 		if(name != null){
 			JButton button = new JButton(name);
 				if(type.equals("Wealthy")){
-					button.setBackground(Color.WHITE);
+					button.setBackground(Color.white);
 				}
 				else if(type.equals("Crook")){
-					button.setBackground(Color.BLUE);
+					button.setBackground(Color.lightGray);
 				}
 				else if(type.equals("Worker")){
-					button.setBackground(Color.GRAY);
+					button.setBackground(Color.cyan);
 				}
 				else if(type.equals("Deadbeat")){
-					button.setBackground(Color.ORANGE);
+					button.setBackground(Color.orange);
 				}
-			Dimension paneSize = pane.getSize();
-			Dimension buttonSize = new Dimension(paneSize.width - 20, (int) (paneSize.height)*(1/7));
+				else{
+					button.setBackground(Color.green);
+				}
+			Dimension paneSize = listPane.getSize();
+			Dimension buttonSize = new Dimension(paneSize.width, (1/7)* (paneSize.height));
 			button.setPreferredSize(buttonSize);
 			button.addActionListener(this);
 			buttons.add(button);
@@ -81,13 +90,41 @@ public class ListPanel extends JPanel implements ActionListener{
 	}
 	public void updateInfoPane(Profile pf, int index){
 		if(pf != null){
-			JTextArea tempInfo = new JTextArea();
-			tempInfo.setText("Name: " + pf.getName() +"\nIndex: "+ index);
+			personInfoArea.setText("Name: " + pf.getName() +"\nIndex: "+ index);
 		}
 	}
 	
-	public void editProfile(){
+	public void updateList(){
+		for(int i = 0; i<app.getPopulationSize();i++){
+			Person temp = app.getPerson(i);
+			if(temp instanceof Crook){
+				people.add(new Profile(temp.getName(), (int) temp.getMoney(), "Crook", null, null, 0,0,0));
+			}
+			else if(temp instanceof Deadbeat){
+			}
+			else if(temp instanceof Worker){
+			}
+			else if(temp instanceof Wealthy){
+			}
+		}
 		
+	}
+	public void editProfile(Profile pf, int index){
+		
+	}
+	
+	public int findIndex(String name, String type){
+		int index = 0;
+		
+		for (index = 0; index<people.size(); index++){
+			if(people.get(index).getName()== name && people.get(index).getType()== type){
+				break;
+			}
+		}
+		if(index == people.size()){
+			index = -1;
+		}
+		return index;
 	}
 	
 	public class Profile{
@@ -101,6 +138,7 @@ public class ListPanel extends JPanel implements ActionListener{
 		int endT;
 		int current_location;
 		int home_location;
+		int index;
 		
 		public Profile (String name ,int money, String type,
 				String jobTitle, String jobLocation, int startT, int lunchT, int endT){
@@ -112,6 +150,25 @@ public class ListPanel extends JPanel implements ActionListener{
 			this.startT = startT;
 			this.lunchT = lunchT;
 			this.endT = endT;
+		}
+		public Profile(){
+			this.name = null;
+			this.money = 0;
+			this.type = null;
+			this.jobTitle = null;
+			this.jobLocation = null;
+			this.startT = 0;
+			this.lunchT = 0;
+			this.endT = 0;
+			
+		}
+		
+		public int getIndex(){
+			return index;
+		}
+		
+		public void setIndex(int index){
+			this.index = index;
 		}
 		
 		public String getName() {
