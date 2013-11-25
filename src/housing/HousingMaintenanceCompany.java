@@ -14,6 +14,7 @@ public class HousingMaintenanceCompany
 	//Different times for company?
 	public WatchTime openTime = new WatchTime(8);
 	public WatchTime closeTime = new WatchTime(17);
+	public Mailbox mailbox = new Mailbox();
 
 	//ROLES
 	public MaintenanceWorkerRole maintenanceWorkerRole = new MaintenanceWorkerRole("Maintenance Worker");

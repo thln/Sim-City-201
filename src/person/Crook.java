@@ -17,7 +17,7 @@ public class Crook extends Person {
 		this.name = name;
 	}
 
-	protected boolean pickAndExecuteAnAction() {
+	public boolean pickAndExecuteAnAction() {
 		if (hunger == HungerLevel.full) {
 			startHungerTimer();
 			return true;
@@ -41,6 +41,17 @@ public class Crook extends Person {
 			return true;
 		}
 
+		//Rent Related
+        if(TimeManager.getTimeManager().getTime().day == Day.Monday)
+        {
+        	resetRentMailbox();
+        }
+        if(TimeManager.getTimeManager().getTime().day == Day.Sunday && !checkedMailbox)
+        {
+        	prepareForRent();
+        	return true;
+        }
+		
 		//Hunger Related
 		if (hunger == HungerLevel.hungry) {
 			//If you don't have food in the fridge

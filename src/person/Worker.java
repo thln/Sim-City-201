@@ -6,6 +6,7 @@ import bank.BankTellerRole;
 import person.Role.RoleState;
 import application.Phonebook;
 import application.TimeManager;
+import application.TimeManager.Day;
 import application.WatchTime;
 
 public class Worker extends Person {
@@ -122,15 +123,26 @@ public class Worker extends Person {
                         return true;
                 }
 
+                //Rent Related
+                if(TimeManager.getTimeManager().getTime().day == Day.Monday)
+                {
+                	resetRentMailbox();
+                }
+                if(TimeManager.getTimeManager().getTime().day == Day.Sunday && !checkedMailbox)
+                {
+                	prepareForRent();
+                	return true;
+                }
+                
                 //Hunger Related
                 if (hunger == HungerLevel.hungry) {
-                        //If you don't have food in the fridge
-                        if (!hasFoodInFridge) {
-                        		//if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getRestaurant().openTime.hour) &&
-                                                //(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getRestaurant().closeTime.hour)) {
-                                        prepareForRestaurant();
-                                        //
-                                        return true;
+                   //If you don't have food in the fridge
+                   if (!hasFoodInFridge) {
+                   //if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getRestaurant().openTime.hour) &&
+                   //(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getRestaurant().closeTime.hour)) {
+                     prepareForRestaurant();
+                     //
+                    return true;
                                 
                         }
                         else //if you do have food in the fridge
@@ -144,14 +156,14 @@ public class Worker extends Person {
                 //Market Related
                 if (!hasFoodInFridge || carStatus == CarState.wantsCar) 
                 { 
-                        {
-                                if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getMarket().openTime.hour) &&
-                                                (TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getMarket().closeTime.hour)) 
-                                {
-                                        prepareForMarket();
-                                        return true;
-                                }
+                   {
+                       if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getMarket().openTime.hour) &&
+                               (TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getMarket().closeTime.hour)) 
+                       {
+                               prepareForMarket();
+                               return true;
                         }
+                    }
                 }
 
                 goToSleep();

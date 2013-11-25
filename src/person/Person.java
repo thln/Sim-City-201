@@ -62,6 +62,9 @@ public abstract class Person extends Agent{
 	public int moneyMinThreshold = 20;
 	public int moneyMaxThreshold = 200;
 
+	//Rent Related
+	public boolean checkedMailbox = false;
+
 	//Time Related
 	public int sleepTime = 22;
 
@@ -135,7 +138,33 @@ public abstract class Person extends Agent{
 			}
 		}
 	}
+	
+	protected void resetRentMailbox()
+	{
+		checkedMailbox = false;
+	}
 
+    protected void prepareForRent()
+    {
+		print("Depositing rent for week. Rent is " + Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.getApartmentRentCost());
+    	if( money >= Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.getApartmentRentCost())
+    	{
+    		money -= Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.getApartmentRentCost();
+    		Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.dropRentMoney(Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.getApartmentRentCost());
+    		checkedMailbox = true;
+    	}
+    	else if (accountBalance >= Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.getApartmentRentCost())
+    	{
+    		accountBalance -= Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.getApartmentRentCost();
+    		Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.dropRentMoney(Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.getApartmentRentCost());
+    		checkedMailbox = true;
+    	}
+    	else
+    	{
+    		//Non Norm, making a loan
+    	}
+    }
+	
 	protected void prepareForMarket() {
 		//GUI call to go to business
 		gui.DoGoToBuilding(400, 100);

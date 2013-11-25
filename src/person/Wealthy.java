@@ -2,6 +2,7 @@ package person;
 
 import application.Phonebook;
 import application.TimeManager;
+import application.TimeManager.Day;
 import person.Role.RoleState;
 
 public class Wealthy extends Person {
@@ -18,7 +19,7 @@ public class Wealthy extends Person {
 
 
 	//Scheduler
-	protected boolean pickAndExecuteAnAction() {
+	public boolean pickAndExecuteAnAction() {
 		if (hunger == HungerLevel.full) {
 			startHungerTimer();
 			return true;
@@ -43,7 +44,12 @@ public class Wealthy extends Person {
         }
         
 		//Rent Related
-		if (TimeManager.getTimeManager().getTime().day == TimeManager.Day.Monday) {
+        if(TimeManager.getTimeManager().getTime().day == Day.Tuesday)
+        {
+        	resetRentMailbox();
+        }
+		if (TimeManager.getTimeManager().getTime().day == TimeManager.Day.Monday && !checkedMailbox) 
+		{
 			prepareForRentCollection();
 			return true;
 		}
@@ -96,7 +102,11 @@ public class Wealthy extends Person {
 	}
 
 	//Actions
-	public void prepareForRentCollection() {
+	public void prepareForRentCollection() 
+	{
+		print("I am picking up all the rent money.");
+		money += Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.pickUpRentMoney(this);
+		
 //		for (Role landlord: roles) {
 //			//			if (landlord instanceof LandlordRole) {
 //			//				landlord.setRoleActive();
