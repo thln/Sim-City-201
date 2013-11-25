@@ -66,8 +66,8 @@ public abstract class Person extends Agent{
 		print("Going to eat at home");
 	}
 
-	protected void prepareForBank () {
-		Do("Becoming Bank Customer");
+	protected void prepareForBank() {
+		print("Becoming Bank Customer");
 		//Do Gui method
 
 		/*GUI call to go to business
@@ -82,8 +82,9 @@ public abstract class Person extends Agent{
 		//Once semaphore is released from GUI
 		for (Role cust1 : roles) {
 			if (cust1 instanceof BankCustomerRole) {
-				BankCustomerRole BCR = (BankCustomerRole) cust1;
-
+				
+				BankCustomerRole BCR = (BankCustomerRole) cust1;	
+				BCR.setPerson(this);
 				if (money <= moneyMinThreshold)
 					desiredCash = 100;
 				else if (money >= moneyMaxThreshold)
@@ -98,9 +99,8 @@ public abstract class Person extends Agent{
 					}
 				}
 
-				Phonebook.getPhonebook().getBank().bankGuardRole.msgArrivedAtBank(BCR);
 				cust1.setRoleActive();
-				stateChanged();
+				Phonebook.getPhonebook().getBank().getBankGuard(cust1.test).msgArrivedAtBank(BCR);		
 				return;
 			}
 		}

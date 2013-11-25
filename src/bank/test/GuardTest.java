@@ -44,7 +44,7 @@ public class GuardTest extends TestCase
 				guard.pickAndExecuteAnAction());
 
 		assertTrue("1st MockTeller should have the state 'available' ", 
-				guard.getTellers().get(0).getState() == BankGuardRole.TellerState.available);
+				guard.getTellers().get(0).state == BankGuardRole.TellerState.available);
 
 		//Step 2: Customer arrives at bank
 		guard.msgArrivedAtBank(customer);
@@ -62,7 +62,7 @@ public class GuardTest extends TestCase
 				customer.log.containsString("Assigned to bank teller " + teller.getName()));
 
 		assertTrue("MockTeller shoudl have the state 'busy'",
-				guard.getTellers().get(0).getState() == BankGuardRole.TellerState.busy);
+				guard.getTellers().get(0).state == BankGuardRole.TellerState.busy);
 
 		assertEquals("Guard should have 0 customers in list. It doesn't.", guard.getCustomers().size(), 0);
 
@@ -76,7 +76,7 @@ public class GuardTest extends TestCase
 		//Step 4 post-conditions
 
 		assertTrue("1st MockTeller should have the state 'available' ", 
-				guard.getTellers().get(0).getState() == BankGuardRole.TellerState.available);
+				guard.getTellers().get(0).state == BankGuardRole.TellerState.available);
 
 		assertFalse("Guard's scheduler should have returned false (no new customers)  but didn't.", 
 				guard.pickAndExecuteAnAction());
@@ -116,7 +116,7 @@ public class GuardTest extends TestCase
 				guard.pickAndExecuteAnAction());
 
 		assertTrue("1st MockTeller should have the state 'available' ", 
-				guard.getTellers().get(0).getState() == BankGuardRole.TellerState.available);
+				guard.getTellers().get(0).state == BankGuardRole.TellerState.available);
 
 		//Step 2: Customer 1 arrives at bank
 		guard.msgArrivedAtBank(customer);
@@ -134,7 +134,7 @@ public class GuardTest extends TestCase
 				customer.log.containsString("Assigned to bank teller " + teller.getName()));
 
 		assertTrue("MockTeller shoudl have the state 'busy'",
-				guard.getTellers().get(0).getState() == BankGuardRole.TellerState.busy);
+				guard.getTellers().get(0).state == BankGuardRole.TellerState.busy);
 
 		assertEquals("Guard should have 0 customers in list. It doesn't.", guard.getCustomers().size(), 0);
 
@@ -165,7 +165,7 @@ public class GuardTest extends TestCase
 		//Step 6 post-conditions
 
 		assertTrue("1st MockTeller should have the state 'available' ", 
-				guard.getTellers().get(0).getState() == BankGuardRole.TellerState.available);
+				guard.getTellers().get(0).state == BankGuardRole.TellerState.available);
 
 		assertFalse("Guard's scheduler should have returned false, but didn't.", 
 				guard.pickAndExecuteAnAction());
@@ -214,7 +214,7 @@ public class GuardTest extends TestCase
 		
 		assertEquals("Guard should have 1 teller in list. It doesn't.", guard.getTellers().size(), 1); 	
 		assertTrue("1st MockTeller should have the state 'available' ", 
-				guard.getTellers().get(0).getState() == BankGuardRole.TellerState.available);
+				guard.getTellers().get(0).state == BankGuardRole.TellerState.available);
 		
 		//Step 4: run scheduler and execute method "assignToTeller"
 		assertFalse("Guard's scheduler should have returned false (no new customers)  but didn't.", 
@@ -226,7 +226,7 @@ public class GuardTest extends TestCase
 				customer.log.containsString("Assigned to bank teller " + teller.getName()));
 
 		assertTrue("MockTeller shoudl have the state 'busy'",
-				guard.getTellers().get(0).getState() == BankGuardRole.TellerState.busy);
+				guard.getTellers().get(0).state == BankGuardRole.TellerState.busy);
 
 	
 		//Step 5: customer leaves bank
@@ -236,7 +236,7 @@ public class GuardTest extends TestCase
 		//Step 5 post-conditions
 
 		assertTrue("1st MockTeller should have the state 'available' ", 
-				guard.getTellers().get(0).getState() == BankGuardRole.TellerState.available);
+				guard.getTellers().get(0).state == BankGuardRole.TellerState.available);
 
 		assertFalse("Guard's scheduler should have returned false (no new customers)  but didn't.", 
 				guard.pickAndExecuteAnAction());
@@ -276,7 +276,7 @@ public class GuardTest extends TestCase
 		
 		assertEquals("Guard should have 1 teller in list. It doesn't.", guard.getTellers().size(), 1); 	
 		assertTrue("1st MockTeller should have the state 'available' ", 
-				guard.getTellers().get(0).getState() == BankGuardRole.TellerState.available);
+				guard.getTellers().get(0).state == BankGuardRole.TellerState.available);
 		
 		//Step 4: run scheduler and execute method "assignToTeller"
 		assertFalse("Guard's scheduler should have returned false (no new customers)  but didn't.", 
@@ -288,7 +288,7 @@ public class GuardTest extends TestCase
 				customer.log.containsString("Assigned to bank teller " + teller.getName()));
 
 		assertTrue("MockTeller shoudl have the state 'busy'",
-				guard.getTellers().get(0).getState() == BankGuardRole.TellerState.busy);
+				guard.getTellers().get(0).state == BankGuardRole.TellerState.busy);
 
 	
 		//Step 5: customer leaves bank
@@ -298,7 +298,7 @@ public class GuardTest extends TestCase
 		//Step 5 post-conditions
 
 		assertTrue("1st MockTeller should have the state 'available' ", 
-				guard.getTellers().get(0).getState() == BankGuardRole.TellerState.available);
+				guard.getTellers().get(0).state == BankGuardRole.TellerState.available);
 
 		assertFalse("Guard's scheduler should have returned false (no new customers)  but didn't.", 
 				guard.pickAndExecuteAnAction());

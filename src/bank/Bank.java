@@ -51,9 +51,10 @@ public class Bank
 		accounts = Collections.synchronizedList(new ArrayList<Account>());
 		BankTellerRole t1 = new BankTellerRole ("BankTeller 1");
 		tellers.add(t1);
-		BankTellerMock t2 = new BankTellerMock ("BankTellerMock");
-		mockTellers.add(t2);
 		bankGuardRole.msgTellerCameToWork(t1);
+			
+		BankTellerMock t2 = new BankTellerMock ("BankTellerMock");
+		mockTellers.add(t2);	
 	}
 
 
@@ -83,7 +84,7 @@ public class Bank
 			//Setting previous bank guard role to inactive
 			for (BankTellerRole r1: tellers) {
 				if (r1.getPerson() != null) {
-					Worker worker = (Worker) loanOfficerRole.getPerson();
+					Worker worker = (Worker) tellers.get(0).getPerson();
 					worker.roleFinishedWork();
 				}
 			}

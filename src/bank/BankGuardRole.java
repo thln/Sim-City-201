@@ -26,21 +26,12 @@ public class BankGuardRole extends Role implements BankGuard {
 	public enum TellerState {available, busy};
 
 	public class MyTeller {
-		private TellerState state;
+		public TellerState state;
 		BankTeller tell1;
 		
 		MyTeller (BankTeller t1) {
 			tell1 = t1;
-			setState(TellerState.available);
-		}
-
-		public TellerState getState() {
-			return state;
-		}
-
-		public TellerState setState(TellerState state) {
-			this.state = state;
-			return state;
+			state = TellerState.available;
 		}
 	}
 	
@@ -71,16 +62,15 @@ public class BankGuardRole extends Role implements BankGuard {
 	}
 
 	public void msgArrivedAtBank(BankCustomer c1) {
-		print("New customer arrived");
+		print("New customer " + ((Role) c1).getName() + " arrived");
 		customers.add(c1);
 		stateChanged();
 	}
 
 	public void msgCustomerLeavingBank (BankTeller t1) {
-		//print("Teller became available");
-	
+		print("Customer leaving, teller became available");
 		MyTeller correct = findTeller(t1);
-		correct.setState(TellerState.available);
+		correct.state = TellerState.available;
 		stateChanged();
 	}
 
@@ -113,7 +103,6 @@ public class BankGuardRole extends Role implements BankGuard {
 	private MyTeller findTeller (BankTeller t1) {
 		for (MyTeller teller: tellers) {
 			if (teller.tell1.equals(t1)) {
-				teller.setState(TellerState.available);
 				stateChanged();
 				return teller;
 			}
@@ -130,13 +119,14 @@ public class BankGuardRole extends Role implements BankGuard {
 			robber1.msgGotAway();  
 	}
 
-	private void assignToTeller(BankCustomer cust1) {
-		print("Assigning to teller");
+	private void assignToTeller(BankCustomer cust1) {	
 		for (MyTeller teller1: tellers) {
-			if (teller1.getState() == TellerState.available) {
+			if (teller1.state == TellerState.available) {
+				print("Assigning " + ((Role) cust1).getPerson().getName() + " to teller " + teller1.tell1.getName());
 				cust1.msgGoToTeller(teller1.tell1);
-				teller1.setState(TellerState.busy);
+				teller1.state = TellerState.busy;
 				customers.remove(cust1);
+				return;
 			}
 		}	
 		cust1.msgNoTellerAvailable();

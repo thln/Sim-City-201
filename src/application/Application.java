@@ -183,10 +183,10 @@ public class Application extends JPanel {
 		market1d.startThread();
 		market1e.startThread();
 //		market1f.startThread();
-		rest1h.startThread();
-		rest1g.startThread();	
-		rest1i.startThread();
-		rest1j.startThread();
+//		rest1h.startThread();
+//		rest1g.startThread();	
+//		rest1i.startThread();
+//		rest1j.startThread();
 //		rest1k.startThread();
 		t.startThread();
 		
