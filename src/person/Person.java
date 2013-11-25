@@ -35,7 +35,7 @@ public abstract class Person extends Agent{
 	public List<Role> roles = Collections.synchronizedList(new ArrayList<Role>());         //contains all the customer role
 	public List<Gui> guis = Collections.synchronizedList(new ArrayList<Gui>());
 	protected String currentRoleName;
-	
+
 	//Car Related
 	public enum CarState {noCar, wantsCar, hasCar};
 	public CarState carStatus = CarState.noCar;
@@ -49,7 +49,7 @@ public abstract class Person extends Agent{
 
 	//Bank Related
 	public double money;
-	
+
 	public int accountNum;
 	public double accountBalance;
 	public double desiredCash;
@@ -67,7 +67,7 @@ public abstract class Person extends Agent{
 		roles.add(new MarketCustomerRole(this, getName(), "Market Customer"));
 		roles.add(new RestaurantCustomerRole(this, getName(), "Restaurant Customer"));
 	}
-	
+
 	public void msgAtDestination() {
 		atDestination.release();
 	}
@@ -83,19 +83,15 @@ public abstract class Person extends Agent{
 
 	protected void prepareForBank () {
 		Do("Becoming Bank Customer");
-		//Do Gui method
-
 		gui.DoGoToBank();
-		//GUI call to go to business
-                try {
-                        atDestination.acquire();
-                } catch (InterruptedException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
+		try {
+			atDestination.acquire();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 
-                }
+		}
 
-		//Once semaphore is released from GUI
 		for (Role cust1 : roles) {
 			if (cust1 instanceof BankCustomerRole) 
 			{
@@ -103,7 +99,7 @@ public abstract class Person extends Agent{
 				BankCustomerGui bg = new BankCustomerGui(BCR);
 				BCR.setGui(bg);
 				currentRoleName = "Bank Customer";
-				
+
 				if (money <= moneyMinThreshold)
 					desiredCash = 100;
 				else if (money >= moneyMaxThreshold)
@@ -126,17 +122,14 @@ public abstract class Person extends Agent{
 	}
 
 	protected void prepareForMarket() {
+		gui.DoGoToMarket();
+		try {
+			atDestination.acquire();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 
-                //GUI call to go to business
-			gui.DoGoToMarket();
-                try {
-                        atDestination.acquire();
-                } catch (InterruptedException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-
-                }
-                //Once semaphore is released from GUI
+		}
 
 		//Checking if have enough money for car
 		if (accountBalance >= (carCost + 100)) {
@@ -192,19 +185,15 @@ public abstract class Person extends Agent{
 	}
 
 	protected void prepareForRestaurant() {
-		//GUI call to go to business
-
 		gui.DoGoToRestaurant();
-		
-                try {
-                        atDestination.acquire();
-                } catch (InterruptedException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
+		try {
+			atDestination.acquire();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 
-                }
-		 
-		//Once semaphore is released from GUI
+		}
+
 		for (Role cust1 : roles) {
 			if (cust1 instanceof RestaurantCustomerRole) {
 				RestaurantCustomerRole RCR = (RestaurantCustomerRole) cust1;
@@ -223,15 +212,15 @@ public abstract class Person extends Agent{
 	}
 
 	protected void goToSleep() {
-
 		gui.DoGoHome();
 		try {
-		        atDestination.acquire();
+			atDestination.acquire();
 		} catch (InterruptedException e) {
-		        // TODO Auto-generated catch block
-		        e.printStackTrace();
-		//
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			//
 		}
+
 		currentRoleName = " ";
 		//After arrives home
 		alarmClock.schedule(new TimerTask() {
@@ -243,14 +232,6 @@ public abstract class Person extends Agent{
 	}
 
 	protected void startHungerTimer() {
-		gui.DoGoHome();
-		try {
-			atDestination.acquire();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
 		hunger = HungerLevel.moderate;
 
 		//After arrives home
@@ -267,7 +248,7 @@ public abstract class Person extends Agent{
 	public String getName() {
 		return name;
 	}
-	
+
 	public double getMoney() {
 		return money;
 	}
@@ -279,30 +260,30 @@ public abstract class Person extends Agent{
 	public void setHome(Housing place) {
 		home = place;
 	}
-	
+
 	public String getCurrentRoleName()
 	{
 		return currentRoleName;
 	}
 
-    public void print(String msg)
-    {
-        AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, msg);
-    }
-    
-    public Housing getHousing()
-    {
-    	return home;
-    }
-    
-    public void setGui(PersonGui gui) {
-    	this.gui = gui;
-    }
-    
-    public void setPanel(AnimationPanel ap) {
-    	ArrayList<Building> buildings = ap.getBuildings();
-    	for(Building building : buildings) {
-    		if(building.getName().toLowerCase().contains("market")) {
+	public void print(String msg)
+	{
+		AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, msg);
+	}
+
+	public Housing getHousing()
+	{
+		return home;
+	}
+
+	public void setGui(PersonGui gui) {
+		this.gui = gui;
+	}
+
+	public void setPanel(AnimationPanel ap) {
+		ArrayList<Building> buildings = ap.getBuildings();
+		for(Building building : buildings) {
+			if(building.getName().toLowerCase().contains("market")) {
 				marketPanel = building.myBuildingPanel;
 			}
 			if(building.getName().toLowerCase().contains("bank")) {
@@ -314,6 +295,6 @@ public abstract class Person extends Agent{
 			if(building.getName().toLowerCase().contains("restaurant")) {
 				restPanel = building.myBuildingPanel;
 			}
-    	}
-    }
+		}
+	}
 }
