@@ -25,6 +25,7 @@ public class MockSalesPerson extends Mock implements SalesPerson {
 	}
 
 	public void msgOrderFulfilled(MarketOrder o) {
+		log.add(new LoggedEvent("Recieved msgOrderFulfilled"));
 	}
 
 	public void msgOrderDelivered(MarketOrder o) {

@@ -95,7 +95,7 @@ public class SalesPersonRole extends Role implements SalesPerson {
 	}
 
 	//Scheduler
-	protected boolean pickAndExecuteAnAction() {
+	public boolean pickAndExecuteAnAction() {
 		if (!orders.isEmpty()) {
 			for (MarketOrder o : orders) {
 				if (o.state == orderState.open) {
@@ -133,7 +133,7 @@ public class SalesPersonRole extends Role implements SalesPerson {
 			return;
 		}
 		
-		market.marketRunnerRole.msgHeresAnOrder(o);
+		market.getMarketRunner(test).msgHeresAnOrder(o);
 		stateChanged();
 	}
 
