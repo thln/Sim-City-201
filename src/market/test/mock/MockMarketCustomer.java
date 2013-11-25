@@ -2,6 +2,7 @@ package market.test.mock;
 
 import market.interfaces.MarketCustomer;
 import testing.EventLog;
+import testing.LoggedEvent;
 import testing.Mock;
 
 public class MockMarketCustomer extends Mock implements MarketCustomer {
@@ -14,6 +15,7 @@ public class MockMarketCustomer extends Mock implements MarketCustomer {
 
 	//Messages
 	public void msgHereAreYourThings(String item, int itemAmount, double orderCost) {
+		log.add(new LoggedEvent("Recieved msgHereAreYourThings"));
 	}
 
 	//Actions
