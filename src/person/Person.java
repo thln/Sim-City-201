@@ -85,7 +85,7 @@ public abstract class Person extends Agent{
 		Do("Becoming Bank Customer");
 		//Do Gui method
 
-		gui.DoGoToBuilding(400, 170);
+		gui.DoGoToBank();
 		//GUI call to go to business
                 try {
                         atDestination.acquire();
@@ -128,7 +128,7 @@ public abstract class Person extends Agent{
 	protected void prepareForMarket() {
 
                 //GUI call to go to business
-			gui.DoGoToBuilding(400, 100);
+			gui.DoGoToMarket();
                 try {
                         atDestination.acquire();
                 } catch (InterruptedException e) {
@@ -194,7 +194,7 @@ public abstract class Person extends Agent{
 	protected void prepareForRestaurant() {
 		//GUI call to go to business
 
-		gui.DoGoToBuilding(400, 50);
+		gui.DoGoToRestaurant();
 		
                 try {
                         atDestination.acquire();
