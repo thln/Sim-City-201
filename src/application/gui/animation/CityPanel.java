@@ -41,10 +41,10 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 
 	BufferedImage background = null;
 
-	ImageIcon bank = new ImageIcon("docs/bank.png", "bank");
-	ImageIcon restaurant = new ImageIcon("docs/restaurant.png", "restaurant");
-	ImageIcon market = new ImageIcon("docs/market.png", "market");
-	ImageIcon house = new ImageIcon("docs/house.png", "house");
+	ImageIcon bank = new ImageIcon("res/bank.png", "bank");
+	ImageIcon restaurant = new ImageIcon("res/restaurant.png", "restaurant");
+	ImageIcon market = new ImageIcon("res/market.png", "market");
+	ImageIcon house = new ImageIcon("res/house.png", "house");
 
 	public CityPanel(AnimationPanel animationPanel) {
 
@@ -59,7 +59,7 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		setLayout(null);
 
 		try {
-			background = ImageIO.read(new File("docs/concrete.jpg"));
+			background = ImageIO.read(new File("res/concrete.jpg"));
 		} catch (IOException e) {
 		}
 

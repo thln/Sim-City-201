@@ -18,6 +18,6 @@ public class PrintPanel extends JPanel {
 		
 		setLayout(new BorderLayout());
 		this.add(printControlPanel, BorderLayout.NORTH);
-		this.add(tracePanel, BorderLayout.SOUTH);
+		this.add(tracePanel, BorderLayout.CENTER);
 	}
 }
