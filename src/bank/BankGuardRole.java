@@ -86,7 +86,7 @@ public class BankGuardRole extends Role implements BankGuard {
 
 		for (BankCustomer cust1: customers) {
 			 assignToTeller(cust1); 
-			 return false;
+			 return true; //false;
 		}
 		
 		if (leaveRole){
@@ -130,6 +130,7 @@ public class BankGuardRole extends Role implements BankGuard {
 			}
 		}	
 		cust1.msgNoTellerAvailable();
+		//return;
 	}
 
 	public List <BankCustomer> getCustomers() {

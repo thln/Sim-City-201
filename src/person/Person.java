@@ -85,6 +85,7 @@ public abstract class Person extends Agent{
 		for (Role cust1 : roles) {
 			if (cust1 instanceof BankCustomerRole) 
 			{
+				//System.out.println(roles.size());
 				BankCustomerRole BCR = (BankCustomerRole) cust1;
 				currentRoleName = "Bank Customer";
 
