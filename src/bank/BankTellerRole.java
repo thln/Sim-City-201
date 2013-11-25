@@ -135,6 +135,7 @@ public class BankTellerRole extends Role implements BankTeller {
 	public void msgLeavingBank(int accountNum) {
 		Account correct = findMyAccount (accountNum);
 		myAccounts.remove(correct);
+		stateChanged();
 	}
 
 	//Scheduler

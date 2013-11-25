@@ -60,7 +60,8 @@ public class MarketCustomerRole extends Role implements MarketCustomer {
 		}
 		else {
 			//message market that bill was wrong
-			state = MarketCustomerState.payed;
+			//for now leaving market
+			exitMarket();
 		}
 	}
 	

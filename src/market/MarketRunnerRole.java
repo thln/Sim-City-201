@@ -9,6 +9,8 @@ import application.Phonebook;
 import person.Person;
 import person.Role;
 import person.Worker;
+import testing.EventLog;
+import testing.LoggedEvent;
 
 public class MarketRunnerRole extends Role implements MarketRunner {
 	
@@ -18,9 +20,11 @@ public class MarketRunnerRole extends Role implements MarketRunner {
 	String name;
 	Market market;
 	
-	private List<MarketOrder> orders = Collections.synchronizedList(new ArrayList<MarketOrder>());
+	public List<MarketOrder> orders = Collections.synchronizedList(new ArrayList<MarketOrder>());
+	
+	public EventLog log = new EventLog();
 
-	MarketRunnerRole(Person person, String pName, String rName, Market market) {
+	public MarketRunnerRole(Person person, String pName, String rName, Market market) {
 		super(person, pName, rName);
 		this.market = market;
 	}
@@ -32,12 +36,13 @@ public class MarketRunnerRole extends Role implements MarketRunner {
 
 	//Messages
 	public void msgHeresAnOrder(MarketOrder o) {
+		log.add(new LoggedEvent("Recieved msgHeresAnOrder"));
 		orders.add(o);
 		stateChanged();
 	}
 
 	//Scheduler
-	protected boolean pickAndExecuteAnAction() {
+	public boolean pickAndExecuteAnAction() {
 		if (!orders.isEmpty()) {
 			for (MarketOrder o: orders){
 				processOrder(o);
@@ -55,15 +60,15 @@ public class MarketRunnerRole extends Role implements MarketRunner {
 	}
 
 	//Actions
-	public void processOrder(MarketOrder o) {
+	public void processOrder(MarketOrder o) {		
 		if (o.customer != null) {
 			decreaseInventoryBy(o.item, o.itemAmountOrdered);
-			market.salesPersonRole.msgOrderFulfilled(o);
+			market.getSalesPerson(test).msgOrderFulfilled(o);
 			orders.remove(o);
 		}
 		else { //o.customerType is an instance of business
 			decreaseInventoryBy(o.item, o.itemAmountOrdered);
-			market.UPSmanRole.msgDeliverOrder(o);
+			market.getUPSman(test).msgDeliverOrder(o);
 			orders.remove(o);
 		}
 	}
