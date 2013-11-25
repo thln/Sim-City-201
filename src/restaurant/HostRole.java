@@ -117,7 +117,8 @@ public class HostRole extends Role
 		{
 			if (MW.waiterRole == waiterRole)
 			{
-				MW.askedToGoOnBreak = true;
+				MW.state = myWaiterState.Working;
+				//MW.askedToGoOnBreak = true;
 				stateChanged();
 			}
 		}
@@ -126,8 +127,35 @@ public class HostRole extends Role
 	public void msgOffBreak(WaiterRole waiterRole) {
 		for (myWaiter MW: waiters) {
 			if (MW.waiterRole.equals(waiterRole)) {
-				MW.onBreak = false;
+				MW.state = myWaiterState.Working;
+				//MW.onBreak = false;
 				stateChanged();
+			}
+		}
+	}
+	
+	public void msgIAmLeavingSoon(WaiterRole waiterRole)
+	{
+		for(myWaiter MW: waiters)
+		{
+			if(MW.waiterRole.equals(waiterRole))
+			{
+				MW.state = myWaiterState.LeavingSoon;
+				stateChanged();
+			}
+		}
+	}
+	
+	public void msgIAmLeavingWork(WaiterRole waiterRole)
+	{
+		for(myWaiter MW: waiters)
+		{
+			if(MW.waiterRole.equals(waiterRole))
+			{
+				MW = null;
+				waiters.remove(MW);
+
+				//stateChanged();
 			}
 		}
 	}
@@ -182,7 +210,7 @@ public class HostRole extends Role
 			{
 				for (myWaiter MW : waiters) 
 				{
-					if (MW.askedToGoOnBreak == true) 
+					if (MW.state == myWaiterState.askedToGoOnBreak)//MW.askedToGoOnBreak == true) 
 					{
 						replyToBreakRequest(MW);
 						return true;
@@ -253,7 +281,8 @@ public class HostRole extends Role
 
 		if (waiters.size() == 1) 
 		{
-			MW.askedToGoOnBreak = false;
+			//MW.askedToGoOnBreak = false;
+			MW.state = myWaiterState.Working;
 			MW.waiterRole.msgPermissionToBreak(false);
 			print("Telling " + MW.waiterRole.getName() + " he/she cannot go on break");
 			return;
@@ -264,20 +293,22 @@ public class HostRole extends Role
 		//Determining how many working waiters there are
 		for (myWaiter wait: waiters)
 		{
-			if (wait.onBreak == false)
+			if ((wait.state != myWaiterState.onBreak) && (wait.state != myWaiterState.LeavingSoon))//wait.onBreak == false)
 				workingWaiterCount++;
 		}
 
 		if (workingWaiterCount > 1) 
 		{
-			MW.askedToGoOnBreak = false;
+			//MW.askedToGoOnBreak = false;
+			MW.state = myWaiterState.onBreak;
 			print("Allowing " + MW.waiterRole.getName() + " to go on break");
 			MW.waiterRole.msgPermissionToBreak(true);
-			MW.onBreak = true;
+			//MW.onBreak = true;
 		}
 		else 
 		{
-			MW.askedToGoOnBreak = false;
+			//MW.askedToGoOnBreak = false;
+			MW.state = myWaiterState.Working;
 			print("Deny " + MW.waiterRole.getName() + " to go on break");
 			MW.waiterRole.msgPermissionToBreak(false);
 		}
@@ -331,7 +362,7 @@ public class HostRole extends Role
 
 		for (myWaiter lowWaiter: waiters) 
 		{
-			if (lowWaiter.onBreak == false) 
+			if ((lowWaiter.state != myWaiterState.onBreak) && (lowWaiter.state != myWaiterState.LeavingSoon))//lowWaiter.onBreak == false) 
 			{
 				lowestWaiter = lowWaiter;	
 				break;
@@ -342,7 +373,7 @@ public class HostRole extends Role
 		//Spreading customers equally
 		for (int i = 0; i < waiters.size(); i++) 
 		{	
-			if ((lowestWaiter.totalCustomers > waiters.get(i).totalCustomers) && (waiters.get(i).onBreak == false))
+			if ((lowestWaiter.totalCustomers > waiters.get(i).totalCustomers) && (waiters.get(i).state != myWaiterState.onBreak) && (waiters.get(i).state != myWaiterState.LeavingSoon)) //.onBreak == false))
 				lowestWaiter = waiters.get(i);
 		}
 		return lowestWaiter.waiterRole;
@@ -378,12 +409,16 @@ public class HostRole extends Role
 		}
 
 	}
+	
+	public enum myWaiterState {Working, askedToGoOnBreak, onBreak, LeavingSoon};
 
 	public class myWaiter {
 		public WaiterRole waiterRole;
 		public int totalCustomers;
-		boolean askedToGoOnBreak = false;
-		boolean onBreak = false;
+		//boolean askedToGoOnBreak = false;
+		//boolean onBreak = false;
+		myWaiterState state = myWaiterState.Working;
+		
 
 		myWaiter(WaiterRole waiterRole) {
 			this.waiterRole = waiterRole;

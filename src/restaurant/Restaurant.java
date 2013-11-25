@@ -108,7 +108,6 @@ public class Restaurant {
 		//make function in host to delete waiter
 		//waiters have to finish duties before finishing waiter & no assignments
 		//look at onBreak code to follow
-
 	}
 
 	public String getName() 
