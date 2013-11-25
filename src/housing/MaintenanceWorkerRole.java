@@ -6,11 +6,12 @@ import java.util.TimerTask;
 import java.util.concurrent.Semaphore;
 
 import housing.Housing.housingState;
+import housing.interfaces.MaintenanceWorker;
 import application.Phonebook;
 import person.Person;
 import person.Role;
 
-public class MaintenanceWorkerRole extends Role 
+public class MaintenanceWorkerRole extends Role  implements MaintenanceWorker
 {
 	//List of housing
 	//Need to talk more about housing. 
@@ -25,7 +26,7 @@ public class MaintenanceWorkerRole extends Role
 
 	String name; 
 	private Timer FixingTimer  = new Timer();
-	public enum maintenanceState {Working, CheckingHouse};
+	public enum maintenanceState {Working, CheckingHouse, RefreshList};
 	public maintenanceState state = maintenanceState.Working;
 	//private Semaphore workingOnResidence = new Semaphore(0, true);
 
@@ -55,9 +56,9 @@ public class MaintenanceWorkerRole extends Role
 	//Messages
 	public void msgNeedMaintenance(Housing houseNeedMain) 
 	{
-		synchronized(Phonebook.getPhonebook().publicAllHousing) 
+		synchronized(Phonebook.getPhonebook().getAllHousing(test)) 
 		{
-			for (Housing h : Phonebook.getPhonebook().publicAllHousing) 
+			for (Housing h : Phonebook.getPhonebook().getAllHousing(test)) 
 			{
 				if (h == houseNeedMain) 
 				{
@@ -67,16 +68,30 @@ public class MaintenanceWorkerRole extends Role
 		}
 	}
 
+	public void msgRefreshHousingList()
+	{
+		if(!Phonebook.getPhonebook().getAllHousing(test).isEmpty())
+		{
+			state = maintenanceState.RefreshList;
+		}
+	}
+	
 	//Scheduler
 	public boolean pickAndExecuteAnAction() 
 	{
+		if (state == maintenanceState.RefreshList)
+		{
+			resetHousingCheck();
+			return true;
+		}
+		
 		if (state == maintenanceState.Working) 
 		{
-			if(!Phonebook.getPhonebook().publicAllHousing.isEmpty())
+			if(!Phonebook.getPhonebook().getAllHousing(test).isEmpty())
 			{
-				synchronized(Phonebook.getPhonebook().publicAllHousing) 
+				synchronized(Phonebook.getPhonebook().getAllHousing(test)) 
 				{
-					for (Housing h : Phonebook.getPhonebook().publicAllHousing) 
+					for (Housing h : Phonebook.getPhonebook().getAllHousing(test)) 
 					{
 						if (h.state == housingState.UrgentWorkOrder) 
 						{
@@ -85,7 +100,7 @@ public class MaintenanceWorkerRole extends Role
 						}
 					}
 	
-					for(Housing h : Phonebook.getPhonebook().publicAllHousing) 
+					for(Housing h : Phonebook.getPhonebook().getAllHousing(test)) 
 					{
 						if (h.state == housingState.CheckUpNeeded) 
 						{
@@ -124,10 +139,11 @@ public class MaintenanceWorkerRole extends Role
 
 	public void resetHousingCheck() 
 	{
-		synchronized(Phonebook.getPhonebook().publicAllHousing) 
+		state = maintenanceState.Working;
+		synchronized(Phonebook.getPhonebook().getAllHousing(test)) 		
 		{
-			for (Housing h : Phonebook.getPhonebook().publicAllHousing) 
-			{
+			for (Housing h : Phonebook.getPhonebook().getAllHousing(test)) 
+			{	
 				print("All houses are finished! Rechecking houses");
 				h.state = housingState.CheckUpNeeded;
 			}

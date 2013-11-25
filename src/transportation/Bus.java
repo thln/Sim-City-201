@@ -2,8 +2,9 @@ package transportation;
 
 import application.Phonebook;
 import application.TimeManager;
+import agent.Agent;
 
-public class Bus{
+public abstract class Bus extends Agent{
 
 	boolean needToDeposit;
 	String name;

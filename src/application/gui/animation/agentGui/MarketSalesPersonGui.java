@@ -3,9 +3,10 @@ package application.gui.animation.agentGui;
 //import market.\*;
 
 import java.awt.*;
+
 import javax.swing.*;
 
-public class MarketSalesPersonGui implements Gui{
+public class MarketSalesPersonGui extends MarketGui{
 
 	//private SalesPersonRole agent = null;
 	private boolean isPresent = true;

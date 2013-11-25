@@ -6,7 +6,7 @@ import java.awt.*;
 
 import javax.swing.*;
 
-public class MarketCustomerGui implements Gui {
+public class MarketCustomerGui extends MarketGui {
 
     //private MarketCustomerRole agent = null;
     private boolean isPresent = true;

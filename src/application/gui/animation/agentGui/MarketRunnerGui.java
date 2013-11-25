@@ -2,9 +2,10 @@ package application.gui.animation.agentGui;
 
 //import market.\*;
 import java.awt.*;
+
 import javax.swing.*;
 
-public class MarketRunnerGui implements Gui{
+public class MarketRunnerGui extends MarketGui{
 
 	//private MarketRunnerRole agent = null;
 	private boolean isPresent = true;

@@ -65,7 +65,7 @@ public class AnimationPanel extends JPanel implements MouseListener {
 			add(BorderLayout.SOUTH, buildingPanels);
 		}
 		
-		
+		/*
 		//UNCOMMENT THE FOLLOWING FOR TESTING ONLY!! re-comment to display final product
 		testGuis();
 		
@@ -76,7 +76,8 @@ public class AnimationPanel extends JPanel implements MouseListener {
     	testbutton2.addMouseListener(this);
     	testbutton2.setBounds(100, 0, 100, 50);
     	cityPanel.add(testbutton2);
-    	
+    	*/
+    	testGuisTwo();
 	}
 
 	public void displayBuildingPanel(BuildingPanel bp) {
@@ -88,45 +89,97 @@ public class AnimationPanel extends JPanel implements MouseListener {
 	}
 	
 	public void testGuis() {
-		for(int i=0; i< buildings.size();i++) {
-			if(buildings.get(i).getName().toLowerCase().contains("market")) {
-			//	buildings.get(i).myBuildingPanel.addGui(market);
-				buildings.get(i).myBuildingPanel.addGui(new MarketCustomerGui());
-				buildings.get(i).myBuildingPanel.addGui(new MarketSalesPersonGui());
-				buildings.get(i).myBuildingPanel.addGui(new MarketRunnerGui());
-				buildings.get(i).myBuildingPanel.addGui(new MarketUPSmanGui());
+		for(Building building : buildings) {
+			if(building.getName().toLowerCase().contains("market")) {
+			//	building.myBuildingPanel.addGui(market);
+				building.myBuildingPanel.addGui(new MarketCustomerGui());
+				building.myBuildingPanel.addGui(new MarketSalesPersonGui());
+				building.myBuildingPanel.addGui(new MarketRunnerGui());
+				building.myBuildingPanel.addGui(new MarketUPSmanGui());
 			}
-		}
-		for(int i=0; i< buildings.size();i++) {
-			if(buildings.get(i).getName().toLowerCase().contains("bank")) {
-			//	buildings.get(i).myBuildingPanel.addGui(bank);
-				buildings.get(i).myBuildingPanel.addGui(new BankCustomerGui());
-				buildings.get(i).myBuildingPanel.addGui(new BankTellerGui());
-				buildings.get(i).myBuildingPanel.addGui(new BankLoanerGui());
-				buildings.get(i).myBuildingPanel.addGui(new BankGuardGui());
+			if(building.getName().toLowerCase().contains("bank")) {
+			//	building.myBuildingPanel.addGui(bank);
+				building.myBuildingPanel.addGui(new BankCustomerGui());
+				building.myBuildingPanel.addGui(new BankTellerGui());
+				building.myBuildingPanel.addGui(new BankLoanerGui());
+				building.myBuildingPanel.addGui(new BankGuardGui());
 			}
-		}
-		for(int i=0; i< buildings.size();i++) {
-			if(buildings.get(i).getName().toLowerCase().contains("house")) {
-			//	buildings.get(i).myBuildingPanel.addGui(house);
-				buildings.get(i).myBuildingPanel.addGui(new HouseRenterGui());
-				buildings.get(i).myBuildingPanel.addGui(new HouseMaintenanceGui());
-				buildings.get(i).myBuildingPanel.addGui(new HouseLandlordGui());
+			if(building.getName().toLowerCase().contains("house")) {
+			//	building.myBuildingPanel.addGui(house);
+				building.myBuildingPanel.addGui(new HouseRenterGui());
+				building.myBuildingPanel.addGui(new HouseMaintenanceGui());
+				building.myBuildingPanel.addGui(new HouseLandlordGui());
 			}
-		}
-		
-		for(int i=0; i< buildings.size();i++) {
-			if(buildings.get(i).getName().toLowerCase().contains("restaurant")) {
-				buildings.get(i).myBuildingPanel.addGui(restaurant);
-				buildings.get(i).myBuildingPanel.addGui(new RestaurantCustomerGui());
-			//	buildings.get(i).myBuildingPanel.addGui(new RestaurantCookGui());
-				buildings.get(i).myBuildingPanel.addGui(new RestaurantWaiterGui());
+			if(building.getName().toLowerCase().contains("restaurant")) {
+			//	building.myBuildingPanel.addGui(restaurant);
+				building.myBuildingPanel.addGui(new RestaurantCustomerGui());
+				building.myBuildingPanel.addGui(new RestaurantCookGui());
+				building.myBuildingPanel.addGui(new RestaurantWaiterGui());
 			}
 		}
 		
 		cityPanel.addGui(car);
 		cityPanel.addGui(bus);
 		cityPanel.addGui(person);
+		
+	}
+	
+	public void testGuisTwo() {
+		ArrayList<Gui> guis = new ArrayList<Gui>();
+		guis.add(new MarketCustomerGui());
+		guis.add(new MarketSalesPersonGui());
+		guis.add(new MarketRunnerGui());
+		guis.add(new MarketUPSmanGui());
+		guis.add(new BankCustomerGui());
+		guis.add(new BankTellerGui());
+		guis.add(new BankLoanerGui());
+		guis.add(new BankGuardGui());
+		guis.add(new HouseRenterGui());
+		guis.add(new HouseMaintenanceGui());
+		guis.add(new HouseLandlordGui());
+		guis.add(new RestaurantCustomerGui());
+		guis.add(new RestaurantCookGui());
+		guis.add(new RestaurantWaiterGui());
+		guis.add(new CarGui());
+		guis.add(new BusGui());
+		guis.add(new PersonGui());
+		
+		BuildingPanel marketPanel = null;
+		BuildingPanel bankPanel = null;
+		BuildingPanel housePanel = null;
+		BuildingPanel restaurantPanel = null;
+		
+		for(Building building : buildings) {
+			if(building.getName().toLowerCase().contains("market")) {
+				marketPanel = building.myBuildingPanel;
+			}
+			if(building.getName().toLowerCase().contains("bank")) {
+				bankPanel = building.myBuildingPanel;
+			}
+			if(building.getName().toLowerCase().contains("house")) {
+				housePanel = building.myBuildingPanel;
+			}
+			if(building.getName().toLowerCase().contains("restaurant")) {
+				restaurantPanel = building.myBuildingPanel;
+			}
+		}
+		for(Gui gui : guis) {
+			if(gui instanceof CityGui) {
+				cityPanel.addGui(gui);
+			}
+			if(gui instanceof BankGui) {
+				bankPanel.addGui(gui);
+			}
+			if(gui instanceof MarketGui) {
+				marketPanel.addGui(gui);
+			}
+			if(gui instanceof HouseGui) {
+				housePanel.addGui(gui);
+			}
+			if(gui instanceof RestaurantGui) {
+				restaurantPanel.addGui(gui);
+			}
+		}
 	}
 	/*  OLD. Delete later?
 		here we have the main city view

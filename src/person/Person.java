@@ -59,6 +59,10 @@ public abstract class Person extends Agent{
 		roles.add(new MarketCustomerRole(this, getName(), "Market Customer"));
 		roles.add(new RestaurantCustomerRole(this, getName(), "Restaurant Customer"));
 	}
+	
+	public void msgAtDestination() {
+		atDestination.release();
+	}
 
 	//Scheduler
 	protected abstract boolean pickAndExecuteAnAction();
@@ -260,7 +264,14 @@ public abstract class Person extends Agent{
         AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, msg);
     }
     
+
     public void setName(String name){
     	this.name = name;
+    }
+    
+    public Housing getHousing()
+    {
+    	return home;
+
     }
 }

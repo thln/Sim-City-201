@@ -6,9 +6,11 @@ import java.awt.*;
 
 import javax.swing.JLabel;
 
-public class CarGui implements Gui{
+import transportation.*;
 
-	//private Car agent = null;
+public class CarGui extends CityGui{
+
+	private Car agent = null;
 	private boolean isPresent = true;
 
 	//RestaurantGui gui;
@@ -21,9 +23,12 @@ public class CarGui implements Gui{
 
 	private enum CarState {nothing};
 	CarState state = CarState.nothing;
-
-	public CarGui(/*Car c, RestaurantGui gui*/){ //HostAgent m) {
-		//agent = c;
+	
+	public CarGui() {
+	}
+	
+	public CarGui(Car c/*, RestaurantGui gui*/){ //HostAgent m) {
+		agent = c;
 		//this.gui = gui;
 	}
 
@@ -47,22 +52,6 @@ public class CarGui implements Gui{
 		g.setColor(Color.BLUE);
 		g.fillRect(xPos, yPos, 20, 20);
 	}
-
-	public boolean isPresent() {
-		return isPresent;
-	}
-	
-	public void setPresent(boolean p) {
-		isPresent = p;
-	}
-
-	public int getXPos() {
-        return xPos;
-    }
-
-    public int getYPos() {
-        return yPos;
-    }
     
     //Actions
     public void GoToParkingGarage(int garage) {

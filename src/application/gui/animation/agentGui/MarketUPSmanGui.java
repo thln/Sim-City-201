@@ -4,7 +4,7 @@ package application.gui.animation.agentGui;
 import java.awt.*;
 import javax.swing.*;
 
-public class MarketUPSmanGui implements Gui{
+public class MarketUPSmanGui extends MarketGui{
 
 	//private UPSmanRole agent = null;
 	private boolean isPresent = true;

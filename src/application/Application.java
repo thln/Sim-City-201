@@ -52,6 +52,7 @@ public class Application extends JPanel {
 		Worker bank1a = new Worker("Alex", 100, "bankTeller", "bank", 0, 6, 12);
 		Worker bank1b = new Worker("Ben", 100, "loanOfficer", "bank", 0, 6, 12);
 		Worker bank1c = new Worker("Caitlyn", 100, "bankGuard", "bank", 0, 6, 12);
+		
 		//SHIFT 2
 		Worker bank2a = new Worker("Andy", 100, "bankTeller", "bank", 12, 18, 24);
 		Worker bank2b = new Worker("Billy", 100, "loanOfficer", "bank", 12, 18, 24);

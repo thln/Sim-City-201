@@ -6,7 +6,7 @@ import java.awt.*;
 
 import javax.swing.JLabel;
 
-public class RestaurantCustomerGui implements Gui{
+public class RestaurantCustomerGui extends RestaurantGui{
 
 	private RestaurantCustomerRole agent = null;
 	private boolean isPresent = true;

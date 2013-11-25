@@ -3,9 +3,10 @@ package application.gui.animation.agentGui;
 //import bank.\*;
 
 import java.awt.*;
+
 import javax.swing.*;
 
-public class BankGuardGui implements Gui{
+public class BankGuardGui extends BankGui{
 
 	//private LoanOfficerRole agent = null;
 	private boolean isPresent = true;
