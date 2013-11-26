@@ -31,6 +31,9 @@ public class Application extends JPanel {
 		animPanel = ap;
 		Phonebook.getPhonebook().setHousingList(allHousing);
 		
+		//the following line is for dynamic building and business making in v2
+		Phonebook.getPhonebook().getBusinessFromGui(animPanel);
+		
 		//String name, int money, String jobTitle, String jobPlace, int startT, int lunchT, int endT
 		
 		/*
