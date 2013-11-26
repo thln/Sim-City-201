@@ -11,6 +11,10 @@ import java.awt.event.*;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
+import sun.audio.*;
+
+import java.io.*;
+
 import application.*;
 import application.gui.appView.listPanel.ListPanel.Profile;
 
@@ -38,6 +42,8 @@ public class AddPanel extends JPanel implements ActionListener {
 	private JComboBox socialClassBox;
 	private JComboBox jobLocationBox;
 	private JComboBox jobTypeBox;
+	
+	private boolean raveMode = false;
 	
 	private String[] personType = {" ", "Deadbeat", "Worker", "Wealthy"};
 	private String[] jobLocation = {" ", "Restaurant", "Bank", "Market", "Housing"};
@@ -278,9 +284,45 @@ public class AddPanel extends JPanel implements ActionListener {
 		if (e.getSource() == raveButton) {
 			for (Person p : app.getPopulation()) {
 				p.getGui().setRaveMode();
+				//RaveAudioMode();
 			}
 		}
 	}
+	
+	/*
+	public void RaveAudioMode()
+	{
+		AudioPlayer MGP = AudioPlayer.player;
+		AudioStream BGM;
+		AudioData MD;
+		ContinuousAudioDataStream loop = null;
+		//try 
+		//{
+			try {
+				BGM = new AudioStream(new FileInputStream("raveAudioMode.wav"));
+				MD = BGM.getData();
+				loop = new ContinuousAudioDataStream(MD);
+
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.out.println("Won't work1.");
+				return;
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.out.println("Won't work.");
+				return;
+			}
+		//}
+		//catch(IOException error)
+		//{
+		//	System.out.println("Won't work.");
+		//	return;
+		//}
+		
+		MGP.start(loop);
+	}*/
 	
 	public void showJobLocationFields(boolean show)
 	{
