@@ -33,6 +33,7 @@ public class UPSmanRole extends Role implements UPSman {
 
 	//Messages
 	public void msgDeliverOrder(MarketOrder o) {
+		print("Recieved an order to deliver");
 		log.add(new LoggedEvent("Recieved msgDeliverOrder"));
 		orders.add(o);
 		stateChanged();
@@ -58,6 +59,7 @@ public class UPSmanRole extends Role implements UPSman {
 
 	//Actions
 	public void deliverOrder(MarketOrder o) {
+		print("Delivered order ot restaurant");
 		o.restaurant.getCook(test).msgOrderFulfillment(o.item, o.itemAmountFulfilled, o.itemAmountOrdered);
 		market.getSalesPerson(test).msgOrderDelivered(o);
 		orders.remove(o);
