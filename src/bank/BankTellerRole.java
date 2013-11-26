@@ -1,6 +1,7 @@
 package bank;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import person.Person;
@@ -68,12 +69,12 @@ public class BankTellerRole extends Role implements BankTeller {
 
 	public BankTellerRole (String name, Person p1, String roleName) {
 		super(p1, name, roleName);
-		myAccounts = new ArrayList<>();
+		myAccounts = Collections.synchronizedList(new ArrayList<Account>());
 	}
 
 	public BankTellerRole(String roleName) {
 		super(roleName);
-		myAccounts = new ArrayList<>();
+		myAccounts = Collections.synchronizedList(new ArrayList<Account>());
 	}
 
 	//MESSAGES
@@ -141,46 +142,48 @@ public class BankTellerRole extends Role implements BankTeller {
 
 	public boolean pickAndExecuteAnAction() {
 
-		for (Account account1: myAccounts) {
+		synchronized(myAccounts) {
+			for (Account account1: myAccounts) {
 
-			if (account1.state == AccountState.newAccount)	{
-				openAccount(account1);
-				return false;
-			}
+				if (account1.state == AccountState.newAccount)	{
+					openAccount(account1);
+					return false;
+				}
 
-			if (account1.state == AccountState.withdrawing)	{
-				withdrawMoney(account1);
-				return false;
-			}
+				if (account1.state == AccountState.withdrawing)	{
+					withdrawMoney(account1);
+					return false;
+				}
 
-			if (account1.state == AccountState.depositing)	{
-				depositMoney(account1);
-				return false;
-			}
+				if (account1.state == AccountState.depositing)	{
+					depositMoney(account1);
+					return false;
+				}
 
-			if (account1.state == AccountState.requestingLoan)	{
-				requestLoan(account1);
-				return false;
-			}
+				if (account1.state == AccountState.requestingLoan)	{
+					requestLoan(account1);
+					return false;
+				}
 
-			if (account1.state == AccountState.closingLoan)	{
-				closeLoan(account1);
-				return false;
-			}
+				if (account1.state == AccountState.closingLoan)	{
+					closeLoan(account1);
+					return false;
+				}
 
-			if (account1.state == AccountState.loanApproved) {	
-				approveLoan(account1);
-				return false;
-			}
+				if (account1.state == AccountState.loanApproved) {	
+					approveLoan(account1);
+					return false;
+				}
 
-			if (account1.state == AccountState.loanDenied)	{
-				denyLoan(account1);
-				return false;
-			}
+				if (account1.state == AccountState.loanDenied)	{
+					denyLoan(account1);
+					return false;
+				}
 
-			if (account1.state == AccountState.closingLoan)	{
-				closeLoan(account1);
-				return false;
+				if (account1.state == AccountState.closingLoan)	{
+					closeLoan(account1);
+					return false;
+				}
 			}
 
 		}
@@ -197,16 +200,17 @@ public class BankTellerRole extends Role implements BankTeller {
 			};
 			return true;
 		}
-
 		return false;
 	}
 
 
 	//Actions
 	Account findMyAccount (int accNum) {
-		for (Account a: myAccounts) {
-			if (a.getAccountNum() == accNum) {
-				return a;		
+		synchronized (myAccounts) {
+			for (Account a: myAccounts) {
+				if (a.getAccountNum() == accNum) {
+					return a;		
+				}
 			}
 		}
 		//If can't find the account in my current set of accounts, look in the global list

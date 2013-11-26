@@ -87,14 +87,18 @@ public class BankGuardRole extends Role implements BankGuard {
 	//SCHEDULER
 	public boolean pickAndExecuteAnAction() {
 
-		for (BankCustomer cust1: robbers) {
-			catchRobber(cust1);
-			return true;
+		synchronized (robbers) {
+			for (BankCustomer cust1: robbers) {
+				catchRobber(cust1);
+				return true;
+			}
 		}
 
-		if (customers.size() != 0){
-			for (BankCustomer cust1: customers) {
-				return assignToTeller(cust1); 
+		synchronized (customers){
+			if (customers.size() != 0){
+				for (BankCustomer cust1: customers) {
+					return assignToTeller(cust1); 
+				}
 			}
 		}
 
@@ -115,10 +119,12 @@ public class BankGuardRole extends Role implements BankGuard {
 	//ACTIONS
 
 	private MyTeller findTeller (BankTeller t1) {
-		for (MyTeller teller: tellers) {
-			if (teller.tell1.equals(t1)) {
-				stateChanged();
-				return teller;
+		synchronized (tellers) {
+			for (MyTeller teller: tellers) {
+				if (teller.tell1.equals(t1)) {
+					stateChanged();
+					return teller;
+				}
 			}
 		}
 		return null;
