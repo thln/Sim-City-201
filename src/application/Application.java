@@ -89,7 +89,7 @@ public class Application extends JPanel {
 		//Do this when person walks in for work***
 
 		//Standard Wealthy Person
-		Wealthy t = new Wealthy("Tony", 100);
+		Wealthy t = new Wealthy("Tam Henry", 100);
 
 		//Standard Crook
 		//Crook v = new Crook("Vinny", 250);
