@@ -83,7 +83,7 @@ public class GuardTest extends TestCase
 		assertFalse("Guard's scheduler should have returned false (no new customers)  but didn't.", 
 				guard.pickAndExecuteAnAction());
 		
-		guard.getTellers().remove(teller);
+		guard.msgTellerLeavingWork(teller);
 	}
 
 
@@ -182,7 +182,7 @@ public class GuardTest extends TestCase
 		assertFalse("Guards's scheduler should have returned false, but didn't.", 
 				guard.pickAndExecuteAnAction());
 		
-		guard.getTellers().remove(teller);
+		guard.msgTellerLeavingWork(teller);
 	}
 
 
@@ -245,7 +245,7 @@ public class GuardTest extends TestCase
 		assertFalse("Guard's scheduler should have returned false (no new customers)  but didn't.", 
 				guard.pickAndExecuteAnAction());
 		
-		guard.getTellers().remove(teller);
+		guard.msgTellerLeavingWork(teller);
 	}
 	
 	//TODO THIS METHOD
@@ -309,6 +309,6 @@ public class GuardTest extends TestCase
 		assertFalse("Guard's scheduler should have returned false (no new customers)  but didn't.", 
 				guard.pickAndExecuteAnAction());
 		
-		guard.getTellers().remove(teller);
+		guard.msgTellerLeavingWork(teller);
 	}
 }
