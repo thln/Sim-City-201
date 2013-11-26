@@ -33,7 +33,7 @@ public class PersonGui extends CityGui{
 	private int xPos, yPos;//default person position
 	private int xDestination, yDestination;//default start position
 	private int xHome, yHome;
-	private enum Command {noCommand, GoToBuilding, GoToBusStop, GoOnBus, GoHome};
+	private enum Command {noCommand, GoToRestaurant, GoToMarket, GoToBank, GoToBusStop, GoOnBus, GoHome};
 	private Command command = Command.noCommand;
 
 	private enum PersonState {nothing};
@@ -93,10 +93,16 @@ public class PersonGui extends CityGui{
 
 		if (xPos == xDestination && yPos == yDestination) {
 			if(agent != null) {
-				if(command == Command.GoToBuilding) {
+				if (command == Command.GoToRestaurant && xPos == xRestaurant1Location && yPos == yRestaurant1Location) {
 					agent.msgAtDestination();
 				}
-				if(command == Command.GoHome) {
+				if (command == Command.GoToMarket && xPos == xMarketLocation && yPos == yMarketLocation) {
+					agent.msgAtDestination();
+				}
+				if (command == Command.GoToBank && xPos == xBankLocation && yPos == yBankLocation) {
+					agent.msgAtDestination();
+				}
+				if (command == Command.GoHome && xPos == xHome && yPos == yHome) {
 					agent.msgAtDestination();
 				}
 			}
