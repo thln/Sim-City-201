@@ -178,6 +178,7 @@ public class SalesPersonRole extends Role implements SalesPerson {
 	}
 
 	public void msgMarketOpen() {
+		print("Opening market");
 		if (!orders.isEmpty()) {
 			for (MarketOrder o: orders) {
 				o.customer.msgComeIn();
