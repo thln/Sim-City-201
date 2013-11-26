@@ -256,7 +256,7 @@ public class Worker extends Person {
 					workState = WorkState.prepareForWork;
 					//print("Preparing for work");
 				}
-				pickAndExecuteAnAction();                
+				stateChanged();                
 			}
 		},
 		((nextTaskTime - currentTime)) * timeConversion);
