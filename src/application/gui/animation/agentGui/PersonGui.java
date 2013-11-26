@@ -3,6 +3,7 @@ package application.gui.animation.agentGui;
 import person.*;
 
 import java.awt.*;
+import java.util.Random;
 
 import javax.swing.JLabel;
 
@@ -11,7 +12,11 @@ public class PersonGui extends CityGui{
 	private Person agent = null;
 	private boolean isHungry = false;
 
-	//RestaurantGui gui;
+	Random rand = new Random();
+	int red = rand.nextInt(255);
+	int blue  = rand.nextInt(255);
+	int green  = rand.nextInt(255);
+	Color myColor = new Color(red, blue, green);
 
 	private int xRestaurant1Location = 300 + 15;
 	private int yRestaurant1Location = 20 + 10;
@@ -24,10 +29,10 @@ public class PersonGui extends CityGui{
 	//	private int yRestaurant4Location;
 	//	private int xRestaurant5Location;
 	//	private int yRestaurant5Location;
-	private int xMarketLocation = 500;
-	private int yMarketLocation = 100;
-	private int xBankLocation = 300;
-	private int yBankLocation = 230;
+	private int xMarketLocation = 500 + 25;
+	private int yMarketLocation = 100 + 25;
+	private int xBankLocation = 300 + 30;
+	private int yBankLocation = 230 + 30;
 
 
 	private int xPos, yPos;//default person position
@@ -114,9 +119,9 @@ public class PersonGui extends CityGui{
 	}
 
 	public void draw(Graphics2D g) {
-		g.setColor(Color.GREEN);
+		g.setColor(myColor);
 		g.fillRect(getxPos(), getyPos(), 20, 20);
-		g.setColor(Color.RED);
+		g.setColor(Color.BLACK);
 		if(agent != null) {
 			g.drawString(agent.getName(), getxPos(), getyPos());
 		}
