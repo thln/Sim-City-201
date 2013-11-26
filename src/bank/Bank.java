@@ -18,6 +18,8 @@ import person.Person;
 import person.Role;
 import person.Worker;
 import application.gui.animation.*;
+import application.gui.trace.AlertLog;
+import application.gui.trace.AlertTag;
 
 public class Bank
 {
@@ -76,6 +78,7 @@ public class Bank
 			}
 			//Setting bank guard role to new role
 			bankGuardRole.setPerson(person);
+			AlertLog.getInstance().logError(AlertTag.BANK, getName(), "bankguard role just set person: " + person.getName());
 			if (isOpen())
 				bankGuardRole.msgBankOpen();
 			return bankGuardRole;

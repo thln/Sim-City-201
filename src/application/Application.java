@@ -48,25 +48,25 @@ public class Application extends JPanel {
 		
 		//Bank Workers
         //SHIFT 1
-        Worker bank1a = new Worker("Alex", 100, "bankTeller", "bank", 0, 6, 12);
-        Worker bank1b = new Worker("Ben", 100, "loanOfficer", "bank", 0, 6, 12);
-        Worker bank1c = new Worker("Caitlyn", 100, "bankGuard", "bank", 0, 6, 12);
+        Worker bank1a = new Worker("Alex", 100, "bankTeller", "bank", 0, 6, 14);
+        Worker bank1b = new Worker("Ben", 100, "loanOfficer", "bank", 0, 6, 14);
+        Worker bank1c = new Worker("Caitlyn", 100, "bankGuard", "bank", 0, 6, 14);
         
         //SHIFT 2
-        Worker bank2a = new Worker("Andy", 100, "bankTeller", "bank", 12, 18, 0);
-        Worker bank2b = new Worker("Billy", 100, "loanOfficer", "bank", 12, 18, 0);
-        Worker bank2c = new Worker("Courtney", 100, "bankGuard", "bank", 12, 18, 0);
+        Worker bank2a = new Worker("Andy", 100, "bankTeller", "bank", 12, 18, 2);
+        Worker bank2b = new Worker("Billy", 100, "loanOfficer", "bank", 12, 18, 2);
+        Worker bank2c = new Worker("Courtney", 100, "bankGuard", "bank", 12, 18, 2);
 
         //Market Workers
         //SHIFT 1
-        Worker market1d = new Worker("Derrick", 10, "marketRunner", "market", 0, 6, 12);
-        Worker market1e = new Worker("Erin", 1000, "salesPerson", "market", 0, 6, 12);
-        Worker market1f = new Worker("Fred", 10, "UPSman", "market", 0, 6, 12);        
+        Worker market1d = new Worker("Derrick", 10, "marketRunner", "market", 6, 6, 20);
+        Worker market1e = new Worker("Erin", 1000, "salesPerson", "market", 6, 6, 20);
+        Worker market1f = new Worker("Fred", 10, "UPSman", "market", 6, 6, 20);        
 
         //SHIFT 2
-        Worker market2d = new Worker("Daniel", 100, "marketRunner", "market", 12, 400, 0);
-        Worker market2e = new Worker("Elle", 200, "salesPerson", "market", 12, 400, 0);
-        Worker market2f = new Worker("Frenchy", 100, "UPSman", "market", 12, 400, 0);        
+        Worker market2d = new Worker("Daniel", 100, "marketRunner", "market", 18, 400, 8);
+        Worker market2e = new Worker("Elle", 200, "salesPerson", "market", 18, 400, 8);
+        Worker market2f = new Worker("Frenchy", 100, "UPSman", "market", 18, 400, 8);        
         
         //Restaurant Workers
         //SHIFT 1
@@ -193,12 +193,12 @@ public class Application extends JPanel {
 		market1d.startThread();
 		market1e.startThread();
 		market1f.startThread();
-		rest1h.startThread();
-		rest1g.startThread();	
-		rest1i.startThread();
-		rest1j.startThread();
+//		rest1h.startThread();
+//		rest1g.startThread();	
+//		rest1i.startThread();
+//		rest1j.startThread();
 //		rest1k.startThread();
-		t.startThread();
+//		t.startThread();
 		
 		bank2a.startThread();
 		bank2b.startThread();
@@ -209,7 +209,7 @@ public class Application extends JPanel {
 		rest2g.startThread();
 		rest2h.startThread();
 		rest2i.startThread();
-		rest2j.startThread();
+//		rest2j.startThread();
 //		rest2k.startThread();
 	}
 
