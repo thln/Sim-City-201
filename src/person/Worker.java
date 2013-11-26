@@ -98,7 +98,11 @@ public class Worker extends Person {
 			int shiftLength = (((myJob.endTime.hour - myJob.startTime.hour) % 24) + 24) % 24;
 			if (workerRole.getState() == RoleState.active) {
 				//If my current time is more than the shift length since start time
-				if (((((currentTime - myJob.startTime.hour) % 24) + 24) % 24) >= shiftLength){
+				//Check to make sure I've started working (fix modulus logic later)
+				if ((((((currentTime - myJob.startTime.hour) % 24) + 24) % 24) >= shiftLength)
+						&& (((((currentTime - myJob.startTime.hour) % 24) + 24) % 24) > 0)
+						&& ((((currentTime - myJob.startTime.hour) % 24) + 24) % 24) < 18){
+					//print("Off work at time = " + currentTime + " and shift length = " + shiftLength + " startTime = " + myJob.startTime.hour);
 					workerRole.msgLeaveRole();
 					return workerRole.pickAndExecuteAnAction();
 				}					
@@ -231,7 +235,7 @@ public class Worker extends Person {
 				e.printStackTrace();
 
 			}
-			print("Going to work at market");
+			print("Going to work at market, job time = " + myJob.startTime.hour);
 			workerRole = Phonebook.getPhonebook().getMarket().arrivedAtWork(this, myJob.title);
 			workerRole.setRoleActive();
 			return;
