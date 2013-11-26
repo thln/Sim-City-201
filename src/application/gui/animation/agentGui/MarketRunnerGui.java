@@ -10,7 +10,6 @@ public class MarketRunnerGui extends MarketGui{
 	private MarketRunnerRole agent = null;
 	private boolean isPresent = true;
 
-	//RestaurantGui gui;
 
     private int xPos = 340, yPos = 100;//default MarketRunner position
     private int xDestination = 300, yDestination = 100;//default start position
@@ -24,9 +23,8 @@ public class MarketRunnerGui extends MarketGui{
 	public MarketRunnerGui() {
 	}
 	
-	public MarketRunnerGui(MarketRunnerRole c/*, RestaurantGui gui*/){
+	public MarketRunnerGui(MarketRunnerRole c) {
 		agent = c;
-		//this.gui = gui;
 	}
 
 	public void updatePosition() {

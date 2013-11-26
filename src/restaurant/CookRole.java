@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.concurrent.Semaphore;
 
 import application.Phonebook;
+import application.gui.animation.agentGui.RestaurantCookGui;
 import market.Market;
 import person.Person;
 import person.Role;
@@ -16,15 +17,14 @@ import restaurant.interfaces.Cook;
  * No current Cook Gui
  */
 
-public class CookRole extends Role implements Cook 
-{
+public class CookRole extends Role implements Cook {
 
 	private String name;
 	private Semaphore atDestination = new Semaphore(0,true);
 	protected String roleName = "Cook";
 	//public Restaurant restaurant;
 
-	//public CookGui cookGui = null;
+	RestaurantCookGui cookGui = (RestaurantCookGui) gui;
 
 	Timer timer = new Timer();
 	private int cookTime;
@@ -197,15 +197,14 @@ public class CookRole extends Role implements Cook
 	private void cookOrder(final Order o) 
 	{
 
-		if(!isInStock(o.choice)) 
-		{
+		if(!isInStock(o.choice)) {
 			checkInventory(o.choice);
 			myOrders.remove(o);
 			o.waiterRole.msgOrderIsNotAvailable(o.choice, o.tableNumber);
 			return;
 		}
 
-		/*
+		
 		cookGui.DoGetIngredients();
 		try {
 			atDestination.acquire();
@@ -221,7 +220,6 @@ public class CookRole extends Role implements Cook
 
 		}
 		cookGui.DoGoToHomePosition();
-		*/
 		
 		foodMap.get(o.choice).quantity--;
 		checkInventory(o.choice);
@@ -247,11 +245,10 @@ public class CookRole extends Role implements Cook
 
 	}
 
-	private void doneCooking(Order o) 
-	{
+	private void doneCooking(Order o) {
 		print("Done cooking order for table " + o.tableNumber);
 
-		/* GUI stuff
+		
 		cookGui.DoPickUpFood();
 		try {
 			atDestination.acquire();
@@ -267,10 +264,10 @@ public class CookRole extends Role implements Cook
 			e.printStackTrace();
 
 		}
-		o.waiter.msgOrderIsReady(o.tableNumber, o.choice);
+		o.waiterRole.msgOrderIsReady(o.tableNumber, o.choice);
 		myOrders.remove(o);
 		cookGui.DoGoToHomePosition();
-		*/
+		
 	}
 
 	public void checkInventory() {
@@ -381,18 +378,7 @@ public class CookRole extends Role implements Cook
 	}
 
 
-	//Utilities
-
-	/* GUI STUFF
-	public void setGui(CookGui gui) {
-		cookGui = gui;
-	}
-
-	public CookGui getGui() {
-		return cookGui;
-	}
-	*/
-	
+	//Utilities	
 	private boolean isInStock(String choice) {
 		if (foodMap.get(choice).quantity > 0)
 			return true;
