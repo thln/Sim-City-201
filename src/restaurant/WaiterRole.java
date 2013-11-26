@@ -26,7 +26,6 @@ public class WaiterRole extends Role implements Waiter {
 
 	protected String name;
 	protected String RoleName = "Waiter";
-	protected Semaphore atDestination = new Semaphore(0,true);
 	RestaurantWaiterGui waiterGui = (RestaurantWaiterGui) gui;
 
 	public Menu menu = new Menu();

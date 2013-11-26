@@ -1,7 +1,8 @@
 package person;
 
-import agent.StringUtil;
+import java.util.concurrent.Semaphore;
 
+import agent.StringUtil;
 import application.gui.trace.AlertLog;
 import application.gui.trace.AlertTag;
 import application.gui.animation.agentGui.*;
@@ -16,7 +17,9 @@ public abstract class Role {
         protected String personName = null;
         
         public enum RoleState {active, inActive, waitingToExecute};
-        //, waitingToExecute}
+
+        protected Semaphore atDestination = new Semaphore(0,true);
+
         private RoleState state = RoleState.inActive;
         protected boolean leaveRole = false;
         
