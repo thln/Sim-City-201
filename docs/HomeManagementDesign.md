@@ -1,6 +1,6 @@
-![Interaction Diagram](https://fbcdn-sphotos-h-a.akamaihd.net/hphotos-ak-prn2/v/1467207_10202515164386296_516116633_n.jpg?oh=dac85d8644d4b4c4065f9c1b1d373526&oe=5284CD29&__gda__=1384530388_2be04475c1d081393cde04e70e78ae33)
+![House Mailbox Diagram](https://raw.github.com/usc-csci201-fall2013/team20/014aeaa5a00d787532f65047f6429105c3027724/docs/InteractionDiagrams/HouseMailbox.png?token=3290221__eyJzY29wZSI6IlJhd0Jsb2I6dXNjLWNzY2kyMDEtZmFsbDIwMTMvdGVhbTIwLzAxNGFlYWE1YTAwZDc4NzUzMmY2NTA0N2Y2NDI5MTA1YzMwMjc3MjQvZG9jcy9JbnRlcmFjdGlvbkRpYWdyYW1zL0hvdXNlTWFpbGJveC5wbmciLCJleHBpcmVzIjoxMzg2MTAyNzQ0fQ%3D%3D--56571bf78745cc0708b4a4508574ed256a794c30)
 
-![Interaction Diagram 2](https://scontent-b-lax.xx.fbcdn.net/hphotos-prn1/v/711516_10202191577647901_2047465932_n.jpg?oh=7aa02da23f36cb2fd96bea1d05a51a2d&oe=528546E7)
+![House Maintenance Diagram](https://raw.github.com/usc-csci201-fall2013/team20/014aeaa5a00d787532f65047f6429105c3027724/docs/InteractionDiagrams/HouseMaintenance.png?token=3290221__eyJzY29wZSI6IlJhd0Jsb2I6dXNjLWNzY2kyMDEtZmFsbDIwMTMvdGVhbTIwLzAxNGFlYWE1YTAwZDc4NzUzMmY2NTA0N2Y2NDI5MTA1YzMwMjc3MjQvZG9jcy9JbnRlcmFjdGlvbkRpYWdyYW1zL0hvdXNlTWFpbnRlbmFuY2UucG5nIiwiZXhwaXJlcyI6MTM4NjEwMjc3NH0%3D--949d144debe9aebac24b3e3eaf17492c9fceb843)
 
 # Renter
 ### Data
