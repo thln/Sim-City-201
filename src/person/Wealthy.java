@@ -3,6 +3,8 @@ package person;
 import application.Phonebook;
 import application.TimeManager;
 import application.TimeManager.Day;
+import application.gui.trace.AlertLog;
+import application.gui.trace.AlertTag;
 import person.Role.RoleState;
 
 public class Wealthy extends Person {
@@ -105,7 +107,8 @@ public class Wealthy extends Person {
 	public void prepareForRentCollection() 
 	{
 		checkedMailbox = true;
-		print("I am picking up all the rent money.");
+		//print("I am picking up all the rent money.");
+    	AlertLog.getInstance().logInfo(AlertTag.HOUSING, name, "I am picking up all the rent money.");
 		money += Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.pickUpRentMoney(this);
 		
 //		for (Role landlord: roles) {
