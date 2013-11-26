@@ -13,19 +13,19 @@ import application.WatchTime;
 
 public class Worker extends Person {
 
+	boolean shift = false;
 	//Data
 	protected Job myJob = null;
 	protected Role workerRole = null;
+	enum WorkState {atWork, prepareForWork, notAtWork}
+	WorkState workState;
+	public boolean lateWorker;
 
 	public Worker (String name, int money, String jobTitle, String jobPlace, int startT, int lunchT, int endT) {
 		super(name);
 		this.money = money;
 		myJob = new Job(jobTitle, jobPlace ,startT, lunchT, endT, this);
-		nextTask = new Timer();
 	}
-
-	private Timer nextTask;
-	boolean upcomingTask = false;
 
 	public class Job {
 		public String title;
@@ -44,6 +44,20 @@ public class Worker extends Person {
 			endTime = new WatchTime(endT, 0);
 			this.title = title;
 			this.jobPlace = jobPlace;
+			if (endT <= 8)
+				lateWorker = true;
+			else
+				lateWorker = false;
+
+			if (lateWorker){
+				workState = WorkState.notAtWork;
+				upcomingTask = false;
+			}
+
+			if (!lateWorker){
+				upcomingTask = false;
+				workState = WorkState.prepareForWork;
+			}
 		}
 
 		WatchTime getStartTime() {
@@ -81,36 +95,71 @@ public class Worker extends Person {
 		money += amount;
 	}
 
-	public void roleFinishedWork(){                 //from worker role
-		print("Finished working");
-		workerRole = null;
-		stateChanged();
-	}
+	 public synchronized void roleFinishedWork(){                 //from worker role
+         print("Shift is over, time to leave work");
+         //        print("Job time = " + myJob.getStartTime().hour + " Current time = " + TimeManager.getTimeManager().getTime().dayHour);
+         workState = WorkState.notAtWork;       
+         workerRole.setPerson(null);
+         workerRole = null;
+         upcomingTask = false;
+         stateChanged();
+ }
+
+
 
 	//Scheduler
 	public boolean pickAndExecuteAnAction() {
 
-
-		//Problem: if you are in a worker role, and that is not receiving any messages, it will never run again to check if it's time to leave work
-		//                if (hunger == HungerLevel.full) {
-		//                        startHungerTimer();
-		//                        return true;
-		//                }
-
-		//Decisions more urgent that role continuity (None for now)
 		if (!upcomingTask) {
-			if (((myJob.getEndTime().hour - TimeManager.getTimeManager().getTime().dayHour) > 0)) 
-				scheduleNextTask(myJob.getEndTime().hour);
+			int currentTime = TimeManager.getTimeManager().getTime().dayHour;
+			if (lateWorker){
+				//Start timer to wake up for work
+				if (workState == WorkState.notAtWork) {
+				//	print("YZ");
+					scheduleNextTask(myJob.getStartTime().hour, currentTime);
+					return true;
+				}
+				//Start timer to wake up for ending work
+				if (workState == WorkState.atWork){
+					scheduleNextTask(myJob.getEndTime().hour + 24, currentTime);
+					return true;
+				}
+			}
+
+			if (!lateWorker){
+				//Start timer to wake up for work
+				if (workState == WorkState.notAtWork) {
+					if (currentTime < 8){
+						scheduleNextTask(myJob.getStartTime().hour, currentTime);
+						return true;
+					}
+					else {
+					//	print("early workers");
+						scheduleNextTask(myJob.getStartTime().hour + 24, currentTime);
+						return true;
+					}
+				}
+				//Start timer to wake up for ending work
+				if (workState == WorkState.atWork){
+					scheduleNextTask(myJob.getEndTime().hour, currentTime);
+					return true;
+				}
+			}
 		}
 
 		if (workerRole != null){
+			int currentTime = TimeManager.getTimeManager().getTime().dayHour;
 			if (workerRole.getState() == RoleState.active) {
-				if (((myJob.getEndTime().hour - TimeManager.getTimeManager().getTime().dayHour) <= 0) && !workerRole.leaveRole) {
-					print("Shift is over, time to leave work");
-					workerRole.msgLeaveRole(); 
-					return true;
+				if (lateWorker && (currentTime < 8) && (myJob.getEndTime().hour - currentTime <= 1)){
+					workerRole.msgLeaveRole();
+					return true; 
 				}
-				return workerRole.pickAndExecuteAnAction();                      
+				if (!lateWorker && (myJob.getEndTime().hour - currentTime <= 1)){
+					workerRole.msgLeaveRole();
+					return true; 
+				}
+				else
+					return workerRole.pickAndExecuteAnAction();                      
 			}
 		}
 
@@ -126,18 +175,24 @@ public class Worker extends Person {
 
 		//If no role is active
 
-		//Job Related
-		if ((myJob.getStartTime().hour - TimeManager.getTimeManager().getTime().dayHour) <= 1 && 
-				(myJob.getStartTime().hour - TimeManager.getTimeManager().getTime().dayHour) >= 0) {
-
-
-			//print("Job time = " + myJob.getStartTime().hour + " Current time = " + TimeManager.getTimeManager().getTime().dayHour);
-			prepareForWork();
-			return true;
+		//Job related
+		int currentTime = TimeManager.getTimeManager().getTime().dayHour;
+		if (workState == WorkState.prepareForWork) {
+			if ((!lateWorker && currentTime <= 5 && (myJob.getStartTime().hour - currentTime) <= 1)
+				|| (lateWorker && currentTime >= 5 && (myJob.getStartTime().hour - currentTime) <= 1)
+				|| (!lateWorker && currentTime > 5 && (myJob.getStartTime().hour + 24 - currentTime) <= 1)
+				|| (lateWorker && currentTime > 5 && (myJob.getStartTime().hour + 24 - currentTime) <= 1))
+				{
+					workState = workState.atWork;
+					upcomingTask = false;
+					prepareForWork();
+					return true;
+				}
 		}
 
 		//Bank Related
-		if (money <= moneyMinThreshold || money >= moneyMaxThreshold) {
+		if (money <= moneyMinThreshold || money >= moneyMaxThreshold) 
+		{
 			prepareForBank();
 			return true;
 		}
@@ -145,6 +200,7 @@ public class Worker extends Person {
 		//Rent Related
 		if (TimeManager.getTimeManager().getTime().day == Day.Monday) {
 			resetRentMailbox();
+			return true;
 		}
 		if (TimeManager.getTimeManager().getTime().day == Day.Sunday && !checkedMailbox) {
 			prepareForRent();
@@ -189,15 +245,21 @@ public class Worker extends Person {
 
 
 	//Actions
-	private void scheduleNextTask(int nextTaskTime) {
+	private void scheduleNextTask(int nextTaskTime, int currentTime) {
 		upcomingTask = true;
+		int timeConversion = 1200;
+		//print("Next task time = " + nextTaskTime + " Current time = " + currentTime);
 		nextTask.schedule(new TimerTask() {
-			public void run() {
-				upcomingTask = false;
-				stateChanged();
+			public void run() {        
+				//print("Time = " + TimeManager.getTimeManager().getTime().dayHour);
+				if (workState == WorkState.notAtWork){
+					workState = WorkState.prepareForWork;
+					//print("Preparing for work");
+				}
+				pickAndExecuteAnAction();                
 			}
 		},
-		(nextTaskTime - TimeManager.getTimeManager().getTime().dayHour));
+		((nextTaskTime - currentTime)) * timeConversion);
 	}
 
 	public void prepareForWork() {

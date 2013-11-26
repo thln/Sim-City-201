@@ -66,7 +66,12 @@ public class LoanOfficerRole extends Role implements LoanOfficer {
 		}
 
 		if (leaveRole){
+			try{
 			((Worker) person).roleFinishedWork();
+			}
+			catch (Exception e){
+				
+			};
 			leaveRole = false;
 			return true;
 		}

@@ -10,6 +10,7 @@ import application.gui.animation.agentGui.*;
 public abstract class Role {
 
 
+<<<<<<< HEAD
         public Person person = null;
         public Gui gui = null;
         
@@ -158,5 +159,5 @@ public abstract class Role {
     public void setGui(Gui gui) {
     	this.gui = gui;
     }
-    
+
 }
