@@ -276,6 +276,7 @@ public class AddPanel extends JPanel implements ActionListener {
 			cp.getAppPanel().getListPanel().updateList();
 
 			app.printLastPop();
+			dashboard.updateDashboard();
 			//System.out.println(type);
 			//System.out.println(app.getPopulationSize());
 		}

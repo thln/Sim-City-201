@@ -48,6 +48,12 @@ public class PersonGui extends CityGui{
 
 	private String choice;
 	public PersonGui() {
+		setxPos(0);
+		setyPos(125);
+		setxHome(0);
+		yHome = 125;
+		setxDestination(25);
+		yDestination = 125;
 	}
 
 	public PersonGui(Person p/*, RestaurantGui gui*/){ //HostAgent m) {
@@ -121,21 +127,27 @@ public class PersonGui extends CityGui{
 	}
 
 	public void draw(Graphics2D g) {
-		g.setColor(myColor);
-		
-		if (raveMode) {
-			Random rand = new Random();
-			int red = rand.nextInt(255);
-			int blue  = rand.nextInt(255);
-			int green  = rand.nextInt(255);
-			g.setColor(new Color (red, blue, green));
+		if (getxPos() == getxDestination() && getyPos() == yDestination) {
+			g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.0f));
 		}
+		else {
+			g.setColor(myColor);
 		
+			if (raveMode) {
+				Random rand = new Random();
+				int red = rand.nextInt(255);
+				int blue  = rand.nextInt(255);
+				int green  = rand.nextInt(255);
+				g.setColor(new Color (red, blue, green));
+			}
+		}
 		g.fillRect(getxPos(), getyPos(), 20, 20);
 		g.setColor(Color.WHITE);
 		if(agent != null) {
 			g.drawString(agent.getName(), getxPos(), getyPos());
 		}
+		else
+			g.drawString("testGui", getxPos(), getyPos());
 	}
 
 	public void setHungry() {
