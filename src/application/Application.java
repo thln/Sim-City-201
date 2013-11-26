@@ -85,7 +85,7 @@ public class Application extends JPanel {
 		//Do this when person walks in for work***
 
 		//Standard Wealthy Person
-		//Wealthy t = new Wealthy("Tam Henry", 700);
+		Wealthy t = new Wealthy("Tam Henry", 700);
 
 		//Standard Crook
 		//Crook v = new Crook("Vinny", 250);
@@ -122,8 +122,8 @@ public class Application extends JPanel {
 //		l.setHome(allHousing.get(allHousing.size() - 1));
 //		allHousing.add(new Housing(m, allHousing.size(), "Apartment"));
 //		m.setHome(allHousing.get(allHousing.size() - 1));
-//		allHousing.add(new Housing(t, allHousing.size(), "Mansion"));
-//		t.setHome(allHousing.get(allHousing.size() - 1));
+		allHousing.add(new Housing(t, allHousing.size(), "Mansion"));
+		t.setHome(allHousing.get(allHousing.size() - 1));
 
 	    allHousing.add(new Housing(bank2a, allHousing.size(), "Apartment"));
 		bank2a.setHome(allHousing.get(allHousing.size() - 1));
@@ -162,7 +162,7 @@ public class Application extends JPanel {
 		getPopulation().add(rest1i);
 		getPopulation().add(rest1j);
 		population.add(rest1k);
-		//population.add(t);
+		population.add(t);
 		
 		getPopulation().add(bank2a);
 		getPopulation().add(bank2b);
@@ -195,7 +195,7 @@ public class Application extends JPanel {
 		rest1i.startThread();
 		rest1j.startThread();
 		rest1k.startThread();
-	//	t.startThread();
+		t.startThread();
 		
 		bank2a.startThread();
 		bank2b.startThread();
