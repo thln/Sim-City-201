@@ -10,4 +10,6 @@ public interface MarketCustomer {
 
 	public void exitMarket();
 
+	public void msgComeIn();
+
 }

@@ -2,6 +2,7 @@ package market;
 
 import java.util.*;
 
+import application.Phonebook;
 import market.MarketOrder.orderState;
 import market.interfaces.MarketCustomer;
 import market.interfaces.SalesPerson;
@@ -149,5 +150,13 @@ public class SalesPersonRole extends Role implements SalesPerson {
 		o.orderCost = market.inventory.get(o.item).price * o.itemAmountFulfilled;
 		o.restaurant.getCashier(true).msgPleasePayForItems(o.item, o.itemAmountFulfilled, o.orderCost, this);
 		stateChanged();
+	}
+
+	public void msgMarketOpen() {
+		if (!orders.isEmpty()) {
+			for (MarketOrder o: orders) {
+				o.customer.msgComeIn();
+			}
+		}
 	}
 }

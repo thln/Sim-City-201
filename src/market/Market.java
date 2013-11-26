@@ -74,10 +74,8 @@ public class Market {
 
 
 	//Methods
-	public Role arrivedAtWork(Person person, String title) 
-	{
-		if (title == "salesPerson") 
-		{
+	public Role arrivedAtWork(Person person, String title) {
+		if (title == "salesPerson") {
 			//Setting previous bank guard role to inactive
 			if (salesPersonRole.getPerson() != null) 
 			{
@@ -86,6 +84,8 @@ public class Market {
 			}
 			//Setting bank guard role to new role
 			salesPersonRole.setPerson(person);
+			if (isOpen())
+				salesPersonRole.msgMarketOpen();
 			return salesPersonRole;
 		}
 		else if (title == "marketRunner") 
@@ -98,6 +98,8 @@ public class Market {
 			}
 			//Setting bank guard role to new role
 			marketRunnerRole.setPerson(person);
+			if (isOpen())
+				salesPersonRole.msgMarketOpen();
 			return marketRunnerRole;
 		}
 		else if (title == "UPSman") {
@@ -108,6 +110,8 @@ public class Market {
 			}
 			//Setting bank guard role to new role
 			UPSmanRole.setPerson(person);
+			if (isOpen())
+				salesPersonRole.msgMarketOpen();
 			return UPSmanRole;
 		}
 		else
@@ -180,5 +184,12 @@ public class Market {
 	
 	public void setPanel(BuildingPanel panel) {
 		marketPanel = panel;
+	}
+	
+	public boolean isOpen(){
+		if (salesPersonRole.getPerson() != null && marketRunnerRole.getPerson() != null && UPSmanRole != null)
+			return true;
+		else 
+			return false;
 	}
 }

@@ -174,14 +174,11 @@ public abstract class Person extends Agent{
 
 		if (hasFoodInFridge == false) {
 			//choosing random item to buy from market
-			String item;
-			item = chooseMarketItem();
 			for (Role cust1 : roles) {
 				if (cust1 instanceof MarketCustomerRole) {
 					MarketCustomerRole MCR = (MarketCustomerRole) cust1;
 					MarketCustomerGui mg = new MarketCustomerGui(MCR);
 					MCR.setGui(mg);
-					Phonebook.getPhonebook().getMarket().salesPersonRole.msgIWantProducts((MarketCustomerRole) cust1, item, 3);
 					cust1.setRoleActive();
 					marketPanel.addGui(mg);
 					currentRoleName = "Market Customer";
@@ -196,7 +193,7 @@ public abstract class Person extends Agent{
 					MarketCustomerRole MCR = (MarketCustomerRole) cust1;
 					MarketCustomerGui mg = new MarketCustomerGui(MCR);
 					MCR.setGui(mg);
-					Phonebook.getPhonebook().getMarket().salesPersonRole.msgIWantProducts((MarketCustomerRole) cust1, "Car", 3);
+					MCR.setItem("Car");
 					cust1.setRoleActive();
 					marketPanel.addGui(mg);
 					stateChanged();
@@ -204,18 +201,6 @@ public abstract class Person extends Agent{
 				}
 			}
 		}
-	}
-
-	private String chooseMarketItem() {
-		Random rand = new Random();
-		int myRandomChoice;
-		String item;
-		do {
-			myRandomChoice = rand.nextInt(10);
-			myRandomChoice %= 7;
-		} while (!Phonebook.getPhonebook().getMarket().marketItemsForSale.containsKey(myRandomChoice) || (money < Phonebook.getPhonebook().getMarket().marketItemsForSale.get(myRandomChoice).price));
-		item = Phonebook.getPhonebook().getMarket().marketItemsForSale.get(myRandomChoice).itemName;
-		return item;
 	}
 
 	protected void prepareForRestaurant() {
