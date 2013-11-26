@@ -200,6 +200,7 @@ public abstract class Person extends Agent{
 					MCR.setItem("Car");
 					cust1.setRoleActive();
 					marketPanel.addGui(mg);
+					currentRoleName = "Market Customer";
 					stateChanged();
 					return;
 				}
