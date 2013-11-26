@@ -155,32 +155,32 @@ public class Application extends JPanel {
 
 		
 		//Adding to Vector
-		population.add(bank1a);
-		population.add(bank1b);
-		population.add(bank1c);
-		population.add(market1d);
-		population.add(market1e);
-		population.add(market1f);
-		population.add(rest1g);
-		population.add(rest1h);
-		population.add(rest1i);
-		population.add(rest1j);
+		getPopulation().add(bank1a);
+		getPopulation().add(bank1b);
+		getPopulation().add(bank1c);
+		getPopulation().add(market1d);
+		getPopulation().add(market1e);
+		getPopulation().add(market1f);
+		getPopulation().add(rest1g);
+		getPopulation().add(rest1h);
+		getPopulation().add(rest1i);
+		getPopulation().add(rest1j);
 //		population.add(rest1k);
 //		population.add(t);
 		
-		population.add(bank2a);
-		population.add(bank2b);
-		population.add(bank2c);
-		population.add(market2d);
-		population.add(market2e);
-		population.add(market2f);
-		population.add(rest2g);
-		population.add(rest2h);
-		population.add(rest2i);
-		population.add(rest2j);
+		getPopulation().add(bank2a);
+		getPopulation().add(bank2b);
+		getPopulation().add(bank2c);
+		getPopulation().add(market2d);
+		getPopulation().add(market2e);
+		getPopulation().add(market2f);
+		getPopulation().add(rest2g);
+		getPopulation().add(rest2h);
+		getPopulation().add(rest2i);
+		getPopulation().add(rest2j);
 //		population.add(rest2k);
 		
-		for(Person person : population) {
+		for(Person person : getPopulation()) {
 			person.setPanel(animPanel);
 			PersonGui pg = new PersonGui(person);
 			person.setGui(pg);
@@ -223,7 +223,7 @@ public class Application extends JPanel {
 			Wealthy newP = new Wealthy(name, money);
 			allHousing.add(new Housing(newP, allHousing.size(), "Mansion"));
 			newP.setHome(allHousing.get(allHousing.size() - 1));
-			population.add(newP);
+			getPopulation().add(newP);
 			newP.startThread();
 		}
 		else if (type.equals("Crook")) 
@@ -231,7 +231,7 @@ public class Application extends JPanel {
 			Crook newP = new Crook(name, money);
 			allHousing.add(new Housing(newP, allHousing.size(), "Apartment"));
 			newP.setHome(allHousing.get(allHousing.size() - 1));
-			population.add(newP);
+			getPopulation().add(newP);
 			newP.startThread();
 		}
 		else if (type.equals("Worker")) 
@@ -239,7 +239,7 @@ public class Application extends JPanel {
 			Worker newP = new Worker(name, money, jobTitle, jobLocation, startT, lunchT, endT);
 			allHousing.add(new Housing(newP, allHousing.size(), "Apartment"));
 			newP.setHome(allHousing.get(allHousing.size() - 1));
-			population.add(newP);
+			getPopulation().add(newP);
 			newP.startThread();	
 		}
 		else if (type.equals("Deadbeat")) 
@@ -247,28 +247,36 @@ public class Application extends JPanel {
 			Deadbeat newP = new Deadbeat(name, money);
 			allHousing.add(new Housing(newP, allHousing.size(), "Park"));
 			newP.setHome(allHousing.get(allHousing.size() - 1));
-			population.add(newP);
+			getPopulation().add(newP);
 			newP.startThread();
 		}
 	}
 	
 	public void editPerson(int index, String name, int money){
-		population.get(index).setMoney(money);
+		getPopulation().get(index).setMoney(money);
 	}
 	
 	//function used to test gui functionality
 	public void printLastPop(){
-		System.out.println(population.get(population.size()-1).getName());
+		System.out.println(getPopulation().get(getPopulation().size()-1).getName());
 	}
 	
 	public int getPopulationSize() {
-		return population.size();
+		return getPopulation().size();
 	}
 	
 	public int getNumberHomes(){
 		return allHousing.size();
 	}
 	public Person getPerson(int personIndex){
-		return population.get(personIndex);
+		return getPopulation().get(personIndex);
+	}
+
+	public ArrayList<Person> getPopulation() {
+		return population;
+	}
+
+	public void setPopulation(ArrayList<Person> population) {
+		this.population = population;
 	}
 }

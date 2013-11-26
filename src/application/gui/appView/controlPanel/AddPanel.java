@@ -4,6 +4,8 @@ package application.gui.appView.controlPanel;
 import javax.swing.*;
 import javax.swing.text.NumberFormatter;
 
+import person.Person;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.text.NumberFormat;
@@ -30,6 +32,7 @@ public class AddPanel extends JPanel implements ActionListener {
 	private JTextField jobLTimeField = new JTextField(10);
 	private JTextField jobETimeField = new JTextField(10);
 	private JButton addButton = new JButton("Add");
+	private JButton raveButton = new JButton("Rave Mode");
 	private ControlPanel cp;
 	private Application app;
 	private JComboBox socialClassBox;
@@ -145,7 +148,9 @@ public class AddPanel extends JPanel implements ActionListener {
 		gbcConstraints.gridx = 9;
 		gbcConstraints.gridy = 1;
 		addButton.addActionListener(this);
+		raveButton.addActionListener(this);
 		mainPanel.add(addButton,gbcConstraints);
+		mainPanel.add(raveButton,gbcConstraints);
 		
 		
 		add(mainPanel);
@@ -269,6 +274,11 @@ public class AddPanel extends JPanel implements ActionListener {
 			app.printLastPop();
 			//System.out.println(type);
 			//System.out.println(app.getPopulationSize());
+		}
+		if (e.getSource() == raveButton) {
+			for (Person p : app.getPopulation()) {
+				p.getGui().setRaveMode();
+			}
 		}
 	}
 	

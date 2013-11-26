@@ -25,7 +25,7 @@ public abstract class Person extends Agent{
 	private Housing home;
 	private Timer alarmClock = new Timer();
 	private Timer hungerTimer = new Timer();
-	protected PersonGui gui;
+	private PersonGui gui;
 	BuildingPanel marketPanel = null;
 	BuildingPanel bankPanel = null;
 	BuildingPanel housePanel = null;
@@ -94,7 +94,7 @@ public abstract class Person extends Agent{
 
 	protected void prepareForBank () {
 		Do("Becoming Bank Customer");
-		gui.DoGoToBank();
+		getGui().DoGoToBank();
 		try {
 			atDestination.acquire();
 		} catch (InterruptedException e) {
@@ -159,7 +159,7 @@ public abstract class Person extends Agent{
 	}
 
 	protected void prepareForMarket() {
-		gui.DoGoToMarket();
+		getGui().DoGoToMarket();
 		try {
 			atDestination.acquire();
 		} catch (InterruptedException e) {
@@ -208,7 +208,7 @@ public abstract class Person extends Agent{
 	}
 
 	protected void prepareForRestaurant() {
-		gui.DoGoToRestaurant();
+		getGui().DoGoToRestaurant();
 		try {
 			atDestination.acquire();
 		} catch (InterruptedException e) {
@@ -236,7 +236,7 @@ public abstract class Person extends Agent{
 
 	protected void goToSleep() {
 	//	if (gui.getxPos() != gui.getxHome() && gui.getyPos() != gui.getyHome()){
-			gui.DoGoHome();
+			getGui().DoGoHome();
 			try {
 				atDestination.acquire();
 			} catch (InterruptedException e) {
@@ -329,5 +329,9 @@ public abstract class Person extends Agent{
 
 	public void setAtDestination(Semaphore atDestination) {
 		this.atDestination = atDestination;
+	}
+
+	public PersonGui getGui() {
+		return gui;
 	}
 }

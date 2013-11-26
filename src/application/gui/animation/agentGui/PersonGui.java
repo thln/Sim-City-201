@@ -12,6 +12,8 @@ public class PersonGui extends CityGui{
 	private Person agent = null;
 	private boolean isHungry = false;
 
+	public boolean raveMode = false;
+	
 	Random rand = new Random();
 	int red = rand.nextInt(255);
 	int blue  = rand.nextInt(255);
@@ -120,6 +122,15 @@ public class PersonGui extends CityGui{
 
 	public void draw(Graphics2D g) {
 		g.setColor(myColor);
+		
+		if (raveMode) {
+			Random rand = new Random();
+			int red = rand.nextInt(255);
+			int blue  = rand.nextInt(255);
+			int green  = rand.nextInt(255);
+			g.setColor(new Color (red, blue, green));
+		}
+		
 		g.fillRect(getxPos(), getyPos(), 20, 20);
 		g.setColor(Color.BLACK);
 		if(agent != null) {
@@ -211,5 +222,13 @@ public class PersonGui extends CityGui{
 
 	public int getyHome() {
 		return yHome;
+	}
+	
+	public void setRaveMode() {
+		if (raveMode) {
+			raveMode = false;
+		}
+		else
+			raveMode = true;
 	}
 }
