@@ -54,6 +54,11 @@ public class BankGuardRole extends Role implements BankGuard {
 	public void msgTellerCameToWork (BankTeller t1) {
 		tellers.add(new MyTeller(t1));
 	}
+	
+	public void msgTellerLeavingWork(BankTeller t1) {
+		tellers.remove(t1);
+	}
+
 
 	public void msgRobbingBank(BankCustomer cust1) {
 		robbers.add(cust1);
@@ -65,7 +70,6 @@ public class BankGuardRole extends Role implements BankGuard {
 			print("New customer " + ((BankCustomerRole) c1).getName() + " arrived");
 		}
 		catch (Exception e) {
-
 		}
 		customers.add(c1);
 		stateChanged();
@@ -157,5 +161,4 @@ public class BankGuardRole extends Role implements BankGuard {
 			}
 		}
 	}
-
 }

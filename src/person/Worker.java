@@ -233,6 +233,7 @@ public class Worker extends Person {
 				if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getMarket().openTime.hour) &&
 						(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getMarket().closeTime.hour)) 
 				{
+					print("Going to market");
 					prepareForMarket();
 					return true;
 				}
@@ -268,13 +269,13 @@ public class Worker extends Person {
 		print("Preparing for work as " + myJob.title);
 		if (myJob.jobPlace == "bank") 
 		{
+			print("going to work at bank");
 			gui.DoGoToBank();
-			try {
+			try {			
 				atDestination.acquire();
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-
 			}
 			workerRole = Phonebook.getPhonebook().getBank().arrivedAtWork(this, myJob.title);
 			workerRole.setRoleActive();

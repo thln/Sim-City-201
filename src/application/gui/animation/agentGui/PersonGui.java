@@ -94,9 +94,11 @@ public class PersonGui extends CityGui{
 		if (xPos == xDestination && yPos == yDestination) {
 			if(agent != null) {
 				if(command == Command.GoToBuilding) {
+				System.out.println("BUILDING RELEASE");
 					agent.msgAtDestination();
 				}
 				if(command == Command.GoHome) {
+					System.out.println("HOUSE RELEASE");
 					agent.msgAtDestination();
 				}
 			}
@@ -137,7 +139,7 @@ public class PersonGui extends CityGui{
 		command = Command.GoToBuilding;
 	}
 
-	public void DoGoToBank() {//later you will map building to map coordinates.
+	public void DoGoToBank() {//later you will map building to map coordinates.		
 		xDestination = xBankLocation;
 		yDestination = yBankLocation;
 		command = Command.GoToBuilding;

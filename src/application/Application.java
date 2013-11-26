@@ -189,11 +189,11 @@ public class Application extends JPanel {
 		
 		//Starting Threads
 		bank1a.startThread();
-		bank1b.startThread();
-		bank1c.startThread();
-		market1d.startThread();
-		market1e.startThread();
-		market1f.startThread();
+//		bank1b.startThread();
+//		bank1c.startThread();
+//		market1d.startThread();
+//		market1e.startThread();
+//		market1f.startThread();
 		rest1h.startThread();
 		rest1g.startThread();	
 		rest1i.startThread();
@@ -202,8 +202,8 @@ public class Application extends JPanel {
 //		t.startThread();
 		
 		bank2a.startThread();
-		bank2b.startThread();
-		bank2c.startThread();
+//		bank2b.startThread();
+//		bank2c.startThread();
 //		market2d.startThread();
 //		market2e.startThread();
 //		market2f.startThread();

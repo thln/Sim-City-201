@@ -55,6 +55,8 @@ public class GuardTest extends TestCase
 		//Step 3: Scheduler runs...should execute method "assignToTeller"
 		assertFalse("Guard's scheduler should have returned false, but didn't.", 
 				guard.pickAndExecuteAnAction());
+		
+		assertEquals("Guard should have 1 customer in list. It doesn't.", guard.getCustomers().size(), 1);
 
 		//Step 3 post-conditions
 		assertTrue("MockCustomer should have logged an event for being assigned to teller, but his last event logged reads instead: " 
@@ -80,6 +82,8 @@ public class GuardTest extends TestCase
 
 		assertFalse("Guard's scheduler should have returned false (no new customers)  but didn't.", 
 				guard.pickAndExecuteAnAction());
+		
+		guard.getTellers().remove(teller);
 	}
 
 
@@ -177,6 +181,8 @@ public class GuardTest extends TestCase
 
 		assertFalse("Guards's scheduler should have returned false, but didn't.", 
 				guard.pickAndExecuteAnAction());
+		
+		guard.getTellers().remove(teller);
 	}
 
 
@@ -213,8 +219,6 @@ public class GuardTest extends TestCase
 		//Step 3 post-conditions
 		
 		assertEquals("Guard should have 1 teller in list. It doesn't.", guard.getTellers().size(), 1); 	
-		assertTrue("1st MockTeller should have the state 'available' ", 
-				guard.getTellers().get(0).state == BankGuardRole.TellerState.available);
 		
 		//Step 4: run scheduler and execute method "assignToTeller"
 		assertFalse("Guard's scheduler should have returned false (no new customers)  but didn't.", 
@@ -240,6 +244,8 @@ public class GuardTest extends TestCase
 
 		assertFalse("Guard's scheduler should have returned false (no new customers)  but didn't.", 
 				guard.pickAndExecuteAnAction());
+		
+		guard.getTellers().remove(teller);
 	}
 	
 	//TODO THIS METHOD
@@ -302,5 +308,7 @@ public class GuardTest extends TestCase
 
 		assertFalse("Guard's scheduler should have returned false (no new customers)  but didn't.", 
 				guard.pickAndExecuteAnAction());
+		
+		guard.getTellers().remove(teller);
 	}
 }

@@ -156,6 +156,7 @@ public abstract class Person extends Agent{
     }
 	
 	protected void prepareForMarket() {
+		print("testMonkeys");
 		gui.DoGoToMarket();
 		try {
 			atDestination.acquire();
