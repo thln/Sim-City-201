@@ -72,8 +72,7 @@ public class Bank
 		if (title == "bankGuard") {
 			//Setting previous bank guard role to inactive
 			if (bankGuardRole.getPerson() != null) {
-				Worker worker = (Worker) bankGuardRole.getPerson();
-				worker.roleFinishedWork();
+				((Worker) bankGuardRole.getPerson()).roleFinishedWork();
 			}
 			//Setting bank guard role to new role
 			bankGuardRole.setPerson(person);
@@ -84,8 +83,7 @@ public class Bank
 		else if (title == "loanOfficer") {
 			//Setting previous bank guard role to inactive
 			if (loanOfficerRole.getPerson() != null) {
-				Worker worker = (Worker) loanOfficerRole.getPerson();
-				worker.roleFinishedWork();
+			((Worker) loanOfficerRole.getPerson()).roleFinishedWork();
 			}
 			//Setting bank guard role to new role
 			loanOfficerRole.setPerson(person);
@@ -97,8 +95,7 @@ public class Bank
 			//Setting previous bank guard role to inactive
 			for (BankTellerRole r1: tellers) {
 				if (r1.getPerson() != null) {
-					Worker worker = (Worker) tellers.get(0).getPerson();
-					worker.roleFinishedWork();
+					((Worker) r1.getPerson()).roleFinishedWork();
 				}
 			}
 			//Setting bank guard role to new role

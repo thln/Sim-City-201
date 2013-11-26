@@ -63,12 +63,16 @@ public abstract class Person extends Agent{
 
 	//Time Related
 	public int sleepTime = 22;
+	protected Timer nextTask;
+	boolean upcomingTask;
 
 	Person(String name) {
 		this.name = name;
 		roles.add(new BankCustomerRole(this, getName(), "Bank Customer"));
 		roles.add(new MarketCustomerRole(this, getName(), "Market Customer"));
 		roles.add(new RestaurantCustomerRole(this, getName(), "Restaurant Customer"));
+		nextTask = new Timer();
+		upcomingTask = false;
 	}
 
 	public void msgAtDestination() {
@@ -123,33 +127,33 @@ public abstract class Person extends Agent{
 			}
 		}
 	}
-	
+
 	protected void resetRentMailbox()
 	{
 		checkedMailbox = false;
 	}
 
-    protected void prepareForRent()
-    {
+	protected void prepareForRent()
+	{
 		print("Depositing rent for week. Rent is " + Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.getApartmentRentCost());
-    	if( money >= Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.getApartmentRentCost())
-    	{
-    		money -= Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.getApartmentRentCost();
-    		Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.dropRentMoney(Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.getApartmentRentCost());
-    		checkedMailbox = true;
-    	}
-    	else if (accountBalance >= Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.getApartmentRentCost())
-    	{
-    		accountBalance -= Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.getApartmentRentCost();
-    		Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.dropRentMoney(Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.getApartmentRentCost());
-    		checkedMailbox = true;
-    	}
-    	else
-    	{
-    		//Non Norm, making a loan
-    	}
-    }
-	
+		if( money >= Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.getApartmentRentCost())
+		{
+			money -= Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.getApartmentRentCost();
+			Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.dropRentMoney(Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.getApartmentRentCost());
+			checkedMailbox = true;
+		}
+		else if (accountBalance >= Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.getApartmentRentCost())
+		{
+			accountBalance -= Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.getApartmentRentCost();
+			Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.dropRentMoney(Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.getApartmentRentCost());
+			checkedMailbox = true;
+		}
+		else
+		{
+			//Non Norm, making a loan
+		}
+	}
+
 	protected void prepareForMarket() {
 		gui.DoGoToMarket();
 		try {
