@@ -64,9 +64,9 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		} catch (IOException e) {
 		}
 
-		addBuilding("Restaurant", WINDOWX - 200, 50);
-		addBuilding("Market", WINDOWX - 200, 100);
-		addBuilding("Bank", WINDOWX - 200, 170);
+		addBuilding("Restaurant", WINDOWX / 2, 20);
+		addBuilding("Market", WINDOWX - 100, 100);
+		addBuilding("Bank", WINDOWX / 2, 230);
 		addBuilding("House", 20, 100);
 		addBuilding("Apartment", 0, 0);
 		
