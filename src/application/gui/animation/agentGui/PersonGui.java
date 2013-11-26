@@ -33,7 +33,7 @@ public class PersonGui extends CityGui{
 	private int xPos, yPos;//default person position
 	private int xDestination, yDestination;//default start position
 	private int xHome, yHome;
-	private enum Command {noCommand, GoToBuilding, GoToBusStop, GoOnBus, GoHome};
+	private enum Command {noCommand, GoToRestaurant, GoToMarket, GoToBank, GoToBusStop, GoOnBus, GoHome};
 	private Command command = Command.noCommand;
 
 	private enum PersonState {nothing};
@@ -93,12 +93,16 @@ public class PersonGui extends CityGui{
 
 		if (xPos == xDestination && yPos == yDestination) {
 			if(agent != null) {
-				if(command == Command.GoToBuilding) {
-				System.out.println("BUILDING RELEASE");
+				if (command == Command.GoToRestaurant && xPos == xRestaurant1Location && yPos == yRestaurant1Location) {
 					agent.msgAtDestination();
 				}
-				if(command == Command.GoHome) {
-					System.out.println("HOUSE RELEASE");
+				if (command == Command.GoToMarket && xPos == xMarketLocation && yPos == yMarketLocation) {
+					agent.msgAtDestination();
+				}
+				if (command == Command.GoToBank && xPos == xBankLocation && yPos == yBankLocation) {
+					agent.msgAtDestination();
+				}
+				if (command == Command.GoHome && xPos == xHome && yPos == yHome) {
 					agent.msgAtDestination();
 				}
 			}
@@ -130,19 +134,19 @@ public class PersonGui extends CityGui{
 	public void DoGoToRestaurant() {//later you will map building to map coordinates.
 		xDestination = xRestaurant1Location;
 		yDestination = yRestaurant1Location;
-		command = Command.GoToBuilding;
+		command = Command.GoToRestaurant;
 	}
 
 	public void DoGoToMarket() {//later you will map building to map coordinates.
 		xDestination = xMarketLocation;
 		yDestination = yMarketLocation;
-		command = Command.GoToBuilding;
+		command = Command.GoToMarket;
 	}
 
 	public void DoGoToBank() {//later you will map building to map coordinates.		
 		xDestination = xBankLocation;
 		yDestination = yBankLocation;
-		command = Command.GoToBuilding;
+		command = Command.GoToBank;
 	}
 
 	public void DoGoToBusStop(int stopNum) {//later you will map stop number to map coordinates.
