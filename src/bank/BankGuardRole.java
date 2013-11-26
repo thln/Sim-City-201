@@ -56,7 +56,8 @@ public class BankGuardRole extends Role implements BankGuard {
 	}
 
 	public void msgTellerLeavingWork(BankTeller t1) {
-		print("Teller role removed " + ((Role) t1).getPerson().getName());
+		if (t1 instanceof Role)
+			print("Teller role removed " + ((Role) t1).getPerson().getName());
 		tellers.remove(t1);
 	}
 
@@ -143,7 +144,7 @@ public class BankGuardRole extends Role implements BankGuard {
 		synchronized(tellers){
 			for (MyTeller teller1: tellers) {
 				if (teller1.state == TellerState.available && (Phonebook.getPhonebook().getBank().isOpen() || test)) {
-					if (!test)
+					if (teller1.tell1 instanceof Role)
 						print("Assigning " + ((Role) cust1).getPerson().getName() + " to teller " + teller1.tell1.getName());
 					cust1.msgGoToTeller(teller1.tell1);
 					teller1.state = TellerState.busy;
