@@ -5,6 +5,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import person.Person;
+import person.Person.HungerLevel;
 import person.Role;
 import restaurant.interfaces.Host;
 import restaurant.interfaces.RestaurantCustomer;
@@ -392,6 +393,7 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer {
 
 	private void ResetState() {
 		state = AgentState.DoingNothing;
+		person.setHunger(HungerLevel.full);
 		this.setRoleInactive();
 	}
 
