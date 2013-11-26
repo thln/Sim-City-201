@@ -132,7 +132,7 @@ public class PersonGui extends CityGui{
 		}
 		
 		g.fillRect(getxPos(), getyPos(), 20, 20);
-		g.setColor(Color.BLACK);
+		g.setColor(Color.WHITE);
 		if(agent != null) {
 			g.drawString(agent.getName(), getxPos(), getyPos());
 		}
