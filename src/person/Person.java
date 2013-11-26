@@ -179,6 +179,7 @@ public abstract class Person extends Agent{
 					MarketCustomerRole MCR = (MarketCustomerRole) cust1;
 					MarketCustomerGui mg = new MarketCustomerGui(MCR);
 					MCR.setGui(mg);
+					MCR.setItem("");
 					cust1.setRoleActive();
 					marketPanel.addGui(mg);
 					currentRoleName = "Market Customer";
