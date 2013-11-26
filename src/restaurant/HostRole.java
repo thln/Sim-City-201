@@ -1,12 +1,14 @@
 package restaurant;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 import person.Person;
 import person.Role;
 import person.Worker;
 import restaurant.interfaces.RestaurantCustomer;
-
 /**
  * Restaurant Host Role
  */
@@ -14,8 +16,7 @@ import restaurant.interfaces.RestaurantCustomer;
 //does all the rest. Rather than calling the other agent a waiter, we called him
 //the HostAgent. A Host is the manager of a restaurant who sees that all
 //is proceeded as he wishes.
-public class HostRole extends Role 
-{
+public class HostRole extends Role {
 	static final int NTABLES = 4;//a global for the number of tables.
 	//Notice that we implement waitingCustomers using ArrayList, but type it
 	//with List semantics.
@@ -355,8 +356,7 @@ public class HostRole extends Role
 		}
 	}
 
-	private WaiterRole findWaiterWithLeastCustomers() 
-	{
+	private WaiterRole findWaiterWithLeastCustomers() {
 		//Finding first waiter that is not on break
 		myWaiter lowestWaiter = null;
 
@@ -435,6 +435,14 @@ public class HostRole extends Role
 			this.customer = customer;
 			this.xHome = xHome;
 			this.yHome = yHome;
+		}
+	}
+
+	public void msgRestaurantOpen() {
+		if (newCustomers.size() != 0){
+			for (myCustomer c1: newCustomers){
+				c1.customer.msgComeIn();
+			}
 		}
 	}
 }

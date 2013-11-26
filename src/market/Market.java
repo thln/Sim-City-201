@@ -35,8 +35,7 @@ public class Market {
 	private BuildingPanel marketPanel;
 	
 	double money;
-	public HashMap<String, Product> marketItemsForSale = new HashMap<String, Product>(); 
-	{
+	public HashMap<String, Product> marketItemsForSale = new HashMap<String, Product>(); {
 		//For people
 		marketItemsForSale.put("Car", new Product("Car", 1000.00));
 		marketItemsForSale.put("Pasta", new Product("Pasta", 1.99));
@@ -67,8 +66,7 @@ public class Market {
 	}
 
 	//Constructor
-	public Market(String name) 
-	{
+	public Market(String name) 	{
 		this.name = name;
 	}
 
@@ -77,29 +75,28 @@ public class Market {
 	public Role arrivedAtWork(Person person, String title) {
 		if (title == "salesPerson") {
 			//Setting previous bank guard role to inactive
-			if (salesPersonRole.getPerson() != null) 
-			{
+			if (salesPersonRole.getPerson() != null) {
 				Worker worker = (Worker) salesPersonRole.getPerson();
 				worker.roleFinishedWork();
 			}
 			//Setting bank guard role to new role
 			salesPersonRole.setPerson(person);
-			if (isOpen())
+			if (isOpen()) {
 				salesPersonRole.msgMarketOpen();
+			}
 			return salesPersonRole;
 		}
-		else if (title == "marketRunner") 
-		{
+		else if (title == "marketRunner") {
 			//Setting previous bank guard role to inactive
-			if (marketRunnerRole.getPerson() != null) 
-			{
+			if (marketRunnerRole.getPerson() != null) {
 				Worker worker = (Worker) marketRunnerRole.getPerson();
 				worker.roleFinishedWork();
 			}
 			//Setting bank guard role to new role
 			marketRunnerRole.setPerson(person);
-			if (isOpen())
+			if (isOpen()) {
 				salesPersonRole.msgMarketOpen();
+			}
 			return marketRunnerRole;
 		}
 		else if (title == "UPSman") {
@@ -110,8 +107,9 @@ public class Market {
 			}
 			//Setting bank guard role to new role
 			UPSmanRole.setPerson(person);
-			if (isOpen())
+			if (isOpen()) {
 				salesPersonRole.msgMarketOpen();
+			}
 			return UPSmanRole;
 		}
 		else
@@ -119,8 +117,7 @@ public class Market {
 	}
 
 
-	public class Item 
-	{
+	public class Item {
 		public String itemName;
 		public double  price;
 		public int amount;
@@ -138,8 +135,7 @@ public class Market {
 		}
 	}
 	
-	public class Product 
-	{
+	public class Product {
 		public String itemName;
 		public double  price;
 
@@ -150,13 +146,11 @@ public class Market {
 		}
 	}
 
-	public String getName() 
-	{
+	public String getName() {
 		return name;
 	}
 
-	public void setName(String name) 
-	{
+	public void setName(String name) {
 		this.name = name;
 	}
 
