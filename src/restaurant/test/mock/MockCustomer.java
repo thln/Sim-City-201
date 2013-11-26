@@ -111,5 +111,11 @@ public class MockCustomer extends Mock implements RestaurantCustomer {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void msgComeIn() {
+		// TODO Auto-generated method stub
+		
+	}
 }
 
