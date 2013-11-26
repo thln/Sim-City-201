@@ -99,7 +99,6 @@ public class Worker extends Person {
 			if (workerRole.getState() == RoleState.active) {
 				//If my current time is more than the shift length since start time
 				if (((((currentTime - myJob.startTime.hour) % 24) + 24) % 24) >= shiftLength){
-//	print("current time = " + currentTime + " startTime = " + myJob.startTime.hour + " shift = " + shiftLength);
 					workerRole.msgLeaveRole();
 					return workerRole.pickAndExecuteAnAction();
 				}					
@@ -120,6 +119,7 @@ public class Worker extends Person {
 		}
 
 		int currentTime = TimeManager.getTimeManager().getTime().dayHour;
+		
 		//If no role is active, check if it's time for work
 		if (((((myJob.startTime.hour - currentTime) % 24) + 24) % 24) <= 1) {
 			prepareForWork();
@@ -135,19 +135,6 @@ public class Worker extends Person {
 			//	scheduleNextTask(currentTime, myJob.endTime.hour);
 				return true;
 		}
-		
-		//		if (workState == WorkState.prepareForWork) {
-		//			if ((!lateWorker && currentTime <= 5 && (myJob.getStartTime().hour - currentTime) <= 1)
-		//					|| (lateWorker && currentTime >= 5 && (myJob.getStartTime().hour - currentTime) <= 1)
-		//					|| (!lateWorker && currentTime > 5 && (myJob.getStartTime().hour + 24 - currentTime) <= 1)
-		//					|| (lateWorker && currentTime > 5 && (myJob.getStartTime().hour + 24 - currentTime) <= 1))
-		//			{
-		//				workState = WorkState.atWork;
-		//				upcomingTask = false;
-		//				prepareForWork();
-		//				return true;
-		//			}
-		//		}
 
 		//Bank Related (check if you need to go to the bank)
 		if (money <= moneyMinThreshold || money >= moneyMaxThreshold) 
