@@ -3,11 +3,15 @@ package application;
 import housing.Housing;
 
 import javax.swing.*;
+
 import market.*;
 import bank.*;
 import person.*;
 import restaurant.Restaurant;
+
 import java.util.*;
+import java.util.Timer;
+
 import application.gui.animation.*;
 import application.gui.animation.agentGui.*;
 import application.gui.appView.listPanel.*;
@@ -22,6 +26,7 @@ public class Application extends JPanel {
 	public Bank bank;
 	public Market market;
 	public Restaurant restaurant;
+	public Timer updateTimer = new Timer();
 
 	//public static Phonebook phonebook = new Phonebook(bank, market, restaurant, allHousing);
 
@@ -29,6 +34,7 @@ public class Application extends JPanel {
 	public Application(AnimationPanel ap) {
 
 		animPanel = ap;
+		
 		Phonebook.getPhonebook().setHousingList(allHousing);
 		
 		//the following line is for dynamic building and business making in v2
@@ -215,6 +221,23 @@ public class Application extends JPanel {
 //		rest2i.startThread();
 //		rest2j.startThread();
 //		rest2k.startThread();
+		
+		updatePeopleTime();
+	}
+	
+	public void updatePeopleTime(){
+		int timeConversion = 60 * TimeManager.getSpeedOfTime();
+		
+		updateTimer.schedule(new TimerTask() {
+			public void run() {        
+				for (Person p: population){
+					p.stateChanged();      
+				}
+				updatePeopleTime();
+			}
+		},
+		timeConversion);
+		
 	}
 
 	public void addPerson (String name ,int money, String type,

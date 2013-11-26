@@ -83,7 +83,7 @@ public class Worker extends Person {
 		print("Shift is over, time to leave work");
 		//workerRole.setPerson(null);
 		workerRole = null;
-		scheduleNextTask(TimeManager.getTimeManager().getTime().dayHour, myJob.startTime.hour);
+	//	scheduleNextTask(TimeManager.getTimeManager().getTime().dayHour, myJob.startTime.hour);
 		stateChanged();
 	}
 
@@ -99,7 +99,7 @@ public class Worker extends Person {
 			if (workerRole.getState() == RoleState.active) {
 				//If my current time is more than the shift length since start time
 				if (((((currentTime - myJob.startTime.hour) % 24) + 24) % 24) >= shiftLength){
-	print("current time = " + currentTime + " startTime = " + myJob.startTime.hour + " shift = " + shiftLength);
+//	print("current time = " + currentTime + " startTime = " + myJob.startTime.hour + " shift = " + shiftLength);
 					workerRole.msgLeaveRole();
 					return workerRole.pickAndExecuteAnAction();
 				}					
@@ -119,31 +119,23 @@ public class Worker extends Person {
 			}
 		}
 
-		//If no role is active, Check if you are late for work
 		int currentTime = TimeManager.getTimeManager().getTime().dayHour;
-		if (myJob.startTime.hour < myJob.endTime.hour){
-			if (currentTime > myJob.startTime.hour && currentTime < myJob.endTime.hour){
-				prepareForWork();
-				scheduleNextTask(currentTime, myJob.endTime.hour);
-				return true;
-			}
-		}
-		else if (myJob.startTime.hour > myJob.endTime.hour) {
-			if (currentTime > myJob.startTime.hour || currentTime < myJob.endTime.hour){
-				prepareForWork();
-				scheduleNextTask(currentTime, myJob.endTime.hour);
-				return true;
-			}
-		}
-
-		//Otherwise, check if it is time to start your job
+		//If no role is active, check if it's time for work
 		if (((((myJob.startTime.hour - currentTime) % 24) + 24) % 24) <= 1) {
 			prepareForWork();
-			scheduleNextTask(currentTime, myJob.endTime.hour);
+		//	scheduleNextTask(currentTime, myJob.endTime.hour);
 			return true;
 		}
-
-
+		
+		//Check if you are late for work	
+		int timePassed = ((((currentTime - myJob.startTime.hour) % 24) + 24) % 24);
+		int maxHoursLate = 4;	//if you are more than 4 hours late, don't bother going to work
+		if ((timePassed >= 0) && (timePassed < maxHoursLate)){
+				prepareForWork();
+			//	scheduleNextTask(currentTime, myJob.endTime.hour);
+				return true;
+		}
+		
 		//		if (workState == WorkState.prepareForWork) {
 		//			if ((!lateWorker && currentTime <= 5 && (myJob.getStartTime().hour - currentTime) <= 1)
 		//					|| (lateWorker && currentTime >= 5 && (myJob.getStartTime().hour - currentTime) <= 1)
