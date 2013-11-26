@@ -1,19 +1,21 @@
 package restaurant;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.Semaphore;
-
-import application.Phonebook;
-import application.gui.animation.agentGui.RestaurantCookGui;
-
-import application.gui.animation.agentGui.RestaurantCustomerGui;
-import application.gui.animation.agentGui.RestaurantWaiterGui;
 
 import market.Market;
 import person.Person;
 import person.Role;
 import person.Worker;
 import restaurant.interfaces.Cook;
+import application.Phonebook;
+import application.gui.animation.agentGui.RestaurantCookGui;
 
 /**
  * Restaurant Cook Role
@@ -24,7 +26,7 @@ import restaurant.interfaces.Cook;
 public class CookRole extends Role implements Cook {
 
 	private String name;
-	private Semaphore atDestination = new Semaphore(0,true);
+	
 	protected String roleName = "Cook";
 	RestaurantCookGui cookGui = (RestaurantCookGui) gui;
 	

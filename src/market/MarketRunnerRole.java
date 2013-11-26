@@ -64,25 +64,25 @@ public class MarketRunnerRole extends Role implements MarketRunner {
 	//Actions
 	public void processOrder(MarketOrder o) {
 
-//		try 
-//		{
-//			atDestination.acquire();
-//		} 
-//		catch (InterruptedException e) 
-//		{
-//			e.printStackTrace();
-//
-//		}
-//		
-//		try 
-//		{
-//			atDestination.acquire();
-//		} 
-//		catch (InterruptedException e) 
-//		{
-//			e.printStackTrace();
-//
-//		}
+		try 
+		{
+			atDestination.acquire();
+		} 
+		catch (InterruptedException e) 
+		{
+			e.printStackTrace();
+
+		}
+		
+		try 
+		{
+			atDestination.acquire();
+		} 
+		catch (InterruptedException e) 
+		{
+			e.printStackTrace();
+
+		}
 		
 		if (o.customer != null) {
 			decreaseInventoryBy(o.item, o.itemAmountOrdered);
