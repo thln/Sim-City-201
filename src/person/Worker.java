@@ -271,7 +271,7 @@ public class Worker extends Person {
 		{
 			print("going to work at bank");
 			gui.DoGoToBank();
-			try {			
+			try {	
 				atDestination.acquire();
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block

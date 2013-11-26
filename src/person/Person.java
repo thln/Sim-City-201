@@ -21,7 +21,7 @@ public abstract class Person extends Agent{
 
 	//Data
 	String name;
-	protected Semaphore atDestination = new Semaphore(0,true);
+	protected Semaphore atDestination;
 	private Housing home;
 	private Timer alarmClock = new Timer();
 	private Timer hungerTimer = new Timer();
@@ -73,10 +73,11 @@ public abstract class Person extends Agent{
 		roles.add(new RestaurantCustomerRole(this, getName(), "Restaurant Customer"));
 		nextTask = new Timer();
 		upcomingTask = false;
+		atDestination = new Semaphore(0,true);
 	}
 
 	public void msgAtDestination() {
-		atDestination.release();
+		getAtDestination().release();
 	}
 
 	//Scheduler
@@ -133,28 +134,28 @@ public abstract class Person extends Agent{
 		checkedMailbox = false;
 	}
 
-    protected void prepareForRent()
-    {
-    	AlertLog.getInstance().logInfo(AlertTag.HOUSING, name, "Depositing rent for week. Rent is " + Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.getApartmentRentCost());
+	protected void prepareForRent()
+	{
+		AlertLog.getInstance().logInfo(AlertTag.HOUSING, name, "Depositing rent for week. Rent is " + Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.getApartmentRentCost());
 		//print("Depositing rent for week. Rent is " + Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.getApartmentRentCost());
-    	if( money >= Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.getApartmentRentCost())
-    	{
-    		money -= Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.getApartmentRentCost();
-    		Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.dropRentMoney(Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.getApartmentRentCost());
-    		checkedMailbox = true;
-    	}
-    	else if (accountBalance >= Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.getApartmentRentCost())
-    	{
-    		accountBalance -= Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.getApartmentRentCost();
-    		Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.dropRentMoney(Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.getApartmentRentCost());
-    		checkedMailbox = true;
-    	}
-    	else
-    	{
-    		//Non Norm, making a loan
-    	}
-    }
-	
+		if( money >= Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.getApartmentRentCost())
+		{
+			money -= Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.getApartmentRentCost();
+			Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.dropRentMoney(Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.getApartmentRentCost());
+			checkedMailbox = true;
+		}
+		else if (accountBalance >= Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.getApartmentRentCost())
+		{
+			accountBalance -= Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.getApartmentRentCost();
+			Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.dropRentMoney(Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.getApartmentRentCost());
+			checkedMailbox = true;
+		}
+		else
+		{
+			//Non Norm, making a loan
+		}
+	}
+
 	protected void prepareForMarket() {
 		print("testMonkeys");
 		gui.DoGoToMarket();
@@ -247,13 +248,15 @@ public abstract class Person extends Agent{
 	}
 
 	protected void goToSleep() {
-		gui.DoGoHome();
-		try {
-			atDestination.acquire();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			//
+		if (gui.getxPos() != gui.getxHome() && gui.getyPos() != gui.getyHome()){
+			gui.DoGoHome();
+			try {
+				atDestination.acquire();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				//
+			}
 		}
 
 		currentRoleName = " ";
@@ -331,5 +334,13 @@ public abstract class Person extends Agent{
 				restPanel = building.myBuildingPanel;
 			}
 		}
+	}
+
+	public Semaphore getAtDestination() {
+		return atDestination;
+	}
+
+	public void setAtDestination(Semaphore atDestination) {
+		this.atDestination = atDestination;
 	}
 }
