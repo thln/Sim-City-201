@@ -71,7 +71,8 @@ public class MarketCustomerRole extends Role implements MarketCustomer {
 			return;
 		}
 		item = chooseMarketItem();
-		Phonebook.getPhonebook().getMarket().salesPersonRole.msgIWantProducts(this, item, 3);	
+		Phonebook.getPhonebook().getMarket().salesPersonRole.msgIWantProducts(this, item, 3);
+		print("Arrived at the market");
 	}
 	
 	private String chooseMarketItem() {
@@ -88,6 +89,7 @@ public class MarketCustomerRole extends Role implements MarketCustomer {
 	
 	public void payBill(){
 		if (bill == Phonebook.getPhonebook().getMarket().inventory.get(item).price * itemAmount) {
+			print("Paying my bill");
 			Phonebook.getPhonebook().getMarket().getSalesPerson(test).msgPayment(this, bill);
 			person.money -= bill;
 			state = MarketCustomerState.payed;
@@ -104,6 +106,7 @@ public class MarketCustomerRole extends Role implements MarketCustomer {
 	}
 	
 	public void exitMarket() {
+		print("Leaving Market");
 		state = MarketCustomerState.atMarket;
 		this.setRoleInactive();
 	}
