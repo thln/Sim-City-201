@@ -31,7 +31,7 @@ public class BankCustomerRole extends Role implements BankCustomer{
 	public void msgComeIn() {
 		stateChanged();
 	}
-	
+
 	public void msgGoToTeller(BankTeller tell1) {
 		print ("Assigned to teller " + tell1.getName());
 		myTeller = tell1;
@@ -119,12 +119,12 @@ public class BankCustomerRole extends Role implements BankCustomer{
 		if (state == CustomerState.waiting) {
 			return false;
 		}
-		
+
 		if (state == CustomerState.atBank) {
 			messageGuard();
 			return false;
 		}
-			
+
 		if (state == CustomerState.ready) {
 			if (desire == BankCustomerDesire.openAccount){
 				openAccount();
@@ -161,19 +161,21 @@ public class BankCustomerRole extends Role implements BankCustomer{
 				return false;
 			}
 		}
-			return false;
+		return false;
 	}
 
 	//Actions
 
 	void messageGuard () {
-		if (!Phonebook.getPhonebook().getBank().isOpen()) {
-			print("Bank closed, waiting for bank to open.");
-			return;
+		if (!test){
+			if (!Phonebook.getPhonebook().getBank().isOpen()) {
+				print("Bank closed, waiting for bank to open.");
+				return;
+			}
+			else
+				print("Arrived at bank");
 		}
-		else
-			print("Arrived at bank");
-			
+
 		Phonebook.getPhonebook().getBank().getBankGuard(test).msgArrivedAtBank(this);
 		state = CustomerState.waiting;
 	}
