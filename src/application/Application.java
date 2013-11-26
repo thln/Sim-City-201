@@ -68,16 +68,16 @@ public class Application extends JPanel {
         //Restaurant Workers
         //SHIFT 1
         Worker rest1h = new Worker("Henry", 100, "host", "restaurant", 1, 1800, 14);
-        Worker rest1g = new Worker("Greg", 100, "cashier", "restaurant", 4, 1800, 15);        
+        Worker rest1g = new Worker("Greg", 100, "cashier", "restaurant", 2, 1800, 15);        
         Worker rest1i = new Worker("Iris", 100, "cook", "restaurant", 2, 1800, 15);
         Worker rest1j = new Worker("Josh", 100, "waiter", "restaurant", 1, 1800, 14);
-        Worker rest1k = new Worker("Kristi", 100, "altWaiter", "restaurant", 3, 1800, 17);
+        Worker rest1k = new Worker("Kristi", 100, "altWaiter", "restaurant", 2, 1800, 15);
         //SHIFT 2
         Worker rest2g = new Worker("Gil", 100, "cashier", "restaurant", 13, 600, 2);
-        Worker rest2h = new Worker("Hannah", 100, "host", "restaurant", 14, 600, 5);
-        Worker rest2i = new Worker("Isaac", 100, "cook", "restaurant", 14, 600, 5);
+        Worker rest2h = new Worker("Hannah", 100, "host", "restaurant", 14, 600, 3);
+        Worker rest2i = new Worker("Isaac", 100, "cook", "restaurant", 14, 600, 3);
         Worker rest2j = new Worker("Jacob", 100, "waiter", "restaurant", 13, 600, 2);
-        Worker rest2k = new Worker("Ken", 100, "altWaiter", "restaurant", 16, 600, 4);
+        Worker rest2k = new Worker("Ken", 100, "altWaiter", "restaurant", 14, 600, 3);
         
 
 		//!!!!Important -- Need to initialize setters 
