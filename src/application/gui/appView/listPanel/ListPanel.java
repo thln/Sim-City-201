@@ -35,15 +35,17 @@ public class ListPanel extends JPanel implements ActionListener{
 	
 	public ListPanel(ApplicationPanel appPanel, Application app){
 		this.app = app;
-		setLayout(new GridLayout(1,2));
+		//setLayout(new GridLayout(1,2));
+		this.setLayout((new BoxLayout((Container) this, BoxLayout.X_AXIS)));
 		
 		listPane = new JPanel();
 		listPane.setLayout(new BoxLayout((Container)listPane, BoxLayout.Y_AXIS));
 		pane.setViewportView(listPane);
         pane.setAlignmentX(Component.RIGHT_ALIGNMENT);
         
-        Dimension paneDim = new Dimension((1/4)*(this.getWidth()),this.getHeight());
-		pane.setPreferredSize(paneDim);
+        //Dimension paneDim = new Dimension((1/4)*(this.getWidth()),this.getHeight());
+		Dimension paneDim = new Dimension(140, 500);
+        pane.setPreferredSize(paneDim);
 		pane.setMinimumSize(paneDim);
 		pane.setMaximumSize(paneDim);
 		updateList();
@@ -135,6 +137,8 @@ public class ListPanel extends JPanel implements ActionListener{
 			}
 			//Dimension buttonSize = new Dimension(listPane.getSize().width, (1/7)* (listPane.getSize().height));
 			//button.setPreferredSize(buttonSize);
+			//button.setSize(25, 10);
+            button.setMaximumSize(new Dimension(125, 25));
 			button.addActionListener(this);
 			buttons.add(button);
 			listPane.add(button);
