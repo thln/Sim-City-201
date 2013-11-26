@@ -21,9 +21,8 @@ public class Worker extends Person {
 	WorkState workState;
 	public boolean lateWorker;
 
-	public Worker (String name, int money, String jobTitle, String jobPlace, int startT, int lunchT, int endT) {
-		super(name);
-		this.money = money;
+	public Worker (String name, double money, String jobTitle, String jobPlace, int startT, int lunchT, int endT) {
+		super(name, money);
 		myJob = new Job(jobTitle, jobPlace ,startT, lunchT, endT, this);
 	}
 

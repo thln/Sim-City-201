@@ -161,12 +161,12 @@ public class Application extends JPanel {
 //		population.add(market1d);
 //		population.add(market1e);
 //		population.add(market1f);
-//		population.add(rest1g);
-//		population.add(rest1h);
-//		population.add(rest1i);
-//		population.add(rest1j);
-//		population.add(rest1k);
-//		population.add(t);
+		population.add(rest1g);
+		population.add(rest1h);
+		population.add(rest1i);
+		population.add(rest1j);
+		population.add(rest1k);
+		population.add(t);
 		
 //		population.add(bank2a);
 //		population.add(bank2b);
@@ -188,20 +188,20 @@ public class Application extends JPanel {
 		}
 		
 		//Starting Threads
-		bank1a.startThread();
+//		bank1a.startThread();
 //		bank1b.startThread();
 //		bank1c.startThread();
 //		market1d.startThread();
 //		market1e.startThread();
 //		market1f.startThread();
-//		rest1h.startThread();
-//		rest1g.startThread();	
-//		rest1i.startThread();
-//		rest1j.startThread();
+		rest1h.startThread();
+		rest1g.startThread();	
+		rest1i.startThread();
+		rest1j.startThread();
 //		rest1k.startThread();
-//		t.startThread();
+		t.startThread();
 		
-		bank2a.startThread();
+//		bank2a.startThread();
 //		bank2b.startThread();
 //		bank2c.startThread();
 //		market2d.startThread();

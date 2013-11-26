@@ -9,12 +9,8 @@ import application.TimeManager.Day;
 public class Crook extends Person {
 	//These people become dishonest customers in the restaurant
 
-	String name;
-
-	public Crook(String name,  int money) {
-		super(name);
-		this.money = money;
-		this.name = name;
+	public Crook(String name, double money) {
+		super(name, money);
 	}
 
 	public boolean pickAndExecuteAnAction() {

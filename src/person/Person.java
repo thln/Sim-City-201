@@ -66,8 +66,9 @@ public abstract class Person extends Agent{
 	protected Timer nextTask;
 	boolean upcomingTask;
 
-	Person(String name) {
+	Person(String name, double moneyz) {
 		this.name = name;
+		this.money = moneyz;
 		roles.add(new BankCustomerRole(this, getName(), "Bank Customer"));
 		roles.add(new MarketCustomerRole(this, getName(), "Market Customer"));
 		roles.add(new RestaurantCustomerRole(this, getName(), "Restaurant Customer"));

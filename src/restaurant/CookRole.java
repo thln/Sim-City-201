@@ -202,21 +202,21 @@ public class CookRole extends Role implements Cook {
 		}
 
 		
-		cookGui.DoGetIngredients();
-		try {
-			atDestination.acquire();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-
-		}
-		cookGui.DoGoToGrill();
-		try {
-			atDestination.acquire();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-
-		}
-		cookGui.DoGoToHomePosition();
+//		cookGui.DoGetIngredients();
+//		try {
+//			atDestination.acquire();
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//
+//		}
+//		cookGui.DoGoToGrill();
+//		try {
+//			atDestination.acquire();
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//
+//		}
+//		cookGui.DoGoToHomePosition();
 		
 		foodMap.get(o.choice).quantity--;
 		checkInventory(o.choice);
@@ -244,24 +244,24 @@ public class CookRole extends Role implements Cook {
 	private void doneCooking(Order o) {
 		print("Done cooking order for table " + o.tableNumber);
 
-		cookGui.DoPickUpFood();
-		try {
-			atDestination.acquire();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-
-		}
-
-		cookGui.DoGoToPlatingArea(o.choice);
-		try {
-			atDestination.acquire();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-
-		}
+//		cookGui.DoPickUpFood();
+//		try {
+//			atDestination.acquire();
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//
+//		}
+//
+//		cookGui.DoGoToPlatingArea(o.choice);
+//		try {
+//			atDestination.acquire();
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//
+//		}
 		o.waiterRole.msgOrderIsReady(o.tableNumber, o.choice);
 		myOrders.remove(o);
-		cookGui.DoGoToHomePosition();
+	//	cookGui.DoGoToHomePosition();
 	}
 
 	public void checkInventory() {
