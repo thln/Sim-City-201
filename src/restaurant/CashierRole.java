@@ -19,8 +19,6 @@ import restaurant.interfaces.Waiter;
 
 public class CashierRole extends Role implements Cashier {
 
-	private String name;
-	protected String roleName = "Cashier";
 	public Restaurant restaurant;
 	//private Semaphore atTable = new Semaphore(0,true);
 
@@ -48,7 +46,7 @@ public class CashierRole extends Role implements Cashier {
 	}
 
 	public String getName() {
-		return name;
+		return person.getName();
 	}
 
 
