@@ -296,7 +296,7 @@ public class AddPanel extends JPanel implements ActionListener {
 			if (rave){
 				rave = false;
 				try {
-					app.animPanel.cityPanel.background = ImageIO.read(new File("res/asphalt_2.jpg"));
+					app.animPanel.cityPanel.background = ImageIO.read(new File("res/concrete.jpg"));
 					//app.animPanel.cityPanel.paint
 				} catch (IOException e1) {
 				}
