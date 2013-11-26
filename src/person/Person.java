@@ -75,6 +75,8 @@ public abstract class Person extends Agent{
 		nextTask = new Timer();
 		upcomingTask = false;
 		atDestination = new Semaphore(0,true);
+		hunger = HungerLevel.full;
+		hasFoodInFridge = false;
 	}
 
 	public void msgAtDestination() {

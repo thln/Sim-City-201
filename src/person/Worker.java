@@ -262,7 +262,6 @@ public class Worker extends Person {
 	}
 
 	public void prepareForWork() {
-
 		currentRoleName = myJob.title;
 		print("Preparing for work as " + myJob.title);
 		if (myJob.jobPlace.equals("bank")) 
@@ -281,6 +280,7 @@ public class Worker extends Person {
 
 		if (myJob.jobPlace == "market") 
 		{
+			//print("Going to work at market");
 			gui.DoGoToMarket();
 			try {
 				atDestination.acquire();
@@ -289,6 +289,7 @@ public class Worker extends Person {
 				e.printStackTrace();
 
 			}
+			print("Going to work at market");
 			workerRole = Phonebook.getPhonebook().getMarket().arrivedAtWork(this, myJob.title);
 			workerRole.setRoleActive();
 			return;

@@ -54,7 +54,7 @@ public class BankGuardRole extends Role implements BankGuard {
 	public void msgTellerCameToWork (BankTeller t1) {
 		tellers.add(new MyTeller(t1));
 	}
-	
+
 	public void msgTellerLeavingWork(BankTeller t1) {
 		tellers.remove(t1);
 	}
@@ -100,10 +100,10 @@ public class BankGuardRole extends Role implements BankGuard {
 		if (leaveRole){
 			leaveRole = false;
 			try {
-			((Worker) person).roleFinishedWork();	
+				((Worker) person).roleFinishedWork();	
 			}
 			catch (Exception e){
-				
+
 			};
 			return true;
 		}
@@ -132,17 +132,19 @@ public class BankGuardRole extends Role implements BankGuard {
 			robber1.msgGotAway();  
 	}
 
-	private boolean assignToTeller(BankCustomer cust1) {	
-		for (MyTeller teller1: tellers) {
-			if (teller1.state == TellerState.available && (Phonebook.getPhonebook().getBank().isOpen() || test)) {
-				if (!test)
-					print("Assigning " + ((Role) cust1).getPerson().getName() + " to teller " + teller1.tell1.getName());
-				cust1.msgGoToTeller(teller1.tell1);
-				teller1.state = TellerState.busy;
-				customers.remove(cust1);
-				return false;
-			}
-		}	
+	private boolean assignToTeller(BankCustomer cust1) {
+		synchronized(tellers){
+			for (MyTeller teller1: tellers) {
+				if (teller1.state == TellerState.available && (Phonebook.getPhonebook().getBank().isOpen() || test)) {
+					if (!test)
+						print("Assigning " + ((Role) cust1).getPerson().getName() + " to teller " + teller1.tell1.getName());
+					cust1.msgGoToTeller(teller1.tell1);
+					teller1.state = TellerState.busy;
+					customers.remove(cust1);
+					return false;
+				}
+			}	
+		}
 		cust1.msgNoTellerAvailable();
 		return false;
 	}

@@ -92,7 +92,6 @@ public class Bank
 			return loanOfficerRole;
 		}
 		else if (title.equals("bankTeller")) {
-			System.out.println("I am " + person.getName());
 			BankTellerRole t1 = new BankTellerRole(person.getName(), person, title);
 			bankGuardRole.msgTellerCameToWork(t1);
 			//Setting bank guard role to new role
