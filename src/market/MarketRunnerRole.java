@@ -5,13 +5,12 @@ import java.util.Collections;
 import java.util.List;
 
 import market.interfaces.MarketRunner;
-import application.Phonebook;
-import application.gui.animation.agentGui.MarketRunnerGui;
 import person.Person;
 import person.Role;
 import person.Worker;
 import testing.EventLog;
 import testing.LoggedEvent;
+import application.gui.animation.agentGui.MarketRunnerGui;
 
 public class MarketRunnerRole extends Role implements MarketRunner {
 	
@@ -63,7 +62,28 @@ public class MarketRunnerRole extends Role implements MarketRunner {
 	}
 
 	//Actions
-	public void processOrder(MarketOrder o) {		
+	public void processOrder(MarketOrder o) {
+
+//		try 
+//		{
+//			atDestination.acquire();
+//		} 
+//		catch (InterruptedException e) 
+//		{
+//			e.printStackTrace();
+//
+//		}
+//		
+//		try 
+//		{
+//			atDestination.acquire();
+//		} 
+//		catch (InterruptedException e) 
+//		{
+//			e.printStackTrace();
+//
+//		}
+		
 		if (o.customer != null) {
 			decreaseInventoryBy(o.item, o.itemAmountOrdered);
 			market.getSalesPerson(test).msgOrderFulfilled(o);
