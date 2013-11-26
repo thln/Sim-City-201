@@ -42,18 +42,6 @@ public class Application extends JPanel {
 		
 		//String name, int money, String jobTitle, String jobPlace, int startT, int lunchT, int endT
 		
-		/*
-		Worker m = new Worker("Matthew", 300, "maintenance", "", 800, 1400, 1700);
-		//allHousing.add(new Housing(m, allHousing.size(), "Mansion"));
-		//m.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(m, allHousing.size(), "Apartment"));
-		m.setHome(allHousing.get(allHousing.size() - 1));
-		//allHousing.add(new Housing(m, allHousing.size(), "Park"));
-		//m.setHome(allHousing.get(allHousing.size() - 1));
-		population.add(m);
-		m.startThread();
-		m.updateTime(800);
-		*/
 		
 		//Bank Workers
         //SHIFT 1
@@ -90,15 +78,14 @@ public class Application extends JPanel {
         Worker rest2i = new Worker("Isaac", 100, "cook", "restaurant", 15, 600, 5);
         Worker rest2j = new Worker("Jacob", 100, "waiter", "restaurant", 15, 600, 5);
         Worker rest2k = new Worker("Ken", 100, "altWaiter", "restaurant", 15, 600, 5);
-		
-		
+        
 
 		//!!!!Important -- Need to initialize setters 
 		//ex. waiter.setHost, waiter.setCook, waiter.setHost, 
 		//Do this when person walks in for work***
 
 		//Standard Wealthy Person
-		Wealthy t = new Wealthy("Tam Henry", 100);
+		//Wealthy t = new Wealthy("Tam Henry", 700);
 
 		//Standard Crook
 		//Crook v = new Crook("Vinny", 250);
@@ -135,47 +122,47 @@ public class Application extends JPanel {
 //		l.setHome(allHousing.get(allHousing.size() - 1));
 //		allHousing.add(new Housing(m, allHousing.size(), "Apartment"));
 //		m.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(t, allHousing.size(), "Mansion"));
-		t.setHome(allHousing.get(allHousing.size() - 1));
+//		allHousing.add(new Housing(t, allHousing.size(), "Mansion"));
+//		t.setHome(allHousing.get(allHousing.size() - 1));
 
-	    allHousing.add(new Housing(bank2a, allHousing.size(), "Apartment"));
-		bank2a.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(bank2b, allHousing.size(), "Apartment"));
-		bank2b.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(bank2c, allHousing.size(), "Apartment"));
-		bank2c.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(market2d, allHousing.size(), "Apartment"));
-		market2d.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(market2e, allHousing.size(), "Apartment"));
-		market2e.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(market2f, allHousing.size(), "Apartment"));
-		market2f.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(rest2g, allHousing.size(), "Apartment"));
-		rest2g.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(rest2h, allHousing.size(), "Apartment"));
-		rest2h.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(rest2i, allHousing.size(), "Apartment"));
-		rest2i.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(rest2j, allHousing.size(), "Apartment"));
-		rest2j.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(rest2k, allHousing.size(), "Apartment"));
-		rest2k.setHome(allHousing.get(allHousing.size() - 1));
+//	    allHousing.add(new Housing(bank2a, allHousing.size(), "Apartment"));
+//		bank2a.setHome(allHousing.get(allHousing.size() - 1));
+//		allHousing.add(new Housing(bank2b, allHousing.size(), "Apartment"));
+//		bank2b.setHome(allHousing.get(allHousing.size() - 1));
+//		allHousing.add(new Housing(bank2c, allHousing.size(), "Apartment"));
+//		bank2c.setHome(allHousing.get(allHousing.size() - 1));
+//		allHousing.add(new Housing(market2d, allHousing.size(), "Apartment"));
+//		market2d.setHome(allHousing.get(allHousing.size() - 1));
+//		allHousing.add(new Housing(market2e, allHousing.size(), "Apartment"));
+//		market2e.setHome(allHousing.get(allHousing.size() - 1));
+//		allHousing.add(new Housing(market2f, allHousing.size(), "Apartment"));
+//		market2f.setHome(allHousing.get(allHousing.size() - 1));
+//		allHousing.add(new Housing(rest2g, allHousing.size(), "Apartment"));
+//		rest2g.setHome(allHousing.get(allHousing.size() - 1));
+//		allHousing.add(new Housing(rest2h, allHousing.size(), "Apartment"));
+//		rest2h.setHome(allHousing.get(allHousing.size() - 1));
+//		allHousing.add(new Housing(rest2i, allHousing.size(), "Apartment"));
+//		rest2i.setHome(allHousing.get(allHousing.size() - 1));
+//		allHousing.add(new Housing(rest2j, allHousing.size(), "Apartment"));
+//		rest2j.setHome(allHousing.get(allHousing.size() - 1));
+//		allHousing.add(new Housing(rest2k, allHousing.size(), "Apartment"));
+//		rest2k.setHome(allHousing.get(allHousing.size() - 1));
 		
 
 		
 		//Adding to Vector
 		getPopulation().add(bank1a);
-//		getPopulation().add(bank1b);
-//		getPopulation().add(bank1c);
-//		getPopulation().add(market1d);
-//		getPopulation().add(market1e);
-//		getPopulation().add(market1f);
-//		getPopulation().add(rest1g);
-//		getPopulation().add(rest1h);
-//		getPopulation().add(rest1i);
-//		getPopulation().add(rest1j);
-//		population.add(rest1k);
-//		population.add(t);
+		getPopulation().add(bank1b);
+		getPopulation().add(bank1c);
+		getPopulation().add(market1d);
+		getPopulation().add(market1e);
+		getPopulation().add(market1f);
+		getPopulation().add(rest1g);
+		getPopulation().add(rest1h);
+		getPopulation().add(rest1i);
+		getPopulation().add(rest1j);
+		population.add(rest1k);
+		//population.add(t);
 		
 		getPopulation().add(bank2a);
 //		getPopulation().add(bank2b);
@@ -198,17 +185,17 @@ public class Application extends JPanel {
 		
 		//Starting Threads
 		bank1a.startThread();
-//		bank1b.startThread();	
-//		bank1c.startThread();
-//		market1d.startThread();
-//		market1e.startThread();
-//		market1f.startThread();
-//		rest1h.startThread();
-//		rest1g.startThread();	
-//		rest1i.startThread();
-//		rest1j.startThread();
-//		rest1k.startThread();
-//		t.startThread();
+		bank1b.startThread();	
+		bank1c.startThread();
+		market1d.startThread();
+		market1e.startThread();
+		market1f.startThread();
+		rest1g.startThread();
+		rest1h.startThread();
+		rest1i.startThread();
+		rest1j.startThread();
+		rest1k.startThread();
+	//	t.startThread();
 		
 		bank2a.startThread();
 //		bank2b.startThread();

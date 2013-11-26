@@ -67,6 +67,7 @@ public class MarketRunnerRole extends Role implements MarketRunner {
 		
 		if (o.customer != null) {
 			decreaseInventoryBy(o.item, o.itemAmountOrdered);
+			o.itemAmountFulfilled = o.itemAmountOrdered;
 			if (o.customer instanceof MarketCustomerRole) {
 				print("Fulfilled order for customer: " + ((MarketCustomerRole) o.customer).getName());
 			}
@@ -75,6 +76,7 @@ public class MarketRunnerRole extends Role implements MarketRunner {
 		}
 		else { //o.customerType is an instance of business
 			decreaseInventoryBy(o.item, o.itemAmountOrdered);
+			o.itemAmountFulfilled = o.itemAmountOrdered;
 			print("Fulfilled order for restaurant for: " + o.item);
 			market.getUPSman(test).msgDeliverOrder(o);
 			orders.remove(o);

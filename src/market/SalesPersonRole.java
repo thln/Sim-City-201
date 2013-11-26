@@ -165,13 +165,13 @@ public class SalesPersonRole extends Role implements SalesPerson {
 		if (o.customer instanceof MarketCustomerRole) {
 			print("Gave order to: " + ((MarketCustomerRole) o.customer).person.getName());
 		}
+
 		o.customer.msgHereAreYourThings(o.item, o.itemAmountFulfilled, o.orderCost);
 		stateChanged();
 	}
 
 	public void askForPayment(MarketOrder o) {
 		o.state = orderState.gaveToCustomer;
-		o.orderCost = market.inventory.get(o.item).price * o.itemAmountFulfilled;
 		print("Asking for payment from the restaurant");
 		o.restaurant.getCashier(true).msgPleasePayForItems(o.item, o.itemAmountFulfilled, o.orderCost, this);
 		stateChanged();

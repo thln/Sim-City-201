@@ -2,8 +2,9 @@ package restaurant;
 
 import application.Phonebook;
 import person.Person;
+import restaurant.interfaces.Waiter;
 
-public class AltWaiterRole extends WaiterRole {
+public class AltWaiterRole extends WaiterRole implements Waiter {
 	//private RevolvingStand theRevolvingStand;
 	protected String RoleName = "Alternative Waiter";
 
@@ -22,17 +23,17 @@ public class AltWaiterRole extends WaiterRole {
 			}
 		}
 
-		waiterGui.DoGoToKitchen();
-		try 
-		{
-			atDestination.acquire();
-		} 
-		catch (InterruptedException e) 
-		{
-			e.printStackTrace();
-
-		}
-		waiterGui.DoLeaveCustomer();
+//		waiterGui.DoGoToKitchen();
+//		try 
+//		{
+//			atDestination.acquire();
+//		} 
+//		catch (InterruptedException e) 
+//		{
+//			e.printStackTrace();
+//
+//		}
+//		waiterGui.DoLeaveCustomer();
 
 		//cook.msgHeresAnOrder(MC.tableNumber, MC.choice, this);
 		Phonebook.getPhonebook().getRestaurant().getRevolvingStand().newOrder(new Order(MC.tableNumber, MC.choice, this));
