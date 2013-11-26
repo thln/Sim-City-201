@@ -20,6 +20,7 @@ public class GuardTest extends TestCase
 		guard = new BankGuardRole (person.getName(), person, "bankGuard");
 		customer = new BankCustomerMock ("mockcustomer");
 		teller = new BankTellerMock ("bankteller");		
+		guard.test = true;
 	}
 
 	public void testOneNormalTellerArrivesCustomerArrives() {
@@ -55,7 +56,7 @@ public class GuardTest extends TestCase
 		//Step 3: Scheduler runs...should execute method "assignToTeller"
 		assertFalse("Guard's scheduler should have returned false, but didn't.", 
 				guard.pickAndExecuteAnAction());
-
+	
 		//Step 3 post-conditions
 		assertTrue("MockCustomer should have logged an event for being assigned to teller, but his last event logged reads instead: " 
 				+ customer.log.getLastLoggedEvent().toString(), 
@@ -80,6 +81,8 @@ public class GuardTest extends TestCase
 
 		assertFalse("Guard's scheduler should have returned false (no new customers)  but didn't.", 
 				guard.pickAndExecuteAnAction());
+		
+		guard.msgTellerLeavingWork(teller);
 	}
 
 
@@ -177,6 +180,8 @@ public class GuardTest extends TestCase
 
 		assertFalse("Guards's scheduler should have returned false, but didn't.", 
 				guard.pickAndExecuteAnAction());
+		
+		guard.msgTellerLeavingWork(teller);
 	}
 
 
@@ -213,8 +218,6 @@ public class GuardTest extends TestCase
 		//Step 3 post-conditions
 		
 		assertEquals("Guard should have 1 teller in list. It doesn't.", guard.getTellers().size(), 1); 	
-		assertTrue("1st MockTeller should have the state 'available' ", 
-				guard.getTellers().get(0).state == BankGuardRole.TellerState.available);
 		
 		//Step 4: run scheduler and execute method "assignToTeller"
 		assertFalse("Guard's scheduler should have returned false (no new customers)  but didn't.", 
@@ -240,6 +243,8 @@ public class GuardTest extends TestCase
 
 		assertFalse("Guard's scheduler should have returned false (no new customers)  but didn't.", 
 				guard.pickAndExecuteAnAction());
+		
+		guard.msgTellerLeavingWork(teller);
 	}
 	
 	//TODO THIS METHOD
@@ -302,5 +307,7 @@ public class GuardTest extends TestCase
 
 		assertFalse("Guard's scheduler should have returned false (no new customers)  but didn't.", 
 				guard.pickAndExecuteAnAction());
+		
+		guard.msgTellerLeavingWork(teller);
 	}
 }

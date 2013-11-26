@@ -46,7 +46,7 @@ public class BankCustomerTest extends TestCase{
 				customer.pickAndExecuteAnAction());
 
 		//Step 1: post-conditions
-		assertTrue("Customer should have the state 'waiting' ", 
+		assertTrue("Customer should have the state 'waiting', instead state is: " + customer.state, 
 				customer.state == CustomerState.waiting);	
 
 		assertTrue("Guard should logged event, customer arrives at bank, but instead says" + guard.log.getLastLoggedEvent().toString(),

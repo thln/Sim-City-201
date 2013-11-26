@@ -54,6 +54,11 @@ public class BankGuardRole extends Role implements BankGuard {
 	public void msgTellerCameToWork (BankTeller t1) {
 		tellers.add(new MyTeller(t1));
 	}
+	
+	public void msgTellerLeavingWork(BankTeller t1) {
+		tellers.remove(t1);
+	}
+
 
 	public void msgRobbingBank(BankCustomer cust1) {
 		robbers.add(cust1);
@@ -65,7 +70,6 @@ public class BankGuardRole extends Role implements BankGuard {
 			print("New customer " + ((BankCustomerRole) c1).getName() + " arrived");
 		}
 		catch (Exception e) {
-
 		}
 		customers.add(c1);
 		stateChanged();
@@ -130,8 +134,9 @@ public class BankGuardRole extends Role implements BankGuard {
 
 	private boolean assignToTeller(BankCustomer cust1) {	
 		for (MyTeller teller1: tellers) {
-			if (teller1.state == TellerState.available && Phonebook.getPhonebook().getBank().isOpen()) {
-				print("Assigning " + ((Role) cust1).getPerson().getName() + " to teller " + teller1.tell1.getName());
+			if (teller1.state == TellerState.available && (Phonebook.getPhonebook().getBank().isOpen() || test)) {
+				if (!test)
+					print("Assigning " + ((Role) cust1).getPerson().getName() + " to teller " + teller1.tell1.getName());
 				cust1.msgGoToTeller(teller1.tell1);
 				teller1.state = TellerState.busy;
 				customers.remove(cust1);
@@ -157,5 +162,4 @@ public class BankGuardRole extends Role implements BankGuard {
 			}
 		}
 	}
-
 }

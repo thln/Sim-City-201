@@ -155,12 +155,12 @@ public class Application extends JPanel {
 
 		
 		//Adding to Vector
-		population.add(bank1a);
-		population.add(bank1b);
-		population.add(bank1c);
-		population.add(market1d);
-		population.add(market1e);
-		population.add(market1f);
+//		population.add(bank1a);
+//		population.add(bank1b);
+//		population.add(bank1c);
+//		population.add(market1d);
+//		population.add(market1e);
+//		population.add(market1f);
 		population.add(rest1g);
 		population.add(rest1h);
 		population.add(rest1i);
@@ -168,17 +168,17 @@ public class Application extends JPanel {
 		population.add(rest1k);
 		population.add(t);
 		
-		population.add(bank2a);
-		population.add(bank2b);
-		population.add(bank2c);
-		population.add(market2d);
-		population.add(market2e);
-		population.add(market2f);
-		population.add(rest2g);
-		population.add(rest2h);
-		population.add(rest2i);
-		population.add(rest2j);
-		population.add(rest2k);
+//		population.add(bank2a);
+//		population.add(bank2b);
+//		population.add(bank2c);
+//		population.add(market2d);
+//		population.add(market2e);
+//		population.add(market2f);
+//		population.add(rest2g);
+//		population.add(rest2h);
+//		population.add(rest2i);
+//		population.add(rest2j);
+//		population.add(rest2k);
 		
 		for(Person person : population) {
 			person.setPanel(animPanel);
@@ -188,22 +188,22 @@ public class Application extends JPanel {
 		}
 		
 		//Starting Threads
-		bank1a.startThread();
-		bank1b.startThread();
-		bank1c.startThread();
-		market1d.startThread();
-		market1e.startThread();
-		market1f.startThread();
+//		bank1a.startThread();
+//		bank1b.startThread();
+//		bank1c.startThread();
+//		market1d.startThread();
+//		market1e.startThread();
+//		market1f.startThread();
 		rest1h.startThread();
 		rest1g.startThread();	
 		rest1i.startThread();
 		rest1j.startThread();
 //		rest1k.startThread();
-//		t.startThread();
+		t.startThread();
 		
-		bank2a.startThread();
-		bank2b.startThread();
-		bank2c.startThread();
+//		bank2a.startThread();
+//		bank2b.startThread();
+//		bank2c.startThread();
 //		market2d.startThread();
 //		market2e.startThread();
 //		market2f.startThread();

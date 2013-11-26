@@ -12,10 +12,11 @@ public class Wealthy extends Person {
 	boolean needToDeposit;
 	String name;
 
-	public Wealthy(String name,  int money) {
-		super(name);
-		this.money = money;
+	public Wealthy(String name,  double money) {
+		super(name, money);
 		this.name = name;
+		hasFoodInFridge = false;
+		hunger = HungerLevel.hungry;
 		//roles.add(new LandlordRole());
 	}
 
@@ -60,16 +61,8 @@ public class Wealthy extends Person {
 		if (hunger == HungerLevel.hungry) {
 			//If you don't have food in the fridge
 			if (!hasFoodInFridge) {
-				if (money <= moneyMinThreshold) { 
-					//This if says go to the business if it is open and at least 1 hour before closing time
-					if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getBank().openTime.hour) &&
-							(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getBank().closeTime.hour)) {
-						prepareForBank();
-						return true;
-					}
-				}
-				else if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getRestaurant().openTime.hour) &&
-						(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getRestaurant().closeTime.hour)) {
+						//((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getRestaurant().openTime.hour) &&
+						//(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getRestaurant().closeTime.hour)) {
 					prepareForRestaurant();
 					return true;
 				}
@@ -79,8 +72,7 @@ public class Wealthy extends Person {
 				eatAtHome(); //empty method for now...
 				return true;
 			}
-		}
-
+		
 		//Market Related
 		if (!hasFoodInFridge || carStatus == CarState.wantsCar) {
 			if (money <= moneyMinThreshold && !hasFoodInFridge) {

@@ -9,12 +9,8 @@ import application.TimeManager;
 
 public class Deadbeat extends Person {
 
-	String name;
-	
-	public Deadbeat(String name,  int money) {
-		super(name);
-		this.money = money;
-		this.name = name;
+	public Deadbeat(String name,  double money) {
+		super(name, money);
 	}
 
 	public void msgWelfareCheck() {

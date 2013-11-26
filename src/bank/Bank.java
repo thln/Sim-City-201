@@ -7,6 +7,7 @@ import java.util.List;
 import bank.BankTellerRole.Account;
 import bank.interfaces.BankCustomer;
 import bank.interfaces.BankGuard;
+import bank.interfaces.BankTeller;
 import bank.interfaces.LoanOfficer;
 import bank.mock.BankGuardMock;
 import bank.mock.BankTellerMock;
@@ -38,8 +39,7 @@ public class Bank
 	//Roles
 	public BankGuardRole bankGuardRole;
 	public LoanOfficerRole loanOfficerRole;
-	public List <BankTellerRole> tellers;
-
+	
 	//Mocks roles for test
 	public BankGuardMock bankGuardMock = new BankGuardMock("Bank Guard");
 	public LoanOfficerMock loanOfficerMock = new LoanOfficerMock("Loan Officer");
@@ -50,7 +50,7 @@ public class Bank
 	public Bank(String name) {
 		bankGuardRole  = new BankGuardRole("Bank Guard");
 		loanOfficerRole =  new LoanOfficerRole("Loan Officer");
-		tellers  = new ArrayList<>();
+		//tellers  = new ArrayList<>();
 		
 		
 		this.name = name;
@@ -58,7 +58,7 @@ public class Bank
 		vaultMinimum = 1000;
 		accounts = Collections.synchronizedList(new ArrayList<Account>());
 		BankTellerRole t1 = new BankTellerRole ("BankTeller 1");
-		tellers.add(t1);
+		//tellers.add(t1);
 		bankGuardRole.msgTellerCameToWork(t1);
 			
 		BankTellerMock t2 = new BankTellerMock ("BankTellerMock");
@@ -92,17 +92,12 @@ public class Bank
 			return loanOfficerRole;
 		}
 		else if (title == "bankTeller") {
-			//Setting previous bank guard role to inactive
-			for (BankTellerRole r1: tellers) {
-				if (r1.getPerson() != null) {
-					((Worker) r1.getPerson()).roleFinishedWork();
-				}
-			}
+			BankTellerRole t1 = new BankTellerRole(person.getName(), person, title);
+			bankGuardRole.msgTellerCameToWork(t1);
 			//Setting bank guard role to new role
-			tellers.get(0).setPerson(person);
 			if (isOpen())
 				bankGuardRole.msgBankOpen();
-			return tellers.get(0);
+			return t1;
 		}
 		else
 			return null;
@@ -117,6 +112,9 @@ public class Bank
 		else if (worker.getWorkerRole().equals(loanOfficerRole)) {
 			loanOfficerRole = null;
 		}
+		else if (worker.getWorkerRole() instanceof BankTellerRole){
+			bankGuardRole.msgTellerLeavingWork((BankTeller) worker.getWorkerRole());
+		}
 	}
 
 	public String getName() {
@@ -128,7 +126,7 @@ public class Bank
 	}
 	
 	public boolean isOpen(){
-		if (loanOfficerRole.getPerson() != null && bankGuardRole.getPerson() != null && tellers.get(0) != null)
+		if (loanOfficerRole.getPerson() != null && bankGuardRole.getPerson() != null && bankGuardRole.getTellers().size() > 0)
 			return true;
 		else 
 			return false;

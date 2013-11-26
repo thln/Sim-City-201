@@ -46,83 +46,98 @@ public class PersonGui extends CityGui{
 	public PersonGui(Person p/*, RestaurantGui gui*/){ //HostAgent m) {
 		this.agent = p;
 		if(p instanceof Worker) {
-			xPos = 0;
-			yPos = 25;
-			xHome = 0;
+			setxPos(0);
+			setyPos(25);
+			setxHome(0);
 			yHome = 25;
-			xDestination = 25;
+			setxDestination(25);
 			yDestination = 25;
 		}
 		if(p instanceof Wealthy) {
-			xPos = 0;
-			yPos = 125;
-			xHome = 0;
+			setxPos(0);
+			setyPos(125);
+			setxHome(0);
 			yHome = 125;
-			xDestination = 25;
+			setxDestination(25);
 			yDestination = 125;
 		}
 		if(p instanceof Crook) {
-			xPos = 280;
-			yPos = 250;
-			xHome = 280;
+			setxPos(280);
+			setyPos(250);
+			setxHome(280);
 			yHome = 250;
-			xDestination = 300;
+			setxDestination(300);
 			yDestination = 250;
 		}
 		if(p instanceof Deadbeat) {
-			xPos = 280;
-			yPos = 250;
-			xHome = 280;
+			setxPos(280);
+			setyPos(250);
+			setxHome(280);
 			yHome = 250;
-			xDestination = 300;
+			setxDestination(300);
 			yDestination = 250;
 		}
 		//this.gui = gui;
 	}
 
 	public void updatePosition() {
-		if (xPos < xDestination)
-			xPos++;
-		else if (xPos > xDestination)
-			xPos--;
+		if (getxPos() < getxDestination())
+			setxPos(getxPos() + 1);
+		else if (getxPos() > getxDestination())
+			setxPos(getxPos() - 1);
 
-		if (yPos < yDestination)
-			yPos++;
-		else if (yPos > yDestination)
-			yPos--;
+		if (getyPos() < yDestination)
+			setyPos(getyPos() + 1);
+		else if (getyPos() > yDestination)
+			setyPos(getyPos() - 1);
 
-		if (xPos == xDestination && yPos == yDestination) {
-			if(agent != null) {
-				if (command == Command.GoToRestaurant && xPos == xRestaurant1Location && yPos == yRestaurant1Location) {
+		if (getxPos() == getxDestination() && getyPos() == yDestination) {
+			//System.out.println(command + "  " + agent.getName() + "has semaphore permits = " + agent.getAtDestination().availablePermits());
+			
+			if(agent != null) {			
+				if (command == Command.GoToRestaurant && getxPos() == xRestaurant1Location && getyPos() == yRestaurant1Location) {
+					System.out.println(command + "  " + agent.getName() + "has semaphore permits = " + agent.getAtDestination().availablePermits());
 					agent.msgAtDestination();
+					System.out.println(command + "  " + agent.getName() + "has semaphore permits = " + agent.getAtDestination().availablePermits());
+					
 				}
-				if (command == Command.GoToMarket && xPos == xMarketLocation && yPos == yMarketLocation) {
+				if (command == Command.GoToMarket && getxPos() == xMarketLocation && getyPos() == yMarketLocation) {
+					System.out.println(command + "  " + agent.getName() + "has semaphore permits = " + agent.getAtDestination().availablePermits());
 					agent.msgAtDestination();
+					System.out.println(command + "  " + agent.getName() + "has semaphore permits = " + agent.getAtDestination().availablePermits());
+					
 				}
-				if (command == Command.GoToBank && xPos == xBankLocation && yPos == yBankLocation) {
+				if (command == Command.GoToBank && getxPos() == xBankLocation && getyPos() == yBankLocation) {
+					System.out.println(command + "  " + agent.getName() + "has semaphore permits = " + agent.getAtDestination().availablePermits());
 					agent.msgAtDestination();
+					System.out.println(command + "  " + agent.getName() + "has semaphore permits = " + agent.getAtDestination().availablePermits());
+					
 				}
-				if (command == Command.GoHome && xPos == xHome && yPos == yHome) {
+				if (command == Command.GoHome && getxPos() == getxHome() && getyPos() == yHome) {
+					System.out.println(command + "  " + agent.getName() + "has semaphore permits = " + agent.getAtDestination().availablePermits());
 					agent.msgAtDestination();
-				}
+					System.out.println(command + "  " + agent.getName() + "has semaphore permits = " + agent.getAtDestination().availablePermits());
+					
+					}
+				command = Command.noCommand;
 			}
-			command = Command.noCommand;
+			
 		}
 	}
 
 	public void draw(Graphics2D g) {
 		g.setColor(Color.GREEN);
-		g.fillRect(xPos, yPos, 20, 20);
+		g.fillRect(getxPos(), getyPos(), 20, 20);
 		g.setColor(Color.RED);
 		if(agent != null) {
-			g.drawString(agent.getName(), xPos, yPos);
+			g.drawString(agent.getName(), getxPos(), getyPos());
 		}
 	}
 
 	public void setHungry() {
 		isHungry = true;
 		setPresent(true);
-		xDestination = xHome;
+		setxDestination(getxHome());
 		yDestination = yHome;
 	}
 
@@ -132,40 +147,76 @@ public class PersonGui extends CityGui{
 
 	//Actions
 	public void DoGoToRestaurant() {//later you will map building to map coordinates.
-		xDestination = xRestaurant1Location;
+		setxDestination(xRestaurant1Location);
 		yDestination = yRestaurant1Location;
 		command = Command.GoToRestaurant;
 	}
 
 	public void DoGoToMarket() {//later you will map building to map coordinates.
-		xDestination = xMarketLocation;
+		setxDestination(xMarketLocation);
 		yDestination = yMarketLocation;
 		command = Command.GoToMarket;
 	}
 
-	public void DoGoToBank() {//later you will map building to map coordinates.
-		xDestination = xBankLocation;
+	public void DoGoToBank() {//later you will map building to map coordinates.		
+		setxDestination(xBankLocation);
 		yDestination = yBankLocation;
 		command = Command.GoToBank;
 	}
 
 	public void DoGoToBusStop(int stopNum) {//later you will map stop number to map coordinates.
-		xDestination = 100;
+		setxDestination(100);
 		yDestination = 100;
 	}
 
 	public void DoGoHome() { //the person's assigned home number. Maybe use coordinates instead?
-		xDestination = xHome;
+		setxDestination(getxHome());
 		yDestination = yHome;
 		command = Command.GoHome;
 	}
 
 	public void setHomeLocation(int x, int y) {
-		xHome = x;
+		setxHome(x);
 		yHome = y;
 	}
 
 	public String toString() {
 		return "Person Gui";
+	}
+
+	public int getxDestination() {
+		return xDestination;
+	}
+
+	public void setxDestination(int xDestination) {
+		this.xDestination = xDestination;
+	}
+
+	public int getxHome() {
+		return xHome;
+	}
+
+	public void setxHome(int xHome) {
+		this.xHome = xHome;
+	}
+
+	public int getxPos() {
+		return xPos;
+	}
+
+	public void setxPos(int xPos) {
+		this.xPos = xPos;
+	}
+
+	public int getyPos() {
+		return yPos;
+	}
+
+	public void setyPos(int yPos) {
+		this.yPos = yPos;
+	}
+
+	public int getyHome() {
+		return yHome;
 	}
 }
