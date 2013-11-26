@@ -5,8 +5,10 @@ import java.util.concurrent.Semaphore;
 
 import application.Phonebook;
 import application.gui.animation.agentGui.RestaurantCookGui;
+
 import application.gui.animation.agentGui.RestaurantCustomerGui;
 import application.gui.animation.agentGui.RestaurantWaiterGui;
+
 import market.Market;
 import person.Person;
 import person.Role;
@@ -19,18 +21,13 @@ import restaurant.interfaces.Cook;
  * No current Cook Gui
  */
 
-public class CookRole extends Role implements Cook 
-{
+public class CookRole extends Role implements Cook {
 
 	private String name;
 	private Semaphore atDestination = new Semaphore(0,true);
 	protected String roleName = "Cook";
 	RestaurantCookGui cookGui = (RestaurantCookGui) gui;
 	
-	//public Restaurant restaurant;
-
-	//public CookGui cookGui = null;
-
 	Timer timer = new Timer();
 	private int cookTime;
 	//private RevolvingStand theRevolvingStand;
@@ -112,8 +109,7 @@ public class CookRole extends Role implements Cook
 		}
 	}
 
-	public void msgAtDestination() 
-	{//from animation
+	public void msgAtDestination() {//from animation
 		atDestination.release();// = true;
 		stateChanged();
 	}
@@ -308,8 +304,7 @@ public class CookRole extends Role implements Cook
 		}
 	}
 
-	private void updateStock() 
-	{
+	private void updateStock() {
 		//No stock is fulfilled
 		if (stockFulfillment.get(0).quantity == 0) {
 
@@ -373,18 +368,7 @@ public class CookRole extends Role implements Cook
 	}
 
 
-	//Utilities
-
-	/* GUI STUFF
-	public void setGui(CookGui gui) {
-		cookGui = gui;
-	}
-
-	public CookGui getGui() {
-		return cookGui;
-	}
-	*/
-	
+	//Utilities	
 	private boolean isInStock(String choice) {
 		if (foodMap.get(choice).quantity > 0)
 			return true;

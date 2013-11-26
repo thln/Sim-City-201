@@ -6,6 +6,7 @@ import java.util.List;
 
 import market.interfaces.MarketRunner;
 import application.Phonebook;
+import application.gui.animation.agentGui.MarketRunnerGui;
 import person.Person;
 import person.Role;
 import person.Worker;
@@ -13,6 +14,8 @@ import testing.EventLog;
 import testing.LoggedEvent;
 
 public class MarketRunnerRole extends Role implements MarketRunner {
+	
+	MarketRunnerGui marketRunnerGui = (MarketRunnerGui) gui;
 	
 	protected String roleName = "Market Runner";
 

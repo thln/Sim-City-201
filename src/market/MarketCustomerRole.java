@@ -2,6 +2,7 @@ package market;
 
 import market.interfaces.MarketCustomer;
 import application.Phonebook;
+import application.gui.animation.agentGui.MarketCustomerGui;
 import person.Person;
 import person.Role;
 import testing.LoggedEvent;
@@ -11,6 +12,8 @@ public class MarketCustomerRole extends Role implements MarketCustomer {
 	protected String roleName = "Market Customer";
 
 	public EventLog log = new EventLog();
+	
+	MarketCustomerGui marketCustomerGui = (MarketCustomerGui) gui;
 	
 	//Data
 	public enum MarketCustomerState {waitingForOrders, recievedOrders, payed, disputingBill}
