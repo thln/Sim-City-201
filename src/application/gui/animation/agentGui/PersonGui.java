@@ -19,6 +19,8 @@ public class PersonGui extends CityGui{
 	int blue  = rand.nextInt(255);
 	int green  = rand.nextInt(255);
 	Color myColor = new Color(red, blue, green);
+	Color transColor = new Color(0,0,0,1);
+	Color currColor;
 
 	private int xRestaurant1Location = 300 + 15;
 	private int yRestaurant1Location = 20 + 10;
@@ -54,6 +56,7 @@ public class PersonGui extends CityGui{
 		yHome = 125;
 		setxDestination(25);
 		yDestination = 125;
+		setDefaultColor();
 	}
 
 	public PersonGui(Person p/*, RestaurantGui gui*/){ //HostAgent m) {
@@ -90,6 +93,7 @@ public class PersonGui extends CityGui{
 			setxDestination(300);
 			yDestination = 250;
 		}
+		setDefaultColor();
 		//this.gui = gui;
 	}
 
@@ -110,15 +114,19 @@ public class PersonGui extends CityGui{
 			if(agent != null) {
 				if (command == Command.GoToRestaurant && getxPos() == xRestaurant1Location && getyPos() == yRestaurant1Location) {
 					agent.msgAtDestination();
+					currColor = transColor;
 				}
 				if (command == Command.GoToMarket && getxPos() == xMarketLocation && getyPos() == yMarketLocation) {
 					agent.msgAtDestination();
+					currColor = transColor;
 				}
 				if (command == Command.GoToBank && getxPos() == xBankLocation && getyPos() == yBankLocation) {
 					agent.msgAtDestination();
+					currColor = transColor;
 				}
 				if (command == Command.GoHome && getxPos() == getxHome() && getyPos() == yHome) {
 					agent.msgAtDestination();
+					currColor = transColor;
 				}
 				command = Command.noCommand;
 			}
@@ -127,22 +135,10 @@ public class PersonGui extends CityGui{
 	}
 
 	public void draw(Graphics2D g) {
-		if (getxPos() == getxDestination() && getyPos() == yDestination) {
-			g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.0f));
-		}
-		else {
-			g.setColor(myColor);
-		
-			if (raveMode) {
-				Random rand = new Random();
-				int red = rand.nextInt(255);
-				int blue  = rand.nextInt(255);
-				int green  = rand.nextInt(255);
-				g.setColor(new Color (red, blue, green));
-			}
-		}
+		g.setColor(currColor);
 		g.fillRect(getxPos(), getyPos(), 20, 20);
-		g.setColor(Color.WHITE);
+		if(currColor != transColor)
+			g.setColor(Color.WHITE);
 		if(agent != null) {
 			g.drawString(agent.getName(), getxPos(), getyPos());
 		}
@@ -165,18 +161,21 @@ public class PersonGui extends CityGui{
 	public void DoGoToRestaurant() {//later you will map building to map coordinates.
 		setxDestination(xRestaurant1Location);
 		yDestination = yRestaurant1Location;
+		setDefaultColor();
 		command = Command.GoToRestaurant;
 	}
 
 	public void DoGoToMarket() {//later you will map building to map coordinates.
 		setxDestination(xMarketLocation);
 		yDestination = yMarketLocation;
+		setDefaultColor();
 		command = Command.GoToMarket;
 	}
 
 	public void DoGoToBank() {//later you will map building to map coordinates.		
 		setxDestination(xBankLocation);
 		yDestination = yBankLocation;
+		setDefaultColor();
 		command = Command.GoToBank;
 	}
 
@@ -188,6 +187,7 @@ public class PersonGui extends CityGui{
 	public void DoGoHome() { //the person's assigned home number. Maybe use coordinates instead?
 		setxDestination(getxHome());
 		yDestination = yHome;
+		setDefaultColor();
 		command = Command.GoHome;
 	}
 
@@ -242,5 +242,17 @@ public class PersonGui extends CityGui{
 		}
 		else
 			raveMode = true;
+	}
+	
+	public void setDefaultColor() {
+		if (raveMode) {
+			Random rand = new Random();
+			int red = rand.nextInt(255);
+			int blue  = rand.nextInt(255);
+			int green  = rand.nextInt(255);
+			currColor = new Color (red, blue, green);
+		}
+		else
+			currColor = myColor;
 	}
 }
