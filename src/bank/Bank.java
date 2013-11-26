@@ -78,7 +78,7 @@ public class Bank
 			}
 			//Setting bank guard role to new role
 			bankGuardRole.setPerson(person);
-			AlertLog.getInstance().logError(AlertTag.BANK, getName(), "bankguard role just set person: " + person.getName());
+			//AlertLog.getInstance().logError(AlertTag.BANK, getName(), "bankguard role just set person: " + person.getName());
 			if (isOpen())
 				bankGuardRole.msgBankOpen();
 			return bankGuardRole;
