@@ -89,7 +89,7 @@ public class SalesPersonTest extends TestCase {
 		assertEquals("Sales Person's order state should be ", salesPerson.orders.get(0).state, orderState.gaveToCustomer);
 
 		//Step 5
-		salesPerson.msgPayment(marketCustomer, market.marketItemsForSale.get("Car").price);
+		salesPerson.msgPayment(marketCustomer, market.marketItemsForSale.get(7).price);
 
 		//Checking post conditions of step 5
 		assertEquals("Sales Person's orders list should have 0 orders", salesPerson.orders.size(), 0);
