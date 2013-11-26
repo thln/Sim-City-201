@@ -60,7 +60,7 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		setLayout(null);
 
 		try {
-			background = ImageIO.read(new File("res/concrete.jpg"));
+			background = ImageIO.read(new File("res/asphalt_2.jpg"));
 		} catch (IOException e) {
 		}
 
