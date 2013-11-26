@@ -45,7 +45,7 @@ public abstract class Person extends Agent{
 	public HashMap <String, Integer> Inventory = new HashMap<String, Integer>();                 //Food list
 	public boolean hasFoodInFridge = false;
 	public enum HungerLevel {full, moderate, hungry, starving};
-	HungerLevel hunger = HungerLevel.full;
+	private HungerLevel hunger = HungerLevel.full;
 
 	//Bank Related
 	public double money;
@@ -75,7 +75,7 @@ public abstract class Person extends Agent{
 		nextTask = new Timer();
 		upcomingTask = false;
 		atDestination = new Semaphore(0,true);
-		hunger = HungerLevel.full;
+		setHunger(HungerLevel.full);
 		hasFoodInFridge = false;
 	}
 
@@ -90,6 +90,7 @@ public abstract class Person extends Agent{
 	protected void eatAtHome() {
 		currentRoleName = "";
 		print("Going to eat at home");
+		hasFoodInFridge = false;
 	}
 
 	protected void prepareForBank () {
@@ -200,6 +201,7 @@ public abstract class Person extends Agent{
 					MCR.setItem("Car");
 					cust1.setRoleActive();
 					marketPanel.addGui(mg);
+					currentRoleName = "Market Customer";
 					stateChanged();
 					return;
 				}
@@ -257,12 +259,12 @@ public abstract class Person extends Agent{
 	}
 
 	protected void startHungerTimer() {
-		hunger = HungerLevel.moderate;
+		setHunger(HungerLevel.moderate);
 
 		//After arrives home
 		hungerTimer.schedule(new TimerTask() {
 			public void run() {
-				hunger = HungerLevel.hungry;
+				setHunger(HungerLevel.hungry);
 				stateChanged();
 			}
 		},
@@ -333,5 +335,13 @@ public abstract class Person extends Agent{
 
 	public PersonGui getGui() {
 		return gui;
+	}
+
+	public HungerLevel getHunger() {
+		return hunger;
+	}
+
+	public void setHunger(HungerLevel hunger) {
+		this.hunger = hunger;
 	}
 }

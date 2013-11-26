@@ -8,7 +8,7 @@ public class TimeManager {
 
 	public enum Day{Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday};
 	
-	private int speedOfTime = 20;
+	private static int speedOfTime = 20;
 
 	private TimeManager() {
 	}
@@ -96,5 +96,9 @@ public class TimeManager {
 				break;
 			}
 		}
+	}
+	
+	public static int getSpeedOfTime(){
+		return speedOfTime;
 	}
 }

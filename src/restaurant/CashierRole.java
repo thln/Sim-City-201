@@ -19,8 +19,6 @@ import restaurant.interfaces.Waiter;
 
 public class CashierRole extends Role implements Cashier {
 
-	private String name;
-	protected String roleName = "Cashier";
 	public Restaurant restaurant;
 	//private Semaphore atTable = new Semaphore(0,true);
 
@@ -48,7 +46,7 @@ public class CashierRole extends Role implements Cashier {
 	}
 
 	public String getName() {
-		return name;
+		return person.getName();
 	}
 
 
@@ -56,10 +54,8 @@ public class CashierRole extends Role implements Cashier {
 	/**
 	 * Messages
 	 */
-	public void msgComputeBill(String choice, int tableNumber, Waiter waiter) 
-	{
-		synchronized(Checks)
-		{
+	public void msgComputeBill(String choice, int tableNumber, Waiter waiter) {
+		synchronized(Checks) {
 			print("Calculating bill for table " + tableNumber);
 			//log.add(new LoggedEvent("Calculating bill for table"));
 			Checks.add(new Check(choice, tableNumber, waiter));
@@ -67,8 +63,7 @@ public class CashierRole extends Role implements Cashier {
 		}
 	}
 
-	public void msgPayment(String choice, double amount, RestaurantCustomer customer) 
-	{
+	public void msgPayment(String choice, double amount, RestaurantCustomer customer) {
 		synchronized(Payments)
 		{
 			print("Received payment from " + customer.getCustomerName());
@@ -78,8 +73,7 @@ public class CashierRole extends Role implements Cashier {
 		}
 	}
 
-	public void msgPleasePayForItems(String choice, int amount, double bill, SalesPerson market) 
-	{
+	public void msgPleasePayForItems(String choice, int amount, double bill, SalesPerson market) {
 		synchronized(OrdersToPay)
 		{
 			OrdersToPay.add(new Order(choice, amount, bill, market));
@@ -147,6 +141,7 @@ public class CashierRole extends Role implements Cashier {
 
 	public void ComputeBill() {
 		double checkAmount = foodPrices.get(Checks.get(0).choice);
+		System.err.println(Checks.get(0).waiterRole);
 		Checks.get(0).waiterRole.msgHereIsCheck(Checks.get(0).tableNumber, checkAmount);
 		Checks.remove(0);
 	}
@@ -191,19 +186,17 @@ public class CashierRole extends Role implements Cashier {
 		Check(String choice, int tableNumber, Waiter waiter) {
 			this.choice = choice;
 			this.tableNumber = tableNumber;
-			this.waiterRole = waiterRole;
+			this.waiterRole = waiter;
 		}
 	}
 
 	//Payment Class
-	public class Payment 
-	{
+	public class Payment {
 		public String choice;
 		public double payment;
 		public RestaurantCustomer customer;
 
-		Payment(String choice, double payment, RestaurantCustomer customer) 
-		{
+		Payment(String choice, double payment, RestaurantCustomer customer) {
 			this.choice = choice;
 			this.payment = payment;
 			this.customer = customer;
@@ -217,8 +210,7 @@ public class CashierRole extends Role implements Cashier {
 		double bill;
 		SalesPerson market; //The market
 
-		Order(String choice, int amountOrdered, double bill, SalesPerson market) 
-		{
+		Order(String choice, int amountOrdered, double bill, SalesPerson market) {
 			this.choice = choice;
 			this.amountOrdered = amountOrdered;
 			this.bill = bill;

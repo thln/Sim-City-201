@@ -5,6 +5,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import person.Person;
+import person.Person.HungerLevel;
 import person.Role;
 import restaurant.interfaces.Host;
 import restaurant.interfaces.RestaurantCustomer;
@@ -337,6 +338,10 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer {
 	private void PayingCheck() {
 		state = AgentState.PayingCheck;
 		print("Going to the cashier");
+		
+		//This stateChanged() needs to be deleted because gui isn't working
+		event = AgentEvent.atCashier;
+		stateChanged();
 	//	customerGui.DoGoToCashier();
 	}
 
@@ -360,6 +365,10 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer {
 
 		print("Leaving.");
 		waiterRole.msgLeavingTable(this);
+		
+		//This event and state changed should be removed when gui is working
+		event = AgentEvent.doneLeaving;
+		stateChanged();
 	//	customerGui.DoExitRestaurant();
 	}
 	
@@ -384,6 +393,8 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer {
 
 	private void ResetState() {
 		state = AgentState.DoingNothing;
+		person.setHunger(HungerLevel.full);
+		this.setRoleInactive();
 	}
 
 

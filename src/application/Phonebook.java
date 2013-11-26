@@ -10,6 +10,7 @@ import java.util.List;
 import bank.Bank;
 import market.Market;
 import restaurant.Restaurant;
+import application.gui.animation.*;
 
 public class Phonebook{
 
@@ -22,7 +23,13 @@ public class Phonebook{
 
 	private List<Housing> publicAllHousing; //= Collections.synchronizedList(new ArrayList<Housing>());
 	private List<Housing> testHousing;// = Collections.synchronizedList(new ArrayList<Housing>());
-
+	
+	
+	//the following 4 lists are for dynamic building and business making in v2
+	private List<Restaurant> restaurants = Collections.synchronizedList(new ArrayList<Restaurant>());
+	private List<Bank> banks = Collections.synchronizedList(new ArrayList<Bank>());
+	private List<Market> markets = Collections.synchronizedList(new ArrayList<Market>());
+	private List<Housing> houses = Collections.synchronizedList(new ArrayList<Housing>());
 	
 	//ChineseRestaurant chineseRestaurant;
 	//ItalianRestaurant italianRestaurant;
@@ -127,5 +134,24 @@ public class Phonebook{
 	public void setHousingMaintenanceCompany(HousingMaintenanceCompany HMC)
 	{
 		this.housingMaintenanceCompany = HMC;
+	}
+	
+	//the following function is for dynamic building and business making in v2
+	public void getBusinessFromGui(AnimationPanel ap) {
+		ArrayList<Building> buildings = ap.getBuildings();
+		for(Building building : buildings) {
+			if(building.getName().toLowerCase().contains("market")) {
+				markets.add(new Market(building.getName()));
+			}
+			if(building.getName().toLowerCase().contains("bank")) {
+				banks.add(new Bank(building.getName()));
+			}
+			if(building.getName().toLowerCase().contains("house")) {
+				//houses.add(new Housing(building.getName()));
+			}
+			if(building.getName().toLowerCase().contains("restaurant")) {
+				restaurants.add(new Restaurant(building.getName()));
+			}
+		}
 	}
 }

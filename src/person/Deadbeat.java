@@ -19,7 +19,7 @@ public class Deadbeat extends Person {
 
 
 	protected boolean pickAndExecuteAnAction() {
-		if (hunger == HungerLevel.full) {
+		if (getHunger() == HungerLevel.full) {
 			startHungerTimer();
 			return true;
 		}

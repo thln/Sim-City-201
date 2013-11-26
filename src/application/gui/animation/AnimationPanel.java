@@ -12,7 +12,7 @@ public class AnimationPanel extends JPanel implements MouseListener {
 	final static int WINDOWX = 600;
 	final static int WINDOWY = 300;
 
-	CityPanel cityPanel;
+	public CityPanel cityPanel;
 	JPanel buildingPanels;
 	CardLayout cardLayout;
 	ArrayList<Building> buildings;

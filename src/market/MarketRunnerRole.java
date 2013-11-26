@@ -38,6 +38,7 @@ public class MarketRunnerRole extends Role implements MarketRunner {
 
 	//Messages
 	public void msgHeresAnOrder(MarketOrder o) {
+		print("Recieved and order to fulfill");
 		log.add(new LoggedEvent("Recieved msgHeresAnOrder"));
 		orders.add(o);
 		stateChanged();
@@ -63,34 +64,20 @@ public class MarketRunnerRole extends Role implements MarketRunner {
 
 	//Actions
 	public void processOrder(MarketOrder o) {
-
-		try 
-		{
-			atDestination.acquire();
-		} 
-		catch (InterruptedException e) 
-		{
-			e.printStackTrace();
-
-		}
-		
-		try 
-		{
-			atDestination.acquire();
-		} 
-		catch (InterruptedException e) 
-		{
-			e.printStackTrace();
-
-		}
 		
 		if (o.customer != null) {
 			decreaseInventoryBy(o.item, o.itemAmountOrdered);
+			o.itemAmountFulfilled = o.itemAmountOrdered;
+			if (o.customer instanceof MarketCustomerRole) {
+				print("Fulfilled order for customer: " + ((MarketCustomerRole) o.customer).getName());
+			}
 			market.getSalesPerson(test).msgOrderFulfilled(o);
 			orders.remove(o);
 		}
 		else { //o.customerType is an instance of business
 			decreaseInventoryBy(o.item, o.itemAmountOrdered);
+			o.itemAmountFulfilled = o.itemAmountOrdered;
+			print("Fulfilled order for restaurant for: " + o.item);
 			market.getUPSman(test).msgDeliverOrder(o);
 			orders.remove(o);
 		}

@@ -50,7 +50,7 @@ public class CarGui extends CityGui{
 
 	public void draw(Graphics2D g) {
 		g.setColor(Color.BLUE);
-		g.fillRect(xPos, yPos, 20, 20);
+		g.fillOval(xPos, yPos, 20, 20);
 	}
     
     //Actions

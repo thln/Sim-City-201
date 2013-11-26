@@ -19,7 +19,7 @@ public abstract class Role {
 
         protected Semaphore atDestination = new Semaphore(0,true);
 
-        private RoleState state = RoleState.inActive;
+        protected RoleState state = RoleState.inActive;
         protected boolean leaveRole = false;
         
         //Testing
@@ -40,20 +40,18 @@ public abstract class Role {
                 state = RoleState.inActive;
         }
         
-        public Person getPerson()
-        {
+        public Person getPerson() {
                 return person;
         }
         
-        public void setPerson(Person person) 
-        {
+        public void setPerson(Person person) {
                 this.person = person;
-                if (person != null)
-                personName = person.getName();
+                if (person != null) {
+                	personName = person.getName();
+                }
         }
         
-        protected void stateChanged()
-        {
+        protected void stateChanged() {
         //calls Person scheduler
                 //do we just call the scheduler, or do we release the semaphore on stateChanged?
                 person.stateChanged();
@@ -104,8 +102,8 @@ public abstract class Role {
             AlertLog.getInstance().logInfo(AlertTag.HOUSING, "Mouse", msg);
 
             }
-            else if (roleName.equals("Market Customer") || roleName.equals("Market Runner") 
-                            || roleName.equals("Sales Person") || roleName.equals("UPS Man"))
+            else if (roleName.equals("Market Customer") || roleName.contains("MarketCustomer") || roleName.equals("Market Runner") 
+                            || roleName.contains("MarketRunner") || roleName.equals("Sales Person") || roleName.contains("SalesPerson") || roleName.contains("Market") || roleName.equals("UPS Man"))
             {
             AlertLog.getInstance().logInfo(AlertTag.MARKET, roleName + " " + getName(), msg);
 

@@ -37,33 +37,33 @@ public class DashboardPanel extends JPanel implements AWTEventListener{
 	public DashboardPanel(Application app){
 		setBackground(getBackground());
 		this.app = app;
-		updateDashboard(app);
+		updateDashboard();
 		setLayout(new GridLayout(0,1));
 		setBorder(BorderFactory.createLoweredBevelBorder());
 	}
 	
 	@Override
 	public void eventDispatched(AWTEvent e) {
-		updateDashboard(app);
+		updateDashboard();
 	}
 	
-	public void updateDashboard(Application app){
+	public void updateDashboard(){
 		population = app.getPopulationSize();
 		numHomes = app.getNumberHomes();
-		occupiedHomes = 0;
+		occupiedHomes = 1;
 		numMarkets = 1;
 		numBanks = 1;
-		numHomeless = 0;
-		numUnemployed = 0;
+//		numHomeless = 0;
+//		numUnemployed = 0;
 
-		mainTitle = new JLabel("\t\t\t" + title);
-		descipt = new JLabel("\t\t\t" + description);
-		pop = new JLabel ("\t\t\t" + "Population: " + population);
-		numberOfHomes = new JLabel ("\t\t\t" + "Number of Homes: " + numHomes);
-		markets = new JLabel ("\t\t\t" + "Number of Markets: " + numMarkets);
-		banks = new JLabel ("\t\t\t" + "Number of Banks: " + numBanks);
-		homeless = new JLabel ("\t\t\t" + "% Homeless: " + numHomeless);
-		unemployed = new JLabel ("\t\t\t" + "% Unemployed: " + numUnemployed);
+		mainTitle.setText("\t\t\t" + title);
+		descipt.setText("\t\t\t" + description);
+		pop.setText("\t\t\t" + "Population: " + population);
+		numberOfHomes.setText("\t\t\t" + "Number of Homes: " + numHomes);
+		markets.setText("\t\t\t" + "Number of Markets: " + numMarkets);
+		banks.setText("\t\t\t" + "Number of Banks: " + numBanks);
+//		homeless = new JLabel ("\t\t\t" + "% Homeless: " + numHomeless);
+//		unemployed = new JLabel ("\t\t\t" + "% Unemployed: " + numUnemployed);
 		
 		add(mainTitle);
 		add(descipt);
@@ -71,7 +71,7 @@ public class DashboardPanel extends JPanel implements AWTEventListener{
 		add(numberOfHomes);
 		add(markets);
 		add(banks);
-		add(homeless);
-		add(unemployed);
+//		add(homeless);
+//		add(unemployed);
 	}
 }

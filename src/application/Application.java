@@ -3,11 +3,15 @@ package application;
 import housing.Housing;
 
 import javax.swing.*;
+
 import market.*;
 import bank.*;
 import person.*;
 import restaurant.Restaurant;
+
 import java.util.*;
+import java.util.Timer;
+
 import application.gui.animation.*;
 import application.gui.animation.agentGui.*;
 import application.gui.appView.listPanel.*;
@@ -18,10 +22,11 @@ public class Application extends JPanel {
 	private ArrayList<Person> population = new ArrayList<Person>();
 	private static List<Housing> allHousing = Collections.synchronizedList(new ArrayList<Housing>());
 
-	private AnimationPanel animPanel;
+	public AnimationPanel animPanel;
 	public Bank bank;
 	public Market market;
 	public Restaurant restaurant;
+	public Timer updateTimer = new Timer();
 
 	//public static Phonebook phonebook = new Phonebook(bank, market, restaurant, allHousing);
 
@@ -29,67 +34,58 @@ public class Application extends JPanel {
 	public Application(AnimationPanel ap) {
 
 		animPanel = ap;
+		
 		Phonebook.getPhonebook().setHousingList(allHousing);
+		
+		//the following line is for dynamic building and business making in v2
+		Phonebook.getPhonebook().getBusinessFromGui(animPanel);
 		
 		//String name, int money, String jobTitle, String jobPlace, int startT, int lunchT, int endT
 		
-		/*
-		Worker m = new Worker("Matthew", 300, "maintenance", "", 800, 1400, 1700);
-		//allHousing.add(new Housing(m, allHousing.size(), "Mansion"));
-		//m.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(m, allHousing.size(), "Apartment"));
-		m.setHome(allHousing.get(allHousing.size() - 1));
-		//allHousing.add(new Housing(m, allHousing.size(), "Park"));
-		//m.setHome(allHousing.get(allHousing.size() - 1));
-		population.add(m);
-		m.startThread();
-		m.updateTime(800);
-		*/
 		
 		//Bank Workers
         //SHIFT 1
-        Worker bank1a = new Worker("Alex", 100, "bankTeller", "bank", 0, 6, 12);
-        Worker bank1b = new Worker("Ben", 100, "loanOfficer", "bank", 0, 6, 12);
-        Worker bank1c = new Worker("Caitlyn", 100, "bankGuard", "bank", 0, 6, 12);
+        Worker bank1a = new Worker("Alex", 100, "bankTeller", "bank", 1, 6, 14);
+        Worker bank1b = new Worker("Ben", 100, "loanOfficer", "bank", 1, 6, 14);
+        Worker bank1c = new Worker("Caitlyn", 100, "bankGuard", "bank", 0, 6, 13);
         
         //SHIFT 2
-        Worker bank2a = new Worker("Andy", 100, "bankTeller", "bank", 12, 18, 0);
-        Worker bank2b = new Worker("Billy", 100, "loanOfficer", "bank", 12, 18, 0);
-        Worker bank2c = new Worker("Courtney", 100, "bankGuard", "bank", 12, 18, 0);
+        Worker bank2a = new Worker("Andy", 100, "bankTeller", "bank", 12, 18, 1);
+        Worker bank2b = new Worker("Billy", 100, "loanOfficer", "bank", 13, 18, 2);
+        Worker bank2c = new Worker("Courtney", 100, "bankGuard", "bank", 12, 18, 1);
 
         //Market Workers
         //SHIFT 1
-        Worker market1d = new Worker("Derrick", 10, "marketRunner", "market", 0, 6, 12);
-        Worker market1e = new Worker("Erin", 1000, "salesPerson", "market", 0, 6, 12);
-        Worker market1f = new Worker("Fred", 10, "UPSman", "market", 0, 6, 12);        
+        Worker market1d = new Worker("Derrick", 10, "marketRunner", "market", 6, 6, 19);
+        Worker market1e = new Worker("Erin", 1000, "salesPerson", "market", 5, 6, 18);
+        Worker market1f = new Worker("Fred", 10, "UPSman", "market", 7, 6, 20);        
 
         //SHIFT 2
-        Worker market2d = new Worker("Daniel", 100, "marketRunner", "market", 12, 400, 0);
-        Worker market2e = new Worker("Elle", 200, "salesPerson", "market", 12, 400, 0);
-        Worker market2f = new Worker("Frenchy", 100, "UPSman", "market", 12, 400, 0);        
+        Worker market2d = new Worker("Daniel", 100, "marketRunner", "market", 18, 400, 7);
+        Worker market2e = new Worker("Elle", 200, "salesPerson", "market", 17, 400, 6);
+        Worker market2f = new Worker("Frenchy", 100, "UPSman", "market", 19, 400, 8);        
         
         //Restaurant Workers
         //SHIFT 1
-        Worker rest1h = new Worker("Henry", 100, "host", "restaurant", 0, 1800, 12);
-        Worker rest1g = new Worker("Greg", 100, "cashier", "restaurant", 0, 1800, 12);        
-        Worker rest1i = new Worker("Iris", 100, "cook", "restaurant", 0, 1800, 12);
-        Worker rest1j = new Worker("Josh", 100, "waiter", "restaurant", 0, 1800, 12);
-        Worker rest1k = new Worker("Kristi", 100, "altWaiter", "restaurant", 0, 1800, 12);
+        Worker rest1h = new Worker("Henry", 100, "host", "restaurant", 1, 1800, 14);
+        Worker rest1g = new Worker("Greg", 100, "cashier", "restaurant", 2, 1800, 15);        
+        Worker rest1i = new Worker("Iris", 100, "cook", "restaurant", 2, 1800, 15);
+        Worker rest1j = new Worker("Josh", 100, "waiter", "restaurant", 1, 1800, 14);
+        Worker rest1k = new Worker("Kristi", 100, "altWaiter", "restaurant", 2, 1800, 15);
         //SHIFT 2
-        Worker rest2g = new Worker("Gil", 100, "cashier", "restaurant", 12, 600, 0);
-        Worker rest2h = new Worker("Hannah", 100, "host", "restaurant", 12, 600, 0);
-        Worker rest2i = new Worker("Isaac", 100, "cook", "restaurant", 12, 600, 0);
-        Worker rest2j = new Worker("Jacob", 100, "waiter", "restaurant", 12, 600, 0);
-        Worker rest2k = new Worker("Ken", 100, "altWaiter", "restaurant", 12, 600, 0);
-		
-		
+        Worker rest2g = new Worker("Gil", 100, "cashier", "restaurant", 13, 600, 2);
+        Worker rest2h = new Worker("Hannah", 100, "host", "restaurant", 14, 600, 3);
+        Worker rest2i = new Worker("Isaac", 100, "cook", "restaurant", 14, 600, 3);
+        Worker rest2j = new Worker("Jacob", 100, "waiter", "restaurant", 13, 600, 2);
+        Worker rest2k = new Worker("Ken", 100, "altWaiter", "restaurant", 14, 600, 3);
+        
 
 		//!!!!Important -- Need to initialize setters 
 		//ex. waiter.setHost, waiter.setCook, waiter.setHost, 
 		//Do this when person walks in for work***
 
 		//Standard Wealthy Person
-		Wealthy t = new Wealthy("Tam Henry", 100);
+		Wealthy t = new Wealthy("Tam Henry", 700);
 
 		//Standard Crook
 		//Crook v = new Crook("Vinny", 250);
@@ -165,8 +161,8 @@ public class Application extends JPanel {
 		getPopulation().add(rest1h);
 		getPopulation().add(rest1i);
 		getPopulation().add(rest1j);
-//		population.add(rest1k);
-//		population.add(t);
+		population.add(rest1k);
+		population.add(t);
 		
 		getPopulation().add(bank2a);
 		getPopulation().add(bank2b);
@@ -178,7 +174,7 @@ public class Application extends JPanel {
 		getPopulation().add(rest2h);
 		getPopulation().add(rest2i);
 		getPopulation().add(rest2j);
-//		population.add(rest2k);
+		population.add(rest2k);
 		
 		for(Person person : getPopulation()) {
 			person.setPanel(animPanel);
@@ -189,15 +185,16 @@ public class Application extends JPanel {
 		
 		//Starting Threads
 		bank1a.startThread();
-		bank1b.startThread();		bank1c.startThread();
+		bank1b.startThread();	
+		bank1c.startThread();
 		market1d.startThread();
 		market1e.startThread();
 		market1f.startThread();
+		rest1g.startThread();
 		rest1h.startThread();
-		rest1g.startThread();	
 		rest1i.startThread();
 		rest1j.startThread();
-//		rest1k.startThread();
+		rest1k.startThread();
 		t.startThread();
 		
 		bank2a.startThread();
@@ -210,7 +207,24 @@ public class Application extends JPanel {
 		rest2h.startThread();
 		rest2i.startThread();
 		rest2j.startThread();
-//		rest2k.startThread();
+		rest2k.startThread();
+		
+		updatePeopleTime();
+	}
+	
+	public void updatePeopleTime(){
+		int timeConversion = 60 * TimeManager.getSpeedOfTime();
+		
+		updateTimer.schedule(new TimerTask() {
+			public void run() {        
+				for (Person p: population){
+					p.stateChanged();      
+				}
+				updatePeopleTime();
+			}
+		},
+		timeConversion);
+		
 	}
 
 	public void addPerson (String name ,int money, String type,

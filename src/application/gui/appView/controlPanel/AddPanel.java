@@ -1,6 +1,7 @@
 package application.gui.appView.controlPanel;
 
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.text.NumberFormatter;
 
@@ -8,6 +9,8 @@ import person.Person;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
@@ -42,9 +45,12 @@ public class AddPanel extends JPanel implements ActionListener {
 	private JComboBox socialClassBox;
 	private JComboBox jobLocationBox;
 	private JComboBox jobTypeBox;
+
 	
-	private boolean raveMode = false;
-	
+	private boolean raveMode = false;	
+	boolean rave = false;
+
+
 	private String[] personType = {" ", "Deadbeat", "Worker", "Wealthy"};
 	private String[] jobLocation = {" ", "Restaurant", "Bank", "Market", "Housing"};
 	private String[] emptyList = {" "};
@@ -52,7 +58,7 @@ public class AddPanel extends JPanel implements ActionListener {
 	private String[] marketJobs = {" ", "UPS Man", "Sales Person", "Market Runner"};
 	private String[] bankJobs = {" ", "Bank Guard", "Bank Teller", "Loan Officer"};
 	private String[] housingJobs = {" ", "Maintenance Worker"};
-		
+
 	public AddPanel(ControlPanel cp, Application app)
 	{
 		//initialization
@@ -73,7 +79,7 @@ public class AddPanel extends JPanel implements ActionListener {
 		gbcConstraints.gridx = 0;
 		gbcConstraints.gridy = 1;
 		mainPanel.add(nameTextField,gbcConstraints);
-		
+
 		//Social Class
 		gbcConstraints.gridx = 1;
 		gbcConstraints.gridy = 0;
@@ -84,7 +90,7 @@ public class AddPanel extends JPanel implements ActionListener {
 		socialClassBox.setSelectedIndex(0);
 		socialClassBox.addActionListener(this);
 		mainPanel.add(socialClassBox,gbcConstraints);
-		
+
 		//Starting Cash
 		gbcConstraints.gridx = 2;
 		gbcConstraints.gridy = 0;
@@ -92,7 +98,7 @@ public class AddPanel extends JPanel implements ActionListener {
 		gbcConstraints.gridx = 2;
 		gbcConstraints.gridy = 1;
 		mainPanel.add(moneyIntField, gbcConstraints);
-		
+
 		//Job Location
 		gbcConstraints.gridx = 3;
 		gbcConstraints.gridy = 0;
@@ -105,7 +111,7 @@ public class AddPanel extends JPanel implements ActionListener {
 		jobLocationBox.addActionListener(this);
 		jobLocationBox.setVisible(false);
 		mainPanel.add(jobLocationBox, gbcConstraints);
-		
+
 		//JobTypes
 		gbcConstraints.gridx = 4;
 		gbcConstraints.gridy = 0;
@@ -128,7 +134,7 @@ public class AddPanel extends JPanel implements ActionListener {
 		gbcConstraints.gridy = 1;
 		jobSTimeField.setVisible(false);
 		mainPanel.add(jobSTimeField, gbcConstraints);
-		
+
 		gbcConstraints.gridx = 6;
 		gbcConstraints.gridy = 0;
 		jobLunchTimeLabel.setVisible(false);
@@ -137,7 +143,7 @@ public class AddPanel extends JPanel implements ActionListener {
 		gbcConstraints.gridy = 1;
 		jobLTimeField.setVisible(false);
 		mainPanel.add(jobLTimeField, gbcConstraints);
-		
+
 		gbcConstraints.gridx = 7;
 		gbcConstraints.gridy = 0;
 		jobEndTimeLabel.setVisible(false);
@@ -146,7 +152,7 @@ public class AddPanel extends JPanel implements ActionListener {
 		gbcConstraints.gridy = 1;
 		jobETimeField.setVisible(false);
 		mainPanel.add(jobETimeField, gbcConstraints);
-		
+
 		//The bottom stuff
 		gbcConstraints.gridx = 9;
 		gbcConstraints.gridy = 0;
@@ -157,11 +163,11 @@ public class AddPanel extends JPanel implements ActionListener {
 		raveButton.addActionListener(this);
 		mainPanel.add(addButton,gbcConstraints);
 		mainPanel.add(raveButton,gbcConstraints);
-		
-		
+
+
 		add(mainPanel);
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
@@ -184,7 +190,7 @@ public class AddPanel extends JPanel implements ActionListener {
 				jobLocationBox.addItem(" ");
 			}
 		}
-		
+
 		if(e.getSource() == jobLocationBox)
 		{
 			if(jobLocationBox.getSelectedItem() == "Restaurant")
@@ -230,54 +236,55 @@ public class AddPanel extends JPanel implements ActionListener {
 				jobTypeBox.addItem(" ");
 			}
 		}
-		
+
 		if (e.getSource() == addButton)
 		{
 			resultLabel.setText(" ");
 			int money = -1;
 			int jobStartTime = -1;
-            int jobLunchTime = -1;
-            int jobEndTime = -1; 
-			 try
-			 {
-		            //yourInt = Integer.parseInt(args[0]);
-		            money = Integer.parseInt(moneyIntField.getText());
-		            if(socialClassBox.getSelectedItem() == "Worker")
-		            {
-			            jobStartTime = Integer.parseInt(jobSTimeField.getText());
-			            jobLunchTime = Integer.parseInt(jobLTimeField.getText());
-			            jobEndTime = Integer.parseInt(jobETimeField.getText());
-		            }
-		            else
-		            {
-		            	jobStartTime = 0;
-			            jobLunchTime = 0;
-			            jobEndTime = 0;
-		            }
-			 }
-			 catch ( NumberFormatException e1 )
-			 {
-				 resultLabel.setText("Please fix fields.");
-				 return;
-		     }
+			int jobLunchTime = -1;
+			int jobEndTime = -1; 
+			try
+			{
+				//yourInt = Integer.parseInt(args[0]);
+				money = Integer.parseInt(moneyIntField.getText());
+				if(socialClassBox.getSelectedItem() == "Worker")
+				{
+					jobStartTime = Integer.parseInt(jobSTimeField.getText());
+					jobLunchTime = Integer.parseInt(jobLTimeField.getText());
+					jobEndTime = Integer.parseInt(jobETimeField.getText());
+				}
+				else
+				{
+					jobStartTime = 0;
+					jobLunchTime = 0;
+					jobEndTime = 0;
+				}
+			}
+			catch ( NumberFormatException e1 )
+			{
+				resultLabel.setText("Please fix fields.");
+				return;
+			}
 
-			 if(allFieldsEntered())
-			 {
+			if(allFieldsEntered())
+			{
 				app.addPerson(nameTextField.getText(), money, (String) socialClassBox.getSelectedItem(), 
 						(String) jobTypeBox.getSelectedItem(), (String) jobLocationBox.getSelectedItem(), 
 						jobStartTime, jobLunchTime, jobEndTime);
 				cp.getAppPanel().getListPanel().updateList();
-			 }
-			 else
-			 {
-				 resultLabel.setText("Please fill in fields.");
-				 return;				 
-			 }
+			}
+			else
+			{
+				resultLabel.setText("Please fill in fields.");
+				return;				 
+			}
 
 			//cp.getAppPanel().getListPanel().addPerson(name, 500, type, null, null, 0, 0, 0);
 			cp.getAppPanel().getListPanel().updateList();
-			
+
 			app.printLastPop();
+			dashboard.updateDashboard();
 			//System.out.println(type);
 			//System.out.println(app.getPopulationSize());
 		}
@@ -286,8 +293,27 @@ public class AddPanel extends JPanel implements ActionListener {
 				p.getGui().setRaveMode();
 				//RaveAudioMode();
 			}
+			if (!rave){
+				rave = true;
+				try {
+					app.animPanel.cityPanel.background = ImageIO.read(new File("res/rave.jpeg"));
+					//app.animPanel.cityPanel.paint
+				} catch (IOException e1) {
+				}
+				return;
+			}
+			if (rave){
+				rave = false;
+				try {
+					app.animPanel.cityPanel.background = ImageIO.read(new File("res/concrete.jpg"));
+					//app.animPanel.cityPanel.paint
+				} catch (IOException e1) {
+				}
+				return;
+			}
 		}
 	}
+
 	
 	/*
 	public void RaveAudioMode()
@@ -329,7 +355,7 @@ public class AddPanel extends JPanel implements ActionListener {
 		jobLocationLabel.setVisible(show);
 		jobLocationBox.setVisible(show);
 	}
-	
+
 	public void showJobInformationFields(boolean show)
 	{
 		jobTypeLabel.setVisible(show);
@@ -341,12 +367,12 @@ public class AddPanel extends JPanel implements ActionListener {
 		jobEndTimeLabel.setVisible(show);
 		jobETimeField.setVisible(show);
 	}
-	
+
 	public boolean allFieldsEntered()
 	{
 		if(nameTextField.getText()  != "")// && moneyIntField.getText() != "" && jobSTimeField.getText() != ""
-				//&& jobLTimeField.getText() != "" && jobETimeField.getText() != "" && socialClassBox.getSelectedIndex() != 0
-				// && jobTypeBox.getSelectedIndex() != 0  && jobLocationBox.getSelectedIndex() != 0)
+			//&& jobLTimeField.getText() != "" && jobETimeField.getText() != "" && socialClassBox.getSelectedIndex() != 0
+			// && jobTypeBox.getSelectedIndex() != 0  && jobLocationBox.getSelectedIndex() != 0)
 		{
 			return true;
 		}
@@ -355,7 +381,7 @@ public class AddPanel extends JPanel implements ActionListener {
 			return false;
 		}
 	}
-	
+
 	public boolean nonWorkerFieldsEntered()
 	{
 		if(nameTextField.getText() != "" && moneyIntField.getText() != "")
@@ -367,10 +393,10 @@ public class AddPanel extends JPanel implements ActionListener {
 			return false;
 		}
 	}
-	
+
 	public void setApplication(Application app){
 		this.app = app; 
 	}
-	
-	
+
+
 }
