@@ -165,16 +165,16 @@ public class Application extends JPanel {
 		//population.add(t);
 		
 		getPopulation().add(bank2a);
-//		getPopulation().add(bank2b);
-//		getPopulation().add(bank2c);
-//		getPopulation().add(market2d);
-//		getPopulation().add(market2e);
-//		getPopulation().add(market2f);
-//		getPopulation().add(rest2g);
-//		getPopulation().add(rest2h);
-//		getPopulation().add(rest2i);
-//		getPopulation().add(rest2j);
-//		population.add(rest2k);
+		getPopulation().add(bank2b);
+		getPopulation().add(bank2c);
+		getPopulation().add(market2d);
+		getPopulation().add(market2e);
+		getPopulation().add(market2f);
+		getPopulation().add(rest2g);
+		getPopulation().add(rest2h);
+		getPopulation().add(rest2i);
+		getPopulation().add(rest2j);
+		population.add(rest2k);
 		
 		for(Person person : getPopulation()) {
 			person.setPanel(animPanel);
@@ -198,16 +198,16 @@ public class Application extends JPanel {
 	//	t.startThread();
 		
 		bank2a.startThread();
-//		bank2b.startThread();
-//		bank2c.startThread();
-//		market2d.startThread();
-//		market2e.startThread();
-//		market2f.startThread();
-//		rest2g.startThread();
-//		rest2h.startThread();
-//		rest2i.startThread();
-//		rest2j.startThread();
-//		rest2k.startThread();
+		bank2b.startThread();
+		bank2c.startThread();
+		market2d.startThread();
+		market2e.startThread();
+		market2f.startThread();
+		rest2g.startThread();
+		rest2h.startThread();
+		rest2i.startThread();
+		rest2j.startThread();
+		rest2k.startThread();
 		
 		updatePeopleTime();
 	}

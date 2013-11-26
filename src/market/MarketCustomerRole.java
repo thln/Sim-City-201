@@ -18,7 +18,7 @@ public class MarketCustomerRole extends Role implements MarketCustomer {
 	MarketCustomerGui marketCustomerGui = (MarketCustomerGui) gui;
 
 	//Data
-	public enum MarketCustomerState {atMarket, waitingForOrders, recievedOrders, payed, disputingBill}
+	public enum MarketCustomerState {atMarket, waitingForOrders, recievedOrders, payed, disputingBill, waitingToOpen}
 	public MarketCustomerState state = MarketCustomerState.atMarket;
 
 	public double bill = 0;
@@ -32,6 +32,7 @@ public class MarketCustomerRole extends Role implements MarketCustomer {
 
 	//Messages
 	public void msgComeIn() {
+		state = MarketCustomerState.atMarket;
 		stateChanged();
 	}
 
@@ -69,6 +70,7 @@ public class MarketCustomerRole extends Role implements MarketCustomer {
 	public void msgSalesPerson() {
 		if(!Phonebook.getPhonebook().getMarket().isOpen()) {
 			print("Waiting for the market to open");
+			state = MarketCustomerState.waitingToOpen;
 			return;
 		}
 
