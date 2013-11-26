@@ -56,7 +56,7 @@ public class BankGuardRole extends Role implements BankGuard {
 	}
 
 	public void msgTellerLeavingWork(BankTeller t1) {
-		print("Teller role removed" + ((Role) t1).getPerson().getName());
+		print("Teller role removed " + ((Role) t1).getPerson().getName());
 		tellers.remove(t1);
 	}
 

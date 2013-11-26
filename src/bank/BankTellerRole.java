@@ -187,12 +187,13 @@ public class BankTellerRole extends Role implements BankTeller {
 
 		if (leaveRole){
 			leaveRole = false;
-			Phonebook.getPhonebook().getBank().getBankGuard(test).msgTellerLeavingWork(this);
+			if (((Role) Phonebook.getPhonebook().getBank().getBankGuard(test)).getPerson() != null)
+				Phonebook.getPhonebook().getBank().getBankGuard(test).msgTellerLeavingWork(this);
 			try {
-			((Worker) person).roleFinishedWork();	
+				((Worker) person).roleFinishedWork();	
 			}
 			catch (Exception e){
-				
+
 			};
 			return true;
 		}

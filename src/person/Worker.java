@@ -81,7 +81,7 @@ public class Worker extends Person {
 
 	public synchronized void roleFinishedWork(){                 //from worker role
 		print("Shift is over, time to leave work");
-		workerRole.setPerson(null);
+		//workerRole.setPerson(null);
 		workerRole = null;
 		scheduleNextTask(TimeManager.getTimeManager().getTime().dayHour, myJob.startTime.hour);
 		stateChanged();
@@ -92,45 +92,6 @@ public class Worker extends Person {
 	//Scheduler
 	public boolean pickAndExecuteAnAction() {
 
-
-
-		//		if (!upcomingTask) {
-		//			int currentTime = TimeManager.getTimeManager().getTime().dayHour;
-		//			if (lateWorker){
-		//				//Start timer to wake up for work
-		//				if (workState == WorkState.notAtWork) {
-		//					//	print("YZ");
-		//					scheduleNextTask(myJob.getStartTime().hour, currentTime);
-		//					return true;
-		//				}
-		//				//Start timer to wake up for ending work
-		//				if (workState == WorkState.atWork){
-		//					scheduleNextTask(myJob.getEndTime().hour + 24, currentTime);
-		//					return true;
-		//				}
-		//			}
-		//
-		//			if (!lateWorker){
-		//				//Start timer to wake up for work
-		//				if (workState == WorkState.notAtWork) {
-		//					if (currentTime < 5){
-		//						scheduleNextTask(myJob.getStartTime().hour, currentTime);
-		//						return true;
-		//					}
-		//					else {
-		//						//	print("early workers");
-		//						scheduleNextTask(myJob.getStartTime().hour + 24, currentTime);
-		//						return true;
-		//					}
-		//				}
-		//				//Start timer to wake up for ending work
-		//				if (workState == WorkState.atWork){
-		//					scheduleNextTask(myJob.getEndTime().hour, currentTime);
-		//					return true;
-		//				}
-		//			}
-		//		}
-
 		//Run your worker role
 		if (workerRole != null){
 			int currentTime = TimeManager.getTimeManager().getTime().dayHour;
@@ -138,6 +99,7 @@ public class Worker extends Person {
 			if (workerRole.getState() == RoleState.active) {
 				//If my current time is more than the shift length since start time
 				if (((((currentTime - myJob.startTime.hour) % 24) + 24) % 24) >= shiftLength){
+	print("current time = " + currentTime + " startTime = " + myJob.startTime.hour + " shift = " + shiftLength);
 					workerRole.msgLeaveRole();
 					return workerRole.pickAndExecuteAnAction();
 				}					
@@ -250,8 +212,9 @@ public class Worker extends Person {
 
 	//Actions
 	private void scheduleNextTask(int currentTime, int nextTaskTime) {
-		int timeConversion = 1200;
+		int timeConversion = 60 * TimeManager.getSpeedOfTime();
 		//print("Next task time = " + nextTaskTime + " Current time = " + currentTime);
+		print("Timer length = ms" + ((((nextTaskTime - currentTime) % 24) + 24) % 24) * timeConversion);
 		nextTask.schedule(new TimerTask() {
 			public void run() {        
 				stateChanged();                

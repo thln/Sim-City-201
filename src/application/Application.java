@@ -70,17 +70,17 @@ public class Application extends JPanel {
         
         //Restaurant Workers
         //SHIFT 1
-        Worker rest1h = new Worker("Henry", 100, "host", "restaurant", 0, 1800, 12);
-        Worker rest1g = new Worker("Greg", 100, "cashier", "restaurant", 0, 1800, 12);        
-        Worker rest1i = new Worker("Iris", 100, "cook", "restaurant", 0, 1800, 12);
-        Worker rest1j = new Worker("Josh", 100, "waiter", "restaurant", 0, 1800, 12);
-        Worker rest1k = new Worker("Kristi", 100, "altWaiter", "restaurant", 0, 1800, 12);
+        Worker rest1h = new Worker("Henry", 100, "host", "restaurant", 3, 1800, 17);
+        Worker rest1g = new Worker("Greg", 100, "cashier", "restaurant", 3, 1800, 17);        
+        Worker rest1i = new Worker("Iris", 100, "cook", "restaurant", 3, 1800, 17);
+        Worker rest1j = new Worker("Josh", 100, "waiter", "restaurant", 3, 1800, 17);
+        Worker rest1k = new Worker("Kristi", 100, "altWaiter", "restaurant", 3, 1800, 17);
         //SHIFT 2
-        Worker rest2g = new Worker("Gil", 100, "cashier", "restaurant", 12, 600, 0);
-        Worker rest2h = new Worker("Hannah", 100, "host", "restaurant", 12, 600, 0);
-        Worker rest2i = new Worker("Isaac", 100, "cook", "restaurant", 12, 600, 0);
-        Worker rest2j = new Worker("Jacob", 100, "waiter", "restaurant", 12, 600, 0);
-        Worker rest2k = new Worker("Ken", 100, "altWaiter", "restaurant", 12, 600, 0);
+        Worker rest2g = new Worker("Gil", 100, "cashier", "restaurant", 15, 600, 5);
+        Worker rest2h = new Worker("Hannah", 100, "host", "restaurant", 15, 600, 5);
+        Worker rest2i = new Worker("Isaac", 100, "cook", "restaurant", 15, 600, 5);
+        Worker rest2j = new Worker("Jacob", 100, "waiter", "restaurant", 15, 600, 5);
+        Worker rest2k = new Worker("Ken", 100, "altWaiter", "restaurant", 15, 600, 5);
 		
 		
 
@@ -156,28 +156,28 @@ public class Application extends JPanel {
 		
 		//Adding to Vector
 		getPopulation().add(bank1a);
-		getPopulation().add(bank1b);
-		getPopulation().add(bank1c);
-		getPopulation().add(market1d);
-		getPopulation().add(market1e);
-		getPopulation().add(market1f);
-		getPopulation().add(rest1g);
-		getPopulation().add(rest1h);
-		getPopulation().add(rest1i);
-		getPopulation().add(rest1j);
+//		getPopulation().add(bank1b);
+//		getPopulation().add(bank1c);
+//		getPopulation().add(market1d);
+//		getPopulation().add(market1e);
+//		getPopulation().add(market1f);
+//		getPopulation().add(rest1g);
+//		getPopulation().add(rest1h);
+//		getPopulation().add(rest1i);
+//		getPopulation().add(rest1j);
 //		population.add(rest1k);
 //		population.add(t);
 		
 		getPopulation().add(bank2a);
-		getPopulation().add(bank2b);
-		getPopulation().add(bank2c);
-		getPopulation().add(market2d);
-		getPopulation().add(market2e);
-		getPopulation().add(market2f);
-		getPopulation().add(rest2g);
-		getPopulation().add(rest2h);
-		getPopulation().add(rest2i);
-		getPopulation().add(rest2j);
+//		getPopulation().add(bank2b);
+//		getPopulation().add(bank2c);
+//		getPopulation().add(market2d);
+//		getPopulation().add(market2e);
+//		getPopulation().add(market2f);
+//		getPopulation().add(rest2g);
+//		getPopulation().add(rest2h);
+//		getPopulation().add(rest2i);
+//		getPopulation().add(rest2j);
 //		population.add(rest2k);
 		
 		for(Person person : getPopulation()) {
@@ -189,10 +189,11 @@ public class Application extends JPanel {
 		
 		//Starting Threads
 		bank1a.startThread();
-		bank1b.startThread();		bank1c.startThread();
-		market1d.startThread();
-		market1e.startThread();
-		market1f.startThread();
+//		bank1b.startThread();	
+//		bank1c.startThread();
+//		market1d.startThread();
+//		market1e.startThread();
+//		market1f.startThread();
 //		rest1h.startThread();
 //		rest1g.startThread();	
 //		rest1i.startThread();
@@ -201,14 +202,14 @@ public class Application extends JPanel {
 //		t.startThread();
 		
 		bank2a.startThread();
-		bank2b.startThread();
-		bank2c.startThread();
-		market2d.startThread();
-		market2e.startThread();
-		market2f.startThread();
-		rest2g.startThread();
-		rest2h.startThread();
-		rest2i.startThread();
+//		bank2b.startThread();
+//		bank2c.startThread();
+//		market2d.startThread();
+//		market2e.startThread();
+//		market2f.startThread();
+//		rest2g.startThread();
+//		rest2h.startThread();
+//		rest2i.startThread();
 //		rest2j.startThread();
 //		rest2k.startThread();
 	}
