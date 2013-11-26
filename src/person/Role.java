@@ -48,6 +48,7 @@ public abstract class Role {
         public void setPerson(Person person) 
         {
                 this.person = person;
+                if (person != null)
                 personName = person.getName();
         }
         
