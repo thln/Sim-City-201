@@ -18,7 +18,7 @@ public class Application extends JPanel {
 	private ArrayList<Person> population = new ArrayList<Person>();
 	private static List<Housing> allHousing = Collections.synchronizedList(new ArrayList<Housing>());
 
-	private AnimationPanel animPanel;
+	public AnimationPanel animPanel;
 	public Bank bank;
 	public Market market;
 	public Restaurant restaurant;
