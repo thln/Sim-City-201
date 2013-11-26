@@ -46,7 +46,7 @@ public class CashierRole extends Role implements Cashier {
 	}
 
 	public String getName() {
-		return name;
+		return person.getName();
 	}
 
 

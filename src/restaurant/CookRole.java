@@ -63,7 +63,7 @@ public class CookRole extends Role implements Cook {
 	}
 
 	public String getName()  {
-		return name;
+		return person.getName();
 	}
 
 
