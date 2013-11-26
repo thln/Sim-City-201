@@ -120,6 +120,7 @@ public class MarketCustomerRole extends Role implements MarketCustomer {
 	public void exitMarket() {
 		print("Leaving Market");
 		state = MarketCustomerState.atMarket;
+		person.hasFoodInFridge = true;
 		this.setRoleInactive();
 	}
 }

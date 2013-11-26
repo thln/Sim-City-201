@@ -158,7 +158,7 @@ public class Worker extends Person {
 		}
 
 		//Hunger Related ( check if you are hungry)
-		if (hunger == HungerLevel.hungry) {
+		if (getHunger() == HungerLevel.hungry) {
 			//If you don't have food in the fridge
 			if (!hasFoodInFridge) {
 				//if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getRestaurant().openTime.hour) &&

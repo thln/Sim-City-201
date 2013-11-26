@@ -14,7 +14,7 @@ public class Crook extends Person {
 	}
 
 	public boolean pickAndExecuteAnAction() {
-		if (hunger == HungerLevel.full) {
+		if (getHunger() == HungerLevel.full) {
 			startHungerTimer();
 			return true;
 		}
@@ -49,7 +49,7 @@ public class Crook extends Person {
         }
 		
 		//Hunger Related
-		if (hunger == HungerLevel.hungry) {
+		if (getHunger() == HungerLevel.hungry) {
 			//If you don't have food in the fridge
 			if (!hasFoodInFridge) {
 				if (money <= moneyMinThreshold) { 

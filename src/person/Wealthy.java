@@ -16,14 +16,14 @@ public class Wealthy extends Person {
 		super(name, money);
 		this.name = name;
 		hasFoodInFridge = false;
-		hunger = HungerLevel.hungry;
+		setHunger(HungerLevel.hungry);
 		//roles.add(new LandlordRole());
 	}
 
 
 	//Scheduler
 	public boolean pickAndExecuteAnAction() {
-		if (hunger == HungerLevel.full) {
+		if (getHunger() == HungerLevel.full) {
 			startHungerTimer();
 			return true;
 		}
@@ -58,7 +58,7 @@ public class Wealthy extends Person {
 		}
 
 		//Hunger Related
-		if (hunger == HungerLevel.hungry) {
+		if (getHunger() == HungerLevel.hungry) {
 			//If you don't have food in the fridge
 			if (!hasFoodInFridge) {
 						//((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getRestaurant().openTime.hour) &&
