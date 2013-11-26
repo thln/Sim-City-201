@@ -24,4 +24,10 @@ public class MockMarketCustomer extends Mock implements MarketCustomer {
 	
 	public void exitMarket() {
 	}
+
+	@Override
+	public void msgComeIn() {
+		// TODO Auto-generated method stub
+		
+	}
 }

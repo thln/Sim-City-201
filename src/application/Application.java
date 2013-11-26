@@ -100,8 +100,8 @@ public class Application extends JPanel {
 		//Setting Gui for everyone
 		
 		//Adding housing
-		allHousing.add(new Housing(bank1a, allHousing.size(), "Apartment"));
-		bank1a.setHome(allHousing.get(allHousing.size() - 1));
+	//	allHousing.add(new Housing(bank1a, allHousing.size(), "Apartment"));
+	//	bank1a.setHome(allHousing.get(allHousing.size() - 1));
 		allHousing.add(new Housing(bank1b, allHousing.size(), "Apartment"));
 		bank1b.setHome(allHousing.get(allHousing.size() - 1));
 		allHousing.add(new Housing(bank1c, allHousing.size(), "Apartment"));
@@ -129,8 +129,8 @@ public class Application extends JPanel {
 		allHousing.add(new Housing(t, allHousing.size(), "Mansion"));
 		t.setHome(allHousing.get(allHousing.size() - 1));
 
-		allHousing.add(new Housing(bank2a, allHousing.size(), "Apartment"));
-		bank2a.setHome(allHousing.get(allHousing.size() - 1));
+	//	allHousing.add(new Housing(bank2a, allHousing.size(), "Apartment"));
+	//	bank2a.setHome(allHousing.get(allHousing.size() - 1));
 		allHousing.add(new Housing(bank2b, allHousing.size(), "Apartment"));
 		bank2b.setHome(allHousing.get(allHousing.size() - 1));
 		allHousing.add(new Housing(bank2c, allHousing.size(), "Apartment"));
@@ -155,22 +155,22 @@ public class Application extends JPanel {
 
 		
 		//Adding to Vector
-//		population.add(bank1a);
-//		population.add(bank1b);
-//		population.add(bank1c);
-//		population.add(market1d);
+		population.add(bank1a);
+		population.add(bank1b);
+		population.add(bank1c);
+		population.add(market1d);
 //		population.add(market1e);
 //		population.add(market1f);
-		population.add(rest1g);
-		population.add(rest1h);
-		population.add(rest1i);
-		population.add(rest1j);
-		population.add(rest1k);
-		population.add(t);
+//		population.add(rest1g);
+//		population.add(rest1h);
+//		population.add(rest1i);
+//		population.add(rest1j);
+//		population.add(rest1k);
+//		population.add(t);
 		
-//		population.add(bank2a);
-//		population.add(bank2b);
-//		population.add(bank2c);
+		population.add(bank2a);
+		population.add(bank2b);
+		population.add(bank2c);
 //		population.add(market2d);
 //		population.add(market2e);
 //		population.add(market2f);
@@ -188,22 +188,22 @@ public class Application extends JPanel {
 		}
 		
 		//Starting Threads
-//		bank1a.startThread();
-//		bank1b.startThread();
-//		bank1c.startThread();
-//		market1d.startThread();
+		bank1a.startThread();
+		bank1b.startThread();
+		bank1c.startThread();
+		market1d.startThread();
 //		market1e.startThread();
 //		market1f.startThread();
-		rest1h.startThread();
-		rest1g.startThread();	
-		rest1i.startThread();
-		rest1j.startThread();
+//		rest1h.startThread();
+//		rest1g.startThread();	
+//		rest1i.startThread();
+//		rest1j.startThread();
 //		rest1k.startThread();
-		t.startThread();
+//		t.startThread();
 		
-//		bank2a.startThread();
-//		bank2b.startThread();
-//		bank2c.startThread();
+		bank2a.startThread();
+		bank2b.startThread();
+		bank2c.startThread();
 //		market2d.startThread();
 //		market2e.startThread();
 //		market2f.startThread();

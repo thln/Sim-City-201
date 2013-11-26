@@ -93,35 +93,23 @@ public class PersonGui extends CityGui{
 
 		if (getxPos() == getxDestination() && getyPos() == yDestination) {
 			//System.out.println(command + "  " + agent.getName() + "has semaphore permits = " + agent.getAtDestination().availablePermits());
-			
-			if(agent != null) {			
+
+			if(agent != null) {
 				if (command == Command.GoToRestaurant && getxPos() == xRestaurant1Location && getyPos() == yRestaurant1Location) {
-					System.out.println(command + "  " + agent.getName() + "has semaphore permits = " + agent.getAtDestination().availablePermits());
 					agent.msgAtDestination();
-					System.out.println(command + "  " + agent.getName() + "has semaphore permits = " + agent.getAtDestination().availablePermits());
-					
 				}
 				if (command == Command.GoToMarket && getxPos() == xMarketLocation && getyPos() == yMarketLocation) {
-					System.out.println(command + "  " + agent.getName() + "has semaphore permits = " + agent.getAtDestination().availablePermits());
 					agent.msgAtDestination();
-					System.out.println(command + "  " + agent.getName() + "has semaphore permits = " + agent.getAtDestination().availablePermits());
-					
 				}
 				if (command == Command.GoToBank && getxPos() == xBankLocation && getyPos() == yBankLocation) {
-					System.out.println(command + "  " + agent.getName() + "has semaphore permits = " + agent.getAtDestination().availablePermits());
 					agent.msgAtDestination();
-					System.out.println(command + "  " + agent.getName() + "has semaphore permits = " + agent.getAtDestination().availablePermits());
-					
 				}
 				if (command == Command.GoHome && getxPos() == getxHome() && getyPos() == yHome) {
-					System.out.println(command + "  " + agent.getName() + "has semaphore permits = " + agent.getAtDestination().availablePermits());
 					agent.msgAtDestination();
-					System.out.println(command + "  " + agent.getName() + "has semaphore permits = " + agent.getAtDestination().availablePermits());
-					
-					}
+				}
 				command = Command.noCommand;
 			}
-			
+
 		}
 	}
 

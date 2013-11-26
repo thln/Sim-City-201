@@ -158,7 +158,6 @@ public abstract class Person extends Agent{
 	}
 
 	protected void prepareForMarket() {
-		print("testMonkeys");
 		gui.DoGoToMarket();
 		try {
 			atDestination.acquire();
@@ -235,7 +234,7 @@ public abstract class Person extends Agent{
 	}
 
 	protected void goToSleep() {
-		if (gui.getxPos() != gui.getxHome() && gui.getyPos() != gui.getyHome()){
+	//	if (gui.getxPos() != gui.getxHome() && gui.getyPos() != gui.getyHome()){
 			gui.DoGoHome();
 			try {
 				atDestination.acquire();
@@ -244,7 +243,7 @@ public abstract class Person extends Agent{
 				e.printStackTrace();
 				//
 			}
-		}
+//		}
 
 		currentRoleName = " ";
 		//After arrives home
