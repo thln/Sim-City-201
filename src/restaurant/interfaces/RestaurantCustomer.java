@@ -46,4 +46,6 @@ public interface RestaurantCustomer {
 	public abstract void msgGoToJail();
 
 	public abstract void msgAnimationFinishedLeaveRestaurant();
+
+	public abstract void msgComeIn();
 }

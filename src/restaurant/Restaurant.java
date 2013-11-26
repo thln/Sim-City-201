@@ -47,67 +47,71 @@ public class Restaurant {
 			}
 			//Setting bank guard role to new role
 			hostRole.setPerson(person);
+			if (isOpen()) {
+				hostRole.msgRestaurantOpen();
+			}
 			return hostRole;
 		}
-		else if (title == "cook") 
-		{
+		else if (title == "cook") {
 			//Setting previous bank guard role to inactive
-			if (cookRole.getPerson() != null) 
-			{
+			if (cookRole.getPerson() != null) {
 				Worker worker = (Worker) cookRole.getPerson();
 				worker.roleFinishedWork();
 			}
 			//Setting bank guard role to new role
 			cookRole.setPerson(person);
+			if (isOpen()) {
+				hostRole.msgRestaurantOpen();
+			}
 			return cookRole;
 		}
-		else if (title == "cashier") 
-		{
+		else if (title == "cashier") {
 			//Setting previous bank guard role to inactive
-			if (cashierRole.getPerson() != null) 
-			{
+			if (cashierRole.getPerson() != null) {
 				Worker worker = (Worker) cashierRole.getPerson();
 				worker.roleFinishedWork();
 			}
 			//Setting bank guard role to new role
 			cashierRole.setPerson(person);
+			if (isOpen()) {
+				hostRole.msgRestaurantOpen();
+			}
 			return cashierRole;
 		}
-		else if (title == "waiter")
-		{	
+		else if (title == "waiter") {	
 			WaiterRole waiter = new WaiterRole(person, person.getName(), title);
 			hostRole.addWaiter(waiter);
+			if (isOpen()) {
+				hostRole.msgRestaurantOpen();
+			}
 			return waiter;
 		}
-		else if (title == "alternative waiter")
-		{
+		else if (title == "alternative waiter") {
 			AltWaiterRole altWaiter = new AltWaiterRole(person, person.getName(), title);
 			hostRole.addWaiter(altWaiter);
+			if (isOpen()) {
+				hostRole.msgRestaurantOpen();
+			}
 			return altWaiter;
 		}
 		//for waiter and alternative waiters, you message the host
 		return null;
 	}
 
-	public void msgIWantFood(RestaurantCustomerRole cust, int xHome, int yHome) 
-	{
+	public void msgIWantFood(RestaurantCustomerRole cust, int xHome, int yHome) {
 		hostRole.msgIWantFood(cust, xHome, yHome);
 	}
 
-	public void goingOffWork(Person person) 
-	{
+	public void goingOffWork(Person person) {
 		Worker worker = (Worker) person;
 
-		if (worker.getWorkerRole().equals(hostRole)) 
-		{
+		if (worker.getWorkerRole().equals(hostRole)) {
 			hostRole = null;
 		}
-		if (worker.getWorkerRole().equals(cashierRole))
-		{
+		if (worker.getWorkerRole().equals(cashierRole)) {
 			cashierRole = null;
 		}
-		if (worker.getWorkerRole().equals(cookRole))
-		{
+		if (worker.getWorkerRole().equals(cookRole)) {
 			cookRole = null;
 		}
 		//WAITERS AND ALT WAITERS
@@ -117,18 +121,15 @@ public class Restaurant {
 		//look at onBreak code to follow
 	}
 
-	public String getName() 
-	{
+	public String getName() {
 		return name;
 	}
 
-	public void setName(String name) 
-	{
+	public void setName(String name) {
 		this.name = name;
 	}
 
-	public RevolvingStand getRevolvingStand()
-	{
+	public RevolvingStand getRevolvingStand() {
 		return theRevolvingStand;
 	}
 
@@ -148,6 +149,12 @@ public class Restaurant {
 			return mockCashier;
 		}
 		return cashierRole;
+	}
 
+	public boolean isOpen() {
+		if (hostRole.getPerson() != null && hostRole.waiters.size() != 0 && cookRole.getPerson() != null && cashierRole != null)
+			return true;
+		else 
+			return false;
 	}
 }

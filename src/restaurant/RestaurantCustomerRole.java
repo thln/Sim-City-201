@@ -81,6 +81,10 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer {
 	/**
 	 * Messages
 	 */
+	public void msgComeIn() {
+		stateChanged();
+	}
+	
 	public void gotHungry(int xHome, int yHome) {//from animation
 		print("I'm hungry");
 		this.xHome = xHome;
