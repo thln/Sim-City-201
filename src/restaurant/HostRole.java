@@ -1,13 +1,14 @@
 package restaurant;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
-import bank.interfaces.BankCustomer;
 import person.Person;
 import person.Role;
 import person.Worker;
 import restaurant.interfaces.RestaurantCustomer;
-
 /**
  * Restaurant Host Role
  */

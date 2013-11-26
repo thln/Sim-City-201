@@ -1,21 +1,27 @@
 package restaurant;
 
-import application.WatchTime;
+import java.util.Vector;
+
 import person.Person;
 import person.Role;
 import person.Worker;
-
-import application.gui.animation.*;
-
 import restaurant.interfaces.Cashier;
 import restaurant.interfaces.Cook;
 import restaurant.test.mock.MockCashier;
 import restaurant.test.mock.MockCook;
+import application.WatchTime;
+import application.gui.animation.BuildingPanel;
 
 public class Restaurant {
 
 	//Data
 	String name;
+
+	//List of Customers
+	private Vector<RestaurantCustomerRole> customers = new Vector<RestaurantCustomerRole>();
+
+	//List of Waiters
+	private Vector<WaiterRole> waiters = new Vector<WaiterRole>();
 
 	//Open and closing times
 	public WatchTime openTime = new WatchTime(11);
@@ -80,6 +86,20 @@ public class Restaurant {
 		}
 		else if (title == "waiter") {	
 			WaiterRole waiter = new WaiterRole(person, person.getName(), title);
+//			if (waiters.size() <= 12) {
+//				RestaurantWaiterGui g = new RestaurantWaiterGui(waiter);
+//				restPanel.addGui(g);
+//				waiter.setGui(g);
+//				g.setHomePosition(5, (55 + (22 * waiters.size())));
+//			}
+//			else if (waiters.size() <= 24) {
+//				RestaurantWaiterGui g = new RestaurantWaiterGui(waiter);
+//				restPanel.addGui(g);
+//				waiter.setGui(g);
+//				g.setHomePosition(27, (55 + (22 * (waiters.size()-12))));
+//			}
+			
+			waiters.add(waiter);
 			hostRole.addWaiter(waiter);
 			if (isOpen()) {
 				hostRole.msgRestaurantOpen();
@@ -88,6 +108,20 @@ public class Restaurant {
 		}
 		else if (title == "alternative waiter") {
 			AltWaiterRole altWaiter = new AltWaiterRole(person, person.getName(), title);
+//			if (waiters.size() <= 12) {
+//				RestaurantWaiterGui g = new RestaurantWaiterGui(altWaiter);
+//				restPanel.addGui(g);
+//				altWaiter.setGui(g);
+//				g.setHomePosition(5, (55 + (22 * waiters.size())));
+//			}
+//			else if (waiters.size() <= 24) {
+//				RestaurantWaiterGui g = new RestaurantWaiterGui(altWaiter);
+//				restPanel.addGui(g);
+//				altWaiter.setGui(g);
+//				g.setHomePosition(27, (55 + (22 * (waiters.size()-12))));
+//			}
+			
+			waiters.add(altWaiter);
 			hostRole.addWaiter(altWaiter);
 			if (isOpen()) {
 				hostRole.msgRestaurantOpen();
@@ -98,8 +132,24 @@ public class Restaurant {
 		return null;
 	}
 
-	public void msgIWantFood(RestaurantCustomerRole cust, int xHome, int yHome) {
-		hostRole.msgIWantFood(cust, xHome, yHome);
+	public boolean arrived(RestaurantCustomerRole rCR) {
+		if (customers.size() <= 12) {
+			//RestaurantCustomerGui rCG = (RestaurantCustomerGui) rCR.gui;
+			//rCG.setHomePosition((22 * customers.size()), 10);
+			//restPanel.addGui(rCG);
+			customers.add(rCR);
+			rCR.gotHungry((22 * customers.size()), 10);
+			return true;
+		}
+		else if (customers.size() <= 24) {
+			//RestaurantCustomerGui rCG = (RestaurantCustomerGui) rCR.gui;
+			//rCG.setHomePosition((22 * (customers.size() - 12)), 32);
+			//restPanel.addGui(rCG);
+			customers.add(rCR);
+			rCR.gotHungry((22 * (customers.size() - 12)), 32);
+			return true;
+		}
+		return false;
 	}
 
 	public void goingOffWork(Person person) {

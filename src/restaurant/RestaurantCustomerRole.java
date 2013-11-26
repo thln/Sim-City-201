@@ -44,10 +44,8 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer {
 	private double money;
 
 	/**
-	 * Constructor for CustomerAgent class
+	 * Constructor for RestaurantCustomer class
 	 *
-	 * @param name name of the customer
-	 * @param gui  reference to the customergui so the customer can send it messages
 	 */
 	public RestaurantCustomerRole(Person p1, String pName, String rName) {
 		super(p1, pName, rName);
@@ -405,20 +403,6 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer {
 	public String toString() {
 		return "customer " + getName();
 	}
-
-	/*
-	public void setGui(CustomerGui g) {
-		customerGui = g;
-	}*/
-/*
-	public void setCashier(CashierRole cashierRole) {
-		this.cashierRole = cashierRole;
-	}*/
-
-	/*
-	public CustomerGui getGui() {
-		return customerGui;
-	}*/
 	
 	public double getMoney() {
 		return money;

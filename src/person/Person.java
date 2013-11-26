@@ -135,8 +135,7 @@ public abstract class Person extends Agent{
 		checkedMailbox = false;
 	}
 
-	protected void prepareForRent()
-	{
+	protected void prepareForRent() {
 		AlertLog.getInstance().logInfo(AlertTag.HOUSING, name, "Depositing rent for week. Rent is " + Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.getApartmentRentCost());
 		//print("Depositing rent for week. Rent is " + Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.getApartmentRentCost());
 		if( money >= Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.getApartmentRentCost())
@@ -222,12 +221,12 @@ public abstract class Person extends Agent{
 				RestaurantCustomerRole RCR = (RestaurantCustomerRole) cust1;
 				RestaurantCustomerGui rg = new RestaurantCustomerGui(RCR);
 				RCR.setGui(rg);
-				//Must be changed because doesn't have xHome, yHome
-				//Phonebook.getPhonebook().getRestaurant().msgIWantFood(cust1, xHome, yHome);
-				currentRoleName = "Restaurant Customer";
-				cust1.setRoleActive();
-				restPanel.addGui(rg);
-				stateChanged();
+				if (Phonebook.getPhonebook().getRestaurant().arrived(RCR)) {
+					currentRoleName = "Restaurant Customer";
+					cust1.setRoleActive();
+					restPanel.addGui(rg);
+					stateChanged();
+				}
 				return;
 			}
 		}
