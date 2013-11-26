@@ -31,4 +31,10 @@ public class BankGuardMock extends Mock implements BankGuard {
 		log.add(new LoggedEvent("New customer arrived at Bank"));
 	}
 
+	@Override
+	public void msgTellerLeavingWork(BankTeller bankTellerRole) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

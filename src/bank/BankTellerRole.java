@@ -13,7 +13,6 @@ import bank.interfaces.BankTeller;
 public class BankTellerRole extends Role implements BankTeller {
 
 	//DATA
-	protected String RoleName = "Bank Teller";
 	int balanceMinimum = 5;
 	String name;
 	List<Account> myAccounts;		//A list of the accounts that only this teller will handle
@@ -188,6 +187,7 @@ public class BankTellerRole extends Role implements BankTeller {
 
 		if (leaveRole){
 			leaveRole = false;
+			Phonebook.getPhonebook().getBank().getBankGuard(test).msgTellerLeavingWork(this);
 			try {
 			((Worker) person).roleFinishedWork();	
 			}

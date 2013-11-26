@@ -104,8 +104,8 @@ public abstract class Role {
             AlertLog.getInstance().logInfo(AlertTag.HOUSING, "Mouse", msg);
 
             }
-            else if (roleName.equals("Market Customer") || roleName.equals("Market Runner") 
-                            || roleName.equals("Sales Person") || roleName.equals("UPS Man"))
+            else if (roleName.equals("Market Customer") || roleName.contains("MarketCustomer") || roleName.equals("Market Runner") 
+                            || roleName.contains("MarketRunner") || roleName.equals("Sales Person") || roleName.contains("SalesPerson") || roleName.contains("Market") || roleName.equals("UPS Man"))
             {
             AlertLog.getInstance().logInfo(AlertTag.MARKET, roleName + " " + getName(), msg);
 

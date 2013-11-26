@@ -57,9 +57,9 @@ public class Bank
 		vault = 10000;
 		vaultMinimum = 1000;
 		accounts = Collections.synchronizedList(new ArrayList<Account>());
-		BankTellerRole t1 = new BankTellerRole ("BankTeller 1");
+		//BankTellerRole t1 = new BankTellerRole ("BankTeller 1");
 		//tellers.add(t1);
-		bankGuardRole.msgTellerCameToWork(t1);
+		//bankGuardRole.msgTellerCameToWork(t1);
 			
 		BankTellerMock t2 = new BankTellerMock ("BankTellerMock");
 		mockTellers.add(t2);	
@@ -91,7 +91,7 @@ public class Bank
 				bankGuardRole.msgBankOpen();
 			return loanOfficerRole;
 		}
-		else if (title == "bankTeller") {
+		else if (title.equals("bankTeller")) {
 			BankTellerRole t1 = new BankTellerRole(person.getName(), person, title);
 			bankGuardRole.msgTellerCameToWork(t1);
 			//Setting bank guard role to new role

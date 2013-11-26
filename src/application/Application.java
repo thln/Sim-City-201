@@ -18,7 +18,7 @@ public class Application extends JPanel {
 	private ArrayList<Person> population = new ArrayList<Person>();
 	private static List<Housing> allHousing = Collections.synchronizedList(new ArrayList<Housing>());
 
-	private AnimationPanel animPanel;
+	public AnimationPanel animPanel;
 	public Bank bank;
 	public Market market;
 	public Restaurant restaurant;
@@ -59,28 +59,28 @@ public class Application extends JPanel {
 
         //Market Workers
         //SHIFT 1
-        Worker market1d = new Worker("Derrick", 10, "marketRunner", "market", 100000, 1400, 2000);
-        Worker market1e = new Worker("Erin", 1000, "marketSales", "market", 100000, 1400, 2000);
-        Worker market1f = new Worker("Fred", 10, "UPSman", "market", 100000, 1400, 2000);        
+        Worker market1d = new Worker("Derrick", 10, "marketRunner", "market", 0, 6, 12);
+        Worker market1e = new Worker("Erin", 1000, "salesPerson", "market", 0, 6, 12);
+        Worker market1f = new Worker("Fred", 10, "UPSman", "market", 0, 6, 12);        
 
         //SHIFT 2
-        Worker market2d = new Worker("Daniel", 100, "marketRunner", "market", 2000, 400, 1000);
-        Worker market2e = new Worker("Elle", 200, "marketSales", "market", 2000, 400, 1000);
-        Worker market2f = new Worker("Frenchy", 100, "UPSman", "market", 2000, 400, 1000);        
+        Worker market2d = new Worker("Daniel", 100, "marketRunner", "market", 12, 400, 0);
+        Worker market2e = new Worker("Elle", 200, "salesPerson", "market", 12, 400, 0);
+        Worker market2f = new Worker("Frenchy", 100, "UPSman", "market", 12, 400, 0);        
         
         //Restaurant Workers
         //SHIFT 1
-        Worker rest1h = new Worker("Henry", 100, "host", "restaurant", 0, 1800, 1200);
-        Worker rest1g = new Worker("Greg", 100, "cashier", "restaurant", 0, 1800, 1200);        
-        Worker rest1i = new Worker("Iris", 100, "cook", "restaurant", 0, 1800, 1200);
-        Worker rest1j = new Worker("Josh", 100, "waiter", "restaurant", 0, 1800, 1200);
-        Worker rest1k = new Worker("Kristi", 100, "altWaiter", "restaurant", 0, 1800, 1200);
+        Worker rest1h = new Worker("Henry", 100, "host", "restaurant", 0, 1800, 12);
+        Worker rest1g = new Worker("Greg", 100, "cashier", "restaurant", 0, 1800, 12);        
+        Worker rest1i = new Worker("Iris", 100, "cook", "restaurant", 0, 1800, 12);
+        Worker rest1j = new Worker("Josh", 100, "waiter", "restaurant", 0, 1800, 12);
+        Worker rest1k = new Worker("Kristi", 100, "altWaiter", "restaurant", 0, 1800, 12);
         //SHIFT 2
-        Worker rest2g = new Worker("Gil", 100, "cashier", "restaurant", 2400, 600, 1200);
-        Worker rest2h = new Worker("Hannah", 100, "host", "restaurant", 2400, 600, 1200);
-        Worker rest2i = new Worker("Isaac", 100, "cook", "restaurant", 2400, 600, 1200);
-        Worker rest2j = new Worker("Jacob", 100, "waiter", "restaurant", 2400, 600, 1200);
-        Worker rest2k = new Worker("Ken", 100, "altWaiter", "restaurant", 2400, 600, 1200);
+        Worker rest2g = new Worker("Gil", 100, "cashier", "restaurant", 12, 600, 0);
+        Worker rest2h = new Worker("Hannah", 100, "host", "restaurant", 12, 600, 0);
+        Worker rest2i = new Worker("Isaac", 100, "cook", "restaurant", 12, 600, 0);
+        Worker rest2j = new Worker("Jacob", 100, "waiter", "restaurant", 12, 600, 0);
+        Worker rest2k = new Worker("Ken", 100, "altWaiter", "restaurant", 12, 600, 0);
 		
 		
 
@@ -129,7 +129,7 @@ public class Application extends JPanel {
 		allHousing.add(new Housing(t, allHousing.size(), "Mansion"));
 		t.setHome(allHousing.get(allHousing.size() - 1));
 
-		allHousing.add(new Housing(bank2a, allHousing.size(), "Apartment"));
+	    allHousing.add(new Housing(bank2a, allHousing.size(), "Apartment"));
 		bank2a.setHome(allHousing.get(allHousing.size() - 1));
 		allHousing.add(new Housing(bank2b, allHousing.size(), "Apartment"));
 		bank2b.setHome(allHousing.get(allHousing.size() - 1));
@@ -155,32 +155,32 @@ public class Application extends JPanel {
 
 		
 		//Adding to Vector
-//		population.add(bank1a);
-//		population.add(bank1b);
-//		population.add(bank1c);
-//		population.add(market1d);
-//		population.add(market1e);
-//		population.add(market1f);
-		population.add(rest1g);
-		population.add(rest1h);
-		population.add(rest1i);
-		population.add(rest1j);
-		population.add(rest1k);
-		population.add(t);
+		getPopulation().add(bank1a);
+		getPopulation().add(bank1b);
+		getPopulation().add(bank1c);
+		getPopulation().add(market1d);
+		getPopulation().add(market1e);
+		getPopulation().add(market1f);
+		getPopulation().add(rest1g);
+		getPopulation().add(rest1h);
+		getPopulation().add(rest1i);
+		getPopulation().add(rest1j);
+//		population.add(rest1k);
+//		population.add(t);
 		
-//		population.add(bank2a);
-//		population.add(bank2b);
-//		population.add(bank2c);
-//		population.add(market2d);
-//		population.add(market2e);
-//		population.add(market2f);
-//		population.add(rest2g);
-//		population.add(rest2h);
-//		population.add(rest2i);
-//		population.add(rest2j);
+		getPopulation().add(bank2a);
+		getPopulation().add(bank2b);
+		getPopulation().add(bank2c);
+		getPopulation().add(market2d);
+		getPopulation().add(market2e);
+		getPopulation().add(market2f);
+		getPopulation().add(rest2g);
+		getPopulation().add(rest2h);
+		getPopulation().add(rest2i);
+		getPopulation().add(rest2j);
 //		population.add(rest2k);
 		
-		for(Person person : population) {
+		for(Person person : getPopulation()) {
 			person.setPanel(animPanel);
 			PersonGui pg = new PersonGui(person);
 			person.setGui(pg);
@@ -188,12 +188,11 @@ public class Application extends JPanel {
 		}
 		
 		//Starting Threads
-//		bank1a.startThread();
-//		bank1b.startThread();
-//		bank1c.startThread();
-//		market1d.startThread();
-//		market1e.startThread();
-//		market1f.startThread();
+		bank1a.startThread();
+		bank1b.startThread();		bank1c.startThread();
+		market1d.startThread();
+		market1e.startThread();
+		market1f.startThread();
 		rest1h.startThread();
 		rest1g.startThread();	
 		rest1i.startThread();
@@ -201,16 +200,16 @@ public class Application extends JPanel {
 //		rest1k.startThread();
 		t.startThread();
 		
-//		bank2a.startThread();
-//		bank2b.startThread();
-//		bank2c.startThread();
-//		market2d.startThread();
-//		market2e.startThread();
-//		market2f.startThread();
-//		rest2g.startThread();
-//		rest2h.startThread();
-//		rest2i.startThread();
-//		rest2j.startThread();
+		bank2a.startThread();
+		bank2b.startThread();
+		bank2c.startThread();
+		market2d.startThread();
+		market2e.startThread();
+		market2f.startThread();
+		rest2g.startThread();
+		rest2h.startThread();
+		rest2i.startThread();
+		rest2j.startThread();
 //		rest2k.startThread();
 	}
 
@@ -224,7 +223,7 @@ public class Application extends JPanel {
 			Wealthy newP = new Wealthy(name, money);
 			allHousing.add(new Housing(newP, allHousing.size(), "Mansion"));
 			newP.setHome(allHousing.get(allHousing.size() - 1));
-			population.add(newP);
+			getPopulation().add(newP);
 			newP.startThread();
 		}
 		else if (type.equals("Crook")) 
@@ -232,7 +231,7 @@ public class Application extends JPanel {
 			Crook newP = new Crook(name, money);
 			allHousing.add(new Housing(newP, allHousing.size(), "Apartment"));
 			newP.setHome(allHousing.get(allHousing.size() - 1));
-			population.add(newP);
+			getPopulation().add(newP);
 			newP.startThread();
 		}
 		else if (type.equals("Worker")) 
@@ -240,7 +239,7 @@ public class Application extends JPanel {
 			Worker newP = new Worker(name, money, jobTitle, jobLocation, startT, lunchT, endT);
 			allHousing.add(new Housing(newP, allHousing.size(), "Apartment"));
 			newP.setHome(allHousing.get(allHousing.size() - 1));
-			population.add(newP);
+			getPopulation().add(newP);
 			newP.startThread();	
 		}
 		else if (type.equals("Deadbeat")) 
@@ -248,28 +247,36 @@ public class Application extends JPanel {
 			Deadbeat newP = new Deadbeat(name, money);
 			allHousing.add(new Housing(newP, allHousing.size(), "Park"));
 			newP.setHome(allHousing.get(allHousing.size() - 1));
-			population.add(newP);
+			getPopulation().add(newP);
 			newP.startThread();
 		}
 	}
 	
 	public void editPerson(int index, String name, int money){
-		population.get(index).setMoney(money);
+		getPopulation().get(index).setMoney(money);
 	}
 	
 	//function used to test gui functionality
 	public void printLastPop(){
-		System.out.println(population.get(population.size()-1).getName());
+		System.out.println(getPopulation().get(getPopulation().size()-1).getName());
 	}
 	
 	public int getPopulationSize() {
-		return population.size();
+		return getPopulation().size();
 	}
 	
 	public int getNumberHomes(){
 		return allHousing.size();
 	}
 	public Person getPerson(int personIndex){
-		return population.get(personIndex);
+		return getPopulation().get(personIndex);
+	}
+
+	public ArrayList<Person> getPopulation() {
+		return population;
+	}
+
+	public void setPopulation(ArrayList<Person> population) {
+		this.population = population;
 	}
 }

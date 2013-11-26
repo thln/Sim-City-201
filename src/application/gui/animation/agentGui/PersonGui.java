@@ -3,6 +3,7 @@ package application.gui.animation.agentGui;
 import person.*;
 
 import java.awt.*;
+import java.util.Random;
 
 import javax.swing.JLabel;
 
@@ -11,10 +12,16 @@ public class PersonGui extends CityGui{
 	private Person agent = null;
 	private boolean isHungry = false;
 
-	//RestaurantGui gui;
+	public boolean raveMode = false;
+	
+	Random rand = new Random();
+	int red = rand.nextInt(255);
+	int blue  = rand.nextInt(255);
+	int green  = rand.nextInt(255);
+	Color myColor = new Color(red, blue, green);
 
-	private int xRestaurant1Location = 400;
-	private int yRestaurant1Location = 50;
+	private int xRestaurant1Location = 300 + 15;
+	private int yRestaurant1Location = 20 + 10;
 	//This is going to be used for future restaurants
 	//	private int xRestaurant2Location;
 	//	private int yRestaurant2Location;
@@ -24,10 +31,10 @@ public class PersonGui extends CityGui{
 	//	private int yRestaurant4Location;
 	//	private int xRestaurant5Location;
 	//	private int yRestaurant5Location;
-	private int xMarketLocation = 400;
-	private int yMarketLocation = 100;
-	private int xBankLocation = 400;
-	private int yBankLocation = 170;
+	private int xMarketLocation = 500 + 25;
+	private int yMarketLocation = 100 + 25;
+	private int xBankLocation = 300 + 30;
+	private int yBankLocation = 230 + 30;
 
 
 	private int xPos, yPos;//default person position
@@ -41,6 +48,12 @@ public class PersonGui extends CityGui{
 
 	private String choice;
 	public PersonGui() {
+		setxPos(0);
+		setyPos(125);
+		setxHome(0);
+		yHome = 125;
+		setxDestination(25);
+		yDestination = 125;
 	}
 
 	public PersonGui(Person p/*, RestaurantGui gui*/){ //HostAgent m) {
@@ -93,45 +106,48 @@ public class PersonGui extends CityGui{
 
 		if (getxPos() == getxDestination() && getyPos() == yDestination) {
 			//System.out.println(command + "  " + agent.getName() + "has semaphore permits = " + agent.getAtDestination().availablePermits());
-			
-			if(agent != null) {			
+
+			if(agent != null) {
 				if (command == Command.GoToRestaurant && getxPos() == xRestaurant1Location && getyPos() == yRestaurant1Location) {
-					System.out.println(command + "  " + agent.getName() + "has semaphore permits = " + agent.getAtDestination().availablePermits());
 					agent.msgAtDestination();
-					System.out.println(command + "  " + agent.getName() + "has semaphore permits = " + agent.getAtDestination().availablePermits());
-					
 				}
 				if (command == Command.GoToMarket && getxPos() == xMarketLocation && getyPos() == yMarketLocation) {
-					System.out.println(command + "  " + agent.getName() + "has semaphore permits = " + agent.getAtDestination().availablePermits());
 					agent.msgAtDestination();
-					System.out.println(command + "  " + agent.getName() + "has semaphore permits = " + agent.getAtDestination().availablePermits());
-					
 				}
 				if (command == Command.GoToBank && getxPos() == xBankLocation && getyPos() == yBankLocation) {
-					System.out.println(command + "  " + agent.getName() + "has semaphore permits = " + agent.getAtDestination().availablePermits());
 					agent.msgAtDestination();
-					System.out.println(command + "  " + agent.getName() + "has semaphore permits = " + agent.getAtDestination().availablePermits());
-					
 				}
 				if (command == Command.GoHome && getxPos() == getxHome() && getyPos() == yHome) {
-					System.out.println(command + "  " + agent.getName() + "has semaphore permits = " + agent.getAtDestination().availablePermits());
 					agent.msgAtDestination();
-					System.out.println(command + "  " + agent.getName() + "has semaphore permits = " + agent.getAtDestination().availablePermits());
-					
-					}
+				}
 				command = Command.noCommand;
 			}
-			
+
 		}
 	}
 
 	public void draw(Graphics2D g) {
-		g.setColor(Color.GREEN);
+		if (getxPos() == getxDestination() && getyPos() == yDestination) {
+			g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.0f));
+		}
+		else {
+			g.setColor(myColor);
+		
+			if (raveMode) {
+				Random rand = new Random();
+				int red = rand.nextInt(255);
+				int blue  = rand.nextInt(255);
+				int green  = rand.nextInt(255);
+				g.setColor(new Color (red, blue, green));
+			}
+		}
 		g.fillRect(getxPos(), getyPos(), 20, 20);
-		g.setColor(Color.RED);
+		g.setColor(Color.WHITE);
 		if(agent != null) {
 			g.drawString(agent.getName(), getxPos(), getyPos());
 		}
+		else
+			g.drawString("testGui", getxPos(), getyPos());
 	}
 
 	public void setHungry() {
@@ -218,5 +234,13 @@ public class PersonGui extends CityGui{
 
 	public int getyHome() {
 		return yHome;
+	}
+	
+	public void setRaveMode() {
+		if (raveMode) {
+			raveMode = false;
+		}
+		else
+			raveMode = true;
 	}
 }

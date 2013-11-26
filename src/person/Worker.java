@@ -9,6 +9,7 @@ import person.Role.RoleState;
 import application.Phonebook;
 import application.TimeManager;
 import application.TimeManager.Day;
+import application.gui.trace.AlertLog;
 import application.WatchTime;
 
 public class Worker extends Person {
@@ -94,15 +95,15 @@ public class Worker extends Person {
 		money += amount;
 	}
 
-	 public synchronized void roleFinishedWork(){                 //from worker role
-         print("Shift is over, time to leave work");
-         //        print("Job time = " + myJob.getStartTime().hour + " Current time = " + TimeManager.getTimeManager().getTime().dayHour);
-         workState = WorkState.notAtWork;       
-         workerRole.setPerson(null);
-         workerRole = null;
-         upcomingTask = false;
-         stateChanged();
- }
+	public synchronized void roleFinishedWork(){                 //from worker role
+		print("Shift is over, time to leave work");
+		//        print("Job time = " + myJob.getStartTime().hour + " Current time = " + TimeManager.getTimeManager().getTime().dayHour);
+		workState = WorkState.notAtWork;       
+		workerRole.setPerson(null);
+		workerRole = null;
+		upcomingTask = false;
+		stateChanged();
+	}
 
 
 
@@ -114,7 +115,7 @@ public class Worker extends Person {
 			if (lateWorker){
 				//Start timer to wake up for work
 				if (workState == WorkState.notAtWork) {
-				//	print("YZ");
+					//	print("YZ");
 					scheduleNextTask(myJob.getStartTime().hour, currentTime);
 					return true;
 				}
@@ -133,7 +134,7 @@ public class Worker extends Person {
 						return true;
 					}
 					else {
-					//	print("early workers");
+						//	print("early workers");
 						scheduleNextTask(myJob.getStartTime().hour + 24, currentTime);
 						return true;
 					}
@@ -151,11 +152,11 @@ public class Worker extends Person {
 			if (workerRole.getState() == RoleState.active) {
 				if (lateWorker && (currentTime < 8) && (myJob.getEndTime().hour - currentTime <= 1)){
 					workerRole.msgLeaveRole();
-					return true; 
+					return workerRole.pickAndExecuteAnAction();
 				}
 				if (!lateWorker && (myJob.getEndTime().hour - currentTime <= 1)){
 					workerRole.msgLeaveRole();
-					return true; 
+					return workerRole.pickAndExecuteAnAction();
 				}
 				else
 					return workerRole.pickAndExecuteAnAction();                      
@@ -178,15 +179,15 @@ public class Worker extends Person {
 		int currentTime = TimeManager.getTimeManager().getTime().dayHour;
 		if (workState == WorkState.prepareForWork) {
 			if ((!lateWorker && currentTime <= 5 && (myJob.getStartTime().hour - currentTime) <= 1)
-				|| (lateWorker && currentTime >= 5 && (myJob.getStartTime().hour - currentTime) <= 1)
-				|| (!lateWorker && currentTime > 5 && (myJob.getStartTime().hour + 24 - currentTime) <= 1)
-				|| (lateWorker && currentTime > 5 && (myJob.getStartTime().hour + 24 - currentTime) <= 1))
-				{
-					workState = workState.atWork;
-					upcomingTask = false;
-					prepareForWork();
-					return true;
-				}
+					|| (lateWorker && currentTime >= 5 && (myJob.getStartTime().hour - currentTime) <= 1)
+					|| (!lateWorker && currentTime > 5 && (myJob.getStartTime().hour + 24 - currentTime) <= 1)
+					|| (lateWorker && currentTime > 5 && (myJob.getStartTime().hour + 24 - currentTime) <= 1))
+			{
+				workState = WorkState.atWork;
+				upcomingTask = false;
+				prepareForWork();
+				return true;
+			}
 		}
 
 		//Bank Related
@@ -228,14 +229,12 @@ public class Worker extends Person {
 		//Market Related
 		if (!hasFoodInFridge || carStatus == CarState.wantsCar) 
 		{ 
+			if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getMarket().openTime.hour) &&
+					(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getMarket().closeTime.hour)) 
 			{
-				if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getMarket().openTime.hour) &&
-						(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getMarket().closeTime.hour)) 
-				{
-					print("Going to market");
-					prepareForMarket();
-					return true;
-				}
+				print("Going to market");
+				prepareForMarket();
+				return true;
 			}
 		}
 
@@ -256,20 +255,18 @@ public class Worker extends Person {
 					workState = WorkState.prepareForWork;
 					//print("Preparing for work");
 				}
-				pickAndExecuteAnAction();                
+				stateChanged();                
 			}
 		},
 		((nextTaskTime - currentTime)) * timeConversion);
 	}
 
 	public void prepareForWork() {
-
 		currentRoleName = myJob.title;
 		print("Preparing for work as " + myJob.title);
-		if (myJob.jobPlace == "bank") 
+		if (myJob.jobPlace.equals("bank")) 
 		{
-			print("going to work at bank");
-			gui.DoGoToBank();
+			getGui().DoGoToBank();
 			try {	
 				atDestination.acquire();
 			} catch (InterruptedException e) {
@@ -283,7 +280,8 @@ public class Worker extends Person {
 
 		if (myJob.jobPlace == "market") 
 		{
-			gui.DoGoToMarket();
+			//print("Going to work at market");
+			getGui().DoGoToMarket();
 			try {
 				atDestination.acquire();
 			} catch (InterruptedException e) {
@@ -291,6 +289,7 @@ public class Worker extends Person {
 				e.printStackTrace();
 
 			}
+			print("Going to work at market");
 			workerRole = Phonebook.getPhonebook().getMarket().arrivedAtWork(this, myJob.title);
 			workerRole.setRoleActive();
 			return;
@@ -298,7 +297,7 @@ public class Worker extends Person {
 
 		if (myJob.jobPlace == "restaurant") 
 		{
-			gui.DoGoToRestaurant();
+			getGui().DoGoToRestaurant();
 			try {
 				atDestination.acquire();
 			} catch (InterruptedException e) {
