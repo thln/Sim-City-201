@@ -26,9 +26,6 @@ import application.gui.animation.agentGui.RestaurantCookGui;
 
 public class CookRole extends Role implements Cook {
 
-	private String name;
-
-	protected String roleName = "Cook";
 	RestaurantCookGui cookGui = (RestaurantCookGui) gui;
 
 	Timer timer = new Timer();
