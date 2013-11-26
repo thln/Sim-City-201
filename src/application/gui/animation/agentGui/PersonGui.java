@@ -13,8 +13,8 @@ public class PersonGui extends CityGui{
 
 	//RestaurantGui gui;
 
-	private int xRestaurant1Location = 400;
-	private int yRestaurant1Location = 50;
+	private int xRestaurant1Location = 300 + 15;
+	private int yRestaurant1Location = 20 + 10;
 	//This is going to be used for future restaurants
 	//	private int xRestaurant2Location;
 	//	private int yRestaurant2Location;
@@ -24,10 +24,10 @@ public class PersonGui extends CityGui{
 	//	private int yRestaurant4Location;
 	//	private int xRestaurant5Location;
 	//	private int yRestaurant5Location;
-	private int xMarketLocation = 400;
+	private int xMarketLocation = 500;
 	private int yMarketLocation = 100;
-	private int xBankLocation = 400;
-	private int yBankLocation = 170;
+	private int xBankLocation = 300;
+	private int yBankLocation = 230;
 
 
 	private int xPos, yPos;//default person position
