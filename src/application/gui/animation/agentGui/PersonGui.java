@@ -144,7 +144,7 @@ public class PersonGui extends CityGui{
 			Color myColor = new Color(red, blue, green);
 			g.setColor(myColor);
 		}
-		else
+		else if (!raveMode)
 			g.setColor(currColor);
 		
 		g.fillRect(getxPos(), getyPos(), 20, 20);
