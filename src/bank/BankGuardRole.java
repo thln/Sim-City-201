@@ -134,8 +134,9 @@ public class BankGuardRole extends Role implements BankGuard {
 
 	private boolean assignToTeller(BankCustomer cust1) {	
 		for (MyTeller teller1: tellers) {
-			if (teller1.state == TellerState.available && Phonebook.getPhonebook().getBank().isOpen()) {
-				print("Assigning " + ((Role) cust1).getPerson().getName() + " to teller " + teller1.tell1.getName());
+			if (teller1.state == TellerState.available && (Phonebook.getPhonebook().getBank().isOpen() || test)) {
+				if (!test)
+					print("Assigning " + ((Role) cust1).getPerson().getName() + " to teller " + teller1.tell1.getName());
 				cust1.msgGoToTeller(teller1.tell1);
 				teller1.state = TellerState.busy;
 				customers.remove(cust1);
