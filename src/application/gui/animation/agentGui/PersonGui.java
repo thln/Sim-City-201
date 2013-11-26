@@ -134,19 +134,19 @@ public class PersonGui extends CityGui{
 	public void DoGoToRestaurant() {//later you will map building to map coordinates.
 		xDestination = xRestaurant1Location;
 		yDestination = yRestaurant1Location;
-		command = Command.GoToBuilding;
+		command = Command.GoToRestaurant;
 	}
 
 	public void DoGoToMarket() {//later you will map building to map coordinates.
 		xDestination = xMarketLocation;
 		yDestination = yMarketLocation;
-		command = Command.GoToBuilding;
+		command = Command.GoToMarket;
 	}
 
 	public void DoGoToBank() {//later you will map building to map coordinates.
 		xDestination = xBankLocation;
 		yDestination = yBankLocation;
-		command = Command.GoToBuilding;
+		command = Command.GoToBank;
 	}
 
 	public void DoGoToBusStop(int stopNum) {//later you will map stop number to map coordinates.
