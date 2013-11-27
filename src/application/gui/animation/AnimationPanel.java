@@ -5,6 +5,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+
+import application.Phonebook;
 import application.gui.animation.agentGui.*;
 
 public class AnimationPanel extends JPanel implements MouseListener {
@@ -59,6 +61,7 @@ public class AnimationPanel extends JPanel implements MouseListener {
 			Building b = buildings.get(i);
 			BuildingPanel bp = new BuildingPanel(b.getName(), this );
 			b.setMyBuildingPanel(bp);
+			setBuildingInPhonebook(b);
 			buildingPanels.add(bp, bp.getName());
 
 			add(BorderLayout.NORTH, cityPanel);
@@ -86,6 +89,12 @@ public class AnimationPanel extends JPanel implements MouseListener {
 	
 	public void displayBlankBuildingPanel() {
 		cardLayout.show(buildingPanels, "");
+	}
+	
+	public void setBuildingInPhonebook(Building building) {
+		if (building.getName().toLowerCase().contains("restaurant")) {
+			Phonebook.getPhonebook().getRestaurant().setBuildingPanel(building.myBuildingPanel);
+		}
 	}
 	
 	public void testGuis() {

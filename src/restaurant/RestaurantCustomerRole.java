@@ -22,8 +22,6 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer {
 	protected String RoleName = "Restaurant Customer";
 
 	int xHome, yHome;
-
-	RestaurantCustomerGui customerGui = (RestaurantCustomerGui) gui;
 	
 	private Menu menu;
 
@@ -231,6 +229,7 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer {
 	}
 	
 	private void DecidingToStay() {
+		RestaurantCustomerGui customerGui = (RestaurantCustomerGui) gui;
 		state = AgentState.DecidingToStayInRestaurant;
 
 		Random rand = new Random();
@@ -242,7 +241,7 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer {
 		if (myRandomChoice == 0) {
 			state = AgentState.Leaving;
 			print("I don't want to wait, bailing from this stupid restaurant");
-			//customerGui.DoExitRestaurant();
+			customerGui.DoExitRestaurant();
 			stateChanged();
 		}
 		else {
@@ -254,19 +253,22 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer {
 	}
 
 	private void SitDown() {
+		RestaurantCustomerGui customerGui = (RestaurantCustomerGui) gui;
 		state = AgentState.BeingSeated;
 		print("Being seated. Going to table");
-//		customerGui.DoGoToSeat(tableNumber);
+		customerGui.DoGoToSeat(tableNumber);
 		event = AgentEvent.seated;			//to delete
 	}
 
 	private void MakeChoice() {
+		RestaurantCustomerGui customerGui = (RestaurantCustomerGui) gui;
 		state = AgentState.DecidingChoice;
 		
 		print("Deciding what I want...");
 		timer.schedule(new TimerTask() {
 			public void run() 
 			{
+				RestaurantCustomerGui customerGui = (RestaurantCustomerGui) gui;
 				
 				if (money < menu.lowestPricedItem) {
 					print("I can't afford anything on the menu");
@@ -287,7 +289,7 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer {
 				
 				state = AgentState.DoneDeciding;
 				AskToOrder();
-		//		customerGui.DoReadyToOrder();
+				customerGui.DoReadyToOrder();
 				stateChanged();
 			}
 		},
@@ -299,14 +301,16 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer {
 	}
 
 	private void PlaceOrder() {
-	//	customerGui.DoPlaceOrder(choice); //GUI call
+		RestaurantCustomerGui customerGui = (RestaurantCustomerGui) gui;
+		customerGui.DoPlaceOrder(choice); //GUI call
 		state = AgentState.Ordered;
 		waiterRole.msgHeresMyOrder(this, choice);
 	}
 
 	private void EatFood() {
+		RestaurantCustomerGui customerGui = (RestaurantCustomerGui) gui;
 		state = AgentState.Eating;
-	//	customerGui.DoEatFood(choice);
+		customerGui.DoEatFood(choice);
 		print("Eating Food");
 		//This next complicated line creates and starts a timer thread.
 		//We schedule a deadline of getHungerLevel()*1000 milliseconds.
@@ -329,20 +333,22 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer {
 	}
 
 	private void AskForCheck() {
-	//	customerGui.DoAskForCheck();
+		RestaurantCustomerGui customerGui = (RestaurantCustomerGui) gui;
+		customerGui.DoAskForCheck();
 		state = AgentState.AskedForCheck;
 		print("Asking for my check");
 		waiterRole.msgIWantMyCheck(this);
 	}
 
 	private void PayingCheck() {
+		RestaurantCustomerGui customerGui = (RestaurantCustomerGui) gui;
 		state = AgentState.PayingCheck;
 		print("Going to the cashier");
 		
 		//This stateChanged() needs to be deleted because gui isn't working
 		event = AgentEvent.atCashier;
 		stateChanged();
-	//	customerGui.DoGoToCashier();
+		customerGui.DoGoToCashier();
 	}
 
 	private void PayCheck() {
@@ -361,6 +367,7 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer {
 	}
 
 	private void LeaveRestaurant() {
+		RestaurantCustomerGui customerGui = (RestaurantCustomerGui) gui;
 		state = AgentState.Leaving;
 
 		print("Leaving.");
@@ -369,13 +376,14 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer {
 		//This event and state changed should be removed when gui is working
 		event = AgentEvent.doneLeaving;
 		stateChanged();
-	//	customerGui.DoExitRestaurant();
+		customerGui.DoExitRestaurant();
 	}
 	
 	private void GoToJail() {
+		RestaurantCustomerGui customerGui = (RestaurantCustomerGui) gui;
 		state = AgentState.inJail;
 		waiterRole.msgLeavingTable(this);
-//		customerGui.DoGoToJail();
+		customerGui.DoGoToJail();
 		
 		timer.schedule(new TimerTask() {
 			public void run() {
@@ -386,8 +394,9 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer {
 	}
 	
 	private void walkOfShame() {
+		RestaurantCustomerGui customerGui = (RestaurantCustomerGui) gui;
 		state = AgentState.Leaving;
-//		customerGui.DoExitRestaurant();
+		customerGui.DoExitRestaurant();
 		stateChanged();
 	}
 

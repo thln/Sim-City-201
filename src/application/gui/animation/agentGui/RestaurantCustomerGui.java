@@ -51,19 +51,19 @@ public class RestaurantCustomerGui extends RestaurantGui{
 
 		if (xPos == xDestination && yPos == yDestination) {
 			if (command == Command.GoToRestaurant) {
-	//			agent.gotHungry(xHome, yHome);
+//				agent.gotHungry(xHome, yHome);
 			}
 			if (command == Command.GoToSeat){
-	//			agent.msgAnimationFinishedGoToSeat();
+				agent.msgAnimationFinishedGoToSeat();
 			}
 			else if (command == Command.GoToCashier) {
-	//			agent.msgAnimationFinishedGoToCashier();
+				agent.msgAnimationFinishedGoToCashier();
 			}
 			else if (command == Command.LeaveRestaurant) {
-	//			agent.msgAnimationFinishedLeaveRestaurant();
+				agent.msgAnimationFinishedLeaveRestaurant();
 				System.out.println("about to call gui.setCustomerEnabled(agent);");
 				isHungry = false;
-			//	gui.setCustomerEnabled(agent);
+//				gui.setCustomerEnabled(agent);
 			}
 			command = Command.noCommand;
 		}

@@ -17,6 +17,7 @@ import person.Role.RoleState;
 import restaurant.interfaces.Cook;
 import application.Phonebook;
 import application.gui.animation.agentGui.RestaurantCookGui;
+import application.gui.trace.AlertLog;
 
 /**
  * Restaurant Cook Role
@@ -187,6 +188,7 @@ public class CookRole extends Role implements Cook {
 	 * Actions
 	 */
 	private void cookOrder(final Order o) {
+		RestaurantCookGui cookGui = (RestaurantCookGui) gui;
 
 		if(!isInStock(o.choice)) {
 			checkInventory(o.choice);
@@ -196,21 +198,24 @@ public class CookRole extends Role implements Cook {
 		}
 
 
-		//		cookGui.DoGetIngredients();
-		//		try {
-		//			atDestination.acquire();
-		//		} catch (InterruptedException e) {
-		//			e.printStackTrace();
-		//
-		//		}
-		//		cookGui.DoGoToGrill();
-		//		try {
-		//			atDestination.acquire();
-		//		} catch (InterruptedException e) {
-		//			e.printStackTrace();
-		//
-		//		}
-		//		cookGui.DoGoToHomePosition();
+		System.err.print(cookGui);
+		//AlertLog.getInstance().logError(AlertLevel.ERROR, getName(), cookGui);
+		cookGui.DoGetIngredients();
+		try {
+			atDestination.acquire();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+
+		}
+		cookGui.DoGoToGrill();
+		try {
+			atDestination.acquire();
+			atDestination.acquire();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+
+		}
+		cookGui.DoGoToHomePosition();
 
 		foodMap.get(o.choice).quantity--;
 		checkInventory(o.choice);
@@ -236,26 +241,28 @@ public class CookRole extends Role implements Cook {
 	}
 
 	private void doneCooking(Order o) {
+		RestaurantCookGui cookGui = (RestaurantCookGui) gui;
 		print("Done cooking order for table " + o.tableNumber);
 
-		//		cookGui.DoPickUpFood();
-		//		try {
-		//			atDestination.acquire();
-		//		} catch (InterruptedException e) {
-		//			e.printStackTrace();
-		//
-		//		}
-		//
-		//		cookGui.DoGoToPlatingArea(o.choice);
-		//		try {
-		//			atDestination.acquire();
-		//		} catch (InterruptedException e) {
-		//			e.printStackTrace();
-		//
-		//		}
+		cookGui.DoPickUpFood();
+		try {
+			atDestination.acquire();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+
+		}
+
+		cookGui.DoGoToPlatingArea(o.choice);
+		try {
+			atDestination.acquire();
+			atDestination.acquire();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+
+		}
 		o.waiterRole.msgOrderIsReady(o.tableNumber, o.choice);
 		myOrders.remove(o);
-		//	cookGui.DoGoToHomePosition();
+		cookGui.DoGoToHomePosition();
 	}
 
 	public void checkInventory() {
