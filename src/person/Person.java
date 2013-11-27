@@ -89,7 +89,7 @@ public abstract class Person extends Agent{
 	//Actions
 	protected void eatAtHome() {
 		currentRoleName = "";
-		print("Going to eat at home");
+		//print("Going to eat at home");
 		hasFoodInFridge = false;
 	}
 

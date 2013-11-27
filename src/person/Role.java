@@ -92,7 +92,7 @@ public abstract class Role {
             //System.out.println(roleName + " " + getName() + " : " + msg);
             if (roleName.equals("Bank Customer") || roleName.equals("Bank Guard") 
                             || roleName.equals("Bank Teller") || roleName.equals("Loan Officer")
-                            || roleName.contains("BankTeller"))
+                            || roleName.contains("bankTeller"))
             {
             AlertLog.getInstance().logInfo(AlertTag.BANK, roleName + " " + getName(), msg);
 

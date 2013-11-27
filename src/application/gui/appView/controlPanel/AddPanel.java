@@ -51,7 +51,7 @@ public class AddPanel extends JPanel implements ActionListener {
 	boolean rave = false;
 
 
-	private String[] personType = {" ", "Deadbeat", "Worker", "Wealthy"};
+	private String[] personType = {" ", /*"Deadbeat", "Crook", */ "Worker", "Wealthy"};
 	private String[] jobLocation = {" ", "Restaurant", "Bank", "Market", "Housing"};
 	private String[] emptyList = {" "};
 	private String[] restaurantJobs = {" ", "Host", "Cook", "Cashier", "Waiter", "Alt Waiter"};
@@ -266,9 +266,18 @@ public class AddPanel extends JPanel implements ActionListener {
 				resultLabel.setText("Please fix fields.");
 				return;
 			}
-
-			if(allFieldsEntered())
+			//if( (jobStartTime < 25) && (jobLunchTime < 25) && (jobEndTime < 25) && (jobStartTime < jobEndTime) )
+			//{
+				
+			//}
+			
+			if(allFieldsEntered() && (jobStartTime < 25) && (jobLunchTime < 25)
+					&& (jobEndTime < 25) && (jobStartTime < jobEndTime))
 			{
+				jobStartTime = jobStartTime*100;
+				jobLunchTime = jobLunchTime*100;
+				jobEndTime = jobEndTime*100;
+				
 				app.addPerson(nameTextField.getText(), money, (String) socialClassBox.getSelectedItem(), 
 						(String) jobTypeBox.getSelectedItem(), (String) jobLocationBox.getSelectedItem(), 
 						jobStartTime, jobLunchTime, jobEndTime);
