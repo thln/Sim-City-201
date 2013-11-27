@@ -298,8 +298,7 @@ public class CookRole extends Role implements Cook {
 				foodMap.get(choice).amountOrdered = orderAmount;
 
 				print("Requesting " + Phonebook.getPhonebook().getMarket().getName() + " for " + orderAmount + " " + choice + "(s)");
-				//myMark.market.msgOutofItems(choice, orderAmount);
-				//CHEF AND MARKET
+				myMark.salesPersonRole.msgIWantProducts(Phonebook.getPhonebook().getRestaurant(), choice, orderAmount);
 			}
 		}
 	}
@@ -407,7 +406,7 @@ public class CookRole extends Role implements Cook {
 	public class Food {
 		String foodType;
 		int	cookTime;
-		int quantity = 10;
+		int quantity = 0;
 		int capacity = 10;
 		int threshold = 2;
 		int amountOrdered = 0;

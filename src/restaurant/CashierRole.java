@@ -141,7 +141,6 @@ public class CashierRole extends Role implements Cashier {
 
 	public void ComputeBill() {
 		double checkAmount = foodPrices.get(Checks.get(0).choice);
-		System.err.println(Checks.get(0).waiterRole);
 		Checks.get(0).waiterRole.msgHereIsCheck(Checks.get(0).tableNumber, checkAmount);
 		Checks.remove(0);
 	}
