@@ -55,6 +55,16 @@ public class WaiterRole extends Role implements Waiter {
 		print(customer.getCustomerName() + " was added to myCustomers list");
 		stateChanged();
 	}
+	
+	public void msgPleaseSeatTestCustomer(RestaurantCustomer customerTest)
+	{
+		if(test)
+		{
+			myCustomers.add(new myCustomer(customerTest));
+			print("Test Customer was added.");
+			stateChanged();
+		}
+	}
 
 	public void msgAtDestination() {//from animation
 		atDestination.release();// = true;
@@ -78,9 +88,22 @@ public class WaiterRole extends Role implements Waiter {
 	}
 
 	public void msgHeresMyOrder(RestaurantCustomer customer, String choice) {
+//		if(test)
+//		{
+//			for (myCustomer myCust : myCustomers) 
+//			{
+//				if (myCust.customer == customer) 
+//				{
+//					myCust.setChoice(choice);
+//					myCust.setOrdered();
+//					stateChanged();
+//				}
+//			}
+//		}
+		
 		for (myCustomer myCust : myCustomers) 
 		{
-			if (myCust.customer == customer) 
+			if (myCust.customer == customer || myCust.testCustomer == customer) 
 			{
 				myCust.setChoice(choice);
 				myCust.setOrdered();
