@@ -88,6 +88,36 @@ askForRent(Property p) {
 }
 </code></pre>
 
+#Mailbox
+
+### Data
+
+<pre><code>
+	private int paymentCash;
+	private int apartmentRentPrice = 50;
+</pre></code>
+
+### Actions
+
+<pre><code>
+//should I check how people pay rent? to keep them accountable?
+//note for v2
+dropRentMoney(int payment) {
+	paymentCash += payment;
+}
+	
+pickUpRentMoney(Wealthy landlord) {
+	if(landlord is an instance of Wealthy {
+		int withdraw = paymentCash;
+		paymentCash = 0;
+		return withdraw;
+	}
+	else{
+		return 0;
+	}
+}
+</code></pre>
+
 # Maintenance
 ### Data
 
@@ -151,6 +181,41 @@ resetHousingCheck() {
 	state = maintenanceState.Working;
 	for (Housing h : Phonebook.getPhonebook().getAllHousing(test)) {
 		h.state = housingState.CheckUpNeeded;
+	}
+}
+</code></pre>
+
+# HousingMaintenanceCompany
+### Data
+
+<pre><code>
+WatchTime openTime;
+WatchTime closeTime;
+Mailbox mailbox;
+</code></pre>
+### Actions
+
+<pre><code>
+arrivedAtWork(Person person, String title) {
+	if (title == "maintenance worker") {
+		//Setting previous maintenance worker role to inactive
+		if (maintenanceWorkerRole.person exists) {
+			Worker worker = (Worker) maintenanceWorkerRole.person;
+			worker.roleFinishedWork();
+		}
+		//Setting maintenance Worker role to new role
+		maintenanceWorkerRole.setPerson(person);
+		return maintenanceWorkerRole;
+	}
+	else {
+		return null;
+	}
+}
+	
+goingOffWork(Person person) {
+	Worker worker = (Worker) person;
+	if (worker.getWorkerRole().equals(maintenanceWorkerRole)) {
+			maintenanceWorkerRole = null;
 	}
 }
 </code></pre>
