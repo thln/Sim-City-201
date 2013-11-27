@@ -1,12 +1,15 @@
-# Requirements Summary
+# Vehicle Agent
+
+Note: To be implemented in v2 instead.
+
+## Requirements Summary
  + Driverless
  + Solarpowered(no gas)
  + Accidents are rare
  + Passengers
  + Underground Parking Structures in each building (assumption)
  + Group Leader is always the first passenger in the occupants array (assumption)
-
-# Vehicle Agent
+ 
 ### Data
 
 <pre><code>
@@ -14,8 +17,7 @@ int capacity
 String type
 ArrayList <Person> Occupants
 boolean full
-Map GPS
-int locationIndex //initialized to null
+int xDestination, yDestination;
 Double change
 Enum VehicleState(On, Off)
 Enum VehicleEvent(TurnOn, TurnOff)
@@ -34,8 +36,10 @@ for(Person p: group)
 if(private)
             	VehicleEvent = TurnOn
 
-msgTakeMeTo(int LocationIndex)
-this.LocationIndex = LocationIndex
+msgTakeMeTo(int x, int y) {
+	xDestination = x;
+	yDestination = y;
+}
 
 msgLeaving()
 Empty Occupants array
@@ -47,37 +51,44 @@ VehicleEvent = TurnOff
 ### Scheduler
 
 <pre><code>
-If(VehicleState == On)
-if(!occupants.isEmpty())
-If(LocationIndex.isNull())
-RequestDestination(occupants.get(0))
-
+If(VehicleState == On) {
+	if(!occupants.isEmpty()) {
+	If(LocationIndex.isNull())
+	RequestDestination(occupants.get(0))
+	}
+}
 else if (VehicleState == Off)
-Drive(LocationIndex)
-            Else If (VehicleState = Off)
-                            //still needs to be designed
+Drive(xDestination, yDestination);
 </code></pre> 
 
 ### Actions
 
 <pre><code>
-StartCar()
-           msgStartCar()
-RequestDestination(Person p)
-            p.msgWhereTo()
-Drive(int location)
-            Gui.goToLocation(location)
-StopCar()
-	msgStopCar()
+StartCar() {
+	msgStartCar();
+}
+RequestDestination(Person p) {
+     p.msgWhereTo();
+}
+Drive(int location) {
+    Gui.goToLocation(xDestination, yDestination);
+}
+StopCar() {
+	msgStopCar();
+}
 </code></pre>
 
 # Gui Design
 
 <pre><code>
-GoToLocation(int location)
+GoToLocation(int x, int y) {
+	//gui movements
+}
 </code></pre> 
 
 # Considerations                                         	
- + What happens when the vehicle is idle
+ + What happens when the vehicle is idle?
+ 	- The "business" of the car, bus, etc. closes for the day.
  + When can the vehicle be idle
+ 	- when driver goes off shift, or parked somewhere in a structure.
            

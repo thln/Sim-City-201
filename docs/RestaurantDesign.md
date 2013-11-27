@@ -19,7 +19,7 @@ List<myMarket> markets;
 List<Stock> stockFulfillment;
  
 class Order {
-        	WaiterAgent waiter;
+        	WaiterRole waiter;
         	int table
         	String choice;
         	enum orderStatus {Open, Cooking, Done};
@@ -47,11 +47,11 @@ class Stock {
         	String choice;
         	int quantity;
         	int orderedAmount;
-        	MarketAgent market;
+        	MarketRole market;
 }
         	
 class myMarket {
-        	MarketAgent market;
+        	MarketRole market;
         	Map<String, Boolean> availableChoices {
                     	availableChoices.put("Chicken", true); 
                     	availableChoices.put("Steak", true); 
@@ -68,11 +68,11 @@ msgHeresAnOrder(Order order) {
         	myOrders.add(order);
 }
  
-msgCantFulfill(String choice, int amount, int orderedAmount, MarketAgent market) {
+msgCantFulfill(String choice, int amount, int orderedAmount, MarketRole market) {
         	stockFulfillment.add(Stock(choice, amount, orderedAmount, market));
 }
  
-msgOrderFulfillment(String choice, int amount, int orderedAmount, MarketAgent market) {
+msgOrderFulfillment(String choice, int amount, int orderedAmount, MarketRole market) {
         	stockFulfillment.add(Stock(choice, amount, orderedAmount, market));
 }
 </code></pre>
@@ -175,21 +175,21 @@ List<myWaiter> waiters;
 List<Table> tables;
  
 class myWaiter {
-        	WaiterAgent waiter;
+        	WaiterRole waiter;
         	int totalCustomers;
         	bool askedToGoOnBreak;
         	bool onBreak;
-};
+}
  
 class Table {
-        	CustomerAgent occupiedBy;
+        	CustomerRole occupiedBy;
         	int tableNumber;      	
-};
+}
  
 class myCustomer {
-        	CustomerAgent customer;
+        	CustomerRole customer;
         	boolean informed = false;
-};
+}
 </code></pre>
 
 ### Messages
@@ -203,17 +203,17 @@ msgStaying(myCustomer cust) {
         	waitingCustomers.add(cust);
 }
  
-msgLeavingTable(CustomerAgent cust) {
+msgLeavingTable(CustomerRole cust) {
         	Table t = tables.find(cust);
         	t.setUnoccupied();
 }
  
-msgMayIGoOnBreak(WaiterAgent waiter) {
+msgMayIGoOnBreak(WaiterRole waiter) {
         	myWaiter MW = waiters.find(waiter);
         	MW.askedToGoOnBreak = true;
 }
  
-msgOffBreak(WaiterAgent waiter) {
+msgOffBreak(WaiterRole waiter) {
         	myWaiter MW = waiter.find(waiter);
         	MW.onBreak = false;
 }
@@ -256,7 +256,7 @@ informCustomerRestaurantFull(myCustomer MC) {
                     	MC.customer.msgTablesAreFull();
 }
  
-assignCustomer(CustomerAgent customer, Table table, WaiterAgent waiter) {
+assignCustomer(CustomerRole customer, Table table, WaiterRole waiter) {
         	waiter.msgPleaseSeatCustomer(table.tableNumber, customer);
         	myWaiter MW = waiters.find(waiter)
         	MW.totalCustomers++;
@@ -298,7 +298,7 @@ boolean PermissionToBreak = false;
 timer breakTimer;
  
 class myCustomer {
-        	CustomerAgent customer;
+        	CustomerRole customer;
         	int tableNumber;
         	String choice;
  
@@ -307,7 +307,7 @@ class myCustomer {
 }
  
 class Order {
-        	WaiterAgent waiter;
+        	WaiterRole waiter;
         	int table
         	String choice;
 };
@@ -325,16 +325,16 @@ class Menu {
 ### Messages
 
 <pre><code>
-msgPleaseSeatCustomer(int tableNumber, CustomerAgent customer) {
+msgPleaseSeatCustomer(int tableNumber, CustomerRole customer) {
         	myCustomers.add(myCustomer(customer, tableNumber));
 }
  
-msgReadyToOrder(CustomerAgent customer) {
+msgReadyToOrder(CustomerRole customer) {
         	myCustomer MC = myCustomers.find(customer);
         	MC.state = ReadyToOrder;
 }
  
-msgHeresMyOrder(CustomerAgent customer, String choice) {
+msgHeresMyOrder(CustomerRole customer, String choice) {
         	myCustomer MC = myCustomers.find(customer);
         	MC.setChoice(choice);
         	MC.state = Ordered;
@@ -349,12 +349,12 @@ msgOrderIsNotAvailable(Order order) {
         	MC.state = Reorder;
 }
  
-msgIWantMyCheck(CustomerAgent customer) {
+msgIWantMyCheck(CustomerRole customer) {
         	myCustomer MC = myCustomers.find(customer);
         	MC.state = WantCheck;
 }
  
-msgLeavingTable(CustomerAgent customer) {       	
+msgLeavingTable(CustomerRole customer) {       	
         	myCustomer MC = myCustomers.find(customer);
         	MC.state = Finished;
 }
@@ -507,7 +507,7 @@ List<myMarket> markets;
 List<Stock> stockFulfillment;
  
 class Order {
-        	WaiterAgent waiter;
+        	WaiterRole waiter;
         	int table
         	String choice;
  
@@ -536,11 +536,11 @@ class Stock {
         	String choice;
         	int quantity;
         	int orderedAmount;
-        	MarketAgent market;
+        	MarketRole market;
 }
         	
 class myMarket {
-        	MarketAgent market;
+        	MarketRole market;
         	Map<String, Boolean> availableChoices {
                     	availableChoices.put("Chicken", true);
                     	availableChoices.put("Steak", true);
@@ -557,11 +557,11 @@ msgHeresAnOrder(Order order) {
         	myOrders.add(order);
 }
  
-msgCantFulfill(String choice, int amount, int orderedAmount, MarketAgent market) {
+msgCantFulfill(String choice, int amount, int orderedAmount, MarketRole market) {
         	stockFulfillment.add(Stock(choice, amount, orderedAmount, market));
 }
  
-msgOrderFulfillment(String choice, int amount, int orderedAmount, MarketAgent market) {
+msgOrderFulfillment(String choice, int amount, int orderedAmount, MarketRole market) {
         	stockFulfillment.add(Stock(choice, amount, orderedAmount, market));
 }
 </code></pre>
@@ -672,24 +672,24 @@ Map<String, Double> foodPrices {
 class Check {
         	String choice;
         	int tableNumber;
-        	WaiterAgent waiter;
+        	WaiterRole waiter;
 }
  
 class Payment {
         	String choice;
         	double payment;
-        	CustomerAgent customer;
+        	CustomerRole customer;
 }
 </code></pre>
 
 ### Messages
 
 <pre><code>
-msgComputeBill(String choice, int tableNumber, WaiterAgent waiter) {
+msgComputeBill(String choice, int tableNumber, WaiterRole waiter) {
         	Checks.add(Check(choice, tableNumber, waiter));
 }
  
-msgPayment(String choice, double amount, CustomerAgent customer) {
+msgPayment(String choice, double amount, CustomerRole customer) {
         	Payments.add(Payment(choice, amount, customer));
 }
 </code></pre>
@@ -710,21 +710,71 @@ if there exists a Payment in Payments
 
 <pre><code>
 ComputeBill() {
-                    	double checkAmount = foodPrices.get(Checks.first().choice);
-                    	Checks.first().waiter.msgHereIsCheck(Checks.first().tableNumber, checkAmount);
-                    	Checks.removeFirst();
+    double checkAmount = foodPrices.get(Checks.first().choice);
+    Checks.first().waiter.msgHereIsCheck(Checks.first().tableNumber, checkAmount);
+    Checks.removeFirst();
 }
  
 GiveChange() {
-        	if (Payments.first().payment < foodPrices.get(Payments.first().choice)) {
-                    	Payments.first().customer.msgGoToJail();
-                    	Payments.removeFirst();
-                    	//Do not execute the rest of method
-        	}
+    if (Payments.first().payment < foodPrices.get(Payments.first().choice)) {
+        Payments.first().customer.msgGoToJail();
+        Payments.removeFirst();
+        //Do not execute the rest of method
+    }
                     	
-        	double change;
-        	change = Payments.first().payment - foodPrices.get(Payments.first().choice);
-        	Payments.first().customer.msgHeresYourChange(change);
-        	Payments.removeFirst();
+    double change;
+    change = Payments.first().payment - foodPrices.get(Payments.first().choice);
+    Payments.first().customer.msgHeresYourChange(change);
+    Payments.removeFirst();
 }
 </code></pre>
+
+#Revolving Stand
+
+### Data
+
+List<Order> AllOrders = Collections.synchronizedList(new ArrayList<Order>());
+
+### Actions
+
+newOrder(Order o) {
+	AllOrders.add(o);
+}
+
+takeOrder() {
+	Order o = AllOrders.get(0);
+	AllOrders.remove(0);
+	return o;
+}
+
+#Alt Waiter
+
+### Data
+
+String RoleName = "Alternative Waiter";
+Restaurant restaurant;
+
+### Messages
+/////
+### Scheduler
+/////
+### Actions
+placeOrder(myCustomer MC) {
+	isInLobby = false;
+	for (myCustomer myCust : myCustomers) {
+		if (myCust.customer == MC.customer) {
+			myCust.setWaitingForFood();
+		}
+	}
+	waiterGui.DoGoToKitchen();
+	try {
+		atDestination.acquire();
+	} 
+	catch (InterruptedException e) {
+		e.printStackTrace();
+	}
+	waiterGui.DoLeaveCustomer();
+
+	//cook.msgHeresAnOrder(MC.tableNumber, MC.choice, this);
+	restaurant.revolvingStand.newOrder(new Order(MC.tableNumber, MC.choice, this));
+	}
