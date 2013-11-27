@@ -99,7 +99,7 @@ public abstract class Role {
             }
             else if (roleName.equals("Maintenance Worker"))
             {
-            AlertLog.getInstance().logInfo(AlertTag.HOUSING, "Mouse", msg);
+            AlertLog.getInstance().logInfo(AlertTag.HOUSING, roleName + " " + getName(), msg);
 
             }
             else if (roleName.equals("Market Customer") || roleName.contains("MarketCustomer") || roleName.equals("Market Runner") 

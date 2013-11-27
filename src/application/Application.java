@@ -79,6 +79,7 @@ public class Application extends JPanel {
         Worker rest2j = new Worker("Jacob", 100, "waiter", "restaurant", 13, 600, 2);
         Worker rest2k = new Worker("Ken", 100, "altWaiter", "restaurant", 14, 600, 3);
         
+        Worker house1 = new Worker("Parker", 100, "maintenance worker","housing maintenance company", 13, 600, 3 );
 
 		//!!!!Important -- Need to initialize setters 
 		//ex. waiter.setHost, waiter.setCook, waiter.setHost, 
@@ -147,7 +148,9 @@ public class Application extends JPanel {
 		rest2j.setHome(allHousing.get(allHousing.size() - 1));
 		allHousing.add(new Housing(rest2k, allHousing.size(), "Apartment"));
 		rest2k.setHome(allHousing.get(allHousing.size() - 1));
-		
+
+		allHousing.add(new Housing(house1, allHousing.size(), "Apartment"));
+		house1.setHome(allHousing.get(allHousing.size() - 1));
 
 		
 		//Adding to Vector
@@ -174,6 +177,7 @@ public class Application extends JPanel {
 		getPopulation().add(rest2h);
 		getPopulation().add(rest2i);
 		getPopulation().add(rest2j);
+		getPopulation().add(house1);
 		population.add(rest2k);
 		
 		for(Person person : getPopulation()) {
@@ -208,6 +212,8 @@ public class Application extends JPanel {
 		rest2i.startThread();
 		rest2j.startThread();
 		rest2k.startThread();
+		
+		house1.startThread();
 		
 		updatePeopleTime();
 	}
