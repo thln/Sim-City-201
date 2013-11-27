@@ -46,6 +46,8 @@ public abstract class Person extends Agent{
 	public boolean hasFoodInFridge = false;
 	public enum HungerLevel {full, moderate, hungry, starving};
 	private HungerLevel hunger = HungerLevel.full;
+	int eatTime = 4;
+	protected Semaphore eating = new Semaphore(0, true);
 
 	//Bank Related
 	public double money;
@@ -64,7 +66,6 @@ public abstract class Person extends Agent{
 	//Time Related
 	public int sleepTime = 22;
 	protected Timer nextTask;
-	boolean upcomingTask;
 
 	Person(String name, double moneyz) {
 		this.name = name;
@@ -73,7 +74,6 @@ public abstract class Person extends Agent{
 		roles.add(new MarketCustomerRole(this, getName(), "Market Customer"));
 		roles.add(new RestaurantCustomerRole(this, getName(), "Restaurant Customer"));
 		nextTask = new Timer();
-		upcomingTask = false;
 		atDestination = new Semaphore(0,true);
 		setHunger(HungerLevel.full);
 		hasFoodInFridge = false;
@@ -89,8 +89,23 @@ public abstract class Person extends Agent{
 	//Actions
 	protected void eatAtHome() {
 		currentRoleName = "";
-		//print("Going to eat at home");
-		hasFoodInFridge = false;
+		int timeConversion = 60 * TimeManager.getSpeedOfTime();
+		print("Going to eat at home");
+		nextTask.schedule(new TimerTask() {
+			public void run() {  
+				eating.release();
+				hasFoodInFridge = false;  
+				print("Finished eating at home");
+				hunger = HungerLevel.full;
+			}
+		}, eatTime * timeConversion);
+		try {
+			eating.acquire();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		}
 	}
 
 	protected void prepareForBank () {
