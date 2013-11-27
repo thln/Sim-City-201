@@ -93,7 +93,7 @@ public class SalesPersonRole extends Role implements SalesPerson {
 		log.add(new LoggedEvent("Recieved msgPayment"));
 		market.money += payment;
 		for (MarketOrder o : orders) {
-			if (o.customer.equals(customer)) {
+			if (customer.equals(o.customer)) {
 				orders.remove(o);
 				return;
 			}
@@ -183,7 +183,9 @@ public class SalesPersonRole extends Role implements SalesPerson {
 		print("Opening market");
 		if (!orders.isEmpty()) {
 			for (MarketOrder o: orders) {
-				o.customer.msgComeIn();
+				if (o.customer != null) {
+					o.customer.msgComeIn();
+				}
 			}
 		}
 	}

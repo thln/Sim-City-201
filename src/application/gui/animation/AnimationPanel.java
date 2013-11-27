@@ -5,6 +5,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+
+import application.Phonebook;
 import application.gui.animation.agentGui.*;
 
 public class AnimationPanel extends JPanel implements MouseListener {
@@ -16,7 +18,7 @@ public class AnimationPanel extends JPanel implements MouseListener {
 	JPanel buildingPanels;
 	CardLayout cardLayout;
 	ArrayList<Building> buildings;
-	
+
 	//begin list of mechanisms for testing agent guis
 	JButton testbutton = new JButton("test");
 	JButton testbutton2 = new JButton("test2");
@@ -52,23 +54,24 @@ public class AnimationPanel extends JPanel implements MouseListener {
 		//Adding a blank building panel
 		BuildingPanel blank = new BuildingPanel("", this);
 		buildingPanels.add(blank, blank.getName());
-		
+
 		//Create the BuildingPanel for each Building object
 		buildings = cityPanel.getBuildings();
 		for ( int i=0; i<buildings.size(); i++ ) {
 			Building b = buildings.get(i);
 			BuildingPanel bp = new BuildingPanel(b.getName(), this );
 			b.setMyBuildingPanel(bp);
+			setBuildingInPhonebook(b);
 			buildingPanels.add(bp, bp.getName());
 
 			add(BorderLayout.NORTH, cityPanel);
 			add(BorderLayout.SOUTH, buildingPanels);
 		}
-		
+
 		/*
 		//UNCOMMENT THE FOLLOWING FOR TESTING ONLY!! re-comment to display final product
 		testGuis();
-		
+
 		//testing mechanisms
 		testbutton.addMouseListener(this);
     	testbutton.setSize(100, 50);
@@ -76,54 +79,60 @@ public class AnimationPanel extends JPanel implements MouseListener {
     	testbutton2.addMouseListener(this);
     	testbutton2.setBounds(100, 0, 100, 50);
     	cityPanel.add(testbutton2);
-    	*/
-    	//testGuisTwo();
+		 */
+		//testGuisTwo();
 	}
 
 	public void displayBuildingPanel(BuildingPanel bp) {
 		cardLayout.show(buildingPanels, bp.getName());
 	}
-	
+
 	public void displayBlankBuildingPanel() {
 		cardLayout.show(buildingPanels, "");
 	}
-	
+
+	public void setBuildingInPhonebook(Building building) {
+		if (building.getName().toLowerCase().contains("restaurant")) {
+			Phonebook.getPhonebook().getRestaurant().setBuildingPanel(building.myBuildingPanel);
+		}
+	}
+
 	public void testGuis() {
 		for(Building building : buildings) {
 			if(building.getName().toLowerCase().contains("market")) {
-			//	building.myBuildingPanel.addGui(market);
+				//	building.myBuildingPanel.addGui(market);
 				building.myBuildingPanel.addGui(new MarketCustomerGui());
 				building.myBuildingPanel.addGui(new MarketSalesPersonGui());
 				building.myBuildingPanel.addGui(new MarketRunnerGui());
 				building.myBuildingPanel.addGui(new MarketUPSmanGui());
 			}
 			if(building.getName().toLowerCase().contains("bank")) {
-			//	building.myBuildingPanel.addGui(bank);
+				//	building.myBuildingPanel.addGui(bank);
 				building.myBuildingPanel.addGui(new BankCustomerGui());
 				building.myBuildingPanel.addGui(new BankTellerGui());
 				building.myBuildingPanel.addGui(new BankLoanerGui());
 				building.myBuildingPanel.addGui(new BankGuardGui());
 			}
 			if(building.getName().toLowerCase().contains("house")) {
-			//	building.myBuildingPanel.addGui(house);
+				//	building.myBuildingPanel.addGui(house);
 				building.myBuildingPanel.addGui(new HouseRenterGui());
 				building.myBuildingPanel.addGui(new HouseMaintenanceGui());
 				building.myBuildingPanel.addGui(new HouseLandlordGui());
 			}
 			if(building.getName().toLowerCase().contains("restaurant")) {
-			//	building.myBuildingPanel.addGui(restaurant);
+				//	building.myBuildingPanel.addGui(restaurant);
 				building.myBuildingPanel.addGui(new RestaurantCustomerGui());
 				building.myBuildingPanel.addGui(new RestaurantCookGui());
 				building.myBuildingPanel.addGui(new RestaurantWaiterGui());
 			}
 		}
-		
+
 		cityPanel.addGui(car);
 		cityPanel.addGui(bus);
 		cityPanel.addGui(person);
-		
+
 	}
-	
+
 	public void testGuisTwo() {
 		ArrayList<Gui> guis = new ArrayList<Gui>();
 		guis.add(new MarketCustomerGui());
@@ -143,12 +152,12 @@ public class AnimationPanel extends JPanel implements MouseListener {
 		guis.add(new CarGui());
 		guis.add(new BusGui());
 		guis.add(new PersonGui());
-		
+
 		BuildingPanel marketPanel = null;
 		BuildingPanel bankPanel = null;
 		BuildingPanel housePanel = null;
 		BuildingPanel restaurantPanel = null;
-		
+
 		for(Building building : buildings) {
 			if(building.getName().toLowerCase().contains("market")) {
 				marketPanel = building.myBuildingPanel;
@@ -181,31 +190,7 @@ public class AnimationPanel extends JPanel implements MouseListener {
 			}
 		}
 	}
-	/*  OLD. Delete later?
-		here we have the main city view
-		cityPanel.setBounds(10, 20, WINDOWX, WINDOWY); //x & y positions in animation panel, x & y sizes
-		cityPanel.addMouseListener(this);
-		cityPanel.setVisible(true);
-		add(cityPanel);
-		
-		buildingView.setBounds(10, 400, WINDOWX, WINDOWY);
-		buildingView.setBackground(Color.CYAN);
-		buildingView.setVisible(true);
-		add(buildingView);
-		
-		stacking the building animations
-		buildingView.setLayout(cardLayout);
-		BuildingPanel blank = new BuildingPanel("name", this);
-		buildingView.add(blank, "blank");
-		
-		buildings = cityPanel.getBuildings();
-		for (int i=0; i<buildings.size(); i++) {
-			Building b = buildings.get(i);
-			BuildingPanel bp = new BuildingPanel(b.getName(), this);
-			b.setBuildingPanel(bp);
-			buildingView.add(bp, b.getName());
-		}
-*/
+
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
@@ -236,51 +221,14 @@ public class AnimationPanel extends JPanel implements MouseListener {
 	public String toString() {
 		return "Animation Panel";
 	}
-	
+
 	public ArrayList<Building> getBuildings() {
 		return buildings;
 	}
-	
+
 	public void addGui(Gui gui) {
-		BuildingPanel marketPanel = null;
-		BuildingPanel bankPanel = null;
-		BuildingPanel housePanel = null;
-		BuildingPanel restaurantPanel = null;
-		
-		for(Building building : buildings) {
-			if(building.getName().toLowerCase().contains("market")) {
-				marketPanel = building.myBuildingPanel;
-				marketPanel.addGui(gui);
-			}
-			if(building.getName().toLowerCase().contains("bank")) {
-				bankPanel = building.myBuildingPanel;
-				bankPanel.addGui(gui);
-			}
-			if(building.getName().toLowerCase().contains("house")) {
-				housePanel = building.myBuildingPanel;
-				housePanel.addGui(gui);
-			}
-			if(building.getName().toLowerCase().contains("restaurant")) {
-				restaurantPanel = building.myBuildingPanel;
-				restaurantPanel.addGui(gui);
-			}
-			
-		}
-		
-		if(gui instanceof CityGui) {
+		if (gui instanceof CityGui) {
 			cityPanel.addGui(gui);
-		}
-		if(gui instanceof BankGui) {
-			bankPanel.addGui(gui);
-		}
-		if(gui instanceof MarketGui) {
-			marketPanel.addGui(gui);
-		}
-		if(gui instanceof HouseGui) {
-			housePanel.addGui(gui);
-		}
-		if(gui instanceof RestaurantGui) {
-			restaurantPanel.addGui(gui);
 		}
 	}
 }

@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import application.Phonebook;
 import person.Person;
 import person.Role;
 import person.Worker;
@@ -147,16 +148,10 @@ public class HostRole extends Role {
 		}
 	}
 	
-	public void msgIAmLeavingWork(WaiterRole waiterRole)
-	{
-		for(myWaiter MW: waiters)
-		{
-			if(MW.waiterRole.equals(waiterRole))
-			{
-				MW = null;
-				waiters.remove(MW);
-
-				//stateChanged();
+	public void msgIAmLeavingWork(WaiterRole waiterRole) {
+		for(myWaiter MW: waiters) {
+			if (MW.waiterRole.equals(waiterRole)) {
+				MW.leaving = true;
 			}
 		}
 	}
@@ -211,6 +206,10 @@ public class HostRole extends Role {
 			{
 				for (myWaiter MW : waiters) 
 				{
+					if (MW.leaving == true) {
+						deleteWaiter(MW);
+					}
+					
 					if (MW.state == myWaiterState.askedToGoOnBreak)//MW.askedToGoOnBreak == true) 
 					{
 						replyToBreakRequest(MW);
@@ -329,7 +328,6 @@ public class HostRole extends Role {
 		stateChanged();
 	}
 
-
 	//utilities
 
 	/* GUI STUFF
@@ -410,6 +408,13 @@ public class HostRole extends Role {
 
 	}
 	
+	public void deleteWaiter(myWaiter MW) {
+		Phonebook.getPhonebook().getRestaurant().removeWaiter(MW.waiterRole);
+		MW = null;
+		waiters.remove(MW);
+	}
+	
+	
 	public enum myWaiterState {Working, askedToGoOnBreak, onBreak, LeavingSoon};
 
 	public class myWaiter {
@@ -418,6 +423,7 @@ public class HostRole extends Role {
 		//boolean askedToGoOnBreak = false;
 		//boolean onBreak = false;
 		myWaiterState state = myWaiterState.Working;
+		boolean leaving = false;
 		
 
 		myWaiter(WaiterRole waiterRole) {
@@ -430,6 +436,7 @@ public class HostRole extends Role {
 		RestaurantCustomerRole customer;
 		int xHome;
 		int yHome;
+		boolean leaving = false;
 		
 		myCustomer(RestaurantCustomerRole customer, int xHome, int yHome) {
 			this.customer = customer;

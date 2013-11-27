@@ -28,9 +28,8 @@ public class RestaurantWaiterGui extends RestaurantGui {
 	public RestaurantWaiterGui() {
 	}
 	
-	public RestaurantWaiterGui(WaiterRole agent/*, RestaurantGui gui*/) {
+	public RestaurantWaiterGui(WaiterRole agent) {
 		this.agent = agent;
-		//this.gui = gui;
 	}
 
 	public void updatePosition() {
@@ -51,13 +50,13 @@ public class RestaurantWaiterGui extends RestaurantGui {
 			}
 
 			if (xPos != xHome && yPos != yHome) {
-	//			agent.msgAtDestination();
+				agent.msgAtDestination();
 				deliveringOrder = false;
 			}
 		}
 
 		if (xPos == xHome && yPos == yHome) {
-	//		agent.msgIsInLobby();
+			agent.msgIsInLobby();
 			//if (agent.isOnBreak()) {
 		//		denyBreak();
 		//	}

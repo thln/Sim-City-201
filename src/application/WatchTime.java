@@ -21,4 +21,8 @@ public class WatchTime {
 			this.hour = hour;
 			this.minutes = minutes;
 		}
+		
+		public int getTimeHour(){
+			return this.hour;
+		}
 }

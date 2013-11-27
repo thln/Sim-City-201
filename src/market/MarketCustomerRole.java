@@ -41,7 +41,6 @@ public class MarketCustomerRole extends Role implements MarketCustomer {
 		this.item = item;
 		this.itemAmount = itemAmount;
 		bill = orderCost;
-		System.err.print(bill);
 		log.add(new LoggedEvent("Recieved msgHereAreYourThings"));
 		stateChanged();
 	}

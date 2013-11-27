@@ -11,6 +11,10 @@ import person.*;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.*;
 import java.util.List;
 
@@ -38,6 +42,7 @@ public class ApplicationGui extends JFrame {
 	//final static int AnimPanelY = WINDOWY; //Animation View Panel Height 600	
 
 	ApplicationGui() {
+		
 		app = new Application(animPanel);
 		appPanel = new ApplicationPanel(this, app);
 		setBounds(0,0, WINDOWX, WINDOWY);
@@ -57,6 +62,34 @@ public class ApplicationGui extends JFrame {
 
 
 	public static void main(String[] args) {
+		/*Properties props = new Properties();
+		
+		try {
+		    FileInputStream in = new FileInputStream("propFile.properties");
+		    props.load(in);
+		    in.close();
+		} catch(IOException e) {
+			e.printStackTrace();
+		} catch(IllegalArgumentException iae) {
+			  iae.printStackTrace();
+		}*/
+		/*
+		Scanner in;
+		
+		try
+		{
+			in = new Scanner(new File("docs/input.txt"));
+			while(in.hasNext())
+			{
+				System.out.println(in.next());
+			}
+		}
+		catch (FileNotFoundException e)
+		{
+			System.err.println("File not found. Retry.");
+		}*/
+		
+		
 		ApplicationGui gui = new ApplicationGui();
 		gui.setTitle("SimCity 201 - Team 20");
 		gui.setVisible(true);

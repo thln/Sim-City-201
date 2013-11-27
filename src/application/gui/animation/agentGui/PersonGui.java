@@ -7,7 +7,7 @@ import java.util.Random;
 
 import javax.swing.JLabel;
 
-public class PersonGui extends CityGui{
+public class PersonGui extends CityGui {
 
 	private Person agent = null;
 	private boolean isHungry = false;
@@ -59,7 +59,7 @@ public class PersonGui extends CityGui{
 		setDefaultColor();
 	}
 
-	public PersonGui(Person p/*, RestaurantGui gui*/){ //HostAgent m) {
+	public PersonGui(Person p) {
 		this.agent = p;
 		if(p instanceof Worker) {
 			setxPos(0);

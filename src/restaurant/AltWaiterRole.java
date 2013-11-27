@@ -14,10 +14,17 @@ public class AltWaiterRole extends WaiterRole implements Waiter {
 
 	protected void placeOrder(myCustomer MC) {
 		isInLobby = false;
-		print("Placing " + MC.customer.getCustomerName() + "'s order");
-
+		if(test)
+		{
+			print("Test Customer");
+		}
+		else
+		{
+			print("Placing " + MC.customer.getCustomerName() + "'s order");
+		}
+		
 		for (myCustomer myCust : myCustomers) {
-			if (myCust.customer == MC.customer) 
+			if (myCust.customer == MC.customer || myCust.testCustomer == MC.customer ) 
 			{
 				myCust.setWaitingForFood();
 			}
@@ -36,6 +43,7 @@ public class AltWaiterRole extends WaiterRole implements Waiter {
 //		waiterGui.DoLeaveCustomer();
 
 		//cook.msgHeresAnOrder(MC.tableNumber, MC.choice, this);
+		print("Placing order on Revolving Stand.");
 		Phonebook.getPhonebook().getRestaurant().getRevolvingStand().newOrder(new Order(MC.tableNumber, MC.choice, this));
 	}
 

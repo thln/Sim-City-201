@@ -17,6 +17,7 @@ import person.Role.RoleState;
 import restaurant.interfaces.Cook;
 import application.Phonebook;
 import application.gui.animation.agentGui.RestaurantCookGui;
+import application.gui.trace.AlertLog;
 
 /**
  * Restaurant Cook Role
@@ -116,7 +117,7 @@ public class CookRole extends Role implements Cook {
 	/**
 	 * Scheduler
 	 */
-	protected boolean pickAndExecuteAnAction() 
+	public boolean pickAndExecuteAnAction() 
 	{
 		/* Think of this next rule as:
             Does there exist a table and customer,
@@ -134,7 +135,7 @@ public class CookRole extends Role implements Cook {
 
 
 		if(!Phonebook.getPhonebook().getRestaurant().getRevolvingStand().isStandEmpty()) {
-			myOrders.add(Phonebook.getPhonebook().getRestaurant().getRevolvingStand().takeOrder());
+			takeRevolvingStandOrder();
 			return true;
 		}
 
@@ -186,7 +187,14 @@ public class CookRole extends Role implements Cook {
 	/**
 	 * Actions
 	 */
+	private void takeRevolvingStandOrder()
+	{
+		print("Taking order from Revolving Stand.");
+		myOrders.add(Phonebook.getPhonebook().getRestaurant().getRevolvingStand().takeOrder());
+	}
+	
 	private void cookOrder(final Order o) {
+		RestaurantCookGui cookGui = (RestaurantCookGui) gui;
 
 		if(!isInStock(o.choice)) {
 			checkInventory(o.choice);
@@ -195,22 +203,22 @@ public class CookRole extends Role implements Cook {
 			return;
 		}
 
+		cookGui.DoGetIngredients();
+		try {
+			atDestination.acquire();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 
-		//		cookGui.DoGetIngredients();
-		//		try {
-		//			atDestination.acquire();
-		//		} catch (InterruptedException e) {
-		//			e.printStackTrace();
-		//
-		//		}
-		//		cookGui.DoGoToGrill();
-		//		try {
-		//			atDestination.acquire();
-		//		} catch (InterruptedException e) {
-		//			e.printStackTrace();
-		//
-		//		}
-		//		cookGui.DoGoToHomePosition();
+		}
+		cookGui.DoGoToGrill();
+		try {
+			atDestination.acquire();
+			atDestination.acquire();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+
+		}
+		cookGui.DoGoToHomePosition();
 
 		foodMap.get(o.choice).quantity--;
 		checkInventory(o.choice);
@@ -236,26 +244,28 @@ public class CookRole extends Role implements Cook {
 	}
 
 	private void doneCooking(Order o) {
+		RestaurantCookGui cookGui = (RestaurantCookGui) gui;
 		print("Done cooking order for table " + o.tableNumber);
 
-		//		cookGui.DoPickUpFood();
-		//		try {
-		//			atDestination.acquire();
-		//		} catch (InterruptedException e) {
-		//			e.printStackTrace();
-		//
-		//		}
-		//
-		//		cookGui.DoGoToPlatingArea(o.choice);
-		//		try {
-		//			atDestination.acquire();
-		//		} catch (InterruptedException e) {
-		//			e.printStackTrace();
-		//
-		//		}
+		cookGui.DoPickUpFood();
+		try {
+			atDestination.acquire();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+
+		}
+
+		cookGui.DoGoToPlatingArea(o.choice);
+		try {
+			atDestination.acquire();
+			atDestination.acquire();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+
+		}
 		o.waiterRole.msgOrderIsReady(o.tableNumber, o.choice);
 		myOrders.remove(o);
-		//	cookGui.DoGoToHomePosition();
+		cookGui.DoGoToHomePosition();
 	}
 
 	public void checkInventory() {
@@ -294,8 +304,7 @@ public class CookRole extends Role implements Cook {
 				foodMap.get(choice).amountOrdered = orderAmount;
 
 				print("Requesting " + Phonebook.getPhonebook().getMarket().getName() + " for " + orderAmount + " " + choice + "(s)");
-				//myMark.market.msgOutofItems(choice, orderAmount);
-				//CHEF AND MARKET
+				myMark.salesPersonRole.msgIWantProducts(Phonebook.getPhonebook().getRestaurant(), choice, orderAmount);
 			}
 		}
 	}
@@ -403,7 +412,7 @@ public class CookRole extends Role implements Cook {
 	public class Food {
 		String foodType;
 		int	cookTime;
-		int quantity = 10;
+		int quantity = 0;
 		int capacity = 10;
 		int threshold = 2;
 		int amountOrdered = 0;

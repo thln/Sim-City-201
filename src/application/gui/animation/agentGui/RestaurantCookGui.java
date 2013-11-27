@@ -78,7 +78,7 @@ public class RestaurantCookGui extends RestaurantGui {
 					state = CookState.nothing;
 				}
 				
-		//		agent.msgAtDestination();
+				agent.msgAtDestination();
 			}
 		}
 	}
