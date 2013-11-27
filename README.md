@@ -133,7 +133,7 @@ team20
 
 ###Unimplemented/Not Working (V1)
   + There is currently no busing system/roads/cars. Everyone walks.
-  + Apartment GUI not finished
+  + Apartment/Housing Related GUI not finished
   + Only Kristi's restaurant has been integrated
   + Integrated but unimplemented GUI for Bank & Market
   + Crooks/Deadbeats/Non Norm's  
