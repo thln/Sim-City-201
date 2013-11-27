@@ -88,39 +88,134 @@ askForRent(Property p) {
 }
 </code></pre>
 
+#Mailbox
+
+### Data
+
+<pre><code>
+	private int paymentCash;
+	private int apartmentRentPrice = 50;
+</pre></code>
+
+### Actions
+
+<pre><code>
+//should I check how people pay rent? to keep them accountable?
+//note for v2
+dropRentMoney(int payment) {
+	paymentCash += payment;
+}
+	
+pickUpRentMoney(Wealthy landlord) {
+	if(landlord is an instance of Wealthy {
+		int withdraw = paymentCash;
+		paymentCash = 0;
+		return withdraw;
+	}
+	else{
+		return 0;
+	}
+}
+</code></pre>
+
 # Maintenance
 ### Data
 
 <pre><code>
-Class WorkOrder {
-int HomeNumber;
-WorkOrder(int n) {
-	HomeNumber = n:
-} 
-}
-List <WorkOrder> WorkOrders;
+String name;
+Timer FixingTimer;
+enum maintenanceState {Working, CheckingHouse, RefreshList};
+maintenanceState state = maintenanceState.Working;
 </code></pre>
 
 ### Messages
 
 <pre><code>
-msgPleaseFixHome (int HomeNumber) {
-	WorkOrder.add(new WorkOrder(HomeNumber));
+msgNeedMaintenance(Housing houseNeedMain) {
+	for (Housing h : Phonebook.getPhonebook().getAllHousing(test)) {
+		if (h == houseNeedMain) 
+			h.state = housingState.UrgentWorkOrder;
+	}
+}
+
+msgRefreshHousingList() {
+	if(!Phonebook.getPhonebook().getAllHousing(test).isEmpty()) {
+		state = maintenanceState.RefreshList;
+	}
 }
 </code></pre>
 
 ### Scheduler
 
 <pre><code>
-If (∃ WorkOrder ∈ WorkOrders)
-	actFixHome(WorkOrder);
+If(state == maintenanceState.RefreshList)
+	resetHousingCheck();
+If((state == maintenanceState.Working)
+	for (Housing h : Phonebook.getPhonebook().getAllHousing(test)) {
+	if (h.state == housingState.UrgentWorkOrder)
+		checkHousing(h);
+	}
+	for (Housing h : Phonebook.getPhonebook().getAllHousing(test)) {
+	if (h.state == housingState.CheckUpNeeded)
+		checkHousing(h);
+	}
+	resetHousingCheck();				
+}
 </code></pre>
 
 ### Actions
 
 <pre><code>
-actFixHome(WorkOrder wh) {
-	WorkOrders.remove(wh);
-	//Fix Grill, Sink, Table, etc Gui stuff
+checkHousing(final Housing h) {
+	state = maintenanceState.CheckingHouse;
+	h.state = housingState.Checking;
+	FixingTimer.schedule(new TimerTask() {
+		run() {
+		state = maintenanceState.Working;
+		h.state = housingState.RecentlyChecked;stateChanged();
+		}
+	}, 2000);
+}
+
+resetHousingCheck() {
+	state = maintenanceState.Working;
+	for (Housing h : Phonebook.getPhonebook().getAllHousing(test)) {
+		h.state = housingState.CheckUpNeeded;
+	}
+}
+</code></pre>
+
+# HousingMaintenanceCompany
+### Data
+
+<pre><code>
+WatchTime openTime;
+WatchTime closeTime;
+Mailbox mailbox;
+</code></pre>
+### Actions
+
+<pre><code>
+arrivedAtWork(Person person, String title) {
+	if (title == "maintenance worker") {
+		//Setting previous maintenance worker role to inactive
+		if (maintenanceWorkerRole.person exists) {
+			Worker worker = (Worker) maintenanceWorkerRole.person;
+			worker.roleFinishedWork();
+		}
+		//Setting maintenance Worker role to new role
+		maintenanceWorkerRole.setPerson(person);
+		return maintenanceWorkerRole;
+	}
+	else {
+		return null;
+	}
+}
+	
+goingOffWork(Person person) {
+	Worker worker = (Worker) person;
+	if (worker.getWorkerRole().equals(maintenanceWorkerRole)) {
+			maintenanceWorkerRole = null;
+	}
 }
 </code></pre>

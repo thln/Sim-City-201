@@ -1,77 +1,111 @@
-![Market Customer(person) Diagram](https://raw.github.com/usc-csci201-fall2013/team20/014aeaa5a00d787532f65047f6429105c3027724/docs/InteractionDiagrams/MarketCustPerson.png?token=3290221__eyJzY29wZSI6IlJhd0Jsb2I6dXNjLWNzY2kyMDEtZmFsbDIwMTMvdGVhbTIwLzAxNGFlYWE1YTAwZDc4NzUzMmY2NTA0N2Y2NDI5MTA1YzMwMjc3MjQvZG9jcy9JbnRlcmFjdGlvbkRpYWdyYW1zL01hcmtldEN1c3RQZXJzb24ucG5nIiwiZXhwaXJlcyI6MTM4NjEwMjY2NH0%3D--c5b149bc6d278b9f601840bf6ec2d590391242e0)
+![Market Customer(person) Diagram](https://raw.github.com/usc-csci201-fall2013/team20/master/docs/InteractionDiagrams/MarketCustPerson.png?token=3290221__eyJzY29wZSI6IlJhd0Jsb2I6dXNjLWNzY2kyMDEtZmFsbDIwMTMvdGVhbTIwL21hc3Rlci9kb2NzL0ludGVyYWN0aW9uRGlhZ3JhbXMvTWFya2V0Q3VzdFBlcnNvbi5wbmciLCJleHBpcmVzIjoxMzg2MTAzMzkwfQ%3D%3D--f15bdb756f4801e59ea775a0277245db5b770cf1)
 ![Market Customer(restaurant) Diagram](https://raw.github.com/usc-csci201-fall2013/team20/014aeaa5a00d787532f65047f6429105c3027724/docs/InteractionDiagrams/MarketCustRest.png?token=3290221__eyJzY29wZSI6IlJhd0Jsb2I6dXNjLWNzY2kyMDEtZmFsbDIwMTMvdGVhbTIwLzAxNGFlYWE1YTAwZDc4NzUzMmY2NTA0N2Y2NDI5MTA1YzMwMjc3MjQvZG9jcy9JbnRlcmFjdGlvbkRpYWdyYW1zL01hcmtldEN1c3RSZXN0LnBuZyIsImV4cGlyZXMiOjEzODYxMDI2ODh9--73991b7d8d4ff8cea009b037dba90c3286519007)
 
 # Sales Person
 ### Data
 
 <pre><code>
-List <Order> orders;
+String roleName = "Sales Person";
+	String name;
+	Market market;
+List <MarketOrder> orders;
 double money;
 
-class Order {
-	Order(Customer customer, HashMap <String, Integer> items) {
-		this.customer = customer;
-		this.items = items;
-		
-if (customer is an instance of MarketCustomer)
-custType = marketCustomer;
-else
-	custType = business;
-	}
+public class MarketOrder {
 
-Order(Customer customer, HashMap <String, Integer> items, point location) {
-		this.customer = customer;
-		this.items = items;
-		this.location = location;
-		
-if (customer is an instance of MarketCustomer)
-custType = marketCustomer;
-else
-	custType = business;
-	}
-
-	Customer customer;
-	enum CustomerType {marketCustomer, business}
-	CustomerType custType;
-	HashMap <String, Integer> items;
+	enum orderState {open, processing, itemsFound, itemsDelivered, gaveToCustomer};
+	MarketCustomer customer
+	Restaurant restaurant;
+	String item;
+	int itemAmountOrdered;
+	int itemAmountFulfilled;
 	double orderCost;
-	enum orderState {open, processing, itemsFound, gaveToCustomer}
-	orderState state.open;
-	point location;
+	public orderState state = orderState.open;
+
+	public MarketOrder(MarketCustomer customer1, String item, int itemAmountOrdered) {
+		this.customer = customer1;
+		this.item = item;
+		this.itemAmountOrdered = itemAmountOrdered;
+	}
+
+	public MarketOrder(Restaurant restaurant, String item, int itemAmountOrdered) {
+		this.restaurant = restaurant;
+		this.item = item;
+		this.itemAmountOrdered = itemAmountOrdered;
+	}
+
 }
 </code></pre>
 
 ### Messages
 
 <pre><code>
-msgIWantProducts(MarketCustomer customer, HashMap <String, Integer> items) {
-	orders.add(new Order(customer, items);
+
+msgIWantProducts(MarketCustomer customer, String item, int numWanted) {
+	orders.add(new MarketOrder(customer, item, numWanted));
 }
 
-msgIWantProducts(Business customer, HashMap <String, Integer> items, point location, double payment) {
-	orders.add(new Order(customer, items, location);
-	money += payment;
+msgIWantProducts(Restaurant restaurant, String item, int numWanted) {
+	orders.add(new MarketOrder(restaurant, item, numWanted));
+	stateChanged();
 }
+
+msgOrderFulfilled(MarketOrder o) {
+
+	for (MarketOrder MO : orders) {
+		if(MO = o)
+			MO.state = orderState.itemsFound;
+	}
+}
+
+
+msgOrderDelivered(MarketOrder o) {
+	for (MarketOrder MO : orders) {
+		if (MO = o)
+			MO.state = orderState.itemsDelivered;
+		}
+	}
+}
+
 
 msgPayment(MarketCustomer customer, double payment) {
-	money += payment;
-	Order o = orders.findOrderWith(customer);
-	orders.remove(o);
+	market.money += payment;
+	for (MarketOrder o : orders) {
+		if (o.customer.equals(customer)) {
+			orders.remove(o);
+		}
+	}
 }
+
+
+msgPayment(Restaurant restaurant, double payment) {
+	market.money += payment;
+	for (MarketOrder o : orders) {
+		if (o.restaurant = restaurant) {
+			orders.remove(o);
+		}
+	}
+}
+
 </code></pre>
 
 ### Scheduler
 
 <pre><code>
-if there exists an Order o in orders &&
-o.state == open;
-	then
-		findItems(o);
+If (∃ MarketOrder ∈  orders | o.state = open)
+	findItems(o);
 
-if there exists an Order o in orders &&
-o.state == itemsFound;
-	then
-		giveCustomerItems(o);
+If (∃ MarketOrder ∈  orders | o.state = itemsFound)
+	giveCustomerItems(o);
+		
+If (∃ MarketOrder ∈  orders | o.state = itemsDelivered)
+	askForPayment(o);
+
+if (leaveRole){
+	((Worker) person).roleFinishedWork();
+	leaveRole = false;
+	return true;
+}
 </code></pre>
 
 ### Actions
@@ -79,13 +113,32 @@ o.state == itemsFound;
 <pre><code>
 findItems(Order o) {
 	o.state = orderState.pending;
-	marketRunner.msgHeresAnOrder(o);
+	if (market.inventory.get(o.item).amount  d= 0) {
+		o.restaurant.getCook(test).msgCantFulfill(o.item, 0, o.itemAmountOrdered);
+		orders.remove(o);
+	}
+	market.marketRunner.msgHeresAnOrder(o);
 }
 
 giveCustomerItems(Order o) {
 	o.state = orderState.gaveToCustomer;
-	calculateOrderCost(o);
-	o.customer.msgHereAreYourThings(o.items, o.orderCost);
+	o.orderCost = market.inventory.get(o.item).price  * o.itemAmountFulfilled;
+	o.customer.msgHereAreYourThings(o.item, o.itemAmountFulfilled, o.orderCost);
+}
+
+askForPayment(MarketOrder o) {
+		o.state = orderState.gaveToCustomer;
+		print("Asking for payment from the restaurant");
+		o.restaurant.getCashier(true).msgPleasePayForItems(o.item, o.itemAmountFulfilled, o.orderCost, this);
+		stateChanged();
+	}
+
+msgMarketOpen() {
+If (∃ MarketOrder ∈  orders) {
+		for (MarketOrder o: orders) {
+			o.customer.msgComeIn();
+		}
+	}
 }
 </code></pre>
 
@@ -93,8 +146,9 @@ giveCustomerItems(Order o) {
 ### Data
 
 <pre><code>
-List <Order> orders;
-HashMap <String, Integer> inventory;
+List <MarketOrder> orders;
+String name;
+Market market;
 </code></pre>
 
 ### Messages
@@ -108,25 +162,38 @@ msgHeresAnOrder(Order o) {
 ### Scheduler
 
 <pre><code>
-if there exists an Order o in order
-	then
+If (∃ MarketOrder ∈  orders)
 		processOrder(o);
+		
+If (leaveRole){
+	((Worker) person).roleFinishedWork();
+	leaveRole = false;
+		return true;
+}
 </code></pre>
 
 ### Actions
 
 <pre><code>
 processOrder(Order o) {
-	if (o.customerType is an instance of customer) {
-		decreaseInventoryBy(o.items);
-                salesPerson.msgOrderFulfilled(o);
+
+	if (o.customer != null) {
+		decreaseInventoryBy(o.item, o.itemAmountOrdered);
+		o.itemAmountFulfilled = o.itemAmountOrdered;
+		market.salesPerson.msgOrderFulfilled(o);
 		orders.remove(o);
 	}
 	else { //o.customerType is an instance of business
-		decreaseInventoryBy(o.items);
-                UPSman.msgDeliverOrder(o);
+		decreaseInventoryBy(o.item, o.itemAmountOrdered);
+		o.itemAmountFulfilled = o.itemAmountOrdered;
+		market.UPSman.msgDeliverOrder(o);
 		orders.remove(o);
 	}
+}
+
+decreaseInventoryBy(String item, int amount) {
+	int newAmount = market.inventory.get(item).amount - amount;
+	market.inventory.get(item).setInventory(newAmount);
 }
 </code></pre>
 
@@ -134,13 +201,16 @@ processOrder(Order o) {
 ### Data
 
 <pre><code>
-List <Order> orders;
+List <MarketOrder> orders;
+String roleName = "UPS man";
+String name;
+Market market;
 </code></pre>
 
 ### Messages
 
 <pre><code>
-msgDeliverOrder(Order o) {
+msgDeliverOrder(MarketOrder o) {
 	orders.add(o);
 }
 </code></pre>
@@ -148,17 +218,23 @@ msgDeliverOrder(Order o) {
 ### Scheduler
 
 <pre><code>
-if there exists an Order o in orders
-	then
-		deliverOrder(o);
+If (∃ MarketOrder ∈  orders)
+	deliverOrder(o);
+	
+If (leaveRole){
+	((Worker) person).roleFinishedWork();
+	leaveRole = false;
+	return true;
+}
 </code></pre>
 
 ### Actions
 
 <pre><code>
-deliverOrder(Order o) {
-	o.customer.HereIsOrder(o);
-	order.remove(o);
+deliverOrder(MarketOrder o) {
+	o.restaurant.cook.msgOrderFullfillment(o.item, o.itemAmountFulfilled, o.itemAmountOrdered);
+	o.salesPerson.msgOrderDelivered(o)
+	orders.remove(o);
 }
 </code></pre>
 
@@ -166,36 +242,82 @@ deliverOrder(Order o) {
 ### Data
 
 <pre><code>
-boolean recivedItems = false;
-double money;
+String roleName = "Market Customer";
+String item;
 double bill;
-HashMap <String, Integer> inventory;
+String name;
+
+enum MarketCustomerState {atMarket, waitingForOrders, recievedOrders, payed, disputingBill, waitingToOpen}
+MarketCustomerState state = MarketCustomerState.atMarket;
 </code></pre>
 
 ### Messages
 
 <pre><code>
-msgHereAreYouThings(HashMap<String, Integer> items, double orderCost) {
-	inventory.add(items);
-	recievedItems = true;
-	bill = orderCost;
+msgComeIn() {
+	state = MarketCustomerState.atMarket;
 }
+
+msgHereAreYourThings(String item, int itemAmount, double orderCost) {
+	state = MarketCustomerState.recievedOrders;
+	this.item = item;
+	this.itemAmount = itemAmount;
+	bill = orderCost;
+	}
 </code></pre>
 
 ### Scheduler
 
 <pre><code>
-if recievedItems = true;
-	then
-		payBill();
+if (state = MarketCustomerState.atMarket)
+	msgSalesPerson();
+if (state = MarketCustomerState.recievedOrders)
+	payBill();
+if (state = MarketCustomerState.payed)
+	exitMarket();
 </code></pre>
 
 ### Actions
 
 <pre><code>
+msgSalesPerson() {
+	if(!Phonebook.getPhonebook().getMarket().isOpen()) {
+		state = MarketCustomerState.waitingToOpen;
+		return;
+	}
+
+	if (item = "Car") {
+		market.salesPersonRole.msgIWantProducts(this, "Car", 1);
+		state = MarketCustomerState.waitingForOrders;
+		return;
+	}
+	item = chooseMarketItem();
+		market.salesPersonRole.msgIWantProducts(this, item, 3);
+		state = MarketCustomerState.waitingForOrders;
+}
+
+String chooseMarketItem() {
+	Random rand;
+	int myRandomChoice;
+	String item;
+	do {
+		myRandomChoice = rand.nextInt(10);
+		myRandomChoice %= 7;
+	} while (!Phonebook.getPhonebook().getMarket().marketItemsForSale.containsKey(myRandomChoice) || (person.money < Phonebook.getPhonebook().getMarket().marketItemsForSale.get(myRandomChoice).price));
+		item = Phonebook.getPhonebook().getMarket().marketItemsForSale.get(myRandomChoice).itemName;
+		return item;
+}
+
 payBill(){
-	salesPerson.msgPayment(this, bill);
-	money -= bill;
-	recievedItems = false;
+	if (bill = market.inventory.get(item).price * itemAmount) {
+		market.getSalesPerson(test).msgPayment(this, bill);
+		person.money -= bill;
+		state = MarketCustomerState.payed;
+	}
+	else {
+		//message market that bill was wrong
+		//for now leaving market
+		exitMarket();
+	}
 }
 </code></pre>
