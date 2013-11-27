@@ -64,6 +64,14 @@ public class ListPanel extends JPanel implements ActionListener{
 		
 		infoPane = new JPanel();
 		infoPane.setLayout(new GridLayout(0,1));
+		infoName.setVisible(false);
+		infoType.setVisible(false);
+		infoMoney.setVisible(false);
+		infoJobLoc.setVisible(false);
+		infoJobTitle.setVisible(false);
+		infoStartTime.setVisible(false);
+		infoLunchTime.setVisible(false);
+		infoEndTime.setVisible(false);
 		infoPane.add(infoName);
 		infoPane.add(infoType);
 		infoPane.add(infoMoney);
@@ -119,6 +127,9 @@ public class ListPanel extends JPanel implements ActionListener{
 	
 	public void updateInfoPane(Profile pf, int index){ //updates person info on the right side 
 		if(pf != null){
+			infoName.setVisible(true);
+			infoType.setVisible(true);
+			infoMoney.setVisible(true);
 			infoName.setText("Name: " + pf.getName());
 			infoType.setText("Type: " + pf.getType());
 			infoMoney.setText("Money: " + pf.getMoney());
