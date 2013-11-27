@@ -100,13 +100,13 @@ public class ListPanel extends JPanel implements ActionListener{
 		}
 	}
 	
-	public void updateInfoPane(Profile pf, int index){
+	public void updateInfoPane(Profile pf, int index){ //updates person info on the right side 
 		if(pf != null){
 			personInfoArea.setText("Name: " + pf.getName() +"\nIndex: "+ index);
 		}
 	}
 	
-	public void updateList(){
+	public void updateList(){ //updates button list on the left side
 		people.clear();
 		buttons.clear();
 		listPane.removeAll();
@@ -135,9 +135,6 @@ public class ListPanel extends JPanel implements ActionListener{
 				people.add(new Profile(temp.getName(), (int) temp.getMoney(), "None", temp.getCurrentRoleName(), null, 0,0,0));
 				button.setBackground(Color.black);
 			}
-			//Dimension buttonSize = new Dimension(listPane.getSize().width, (1/7)* (listPane.getSize().height));
-			//button.setPreferredSize(buttonSize);
-			//button.setSize(25, 10);
             button.setMaximumSize(new Dimension(125, 25));
 			button.addActionListener(this);
 			buttons.add(button);
