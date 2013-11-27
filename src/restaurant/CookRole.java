@@ -197,9 +197,6 @@ public class CookRole extends Role implements Cook {
 			return;
 		}
 
-
-		System.err.print(cookGui);
-		//AlertLog.getInstance().logError(AlertLevel.ERROR, getName(), cookGui);
 		cookGui.DoGetIngredients();
 		try {
 			atDestination.acquire();

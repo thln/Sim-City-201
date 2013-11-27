@@ -11,6 +11,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -27,7 +28,7 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 	private final int WINDOWY = 350;
 
 	AnimationPanel animationPanel;
-	private List<Gui> guis = new ArrayList<Gui>();
+	private List<Gui> guis = Collections.synchronizedList(new ArrayList<Gui>());
 	public ArrayList<Building> buildings = new ArrayList<Building>();
 	Dimension Msize = new Dimension(75, 75);
 	Dimension Bsize = new Dimension(75, 75);
@@ -84,21 +85,24 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		g2.drawImage(background, 0, 0, null);
 
 		//Drawing all buildings
-		for ( int i=0; i<buildings.size(); i++ ) {
+		for (int i=0; i<buildings.size(); i++ ) {
 			Building b = buildings.get(i);
 			g2.drawImage(b.getMyImage().getImage(), b.getxLocation(), b.getyLocation(), null);
 		}
 
-		for(Gui gui : guis) {
-            if (gui.isPresent()) {
-                gui.updatePosition();
-            }
-        }
-		for(Gui gui : guis) {
-            if (gui.isPresent()) {
-                gui.draw(g2);
-            }
-        }
+		//Drawing all People guis
+		synchronized (guis) {
+			for(Gui gui : guis) {
+				if (gui.isPresent()) {
+					gui.updatePosition();
+				}
+			}
+			for(Gui gui : guis) {
+				if (gui.isPresent()) {
+					gui.draw(g2);
+				}
+			}
+		}
 	}
 
 	public void addGui(Gui gui) {
