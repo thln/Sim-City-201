@@ -14,7 +14,7 @@ team20
 
   + Name: Josh Greenberger
   	+ USC Email: jdgreenb@usc.edu
-  	+ USC ID: 
+  	+ USC ID: 2189996682
 
   + Name: Carmen Tan
   	+ USC Email: carmiele@usc.edu
@@ -25,7 +25,7 @@ team20
   	+ USC ID:
 
 ###Mentor Information
-  + Name: Keith DeRuiter
+  + Name: Keith DeRuiter (The Best Mentor Ever)
   	+ USC Email: kderuite@usc.edu
 
 ###Design Documents and Interaction Diagrams
