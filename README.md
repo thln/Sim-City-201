@@ -36,13 +36,17 @@ team20
   + Please clone my repository (use Git Bash if Windows, terminal for Linux or Mac)
     which is "team20.git" in the usc-csci201-fall2013 directory
   + Open Eclipse
-  + File -> New -> Other
-  + Choose Java Project from Existing Ant Buildfile
+  + File -> New -> Java Project(if Java Project isn't visible, Project->Java Project)
+  + Uncheck "Use Default Location"
   + Click on Browse Button
   + Navigate to git repository that you cloned earlier (Should be team20)
-  + Choose the build.xml file
-  + Check the Link to the buildfile in the file system box
   + Press Finish
+  + Left Click on Project Folder in Package Explorer
+  + Go to Add Library
+  + Add JUnit
+  + Click Next
+  + Choose JUnit Library Version 3
+  + Click Finish
 
 ###Work By Individual (V1)
   + Tam Henry Le Nguyen
@@ -129,11 +133,19 @@ team20
   	+
 
 ###How To Run Scenarios (V1)
-  +
+  + Simply press the Green Play Button in the Tool Bar (ApplicationGui.Java)
+  	+ Alternatively, you can right click "ApplicationGui.Java" and hit "Run As -> Java Application"
+  + The program will immediately run and go through all the scenario's. In order to easily see each 
+  	scenario, go to the "TracePanel" tab. Here you can see the different scenario's running with print statements.
+    The General City Print Statements show by default, whereas all the other type of print statements are hidden.
+    You can hide the General City Print Statements, and click to show another scenario's print statements
+    in order to see the different scenarios running. 
+  + *Since we have implemented all the main scenarios, we have not implemented a configuration file under the time constraints.  However all normative scenerios can be tracked via the Trace Panel.*
+  + We recommend restarting the application each time.
 
 ###Unimplemented/Not Working (V1)
   + There is currently no busing system/roads/cars. Everyone walks.
   + Apartment/Housing Related GUI not finished
   + Only Kristi's restaurant has been integrated
   + Integrated but unimplemented GUI for Bank & Market
-  + Crooks/Deadbeats/Non Norm's  
+  + Crooks/Deadbeats/Non Norm's
