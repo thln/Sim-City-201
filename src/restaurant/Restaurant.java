@@ -11,6 +11,8 @@ import restaurant.test.mock.MockCashier;
 import restaurant.test.mock.MockCook;
 import application.WatchTime;
 import application.gui.animation.BuildingPanel;
+import application.gui.animation.agentGui.RestaurantCookGui;
+import application.gui.animation.agentGui.RestaurantWaiterGui;
 
 public class Restaurant {
 
@@ -30,6 +32,8 @@ public class Restaurant {
 	//Roles
 	public HostRole hostRole = new HostRole("Host");
 	public CookRole cookRole = new CookRole("Cook", this);
+	public RestaurantCookGui cookGui = new RestaurantCookGui(cookRole);
+	
 	public CashierRole cashierRole = new CashierRole("Cashier", this);
 	public RevolvingStand theRevolvingStand = new RevolvingStand();
 	private BuildingPanel restPanel;
@@ -86,18 +90,18 @@ public class Restaurant {
 		}
 		else if (title == "waiter") {	
 			WaiterRole waiter = new WaiterRole(person, person.getName(), title);
-//			if (waiters.size() <= 12) {
-//				RestaurantWaiterGui g = new RestaurantWaiterGui(waiter);
-//				restPanel.addGui(g);
-//				waiter.setGui(g);
-//				g.setHomePosition(5, (55 + (22 * waiters.size())));
-//			}
-//			else if (waiters.size() <= 24) {
-//				RestaurantWaiterGui g = new RestaurantWaiterGui(waiter);
-//				restPanel.addGui(g);
-//				waiter.setGui(g);
-//				g.setHomePosition(27, (55 + (22 * (waiters.size()-12))));
-//			}
+			if (waiters.size() <= 12) {
+				RestaurantWaiterGui g = new RestaurantWaiterGui(waiter);
+				restPanel.addGui(g);
+				waiter.setGui(g);
+				g.setHomePosition(5, (55 + (22 * waiters.size())));
+			}
+			else if (waiters.size() <= 24) {
+				RestaurantWaiterGui g = new RestaurantWaiterGui(waiter);
+				restPanel.addGui(g);
+				waiter.setGui(g);
+				g.setHomePosition(27, (55 + (22 * (waiters.size()-12))));
+			}
 			
 			waiters.add(waiter);
 			hostRole.addWaiter(waiter);
@@ -108,18 +112,18 @@ public class Restaurant {
 		}
 		else if (title == "altWaiter") {
 			AltWaiterRole altWaiter = new AltWaiterRole(person, person.getName(), title);
-//			if (waiters.size() <= 12) {
-//				RestaurantWaiterGui g = new RestaurantWaiterGui(altWaiter);
-//				restPanel.addGui(g);
-//				altWaiter.setGui(g);
-//				g.setHomePosition(5, (55 + (22 * waiters.size())));
-//			}
-//			else if (waiters.size() <= 24) {
-//				RestaurantWaiterGui g = new RestaurantWaiterGui(altWaiter);
-//				restPanel.addGui(g);
-//				altWaiter.setGui(g);
-//				g.setHomePosition(27, (55 + (22 * (waiters.size()-12))));
-//			}
+			if (waiters.size() <= 12) {
+				RestaurantWaiterGui g = new RestaurantWaiterGui(altWaiter);
+				restPanel.addGui(g);
+				altWaiter.setGui(g);
+				g.setHomePosition(5, (55 + (22 * waiters.size())));
+			}
+			else if (waiters.size() <= 24) {
+				RestaurantWaiterGui g = new RestaurantWaiterGui(altWaiter);
+				restPanel.addGui(g);
+				altWaiter.setGui(g);
+				g.setHomePosition(27, (55 + (22 * (waiters.size()-12))));
+			}
 			
 			waiters.add(altWaiter);
 			hostRole.addWaiter(altWaiter);
@@ -206,5 +210,19 @@ public class Restaurant {
 			return true;
 		else 
 			return false;
+	}
+	
+	public void setBuildingPanel (BuildingPanel buildingPanel) {
+		restPanel = buildingPanel;
+	}
+
+	public void removeWaiter(WaiterRole waiterRole) {
+		waiters.remove(waiterRole);
+		restPanel.removeGui(waiterRole.gui);
+	}
+	
+	public void removeCustomer(RestaurantCustomerRole customerRole) {
+		customers.remove(customerRole);
+		restPanel.removeGui(customerRole.gui);
 	}
 }

@@ -185,6 +185,18 @@ public class BuildingPanel extends JPanel implements ActionListener {
             g2.setColor(Color.WHITE);
             g2.drawString("Lobby", xLobbyLocation + 2, yLobbyLocation + 45);
             
+            for(Gui gui : guis) {
+                if (gui.isPresent()) {
+                    gui.updatePosition();
+                }
+            }
+
+            for(Gui gui : guis) {
+                if (gui.isPresent()) {
+                    gui.draw(g2);
+                }
+            }
+            
         }
         else if (name.toLowerCase().contains("market")) {
         	g2.drawString("Inventory",WINDOWX/2, 60 );
@@ -275,8 +287,11 @@ public class BuildingPanel extends JPanel implements ActionListener {
     }
     
     public void addGui(Gui gui) {
-        guis.add(gui);
-        
+        guis.add(gui); 
+    }
+    
+    public void removeGui(Gui gui) {
+        guis.remove(gui); 
     }
     
     public String toString() {

@@ -1,18 +1,19 @@
 package restaurant;
 
 //import agent.Agent;
-import restaurant.myCustomer.customerState;
-import restaurant.interfaces.RestaurantCustomer;
-import restaurant.interfaces.Waiter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Timer;
 
-import java.util.*;
-import java.util.concurrent.Semaphore;
-
-import application.Phonebook;
-import application.gui.animation.agentGui.RestaurantWaiterGui;
 import person.Person;
 import person.Role;
 import person.Worker;
+import restaurant.myCustomer.customerState;
+import restaurant.interfaces.RestaurantCustomer;
+import restaurant.interfaces.Waiter;
+import application.Phonebook;
+import application.gui.animation.agentGui.RestaurantWaiterGui;
 
 /**
  * Restaurant Waiter Role
@@ -414,6 +415,8 @@ public class WaiterRole extends Role implements Waiter {
 	protected void clearTable(myCustomer MC) {
 		print(MC.customer.getCustomerName() + " is leaving " + MC.tableNumber);
 		Phonebook.getPhonebook().getRestaurant().hostRole.msgLeavingTable(MC.customer, this);
+		Phonebook.getPhonebook().getRestaurant().removeCustomer(MC.customer);
+
 		myCustomers.remove(MC);
 	}
 
