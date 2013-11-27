@@ -92,35 +92,65 @@ askForRent(Property p) {
 ### Data
 
 <pre><code>
-Class WorkOrder {
-int HomeNumber;
-WorkOrder(int n) {
-	HomeNumber = n:
-} 
-}
-List <WorkOrder> WorkOrders;
+String name;
+Timer FixingTimer;
+enum maintenanceState {Working, CheckingHouse, RefreshList};
+maintenanceState state = maintenanceState.Working;
 </code></pre>
 
 ### Messages
 
 <pre><code>
-msgPleaseFixHome (int HomeNumber) {
-	WorkOrder.add(new WorkOrder(HomeNumber));
+msgNeedMaintenance(Housing houseNeedMain) {
+	for (Housing h : Phonebook.getPhonebook().getAllHousing(test)) {
+		if (h == houseNeedMain) 
+			h.state = housingState.UrgentWorkOrder;
+	}
+}
+
+msgRefreshHousingList() {
+	if(!Phonebook.getPhonebook().getAllHousing(test).isEmpty()) {
+		state = maintenanceState.RefreshList;
+	}
 }
 </code></pre>
 
 ### Scheduler
 
 <pre><code>
-If (∃ WorkOrder ∈ WorkOrders)
-	actFixHome(WorkOrder);
+If(state == maintenanceState.RefreshList)
+	resetHousingCheck();
+If((state == maintenanceState.Working)
+	for (Housing h : Phonebook.getPhonebook().getAllHousing(test)) {
+	if (h.state == housingState.UrgentWorkOrder)
+		checkHousing(h);
+	}
+	for (Housing h : Phonebook.getPhonebook().getAllHousing(test)) {
+	if (h.state == housingState.CheckUpNeeded)
+		checkHousing(h);
+	}
+	resetHousingCheck();				
+}
 </code></pre>
 
 ### Actions
 
 <pre><code>
-actFixHome(WorkOrder wh) {
-	WorkOrders.remove(wh);
-	//Fix Grill, Sink, Table, etc Gui stuff
+checkHousing(final Housing h) {
+	state = maintenanceState.CheckingHouse;
+	h.state = housingState.Checking;
+	FixingTimer.schedule(new TimerTask() {
+		run() {
+		state = maintenanceState.Working;
+		h.state = housingState.RecentlyChecked;stateChanged();
+		}
+	}, 2000);
+}
+
+resetHousingCheck() {
+	state = maintenanceState.Working;
+	for (Housing h : Phonebook.getPhonebook().getAllHousing(test)) {
+		h.state = housingState.CheckUpNeeded;
+	}
 }
 </code></pre>

@@ -11,15 +11,7 @@
 ###Paying Off a Loan
 ![Paying a Loan Diagram](https://raw.github.com/usc-csci201-fall2013/team20/master/docs/InteractionDiagrams/BankPayLoan.png?token=3290221__eyJzY29wZSI6IlJhd0Jsb2I6dXNjLWNzY2kyMDEtZmFsbDIwMTMvdGVhbTIwL21hc3Rlci9kb2NzL0ludGVyYWN0aW9uRGlhZ3JhbXMvQmFua1BheUxvYW4ucG5nIiwiZXhwaXJlcyI6MTM4NjA5Mjc3MX0%3D--1f72a5f8f15afa5e5173b1c1a9fc729df2c15af0)
 
-# Bank (Manager) Agent
-
-<pre><code>
-int vault = 10000;
-int final vaultMinimum = 1000;
-//Initialize restaurant accounts
-</code></pre>
-
-# BankCustomer Agent
+# BankCustomerRole
 
 <pre><code>
 //people request loans when desired cash is less than account balance
@@ -28,186 +20,242 @@ int final vaultMinimum = 1000;
 ### Data
 
 <pre><code>
-enum CustomerDesire {none, withdraw, deposit, wantLoan, closeLoan, openAccount, robBank}
-
-TellerAgent myTeller;
-GuardAgent guard1;
-
-int cash;
-int accountNum;
-int accountBalance;
-int desiredLoanAmount;
-int desiredCashAmount;
-int depositAmount;
-int loan; 	
-CustomerDesire desire = none;
+enum BankCustomerDesire {none, withdraw, deposit, wantLoan, closeLoan, openAccount, closeAccount, robBank, leaveBank};
+enum CustomerState {atBank, none, waiting, ready};
+BankCustomerDesire desire = openAccount;
+BankTeller myTeller;
+GuardRole guard1;
+double desiredLoanAmount;
+CustomerState state = atBank;
+String RoleName = "Bank Customer";
 </code></pre>
 
 ### Messages
 
 <pre><code>
-HereIsYourMoney(int amount) {
-	cash += amount;
+msgComeIn() {
+}
+
+msgGoToTeller(BankTeller tell1) {
+	myTeller = tell1;
+	state = CustomerState.ready;
+}
+
+msgNoTellerAvailable(){
+	state = CustomerState.waiting;
+}
+
+HereIsYourMoney(double amount) {
+	person.money += amount;
+	desire = BankCustomerDesire.leaveBank;
+	state = CustomerState.ready;
 }
 
 HereIsNewAccount (int accountNum) {
-	accountNums.add(accountNum);
+	person.accountNum = accountNum;
+	if (person.money <= person.moneyMinThreshold)
+		desire = BankCustomerDesire.withdraw;
+	else if (person.money >= person.moneyMaxThreshold)
+		desire = BankCustomerDesire.deposit;
+	else	
+		desire = BankCustomerDesire.leaveBank;
+		state = CustomerState.ready;
 }
 
-Bankrupt() {
-	guard1.LeavingBank(myTeller);
-	//animate leaving bank
+msgBankrupt() {
+	state = CustomerState.ready;
+	desire = BankCustomerDesire.leaveBank;
 }
 
-InsufficentFunds(){
-	guard1.LeavingBank(myTeller);
-	//animate leaving bank...maybe go get more money somehow?
+msgInsufficentFunds(){
+	state = CustomerState.ready;
+	desire = BankCustomerDesire.wantLoan;
 }
 
-DepositReceived() {
-	guard1.LeavingBank(myTeller);
-	//animate leaving bank
+msgDepositReceived() {
+	desire = BankCustomerDesire.leaveBank;
+	state = CustomerState.ready;
 }
 
-YourLoanWasApproved() {
-	desire = withdraw;
+msgYourLoanWasApproved() {
+	desire = BankCustomerDesire.withdraw;
+	state = CustomerState.ready;
 }
 
-YourLoanWasDenied(int amount) {
+msgYourLoanWasDenied(double amount) {
 	//decide whether or not to request another loan
+	state = CustomerState.ready;
+	desire = BankCustomerDesire.leaveBank;
 }
 
-LoanClosed() {
-guard1.LeavingBank(myTeller);
-	//animate leaving bank
+msgLoanClosed() {
+	state = CustomerState.ready;
+	desire = BankCustomerDesire.leaveBank;
 }	
 
-CaughtYou() {
+msgCaughtYou() {
+	state = CustomerState.ready;
 }
 
-GotAway() {
-	cash += vault;
+msgGotAway() {
+	state = CustomerState.ready;
 }
 </code></pre>
 	
 ### Scheduler
 
 <pre><code>
-if (desire == withdraw)
-	WithdrawCash();
+if (state == CustomerState.waiting) {
 
-if (desire == deposit)
-	DepositCash();
+}
+if (state == CustomerState.atBank) {
+	messageGuard();
+}
+if (state == CustomerState.ready) {
+	if(desire == openAccount)
+	openAccount();
+	
+	if (desire == withdraw)
+	withdrawCash();
 
-if (desire == wantLoan)
-	RequestLoan();
+	if (desire == deposit)
+	depositCash();
 
-if (desire == closeLoan)
-	PayOffLoan();
+	if (desire == wantLoan)
+	requestLoan();
 
-if (desire == openAccount)
-	OpenAccount();
-
-if (desire == robBank)
-	RobBank();
+	if (desire == closeLoan)
+	payOffLoan();
+	
+	if(desire == leaveBank)
+	leaveBank();
+	
+	if (desire == robBank)
+	robBank();
+}
 </code></pre>
 
 ### Actions
 
 <pre><code>
-WithdrawCash() {
+messageGuard () {
+	bank.BankGuard.msgArrivedAtBank(this);
+	state = CustomerState.waiting;
+}
+
+withdrawCash() {
 	myTeller.INeedMoney(desiredCashAmount,accountNum);
+	state = CustomerState.waiting;
 }
 
-DepositCash () {
-	myTeller.HereIsMyDeposit(depositAmount, accountNum);
+depositCash () {
+	person.money -= person.depositAmount;
+	myTeller.msgHereIsMyDeposit(person.depositAmount, person.accountNum);
+	state = CustomerState.waiting;
 }
 
-RequestLoan() {
+requestLoan() {
 	desiredLoanAmount = 10*desiredCashAmount;
-	myTeller.INeedALoan(desiredLoanAmount, accountNum);
+	myTeller.msgINeedALoan(desiredLoanAmount, person.accountNum);
+	state = CustomerState.waiting;
 }
 
-PayOffLoan() {
-	cash -= loan;
-	myTeller.PayingOffLoan(loan, accountNum);
+payOffLoan() {
+	person.money -= person.loan;
+	myTeller.PayingOffLoan(person.loan, person.accountNum);
+	state = CustomerState.waiting;
 }
 
-OpenAccount () {
+openAccount () {
 	myTeller.WantNewAccount(this);
+	state = CustomerState.waiting;
 }
 
-RobBank () {
+leaveBank () {	
+	//GUI operation
+	desire = BankCustomerDesire.none;
+	state = CustomerState.waiting;	
+	myTeller.msgLeavingBank(person.accountNum);
+	bank.bankGuard.msgCustomerLeavingBank(myTeller);
+	myTeller = null;
+	this.setRoleInactive();
+}
+
+robBank () {
 	//Animation();
 	guard1.RobbingBank(this);
+	state = CustomerState.waiting;
 }
 </code></pre>
 
 # Teller
 ### Data
-
 <pre><code>
-enum AccountState {neutral, new, waiting, depositing, withdrawing, requestingLoan, closingLoan, loanApproved, loanDenied, closingLoan}
-
-class Account {	
-	CustomerAgent customer;
+int balanceMinimum = 5;
+String name;
+List<Account> myAccounts;
+enum AccountState {neutral, newAccount, waiting, depositing, withdrawing, requestingLoan, 
+		closingLoan, loanApproved, loanDenied, bankEmpty, leavingBank}
+class Account {
+	BankCustomer customer;
 	int accountNum; 		//the hash key
 	double loan = 0;
 	double balance = 0;
-	double creditScore = 0;
+	double creditScore = 150;
 	double processingMoney = 0;
-	AccountState state = new;
+	AccountState state;
 }
 
 List<Account> accounts;
-BankAgent myBank;
-LoanOfficerAgent myLoaner;
-int final balanceMinimum = 5;
+BankRole bank;
+LoanOfficerRole myLoaner;
 </code></pre>
 
 ### Messages
 
 <pre><code>
-WantNewAccount (BankCustomerAgent cust1) {
-	accounts.add(new Account(cust1));
+msgWantNewAccount (BankCustomer cust1) {
+	Account a1 = new Account(cust1);
+	bank.accounts.add(a1);
+	a1.setState(AccountState.newAccount);
+	myAccounts.add(a1);
 }
 
-RestaurantDepositMoney(int accountNum) {
-	Account correct = FindAccount(accountNum);
-	accounts.remove(correct);
-}
-
-INeedMoney(int desiredAmount, int accountNum) {
-	Account correct = FindAccount (accountNum);
+msgINeedMoney(double desiredAmount, int accountNum) {
+	Account correct = findMyAccount (accountNum);
 	correct.processingMoney = desiredAmount;
-	correct.state = withdrawing;
+	correct.state = AccountState.withdrawing;
 }
 
-HereIsMyDeposit(int amount, int accountNum) {
-	Account correct = FindAccount (accountNum);
+msgHereIsMyDeposit(double amount, int accountNum) {
+	Account correct = findMyAccount (accountNum);
 	correct.processingMoney = amount;
-	correct.state = depositing;
-}
+	correct.state = AccountState.depositing;
 
-INeedALoan(int desiredLoan, int accountNum) {
-	Account correct = FindAccount (accountNum);
+msgINeedALoan(double desiredLoan, int accountNum) {
+	Account correct = findMyAccount (accountNum);
 	correct.processingMoney = desiredLoan;
-	correct.state = requestingLoan;
+	correct.state = AccountState.requestingLoan;
 }
 
-PayingOffLoan(int loan, int accountNum) {
-	Account correct = FindAccount (accountNum);
+msgPayingOffLoan(double loan, int accountNum) {
+	Account correct = findMyAccount (accountNum);
 	correct.processingMoney = loan;
-	correct.state = closingLoan;
+	correct.state = AccountState.closingLoan;stateChanged();
 }
 
-ThisLoanApproved(Account account1) {
-	account1.state = loanApproved;
+msgThisLoanApproved(Account account1) {
+	account1.state = AccountState.loanApproved;
 }
 
-ThisLoanDenied (Account account1, int possibleLoan) {
-	account1.state = loanDenied;
+msgThisLoanDenied (Account account1, double possibleLoan) {
+	account1.state = AccountState.loanDenied;
 	account1.processingMoney = possibleLoan;
+}
+
+msgLeavingBank(int accountNum) {
+	Account correct = findMyAccount (accountNum);
+	myAccounts.remove(correct);
 }
 </code></pre>
 
@@ -236,47 +284,74 @@ If (∃ Account ∈  accounts | Account.state == loanDenied)
 	DenyLoan(Account);
 
 If (∃ Account ∈  accounts | Account.state == closingLoan)
-	CloseLoan(Account)
+	CloseLoan(Account);
+	
+If (leaveRole){
+	leaveRole = false;
+	if (((Role) bank.bankGuard.person != null)
+				bank.bankGuard.msgTellerLeavingWork(this);
+			try {
+				((Worker) person).roleFinishedWork();	
+			}
+			catch (Exception e){
+
+			}
+		}
+}
 </code></pre>
 
 ### Actions
 
 <pre><code>
-FindAccount (int accountNum) {
-	
+Account FindAccount (int accountNum) {
+	for (Account a: myAccounts) {
+		if (a.getAccountNum() == accNum) {
+			return a;		
+		}
+	}
+	return findPhonebookAccount(accNum);
+}
+
+Account findPhonebookAccount (int accNum) {
+	for (Account a: bank.accounts) {
+		if (a.getAccountNum() == accNum) {
+			myAccounts.add(a);		//Anytime we must search through the global list, 		
+			return a;						//we need add account to the local one for easy future access
+		}
+	}
+	return null;
 }
 
 OpenAccount (Account account1) {
 	//generate key (accountNum)
-	account1.customer.HereIsNewAccount(account1.accountNum);
-	account1.state = neutral;
+	int hashKey = ++bank.accountNumKeyList;
+	account1.setAccountNum(hashKey);
+	account1.customer.msgHereIsNewAccount(account1.getAccountNum());
+	account1.state = AccountState.neutral;
 }
 
 WithdrawMoney(Account account1) {
-	if (account1.balance > (account1.processingMoney + balanceMinimum) && (account1.processingMoney < (vault - vaultMinimum))) {
-		myBank.vault -= account1.desiredAmount;
+	if (account1.balance > (account1.processingMoney + balanceMinimum)) {
+		bank.vault -= account1.processingMoney;
 		account1.state = neutral;
-		account1.customer.HereIsYourMoney(account1.transferringMoney);
+		account1.customer.HereIsYourMoney(account1.processingMoney);
 	}
-	else if (account.processingMoney > (vault-vaultMinimum))
-		account1.customer.Bankrupt();
 	else
-		account1.customer.InsufficentFunds();
-
+		account1.customer.msgInsufficientFunds();
 	account1.processingMoney = 0;
-	account1.state = neutral;
+	account1.state = AccountState.neutral;
 }
 
 DepositMoney(Account account1) {
-	vault += account1.processingMoney;
+	bank.vault += account1.processingMoney;
 	account1.balance +=  account1.processingMoney;
 	account1.creditScore += account1.processingMoney/10;	//every time you deposit money, your credit goes up…the bank can trust that you have money
-	account1.customer.DepositReceived();
+	account1.customer.msgDepositReceived();
 	account1.state = neutral;
 }
 
 RequestLoan (Account account1) {
-	myLoaner.IsLoanApproved(account1, this);
+	LoanOfficer.msgIsLoanApproved(account1, this);
 	account1.state = waiting;
 }
 
@@ -304,7 +379,9 @@ DenyLoan (Account account1) {
 ### Data
 
 <pre><code>
-enum LoanState {requesting, open, closed}
+String name;
+String RoleName = "Loan Officer";
+enum LoanState {requesting, open, closed};
 class Loan {
 	Account account1;
 	LoanState state = requesting;
@@ -316,7 +393,7 @@ List<Loan> loans;
 ### Messages
 
 <pre><code>
-IsLoanApproved(Account account1, Teller t1) {
+msgIsLoanApproved(Account account1, Teller t1) {
 	loans.add( new Loan(account1, t1));
 }
 </code></pre>
@@ -327,6 +404,15 @@ IsLoanApproved(Account account1, Teller t1) {
 <pre><code>
 If (∃ Loan ∈  loans | Loan.state == requesting)
 	ProcessLoan(Loan);
+If (leaveRole){
+	try{
+		((Worker) person).roleFinishedWork();
+	}
+	catch (Exception e){
+		
+	};
+	leaveRole = false;
+}
 </code></pre>
 
 ### Actions
@@ -334,16 +420,12 @@ If (∃ Loan ∈  loans | Loan.state == requesting)
 <pre><code>
 ProcessLoan (Loan loan1) {
 
-	int loanAmount = loan1.account1.processingMoney;
-	if (vault <=  vaultMinimum + loanAmount) {
-		loan1.teller1.ThisLoanDenied(loan1.account1, 0);
-	}
-
-	if (loanAmount > ((loan1.account1.creditScore * 10);		//You are allowed a loan 10 times your credit score
-		loan1. teller1.ThisLoanApproved(loan1.account1);
-
+	if (loan1.account1.processingMoney <= (loan1.account1.creditScore * 10))		//You are allowed a loan 10 times your credit score
+		loan1.teller1.msgThisLoanApproved(loan1.account1);
 	else
-		loan1.teller1.ThisLoanDenied(loan1.account1, loan1.account1.creditScore*10); 
+		loan1.teller1.msgThisLoanDenied(loan1.account1, loan1.account1.creditScore*10); 
+
+	loans.remove(loan1);
 }
 </code></pre>
 
@@ -352,27 +434,38 @@ ProcessLoan (Loan loan1) {
 ### Data
 
 <pre><code>
-List<CustomerAgent> customers;
-List<CustomerAgent> robbers;
-class MyTeller {
-	enum tellerState {available, busy};
-	TellerAgent tell1;
-}
+List<BankCustomer> customers;
+List<BankCustomer> robbers;
 List<MyTeller> tellers;		//initialized at beginning
+String roleName = "Bank Guard";
+class MyTeller {
+	TellerState state;
+	BankTeller tell1;
+}
+enum tellerState {available, busy};
 </code></pre>
 
 ### Messages
 
 <pre><code>
-RobbingBank(CustomerAgent cust1) {
+msgTellerCameToWork (BankTeller t1) {
+	tellers.add(new MyTeller(t1));
+}
+
+msgTellerLeavingWork(BankTeller t1) {
+	if (t1 instanceof Role)
+	tellers.remove(t1);
+}
+
+msgRobbingBank(BankCustomer cust1) {
 	robbers.add(cust1);
 }
 
-ArrivedAtBank(CustomerAgent c1) {
+msgArrivedAtBank(BankCustomer c1) {
 	customers.add(c1);
 }
 
-LeavingBank (TellerAgent t1) {
+msgCustomerLeavingBank (BankTeller t1) {
 	MyTeller correct = findTeller(t1);
 	correct.state = available;
 }
@@ -381,21 +474,34 @@ LeavingBank (TellerAgent t1) {
 ### Scheduler
 
 <pre><code>
-If (∃ CustomerAgent ∈  robbers) 
-	catchRobber(CustomerAgent);
+If (∃ BankCustomer ∈  robbers) 
+	catchRobber(BankCustomer);
 
-If (∃ CustomerAgent ∈  customers)
-assignToTeller(CustomerAgent); 
+If (∃ BankCustomer ∈  customers)
+assignToTeller(BankCustomer); 
+if (leaveRole){
+	leaveRole = false;
+	try {
+		((Worker) person).roleFinishedWork();	
+	}
+	catch (Exception e){
+
+	}
+}
+
 </code></pre>
 
 ### Actions
 
 <pre><code>
-findTeller (TellerAgent t1) {
-
+findTeller (BankTeller t1) {
+	for (MyTeller teller1: tellers) {
+	if (teller.tell1 = t1)
+		return teller;
+	}
 }
 
-catchRobber(CustomerAgent robber1) {
+catchRobber(BankCustomer robber1) {
 //95% chance Robber is caught, 5% he gets away;
 	if (caught)
 		robber1.CaughtYou();
@@ -403,11 +509,21 @@ catchRobber(CustomerAgent robber1) {
 		robber1.GotAway();	
 }
 
-assignToTeller(CustomerAgent cust1) {
+assignToTeller(BankCustomer cust1) {
 	for (MyTeller teller1: tellers) {
-		if (teller1.state = available) {
+		if (teller1.state = available && bank.isOpen()) {
 			cust1.GoToTeller(teller1.tell1);
 			teller1.state = busy;
+			customers.remove(cust1);
+		}
+	}
+	cust1.msgNoTellerAvailable();
+}
+
+msgBankOpen() {
+	if (customers.size() != 0){
+		for (BankCustomer c1: customers){
+			c1.msgComeIn();
 		}
 	}
 }
