@@ -116,7 +116,7 @@ public class CookRole extends Role implements Cook {
 	/**
 	 * Scheduler
 	 */
-	protected boolean pickAndExecuteAnAction() 
+	public boolean pickAndExecuteAnAction() 
 	{
 		/* Think of this next rule as:
             Does there exist a table and customer,
@@ -134,7 +134,7 @@ public class CookRole extends Role implements Cook {
 
 
 		if(!Phonebook.getPhonebook().getRestaurant().getRevolvingStand().isStandEmpty()) {
-			myOrders.add(Phonebook.getPhonebook().getRestaurant().getRevolvingStand().takeOrder());
+			takeRevolvingStandOrder();
 			return true;
 		}
 
@@ -186,6 +186,12 @@ public class CookRole extends Role implements Cook {
 	/**
 	 * Actions
 	 */
+	private void takeRevolvingStandOrder()
+	{
+		print("Taking order from Revolving Stand.");
+		myOrders.add(Phonebook.getPhonebook().getRestaurant().getRevolvingStand().takeOrder());
+	}
+	
 	private void cookOrder(final Order o) {
 
 		if(!isInStock(o.choice)) {
