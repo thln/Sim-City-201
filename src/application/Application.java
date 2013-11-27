@@ -70,8 +70,8 @@ public class Application extends JPanel {
         Worker rest1h = new Worker("Henry", 100, "host", "restaurant", 1, 1800, 14);
         Worker rest1g = new Worker("Greg", 100, "cashier", "restaurant", 2, 1800, 15);        
         Worker rest1i = new Worker("Iris", 100, "cook", "restaurant", 2, 1800, 15);
-        Worker rest1j = new Worker("Josh", 100, "waiter", "restaurant", 1, 1800, 14);
-        Worker rest1k = new Worker("Kristi", 100, "altWaiter", "restaurant", 2, 1800, 15);
+        Worker rest1j = new Worker("Josh", 100, "waiter", "restaurant", 2, 1800, 15);
+        Worker rest1k = new Worker("Kristi", 100, "altWaiter", "restaurant", 1, 1800, 14);
         //SHIFT 2
         Worker rest2g = new Worker("Gil", 100, "cashier", "restaurant", 13, 600, 2);
         Worker rest2h = new Worker("Hannah", 100, "host", "restaurant", 14, 600, 3);
@@ -88,8 +88,8 @@ public class Application extends JPanel {
 		//Standard Wealthy Person
 		Wealthy wealthy1 = new Wealthy("Tam Henry", 700);
 		Wealthy wealthy2 = new Wealthy("Kristi Hupka", 10000);
-		Wealthy wealthy3 = new Wealthy("Josh Greenburger", 700);
-		Wealthy wealthy4 = new Wealthy("Keith DeRuiter", 700);
+//		Wealthy wealthy3 = new Wealthy("Josh Greenburger", 700);
+//		Wealthy wealthy4 = new Wealthy("Keith DeRuiter", 700);
 
 		//Standard Crook
 		//Crook v = new Crook("Vinny", 250);
@@ -161,10 +161,10 @@ public class Application extends JPanel {
 		wealthy1.setHome(allHousing.get(allHousing.size() - 1));
 		allHousing.add(new Housing(wealthy2, allHousing.size(), "Mansion"));
 		wealthy2.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(wealthy3, allHousing.size(), "Mansion"));
-		wealthy3.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(wealthy4, allHousing.size(), "Mansion"));
-		wealthy4.setHome(allHousing.get(allHousing.size() - 1));
+//		allHousing.add(new Housing(wealthy3, allHousing.size(), "Mansion"));
+//		wealthy3.setHome(allHousing.get(allHousing.size() - 1));
+//		allHousing.add(new Housing(wealthy4, allHousing.size(), "Mansion"));
+//		wealthy4.setHome(allHousing.get(allHousing.size() - 1));
 
 		
 		//Adding to Vector
@@ -198,8 +198,8 @@ public class Application extends JPanel {
 		//People
 		getPopulation().add(wealthy1);
 		getPopulation().add(wealthy2);
-		getPopulation().add(wealthy3);
-		getPopulation().add(wealthy4);
+//		getPopulation().add(wealthy3);
+//		getPopulation().add(wealthy4);
 		
 		for (Person person : getPopulation()) {
 			person.setPanel(animPanel);
@@ -240,8 +240,8 @@ public class Application extends JPanel {
 		//People
 		wealthy1.startThread();
 		wealthy2.startThread();
-		wealthy3.startThread();
-		wealthy4.startThread();
+//		wealthy3.startThread();
+//		wealthy4.startThread();
 		
 		updatePeopleTime();
 	}
