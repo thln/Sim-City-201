@@ -267,39 +267,42 @@ public class WaiterRole extends Role implements Waiter {
 	/**
 	 * Actions
 	 */
-	protected void seatCustomer(myCustomer MC) 
-	{
-//		waiterGui.DoPickUpCustomer(MC.xHome, MC.yHome);
-//		try {
-//			atDestination.acquire();
-//		} catch (InterruptedException e) 
-//		{
-//			e.printStackTrace();
-//
-//		}
+	protected void seatCustomer(myCustomer MC) {
+		RestaurantWaiterGui waiterGui = (RestaurantWaiterGui) gui;
+		waiterGui.DoPickUpCustomer(MC.xHome, MC.yHome);
+		try {
+			atDestination.acquire();
+		} catch (InterruptedException e) 
+		{
+			e.printStackTrace();
+
+		}
 		MC.customer.msgPleaseFollowMe(MC.tableNumber, menu, this);
 		isInLobby = false;
-//		DoSeatCustomer(MC.customer, MC.tableNumber);
-//
-//		try {
-//			atDestination.acquire();
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//
-//		}
-//		waiterGui.DoLeaveCustomer();
+		DoSeatCustomer(MC.customer, MC.tableNumber);
+
+		try {
+			atDestination.acquire();
+			atDestination.acquire();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+
+		}
+		waiterGui.DoLeaveCustomer();
 		print("Finished seating " + MC.customer.getCustomerName());
 		MC.setSeated();
 	}
 
 	// The animation DoXYZ() routines
 	protected void DoSeatCustomer(RestaurantCustomerRole customer, int table) {
+		RestaurantWaiterGui waiterGui = (RestaurantWaiterGui) gui;
 		isInLobby = false;
 		print("Seating " + customer + " at " + table);
-	//	waiterGui.DoBringToTable(customer, table);
+		waiterGui.DoBringToTable(customer, table);
 	}
 
 	protected void takeOrder(myCustomer MC) {
+		RestaurantWaiterGui waiterGui = (RestaurantWaiterGui) gui;
 		isInLobby = false;
 		print(MC.customer.getCustomerName() + " wants to order");
 
@@ -311,19 +314,20 @@ public class WaiterRole extends Role implements Waiter {
 			}
 		}
 
-//	waiterGui.DoTakeOrder(MC.tableNumber);
-//		try {
-//			atDestination.acquire();
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//
-//		}
-//		waiterGui.DoLeaveCustomer();
+		waiterGui.DoTakeOrder(MC.tableNumber);
+		try {
+			atDestination.acquire();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+
+		}
+		waiterGui.DoLeaveCustomer();
 
 		MC.customer.msgWhatWouldYouLike();
 	}
 
 	protected void placeOrder(myCustomer MC) {
+		RestaurantWaiterGui waiterGui = (RestaurantWaiterGui) gui;
 		isInLobby = false;
 		print("Placing " + MC.customer.getCustomerName() + "'s order");
 
@@ -333,30 +337,31 @@ public class WaiterRole extends Role implements Waiter {
 			}
 		}
 
-//		waiterGui.DoGoToKitchen();
-//		try {
-//			atDestination.acquire();
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//
-//		}
-//		waiterGui.DoLeaveCustomer();
+		waiterGui.DoGoToKitchen();
+		try {
+			atDestination.acquire();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+
+		}
+		waiterGui.DoLeaveCustomer();
 
 		Phonebook.getPhonebook().getRestaurant().cookRole.msgHeresAnOrder(MC.tableNumber, MC.choice, this);
 
 	}
 
 	protected void retakeOrder(myCustomer MC) {
+		RestaurantWaiterGui waiterGui = (RestaurantWaiterGui) gui;
 		isInLobby = false;
 
-//		waiterGui.DoTakeOrder(MC.tableNumber);
-//		try {
-//			atDestination.acquire();
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//
-//		}
-//		waiterGui.DoLeaveCustomer();
+		waiterGui.DoTakeOrder(MC.tableNumber);
+		try {
+			atDestination.acquire();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+
+		}
+		waiterGui.DoLeaveCustomer();
 		MC.setSeated();
 
 		print("Asking " + MC.customer.getCustomerName() + " for a re-order");
@@ -365,25 +370,27 @@ public class WaiterRole extends Role implements Waiter {
 	}
 
 	protected void deliverOrder() {
+		RestaurantWaiterGui waiterGui = (RestaurantWaiterGui) gui;
 		isInLobby = false;
-//		waiterGui.DoGoToPlatingArea();
-//
-//		try {
-//			atDestination.acquire();
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//
-//		}
-		//waiterGui.DoDeliverOrder(readyOrders.get(0).tableNumber, readyOrders.get(0).choice);
+		waiterGui.DoGoToPlatingArea();
+
+		try {
+			atDestination.acquire();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+
+		}
+		waiterGui.DoDeliverOrder(readyOrders.get(0).tableNumber, readyOrders.get(0).choice);
 		print("waiter called msgGotOrder");
-		//cookGui.msgGotOrder(readyOrders.get(0).choice);
-//		try {
-//			atDestination.acquire();
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//
-//		}
-//		waiterGui.DoLeaveCustomer();
+		Phonebook.getPhonebook().getRestaurant().cookGui.msgGotOrder(readyOrders.get(0).choice);
+		try {
+			atDestination.acquire();
+			atDestination.acquire();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+
+		}
+		waiterGui.DoLeaveCustomer();
 		readyOrders.get(0).customer.msgHeresYourOrder(readyOrders.get(0).choice);
 		Phonebook.getPhonebook().getRestaurant().cashierRole.msgComputeBill(readyOrders.get(0).choice, readyOrders.get(0).tableNumber, this);
 
@@ -397,16 +404,17 @@ public class WaiterRole extends Role implements Waiter {
 	}
 
 	protected void giveCheck(myCustomer MC) {
+		RestaurantWaiterGui waiterGui = (RestaurantWaiterGui) gui;
 		isInLobby = false;
 
-//		waiterGui.DoTakeOrder(MC.tableNumber); //Is going to table
-//		try {
-//			atDestination.acquire();
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//
-//		}
-//		waiterGui.DoLeaveCustomer();
+		waiterGui.DoTakeOrder(MC.tableNumber); //Is going to table
+		try {
+			atDestination.acquire();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+
+		}
+		waiterGui.DoLeaveCustomer();
 
 		MC.customer.msgHeresYourCheck(MC.CheckAmount);
 		MC.state = customerState.GaveCheck;
@@ -432,22 +440,22 @@ public class WaiterRole extends Role implements Waiter {
 		isInLobby = false;
 		state = breakStatus.onBreak;
 		PermissionToBreak = false;
-	//	waiterGui.DoGoOnBreak();
+		//	waiterGui.DoGoOnBreak();
 		stateChanged();
 	}
 
 	protected void goOffBreak() {
 		isInLobby = false;
-//		waiterGui.DoLeaveCustomer();
+		//		waiterGui.DoLeaveCustomer();
 		Phonebook.getPhonebook().getRestaurant().hostRole.msgOffBreak(this);
 		state = breakStatus.working;
-//		waiterGui.denyBreak();
+		//		waiterGui.denyBreak();
 		stateChanged();
 	}
 
 	protected void breakDenied() {
 		state = breakStatus.working;
-	//	waiterGui.denyBreak();
+		//	waiterGui.denyBreak();
 		stateChanged();
 	}
 

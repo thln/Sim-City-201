@@ -12,6 +12,7 @@ import restaurant.test.mock.MockCook;
 import application.WatchTime;
 import application.gui.animation.BuildingPanel;
 import application.gui.animation.agentGui.RestaurantCookGui;
+import application.gui.animation.agentGui.RestaurantCustomerGui;
 import application.gui.animation.agentGui.RestaurantWaiterGui;
 
 public class Restaurant {
@@ -44,6 +45,7 @@ public class Restaurant {
 
 	public Restaurant(String name) {
 		this.name = name;
+		cookRole.setGui(cookGui);
 	}
 
 	//Methods
@@ -73,6 +75,7 @@ public class Restaurant {
 			if (isOpen()) {
 				hostRole.msgRestaurantOpen();
 			}
+			restPanel.addGui(cookGui);
 			return cookRole;
 		}
 		else if (title.contains("cashier")) {
@@ -138,17 +141,17 @@ public class Restaurant {
 
 	public boolean arrived(RestaurantCustomerRole rCR) {
 		if (customers.size() <= 12) {
-			//RestaurantCustomerGui rCG = (RestaurantCustomerGui) rCR.gui;
-			//rCG.setHomePosition((22 * customers.size()), 10);
-			//restPanel.addGui(rCG);
+			RestaurantCustomerGui rCG = (RestaurantCustomerGui) rCR.gui;
+			rCG.setHomePosition((22 * customers.size()), 10);
+			restPanel.addGui(rCG);
 			customers.add(rCR);
 			rCR.gotHungry((22 * customers.size()), 10);
 			return true;
 		}
 		else if (customers.size() <= 24) {
-			//RestaurantCustomerGui rCG = (RestaurantCustomerGui) rCR.gui;
-			//rCG.setHomePosition((22 * (customers.size() - 12)), 32);
-			//restPanel.addGui(rCG);
+			RestaurantCustomerGui rCG = (RestaurantCustomerGui) rCR.gui;
+			rCG.setHomePosition((22 * (customers.size() - 12)), 32);
+			restPanel.addGui(rCG);
 			customers.add(rCR);
 			rCR.gotHungry((22 * (customers.size() - 12)), 32);
 			return true;
@@ -167,6 +170,7 @@ public class Restaurant {
 		}
 		if (worker.getWorkerRole().equals(cookRole)) {
 			cookRole = null;
+			restPanel.removeGui(cookGui);
 		}
 		//WAITERS AND ALT WAITERS
 		//finish the "leave work" in Role.java 
