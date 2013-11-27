@@ -8,7 +8,7 @@ public class TimeManager {
 
 	public enum Day{Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday};
 	
-	private static int speedOfTime = 20;
+	private static int speedOfTime = 80;
 
 	private TimeManager() {
 	}
@@ -53,7 +53,7 @@ public class TimeManager {
 	
 	public void resetTimeSpeed()
 	{
-		speedOfTime = 500;
+		speedOfTime = 80;
 	}
 	
 	public class Time {
