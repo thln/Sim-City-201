@@ -1,4 +1,15 @@
-![Bank Interaction Diagram](https://scontent-b-lax.xx.fbcdn.net/hphotos-prn2/v/1421408_10202191577887907_357942202_n.jpg?oh=3dc60717c29715c98d24c0f94c18b0a1&oe=5284EE88)
+#Bank Design
+
+###Opening a New Account
+![New Account Diagram](https://raw.github.com/usc-csci201-fall2013/team20/master/docs/InteractionDiagrams/BankNew.png?token=3290221__eyJzY29wZSI6IlJhd0Jsb2I6dXNjLWNzY2kyMDEtZmFsbDIwMTMvdGVhbTIwL21hc3Rlci9kb2NzL0ludGVyYWN0aW9uRGlhZ3JhbXMvQmFua05ldy5wbmciLCJleHBpcmVzIjoxMzg2MDkyNjg1fQ%3D%3D--08b1310e1d4e1c95829357f684c05de51e6230d5)
+###Depositing into an Account
+![Bank Deposit Diagram](https://raw.github.com/usc-csci201-fall2013/team20/master/docs/InteractionDiagrams/BankDeposit.png?token=3290221__eyJzY29wZSI6IlJhd0Jsb2I6dXNjLWNzY2kyMDEtZmFsbDIwMTMvdGVhbTIwL21hc3Rlci9kb2NzL0ludGVyYWN0aW9uRGlhZ3JhbXMvQmFua0RlcG9zaXQucG5nIiwiZXhwaXJlcyI6MTM4NjA5MjU3NH0%3D--42197ac00d98717dbd9adaf2d848b92965607a07)
+###Withdrawing from an Account
+![Bank Withdrawal Diagram](https://raw.github.com/usc-csci201-fall2013/team20/master/docs/InteractionDiagrams/BankWidthdraw.png?token=3290221__eyJzY29wZSI6IlJhd0Jsb2I6dXNjLWNzY2kyMDEtZmFsbDIwMTMvdGVhbTIwL21hc3Rlci9kb2NzL0ludGVyYWN0aW9uRGlhZ3JhbXMvQmFua1dpZHRoZHJhdy5wbmciLCJleHBpcmVzIjoxMzg2MDkyNzM1fQ%3D%3D--e83ca819d6a1b9b7e62753ac996307193988dc1d)
+###Processing a New Loan
+![New Loan Diagram](https://raw.github.com/usc-csci201-fall2013/team20/master/docs/InteractionDiagrams/BankLoan.png?token=3290221__eyJzY29wZSI6IlJhd0Jsb2I6dXNjLWNzY2kyMDEtZmFsbDIwMTMvdGVhbTIwL21hc3Rlci9kb2NzL0ludGVyYWN0aW9uRGlhZ3JhbXMvQmFua0xvYW4ucG5nIiwiZXhwaXJlcyI6MTM4NjA5MjY2Mn0%3D--94847223cb14e1aa42b336f28288983c712e9717)
+###Paying Off a Loan
+![Paying a Loan Diagram](https://raw.github.com/usc-csci201-fall2013/team20/master/docs/InteractionDiagrams/BankPayLoan.png?token=3290221__eyJzY29wZSI6IlJhd0Jsb2I6dXNjLWNzY2kyMDEtZmFsbDIwMTMvdGVhbTIwL21hc3Rlci9kb2NzL0ludGVyYWN0aW9uRGlhZ3JhbXMvQmFua1BheUxvYW4ucG5nIiwiZXhwaXJlcyI6MTM4NjA5Mjc3MX0%3D--1f72a5f8f15afa5e5173b1c1a9fc729df2c15af0)
 
 # Bank (Manager) Agent
 

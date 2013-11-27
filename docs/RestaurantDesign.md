@@ -1,4 +1,4 @@
-![Interaction Diagram NonNorm](https://fbcdn-sphotos-h-a.akamaihd.net/hphotos-ak-prn2/v/1441593_10202515164226292_609609151_n.jpg?oh=4c8cbf337faf971c21a520a48a962c79&oe=528508E8&__gda__=1384526613_fb32443d7157273275ace11c4a6f655b)
+![Revolving Stand Diagram NonNorm](https://raw.github.com/usc-csci201-fall2013/team20/014aeaa5a00d787532f65047f6429105c3027724/docs/InteractionDiagrams/RevolvingStand.png?token=3290221__eyJzY29wZSI6IlJhd0Jsb2I6dXNjLWNzY2kyMDEtZmFsbDIwMTMvdGVhbTIwLzAxNGFlYWE1YTAwZDc4NzUzMmY2NTA0N2Y2NDI5MTA1YzMwMjc3MjQvZG9jcy9JbnRlcmFjdGlvbkRpYWdyYW1zL1Jldm9sdmluZ1N0YW5kLnBuZyIsImV4cGlyZXMiOjEzODYxMDI4MjR9--4c0b4137fab3fb854e1d6f224efa2481911872e1)
 
 # Customer 
 
