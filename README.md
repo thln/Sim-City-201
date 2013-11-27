@@ -14,7 +14,7 @@ team20
 
   + Name: Josh Greenberger
   	+ USC Email: jdgreenb@usc.edu
-  	+ USC ID: 
+  	+ USC ID: 2189996682
 
   + Name: Carmen Tan
   	+ USC Email: carmiele@usc.edu
@@ -72,6 +72,7 @@ team20
   	+ Created and adapted Trace Panel and corresponding print functions (with the right tag's)
   	+ Created Add Person Panel to dynamically figure out what information is necessary to display
   	+ Fix Info Panel to dynamically figure out what information is necessary to display
+  	+ Fixed List Panel Size
 
 
   + Kristi Hupka
@@ -81,7 +82,8 @@ team20
   	+ Designed and implemented Deadbeat Sub Class
   	+ Designed and implemented Crook Sub Class
   	+ Designed and implemented Worker Sub Class 
-  	+ Designed and implemented Phonebook Reference
+  	+ Designed and implemented Phonebook 
+  	+ Designed and implemented inner Reference
   	+ Designed and implemented Time System
   	+ Implemented Roles system
   	+ Designed and implemented all Market Agents and Code
@@ -92,13 +94,18 @@ team20
   	+ Created Interfaces for all of the above roles
   	+ Created Mocks for all of the above roles
   	+ Created tests for all of the above roles
+  	+ Designed and implemented Restaurant and Market Business Interaction
   	+ Figured out the local image/how to show images
-  	+ Created Aplication file
+  	+ Created Application file
   	+ Changed the Build file for it to work on other computers
   	+ Designed and implemented Restaurant Phonebook Reference
   	+ Integrated Restaurant into City
   	+ Created Design Documents
-  	+ A bunch GUI stuff I don't know right now, Kristi fix pls
+  	+ Merged Dashboard and Add Panel
+  	+ Put in Trace Panel
+  	+ Fixed Restaurant GUI Animation
+  	+ Fixed CardLayout for Building and City View
+  	+ Fixed Scrolling for List Panel
 
 
   + Josh Greenberger
@@ -111,6 +118,7 @@ team20
   	+ Designed and implemented Phonebook Reference
   	+ Implemented Roles system
   	+ Designed and implemented how shift times for all roles would work
+  	+ Designed going to Work system
   	+ Designed the best system for interaction between Person, subclasses, and all of the roles
   	+ Designed and implemented all Bank related Agents and Code
   	+ Designed and implemented Phonebook reference for Bank
@@ -122,9 +130,9 @@ team20
   	+ Created Interfaces for all of the above roles
   	+ Created Mocks for all of the above roles
   	+ Created tests for all of the above roles
-  	+ Josh needs way more credit
-  	+
-  	+
+  	+ Designed how Phonebook can check if something is Open
+  	+ Enhanced Phonebook to be used for tests
+
 
   + Carmen Tan
   	+Created Design Documents
