@@ -81,8 +81,9 @@ team20
   	+ Designed and implemented Deadbeat Sub Class
   	+ Designed and implemented Crook Sub Class
   	+ Designed and implemented Worker Sub Class 
-  	+ Designed and implemented Phonebook Reference
-  	+ Designed and implemented Time System
+  	+ Designed and implemented Singleton Phonebook Reference
+  	+ Designed and implemented Singleton Time System
+  	+ Designed a TimeWatch class for Person to deal with time
   	+ Implemented Roles system
   	+ Designed and implemented all Market Agents and Code
   	+ Designed and implemented Market Customer
@@ -92,13 +93,19 @@ team20
   	+ Created Interfaces for all of the above roles
   	+ Created Mocks for all of the above roles
   	+ Created tests for all of the above roles
-  	+ Figured out the local image/how to show images
-  	+ Created Aplication file
+  	+ Figured out the local image/how to show images with relative paths on all computers
+  	+ Created Application file
   	+ Changed the Build file for it to work on other computers
   	+ Designed and implemented Restaurant Phonebook Reference
   	+ Integrated Restaurant into City
   	+ Created Design Documents
-  	+ A bunch GUI stuff I don't know right now, Kristi fix pls
+  	+ Combined Add Panel and Dashboard Panel
+  	+ Put Trace Panel into Gui
+  	+ Fixed Linked Building and clickable City Views in Animation Panel for cardLayout
+  	+ Implemented animated restaurant building GUI
+  	+ Fixed scrollbar on Infomation Panel
+  	+ Set up initial project packages with agent and test code
+  	+ Managed team meetings
 
 
   + Josh Greenberger
@@ -122,9 +129,9 @@ team20
   	+ Created Interfaces for all of the above roles
   	+ Created Mocks for all of the above roles
   	+ Created tests for all of the above roles
+  	+ Managed team meetings
   	+ Josh needs way more credit
-  	+
-  	+
+
 
   + Carmen Tan
   	+ Created Design Documents for Individual Businesses
