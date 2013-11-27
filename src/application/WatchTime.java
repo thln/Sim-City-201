@@ -22,7 +22,7 @@ public class WatchTime {
 			this.minutes = minutes;
 		}
 		
-		public int getTime(){
-			return (60*hour + minutes);
+		public int getTimeHour(){
+			return this.hour;
 		}
 }

@@ -148,8 +148,8 @@ public class ListPanel extends JPanel implements ActionListener{
 			}
 			else if(temp instanceof Worker){
 				Job tempJob = ((Worker) temp).getJob();
-				people.add(new Profile(temp.getName(), (int) temp.getMoney(), "Worker", tempJob.getTitle(), tempJob.getJobLoc(), tempJob.getStartTime().getTime()
-										,tempJob.getLunchTime().getTime(),tempJob.getEndTime().getTime()));
+				people.add(new Profile(temp.getName(), (int) temp.getMoney(), "Worker", tempJob.getTitle(), tempJob.getJobLoc(), tempJob.getStartTime().getTimeHour()
+										,tempJob.getLunchTime().getTimeHour(),tempJob.getEndTime().getTimeHour()));
 				button.setBackground(Color.white);
 			}
 			else if(temp instanceof Wealthy){
