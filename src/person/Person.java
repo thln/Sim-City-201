@@ -45,7 +45,9 @@ public abstract class Person extends Agent{
 	public HashMap <String, Integer> Inventory = new HashMap<String, Integer>();                 //Food list
 	public boolean hasFoodInFridge = false;
 	public enum HungerLevel {full, moderate, hungry, starving};
-	HungerLevel hunger = HungerLevel.full;
+	private HungerLevel hunger = HungerLevel.full;
+	int eatTime = 4;
+	protected Semaphore eating = new Semaphore(0, true);
 
 	//Bank Related
 	public double money;
@@ -64,7 +66,6 @@ public abstract class Person extends Agent{
 	//Time Related
 	public int sleepTime = 22;
 	protected Timer nextTask;
-	boolean upcomingTask;
 
 	Person(String name, double moneyz) {
 		this.name = name;
@@ -73,9 +74,8 @@ public abstract class Person extends Agent{
 		roles.add(new MarketCustomerRole(this, getName(), "Market Customer"));
 		roles.add(new RestaurantCustomerRole(this, getName(), "Restaurant Customer"));
 		nextTask = new Timer();
-		upcomingTask = false;
 		atDestination = new Semaphore(0,true);
-		hunger = HungerLevel.full;
+		setHunger(HungerLevel.full);
 		hasFoodInFridge = false;
 	}
 
@@ -89,7 +89,23 @@ public abstract class Person extends Agent{
 	//Actions
 	protected void eatAtHome() {
 		currentRoleName = "";
+		int timeConversion = 60 * TimeManager.getSpeedOfTime();
 		print("Going to eat at home");
+		nextTask.schedule(new TimerTask() {
+			public void run() {  
+				eating.release();
+				hasFoodInFridge = false;  
+				print("Finished eating at home");
+				hunger = HungerLevel.full;
+			}
+		}, eatTime * timeConversion);
+		try {
+			eating.acquire();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		}
 	}
 
 	protected void prepareForBank () {
@@ -200,6 +216,7 @@ public abstract class Person extends Agent{
 					MCR.setItem("Car");
 					cust1.setRoleActive();
 					marketPanel.addGui(mg);
+					currentRoleName = "Market Customer";
 					stateChanged();
 					return;
 				}
@@ -257,12 +274,12 @@ public abstract class Person extends Agent{
 	}
 
 	protected void startHungerTimer() {
-		hunger = HungerLevel.moderate;
+		setHunger(HungerLevel.moderate);
 
 		//After arrives home
 		hungerTimer.schedule(new TimerTask() {
 			public void run() {
-				hunger = HungerLevel.hungry;
+				setHunger(HungerLevel.hungry);
 				stateChanged();
 			}
 		},
@@ -333,5 +350,13 @@ public abstract class Person extends Agent{
 
 	public PersonGui getGui() {
 		return gui;
+	}
+
+	public HungerLevel getHunger() {
+		return hunger;
+	}
+
+	public void setHunger(HungerLevel hunger) {
+		this.hunger = hunger;
 	}
 }

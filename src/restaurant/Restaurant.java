@@ -64,20 +64,20 @@ public class Restaurant {
 				Worker worker = (Worker) cookRole.getPerson();
 				worker.roleFinishedWork();
 			}
-			//Setting bank guard role to new role
+			//Setting cook role to new role
 			cookRole.setPerson(person);
 			if (isOpen()) {
 				hostRole.msgRestaurantOpen();
 			}
 			return cookRole;
 		}
-		else if (title == "cashier") {
+		else if (title.contains("cashier")) {
 			//Setting previous bank guard role to inactive
 			if (cashierRole.getPerson() != null) {
 				Worker worker = (Worker) cashierRole.getPerson();
 				worker.roleFinishedWork();
 			}
-			//Setting bank guard role to new role
+			//Setting cashier role to new role
 			cashierRole.setPerson(person);
 			if (isOpen()) {
 				hostRole.msgRestaurantOpen();
@@ -106,7 +106,7 @@ public class Restaurant {
 			}
 			return waiter;
 		}
-		else if (title == "alternative waiter") {
+		else if (title == "altWaiter") {
 			AltWaiterRole altWaiter = new AltWaiterRole(person, person.getName(), title);
 //			if (waiters.size() <= 12) {
 //				RestaurantWaiterGui g = new RestaurantWaiterGui(altWaiter);

@@ -14,6 +14,10 @@ import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
+import sun.audio.*;
+
+import java.io.*;
+
 import application.*;
 import application.gui.appView.listPanel.ListPanel.Profile;
 
@@ -41,9 +45,13 @@ public class AddPanel extends JPanel implements ActionListener {
 	private JComboBox socialClassBox;
 	private JComboBox jobLocationBox;
 	private JComboBox jobTypeBox;
+
+	
+	private boolean raveMode = false;	
 	boolean rave = false;
 
-	private String[] personType = {" ", "Deadbeat", "Worker", "Wealthy"};
+
+	private String[] personType = {" ", /*"Deadbeat", "Crook", */ "Worker", "Wealthy"};
 	private String[] jobLocation = {" ", "Restaurant", "Bank", "Market", "Housing"};
 	private String[] emptyList = {" "};
 	private String[] restaurantJobs = {" ", "Host", "Cook", "Cashier", "Waiter", "Alt Waiter"};
@@ -258,9 +266,18 @@ public class AddPanel extends JPanel implements ActionListener {
 				resultLabel.setText("Please fix fields.");
 				return;
 			}
-
-			if(allFieldsEntered())
+			//if( (jobStartTime < 25) && (jobLunchTime < 25) && (jobEndTime < 25) && (jobStartTime < jobEndTime) )
+			//{
+				
+			//}
+			
+			if(allFieldsEntered() && (jobStartTime < 25) && (jobLunchTime < 25)
+					&& (jobEndTime < 25) && (jobStartTime < jobEndTime))
 			{
+				jobStartTime = jobStartTime*100;
+				jobLunchTime = jobLunchTime*100;
+				jobEndTime = jobEndTime*100;
+				
 				app.addPerson(nameTextField.getText(), money, (String) socialClassBox.getSelectedItem(), 
 						(String) jobTypeBox.getSelectedItem(), (String) jobLocationBox.getSelectedItem(), 
 						jobStartTime, jobLunchTime, jobEndTime);
@@ -283,6 +300,7 @@ public class AddPanel extends JPanel implements ActionListener {
 		if (e.getSource() == raveButton) {
 			for (Person p : app.getPopulation()) {
 				p.getGui().setRaveMode();
+				//RaveAudioMode();
 			}
 			if (!rave){
 				rave = true;
@@ -305,6 +323,42 @@ public class AddPanel extends JPanel implements ActionListener {
 		}
 	}
 
+	
+	/*
+	public void RaveAudioMode()
+	{
+		AudioPlayer MGP = AudioPlayer.player;
+		AudioStream BGM;
+		AudioData MD;
+		ContinuousAudioDataStream loop = null;
+		//try 
+		//{
+			try {
+				BGM = new AudioStream(new FileInputStream("raveAudioMode.wav"));
+				MD = BGM.getData();
+				loop = new ContinuousAudioDataStream(MD);
+
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.out.println("Won't work1.");
+				return;
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.out.println("Won't work.");
+				return;
+			}
+		//}
+		//catch(IOException error)
+		//{
+		//	System.out.println("Won't work.");
+		//	return;
+		//}
+		
+		MGP.start(loop);
+	}*/
+	
 	public void showJobLocationFields(boolean show)
 	{
 		jobLocationLabel.setVisible(show);

@@ -35,16 +35,16 @@ public class Market {
 	private BuildingPanel marketPanel;
 	
 	double money;
-	public HashMap<String, Product> marketItemsForSale = new HashMap<String, Product>(); {
+	public HashMap<Integer, Product> marketItemsForSale = new HashMap<Integer, Product>(); {
 		//For people
-		marketItemsForSale.put("Car", new Product("Car", 1000.00));
-		marketItemsForSale.put("Pasta", new Product("Pasta", 1.99));
-		marketItemsForSale.put("Ice Cream", new Product("Ice Cream", 4.99));
-		marketItemsForSale.put("Chips", new Product("Chips", 2.99));
-		marketItemsForSale.put("Milk", new Product("Milk", 2.50));
-		marketItemsForSale.put("Eggs", new Product("Eggs", 1.50));
-		marketItemsForSale.put("Lobster", new Product("Lobster", 12.99));
-		marketItemsForSale.put("Cheese", new Product("Cheese", 3.99));
+		marketItemsForSale.put(0, new Product("Pasta", 1.99));
+		marketItemsForSale.put(1, new Product("Ice Cream", 4.99));
+		marketItemsForSale.put(2, new Product("Chips", 2.99));
+		marketItemsForSale.put(3, new Product("Milk", 2.50));
+		marketItemsForSale.put(4, new Product("Eggs", 1.50));
+		marketItemsForSale.put(5, new Product("Lobster", 12.99));
+		marketItemsForSale.put(6, new Product("Cheese", 3.99));
+		marketItemsForSale.put(7, new Product("Car", 1000.00));
 	}
 
 	public HashMap<String, Item> inventory = new HashMap<String, Item>(); {

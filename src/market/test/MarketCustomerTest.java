@@ -58,7 +58,7 @@ public class MarketCustomerTest extends TestCase {
 		assertTrue("MarketCustomer's scheduler should have returned true, has to exit the market, but didn't.", 
 				marketCustomer.pickAndExecuteAnAction());
 		
-		assertEquals("MarketCustomer's state should go back to original state of waiting for orders", marketCustomer.state, MarketCustomerState.waitingForOrders);
+		assertEquals("MarketCustomer's state should go back to original state of waiting for orders", marketCustomer.state, MarketCustomerState.atMarket);
 
 	}// end testOneMarketCustomerPaymentNormativeScenerio
 }

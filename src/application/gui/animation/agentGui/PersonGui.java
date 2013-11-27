@@ -135,7 +135,18 @@ public class PersonGui extends CityGui{
 	}
 
 	public void draw(Graphics2D g) {
-		g.setColor(currColor);
+		
+		if (raveMode){
+			Random rand = new Random();
+			int red = rand.nextInt(255);
+			int blue  = rand.nextInt(255);
+			int green  = rand.nextInt(255);
+			Color myColor = new Color(red, blue, green);
+			g.setColor(myColor);
+		}
+		else if (!raveMode)
+			g.setColor(currColor);
+		
 		g.fillRect(getxPos(), getyPos(), 20, 20);
 		if(currColor != transColor)
 			g.setColor(Color.WHITE);

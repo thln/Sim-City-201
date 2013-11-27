@@ -19,7 +19,7 @@ public abstract class Role {
 
         protected Semaphore atDestination = new Semaphore(0,true);
 
-        private RoleState state = RoleState.inActive;
+        protected RoleState state = RoleState.inActive;
         protected boolean leaveRole = false;
         
         //Testing
@@ -40,20 +40,18 @@ public abstract class Role {
                 state = RoleState.inActive;
         }
         
-        public Person getPerson()
-        {
+        public Person getPerson() {
                 return person;
         }
         
-        public void setPerson(Person person) 
-        {
+        public void setPerson(Person person) {
                 this.person = person;
-                if (person != null)
-                personName = person.getName();
+                if (person != null) {
+                	personName = person.getName();
+                }
         }
         
-        protected void stateChanged()
-        {
+        protected void stateChanged() {
         //calls Person scheduler
                 //do we just call the scheduler, or do we release the semaphore on stateChanged?
                 person.stateChanged();
@@ -94,7 +92,7 @@ public abstract class Role {
             //System.out.println(roleName + " " + getName() + " : " + msg);
             if (roleName.equals("Bank Customer") || roleName.equals("Bank Guard") 
                             || roleName.equals("Bank Teller") || roleName.equals("Loan Officer")
-                            || roleName.contains("BankTeller"))
+                            || roleName.contains("bankTeller"))
             {
             AlertLog.getInstance().logInfo(AlertTag.BANK, roleName + " " + getName(), msg);
 

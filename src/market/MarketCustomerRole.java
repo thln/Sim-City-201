@@ -14,13 +14,13 @@ public class MarketCustomerRole extends Role implements MarketCustomer {
 	protected String roleName = "Market Customer";
 
 	public EventLog log = new EventLog();
-	
+
 	MarketCustomerGui marketCustomerGui = (MarketCustomerGui) gui;
-	
+
 	//Data
-	public enum MarketCustomerState {atMarket, waitingForOrders, recievedOrders, payed, disputingBill}
-	public MarketCustomerState state = MarketCustomerState.waitingForOrders;
-	
+	public enum MarketCustomerState {atMarket, waitingForOrders, recievedOrders, payed, disputingBill, waitingToOpen}
+	public MarketCustomerState state = MarketCustomerState.atMarket;
+
 	public double bill = 0;
 	String item;
 	int itemAmount;
@@ -32,14 +32,16 @@ public class MarketCustomerRole extends Role implements MarketCustomer {
 
 	//Messages
 	public void msgComeIn() {
+		state = MarketCustomerState.atMarket;
 		stateChanged();
 	}
-	
+
 	public void msgHereAreYourThings(String item, int itemAmount, double orderCost) {
 		state = MarketCustomerState.recievedOrders;
 		this.item = item;
 		this.itemAmount = itemAmount;
 		bill = orderCost;
+		System.err.print(bill);
 		log.add(new LoggedEvent("Recieved msgHereAreYourThings"));
 		stateChanged();
 	}
@@ -55,26 +57,36 @@ public class MarketCustomerRole extends Role implements MarketCustomer {
 			payBill();
 			return true;
 		}
-		
+
 		if (state == MarketCustomerState.payed) {
 			exitMarket();
 			return true;
 		}
-		
+
 		return false;
 	}
 
 	//Actions
 	public void msgSalesPerson() {
+		if(!Phonebook.getPhonebook().getMarket().isOpen()) {
+			print("Waiting for the market to open");
+			state = MarketCustomerState.waitingToOpen;
+			return;
+		}
+
 		if (item == "Car") {
 			Phonebook.getPhonebook().getMarket().salesPersonRole.msgIWantProducts(this, "Car", 1);
+			print("Arrived at the market");
+			state = MarketCustomerState.waitingForOrders;
 			return;
 		}
 		item = chooseMarketItem();
 		Phonebook.getPhonebook().getMarket().salesPersonRole.msgIWantProducts(this, item, 3);
-		print("Arrived at the market");
+		print("Asking sales person for: " + item);
+		state = MarketCustomerState.waitingForOrders;
+
 	}
-	
+
 	private String chooseMarketItem() {
 		Random rand = new Random();
 		int myRandomChoice;
@@ -86,7 +98,7 @@ public class MarketCustomerRole extends Role implements MarketCustomer {
 		item = Phonebook.getPhonebook().getMarket().marketItemsForSale.get(myRandomChoice).itemName;
 		return item;
 	}
-	
+
 	public void payBill(){
 		if (bill == Phonebook.getPhonebook().getMarket().inventory.get(item).price * itemAmount) {
 			print("Paying my bill");
@@ -100,14 +112,15 @@ public class MarketCustomerRole extends Role implements MarketCustomer {
 			exitMarket();
 		}
 	}
-	
+
 	public void setItem(String item) {
 		this.item = item;
 	}
-	
+
 	public void exitMarket() {
 		print("Leaving Market");
 		state = MarketCustomerState.atMarket;
+		person.hasFoodInFridge = true;
 		this.setRoleInactive();
 	}
 }
