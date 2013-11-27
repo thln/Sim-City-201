@@ -5,6 +5,7 @@ import restaurant.interfaces.RestaurantCustomer;
 public class myCustomer {
 	
 	RestaurantCustomerRole customer;
+	RestaurantCustomer testCustomer;
 	
 	int tableNumber;
 	double CheckAmount = 0;
@@ -26,7 +27,10 @@ public class myCustomer {
 		this.yHome = yHome;
 	}
 	
-	
+	myCustomer (RestaurantCustomer customerTest)
+	{
+		testCustomer = customerTest;
+	}
 	
 	//Utilities
 	
