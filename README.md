@@ -93,6 +93,7 @@ team20
   	+ Changed the Build file for it to work on other computers
   	+ Designed and implemented Restaurant Phonebook Reference
   	+ Integrated Restaurant into City
+  	+ Created Design Documents
   	+ A bunch GUI stuff I don't know right now, Kristi fix pls
 
 
@@ -122,7 +123,7 @@ team20
   	+
 
   + Carmen Tan
-  	+
+  	+Created Design Documents
 
   + Nishant Srikanthan (Team Leader)
   	+
