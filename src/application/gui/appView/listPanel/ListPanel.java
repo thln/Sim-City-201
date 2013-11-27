@@ -122,11 +122,27 @@ public class ListPanel extends JPanel implements ActionListener{
 			infoName.setText("Name: " + pf.getName());
 			infoType.setText("Type: " + pf.getType());
 			infoMoney.setText("Money: " + pf.getMoney());
-			infoJobLoc.setText("Name: " + pf.getJobLocation());
-			infoJobTitle.setText("Job Title: " + pf.getJobTitle());
-			infoStartTime.setText("Start Time: " + pf.getStartT());
-			infoLunchTime.setText("Lunch Time: " + pf.getLunchT());
-			infoEndTime.setText("End Time: " + pf.getEndT());
+			if(pf.getType() == "Worker")
+			{
+				infoJobLoc.setVisible(true);
+				infoJobTitle.setVisible(true);
+				infoStartTime.setVisible(true);
+				infoLunchTime.setVisible(true);
+				infoEndTime.setVisible(true);
+				infoJobLoc.setText("Job Location: " + pf.getJobLocation());
+				infoJobTitle.setText("Job Title: " + pf.getJobTitle());
+				infoStartTime.setText("Start Time: " + pf.getStartT());
+				infoLunchTime.setText("Lunch Time: " + pf.getLunchT());
+				infoEndTime.setText("End Time: " + pf.getEndT());
+			}
+			else
+			{
+				infoJobLoc.setVisible(false);
+				infoJobTitle.setVisible(false);
+				infoStartTime.setVisible(false);
+				infoLunchTime.setVisible(false);
+				infoEndTime.setVisible(false);
+			}
 
 		}
 	}
