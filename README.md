@@ -142,6 +142,7 @@ team20
     in order to see the different scenarios running. 
   + *Since we have implemented all the main scenarios, we have not implemented a configuration file under the time constraints.  However all normative scenerios can be tracked via the Trace Panel.*
   + We recommend restarting the application each time.
+  + In order to run the test cases, please open the respective directory (market.test, bank.test, restaurant.test, housing.test), right click the test you want to run, and run as JUNIT test.
 
 ###Unimplemented/Not Working (V1)
   + There is currently no busing system/roads/cars. Everyone walks.
