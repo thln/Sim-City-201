@@ -44,23 +44,23 @@ public class Worker extends Person {
 			this.jobPlace = jobPlace;
 		}
 
-		WatchTime getStartTime() {
+		public WatchTime getStartTime() {
 			return startTime;
 		}
 
-		void setStartTime(int t) {
+		public void setStartTime(int t) {
 			startTime.setTime(t, 0);
 		}
 
-		WatchTime getLunchTime() {
+		public WatchTime getLunchTime() {
 			return lunchTime;
 		}
 
-		void setLunchTime(int t) {
+		public void setLunchTime(int t) {
 			lunchTime.setTime(t, 0);
 		}
 
-		WatchTime getEndTime() {
+		public WatchTime getEndTime() {
 			return endTime;
 		}
 
@@ -70,6 +70,13 @@ public class Worker extends Person {
 
 		void setTitle(String title) {
 			this.title = title;
+		}
+		
+		public String getTitle(){
+			return title;
+		}
+		public String getJobLoc(){
+			return jobPlace;
 		}
 	}
 
