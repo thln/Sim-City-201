@@ -5,6 +5,7 @@ import java.util.Random;
 import market.interfaces.MarketCustomer;
 import application.Phonebook;
 import application.gui.animation.agentGui.MarketCustomerGui;
+import application.gui.animation.agentGui.RestaurantCustomerGui;
 import person.Person;
 import person.Role;
 import testing.LoggedEvent;
@@ -28,6 +29,7 @@ public class MarketCustomerRole extends Role implements MarketCustomer {
 
 	public MarketCustomerRole(Person person, String pName, String rName) {
 		super(person, pName, rName);
+		gui = new MarketCustomerGui(this);
 	}
 
 	//Messages

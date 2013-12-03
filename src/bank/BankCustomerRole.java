@@ -3,6 +3,8 @@ package bank;
 import bank.interfaces.BankCustomer;
 import bank.interfaces.BankTeller;
 import application.Phonebook;
+import application.gui.animation.agentGui.BankCustomerGui;
+import application.gui.animation.agentGui.RestaurantCustomerGui;
 import person.Person;
 import person.Role;
 import person.Worker;
@@ -25,6 +27,7 @@ public class BankCustomerRole extends Role implements BankCustomer{
 		super(p1, pName, rName);
 		desire = BankCustomerDesire.openAccount;
 		state = CustomerState.atBank;
+		gui = new BankCustomerGui(this);
 	}
 
 	//Messages

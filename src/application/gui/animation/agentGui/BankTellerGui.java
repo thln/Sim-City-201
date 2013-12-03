@@ -10,11 +10,10 @@ public class BankTellerGui extends BankGui{
 	private BankTellerRole agent = null;
 	private boolean isPresent = true;
 
-	//RestaurantGui gui;
-
-    private int xPos = 600, yPos = 0;//default bank teller position
-    private int xDestination = 600, yDestination = 0;//default start position
-	
+    private int xPos = 300, yPos = 30;//default bank teller position
+    private int xDestination = 300, yDestination = 50;//default start position
+	private int tellerPosition;
+    
 	private enum Command {noCommand};
 	private Command command = Command.noCommand;
 
@@ -24,9 +23,8 @@ public class BankTellerGui extends BankGui{
 	public BankTellerGui() {
 	}
 	
-	public BankTellerGui(BankTellerRole c/*, RestaurantGui gui*/){
+	public BankTellerGui(BankTellerRole c){
 		agent = c;
-		//this.gui = gui;
 	}
 
 	public void updatePosition() {
@@ -81,4 +79,8 @@ public class BankTellerGui extends BankGui{
     	xDestination = 300;
     	yDestination = 300;
     }
+
+	public void setTellerPosition(int i) {
+		tellerPosition = i;
+	}
 }
