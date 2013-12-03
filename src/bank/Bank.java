@@ -116,7 +116,8 @@ public class Bank {
 				bankGuardRole.msgTellerCameToWork(t1);
 				
 				t1.setGui(g);
-				setTellerPosition(g);
+				setTellerPosition(t1, g);
+				g.DoGoToWindow();
 				tellers.add(t1);
 				if (isOpen()) {
 					bankGuardRole.msgBankOpen();
@@ -147,17 +148,21 @@ public class Bank {
 		}
 	}
 
-	public void setTellerPosition(BankTellerGui g) {
+	public void setTellerPosition(BankTeller t1, BankTellerGui g) {
 		if (tellers.size() == 0) {
+			t1.setTellerWindow(1);
 			g.setTellerPosition(1);
 		}
 		else if (tellers.size() == 1) {
+			t1.setTellerWindow(2);
 			g.setTellerPosition(2);
 		}
 		else if (tellers.size() == 2) {
+			t1.setTellerWindow(3);
 			g.setTellerPosition(3);
 		}
 		else if (tellers.size() == 3) {
+			t1.setTellerWindow(4);
 			g.setTellerPosition(4);
 		}
 	}

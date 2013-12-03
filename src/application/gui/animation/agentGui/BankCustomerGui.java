@@ -43,13 +43,19 @@ public class BankCustomerGui extends BankGui {
     			yPos--;
 
     		if (xPos == xDestination && yPos == yDestination) {
-    			
+    			if(agent != null) {
+    				agent.msgAtDestination();
+    			}
     		}
     }
 
     public void draw(Graphics2D g) {
         g.setColor(Color.BLUE);
         g.fillRect(xPos, yPos, 20, 20);
+        if(agent != null) {
+        	g.setColor(Color.BLACK);
+        	g.drawString(agent.getName(), xPos, yPos);
+        }
     }
 
 	public boolean isPresent() {
@@ -101,6 +107,6 @@ public class BankCustomerGui extends BankGui {
     
     public void DoExit() {
     	xDestination = 300;
-    	yDestination = 300;
+    	yDestination = 350;
     }
 }

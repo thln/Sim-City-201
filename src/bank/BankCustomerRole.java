@@ -1,5 +1,7 @@
 package bank;
 
+import java.util.concurrent.Semaphore;
+
 import bank.interfaces.BankCustomer;
 import bank.interfaces.BankTeller;
 import application.Phonebook;
@@ -15,19 +17,21 @@ public class BankCustomerRole extends Role implements BankCustomer{
 
 	public enum BankCustomerDesire {none, withdraw, deposit, wantLoan, closeLoan, openAccount, closeAccount, robBank, leaveBank}
 	public enum CustomerState {atBank, none, waiting, ready};
-
+	
 	public BankTeller myTeller;
-
+	//private BankCustomerGui custGui = (BankCustomerGui) gui;
+	private BankCustomerGui custGui = null;
 	public double desiredLoanAmount;
 	public BankCustomerDesire desire;
 	public CustomerState state;
 	protected String RoleName = "Bank Customer";
-
+	private Semaphore atDestination = new Semaphore(0, true);
+	
 	public BankCustomerRole (Person p1, String pName, String rName) {
 		super(p1, pName, rName);
 		desire = BankCustomerDesire.openAccount;
 		state = CustomerState.atBank;
-		gui = new BankCustomerGui(this);
+		//gui = new BankCustomerGui(this);
 	}
 
 	//Messages
@@ -114,12 +118,18 @@ public class BankCustomerRole extends Role implements BankCustomer{
 	public void msgGotAway() {
 		state = CustomerState.ready;
 	}
+	
+	public void msgAtDestination() {
+		this.atDestination.release();
+	}
 
 	//Scheduler
 
 	public boolean pickAndExecuteAnAction () {
 
 		if (state == CustomerState.waiting) {
+			if(myTeller == null)
+				waitInLine();
 			return false;
 		}
 
@@ -182,38 +192,91 @@ public class BankCustomerRole extends Role implements BankCustomer{
 		Phonebook.getPhonebook().getBank().getBankGuard(test).msgArrivedAtBank(this);
 		state = CustomerState.waiting;
 	}
+	
+	void waitInLine() {
+		custGui.WaitTellerLine(1); //positions to be changed later by guard
+		try {
+			this.atDestination.acquire();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	void withdrawCash() {
+		//GUI operation
+		custGui.DoGoToTeller(myTeller.getTellerPosition());
+		try {
+			this.atDestination.acquire();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		myTeller.msgINeedMoney(person.desiredCash,person.accountNum);
 		state = CustomerState.waiting;
 	}
 
 	void depositCash () {
+		custGui.DoGoToTeller(myTeller.getTellerPosition());
+		try {
+			this.atDestination.acquire();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		person.money -= person.depositAmount;
 		myTeller.msgHereIsMyDeposit(person.depositAmount, person.accountNum);
 		state = CustomerState.waiting;
 	}
 
 	void requestLoan () {
+		custGui.DoGoToTeller(myTeller.getTellerPosition());
+		try {
+			this.atDestination.acquire();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		desiredLoanAmount = 10*person.desiredCash;
 		myTeller.msgINeedALoan(desiredLoanAmount, person.accountNum);
 		state = CustomerState.waiting;
 	}
 
 	void payOffLoan() {
+		custGui.DoGoToTeller(myTeller.getTellerPosition());
+		try {
+			this.atDestination.acquire();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		person.money -= person.loan;
 		myTeller.msgPayingOffLoan(person.loan, person.accountNum);
 		state = CustomerState.waiting;
 	}
 
 	void openAccount () {
+		custGui.DoGoToTeller(myTeller.getTellerPosition());
+		try {
+			this.atDestination.acquire();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		myTeller.msgWantNewAccount(this);
 		state = CustomerState.waiting;
 	}
 
 	void leaveBank () {	
-		//GUI operation
 		print("Leaving bank");
+		//GUI operation
+		custGui.DoExit();
+		try {
+			this.atDestination.acquire();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		desire = BankCustomerDesire.none;
 		state = CustomerState.waiting;	
 		myTeller.msgLeavingBank(person.accountNum);
@@ -236,5 +299,9 @@ public class BankCustomerRole extends Role implements BankCustomer{
 			desire = BankCustomerDesire.withdraw;
 		if (d1 == "robBank")
 			desire = BankCustomerDesire.robBank;
+	}
+	
+	public void setGui(BankCustomerGui gui) {
+		this.custGui = gui;
 	}
 }

@@ -141,7 +141,7 @@ public abstract class Person extends Agent{
 					}
 				}
 				cust1.setRoleActive();
-				//bankPanel.addGui(bg);
+				bankPanel.addGui(bg);
 				stateChanged();
 				return;
 			}

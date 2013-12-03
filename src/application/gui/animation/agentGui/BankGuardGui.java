@@ -13,8 +13,8 @@ public class BankGuardGui extends BankGui{
 
 	//RestaurantGui gui;
 
-    private int xPos = 260, yPos = 260;//default BankGuard position
-    private int xDestination = 260, yDestination = 260;//default start position
+    private int xPos = 280, yPos = 260;//default BankGuard position
+    private int xDestination = 340, yDestination = 260;//default start position
 	
 	private enum Command {noCommand};
 	private Command command = Command.noCommand;
@@ -49,6 +49,8 @@ public class BankGuardGui extends BankGui{
 	public void draw(Graphics2D g) {
 		g.setColor(Color.ORANGE);
 		g.fillRect(xPos, yPos, 20, 20);
+		g.setColor(Color.BLACK);
+		g.drawString("Guard", xPos, yPos);
 	}
 
 	public boolean isPresent() {
