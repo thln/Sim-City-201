@@ -110,6 +110,17 @@ public abstract class Person extends Agent{
 
 	protected void prepareForBank () {
 		Do("Becoming Bank Customer");
+		gui.walk = gui.decideForBus(gui.getxDestination(), gui.getyDestination());
+		if (!gui.walk){
+			gui.doGoToBus();
+			try {
+				atDestination.acquire();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		getGui().DoGoToBank();
 		try {
 			atDestination.acquire();

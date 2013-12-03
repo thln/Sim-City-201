@@ -3,17 +3,21 @@ package application.gui.animation.agentGui;
 import person.*;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Random;
 
 import javax.swing.JLabel;
+
+import application.Phonebook;
 
 public class PersonGui extends CityGui {
 
 	private Person agent = null;
 	private boolean isHungry = false;
+	public boolean walk = true;
 
 	public boolean raveMode = false;
-	
+
 	Random rand = new Random();
 	int red = rand.nextInt(255);
 	int blue  = rand.nextInt(255);
@@ -37,7 +41,7 @@ public class PersonGui extends CityGui {
 	private int yMarketLocation = 100 + 25;
 	private int xBankLocation = 300 + 30;
 	private int yBankLocation = 230 + 30;
-
+	
 
 	private int xPos, yPos;//default person position
 	private int xDestination, yDestination;//default start position
@@ -55,7 +59,7 @@ public class PersonGui extends CityGui {
 		setxHome(0);
 		yHome = 125;
 		setxDestination(25);
-		yDestination = 125;
+		setyDestination(125);
 		setDefaultColor();
 	}
 
@@ -67,7 +71,7 @@ public class PersonGui extends CityGui {
 			setxHome(0);
 			yHome = 25;
 			setxDestination(25);
-			yDestination = 25;
+			setyDestination(25);
 		}
 		if(p instanceof Wealthy) {
 			setxPos(0);
@@ -75,7 +79,7 @@ public class PersonGui extends CityGui {
 			setxHome(0);
 			yHome = 125;
 			setxDestination(25);
-			yDestination = 125;
+			setyDestination(125);
 		}
 		if(p instanceof Crook) {
 			setxPos(280);
@@ -83,7 +87,7 @@ public class PersonGui extends CityGui {
 			setxHome(280);
 			yHome = 250;
 			setxDestination(300);
-			yDestination = 250;
+			setyDestination(250);
 		}
 		if(p instanceof Deadbeat) {
 			setxPos(280);
@@ -91,7 +95,7 @@ public class PersonGui extends CityGui {
 			setxHome(280);
 			yHome = 250;
 			setxDestination(300);
-			yDestination = 250;
+			setyDestination(250);
 		}
 		setDefaultColor();
 		//this.gui = gui;
@@ -103,12 +107,12 @@ public class PersonGui extends CityGui {
 		else if (getxPos() > getxDestination())
 			setxPos(getxPos() - 1);
 
-		if (getyPos() < yDestination)
+		if (getyPos() < getyDestination())
 			setyPos(getyPos() + 1);
-		else if (getyPos() > yDestination)
+		else if (getyPos() > getyDestination())
 			setyPos(getyPos() - 1);
 
-		if (getxPos() == getxDestination() && getyPos() == yDestination) {
+		if (getxPos() == getxDestination() && getyPos() == getyDestination()) {
 			//System.out.println(command + "  " + agent.getName() + "has semaphore permits = " + agent.getAtDestination().availablePermits());
 
 			if(agent != null) {
@@ -128,6 +132,11 @@ public class PersonGui extends CityGui {
 					agent.msgAtDestination();
 					currColor = transColor;
 				}
+				if (command == Command.GoToBusStop && getxPos() == xDestination && getyPos() == getyDestination()) {
+					agent.msgAtDestination();
+					System.out.println("Reached bus stop");
+					currColor = transColor;
+				}
 				command = Command.noCommand;
 			}
 
@@ -135,7 +144,7 @@ public class PersonGui extends CityGui {
 	}
 
 	public void draw(Graphics2D g) {
-		
+
 		if (raveMode){
 			Random rand = new Random();
 			int red = rand.nextInt(255);
@@ -146,7 +155,7 @@ public class PersonGui extends CityGui {
 		}
 		else if (!raveMode)
 			g.setColor(currColor);
-		
+
 		g.fillRect(getxPos(), getyPos(), 20, 20);
 		if(currColor != transColor)
 			g.setColor(Color.WHITE);
@@ -161,7 +170,7 @@ public class PersonGui extends CityGui {
 		isHungry = true;
 		setPresent(true);
 		setxDestination(getxHome());
-		yDestination = yHome;
+		setyDestination(yHome);
 	}
 
 	public boolean isHungry() {
@@ -171,35 +180,70 @@ public class PersonGui extends CityGui {
 	//Actions
 	public void DoGoToRestaurant() {//later you will map building to map coordinates.
 		setxDestination(xRestaurant1Location);
-		yDestination = yRestaurant1Location;
+		setyDestination(yRestaurant1Location);
 		setDefaultColor();
 		command = Command.GoToRestaurant;
 	}
 
 	public void DoGoToMarket() {//later you will map building to map coordinates.
 		setxDestination(xMarketLocation);
-		yDestination = yMarketLocation;
+		setyDestination(yMarketLocation);
 		setDefaultColor();
 		command = Command.GoToMarket;
 	}
 
 	public void DoGoToBank() {//later you will map building to map coordinates.		
 		setxDestination(xBankLocation);
-		yDestination = yBankLocation;
+		setyDestination(yBankLocation);
 		setDefaultColor();
 		command = Command.GoToBank;
 	}
 
 	public void DoGoToBusStop(int stopNum) {//later you will map stop number to map coordinates.
 		setxDestination(100);
-		yDestination = 100;
+		setyDestination(100);
 	}
 
 	public void DoGoHome() { //the person's assigned home number. Maybe use coordinates instead?
 		setxDestination(getxHome());
-		yDestination = yHome;
+		setyDestination(yHome);
 		setDefaultColor();
 		command = Command.GoHome;
+	}
+
+	public void doGoToBus() {
+		System.out.println("Going to bus stop");
+		if (xPos <= 170){
+			if (yPos <= 30){
+				xDestination = (int) Phonebook.getPhonebook().getBusStops().get(0).getX();
+				setyDestination((int) Phonebook.getPhonebook().getBusStops().get(0).getY());
+			}
+			else {
+				xDestination = (int) Phonebook.getPhonebook().getBusStops().get(1).getX();
+				setyDestination((int) Phonebook.getPhonebook().getBusStops().get(1).getY());
+			}	
+		}
+		else if (xPos > 170) {
+			if (yPos <= 30){
+				xDestination = (int) Phonebook.getPhonebook().getBusStops().get(2).getX();
+				setyDestination((int) Phonebook.getPhonebook().getBusStops().get(2).getY());
+			}
+			else {
+				xDestination = (int) Phonebook.getPhonebook().getBusStops().get(3).getX();
+				setyDestination((int) Phonebook.getPhonebook().getBusStops().get(3).getY());
+			}
+		}	
+		setDefaultColor();
+		command = Command.GoToBusStop;
+	}
+
+	public boolean decideForBus(int xDest, int yDest) {
+		if ((xDest - xPos >= 50) || (yDest - yPos >= 50)){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 
 	public void setHomeLocation(int x, int y) {
@@ -246,7 +290,7 @@ public class PersonGui extends CityGui {
 	public int getyHome() {
 		return yHome;
 	}
-	
+
 	public void setRaveMode() {
 		if (raveMode) {
 			raveMode = false;
@@ -254,7 +298,7 @@ public class PersonGui extends CityGui {
 		else
 			raveMode = true;
 	}
-	
+
 	public void setDefaultColor() {
 		if (raveMode) {
 			Random rand = new Random();
@@ -266,4 +310,17 @@ public class PersonGui extends CityGui {
 		else
 			currColor = myColor;
 	}
+
+	public int getyDestination() {
+		return yDestination;
+	}
+
+	public void setyDestination(int yDestination) {
+		this.yDestination = yDestination;
+	}
 }
+
+
+
+
+

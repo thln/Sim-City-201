@@ -52,6 +52,8 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 
 	public ImageIcon roadHorizontal = new ImageIcon("res/roadsHorizontal.png");
 	public ImageIcon roadVertical = new ImageIcon("res/roadsVertical.png");
+	public ImageIcon busStop = new ImageIcon("res/bus_stop.png");
+
 
 	public CityPanel(AnimationPanel animationPanel) {
 
@@ -129,6 +131,11 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		g2.fillRect(170, 192, 30, 38);
 		g2.fillRect(390, 192, 30, 38);
 
+		//Bus Stops
+		g2.drawImage(busStop.getImage(), 127, 28, null);
+		g2.drawImage(busStop.getImage(), 127, 230, null);
+		g2.drawImage(busStop.getImage(), 420, 28, null);
+		g2.drawImage(busStop.getImage(), 420, 230, null);
 
 		//Drawing all buildings
 		for (int i=0; i<buildings.size(); i++ ) {

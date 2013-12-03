@@ -3,6 +3,7 @@ package application;
 import housing.Housing;
 import housing.HousingMaintenanceCompany;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -37,7 +38,10 @@ public class Phonebook{
 	//AmericanRestaurant americanRestaurant;
 	//SeafoodRestaurant seafoodRestaurant;
 	
+	//List of bus stops
+	private List<Point> busStops = new ArrayList<>();
 
+	
 	private static Phonebook phonebook;
 
 	private Phonebook() 
@@ -46,6 +50,10 @@ public class Phonebook{
 		market = new Market("Market");
 		restaurant = new Restaurant("Restaurant");
 		housingMaintenanceCompany = new HousingMaintenanceCompany("Housing maintenance company");
+		getBusStops().add(new Point(172, 28));
+		getBusStops().add(new Point(172, 230));
+		getBusStops().add(new Point(420, 28));
+		getBusStops().add(new Point(420, 230));
 	}
 	
 	public static Phonebook getPhonebook() 
@@ -153,5 +161,13 @@ public class Phonebook{
 				restaurants.add(new Restaurant(building.getName()));
 			}
 		}
+	}
+
+	public List<Point> getBusStops() {
+		return busStops;
+	}
+
+	public void setBusStops(List<Point> busStops) {
+		this.busStops = busStops;
 	}
 }
