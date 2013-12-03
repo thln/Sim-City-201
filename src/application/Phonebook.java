@@ -63,7 +63,7 @@ public class Phonebook{
 
 	public Bank getBank() 
 	{
-			return bank;
+			return banks.get(0); //temporary stub. make more dynamic later
 	}
 
 	public void setBank(Bank bank) 
@@ -73,7 +73,7 @@ public class Phonebook{
 
 	public Market getMarket() 
 	{
-		return market;
+		return markets.get(0); //temporary stub. make more dynamic later
 	}
 
 	public void setMarket(Market market) 
@@ -83,7 +83,7 @@ public class Phonebook{
 
 	public Restaurant getRestaurant() 
 	{
-		return restaurant;
+		return restaurants.get(0); //temporary stub. make more dynamic later
 	}
 
 	public void setRestaurant(Restaurant restaurant) 
@@ -137,21 +137,24 @@ public class Phonebook{
 	}
 	
 	//the following function is for dynamic building and business making in v2
-	public void getBusinessFromGui(AnimationPanel ap) {
-		ArrayList<Building> buildings = ap.getBuildings();
-		for(Building building : buildings) {
-			if(building.getName().toLowerCase().contains("market")) {
-				markets.add(new Market(building.getName()));
-			}
-			if(building.getName().toLowerCase().contains("bank")) {
-				banks.add(new Bank(building.getName()));
-			}
-			if(building.getName().toLowerCase().contains("house")) {
-				//houses.add(new Housing(building.getName()));
-			}
-			if(building.getName().toLowerCase().contains("restaurant")) {
-				restaurants.add(new Restaurant(building.getName()));
-			}
+	public void getBusinessFromGui(Building building) {
+		if(building.getName().toLowerCase().contains("market")) {
+			Market newMarket = new Market(building.getName());
+			newMarket.setBuildingPanel(building.myBuildingPanel);
+			markets.add(newMarket);
+		}
+		if(building.getName().toLowerCase().contains("bank")) {
+			Bank newBank = new Bank(building.getName());
+			newBank.setBuildingPanel(building.myBuildingPanel);
+			banks.add(newBank);
+		}
+		if(building.getName().toLowerCase().contains("house")) {
+			//houses.add(new Housing(building.getName()));
+		}
+		if(building.getName().toLowerCase().contains("restaurant")) {
+			Restaurant newRestaurant = new Restaurant(building.getName());
+			newRestaurant.setBuildingPanel(building.myBuildingPanel);
+			restaurants.add(newRestaurant);
 		}
 	}
 }
