@@ -1,5 +1,6 @@
 package application.gui.animation;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -49,6 +50,9 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 	ImageIcon apartment = new ImageIcon("res/apartment.png", "bank");
 	ImageIcon rave = new ImageIcon("res/rave.jpeg");
 
+	public ImageIcon roadHorizontal = new ImageIcon("res/roadsHorizontal.png");
+	public ImageIcon roadVertical = new ImageIcon("res/roadsVertical.png");
+
 	public CityPanel(AnimationPanel animationPanel) {
 
 		this.animationPanel = animationPanel;
@@ -71,9 +75,9 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		addBuilding("Bank", WINDOWX / 2, 230);
 		addBuilding("House", 20, 100);
 		addBuilding("Apartment", 0, 0);
-		
+
 		Timer timer = new Timer(10, this );
-    	timer.start();
+		timer.start();
 	}
 
 	public void paintComponent(Graphics g) {
@@ -83,6 +87,48 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		g2.setColor(getBackground());
 		g2.fillRect(0, 0, WINDOWX, WINDOWY );
 		g2.drawImage(background, 0, 0, null);
+
+		//Horizontal Roads 1
+		g2.drawImage(roadHorizontal.getImage(), 0, 70, null);
+		g2.drawImage(roadHorizontal.getImage(), 73, 70, null);
+		g2.drawImage(roadHorizontal.getImage(), 146, 70, null);
+		g2.drawImage(roadHorizontal.getImage(), 219, 70, null);
+		g2.drawImage(roadHorizontal.getImage(), 292, 70, null);
+		g2.drawImage(roadHorizontal.getImage(), 365, 70, null);
+		g2.drawImage(roadHorizontal.getImage(), 438, 70, null);
+		g2.drawImage(roadHorizontal.getImage(), 511, 70, null);
+
+		//Horizontal Roads 2
+		g2.drawImage(roadHorizontal.getImage(), 0, 190, null);
+		g2.drawImage(roadHorizontal.getImage(), 73, 190, null);
+		g2.drawImage(roadHorizontal.getImage(), 146, 190, null);
+		g2.drawImage(roadHorizontal.getImage(), 219, 190, null);
+		g2.drawImage(roadHorizontal.getImage(), 292, 190, null);
+		g2.drawImage(roadHorizontal.getImage(), 365, 190, null);
+		g2.drawImage(roadHorizontal.getImage(), 438, 190, null);
+		g2.drawImage(roadHorizontal.getImage(), 511, 190, null);
+
+		//Vertical Roads 1
+		g2.drawImage(roadVertical.getImage(), 160, 0, null);
+		g2.drawImage(roadVertical.getImage(), 160, 73, null);
+		g2.drawImage(roadVertical.getImage(), 160, 146, null);
+		g2.drawImage(roadVertical.getImage(), 160, 219, null);
+		g2.drawImage(roadVertical.getImage(), 160, 292, null);
+		
+		//Vertical Roads 2
+		g2.drawImage(roadVertical.getImage(), 380, 0, null);
+		g2.drawImage(roadVertical.getImage(), 380, 73, null);
+		g2.drawImage(roadVertical.getImage(), 380, 146, null);
+		g2.drawImage(roadVertical.getImage(), 380, 219, null);
+		g2.drawImage(roadVertical.getImage(), 380, 292, null);
+		
+		//Intersections
+		g2.setColor(Color.BLACK);
+		g2.fillRect(170, 72, 30, 38);
+		g2.fillRect(390, 72, 30, 38);
+		g2.fillRect(170, 192, 30, 38);
+		g2.fillRect(390, 192, 30, 38);
+
 
 		//Drawing all buildings
 		for (int i=0; i<buildings.size(); i++ ) {
@@ -133,7 +179,7 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 			building.setMyImage(house);
 			building.setLocation(x, y);
 		}
-		
+
 		//Apartment building
 		else if (name.toLowerCase().contains("apartment")) {
 			building.setMyImage(apartment);
@@ -186,6 +232,6 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 	public void mouseExited(MouseEvent e) {
 
 	}
-	
-	
+
+
 }
