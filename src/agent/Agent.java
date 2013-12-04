@@ -10,7 +10,7 @@ import restaurant.WaiterRole;
  * Base class for simple agents
  */
 public abstract class Agent {
-    Semaphore stateChange = new Semaphore(1, true);//binary semaphore, fair
+    public Semaphore stateChange = new Semaphore(1, true);//binary semaphore, fair
     Semaphore pausedSem = new Semaphore(0, false);
     private boolean paused = false;
     private AgentThread agentThread;

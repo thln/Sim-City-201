@@ -251,7 +251,8 @@ public class Application extends JPanel {
 		updateTimer.schedule(new TimerTask() {
 			public void run() {        
 				for (Person p: population){
-					p.stateChanged();      
+					if (p.stateChange.availablePermits() < 1)
+						p.stateChanged();      
 				}
 				updatePeopleTime();
 			}
