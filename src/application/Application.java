@@ -4,10 +4,10 @@ import housing.Housing;
 
 import javax.swing.*;
 
+import chineseRestaurant.Restaurant;
 import market.*;
 import bank.*;
 import person.*;
-import restaurant.Restaurant;
 
 import java.util.*;
 import java.util.Timer;
@@ -34,8 +34,6 @@ public class Application extends JPanel {
 	public Application(AnimationPanel ap) {
 
 		animPanel = ap;
-		
-		Phonebook.getPhonebook().setHousingList(allHousing);
 		
 		//the following line is for dynamic building and business making in v2
 		//Phonebook.getPhonebook().getBusinessFromGui(animPanel);
@@ -243,6 +241,7 @@ public class Application extends JPanel {
 //		wealthy4.startThread();
 		
 		updatePeopleTime();
+		Phonebook.getPhonebook().setHousingList(allHousing);
 	}
 	
 	public void updatePeopleTime(){

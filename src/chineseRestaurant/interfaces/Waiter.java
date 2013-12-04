@@ -1,4 +1,4 @@
-package restaurant.interfaces;
+package chineseRestaurant.interfaces;
 
 //import restaurant.Cashier;
 //import restaurant.Cook;

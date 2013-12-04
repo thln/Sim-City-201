@@ -5,10 +5,10 @@ import housing.Housing;
 import java.util.*;
 import java.util.concurrent.Semaphore;
 
+import chineseRestaurant.RestaurantCustomerRole;
 import bank.BankCustomerRole;
 import market.MarketCustomerRole;
 import person.Role;
-import restaurant.RestaurantCustomerRole;
 import agent.Agent;
 import application.Phonebook;
 import application.TimeManager;

@@ -1,6 +1,6 @@
-package restaurant.interfaces;
+package chineseRestaurant.interfaces;
 
-import restaurant.CashierRole;
+import chineseRestaurant.CashierRole;
 
 public interface Market {
 	

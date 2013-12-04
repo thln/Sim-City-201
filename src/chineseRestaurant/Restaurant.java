@@ -1,14 +1,14 @@
-package restaurant;
+package chineseRestaurant;
 
 import java.util.Vector;
 
+import chineseRestaurant.interfaces.Cashier;
+import chineseRestaurant.interfaces.Cook;
+import chineseRestaurant.test.mock.MockCashier;
+import chineseRestaurant.test.mock.MockCook;
 import person.Person;
 import person.Role;
 import person.Worker;
-import restaurant.interfaces.Cashier;
-import restaurant.interfaces.Cook;
-import restaurant.test.mock.MockCashier;
-import restaurant.test.mock.MockCook;
 import application.RestaurantType;
 import application.WatchTime;
 import application.gui.animation.BuildingPanel;

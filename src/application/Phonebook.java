@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import chineseRestaurant.Restaurant;
 import bank.Bank;
 import market.Market;
-import restaurant.Restaurant;
 import application.gui.animation.*;
 
 public class Phonebook{
@@ -71,7 +71,8 @@ public class Phonebook{
 
 	public Bank getBank() 
 	{
-			return banks.get(0); //temporary stub. make more dynamic later
+		return banks.get(0);	
+		//return banks.get(0); //temporary stub. make more dynamic later
 	}
 
 	public void setBank(Bank bank) 
@@ -81,7 +82,8 @@ public class Phonebook{
 
 	public Market getMarket() 
 	{
-		return markets.get(0); //temporary stub. make more dynamic later
+		return markets.get(0);
+		//return markets.get(0); //temporary stub. make more dynamic later
 	}
 
 	public void setMarket(Market market) 
@@ -91,7 +93,8 @@ public class Phonebook{
 
 	public Restaurant getRestaurant() 
 	{
-		return restaurants.get(0); //temporary stub. make more dynamic later
+		return restaurant;
+		//return restaurants.get(0); //temporary stub. make more dynamic later
 	}
 
 	public void setRestaurant(Restaurant restaurant) 

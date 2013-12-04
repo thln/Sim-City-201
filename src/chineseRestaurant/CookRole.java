@@ -1,4 +1,4 @@
-package restaurant;
+package chineseRestaurant;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,12 +9,12 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.Semaphore;
 
+import chineseRestaurant.interfaces.Cook;
 import market.Market;
 import person.Person;
 import person.Role;
 import person.Worker;
 import person.Role.RoleState;
-import restaurant.interfaces.Cook;
 import application.Phonebook;
 import application.gui.animation.agentGui.RestaurantCookGui;
 import application.gui.trace.AlertLog;

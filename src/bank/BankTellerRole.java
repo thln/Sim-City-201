@@ -10,6 +10,7 @@ import person.Worker;
 import application.Phonebook;
 import bank.interfaces.BankCustomer;
 import bank.interfaces.BankTeller;
+import application.gui.animation.agentGui.*;
 
 public class BankTellerRole extends Role implements BankTeller {
 
@@ -21,6 +22,7 @@ public class BankTellerRole extends Role implements BankTeller {
 	public enum AccountState {neutral, newAccount, waiting, depositing, withdrawing, requestingLoan, 
 		closingLoan, loanApproved, loanDenied, bankEmpty, leavingBank}
 	private int tellerWindow;
+	private BankTellerGui gui = null;
 	
 	static public class Account {	
 		private BankCustomer customer;
@@ -137,6 +139,10 @@ public class BankTellerRole extends Role implements BankTeller {
 		Account correct = findMyAccount (accountNum);
 		myAccounts.remove(correct);
 		stateChanged();
+	}
+	
+	public void msgAtDestination() {
+		this.atDestination.release();
 	}
 
 	//Scheduler
@@ -298,5 +304,9 @@ public class BankTellerRole extends Role implements BankTeller {
 	
 	public int getTellerPosition() {
 		return tellerWindow;
+	}
+	
+	public void setGui(BankTellerGui gui) {
+		this.gui = gui;
 	}
 }

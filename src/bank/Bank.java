@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
 
+import chineseRestaurant.WaiterRole;
 import market.MarketCustomerRole;
 import bank.BankGuardRole.MyTeller;
 import bank.BankTellerRole.Account;
@@ -20,7 +21,6 @@ import application.WatchTime;
 import person.Person;
 import person.Role;
 import person.Worker;
-import restaurant.WaiterRole;
 import application.gui.animation.*;
 import application.gui.animation.agentGui.BankGuardGui;
 import application.gui.animation.agentGui.BankLoanerGui;
@@ -48,7 +48,7 @@ public class Bank {
 
 	//Roles
 	public BankGuardRole bankGuardRole;
-	public BankGuardGui bankGuardGui = new BankGuardGui(bankGuardRole);
+	public BankGuardGui bankGuardGui = new BankGuardGui();
 	
 	public LoanOfficerRole loanOfficerRole;
 	public BankLoanerGui loanOfficerGui = new BankLoanerGui(loanOfficerRole);
@@ -89,11 +89,12 @@ public class Bank {
 			}
 			//Setting bank guard role to new role
 			bankGuardRole.setPerson(person);
+			bankGuardRole.setGui(bankGuardGui);
+			bankGuardGui.setPerson(bankGuardRole);
 			//AlertLog.getInstance().logError(AlertTag.BANK, getName(), "bankguard role just set person: " + person.getName());
 			if (isOpen()) {
 				bankGuardRole.msgBankOpen();
 			}
-			
 			bankPanel.addGui(bankGuardGui);
 			return bankGuardRole;
 		}

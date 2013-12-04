@@ -1,4 +1,4 @@
-package restaurant;
+package chineseRestaurant;
 
 import java.util.Map;
 import java.util.TreeMap;

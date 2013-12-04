@@ -39,6 +39,8 @@ public class BankTellerGui extends BankGui{
 			yPos--;
 
 		if (xPos == xDestination && yPos == yDestination) {
+			if(agent != null)
+				agent.msgAtDestination();
 			command = Command.noCommand;
 		}
 	}

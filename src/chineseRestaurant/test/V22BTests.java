@@ -1,11 +1,11 @@
-package restaurant.test;
+package chineseRestaurant.test;
 
+import chineseRestaurant.test.mock.MockCustomer;
+import chineseRestaurant.test.mock.MockMarket;
+import chineseRestaurant.test.mock.MockWaiter;
 import junit.framework.TestCase;
 //import restaurant.CashierAgent;
 //import restaurant.Check.CheckState;
-import restaurant.test.mock.MockCustomer;
-import restaurant.test.mock.MockMarket;
-import restaurant.test.mock.MockWaiter;
 
 public class V22BTests extends TestCase
 {
