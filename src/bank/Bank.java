@@ -179,7 +179,7 @@ public class Bank {
 	}
 	
 	public boolean isOpen(){
-		if (loanOfficerRole.getPerson() != null && bankGuardRole.getPerson() != null && bankGuardRole.getTellers().size() > 0)
+		if (loanOfficerRole.getPerson() != null && bankGuardRole.getPerson() != null && bankGuardRole.getTellers().size() > 0 && !userClosed)
 			return true;
 		else 
 			return false;

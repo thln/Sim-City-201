@@ -110,7 +110,7 @@ public abstract class Person extends Agent{
 
 	protected void prepareForBank () {
 		Do("Becoming Bank Customer");
-		gui.walk = gui.decideForBus(gui.getxDestination(), gui.getyDestination());
+		//gui.walk = gui.decideForBus(gui.getxDestination(), gui.getyDestination());
 		if (!gui.walk){
 			gui.doGoToBus();
 			try {
@@ -172,6 +172,7 @@ public abstract class Person extends Agent{
 			money -= Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.getApartmentRentCost();
 			Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.dropRentMoney(Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.getApartmentRentCost());
 			checkedMailbox = true;
+			return;
 		}
 		else if (accountBalance >= Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.getApartmentRentCost())
 		{
@@ -181,6 +182,8 @@ public abstract class Person extends Agent{
 		}
 		else
 		{
+			print("Not enough money to pay rent");
+			checkedMailbox = true;
 			//Non Norm, making a loan
 		}
 	}

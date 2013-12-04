@@ -152,10 +152,13 @@ public class Worker extends Person {
 		}
 
 		//Bank Related (check if you need to go to the bank)
-		if (money <= moneyMinThreshold || money >= moneyMaxThreshold) 
-		{
-			prepareForBank();
-			return true;
+		//Check if there is a bank open before you go
+		if (Phonebook.getPhonebook().getEastBank().isOpen()){ // || Phonebook.getPhonebook().getEastBank().isOpen()){	
+			if (money <= moneyMinThreshold || money >= moneyMaxThreshold) 
+			{
+				prepareForBank();
+				return true;
+			}
 		}
 
 		//Rent Related (check if you need to pay rent)
@@ -172,9 +175,10 @@ public class Worker extends Person {
 		if (getHunger() == HungerLevel.hungry) {
 			//If you don't have food in the fridge
 			if (!hasFoodInFridge) {
-				//if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getRestaurant().openTime.hour) &&
-				//(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getRestaurant().closeTime.hour)) {
-				prepareForRestaurant();
+				//Check if any restaurants are open
+				if (Phonebook.getPhonebook().getChineseRestaurant().isOpen()) {	
+					prepareForRestaurant();
+				}
 				//
 				return true;
 
@@ -190,8 +194,7 @@ public class Worker extends Person {
 		//Market Related (check if you need to go to the market)
 		if (!hasFoodInFridge || carStatus == CarState.wantsCar) 
 		{ 
-			if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getEastMarket().openTime.hour) &&
-					(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getEastMarket().closeTime.hour)) 
+			if (Phonebook.getPhonebook().getEastMarket().isOpen()) // || Phonebook.getPhonebook().getEastMarket().isOpen())
 			{
 				print("Going to market");
 				prepareForMarket();

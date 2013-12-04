@@ -18,7 +18,7 @@ public class Crook extends Person {
 			startHungerTimer();
 			return true;
 		}
-		
+
 		synchronized (roles) {
 			if (!roles.isEmpty()) {
 				for (Role r : roles) {
@@ -38,16 +38,16 @@ public class Crook extends Person {
 		}
 
 		//Rent Related
-        if(TimeManager.getTimeManager().getTime().day == Day.Monday)
-        {
-        	resetRentMailbox();
-        }
-        if(TimeManager.getTimeManager().getTime().day == Day.Sunday && !checkedMailbox)
-        {
-        	prepareForRent();
-        	return true;
-        }
-		
+		if(TimeManager.getTimeManager().getTime().day == Day.Monday)
+		{
+			resetRentMailbox();
+		}
+		if(TimeManager.getTimeManager().getTime().day == Day.Sunday && !checkedMailbox)
+		{
+			prepareForRent();
+			return true;
+		}
+
 		//Hunger Related
 		if (getHunger() == HungerLevel.hungry) {
 			//If you don't have food in the fridge
@@ -60,8 +60,7 @@ public class Crook extends Person {
 						return true;
 					}
 				}
-				else if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getChineseRestaurant().openTime.hour) &&
-						(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getChineseRestaurant().closeTime.hour)) {
+				else if (Phonebook.getPhonebook().getChineseRestaurant().isOpen()) {	
 					prepareForRestaurant();
 					return true;
 				}
@@ -76,16 +75,12 @@ public class Crook extends Person {
 		//Market Related
 		if (!hasFoodInFridge || carStatus == CarState.wantsCar) {
 			if (money <= moneyMinThreshold && !hasFoodInFridge) {
-				if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getEastBank().openTime.hour) &&
-						(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getEastBank().closeTime.hour)) {
-					prepareForBank();
+				if (Phonebook.getPhonebook().getEastBank().isOpen()){ // || Phonebook.getPhonebook().getEastBank().isOpen()){	
 					return true;
 				}
 			}
 			else {
-				if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getEastMarket().openTime.hour) &&
-						(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getEastMarket().closeTime.hour)) {
-					prepareForMarket();
+				if (Phonebook.getPhonebook().getEastMarket().isOpen()){
 					return true;
 				}
 			}
