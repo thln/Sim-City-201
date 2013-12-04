@@ -23,7 +23,7 @@ public class Phonebook{
 	static private Market eastMarket;
 	static private Market westMarket;
 
-	//Restaruants
+	//Restaurants
 	static private Restaurant chineseRestaurant;
 	//ItalianRestaurant italianRestaurant;
 	//MexicanRestaurant mexicanRestaurant;
