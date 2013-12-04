@@ -35,14 +35,14 @@ public class ControlPanel extends JPanel {
 		this.appPanel = appPanel;
 		addP = new AddPanel(this, app);
 		editP = new EditPanel(this, app, appPanel);
-		//selectP = new SelectBuilding(appPanel.getAppGui().getAnimationPanel());
+		selectP = new SelectBuilding(this, app, appPanel); //appPanel.getAppGui().getAnimationPanel());
 
 		printPanel = new PrintPanel();
 		printPanelTab = printPanel;
 
 		ControlPane.addTab("Dashboard", addP);
 		ControlPane.addTab("Edit Panel", editP);
-		ControlPane.addTab("Select Building", panel4);
+		ControlPane.addTab("Select Building", selectP); //panel4);
 		ControlPane.addTab("Trace Panel", printPanelTab);
 
 		add(ControlPane);
