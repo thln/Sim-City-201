@@ -15,8 +15,6 @@ import testing.LoggedEvent;
 
 public class SalesPersonRole extends Role implements SalesPerson {
 
-	protected String roleName = "Sales Person";
-	String name;
 	Market market;
 
 	public EventLog log = new EventLog();
