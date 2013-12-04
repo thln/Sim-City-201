@@ -47,13 +47,13 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 	ImageIcon restaurant = new ImageIcon("res/restaurant.png", "restaurant");
 	ImageIcon market = new ImageIcon("res/market.png", "market");
 	ImageIcon house = new ImageIcon("res/house.png", "house");
-	ImageIcon apartment = new ImageIcon("res/apartment.png", "bank");
+	ImageIcon apartment = new ImageIcon("res/apartment.png", "apartment");
 	ImageIcon rave = new ImageIcon("res/rave.jpeg");
+	ImageIcon park = new ImageIcon("res/grass.jpeg", "park");
 
 	public ImageIcon roadHorizontal = new ImageIcon("res/roadsHorizontal.png");
 	public ImageIcon roadVertical = new ImageIcon("res/roadsVertical.png");
 	public ImageIcon busStop = new ImageIcon("res/bus_stop.png");
-
 
 	public CityPanel(AnimationPanel animationPanel) {
 
@@ -77,6 +77,7 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		addBuilding("Bank", WINDOWX / 2, 230);
 		addBuilding("House", 20, 100);
 		addBuilding("Apartment", 0, 0);
+		addBuilding("Park",WINDOWX/2,WINDOWY/2);
 
 		Timer timer = new Timer(10, this );
 		timer.start();
@@ -191,6 +192,12 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		else if (name.toLowerCase().contains("apartment")) {
 			building.setMyImage(apartment);
 			building.setLocation(x, y);
+		}
+		
+		//Park in the Middle
+		else if (name.toLowerCase().contains("park")){
+			building.setMyImage(park);
+			building.setLocation(x,y);
 		}
 
 		building.setName(name);

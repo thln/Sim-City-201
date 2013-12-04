@@ -1,13 +1,11 @@
 package application.gui.animation;
 
 import javax.swing.*;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import application.gui.animation.agentGui.*;
 
 public class RestaurantPanel extends BuildingPanel implements ActionListener{

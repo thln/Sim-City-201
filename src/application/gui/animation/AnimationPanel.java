@@ -74,6 +74,10 @@ public class AnimationPanel extends JPanel implements MouseListener {
 			else if(name.toLowerCase().contains("bank")) {
 				panel = new BankPanel(name, this );
 			}
+			else if(name.toLowerCase().contains("park")){
+				panel = new ParkPanel(name, this);
+			}
+			
 			b.setMyBuildingPanel(panel);
 			setBuildingInPhonebook(b);
 			buildingPanels.add(panel, name);
