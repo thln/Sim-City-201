@@ -33,14 +33,7 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 	public ArrayList<Building> buildings = new ArrayList<Building>();
 	Dimension Msize = new Dimension(75, 75);
 	Dimension Bsize = new Dimension(75, 75);
-
-	//list of images representing our different buildings
-	BufferedImage carIcon = null;
-	BufferedImage bankIcon = null;
-	BufferedImage marketIcon = null;
-	BufferedImage houseIcon = null;
-	BufferedImage restaurantIcon = null;
-
+	
 	public BufferedImage background = null;
 
 	ImageIcon bank = new ImageIcon("res/bank.png", "bank");
@@ -49,7 +42,7 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 	ImageIcon house = new ImageIcon("res/house.png", "house");
 	ImageIcon apartment = new ImageIcon("res/apartment.png", "apartment");
 	ImageIcon rave = new ImageIcon("res/rave.jpeg");
-	ImageIcon park = new ImageIcon("res/grass.jpeg", "park");
+	ImageIcon park = new ImageIcon("res/grass.jpg", "park");
 
 	public ImageIcon roadHorizontal = new ImageIcon("res/roadsHorizontal.png");
 	public ImageIcon roadVertical = new ImageIcon("res/roadsVertical.png");
@@ -77,8 +70,12 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		addBuilding("Bank", WINDOWX / 2, 230);
 		addBuilding("House", 20, 100);
 		addBuilding("Apartment", 0, 0);
-		addBuilding("Park",WINDOWX/2,WINDOWY/2);
-
+		addBuilding("Park",(WINDOWX/2)-80,(WINDOWY/2)-47);
+		addBuilding("Mexican Restaurant", 20, WINDOWY-75);
+		addBuilding("Burger Restaurant", WINDOWX-100, WINDOWY-75);
+		addBuilding("Italian Restaurant", WINDOWX-100, 20);
+		addBuilding("Fancy Restaurant", WINDOWX-100, 100+market.getIconHeight()+2);
+		
 		Timer timer = new Timer(10, this );
 		timer.start();
 	}
