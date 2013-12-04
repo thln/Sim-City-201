@@ -157,7 +157,7 @@ public class Phonebook{
 	}
 	
 	public void openBuilding(String type){
-		System.out.println("Closing " + type);
+		System.out.println("Opening " + type);
 		if (type == "eastBank")
 			eastBank.userClosed = false;
 		if (type == "westBank")
