@@ -16,7 +16,7 @@ public class BankGuardGui extends BankGui{
     private int xPos = 340, yPos = 320;//default BankGuard position
     private int xDestination = 340, yDestination = 260;//default start position
 	
-	private enum Command {toTellers,noCommand};
+	private enum Command {inTransit,toTellers,noCommand};
 	private Command command = Command.noCommand;
 
 	private enum CustomerState {nothing};
@@ -42,10 +42,12 @@ public class BankGuardGui extends BankGui{
 			yPos--;
 
 		if (xPos == xDestination && yPos == yDestination) {
-			if(agent != null)
-				agent.msgAtDestination();
-			if(command == Command.toTellers)
-				BacktoPosition();
+			if(command != Command.noCommand) {
+				if(agent != null)
+					agent.msgAtDestination();
+				if(command == Command.toTellers)
+					BacktoPosition();
+			}
 			command = Command.noCommand;
 		}
 	}
@@ -83,16 +85,19 @@ public class BankGuardGui extends BankGui{
     public void BacktoPosition() {
     	xDestination = 340;
     	yDestination = 260;
+    	command = Command.inTransit;
     }
     
     public void DoCatchRobber() {
     	xDestination = 120;
     	yDestination = 50;
+    	command = Command.inTransit;
     }
     
     public void BringToJail() {
     	xDestination = 300;
     	yDestination = -20;
+    	command = Command.inTransit;
     }
     
     public void DoExit() {

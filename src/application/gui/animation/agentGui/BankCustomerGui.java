@@ -16,7 +16,7 @@ public class BankCustomerGui extends BankGui {
     private int xPos = 300, yPos = 300;//default Customer position
     private int xDestination = 300, yDestination = 260;//default start position
     
-    private enum Command {noCommand};
+    private enum Command {inTransit, noCommand};
 	private Command command = Command.noCommand;
 
 	private enum CustomerState {nothing};
@@ -43,9 +43,12 @@ public class BankCustomerGui extends BankGui {
     			yPos--;
 
     		if (xPos == xDestination && yPos == yDestination) {
-    			if(agent != null) {
-    				agent.msgAtDestination();
+    			if(command != Command.noCommand) {
+    				if(agent != null) {
+    					agent.msgAtDestination();
+    				}
     			}
+    			command = Command.noCommand;
     		}
     }
 
@@ -78,31 +81,37 @@ public class BankCustomerGui extends BankGui {
     public void WaitTellerLine(int pos) {
     	xDestination = 380;
     	yDestination = 50+30*(pos-1);
+    	command = Command.inTransit;
     }
     
     public void DoGoToTeller(int window) {
     	xDestination = 450;
     	yDestination = 20*window+30*(window-1); //accounts for space created by window separations
+    	command = Command.inTransit;
     }
     
     public void DoGoToLoanOfficer() {
     	xDestination = 120;
     	yDestination = 200;
+    	command = Command.inTransit;
     }
     
     public void DoRobBank() {
     	xDestination = 100;
     	yDestination = 50;
+    	command = Command.inTransit;
     }
     
     public void DoGoToJail() {
     	xDestination = 300;
     	yDestination = -40;
+    	command = Command.inTransit;
     }
     
     public void WaitLoanLine(int pos) {
     	xDestination = 30*pos;
     	yDestination = 230;
+    	command = Command.inTransit;
     }
     
     public void DoExit() {

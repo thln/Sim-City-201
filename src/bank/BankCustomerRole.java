@@ -245,12 +245,6 @@ public class BankCustomerRole extends Role implements BankCustomer{
 		print("Leaving bank");
 		//GUI operation
 		custGui.DoExit();
-		try {
-			this.atDestination.acquire();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		desire = BankCustomerDesire.none;
 		state = CustomerState.waiting;	
 		myTeller.msgLeavingBank(person.accountNum);
