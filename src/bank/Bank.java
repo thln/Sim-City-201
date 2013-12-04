@@ -215,13 +215,12 @@ public class Bank {
 		userClosed = true;
 		bankGuardRole.msgLeaveRole();
 		bankPanel.removeGui(bankGuardGui);
-		
 		for (MyTeller t1: bankGuardRole.tellers){
 			((Role) t1.tell1).msgLeaveRole();
 			bankPanel.removeGui(((Role) t1.tell1).gui);
 		}
 		loanOfficerRole.msgLeaveRole();
+
 		bankPanel.removeGui(loanOfficerGui);
-		
 	}
 }
