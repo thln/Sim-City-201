@@ -181,7 +181,7 @@ public class BankCustomerRole extends Role implements BankCustomer{
 
 	void messageGuard () {
 		if (!test){
-			if (!Phonebook.getPhonebook().getBank().isOpen()) {
+			if (!Phonebook.getPhonebook().getEastBank().isOpen()) {
 				print("Bank closed, waiting for bank to open.");
 				return;
 			}
@@ -189,7 +189,7 @@ public class BankCustomerRole extends Role implements BankCustomer{
 				print("Arrived at bank");
 		}
 
-		Phonebook.getPhonebook().getBank().getBankGuard(test).msgArrivedAtBank(this);
+		Phonebook.getPhonebook().getEastBank().getBankGuard(test).msgArrivedAtBank(this);
 		state = CustomerState.waiting;
 	}
 	
@@ -248,7 +248,7 @@ public class BankCustomerRole extends Role implements BankCustomer{
 		desire = BankCustomerDesire.none;
 		state = CustomerState.waiting;	
 		myTeller.msgLeavingBank(person.accountNum);
-		Phonebook.getPhonebook().getBank().getBankGuard(test).msgCustomerLeavingBank(myTeller);
+		Phonebook.getPhonebook().getEastBank().getBankGuard(test).msgCustomerLeavingBank(myTeller);
 		myTeller = null;
 		this.setRoleInactive();
 		stateChanged();
@@ -264,7 +264,7 @@ public class BankCustomerRole extends Role implements BankCustomer{
 			e.printStackTrace();
 		}
 		
-		Phonebook.getPhonebook().getBank().getBankGuard(test).msgRobbingBank(this);
+		Phonebook.getPhonebook().getEastBank().getBankGuard(test).msgRobbingBank(this);
 		state = CustomerState.waiting;
 	}
 

@@ -44,7 +44,7 @@ public class AltWaiterRole extends WaiterRole implements Waiter {
 
 		//cook.msgHeresAnOrder(MC.tableNumber, MC.choice, this);
 		print("Placing order on Revolving Stand.");
-		Phonebook.getPhonebook().getRestaurant().getRevolvingStand().newOrder(new Order(MC.tableNumber, MC.choice, this));
+		Phonebook.getPhonebook().getChineseRestaurant().getRevolvingStand().newOrder(new Order(MC.tableNumber, MC.choice, this));
 	}
 
 }

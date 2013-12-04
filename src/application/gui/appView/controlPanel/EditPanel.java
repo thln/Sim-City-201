@@ -75,7 +75,7 @@ public class EditPanel extends JPanel implements ActionListener {
 		}
 		
 		if (e.getSource() == closeBuilding){
-			Phonebook.getPhonebook().closeBuildings();
+			Phonebook.getPhonebook().closeBuilding("eastBank");
 		}
 	}
 	

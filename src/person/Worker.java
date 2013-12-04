@@ -186,8 +186,8 @@ public class Worker extends Person {
 		//Market Related (check if you need to go to the market)
 		if (!hasFoodInFridge || carStatus == CarState.wantsCar) 
 		{ 
-			if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getMarket().openTime.hour) &&
-					(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getMarket().closeTime.hour)) 
+			if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getEastMarket().openTime.hour) &&
+					(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getEastMarket().closeTime.hour)) 
 			{
 				print("Going to market");
 				prepareForMarket();
@@ -226,7 +226,7 @@ public class Worker extends Person {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			workerRole = Phonebook.getPhonebook().getBank().arrivedAtWork(this, myJob.title);
+			workerRole = Phonebook.getPhonebook().getEastBank().arrivedAtWork(this, myJob.title);
 			workerRole.setRoleActive();
 			return;
 		}
@@ -243,7 +243,7 @@ public class Worker extends Person {
 
 			}
 			print("Going to work at market, job time = " + myJob.startTime.hour);
-			workerRole = Phonebook.getPhonebook().getMarket().arrivedAtWork(this, myJob.title);
+			workerRole = Phonebook.getPhonebook().getEastMarket().arrivedAtWork(this, myJob.title);
 			workerRole.setRoleActive();
 			return;
 		}
@@ -258,7 +258,7 @@ public class Worker extends Person {
 				e.printStackTrace();
 
 			}
-			workerRole = Phonebook.getPhonebook().getRestaurant().arrivedAtWork(this, myJob.title);
+			workerRole = Phonebook.getPhonebook().getChineseRestaurant().arrivedAtWork(this, myJob.title);
 			workerRole.setRoleActive();
 			return;
 		}

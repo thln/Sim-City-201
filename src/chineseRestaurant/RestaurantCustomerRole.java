@@ -226,7 +226,7 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer {
 	private void goToRestaurant() {
 		state = AgentState.WaitingInRestaurant;
 		print("Going to restaurant");
-		Phonebook.getPhonebook().getRestaurant().hostRole.msgIWantFood(this, xHome, yHome);
+		Phonebook.getPhonebook().getChineseRestaurant().hostRole.msgIWantFood(this, xHome, yHome);
 	}
 	
 	private void DecidingToStay() {
@@ -248,7 +248,7 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer {
 		else {
 			state = AgentState.WaitingInRestaurant;
 			print("Decided to stay and eat in restaurant");
-			Phonebook.getPhonebook().getRestaurant().hostRole.msgStaying(this, xHome, yHome);
+			Phonebook.getPhonebook().getChineseRestaurant().hostRole.msgStaying(this, xHome, yHome);
 			stateChanged();
 		}
 	}
@@ -363,7 +363,7 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer {
 		print("I have $" + money);
 
 		state = AgentState.PayedCheck;
-		Phonebook.getPhonebook().getRestaurant().cashierRole.msgPayment(choice, money, this);
+		Phonebook.getPhonebook().getChineseRestaurant().cashierRole.msgPayment(choice, money, this);
 		money = 0;
 	}
 

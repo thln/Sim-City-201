@@ -92,7 +92,7 @@ public class CookRole extends Role implements Cook {
 	{
 		synchronized(stockFulfillment){
 			print("Market cannot fulfill order for " + choice + "-- Amount: " + amount + " Ordered: " + orderedAmount);
-			stockFulfillment.add(new Stock(choice, amount, orderedAmount, Phonebook.getPhonebook().getMarket()));
+			stockFulfillment.add(new Stock(choice, amount, orderedAmount, Phonebook.getPhonebook().getEastMarket()));
 			stateChanged();
 		}
 	}
@@ -102,7 +102,7 @@ public class CookRole extends Role implements Cook {
 		synchronized(stockFulfillment)
 		{
 			print("Got fullfillment for " + choice + "-- Amount: " + amount + " Ordered: " + orderedAmount);
-			stockFulfillment.add(new Stock(choice, amount, orderedAmount, Phonebook.getPhonebook().getMarket()));
+			stockFulfillment.add(new Stock(choice, amount, orderedAmount, Phonebook.getPhonebook().getEastMarket()));
 			stateChanged();
 		}
 	}
@@ -134,7 +134,7 @@ public class CookRole extends Role implements Cook {
 		}
 
 
-		if(!Phonebook.getPhonebook().getRestaurant().getRevolvingStand().isStandEmpty()) {
+		if(!Phonebook.getPhonebook().getChineseRestaurant().getRevolvingStand().isStandEmpty()) {
 			takeRevolvingStandOrder();
 			return true;
 		}
@@ -190,7 +190,7 @@ public class CookRole extends Role implements Cook {
 	private void takeRevolvingStandOrder()
 	{
 		print("Taking order from Revolving Stand.");
-		myOrders.add(Phonebook.getPhonebook().getRestaurant().getRevolvingStand().takeOrder());
+		myOrders.add(Phonebook.getPhonebook().getChineseRestaurant().getRevolvingStand().takeOrder());
 	}
 	
 	private void cookOrder(final Order o) {
@@ -281,10 +281,10 @@ public class CookRole extends Role implements Cook {
 
 			Market myMark = null;
 
-			if(Phonebook.getPhonebook().getMarket().inventory.get(choice).amount != 0)
+			if(Phonebook.getPhonebook().getEastMarket().inventory.get(choice).amount != 0)
 				//if (MM.availableChoices.get(choice) == true) 
 			{
-				myMark = Phonebook.getPhonebook().getMarket();
+				myMark = Phonebook.getPhonebook().getEastMarket();
 			}
 
 			if (myMark == null) 
@@ -303,8 +303,8 @@ public class CookRole extends Role implements Cook {
 				orderAmount = foodMap.get(choice).capacity - stockOnHand;
 				foodMap.get(choice).amountOrdered = orderAmount;
 
-				print("Requesting " + Phonebook.getPhonebook().getMarket().getName() + " for " + orderAmount + " " + choice + "(s)");
-				myMark.salesPersonRole.msgIWantProducts(Phonebook.getPhonebook().getRestaurant(), choice, orderAmount);
+				print("Requesting " + Phonebook.getPhonebook().getEastMarket().getName() + " for " + orderAmount + " " + choice + "(s)");
+				myMark.salesPersonRole.msgIWantProducts(Phonebook.getPhonebook().getChineseRestaurant(), choice, orderAmount);
 			}
 		}
 	}
@@ -313,12 +313,12 @@ public class CookRole extends Role implements Cook {
 		//No stock is fulfilled
 		if (stockFulfillment.get(0).quantity == 0) {
 
-			if (Phonebook.getPhonebook().getMarket().equals(stockFulfillment.get(0).market)) 
+			if (Phonebook.getPhonebook().getEastMarket().equals(stockFulfillment.get(0).market)) 
 			{
 				foodMap.get(stockFulfillment.get(0).choice).amountOrdered -= stockFulfillment.get(0).orderedAmount;
 				//Setting order availability for the choice at market to false
 				//MM.availableChoices.put(stockFulfillment.get(0).choice, false);
-				print(Phonebook.getPhonebook().getMarket().getName() + " is out of " + stockFulfillment.get(0).choice);
+				print(Phonebook.getPhonebook().getEastMarket().getName() + " is out of " + stockFulfillment.get(0).choice);
 			}
 
 			//Check inventory to re-order
@@ -336,11 +336,11 @@ public class CookRole extends Role implements Cook {
 			{
 				//Finding market
 
-				if (Phonebook.getPhonebook().getMarket().equals(stockFulfillment.get(0).market)) 
+				if (Phonebook.getPhonebook().getEastMarket().equals(stockFulfillment.get(0).market)) 
 				{
 					//Setting order availability for the choice at market to false
 					//MM.availableChoices.put(stockFulfillment.get(0).choice, false);
-					print(Phonebook.getPhonebook().getMarket().getName() + " is out of " + stockFulfillment.get(0).choice);
+					print(Phonebook.getPhonebook().getEastMarket().getName() + " is out of " + stockFulfillment.get(0).choice);
 				}
 
 
@@ -348,9 +348,9 @@ public class CookRole extends Role implements Cook {
 				print("Order partially fulfilled, re-ordering from different market for " + stockFulfillment.get(0).choice);
 
 				Market myMark = null;
-				if(Phonebook.getPhonebook().getMarket().inventory.get(stockFulfillment.get(0).choice).amount > 0) 
+				if(Phonebook.getPhonebook().getEastMarket().inventory.get(stockFulfillment.get(0).choice).amount > 0) 
 				{
-					myMark = Phonebook.getPhonebook().getMarket();
+					myMark = Phonebook.getPhonebook().getEastMarket();
 				}
 
 				if (myMark == null) 
@@ -362,8 +362,8 @@ public class CookRole extends Role implements Cook {
 
 				int newOrderAmount;
 				newOrderAmount = stockFulfillment.get(0).orderedAmount - stockFulfillment.get(0).quantity;
-				print("Requesting " + Phonebook.getPhonebook().getMarket().getName() + " for " + newOrderAmount + " " + stockFulfillment.get(0).choice + "(s)");
-				Phonebook.getPhonebook().getMarket().salesPersonRole.msgIWantProducts(Phonebook.getPhonebook().getRestaurant(), stockFulfillment.get(0).choice, newOrderAmount);
+				print("Requesting " + Phonebook.getPhonebook().getEastMarket().getName() + " for " + newOrderAmount + " " + stockFulfillment.get(0).choice + "(s)");
+				Phonebook.getPhonebook().getEastMarket().salesPersonRole.msgIWantProducts(Phonebook.getPhonebook().getChineseRestaurant(), stockFulfillment.get(0).choice, newOrderAmount);
 				//Because there is only one restaurant right now
 
 			}

@@ -22,7 +22,7 @@ public class BankCustomerTest extends TestCase{
 		person = new Worker("Josh", 200, "bankTeller", "bank", 800, 1200, 1500);
 		customer = new BankCustomerRole (person, person.getName(), "mockcustomer");
 		customer.test = true;
-		guard = (BankGuardMock) Phonebook.getPhonebook().getBank().getBankGuard(true);		
+		guard = (BankGuardMock) Phonebook.getPhonebook().getEastBank().getBankGuard(true);		
 		officer = new LoanOfficerMock ("mockofficer");
 		teller = new BankTellerMock ("teller");		
 	}

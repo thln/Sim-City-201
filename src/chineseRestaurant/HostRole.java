@@ -409,7 +409,7 @@ public class HostRole extends Role {
 	}
 	
 	public void deleteWaiter(myWaiter MW) {
-		Phonebook.getPhonebook().getRestaurant().removeWaiter(MW.waiterRole);
+		Phonebook.getPhonebook().getChineseRestaurant().removeWaiter(MW.waiterRole);
 		MW = null;
 		waiters.remove(MW);
 	}

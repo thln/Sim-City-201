@@ -31,11 +31,11 @@ public class UPSmanTest extends TestCase {
 
 	public void setUp() throws Exception {
 		super.setUp();
-		market = Phonebook.getPhonebook().getMarket();
-		restaurant = Phonebook.getPhonebook().getRestaurant();
-		salesPerson = (MockSalesPerson) Phonebook.getPhonebook().getMarket().getSalesPerson(true);
-		marketRunner = (MockMarketRunner) Phonebook.getPhonebook().getMarket().getMarketRunner(true);
-		cook = (MockCook) Phonebook.getPhonebook().getRestaurant().getCook(true);
+		market = Phonebook.getPhonebook().getEastMarket();
+		restaurant = Phonebook.getPhonebook().getChineseRestaurant();
+		salesPerson = (MockSalesPerson) Phonebook.getPhonebook().getEastMarket().getSalesPerson(true);
+		marketRunner = (MockMarketRunner) Phonebook.getPhonebook().getEastMarket().getMarketRunner(true);
+		cook = (MockCook) Phonebook.getPhonebook().getChineseRestaurant().getCook(true);
 
 		worker = new Worker("Worker", 50, "UPSman", "Market", 8, 12, 24);
 		UPSman = new UPSmanRole(worker, "UPSman", "UPSman", market);

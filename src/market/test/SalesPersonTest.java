@@ -25,14 +25,14 @@ public class SalesPersonTest extends TestCase {
 
 	public void setUp() throws Exception {
 		super.setUp();
-		market = Phonebook.getPhonebook().getMarket();
-		restaurant = Phonebook.getPhonebook().getRestaurant();
+		market = Phonebook.getPhonebook().getEastMarket();
+		restaurant = Phonebook.getPhonebook().getChineseRestaurant();
 		worker = new Worker("Worker", 50, "SalesPerson", "Market", 8, 12, 24);
 		salesPerson = new SalesPersonRole(worker, "SalesPerson", "MarketSalesPerson", market);
 		marketCustomer = new MockMarketCustomer("Mock Customer");
-		marketRunner = (MockMarketRunner) Phonebook.getPhonebook().getMarket().getMarketRunner(true);
-		UPSman = (MockUPSman) Phonebook.getPhonebook().getMarket().getUPSman(true);
-		cashier = (MockCashier) Phonebook.getPhonebook().getRestaurant().getCashier(true);
+		marketRunner = (MockMarketRunner) Phonebook.getPhonebook().getEastMarket().getMarketRunner(true);
+		UPSman = (MockUPSman) Phonebook.getPhonebook().getEastMarket().getUPSman(true);
+		cashier = (MockCashier) Phonebook.getPhonebook().getChineseRestaurant().getCashier(true);
 		salesPerson.test = true;
 	}
 

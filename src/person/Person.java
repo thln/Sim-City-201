@@ -209,7 +209,7 @@ public abstract class Person extends Agent{
 					MarketCustomerRole MCR = (MarketCustomerRole) cust1;
 					MCR.setItem("");
 					cust1.setRoleActive();
-					Phonebook.getPhonebook().getMarket().arrived(MCR);
+					Phonebook.getPhonebook().getEastMarket().arrived(MCR);
 					currentRoleName = "Market Customer";
 					stateChanged();
 					return;
@@ -222,7 +222,7 @@ public abstract class Person extends Agent{
 					MarketCustomerRole MCR = (MarketCustomerRole) cust1;
 					MCR.setItem("Car");
 					cust1.setRoleActive();
-					Phonebook.getPhonebook().getMarket().arrived(MCR);
+					Phonebook.getPhonebook().getEastMarket().arrived(MCR);
 					currentRoleName = "Market Customer";
 					stateChanged();
 					return;
@@ -244,7 +244,7 @@ public abstract class Person extends Agent{
 		for (Role cust1 : roles) {
 			if (cust1 instanceof RestaurantCustomerRole) {
 				RestaurantCustomerRole RCR = (RestaurantCustomerRole) cust1;
-				if (Phonebook.getPhonebook().getRestaurant().arrived(RCR)) {
+				if (Phonebook.getPhonebook().getChineseRestaurant().arrived(RCR)) {
 					currentRoleName = "Restaurant Customer";
 					cust1.setRoleActive();
 					stateChanged();
