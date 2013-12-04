@@ -63,7 +63,8 @@ public class Phonebook{
 
 	public Bank getBank() 
 	{
-			return banks.get(0); //temporary stub. make more dynamic later
+		return bank;	
+		//return banks.get(0); //temporary stub. make more dynamic later
 	}
 
 	public void setBank(Bank bank) 
@@ -73,7 +74,8 @@ public class Phonebook{
 
 	public Market getMarket() 
 	{
-		return markets.get(0); //temporary stub. make more dynamic later
+		return market;
+		//return markets.get(0); //temporary stub. make more dynamic later
 	}
 
 	public void setMarket(Market market) 
@@ -83,7 +85,8 @@ public class Phonebook{
 
 	public Restaurant getRestaurant() 
 	{
-		return restaurants.get(0); //temporary stub. make more dynamic later
+		return restaurant;
+		//return restaurants.get(0); //temporary stub. make more dynamic later
 	}
 
 	public void setRestaurant(Restaurant restaurant) 

@@ -35,8 +35,6 @@ public class Application extends JPanel {
 
 		animPanel = ap;
 		
-		Phonebook.getPhonebook().setHousingList(allHousing);
-		
 		//the following line is for dynamic building and business making in v2
 		//Phonebook.getPhonebook().getBusinessFromGui(animPanel);
 		
@@ -243,6 +241,7 @@ public class Application extends JPanel {
 //		wealthy4.startThread();
 		
 		updatePeopleTime();
+		Phonebook.getPhonebook().setHousingList(allHousing);
 	}
 	
 	public void updatePeopleTime(){
