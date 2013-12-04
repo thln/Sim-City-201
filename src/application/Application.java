@@ -161,7 +161,8 @@ public class Application extends JPanel {
 //		wealthy3.setHome(allHousing.get(allHousing.size() - 1));
 //		allHousing.add(new Housing(wealthy4, allHousing.size(), "Mansion"));
 //		wealthy4.setHome(allHousing.get(allHousing.size() - 1));
-
+		Phonebook.getPhonebook().setHousingList(allHousing);
+		
 		
 		//Adding to Vector
 		//Shift 1
@@ -205,6 +206,14 @@ public class Application extends JPanel {
 			animPanel.addGui(pg);
 		}
 		
+		for(int h=0; h < population.size(); h++) {
+			if(allHousing.get(h).structure.equals("Apartment")) {
+				//System.out.println(allHousing.get(h).housingStructure);
+				//System.out.println(population.get(h).getHousing().structure);
+				animPanel.addAptUnit(new BuildingPanel("", animPanel), h);
+			}
+		}
+		
 		//Starting Threads
 		//Shift 1
 		bank1a.startThread();
@@ -241,7 +250,7 @@ public class Application extends JPanel {
 //		wealthy4.startThread();
 		
 		updatePeopleTime();
-		Phonebook.getPhonebook().setHousingList(allHousing);
+		
 	}
 	
 	public void updatePeopleTime(){
@@ -251,7 +260,7 @@ public class Application extends JPanel {
 			public void run() {        
 				for (Person p: population){
 					if (p.stateChange.availablePermits() < 1)
-						p.stateChanged();      
+						p.stateChanged();    
 				}
 				updatePeopleTime();
 			}

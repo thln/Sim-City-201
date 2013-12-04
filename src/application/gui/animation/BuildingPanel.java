@@ -25,6 +25,7 @@ public class BuildingPanel extends JPanel implements ActionListener {
 
 	private String name;
 	private List<Gui> guis = Collections.synchronizedList(new ArrayList<Gui>());
+	int apartments = 0;
 	AnimationPanel myCity;
 
 	public BuildingPanel(String buildName, AnimationPanel ap) {
@@ -255,6 +256,35 @@ public class BuildingPanel extends JPanel implements ActionListener {
 			g2.setColor(Color.BLACK);
 			g2.drawString("Bank Vault", 50, 50);
 		}
+		else if(name.toLowerCase().contains("apartment")) {
+			//for(int h=0; h<apartments;h++) {
+			//	g2.setColor(Color.BLACK);
+	        	int rows = apartments/10;
+	        	int cols = 10;
+	        	int xremainder = apartments - cols*rows;
+	        	int counter = 0;
+	        	
+	        	//fills up a grid w/ specified rows and columns
+    			//xloc is x location, yloc is y location of apt
+				for (int iy = 1; iy <= rows; iy++) {
+	        		for(int ix=1; ix <= cols; ix++) {
+	        			g2.setColor(Color.ORANGE);
+	        			g2.fillRect(50*ix, 50*iy, 45, 45);
+	        			g2.setColor(Color.BLACK);
+	        			counter++;
+	        			g2.drawString(counter+"", 50*ix+10, 50*iy+15);
+	        		}
+	        	}
+				//creates the remainder apartments
+	        	for(int ix=1; ix<= xremainder; ix++) {
+	        		g2.setColor(Color.ORANGE);
+	        		g2.fillRect(50*ix, 50*rows+50, 45, 45);
+	        		g2.setColor(Color.BLACK);
+	        		counter++;
+	        		g2.drawString(counter+"", 50*ix+10, 50*rows+50+15);
+	        	}
+		//	}
+		}
 
 		synchronized(guis){
 			for(Gui gui : guis) {
@@ -268,13 +298,18 @@ public class BuildingPanel extends JPanel implements ActionListener {
 					gui.draw(g2);
 				}
 			}
+			
 		}
 	}
 
 	public void displayBuildingPanel() {
 		myCity.displayBuildingPanel(this);
 	}
-
+	
+	public void addAptUnit() {
+		apartments++;
+	}
+	
 	public String getName() {
 		return name;
 	}
