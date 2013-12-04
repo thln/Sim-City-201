@@ -11,7 +11,7 @@ import chineseRestaurant.*;
 
 public class RestaurantWaiterGui extends RestaurantGui {
 
-	private WaiterRole agent = null;
+	private ChineseRestaurantWaiterRole agent = null;
 	//RestaurantGui gui;
 
 	private int xPos = -20, yPos = 0;//default waiter position
@@ -29,7 +29,7 @@ public class RestaurantWaiterGui extends RestaurantGui {
 	public RestaurantWaiterGui() {
 	}
 	
-	public RestaurantWaiterGui(WaiterRole agent) {
+	public RestaurantWaiterGui(ChineseRestaurantWaiterRole agent) {
 		this.agent = agent;
 	}
 
@@ -119,7 +119,7 @@ public class RestaurantWaiterGui extends RestaurantGui {
 		yDestination = y + 20;
 	}
 
-	public void DoBringToTable(RestaurantCustomerRole customer, int tableNumber) {
+	public void DoBringToTable(ChineseRestaurantCustomerRole customer, int tableNumber) {
 
 		if (tableNumber == 1)
 		{

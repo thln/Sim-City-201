@@ -1,18 +1,18 @@
 package chineseRestaurant;
 
-import chineseRestaurant.interfaces.Waiter;
+import chineseRestaurant.interfaces.ChineseRestaurantWaiter;
 import application.Phonebook;
 import person.Person;
 
-public class AltWaiterRole extends WaiterRole implements Waiter {
+public class ChineseRestaurantAltWaiterRole extends ChineseRestaurantWaiterRole implements ChineseRestaurantWaiter {
 	//private RevolvingStand theRevolvingStand;
 	protected String RoleName = "Alternative Waiter";
 
-	public AltWaiterRole(Person p1, String pName, String rName) {
+	public ChineseRestaurantAltWaiterRole(Person p1, String pName, String rName) {
 		super(p1, pName, rName);
 	}
 
-	protected void placeOrder(myCustomer MC) {
+	protected void placeOrder(ChineseRestaurantMyCustomer MC) {
 		isInLobby = false;
 		if(test)
 		{
@@ -23,7 +23,7 @@ public class AltWaiterRole extends WaiterRole implements Waiter {
 			print("Placing " + MC.customer.getCustomerName() + "'s order");
 		}
 		
-		for (myCustomer myCust : myCustomers) {
+		for (ChineseRestaurantMyCustomer myCust : ChineseRestaurantMyCustomers) {
 			if (myCust.customer == MC.customer || myCust.testCustomer == MC.customer ) 
 			{
 				myCust.setWaitingForFood();
@@ -44,7 +44,7 @@ public class AltWaiterRole extends WaiterRole implements Waiter {
 
 		//cook.msgHeresAnOrder(MC.tableNumber, MC.choice, this);
 		print("Placing order on Revolving Stand.");
-		Phonebook.getPhonebook().getChineseRestaurant().getRevolvingStand().newOrder(new Order(MC.tableNumber, MC.choice, this));
+		Phonebook.getPhonebook().getChineseRestaurant().getRevolvingStand().newOrder(new ChineseRestaurantOrder(MC.tableNumber, MC.choice, this));
 	}
 
 }

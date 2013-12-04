@@ -1,20 +1,20 @@
 package chineseRestaurant.test;
 
-import chineseRestaurant.test.mock.MockCustomer;
-import chineseRestaurant.test.mock.MockMarket;
-import chineseRestaurant.test.mock.MockWaiter;
+import chineseRestaurant.test.mock.ChineseRestaurantMockCustomer;
+import chineseRestaurant.test.mock.ChineseRestaurantMockMarket;
+import chineseRestaurant.test.mock.ChineseRestaurantMockWaiter;
 import junit.framework.TestCase;
 //import restaurant.CashierAgent;
 //import restaurant.Check.CheckState;
 
-public class V22BTests extends TestCase
+public class ChineseRestaurantV22BTests extends TestCase
 {
 	//these are instantiated for each test separately via the setUp() method.
 	//CashierAgent cashier;
-	MockMarket market1;
-	MockMarket market2;
-    MockWaiter waiter;
-    MockCustomer customer;
+	ChineseRestaurantMockMarket market1;
+	ChineseRestaurantMockMarket market2;
+    ChineseRestaurantMockWaiter waiter;
+    ChineseRestaurantMockCustomer customer;
 
     /**
      * This method is run before each test. You can use it to instantiate the class variables
@@ -24,10 +24,10 @@ public class V22BTests extends TestCase
 	{
 		//super.setUp();
 		//cashier = new CashierAgent("cashier");    
-		market1 = new MockMarket("market1");
-		market2 = new MockMarket("market2");
-        customer = new MockCustomer("mockcustomer");                
-        waiter = new MockWaiter("mockwaiter");
+		market1 = new ChineseRestaurantMockMarket("market1");
+		market2 = new ChineseRestaurantMockMarket("market2");
+        customer = new ChineseRestaurantMockCustomer("mockcustomer");                
+        waiter = new ChineseRestaurantMockWaiter("mockwaiter");
 	}
 	
     /**

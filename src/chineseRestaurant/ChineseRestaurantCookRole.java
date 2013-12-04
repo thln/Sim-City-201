@@ -9,7 +9,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.Semaphore;
 
-import chineseRestaurant.interfaces.Cook;
+import chineseRestaurant.interfaces.ChineseRestaurantCook;
 import market.Market;
 import person.Person;
 import person.Role;
@@ -25,7 +25,7 @@ import application.gui.trace.AlertLog;
  * No current Cook Gui
  */
 
-public class CookRole extends Role implements Cook {
+public class ChineseRestaurantCookRole extends Role implements ChineseRestaurantCook {
 
 	RestaurantCookGui cookGui = (RestaurantCookGui) gui;
 
@@ -37,7 +37,7 @@ public class CookRole extends Role implements Cook {
 
 	int inventoryChecker = 0;
 
-	public List<Order> myOrders = Collections.synchronizedList(new ArrayList<Order>());
+	public List<ChineseRestaurantOrder> myOrders = Collections.synchronizedList(new ArrayList<ChineseRestaurantOrder>());
 	//private List<myMarket> markets = Collections.synchronizedList(new ArrayList<myMarket>());
 	private List<Stock> stockFulfillment = Collections.synchronizedList(new ArrayList<Stock>());
 
@@ -48,14 +48,14 @@ public class CookRole extends Role implements Cook {
 		foodMap.put("Salad", new Food("Salad"));
 	}
 
-	public CookRole(Person p1, String pName, String rName, Restaurant resturant) {
+	public ChineseRestaurantCookRole(Person p1, String pName, String rName, ChineseRestaurant resturant) {
 		super(p1, pName, rName);
 		//this.restaurant = restaurant;
 		//theRevolvingStand = Phonebook.getPhonebook().getRestaurant().getRevolvingStand();
 
 	}
 
-	public CookRole(String roleName, Restaurant restaurant) {
+	public ChineseRestaurantCookRole(String roleName, ChineseRestaurant chineseRestaurant) {
 		super(roleName);
 
 		//Starts revolving stand timer to check revolving stand
@@ -72,19 +72,19 @@ public class CookRole extends Role implements Cook {
 	/**
 	 * Messages
 	 */
-	public void msgHeresAnOrder(int table, String choice, WaiterRole waiterRole) {
+	public void msgHeresAnOrder(int table, String choice, ChineseRestaurantWaiterRole chineseRestaurantWaiterRole) {
 		synchronized(myOrders) {
 
 			print("Order received for table " + table);
-			Order order = new Order(table, choice, waiterRole);
-			myOrders.add(order);
+			ChineseRestaurantOrder chineseRestaurantOrder = new ChineseRestaurantOrder(table, choice, chineseRestaurantWaiterRole);
+			myOrders.add(chineseRestaurantOrder);
 			stateChanged();
 		}
 	}
 
-	public void msgOrderDone(Order order) 
+	public void msgOrderDone(ChineseRestaurantOrder chineseRestaurantOrder) 
 	{
-		order.setDone();
+		chineseRestaurantOrder.setDone();
 		stateChanged();
 	}
 
@@ -142,17 +142,17 @@ public class CookRole extends Role implements Cook {
 		synchronized(myOrders) {
 			if (!myOrders.isEmpty()) 
 			{
-				for (Order order : myOrders) 
+				for (ChineseRestaurantOrder chineseRestaurantOrder : myOrders) 
 				{
-					if (order.isOpen()) 
+					if (chineseRestaurantOrder.isOpen()) 
 					{
-						cookOrder(order);
+						cookOrder(chineseRestaurantOrder);
 						return true;//return true to the abstract agent to re-invoke the scheduler.
 					}
 
-					if (order.isDone()) 
+					if (chineseRestaurantOrder.isDone()) 
 					{
-						doneCooking(order);
+						doneCooking(chineseRestaurantOrder);
 						return true;
 					}
 				}
@@ -193,13 +193,13 @@ public class CookRole extends Role implements Cook {
 		myOrders.add(Phonebook.getPhonebook().getChineseRestaurant().getRevolvingStand().takeOrder());
 	}
 	
-	private void cookOrder(final Order o) {
+	private void cookOrder(final ChineseRestaurantOrder o) {
 		RestaurantCookGui cookGui = (RestaurantCookGui) gui;
 
 		if(!isInStock(o.choice)) {
 			checkInventory(o.choice);
 			myOrders.remove(o);
-			o.waiterRole.msgOrderIsNotAvailable(o.choice, o.tableNumber);
+			o.chineseRestaurantWaiterRole.msgOrderIsNotAvailable(o.choice, o.tableNumber);
 			return;
 		}
 
@@ -243,7 +243,7 @@ public class CookRole extends Role implements Cook {
 
 	}
 
-	private void doneCooking(Order o) {
+	private void doneCooking(ChineseRestaurantOrder o) {
 		RestaurantCookGui cookGui = (RestaurantCookGui) gui;
 		print("Done cooking order for table " + o.tableNumber);
 
@@ -263,7 +263,7 @@ public class CookRole extends Role implements Cook {
 			e.printStackTrace();
 
 		}
-		o.waiterRole.msgOrderIsReady(o.tableNumber, o.choice);
+		o.chineseRestaurantWaiterRole.msgOrderIsReady(o.tableNumber, o.choice);
 		myOrders.remove(o);
 		cookGui.DoGoToHomePosition();
 	}

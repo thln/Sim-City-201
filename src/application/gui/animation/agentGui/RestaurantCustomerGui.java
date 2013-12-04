@@ -8,7 +8,7 @@ import chineseRestaurant.*;
 
 public class RestaurantCustomerGui extends RestaurantGui{
 
-	private RestaurantCustomerRole agent = null;
+	private ChineseRestaurantCustomerRole agent = null;
 	private boolean isPresent = true;
 	private boolean isHungry = false;
 
@@ -31,7 +31,7 @@ public class RestaurantCustomerGui extends RestaurantGui{
 	public RestaurantCustomerGui() {
 	}
 	
-	public RestaurantCustomerGui(RestaurantCustomerRole c/*, RestaurantGui gui*/){ //HostAgent m) {
+	public RestaurantCustomerGui(ChineseRestaurantCustomerRole c/*, RestaurantGui gui*/){ //HostAgent m) {
 		agent = c;
 		xPos = -20;
 		yPos = -20;

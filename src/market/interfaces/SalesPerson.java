@@ -1,6 +1,6 @@
 package market.interfaces;
 
-import chineseRestaurant.Restaurant;
+import chineseRestaurant.ChineseRestaurant;
 import market.MarketCustomerRole;
 import market.MarketOrder;
 import market.MarketOrder.orderState;
@@ -11,7 +11,7 @@ public interface SalesPerson {
 	public void msgIWantProducts(MarketCustomer customer, String item,
 			int numWanted);
 
-	public void msgIWantProducts(Restaurant restaurant, String item,
+	public void msgIWantProducts(ChineseRestaurant chineseRestaurant, String item,
 			int numWanted);
 
 	public void msgOrderFulfilled(MarketOrder o);
@@ -20,7 +20,7 @@ public interface SalesPerson {
 
 	public void msgPayment(MarketCustomer customer, double payment);
 
-	public void msgPayment(Restaurant restaurant, double payment);
+	public void msgPayment(ChineseRestaurant chineseRestaurant, double payment);
 
 	//Actions
 	public void findItems(MarketOrder o);

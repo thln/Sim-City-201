@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import chineseRestaurant.Restaurant;
+import chineseRestaurant.ChineseRestaurant;
 import bank.Bank;
 import market.Market;
 import application.gui.animation.*;
@@ -24,7 +24,7 @@ public class Phonebook{
 	static private Market westMarket;
 
 	//Restaruants
-	static private Restaurant chineseRestaurant;
+	static private ChineseRestaurant chineseRestaurant;
 	//ItalianRestaurant italianRestaurant;
 	//MexicanRestaurant mexicanRestaurant;
 	//AmericanRestaurant americanRestaurant;
@@ -54,7 +54,7 @@ public class Phonebook{
 		//	westBank = new Bank("Bank");
 		eastMarket = new Market("Market");
 		//	westMarket = new Market("Market");
-		chineseRestaurant = new Restaurant("Restaurant");
+		chineseRestaurant = new ChineseRestaurant("Restaurant");
 		housingMaintenanceCompany = new HousingMaintenanceCompany("Housing maintenance company");
 		getBusStops().add(new Point(172, 28));
 		getBusStops().add(new Point(172, 230));
@@ -96,7 +96,7 @@ public class Phonebook{
 			return westMarket;
 	}
 
-	public Restaurant getChineseRestaurant() 
+	public ChineseRestaurant getChineseRestaurant() 
 	{
 		return chineseRestaurant; //temporary stub. make more dynamic later
 	}

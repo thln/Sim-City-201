@@ -4,7 +4,7 @@ import housing.Housing;
 
 import javax.swing.*;
 
-import chineseRestaurant.Restaurant;
+import chineseRestaurant.ChineseRestaurant;
 import market.*;
 import bank.*;
 import person.*;
@@ -25,7 +25,7 @@ public class Application extends JPanel {
 	public AnimationPanel animPanel;
 	public Bank bank;
 	public Market market;
-	public Restaurant restaurant;
+	public ChineseRestaurant chineseRestaurant;
 	public Timer updateTimer = new Timer();
 
 	//public static Phonebook phonebook = new Phonebook(bank, market, restaurant, allHousing);

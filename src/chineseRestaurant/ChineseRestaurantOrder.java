@@ -1,11 +1,11 @@
 package chineseRestaurant;
 
-import chineseRestaurant.interfaces.RestaurantCustomer;
+import chineseRestaurant.interfaces.ChineseRestaurantCustomer;
 
-public class Order {
+public class ChineseRestaurantOrder {
 
-	WaiterRole waiterRole;
-	public RestaurantCustomer customer;
+	ChineseRestaurantWaiterRole chineseRestaurantWaiterRole;
+	public ChineseRestaurantCustomer customer;
 
 	int tableNumber;
 
@@ -14,13 +14,13 @@ public class Order {
 	enum orderStatus {Open, Cooking, Done}
 	orderStatus status = orderStatus.Open;
 
-	Order(int tableNumber, String choice, WaiterRole waiterRole) {
+	ChineseRestaurantOrder(int tableNumber, String choice, ChineseRestaurantWaiterRole chineseRestaurantWaiterRole) {
 		this.tableNumber = tableNumber;
 		this.choice = choice;
-		this.waiterRole = waiterRole;
+		this.chineseRestaurantWaiterRole = chineseRestaurantWaiterRole;
 	}
 
-	Order(int tableNumber, String choice, RestaurantCustomer customer) {
+	ChineseRestaurantOrder(int tableNumber, String choice, ChineseRestaurantCustomer customer) {
 		this.tableNumber = tableNumber;
 		this.choice = choice;
 		this.customer = customer;

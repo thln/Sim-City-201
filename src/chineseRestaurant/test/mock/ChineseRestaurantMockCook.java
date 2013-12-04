@@ -1,8 +1,8 @@
 package chineseRestaurant.test.mock;
 
-import chineseRestaurant.Order;
-import chineseRestaurant.WaiterRole;
-import chineseRestaurant.interfaces.Cook;
+import chineseRestaurant.ChineseRestaurantOrder;
+import chineseRestaurant.ChineseRestaurantWaiterRole;
+import chineseRestaurant.interfaces.ChineseRestaurantCook;
 import market.Market;
 import testing.EventLog;
 import testing.LoggedEvent;
@@ -14,21 +14,21 @@ import testing.Mock;
 	 *
 	 */
 
-public class MockCook extends Mock implements Cook {
+public class ChineseRestaurantMockCook extends Mock implements ChineseRestaurantCook {
 	
 	public EventLog log = new EventLog();
 	
-	public MockCook(String name)
+	public ChineseRestaurantMockCook(String name)
 	{
 		super(name);
 	}
 	
-	public void msgHeresAnOrder(int table, String choice, WaiterRole waiterRole)
+	public void msgHeresAnOrder(int table, String choice, ChineseRestaurantWaiterRole chineseRestaurantWaiterRole)
 	{
 		
 	}
 
-	public void msgOrderDone(Order order)
+	public void msgOrderDone(ChineseRestaurantOrder chineseRestaurantOrder)
 	{
 		
 	}

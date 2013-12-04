@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
 
-import chineseRestaurant.WaiterRole;
+import chineseRestaurant.ChineseRestaurantWaiterRole;
 import market.MarketCustomerRole;
 import bank.BankGuardRole.MyTeller;
 import bank.BankTellerRole.Account;

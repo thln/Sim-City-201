@@ -1,11 +1,11 @@
 package chineseRestaurant.test.mock;
 
 
-import chineseRestaurant.Menu;
-import chineseRestaurant.interfaces.Cashier;
-import chineseRestaurant.interfaces.Host;
-import chineseRestaurant.interfaces.RestaurantCustomer;
-import chineseRestaurant.interfaces.Waiter;
+import chineseRestaurant.ChineseRestaurantMenu;
+import chineseRestaurant.interfaces.ChineseRestaurantCashier;
+import chineseRestaurant.interfaces.ChineseRestaurantHost;
+import chineseRestaurant.interfaces.ChineseRestaurantCustomer;
+import chineseRestaurant.interfaces.ChineseRestaurantWaiter;
 import testing.LoggedEvent;
 import testing.Mock;
 
@@ -15,21 +15,21 @@ import testing.Mock;
  * @author Kristi Hupka
  *
  */
-public class MockCustomer extends Mock implements RestaurantCustomer {
+public class ChineseRestaurantMockCustomer extends Mock implements ChineseRestaurantCustomer {
 
-	public Cashier cashier;
+	public ChineseRestaurantCashier chineseRestaurantCashier;
 
 	/**
 	 * Reference to the Cashier under test that can be set by the unit test.
 	 */
 	//public Cashier cashier;
 
-	public MockCustomer(String name) {
+	public ChineseRestaurantMockCustomer(String name) {
 		super(name);
 	}
 
 	@Override
-	public void setHost(Host host) {
+	public void setHost(ChineseRestaurantHost chineseRestaurantHost) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -65,7 +65,7 @@ public class MockCustomer extends Mock implements RestaurantCustomer {
 	}
 
 	@Override
-	public void msgPleaseReorder(Menu newMenu) {
+	public void msgPleaseReorder(ChineseRestaurantMenu newMenu) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -107,7 +107,7 @@ public class MockCustomer extends Mock implements RestaurantCustomer {
 	}
 
 	@Override
-	public void msgPleaseFollowMe(int tableNumber, Menu menu, Waiter waiter) {
+	public void msgPleaseFollowMe(int tableNumber, ChineseRestaurantMenu chineseRestaurantMenu, ChineseRestaurantWaiter chineseRestaurantWaiter) {
 		// TODO Auto-generated method stub
 		
 	}

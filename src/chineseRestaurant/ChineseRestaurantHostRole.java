@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import chineseRestaurant.interfaces.RestaurantCustomer;
+import chineseRestaurant.interfaces.ChineseRestaurantCustomer;
 import application.Phonebook;
 import person.Person;
 import person.Role;
@@ -17,7 +17,7 @@ import person.Worker;
 //does all the rest. Rather than calling the other agent a waiter, we called him
 //the HostAgent. A Host is the manager of a restaurant who sees that all
 //is proceeded as he wishes.
-public class HostRole extends Role {
+public class ChineseRestaurantHostRole extends Role {
 	static final int NTABLES = 4;//a global for the number of tables.
 	//Notice that we implement waitingCustomers using ArrayList, but type it
 	//with List semantics.
@@ -37,7 +37,7 @@ public class HostRole extends Role {
 	//GUI stuff
 	//public HostGui hostGui = null;
 
-	public HostRole(Person p1, String pName, String rName) 
+	public ChineseRestaurantHostRole(Person p1, String pName, String rName) 
 	{
 		super(p1, pName, rName);
 
@@ -48,7 +48,7 @@ public class HostRole extends Role {
 		}
 	}
 
-	public HostRole(String roleName) 
+	public ChineseRestaurantHostRole(String roleName) 
 	{
 		super(roleName);
 
@@ -76,21 +76,21 @@ public class HostRole extends Role {
 	/**
 	 *	Messages
 	 */
-	public void msgIWantFood(RestaurantCustomerRole cust, int xHome, int yHome) {
+	public void msgIWantFood(ChineseRestaurantCustomerRole cust, int xHome, int yHome) {
 		synchronized(newCustomers){
 			newCustomers.add(new myCustomer(cust, xHome, yHome));
 			stateChanged();
 		}
 	}
 
-	public void msgStaying(RestaurantCustomerRole cust, int xHome, int yHome) {
+	public void msgStaying(ChineseRestaurantCustomerRole cust, int xHome, int yHome) {
 		synchronized(waitingCustomers){
 			waitingCustomers.add(new myCustomer(cust, xHome, yHome));
 			stateChanged();
 		}
 	}
 
-	public void msgLeavingTable(RestaurantCustomer cust, WaiterRole waiterRole) 
+	public void msgLeavingTable(ChineseRestaurantCustomer cust, ChineseRestaurantWaiterRole chineseRestaurantWaiterRole) 
 	{
 		for (Table table : tables) 
 		{
@@ -103,7 +103,7 @@ public class HostRole extends Role {
 
 		for (myWaiter MW: waiters) 
 		{
-			if (MW.waiterRole == waiterRole) 
+			if (MW.chineseRestaurantWaiterRole == chineseRestaurantWaiterRole) 
 			{
 				MW.totalCustomers--;
 			}
@@ -112,12 +112,12 @@ public class HostRole extends Role {
 		stateChanged();
 	}
 
-	public void msgMayIGoOnBreak(WaiterRole waiterRole) 
+	public void msgMayIGoOnBreak(ChineseRestaurantWaiterRole chineseRestaurantWaiterRole) 
 	{
-		print(waiterRole.getName() + " asked to go on break");
+		print(chineseRestaurantWaiterRole.getName() + " asked to go on break");
 		for (myWaiter MW: waiters) 
 		{
-			if (MW.waiterRole == waiterRole)
+			if (MW.chineseRestaurantWaiterRole == chineseRestaurantWaiterRole)
 			{
 				MW.state = myWaiterState.Working;
 				//MW.askedToGoOnBreak = true;
@@ -126,9 +126,9 @@ public class HostRole extends Role {
 		}
 	}
 
-	public void msgOffBreak(WaiterRole waiterRole) {
+	public void msgOffBreak(ChineseRestaurantWaiterRole chineseRestaurantWaiterRole) {
 		for (myWaiter MW: waiters) {
-			if (MW.waiterRole.equals(waiterRole)) {
+			if (MW.chineseRestaurantWaiterRole.equals(chineseRestaurantWaiterRole)) {
 				MW.state = myWaiterState.Working;
 				//MW.onBreak = false;
 				stateChanged();
@@ -136,11 +136,11 @@ public class HostRole extends Role {
 		}
 	}
 	
-	public void msgIAmLeavingSoon(WaiterRole waiterRole)
+	public void msgIAmLeavingSoon(ChineseRestaurantWaiterRole chineseRestaurantWaiterRole)
 	{
 		for(myWaiter MW: waiters)
 		{
-			if(MW.waiterRole.equals(waiterRole))
+			if(MW.chineseRestaurantWaiterRole.equals(chineseRestaurantWaiterRole))
 			{
 				MW.state = myWaiterState.LeavingSoon;
 				stateChanged();
@@ -148,9 +148,9 @@ public class HostRole extends Role {
 		}
 	}
 	
-	public void msgIAmLeavingWork(WaiterRole waiterRole) {
+	public void msgIAmLeavingWork(ChineseRestaurantWaiterRole chineseRestaurantWaiterRole) {
 		for(myWaiter MW: waiters) {
-			if (MW.waiterRole.equals(waiterRole)) {
+			if (MW.chineseRestaurantWaiterRole.equals(chineseRestaurantWaiterRole)) {
 				MW.leaving = true;
 			}
 		}
@@ -260,13 +260,13 @@ public class HostRole extends Role {
 		}
 	}
 
-	private void assignCustomer(myCustomer MC, Table table, WaiterRole waiterRole) 
+	private void assignCustomer(myCustomer MC, Table table, ChineseRestaurantWaiterRole chineseRestaurantWaiterRole) 
 	{
 
-		print("Assigning customer " + MC.customer.getCustomerName() + " to waiter" + waiterRole.getName());
-		addCustomerToWaiter(waiterRole);
+		print("Assigning customer " + MC.customer.getCustomerName() + " to waiter" + chineseRestaurantWaiterRole.getName());
+		addCustomerToWaiter(chineseRestaurantWaiterRole);
 		//waiterRole
-		waiterRole.msgPleaseSeatCustomer(table.tableNumber, MC.customer, MC.xHome, MC.yHome);
+		chineseRestaurantWaiterRole.msgPleaseSeatCustomer(table.tableNumber, MC.customer, MC.xHome, MC.yHome);
 		table.setOccupant(MC.customer);
 		for (myCustomer MyCust : waitingCustomers) {
 			if (MyCust.equals(MC)) {
@@ -283,8 +283,8 @@ public class HostRole extends Role {
 		{
 			//MW.askedToGoOnBreak = false;
 			MW.state = myWaiterState.Working;
-			MW.waiterRole.msgPermissionToBreak(false);
-			print("Telling " + MW.waiterRole.getName() + " he/she cannot go on break");
+			MW.chineseRestaurantWaiterRole.msgPermissionToBreak(false);
+			print("Telling " + MW.chineseRestaurantWaiterRole.getName() + " he/she cannot go on break");
 			return;
 		}
 
@@ -301,20 +301,20 @@ public class HostRole extends Role {
 		{
 			//MW.askedToGoOnBreak = false;
 			MW.state = myWaiterState.onBreak;
-			print("Allowing " + MW.waiterRole.getName() + " to go on break");
-			MW.waiterRole.msgPermissionToBreak(true);
+			print("Allowing " + MW.chineseRestaurantWaiterRole.getName() + " to go on break");
+			MW.chineseRestaurantWaiterRole.msgPermissionToBreak(true);
 			//MW.onBreak = true;
 		}
 		else 
 		{
 			//MW.askedToGoOnBreak = false;
 			MW.state = myWaiterState.Working;
-			print("Deny " + MW.waiterRole.getName() + " to go on break");
-			MW.waiterRole.msgPermissionToBreak(false);
+			print("Deny " + MW.chineseRestaurantWaiterRole.getName() + " to go on break");
+			MW.chineseRestaurantWaiterRole.msgPermissionToBreak(false);
 		}
 	}
 
-	private void informCustomerRestaurantFull(RestaurantCustomerRole customer)
+	private void informCustomerRestaurantFull(ChineseRestaurantCustomerRole customer)
 	{
 		customer.msgTablesAreFull();
 		for(myCustomer MC : newCustomers) 
@@ -339,22 +339,22 @@ public class HostRole extends Role {
 		return hostGui;
 	}*/
 
-	public void addWaiter(WaiterRole waiterRole) 
+	public void addWaiter(ChineseRestaurantWaiterRole chineseRestaurantWaiterRole) 
 	{
-		waiters.add(new myWaiter(waiterRole));
-		print("Hired new waiter, " + waiterRole.getPerson().getName());
+		waiters.add(new myWaiter(chineseRestaurantWaiterRole));
+		print("Hired new waiter, " + chineseRestaurantWaiterRole.getPerson().getName());
 		stateChanged();
 	}
 
-	public void addCustomerToWaiter(WaiterRole waiterRole) 
+	public void addCustomerToWaiter(ChineseRestaurantWaiterRole chineseRestaurantWaiterRole) 
 	{
 		for (myWaiter MW: waiters) {
-			if (MW.waiterRole == waiterRole)
+			if (MW.chineseRestaurantWaiterRole == chineseRestaurantWaiterRole)
 				MW.totalCustomers++;
 		}
 	}
 
-	private WaiterRole findWaiterWithLeastCustomers() {
+	private ChineseRestaurantWaiterRole findWaiterWithLeastCustomers() {
 		//Finding first waiter that is not on break
 		myWaiter lowestWaiter = null;
 
@@ -374,11 +374,11 @@ public class HostRole extends Role {
 			if ((lowestWaiter.totalCustomers > waiters.get(i).totalCustomers) && (waiters.get(i).state != myWaiterState.onBreak) && (waiters.get(i).state != myWaiterState.LeavingSoon)) //.onBreak == false))
 				lowestWaiter = waiters.get(i);
 		}
-		return lowestWaiter.waiterRole;
+		return lowestWaiter.chineseRestaurantWaiterRole;
 	}
 
 	private class Table {
-		RestaurantCustomerRole occupiedBy;
+		ChineseRestaurantCustomerRole occupiedBy;
 		int tableNumber;
 
 		Table(int tableNumber) {
@@ -386,7 +386,7 @@ public class HostRole extends Role {
 		}
 
 
-		void setOccupant(RestaurantCustomerRole cust) {
+		void setOccupant(ChineseRestaurantCustomerRole cust) {
 			occupiedBy = cust;
 		}
 
@@ -394,7 +394,7 @@ public class HostRole extends Role {
 			occupiedBy = null;
 		}
 
-		RestaurantCustomerRole getOccupant() {
+		ChineseRestaurantCustomerRole getOccupant() {
 			return occupiedBy;
 		}
 
@@ -409,7 +409,7 @@ public class HostRole extends Role {
 	}
 	
 	public void deleteWaiter(myWaiter MW) {
-		Phonebook.getPhonebook().getChineseRestaurant().removeWaiter(MW.waiterRole);
+		Phonebook.getPhonebook().getChineseRestaurant().removeWaiter(MW.chineseRestaurantWaiterRole);
 		MW = null;
 		waiters.remove(MW);
 	}
@@ -418,7 +418,7 @@ public class HostRole extends Role {
 	public enum myWaiterState {Working, askedToGoOnBreak, onBreak, LeavingSoon};
 
 	public class myWaiter {
-		public WaiterRole waiterRole;
+		public ChineseRestaurantWaiterRole chineseRestaurantWaiterRole;
 		public int totalCustomers;
 		//boolean askedToGoOnBreak = false;
 		//boolean onBreak = false;
@@ -426,19 +426,19 @@ public class HostRole extends Role {
 		boolean leaving = false;
 		
 
-		myWaiter(WaiterRole waiterRole) {
-			this.waiterRole = waiterRole;
+		myWaiter(ChineseRestaurantWaiterRole chineseRestaurantWaiterRole) {
+			this.chineseRestaurantWaiterRole = chineseRestaurantWaiterRole;
 			totalCustomers = 0;
 		}
 	}
 	
 	private class myCustomer {
-		RestaurantCustomerRole customer;
+		ChineseRestaurantCustomerRole customer;
 		int xHome;
 		int yHome;
 		boolean leaving = false;
 		
-		myCustomer(RestaurantCustomerRole customer, int xHome, int yHome) {
+		myCustomer(ChineseRestaurantCustomerRole customer, int xHome, int yHome) {
 			this.customer = customer;
 			this.xHome = xHome;
 			this.yHome = yHome;

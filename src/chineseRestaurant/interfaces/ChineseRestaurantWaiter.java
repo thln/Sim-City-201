@@ -5,7 +5,7 @@ package chineseRestaurant.interfaces;
 //import restaurant.RestaurantCustomer;
 //import restaurant.Host;
 //
-public interface Waiter {
+public interface ChineseRestaurantWaiter {
 
 	public abstract void msgHereIsCheck(int tableNumber, double checkAmount);
 //

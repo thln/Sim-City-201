@@ -4,9 +4,9 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import chineseRestaurant.interfaces.Host;
-import chineseRestaurant.interfaces.RestaurantCustomer;
-import chineseRestaurant.interfaces.Waiter;
+import chineseRestaurant.interfaces.ChineseRestaurantHost;
+import chineseRestaurant.interfaces.ChineseRestaurantCustomer;
+import chineseRestaurant.interfaces.ChineseRestaurantWaiter;
 import person.Person;
 import person.Person.HungerLevel;
 import person.Role;
@@ -16,16 +16,16 @@ import application.gui.animation.agentGui.RestaurantCustomerGui;
 /**
  * Restaurant customer agent.
  */
-public class RestaurantCustomerRole extends Role implements RestaurantCustomer {
+public class ChineseRestaurantCustomerRole extends Role implements ChineseRestaurantCustomer {
 	private int hungerLevel = 5;        // determines length of meal
 	Timer timer = new Timer();
 	protected String RoleName = "Restaurant Customer";
 
 	int xHome, yHome;
 	
-	private Menu menu;
+	private ChineseRestaurantMenu chineseRestaurantMenu;
 
-	private WaiterRole waiterRole;
+	private ChineseRestaurantWaiterRole chineseRestaurantWaiterRole;
 
 
 	// private boolean isHungry = false; //hack for gui
@@ -46,7 +46,7 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer {
 	 * Constructor for RestaurantCustomer class
 	 *
 	 */
-	public RestaurantCustomerRole(Person p1, String pName, String rName) {
+	public ChineseRestaurantCustomerRole(Person p1, String pName, String rName) {
 		super(p1, pName, rName);
 	/*
 		if (name.equals("Broke 1")) {
@@ -97,11 +97,11 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer {
 		stateChanged();
 	}
 	
-	public void msgPleaseFollowMe(int tableNumber, Menu menu, WaiterRole waiterRole) {
+	public void msgPleaseFollowMe(int tableNumber, ChineseRestaurantMenu chineseRestaurantMenu, ChineseRestaurantWaiterRole chineseRestaurantWaiterRole) {
 		this.tableNumber = tableNumber;
-		this.menu = menu;
-		this.waiterRole = waiterRole; //to establish connection to waiter
-		print("Received msgPleaseFollowMe from " + waiterRole.getName());
+		this.chineseRestaurantMenu = chineseRestaurantMenu;
+		this.chineseRestaurantWaiterRole = chineseRestaurantWaiterRole; //to establish connection to waiter
+		print("Received msgPleaseFollowMe from " + chineseRestaurantWaiterRole.getName());
 		event = AgentEvent.followHost;
 		stateChanged();
 	}
@@ -116,8 +116,8 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer {
 		stateChanged();
 	}
 
-	public void msgPleaseReorder(Menu newMenu) {
-		this.menu = newMenu;
+	public void msgPleaseReorder(ChineseRestaurantMenu newMenu) {
+		this.chineseRestaurantMenu = newMenu;
 		event = AgentEvent.seated;
 		state = AgentState.BeingSeated;
 		stateChanged();
@@ -226,7 +226,7 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer {
 	private void goToRestaurant() {
 		state = AgentState.WaitingInRestaurant;
 		print("Going to restaurant");
-		Phonebook.getPhonebook().getChineseRestaurant().hostRole.msgIWantFood(this, xHome, yHome);
+		Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantHostRole.msgIWantFood(this, xHome, yHome);
 	}
 	
 	private void DecidingToStay() {
@@ -248,7 +248,7 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer {
 		else {
 			state = AgentState.WaitingInRestaurant;
 			print("Decided to stay and eat in restaurant");
-			Phonebook.getPhonebook().getChineseRestaurant().hostRole.msgStaying(this, xHome, yHome);
+			Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantHostRole.msgStaying(this, xHome, yHome);
 			stateChanged();
 		}
 	}
@@ -271,7 +271,7 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer {
 			{
 				RestaurantCustomerGui customerGui = (RestaurantCustomerGui) gui;
 				
-				if (money < menu.lowestPricedItem) {
+				if (money < chineseRestaurantMenu.lowestPricedItem) {
 					print("I can't afford anything on the menu");
 					LeaveRestaurant();
 					ResetState();
@@ -284,9 +284,9 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer {
 				do {
 					myRandomChoice = rand.nextInt(10);
 					myRandomChoice %= 4;
-				} while (!menu.menuMap.containsKey(myRandomChoice) || (money < menu.menuMap.get(myRandomChoice).price));
+				} while (!chineseRestaurantMenu.menuMap.containsKey(myRandomChoice) || (money < chineseRestaurantMenu.menuMap.get(myRandomChoice).price));
 
-				choice = menu.menuMap.get(myRandomChoice).choice;
+				choice = chineseRestaurantMenu.menuMap.get(myRandomChoice).choice;
 				
 				state = AgentState.DoneDeciding;
 				AskToOrder();
@@ -298,14 +298,14 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer {
 	}
 
 	private void AskToOrder() {
-		waiterRole.msgReadyToOrder(this);
+		chineseRestaurantWaiterRole.msgReadyToOrder(this);
 	}
 
 	private void PlaceOrder() {
 		RestaurantCustomerGui customerGui = (RestaurantCustomerGui) gui;
 		customerGui.DoPlaceOrder(choice); //GUI call
 		state = AgentState.Ordered;
-		waiterRole.msgHeresMyOrder(this, choice);
+		chineseRestaurantWaiterRole.msgHeresMyOrder(this, choice);
 	}
 
 	private void EatFood() {
@@ -338,7 +338,7 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer {
 		customerGui.DoAskForCheck();
 		state = AgentState.AskedForCheck;
 		print("Asking for my check");
-		waiterRole.msgIWantMyCheck(this);
+		chineseRestaurantWaiterRole.msgIWantMyCheck(this);
 	}
 
 	private void PayingCheck() {
@@ -363,7 +363,7 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer {
 		print("I have $" + money);
 
 		state = AgentState.PayedCheck;
-		Phonebook.getPhonebook().getChineseRestaurant().cashierRole.msgPayment(choice, money, this);
+		Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantCashierRole.msgPayment(choice, money, this);
 		money = 0;
 	}
 
@@ -372,7 +372,7 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer {
 		state = AgentState.Leaving;
 
 		print("Leaving.");
-		waiterRole.msgLeavingTable(this);
+		chineseRestaurantWaiterRole.msgLeavingTable(this);
 		
 		//This event and state changed should be removed when gui is working
 		event = AgentEvent.doneLeaving;
@@ -383,7 +383,7 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer {
 	private void GoToJail() {
 		RestaurantCustomerGui customerGui = (RestaurantCustomerGui) gui;
 		state = AgentState.inJail;
-		waiterRole.msgLeavingTable(this);
+		chineseRestaurantWaiterRole.msgLeavingTable(this);
 		customerGui.DoGoToJail();
 		
 		timer.schedule(new TimerTask() {
@@ -430,13 +430,13 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer {
 	}
 
 	@Override
-	public void setHost(Host host) {
+	public void setHost(ChineseRestaurantHost chineseRestaurantHost) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void msgPleaseFollowMe(int tableNumber, Menu menu, Waiter waiter) {
+	public void msgPleaseFollowMe(int tableNumber, ChineseRestaurantMenu chineseRestaurantMenu, ChineseRestaurantWaiter chineseRestaurantWaiter) {
 		// TODO Auto-generated method stub
 		
 	}

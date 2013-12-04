@@ -1,7 +1,7 @@
 package chineseRestaurant.test.mock;
 
-import chineseRestaurant.CashierRole;
-import chineseRestaurant.interfaces.Market;
+import chineseRestaurant.ChineseRestaurantCashierRole;
+import chineseRestaurant.interfaces.ChineseRestaurantMarket;
 import testing.LoggedEvent;
 import testing.Mock;
 
@@ -12,11 +12,11 @@ import testing.Mock;
  *
  */
 
-public class MockMarket extends Mock implements Market {
+public class ChineseRestaurantMockMarket extends Mock implements ChineseRestaurantMarket {
 
-	public CashierRole cashierRole;
+	public ChineseRestaurantCashierRole chineseRestaurantCashierRole;
 
-	public MockMarket(String name) {
+	public ChineseRestaurantMockMarket(String name) {
 		super(name);
 	}
 
@@ -24,7 +24,7 @@ public class MockMarket extends Mock implements Market {
 		log.add(new LoggedEvent("Received msgOutOfItems from cook. Choice: " + choice + "Order Amount: " + orderAmount));
 	}
 
-	public void msgPayment(double payment, CashierRole cashier) {
+	public void msgPayment(double payment, ChineseRestaurantCashierRole cashier) {
 		log.add(new LoggedEvent("Received msgPayment from cashier. Payment: " + payment));
 	}
 }

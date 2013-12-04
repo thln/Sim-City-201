@@ -2,10 +2,10 @@ package chineseRestaurant;
 
 import java.util.Vector;
 
-import chineseRestaurant.interfaces.Cashier;
-import chineseRestaurant.interfaces.Cook;
-import chineseRestaurant.test.mock.MockCashier;
-import chineseRestaurant.test.mock.MockCook;
+import chineseRestaurant.interfaces.ChineseRestaurantCashier;
+import chineseRestaurant.interfaces.ChineseRestaurantCook;
+import chineseRestaurant.test.mock.ChineseRestaurantMockCashier;
+import chineseRestaurant.test.mock.ChineseRestaurantMockCook;
 import person.Person;
 import person.Role;
 import person.Worker;
@@ -15,38 +15,38 @@ import application.gui.animation.agentGui.RestaurantCookGui;
 import application.gui.animation.agentGui.RestaurantCustomerGui;
 import application.gui.animation.agentGui.RestaurantWaiterGui;
 
-public class Restaurant{
+public class ChineseRestaurant{
 
 	//Data
 	String name;
 	public boolean userClosed = false;
 
 	//List of Customers
-	private Vector<RestaurantCustomerRole> customers = new Vector<RestaurantCustomerRole>();
+	private Vector<ChineseRestaurantCustomerRole> customers = new Vector<ChineseRestaurantCustomerRole>();
 
 	//List of Waiters
-	private Vector<WaiterRole> waiters = new Vector<WaiterRole>();
+	private Vector<ChineseRestaurantWaiterRole> waiters = new Vector<ChineseRestaurantWaiterRole>();
 
 	//Open and closing times
 	public WatchTime openTime = new WatchTime(11);
 	public WatchTime closeTime = new WatchTime(21);
 
 	//Roles
-	public HostRole hostRole = new HostRole("Host");
-	public CookRole cookRole = new CookRole("Cook", this);
-	public RestaurantCookGui cookGui = new RestaurantCookGui(cookRole);
+	public ChineseRestaurantHostRole chineseRestaurantHostRole = new ChineseRestaurantHostRole("Host");
+	public ChineseRestaurantCookRole chineseRestaurantCookRole = new ChineseRestaurantCookRole("Cook", this);
+	public RestaurantCookGui cookGui = new RestaurantCookGui(chineseRestaurantCookRole);
 	
-	public CashierRole cashierRole = new CashierRole("Cashier", this);
-	public RevolvingStand theRevolvingStand = new RevolvingStand();
+	public ChineseRestaurantCashierRole chineseRestaurantCashierRole = new ChineseRestaurantCashierRole("Cashier", this);
+	public ChineseRestaurantRevolvingStand theRevolvingStand = new ChineseRestaurantRevolvingStand();
 	private BuildingPanel restPanel;
 
 	//Mocks
-	public MockCook mockCook = new MockCook("MockCook");
-	public MockCashier mockCashier = new MockCashier("MockCashier");
+	public ChineseRestaurantMockCook chineseRestaurantMockCook = new ChineseRestaurantMockCook("MockCook");
+	public ChineseRestaurantMockCashier chineseRestaurantMockCashier = new ChineseRestaurantMockCashier("MockCashier");
 
-	public Restaurant(String name) {
+	public ChineseRestaurant(String name) {
 		this.name = name;
-		cookRole.setGui(cookGui);
+		chineseRestaurantCookRole.setGui(cookGui);
 	}
 
 	//Methods
@@ -54,46 +54,46 @@ public class Restaurant{
 
 		if (title == "host") {
 			//Setting previous bank guard role to inactive
-			if (hostRole.getPerson() != null) {
-				Worker worker = (Worker) hostRole.getPerson();
+			if (chineseRestaurantHostRole.getPerson() != null) {
+				Worker worker = (Worker) chineseRestaurantHostRole.getPerson();
 				worker.roleFinishedWork();
 			}
 			//Setting bank guard role to new role
-			hostRole.setPerson(person);
+			chineseRestaurantHostRole.setPerson(person);
 			if (isOpen()) {
-				hostRole.msgRestaurantOpen();
+				chineseRestaurantHostRole.msgRestaurantOpen();
 			}
-			return hostRole;
+			return chineseRestaurantHostRole;
 		}
 		else if (title == "cook") {
 			//Setting previous bank guard role to inactive
-			if (cookRole.getPerson() != null) {
-				Worker worker = (Worker) cookRole.getPerson();
+			if (chineseRestaurantCookRole.getPerson() != null) {
+				Worker worker = (Worker) chineseRestaurantCookRole.getPerson();
 				worker.roleFinishedWork();
 			}
 			//Setting cook role to new role
-			cookRole.setPerson(person);
+			chineseRestaurantCookRole.setPerson(person);
 			if (isOpen()) {
-				hostRole.msgRestaurantOpen();
+				chineseRestaurantHostRole.msgRestaurantOpen();
 			}
 			restPanel.addGui(cookGui);
-			return cookRole;
+			return chineseRestaurantCookRole;
 		}
 		else if (title.contains("cashier")) {
 			//Setting previous bank guard role to inactive
-			if (cashierRole.getPerson() != null) {
-				Worker worker = (Worker) cashierRole.getPerson();
+			if (chineseRestaurantCashierRole.getPerson() != null) {
+				Worker worker = (Worker) chineseRestaurantCashierRole.getPerson();
 				worker.roleFinishedWork();
 			}
 			//Setting cashier role to new role
-			cashierRole.setPerson(person);
+			chineseRestaurantCashierRole.setPerson(person);
 			if (isOpen()) {
-				hostRole.msgRestaurantOpen();
+				chineseRestaurantHostRole.msgRestaurantOpen();
 			}
-			return cashierRole;
+			return chineseRestaurantCashierRole;
 		}
 		else if (title == "waiter") {	
-			WaiterRole waiter = new WaiterRole(person, person.getName(), title);
+			ChineseRestaurantWaiterRole waiter = new ChineseRestaurantWaiterRole(person, person.getName(), title);
 			if (waiters.size() <= 12) {
 				RestaurantWaiterGui g = new RestaurantWaiterGui(waiter);
 				restPanel.addGui(g);
@@ -108,14 +108,14 @@ public class Restaurant{
 			}
 			
 			waiters.add(waiter);
-			hostRole.addWaiter(waiter);
+			chineseRestaurantHostRole.addWaiter(waiter);
 			if (isOpen()) {
-				hostRole.msgRestaurantOpen();
+				chineseRestaurantHostRole.msgRestaurantOpen();
 			}
 			return waiter;
 		}
 		else if (title == "altWaiter") {
-			AltWaiterRole altWaiter = new AltWaiterRole(person, person.getName(), title);
+			ChineseRestaurantAltWaiterRole altWaiter = new ChineseRestaurantAltWaiterRole(person, person.getName(), title);
 			if (waiters.size() <= 12) {
 				RestaurantWaiterGui g = new RestaurantWaiterGui(altWaiter);
 				restPanel.addGui(g);
@@ -130,9 +130,9 @@ public class Restaurant{
 			}
 			
 			waiters.add(altWaiter);
-			hostRole.addWaiter(altWaiter);
+			chineseRestaurantHostRole.addWaiter(altWaiter);
 			if (isOpen()) {
-				hostRole.msgRestaurantOpen();
+				chineseRestaurantHostRole.msgRestaurantOpen();
 			}
 			return altWaiter;
 		}
@@ -140,7 +140,7 @@ public class Restaurant{
 		return null;
 	}
 
-	public boolean arrived(RestaurantCustomerRole rCR) {
+	public boolean arrived(ChineseRestaurantCustomerRole rCR) {
 		if (customers.size() <= 12) {
 			RestaurantCustomerGui rCG = (RestaurantCustomerGui) rCR.gui;
 			rCG.setHomePosition((22 * customers.size()), 10);
@@ -163,14 +163,14 @@ public class Restaurant{
 	public void goingOffWork(Person person) {
 		Worker worker = (Worker) person;
 
-		if (worker.getWorkerRole().equals(hostRole)) {
-			hostRole = null;
+		if (worker.getWorkerRole().equals(chineseRestaurantHostRole)) {
+			chineseRestaurantHostRole = null;
 		}
-		if (worker.getWorkerRole().equals(cashierRole)) {
-			cashierRole = null;
+		if (worker.getWorkerRole().equals(chineseRestaurantCashierRole)) {
+			chineseRestaurantCashierRole = null;
 		}
-		if (worker.getWorkerRole().equals(cookRole)) {
-			cookRole = null;
+		if (worker.getWorkerRole().equals(chineseRestaurantCookRole)) {
+			chineseRestaurantCookRole = null;
 			restPanel.removeGui(cookGui);
 		}
 		//WAITERS AND ALT WAITERS
@@ -188,7 +188,7 @@ public class Restaurant{
 		this.name = name;
 	}
 
-	public RevolvingStand getRevolvingStand() {
+	public ChineseRestaurantRevolvingStand getRevolvingStand() {
 		return theRevolvingStand;
 	}
 
@@ -196,22 +196,22 @@ public class Restaurant{
 		restPanel = panel;
 	}
 
-	public Cook getCook(boolean test) {
+	public ChineseRestaurantCook getCook(boolean test) {
 		if (test) {
-			return mockCook;
+			return chineseRestaurantMockCook;
 		}
-		return cookRole;
+		return chineseRestaurantCookRole;
 	}
 
-	public Cashier getCashier(boolean test) {
+	public ChineseRestaurantCashier getCashier(boolean test) {
 		if (test) {
-			return mockCashier;
+			return chineseRestaurantMockCashier;
 		}
-		return cashierRole;
+		return chineseRestaurantCashierRole;
 	}
 
 	public boolean isOpen() {
-		if (hostRole.getPerson() != null && hostRole.waiters.size() != 0 && cookRole.getPerson() != null && cashierRole != null && !userClosed)
+		if (chineseRestaurantHostRole.getPerson() != null && chineseRestaurantHostRole.waiters.size() != 0 && chineseRestaurantCookRole.getPerson() != null && chineseRestaurantCashierRole != null && !userClosed)
 			return true;
 		else 
 			return false;
@@ -221,23 +221,23 @@ public class Restaurant{
 		restPanel = buildingPanel;
 	}
 
-	public void removeWaiter(WaiterRole waiterRole) {
-		waiters.remove(waiterRole);
-		restPanel.removeGui(waiterRole.gui);
+	public void removeWaiter(ChineseRestaurantWaiterRole chineseRestaurantWaiterRole) {
+		waiters.remove(chineseRestaurantWaiterRole);
+		restPanel.removeGui(chineseRestaurantWaiterRole.gui);
 	}
 	
-	public void removeCustomer(RestaurantCustomerRole customerRole) {
+	public void removeCustomer(ChineseRestaurantCustomerRole customerRole) {
 		customers.remove(customerRole);
 		restPanel.removeGui(customerRole.gui);
 	}
 	
 	public void closeBuilding(){
 		userClosed = true;
-		hostRole.msgLeaveRole();
-		for (WaiterRole w1: waiters) {
+		chineseRestaurantHostRole.msgLeaveRole();
+		for (ChineseRestaurantWaiterRole w1: waiters) {
 			w1.msgLeaveRole();
 		}
-		cookRole.msgLeaveRole();
-		cashierRole.msgLeaveRole();
+		chineseRestaurantCookRole.msgLeaveRole();
+		chineseRestaurantCashierRole.msgLeaveRole();
 	}
 }

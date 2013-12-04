@@ -1,7 +1,7 @@
 package market.test;
 
-import chineseRestaurant.Restaurant;
-import chineseRestaurant.test.mock.MockCashier;
+import chineseRestaurant.ChineseRestaurant;
+import chineseRestaurant.test.mock.ChineseRestaurantMockCashier;
 import application.Phonebook;
 import junit.framework.TestCase;
 import market.Market;
@@ -15,24 +15,24 @@ import person.Worker;
 public class SalesPersonTest extends TestCase {
 
 	Market market;
-	Restaurant restaurant;
+	ChineseRestaurant chineseRestaurant;
 	Worker worker;
 	SalesPersonRole salesPerson;
 	MockMarketCustomer marketCustomer;
 	MockMarketRunner marketRunner;
 	MockUPSman UPSman;
-	MockCashier cashier;
+	ChineseRestaurantMockCashier cashier;
 
 	public void setUp() throws Exception {
 		super.setUp();
 		market = Phonebook.getPhonebook().getEastMarket();
-		restaurant = Phonebook.getPhonebook().getChineseRestaurant();
+		chineseRestaurant = Phonebook.getPhonebook().getChineseRestaurant();
 		worker = new Worker("Worker", 50, "SalesPerson", "Market", 8, 12, 24);
 		salesPerson = new SalesPersonRole(worker, "SalesPerson", "MarketSalesPerson", market);
 		marketCustomer = new MockMarketCustomer("Mock Customer");
 		marketRunner = (MockMarketRunner) Phonebook.getPhonebook().getEastMarket().getMarketRunner(true);
 		UPSman = (MockUPSman) Phonebook.getPhonebook().getEastMarket().getUPSman(true);
-		cashier = (MockCashier) Phonebook.getPhonebook().getChineseRestaurant().getCashier(true);
+		cashier = (ChineseRestaurantMockCashier) Phonebook.getPhonebook().getChineseRestaurant().getCashier(true);
 		salesPerson.test = true;
 	}
 
@@ -115,7 +115,7 @@ public class SalesPersonTest extends TestCase {
 				+ salesPerson.log.toString(), 0, salesPerson.log.size());
 
 		//Step 1
-		salesPerson.msgIWantProducts(restaurant, "Steak", 1);
+		salesPerson.msgIWantProducts(chineseRestaurant, "Steak", 1);
 
 		//Checking post conditions for step 1
 		assertEquals("Sales Person should have 1 order in it", salesPerson.orders.size(), 1);
@@ -153,7 +153,7 @@ public class SalesPersonTest extends TestCase {
 		assertEquals("Sales Person's order state should be ", salesPerson.orders.get(0).state, orderState.gaveToCustomer);
 
 		//Step 5
-		salesPerson.msgPayment(restaurant, market.inventory.get("Steak").price);
+		salesPerson.msgPayment(chineseRestaurant, market.inventory.get("Steak").price);
 
 		//Checking post conditions of step 5
 		assertEquals("Sales Person's orders list should have 0 orders", salesPerson.orders.size(), 0);
