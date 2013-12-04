@@ -33,27 +33,20 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 	public ArrayList<Building> buildings = new ArrayList<Building>();
 	Dimension Msize = new Dimension(75, 75);
 	Dimension Bsize = new Dimension(75, 75);
-
-	//list of images representing our different buildings
-	BufferedImage carIcon = null;
-	BufferedImage bankIcon = null;
-	BufferedImage marketIcon = null;
-	BufferedImage houseIcon = null;
-	BufferedImage restaurantIcon = null;
-
+	
 	public BufferedImage background = null;
 
 	ImageIcon bank = new ImageIcon("res/bank.png", "bank");
 	ImageIcon restaurant = new ImageIcon("res/restaurant.png", "restaurant");
 	ImageIcon market = new ImageIcon("res/market.png", "market");
 	ImageIcon house = new ImageIcon("res/house.png", "house");
-	ImageIcon apartment = new ImageIcon("res/apartment.png", "bank");
+	ImageIcon apartment = new ImageIcon("res/apartment.png", "apartment");
 	ImageIcon rave = new ImageIcon("res/rave.jpeg");
+	ImageIcon park = new ImageIcon("res/grass.jpg", "park");
 
 	public ImageIcon roadHorizontal = new ImageIcon("res/roadsHorizontal.png");
 	public ImageIcon roadVertical = new ImageIcon("res/roadsVertical.png");
 	public ImageIcon busStop = new ImageIcon("res/bus_stop.png");
-
 
 	public CityPanel(AnimationPanel animationPanel) {
 
@@ -77,7 +70,12 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		addBuilding("Bank", WINDOWX / 2, 230);
 		addBuilding("House", 20, 100);
 		addBuilding("Apartment", 0, 0);
-
+		addBuilding("Park",(WINDOWX/2)-80,(WINDOWY/2)-47);
+		addBuilding("Mexican Restaurant", 20, WINDOWY-75);
+		addBuilding("Burger Restaurant", WINDOWX-100, WINDOWY-75);
+		addBuilding("Italian Restaurant", WINDOWX-100, 20);
+		addBuilding("Fancy Restaurant", WINDOWX-100, 100+market.getIconHeight()+2);
+		
 		Timer timer = new Timer(10, this );
 		timer.start();
 	}
@@ -191,6 +189,12 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		else if (name.toLowerCase().contains("apartment")) {
 			building.setMyImage(apartment);
 			building.setLocation(x, y);
+		}
+		
+		//Park in the Middle
+		else if (name.toLowerCase().contains("park")){
+			building.setMyImage(park);
+			building.setLocation(x,y);
 		}
 
 		building.setName(name);
