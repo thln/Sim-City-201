@@ -71,7 +71,7 @@ public class Worker extends Person {
 		void setTitle(String title) {
 			this.title = title;
 		}
-		
+
 		public String getTitle(){
 			return title;
 		}
@@ -90,7 +90,7 @@ public class Worker extends Person {
 		print("Shift is over, time to leave work");
 		//workerRole.setPerson(null);
 		workerRole = null;
-	//	scheduleNextTask(TimeManager.getTimeManager().getTime().dayHour, myJob.startTime.hour);
+		//	scheduleNextTask(TimeManager.getTimeManager().getTime().dayHour, myJob.startTime.hour);
 		stateChanged();
 	}
 
@@ -130,21 +130,25 @@ public class Worker extends Person {
 		}
 
 		int currentTime = TimeManager.getTimeManager().getTime().dayHour;
-		
-		//If no role is active, check if it's time for work
-		if (((((myJob.startTime.hour - currentTime) % 24) + 24) % 24) <= 1) {
-			prepareForWork();
-		//	scheduleNextTask(currentTime, myJob.endTime.hour);
-			return true;
-		}
-		
-		//Check if you are late for work	
-		int timePassed = ((((currentTime - myJob.startTime.hour) % 24) + 24) % 24);
-		int maxHoursLate = 4;	//if you are more than 4 hours late, don't bother going to work
-		if ((timePassed >= 0) && (timePassed < maxHoursLate)){
+
+		//make sure user has not closed your business
+		if (workIsOpen()) {	
+
+			//If no role is active, check if it's time for work
+			if (((((myJob.startTime.hour - currentTime) % 24) + 24) % 24) <= 1) {
 				prepareForWork();
-			//	scheduleNextTask(currentTime, myJob.endTime.hour);
+				//	scheduleNextTask(currentTime, myJob.endTime.hour);
 				return true;
+			}
+
+			//Check if you are late for work	
+			int timePassed = ((((currentTime - myJob.startTime.hour) % 24) + 24) % 24);
+			int maxHoursLate = 4;	//if you are more than 4 hours late, don't bother going to work
+			if ((timePassed >= 0) && (timePassed < maxHoursLate)){
+				prepareForWork();
+				//	scheduleNextTask(currentTime, myJob.endTime.hour);
+				return true;
+			} 
 		}
 
 		//Bank Related (check if you need to go to the bank)
@@ -271,6 +275,30 @@ public class Worker extends Person {
 		//need to put in maintenance role
 
 		return;
+	}
+
+	public boolean workIsOpen() {
+		if (myJob.jobPlace.equals("bank")) {
+			if (!Phonebook.getPhonebook().getEastBank().userClosed)
+				return true;
+			else
+				return false;
+		}
+
+		if (myJob.jobPlace == "market") {
+			if (!Phonebook.getPhonebook().getEastMarket().userClosed)
+				return true;
+			else
+				return false;
+		}
+
+		if (myJob.jobPlace == "restaurant") {
+			if (!Phonebook.getPhonebook().getChineseRestaurant().userClosed)
+				return true;
+			else
+				return false;
+		}
+		return true;
 	}
 
 	public void setWorkerRole(Role workerRole) 

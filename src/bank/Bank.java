@@ -34,6 +34,7 @@ public class Bank {
 
 	//Data
 	String name;
+	public boolean userClosed = false;
 
 	//Open and closing times
 	public WatchTime openTime = new WatchTime(8);
@@ -208,6 +209,8 @@ public class Bank {
 	}
 	
 	public void closeBuilding(){
+		userClosed = true;
+		System.out.println("Bank closing");
 		bankGuardRole.msgLeaveRole();
 		for (MyTeller t1: bankGuardRole.tellers){
 			((Role) t1.tell1).msgLeaveRole();

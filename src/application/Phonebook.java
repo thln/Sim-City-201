@@ -151,5 +151,20 @@ public class Phonebook{
 			eastMarket.closeBuilding();
 		if (type == "westMarket")
 			westMarket.closeBuilding();
+		if (type == "chineseRestaurant")
+			chineseRestaurant.closeBuilding();
+	}
+	
+	public void openBuilding(String type){
+		if (type == "eastBank")
+			eastBank.userClosed = false;
+		if (type == "westBank")
+			westBank.userClosed = false;
+		if (type == "eastMarket")
+			eastMarket.userClosed = false;
+		if (type == "westMarket")
+			westMarket.userClosed = false;
+		if (type == "chineseRestaurant")
+			chineseRestaurant.userClosed = false;
 	}
 }

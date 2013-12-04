@@ -21,6 +21,7 @@ public class EditPanel extends JPanel implements ActionListener {
 	Application app;
 	ControlPanel cp;
 	JButton closeBuilding;
+	JButton openBuilding;
 	int editIndex = 0;
 	
 	public EditPanel(ControlPanel cp, Application app, ApplicationPanel appPanel){
@@ -57,6 +58,10 @@ public class EditPanel extends JPanel implements ActionListener {
 		closeBuilding.addActionListener(this);
 		mainPanel.add(closeBuilding);
 		
+		openBuilding = new JButton("Open Building");
+		openBuilding.addActionListener(this);
+		mainPanel.add(openBuilding);
+		
 		
 		add(mainPanel);
 	}
@@ -76,6 +81,10 @@ public class EditPanel extends JPanel implements ActionListener {
 		
 		if (e.getSource() == closeBuilding){
 			Phonebook.getPhonebook().closeBuilding("eastBank");
+		}
+		
+		if (e.getSource() == openBuilding){
+			Phonebook.getPhonebook().openBuilding("eastBank");
 		}
 	}
 	

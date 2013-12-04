@@ -19,6 +19,7 @@ public class Restaurant{
 
 	//Data
 	String name;
+	public boolean userClosed = false;
 
 	//List of Customers
 	private Vector<RestaurantCustomerRole> customers = new Vector<RestaurantCustomerRole>();
@@ -231,6 +232,7 @@ public class Restaurant{
 	}
 	
 	public void closeBuilding(){
+		userClosed = true;
 		hostRole.msgLeaveRole();
 		for (WaiterRole w1: waiters) {
 			w1.msgLeaveRole();

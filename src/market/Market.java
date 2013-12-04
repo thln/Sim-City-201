@@ -22,6 +22,7 @@ public class Market {
 
 	//Data
 	String name;
+	public boolean userClosed = false;
 
 	//Open and closing times
 	public WatchTime openTime = new WatchTime(9);
@@ -210,6 +211,7 @@ public class Market {
 	}
 	
 	public void closeBuilding(){
+		userClosed = true;
 		salesPersonRole.msgLeaveRole();
 		marketRunnerRole.msgLeaveRole();
 		UPSmanRole.msgLeaveRole();
