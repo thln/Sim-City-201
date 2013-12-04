@@ -56,8 +56,7 @@ public class SeafoodRestaurantCustomerRole extends Role //implements SeafoodRest
 	 */
 	public SeafoodRestaurantCustomerRole(String name, SeafoodRestaurantHostRole h, SeafoodRestaurantCashierRole cas, int n) //CashierAgent
 	{
-		super();
-		this.name = name;
+		super(name);
 		
 		this.host = h;
 		this.cashier = cas;
@@ -79,7 +78,7 @@ public class SeafoodRestaurantCustomerRole extends Role //implements SeafoodRest
 
 	public String getCustomerName() 
 	{
-		return name;
+		return getName();
 	}
 	
 	
