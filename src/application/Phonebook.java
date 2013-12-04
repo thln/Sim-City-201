@@ -46,8 +46,8 @@ public class Phonebook{
 
 	private Phonebook() 
 	{
-		bank = new Bank("Bank");
-		market = new Market("Market");
+		banks.add(new Bank("Bank"));
+		markets.add(new Market("Market"));
 		restaurant = new Restaurant("Restaurant");
 		housingMaintenanceCompany = new HousingMaintenanceCompany("Housing maintenance company");
 		getBusStops().add(new Point(172, 28));
