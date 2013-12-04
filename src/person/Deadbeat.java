@@ -23,7 +23,7 @@ public class Deadbeat extends Person {
 			startHungerTimer();
 			return true;
 		}
-		
+
 		synchronized (roles) {
 			if (!roles.isEmpty()) {
 				for (Role r : roles) {
@@ -42,16 +42,24 @@ public class Deadbeat extends Person {
 		}
 
 		//Otherwise, randomly wander to a sim city business
-		 Random rand = new Random();
-         int myRandomChoice = rand.nextInt(3);
-         if (myRandomChoice == 0)
-        	 prepareForBank();
-         if (myRandomChoice == 1)
-        	 prepareForMarket();
-         if (myRandomChoice == 2)
-        	 prepareForRestaurant();
-        	 
-	
+		Random rand = new Random();
+		int myRandomChoice = rand.nextInt(3);
+		if (myRandomChoice == 0){
+			if (Phonebook.getPhonebook().getEastBank().isOpen()){ // || Phonebook.getPhonebook().getEastBank().isOpen()){	
+				prepareForBank();
+			}
+		}
+		if (myRandomChoice == 1)
+			if (Phonebook.getPhonebook().getEastMarket().isOpen()){
+				prepareForMarket();
+			}
+		if (myRandomChoice == 2){
+			if (Phonebook.getPhonebook().getChineseRestaurant().isOpen()) {	
+				prepareForRestaurant();
+			}
+		}
+
+
 		goToSleep();
 		return false;
 	}

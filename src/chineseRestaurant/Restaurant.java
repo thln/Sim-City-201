@@ -211,7 +211,7 @@ public class Restaurant{
 	}
 
 	public boolean isOpen() {
-		if (hostRole.getPerson() != null && hostRole.waiters.size() != 0 && cookRole.getPerson() != null && cashierRole != null)
+		if (hostRole.getPerson() != null && hostRole.waiters.size() != 0 && cookRole.getPerson() != null && cashierRole != null && !userClosed)
 			return true;
 		else 
 			return false;

@@ -27,7 +27,7 @@ public class Wealthy extends Person {
 			startHungerTimer();
 			return true;
 		}
-		
+
 		synchronized (roles) {
 			if (!roles.isEmpty()) {
 				for (Role r : roles) {
@@ -41,16 +41,16 @@ public class Wealthy extends Person {
 		//If no role is active
 
 		//Bank Related
-        if (money <= moneyMinThreshold || money >= moneyMaxThreshold) {
-        	prepareForBank();
-        	return true;
-        }
-        
+		if (money <= moneyMinThreshold || money >= moneyMaxThreshold) {
+			prepareForBank();
+			return true;
+		}
+
 		//Rent Related
-        if(TimeManager.getTimeManager().getTime().day == Day.Tuesday)
-        {
-        	resetRentMailbox();
-        }
+		if(TimeManager.getTimeManager().getTime().day == Day.Tuesday)
+		{
+			resetRentMailbox();
+		}
 		if (TimeManager.getTimeManager().getTime().day == TimeManager.Day.Monday && !checkedMailbox) 
 		{
 			prepareForRentCollection();
@@ -61,8 +61,7 @@ public class Wealthy extends Person {
 		if (getHunger() == HungerLevel.hungry) {
 			//If you don't have food in the fridge
 			if (!hasFoodInFridge) {
-						//((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getRestaurant().openTime.hour) &&
-						//(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getRestaurant().closeTime.hour)) {
+				if (Phonebook.getPhonebook().getChineseRestaurant().isOpen()) {	
 					prepareForRestaurant();
 					return true;
 				}
@@ -72,21 +71,20 @@ public class Wealthy extends Person {
 				eatAtHome(); //empty method for now...
 				return true;
 			}
-		
-		//Market Related
-		if (!hasFoodInFridge || carStatus == CarState.wantsCar) {
-			if (money <= moneyMinThreshold && !hasFoodInFridge) {
-				if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getEastBank().openTime.hour) &&
-						(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getEastBank().closeTime.hour)) {
-					prepareForBank();
-					return true;
+
+			//Market Related
+			if (!hasFoodInFridge || carStatus == CarState.wantsCar) {
+				if (money <= moneyMinThreshold && !hasFoodInFridge) {
+					if (Phonebook.getPhonebook().getEastBank().isOpen()){ // || Phonebook.getPhonebook().getEastBank().isOpen()){	
+						prepareForBank();
+						return true;
+					}
 				}
-			}
-			else {
-				if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getEastMarket().openTime.hour) &&
-						(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getEastMarket().closeTime.hour)) {
-					prepareForMarket();
-					return true;
+				else {
+					if (Phonebook.getPhonebook().getEastMarket().isOpen()){
+						prepareForMarket();
+						return true;
+					}
 				}
 			}
 		}
@@ -100,15 +98,15 @@ public class Wealthy extends Person {
 	{
 		checkedMailbox = true;
 		//print("I am picking up all the rent money.");
-    	AlertLog.getInstance().logInfo(AlertTag.HOUSING, name, "I am picking up all the rent money.");
+		AlertLog.getInstance().logInfo(AlertTag.HOUSING, name, "I am picking up all the rent money.");
 		money += Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.pickUpRentMoney(this);
-		
-//		for (Role landlord: roles) {
-//			//			if (landlord instanceof LandlordRole) {
-//			//				landlord.setRoleActive();
-//			//				stateChanged();
-//			//				return;
-//			//			}
-//		}
+
+		//		for (Role landlord: roles) {
+		//			//			if (landlord instanceof LandlordRole) {
+		//			//				landlord.setRoleActive();
+		//			//				stateChanged();
+		//			//				return;
+		//			//			}
+		//		}
 	}
 }

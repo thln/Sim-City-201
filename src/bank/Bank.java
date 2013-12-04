@@ -179,7 +179,7 @@ public class Bank {
 	}
 	
 	public boolean isOpen(){
-		if (loanOfficerRole.getPerson() != null && bankGuardRole.getPerson() != null && bankGuardRole.getTellers().size() > 0)
+		if (loanOfficerRole.getPerson() != null && bankGuardRole.getPerson() != null && bankGuardRole.getTellers().size() > 0 && !userClosed)
 			return true;
 		else 
 			return false;
@@ -210,7 +210,6 @@ public class Bank {
 	
 	public void closeBuilding(){
 		userClosed = true;
-		System.out.println("Bank closing");
 		bankGuardRole.msgLeaveRole();
 		for (MyTeller t1: bankGuardRole.tellers){
 			((Role) t1.tell1).msgLeaveRole();

@@ -246,4 +246,13 @@ public class AnimationPanel extends JPanel implements MouseListener {
 		}
 		
 	}
+	
+	public void addAptUnit(BuildingPanel house, int i) {
+		buildingPanels.add(house);
+		for(Building building : buildings) {
+			if(building.getName().toLowerCase().contains("apartment")) {
+				building.myBuildingPanel.addAptUnit();
+			}
+		}
+	}
 }

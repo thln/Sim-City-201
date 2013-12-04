@@ -200,7 +200,7 @@ public class Market {
 	}
 
 	public boolean isOpen(){
-		if (salesPersonRole.getPerson() != null && marketRunnerRole.getPerson() != null && UPSmanRole != null)
+		if (salesPersonRole.getPerson() != null && marketRunnerRole.getPerson() != null && UPSmanRole != null && !userClosed)
 			return true;
 		else 
 			return false;
