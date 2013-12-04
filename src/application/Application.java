@@ -4,10 +4,10 @@ import housing.Housing;
 
 import javax.swing.*;
 
+import chineseRestaurant.Restaurant;
 import market.*;
 import bank.*;
 import person.*;
-import restaurant.Restaurant;
 
 import java.util.*;
 import java.util.Timer;
@@ -35,10 +35,8 @@ public class Application extends JPanel {
 
 		animPanel = ap;
 		
-		Phonebook.getPhonebook().setHousingList(allHousing);
-		
 		//the following line is for dynamic building and business making in v2
-		Phonebook.getPhonebook().getBusinessFromGui(animPanel);
+		//Phonebook.getPhonebook().getBusinessFromGui(animPanel);
 		
 		//String name, int money, String jobTitle, String jobPlace, int startT, int lunchT, int endT
 		
@@ -96,8 +94,6 @@ public class Application extends JPanel {
 
 		//Standard Deadbeat
 		//Deadbeat w = new Deadbeat("Walter", 0);
-
-		//Setting Gui for everyone
 		
 		//Adding housing
 		
@@ -201,6 +197,7 @@ public class Application extends JPanel {
 //		getPopulation().add(wealthy3);
 //		getPopulation().add(wealthy4);
 		
+		//Setting Gui for everyone
 		for (Person person : getPopulation()) {
 			person.setPanel(animPanel);
 			PersonGui pg = new PersonGui(person);
@@ -244,6 +241,7 @@ public class Application extends JPanel {
 //		wealthy4.startThread();
 		
 		updatePeopleTime();
+		Phonebook.getPhonebook().setHousingList(allHousing);
 	}
 	
 	public void updatePeopleTime(){
@@ -252,7 +250,8 @@ public class Application extends JPanel {
 		updateTimer.schedule(new TimerTask() {
 			public void run() {        
 				for (Person p: population){
-					p.stateChanged();      
+					if (p.stateChange.availablePermits() < 1)
+						p.stateChanged();      
 				}
 				updatePeopleTime();
 			}

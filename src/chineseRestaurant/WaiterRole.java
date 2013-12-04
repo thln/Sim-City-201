@@ -1,4 +1,4 @@
-package restaurant;
+package chineseRestaurant;
 
 //import agent.Agent;
 import java.util.ArrayList;
@@ -6,12 +6,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Timer;
 
+import chineseRestaurant.interfaces.RestaurantCustomer;
+import chineseRestaurant.interfaces.Waiter;
+import chineseRestaurant.myCustomer.customerState;
 import person.Person;
 import person.Role;
 import person.Worker;
-import restaurant.myCustomer.customerState;
-import restaurant.interfaces.RestaurantCustomer;
-import restaurant.interfaces.Waiter;
 import application.Phonebook;
 import application.gui.animation.agentGui.RestaurantWaiterGui;
 
@@ -369,7 +369,7 @@ public class WaiterRole extends Role implements Waiter {
 		}
 		waiterGui.DoLeaveCustomer();
 
-		Phonebook.getPhonebook().getRestaurant().cookRole.msgHeresAnOrder(MC.tableNumber, MC.choice, this);
+		Phonebook.getPhonebook().getChineseRestaurant().cookRole.msgHeresAnOrder(MC.tableNumber, MC.choice, this);
 
 	}
 
@@ -405,7 +405,7 @@ public class WaiterRole extends Role implements Waiter {
 		}
 		waiterGui.DoDeliverOrder(readyOrders.get(0).tableNumber, readyOrders.get(0).choice);
 		print("waiter called msgGotOrder");
-		Phonebook.getPhonebook().getRestaurant().cookGui.msgGotOrder(readyOrders.get(0).choice);
+		Phonebook.getPhonebook().getChineseRestaurant().cookGui.msgGotOrder(readyOrders.get(0).choice);
 		try {
 			atDestination.acquire();
 			atDestination.acquire();
@@ -415,7 +415,7 @@ public class WaiterRole extends Role implements Waiter {
 		}
 		waiterGui.DoLeaveCustomer();
 		readyOrders.get(0).customer.msgHeresYourOrder(readyOrders.get(0).choice);
-		Phonebook.getPhonebook().getRestaurant().cashierRole.msgComputeBill(readyOrders.get(0).choice, readyOrders.get(0).tableNumber, this);
+		Phonebook.getPhonebook().getChineseRestaurant().cashierRole.msgComputeBill(readyOrders.get(0).choice, readyOrders.get(0).tableNumber, this);
 
 		//Changing customer state to "Got Food"
 		for (myCustomer MC : myCustomers) {
@@ -445,8 +445,8 @@ public class WaiterRole extends Role implements Waiter {
 
 	protected void clearTable(myCustomer MC) {
 		print(MC.customer.getCustomerName() + " is leaving " + MC.tableNumber);
-		Phonebook.getPhonebook().getRestaurant().hostRole.msgLeavingTable(MC.customer, this);
-		Phonebook.getPhonebook().getRestaurant().removeCustomer(MC.customer);
+		Phonebook.getPhonebook().getChineseRestaurant().hostRole.msgLeavingTable(MC.customer, this);
+		Phonebook.getPhonebook().getChineseRestaurant().removeCustomer(MC.customer);
 
 		myCustomers.remove(MC);
 	}
@@ -454,7 +454,7 @@ public class WaiterRole extends Role implements Waiter {
 	protected void askToGoOnBreak() 
 	{
 		print("Asking host for break");
-		Phonebook.getPhonebook().getRestaurant().hostRole.msgMayIGoOnBreak(this);
+		Phonebook.getPhonebook().getChineseRestaurant().hostRole.msgMayIGoOnBreak(this);
 		state = breakStatus.waitingForReply;
 	}
 
@@ -470,7 +470,7 @@ public class WaiterRole extends Role implements Waiter {
 	protected void goOffBreak() {
 		isInLobby = false;
 		//		waiterGui.DoLeaveCustomer();
-		Phonebook.getPhonebook().getRestaurant().hostRole.msgOffBreak(this);
+		Phonebook.getPhonebook().getChineseRestaurant().hostRole.msgOffBreak(this);
 		state = breakStatus.working;
 		//		waiterGui.denyBreak();
 		stateChanged();
@@ -483,10 +483,10 @@ public class WaiterRole extends Role implements Waiter {
 	}
 
 	protected void AskHostToLeave()	{
-		Phonebook.getPhonebook().getRestaurant().hostRole.msgIAmLeavingSoon(this);
+		Phonebook.getPhonebook().getChineseRestaurant().hostRole.msgIAmLeavingSoon(this);
 		if(myCustomers.isEmpty())
 		{
-			Phonebook.getPhonebook().getRestaurant().hostRole.msgIAmLeavingWork(this);
+			Phonebook.getPhonebook().getChineseRestaurant().hostRole.msgIAmLeavingWork(this);
 			((Worker) person).roleFinishedWork();
 			leaveRole = false;
 		}

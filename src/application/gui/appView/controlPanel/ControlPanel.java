@@ -45,7 +45,6 @@ public class ControlPanel extends JPanel {
 		ControlPane.addTab("Select Building", panel4);
 		ControlPane.addTab("Trace Panel", printPanelTab);
 
-
 		add(ControlPane);
 
 	}	

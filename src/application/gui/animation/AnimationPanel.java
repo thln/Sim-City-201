@@ -92,8 +92,21 @@ public class AnimationPanel extends JPanel implements MouseListener {
 	}
 
 	public void setBuildingInPhonebook(Building building) {
+		//Phonebook.getPhonebook().getBusinessFromGui(building);
+		
+		/* This only allows for ONE of each type of building. In v2,
+		 * it is required to have multiple instances of each, so we
+		 * must code for that eventuality.
+		 */
+		
 		if (building.getName().toLowerCase().contains("restaurant")) {
-			Phonebook.getPhonebook().getRestaurant().setBuildingPanel(building.myBuildingPanel);
+			Phonebook.getPhonebook().getChineseRestaurant().setBuildingPanel(building.myBuildingPanel);
+		}
+		if (building.getName().toLowerCase().contains("market")) {
+			Phonebook.getPhonebook().getEastMarket().setBuildingPanel(building.myBuildingPanel);
+		}
+		if (building.getName().toLowerCase().contains("bank")) {
+			Phonebook.getPhonebook().getEastBank().setBuildingPanel(building.myBuildingPanel);
 		}
 	}
 
@@ -226,9 +239,11 @@ public class AnimationPanel extends JPanel implements MouseListener {
 		return buildings;
 	}
 
+	//to be used for the adding the people and transportation guis to the city Panel
 	public void addGui(Gui gui) {
 		if (gui instanceof CityGui) {
 			cityPanel.addGui(gui);
 		}
+		
 	}
 }

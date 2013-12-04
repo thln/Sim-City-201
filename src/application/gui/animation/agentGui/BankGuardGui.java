@@ -13,10 +13,10 @@ public class BankGuardGui extends BankGui{
 
 	//RestaurantGui gui;
 
-    private int xPos = 260, yPos = 260;//default BankGuard position
-    private int xDestination = 260, yDestination = 260;//default start position
+    private int xPos = 340, yPos = 320;//default BankGuard position
+    private int xDestination = 340, yDestination = 260;//default start position
 	
-	private enum Command {noCommand};
+	private enum Command {inTransit,toTellers,noCommand};
 	private Command command = Command.noCommand;
 
 	private enum CustomerState {nothing};
@@ -24,11 +24,11 @@ public class BankGuardGui extends BankGui{
 	
 	public BankGuardGui() {
 	}
-	
-	public BankGuardGui(BankGuardRole c/*, RestaurantGui gui*/){
+	/*
+	public BankGuardGui(BankGuardRole c, RestaurantGui gui){
 		//agent = c;
 		//this.gui = gui;
-	}
+	}*/
 
 	public void updatePosition() {
 		if (xPos < xDestination)
@@ -42,6 +42,12 @@ public class BankGuardGui extends BankGui{
 			yPos--;
 
 		if (xPos == xDestination && yPos == yDestination) {
+			if(command != Command.noCommand) {
+				if(agent != null)
+					agent.msgAtDestination();
+				if(command == Command.toTellers)
+					BacktoPosition();
+			}
 			command = Command.noCommand;
 		}
 	}
@@ -49,6 +55,8 @@ public class BankGuardGui extends BankGui{
 	public void draw(Graphics2D g) {
 		g.setColor(Color.ORANGE);
 		g.fillRect(xPos, yPos, 20, 20);
+		g.setColor(Color.BLACK);
+		g.drawString("Guard", xPos, yPos);
 	}
 
 	public boolean isPresent() {
@@ -69,27 +77,35 @@ public class BankGuardGui extends BankGui{
 	
 	//Actions
     public void GoToTellers() {
-    	xDestination = 450;
-    	yDestination = 250;
+    	xDestination = 370;
+    	yDestination = 220;
+    	command = Command.toTellers;
     }
     
     public void BacktoPosition() {
-    	xDestination = 260;
+    	xDestination = 340;
     	yDestination = 260;
+    	command = Command.inTransit;
     }
     
     public void DoCatchRobber() {
     	xDestination = 120;
     	yDestination = 50;
+    	command = Command.inTransit;
     }
     
     public void BringToJail() {
     	xDestination = 300;
     	yDestination = -20;
+    	command = Command.inTransit;
     }
     
     public void DoExit() {
     	xDestination = 300;
     	yDestination = 300;
+    }
+    
+    public void setPerson(BankGuardRole c) {
+    	agent = c;
     }
 }

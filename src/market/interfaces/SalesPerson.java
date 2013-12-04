@@ -1,9 +1,9 @@
 package market.interfaces;
 
+import chineseRestaurant.Restaurant;
 import market.MarketCustomerRole;
 import market.MarketOrder;
 import market.MarketOrder.orderState;
-import restaurant.Restaurant;
 
 public interface SalesPerson {
 

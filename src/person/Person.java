@@ -5,10 +5,10 @@ import housing.Housing;
 import java.util.*;
 import java.util.concurrent.Semaphore;
 
+import chineseRestaurant.RestaurantCustomerRole;
 import bank.BankCustomerRole;
 import market.MarketCustomerRole;
 import person.Role;
-import restaurant.RestaurantCustomerRole;
 import agent.Agent;
 import application.Phonebook;
 import application.TimeManager;
@@ -110,6 +110,17 @@ public abstract class Person extends Agent{
 
 	protected void prepareForBank () {
 		Do("Becoming Bank Customer");
+		gui.walk = gui.decideForBus(gui.getxDestination(), gui.getyDestination());
+		if (!gui.walk){
+			gui.doGoToBus();
+			try {
+				atDestination.acquire();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		getGui().DoGoToBank();
 		try {
 			atDestination.acquire();
@@ -141,7 +152,7 @@ public abstract class Person extends Agent{
 					}
 				}
 				cust1.setRoleActive();
-				//bankPanel.addGui(bg);
+				bankPanel.addGui(bg);
 				stateChanged();
 				return;
 			}
@@ -196,11 +207,9 @@ public abstract class Person extends Agent{
 			for (Role cust1 : roles) {
 				if (cust1 instanceof MarketCustomerRole) {
 					MarketCustomerRole MCR = (MarketCustomerRole) cust1;
-					MarketCustomerGui mg = new MarketCustomerGui(MCR);
-					MCR.setGui(mg);
 					MCR.setItem("");
 					cust1.setRoleActive();
-					marketPanel.addGui(mg);
+					Phonebook.getPhonebook().getEastMarket().arrived(MCR);
 					currentRoleName = "Market Customer";
 					stateChanged();
 					return;
@@ -211,11 +220,9 @@ public abstract class Person extends Agent{
 			for (Role cust1 : roles) {
 				if (cust1 instanceof MarketCustomerRole) {
 					MarketCustomerRole MCR = (MarketCustomerRole) cust1;
-					MarketCustomerGui mg = new MarketCustomerGui(MCR);
-					MCR.setGui(mg);
 					MCR.setItem("Car");
 					cust1.setRoleActive();
-					marketPanel.addGui(mg);
+					Phonebook.getPhonebook().getEastMarket().arrived(MCR);
 					currentRoleName = "Market Customer";
 					stateChanged();
 					return;
@@ -237,12 +244,9 @@ public abstract class Person extends Agent{
 		for (Role cust1 : roles) {
 			if (cust1 instanceof RestaurantCustomerRole) {
 				RestaurantCustomerRole RCR = (RestaurantCustomerRole) cust1;
-				RestaurantCustomerGui rg = new RestaurantCustomerGui(RCR);
-				RCR.setGui(rg);
-				if (Phonebook.getPhonebook().getRestaurant().arrived(RCR)) {
+				if (Phonebook.getPhonebook().getChineseRestaurant().arrived(RCR)) {
 					currentRoleName = "Restaurant Customer";
 					cust1.setRoleActive();
-					restPanel.addGui(rg);
 					stateChanged();
 				}
 				return;

@@ -1,5 +1,7 @@
 package market.test;
 
+import chineseRestaurant.Restaurant;
+import chineseRestaurant.test.mock.MockCook;
 import application.Phonebook;
 import junit.framework.TestCase;
 import market.Market;
@@ -14,8 +16,6 @@ import market.test.mock.MockMarketRunner;
 import market.test.mock.MockSalesPerson;
 import market.test.mock.MockUPSman;
 import person.Worker;
-import restaurant.Restaurant;
-import restaurant.test.mock.MockCook;
 
 public class MarketRunnerTest extends TestCase {
 
@@ -29,11 +29,11 @@ public class MarketRunnerTest extends TestCase {
 	
 	public void setUp() throws Exception {
 		super.setUp();
-		market = Phonebook.getPhonebook().getMarket();
-		restaurant = Phonebook.getPhonebook().getRestaurant();
-		salesPerson = (MockSalesPerson) Phonebook.getPhonebook().getMarket().getSalesPerson(true);
+		market = Phonebook.getPhonebook().getEastMarket();
+		restaurant = Phonebook.getPhonebook().getChineseRestaurant();
+		salesPerson = (MockSalesPerson) Phonebook.getPhonebook().getEastMarket().getSalesPerson(true);
 		marketCustomer = new MockMarketCustomer("MockMarketCustomer");
-		UPSman = (MockUPSman) Phonebook.getPhonebook().getMarket().getUPSman(true);
+		UPSman = (MockUPSman) Phonebook.getPhonebook().getEastMarket().getUPSman(true);
 		
 		worker = new Worker("Worker", 50, "Market Runner", "Market", 8, 12, 24);
 		marketRunner = new MarketRunnerRole(worker, "Market Runner", "Market Runner", market);

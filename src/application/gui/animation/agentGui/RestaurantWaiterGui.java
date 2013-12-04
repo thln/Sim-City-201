@@ -1,12 +1,13 @@
 package application.gui.animation.agentGui;
 
 
-import restaurant.*;
 import sun.applet.resources.MsgAppletViewer;
 
 import java.awt.*;
 import java.util.Map;
 import java.util.TreeMap;
+
+import chineseRestaurant.*;
 
 public class RestaurantWaiterGui extends RestaurantGui {
 

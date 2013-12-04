@@ -1,8 +1,8 @@
-package restaurant.interfaces;
+package chineseRestaurant.interfaces;
 
-import restaurant.interfaces.Host;
-import restaurant.Menu;
-import restaurant.interfaces.Waiter;
+import chineseRestaurant.Menu;
+import chineseRestaurant.interfaces.Host;
+import chineseRestaurant.interfaces.Waiter;
 
 /**
  * A sample Customer interface built to unit test a CashierAgent.

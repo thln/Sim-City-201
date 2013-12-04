@@ -54,14 +54,14 @@ public class Crook extends Person {
 			if (!hasFoodInFridge) {
 				if (money <= moneyMinThreshold) { 
 					//This if says go to the business if it is open and at least 1 hour before closing time
-					if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getBank().openTime.hour) &&
-							(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getBank().closeTime.hour)) {
+					if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getEastBank().openTime.hour) &&
+							(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getEastBank().closeTime.hour)) {
 						prepareForBank();
 						return true;
 					}
 				}
-				else if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getRestaurant().openTime.hour) &&
-						(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getRestaurant().closeTime.hour)) {
+				else if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getChineseRestaurant().openTime.hour) &&
+						(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getChineseRestaurant().closeTime.hour)) {
 					prepareForRestaurant();
 					return true;
 				}
@@ -76,15 +76,15 @@ public class Crook extends Person {
 		//Market Related
 		if (!hasFoodInFridge || carStatus == CarState.wantsCar) {
 			if (money <= moneyMinThreshold && !hasFoodInFridge) {
-				if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getBank().openTime.hour) &&
-						(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getBank().closeTime.hour)) {
+				if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getEastBank().openTime.hour) &&
+						(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getEastBank().closeTime.hour)) {
 					prepareForBank();
 					return true;
 				}
 			}
 			else {
-				if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getMarket().openTime.hour) &&
-						(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getMarket().closeTime.hour)) {
+				if ((TimeManager.getTimeManager().getTime().dayHour >= Phonebook.getPhonebook().getEastMarket().openTime.hour) &&
+						(TimeManager.getTimeManager().getTime().dayHour < Phonebook.getPhonebook().getEastMarket().closeTime.hour)) {
 					prepareForMarket();
 					return true;
 				}
@@ -111,7 +111,7 @@ public class Crook extends Person {
 				BankCustomerRole bankRobber = (BankCustomerRole) cust1;
 
 				bankRobber.setDesire("robBank");
-				Phonebook.getPhonebook().getBank().bankGuardRole.msgRobbingBank(bankRobber);
+				Phonebook.getPhonebook().getEastBank().bankGuardRole.msgRobbingBank(bankRobber);
 				cust1.setRoleActive();
 				stateChanged();
 				return;

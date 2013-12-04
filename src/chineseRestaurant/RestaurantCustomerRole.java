@@ -1,15 +1,15 @@
-package restaurant;
+package chineseRestaurant;
 
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import chineseRestaurant.interfaces.Host;
+import chineseRestaurant.interfaces.RestaurantCustomer;
+import chineseRestaurant.interfaces.Waiter;
 import person.Person;
 import person.Person.HungerLevel;
 import person.Role;
-import restaurant.interfaces.Host;
-import restaurant.interfaces.RestaurantCustomer;
-import restaurant.interfaces.Waiter;
 import application.Phonebook;
 import application.gui.animation.agentGui.RestaurantCustomerGui;
 
@@ -67,6 +67,7 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer {
 		state = AgentState.DoingNothing; 
 		event = AgentEvent.gotHungry;
 		this.money = p1.money;
+		gui = new RestaurantCustomerGui(this);
 	}
 
 	public String getCustomerName() {
@@ -225,7 +226,7 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer {
 	private void goToRestaurant() {
 		state = AgentState.WaitingInRestaurant;
 		print("Going to restaurant");
-		Phonebook.getPhonebook().getRestaurant().hostRole.msgIWantFood(this, xHome, yHome);
+		Phonebook.getPhonebook().getChineseRestaurant().hostRole.msgIWantFood(this, xHome, yHome);
 	}
 	
 	private void DecidingToStay() {
@@ -247,7 +248,7 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer {
 		else {
 			state = AgentState.WaitingInRestaurant;
 			print("Decided to stay and eat in restaurant");
-			Phonebook.getPhonebook().getRestaurant().hostRole.msgStaying(this, xHome, yHome);
+			Phonebook.getPhonebook().getChineseRestaurant().hostRole.msgStaying(this, xHome, yHome);
 			stateChanged();
 		}
 	}
@@ -362,7 +363,7 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer {
 		print("I have $" + money);
 
 		state = AgentState.PayedCheck;
-		Phonebook.getPhonebook().getRestaurant().cashierRole.msgPayment(choice, money, this);
+		Phonebook.getPhonebook().getChineseRestaurant().cashierRole.msgPayment(choice, money, this);
 		money = 0;
 	}
 

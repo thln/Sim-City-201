@@ -25,7 +25,7 @@ team20
   	+ USC ID:
 
 ###Mentor Information
-  + Name: Keith DeRuiter
+  + Name: Keith DeRuiter (The Best Mentor Ever)
   	+ USC Email: kderuite@usc.edu
 
 ###Design Documents and Interaction Diagrams
@@ -82,9 +82,9 @@ team20
   	+ Designed and implemented Deadbeat Sub Class
   	+ Designed and implemented Crook Sub Class
   	+ Designed and implemented Worker Sub Class 
-  	+ Designed and implemented Phonebook 
-  	+ Designed and implemented inner Reference
-  	+ Designed and implemented Time System
+  	+ Designed and implemented Singleton Phonebook Reference
+  	+ Designed and implemented Singleton Time System
+  	+ Designed a TimeWatch class for Person to deal with time
   	+ Implemented Roles system
   	+ Designed and implemented all Market Agents and Code
   	+ Designed and implemented Market Customer
@@ -101,11 +101,13 @@ team20
   	+ Designed and implemented Restaurant Phonebook Reference
   	+ Integrated Restaurant into City
   	+ Created Design Documents
-  	+ Merged Dashboard and Add Panel
-  	+ Put in Trace Panel
-  	+ Fixed Restaurant GUI Animation
-  	+ Fixed CardLayout for Building and City View
-  	+ Fixed Scrolling for List Panel
+  	+ Combined Add Panel and Dashboard Panel
+  	+ Put Trace Panel into Gui
+  	+ Fixed Linked Building and clickable City Views in Animation Panel for cardLayout
+  	+ Implemented animated restaurant building GUI
+  	+ Fixed scrollbar on Infomation Panel
+  	+ Set up initial project packages with agent and test code
+  	+ Managed team meetings
 
 
   + Josh Greenberger
@@ -135,10 +137,28 @@ team20
 
 
   + Carmen Tan
-  	+Created Design Documents
+  	+ Created Design Documents for Individual Businesses
+  	+ Created interaction diagrams for all the different businesses (Bank, etc.)
+  	+ Designed Renter, Landlord Interactions in Housing
+  	+ Designed and implemented all functions for Person agent guis
+  	+ Designed and implemented all functions for Role guis
+  	+ Designed and implemented layouts and visual designs for building and city Views
+  	+ Made Person, Car, and Bus Guis move in City Guis according to their location
+  	+ Made Guis disappear (change color) when reached destination in city View
+  	+ Linked Building and clickable City Views in Animation Panel
+  	+ Linked Building Guis with the City Guis (when person animation stops, inner building animation start)
+  	+ Adapted Person and Role classes to fit in Guis
+  	+ Adapted individual Role classes (specific to the Business) to fit the Guis
+  	+ Initialized Transportation (Bus, Car) Agents
+  	+ Modified Application file to set and initialize Guis with the agents methods
+  	+ Created function for future dynamic business and building creation in the gui
+  	_ 
+  	
 
   + Nishant Srikanthan (Team Leader)
-  	+
+  	+ Gui aside from animation
+  	+ Application panel initialization
+  	+ Transportation design
 
 ###How To Run Scenarios (V1)
   + Simply press the Green Play Button in the Tool Bar (ApplicationGui.Java)

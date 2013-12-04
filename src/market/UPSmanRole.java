@@ -15,8 +15,6 @@ public class UPSmanRole extends Role implements UPSman {
 
 	//Data
 	public List<MarketOrder> orders = Collections.synchronizedList(new ArrayList<MarketOrder>());
-	protected String roleName = "UPS man";
-	String name;
 	Market market;
 
 	public EventLog log = new EventLog();

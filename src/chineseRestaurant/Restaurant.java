@@ -1,24 +1,25 @@
-package restaurant;
+package chineseRestaurant;
 
 import java.util.Vector;
 
+import chineseRestaurant.interfaces.Cashier;
+import chineseRestaurant.interfaces.Cook;
+import chineseRestaurant.test.mock.MockCashier;
+import chineseRestaurant.test.mock.MockCook;
 import person.Person;
 import person.Role;
 import person.Worker;
-import restaurant.interfaces.Cashier;
-import restaurant.interfaces.Cook;
-import restaurant.test.mock.MockCashier;
-import restaurant.test.mock.MockCook;
 import application.WatchTime;
 import application.gui.animation.BuildingPanel;
 import application.gui.animation.agentGui.RestaurantCookGui;
 import application.gui.animation.agentGui.RestaurantCustomerGui;
 import application.gui.animation.agentGui.RestaurantWaiterGui;
 
-public class Restaurant {
+public class Restaurant{
 
 	//Data
 	String name;
+	public boolean userClosed = false;
 
 	//List of Customers
 	private Vector<RestaurantCustomerRole> customers = new Vector<RestaurantCustomerRole>();
@@ -228,5 +229,15 @@ public class Restaurant {
 	public void removeCustomer(RestaurantCustomerRole customerRole) {
 		customers.remove(customerRole);
 		restPanel.removeGui(customerRole.gui);
+	}
+	
+	public void closeBuilding(){
+		userClosed = true;
+		hostRole.msgLeaveRole();
+		for (WaiterRole w1: waiters) {
+			w1.msgLeaveRole();
+		}
+		cookRole.msgLeaveRole();
+		cashierRole.msgLeaveRole();
 	}
 }

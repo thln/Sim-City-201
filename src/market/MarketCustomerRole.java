@@ -5,13 +5,13 @@ import java.util.Random;
 import market.interfaces.MarketCustomer;
 import application.Phonebook;
 import application.gui.animation.agentGui.MarketCustomerGui;
+import application.gui.animation.agentGui.RestaurantCustomerGui;
 import person.Person;
 import person.Role;
 import testing.LoggedEvent;
 import testing.EventLog;
 
 public class MarketCustomerRole extends Role implements MarketCustomer {
-	protected String roleName = "Market Customer";
 
 	public EventLog log = new EventLog();
 
@@ -28,6 +28,7 @@ public class MarketCustomerRole extends Role implements MarketCustomer {
 
 	public MarketCustomerRole(Person person, String pName, String rName) {
 		super(person, pName, rName);
+		gui = new MarketCustomerGui(this);
 	}
 
 	//Messages
@@ -67,20 +68,20 @@ public class MarketCustomerRole extends Role implements MarketCustomer {
 
 	//Actions
 	public void msgSalesPerson() {
-		if(!Phonebook.getPhonebook().getMarket().isOpen()) {
+		if(!Phonebook.getPhonebook().getEastMarket().isOpen()) {
 			print("Waiting for the market to open");
 			state = MarketCustomerState.waitingToOpen;
 			return;
 		}
 
 		if (item == "Car") {
-			Phonebook.getPhonebook().getMarket().salesPersonRole.msgIWantProducts(this, "Car", 1);
+			Phonebook.getPhonebook().getEastMarket().salesPersonRole.msgIWantProducts(this, "Car", 1);
 			print("Arrived at the market");
 			state = MarketCustomerState.waitingForOrders;
 			return;
 		}
 		item = chooseMarketItem();
-		Phonebook.getPhonebook().getMarket().salesPersonRole.msgIWantProducts(this, item, 3);
+		Phonebook.getPhonebook().getEastMarket().salesPersonRole.msgIWantProducts(this, item, 3);
 		print("Asking sales person for: " + item);
 		state = MarketCustomerState.waitingForOrders;
 
@@ -93,15 +94,15 @@ public class MarketCustomerRole extends Role implements MarketCustomer {
 		do {
 			myRandomChoice = rand.nextInt(10);
 			myRandomChoice %= 7;
-		} while (!Phonebook.getPhonebook().getMarket().marketItemsForSale.containsKey(myRandomChoice) || (person.money < Phonebook.getPhonebook().getMarket().marketItemsForSale.get(myRandomChoice).price));
-		item = Phonebook.getPhonebook().getMarket().marketItemsForSale.get(myRandomChoice).itemName;
+		} while (!Phonebook.getPhonebook().getEastMarket().marketItemsForSale.containsKey(myRandomChoice) || (person.money < Phonebook.getPhonebook().getEastMarket().marketItemsForSale.get(myRandomChoice).price));
+		item = Phonebook.getPhonebook().getEastMarket().marketItemsForSale.get(myRandomChoice).itemName;
 		return item;
 	}
 
 	public void payBill(){
-		if (bill == Phonebook.getPhonebook().getMarket().inventory.get(item).price * itemAmount) {
+		if (bill == Phonebook.getPhonebook().getEastMarket().inventory.get(item).price * itemAmount) {
 			print("Paying my bill");
-			Phonebook.getPhonebook().getMarket().getSalesPerson(test).msgPayment(this, bill);
+			Phonebook.getPhonebook().getEastMarket().getSalesPerson(test).msgPayment(this, bill);
 			person.money -= bill;
 			state = MarketCustomerState.payed;
 		}

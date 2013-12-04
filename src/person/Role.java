@@ -59,9 +59,8 @@ public abstract class Role {
 
     protected abstract boolean pickAndExecuteAnAction();
  
-        public String getName() 
-        {
-                return person.getName();
+        public String getName() {
+        	return person.getName();
         }
         
         public void setState(RoleState state) 

@@ -231,8 +231,12 @@ public class BuildingPanel extends JPanel implements ActionListener {
 
 		}
 		else if (name.toLowerCase().contains("bank")) {
+			
+			//teller window
 			g2.fillRect(WINDOWX - 100, 0, 20, WINDOWY*3/4);
-
+			//waiting line
+			g2.fillRect(WINDOWX - 175, 50, 5, WINDOWY/2);
+			g2.drawString("Queue", WINDOWX - 200, 50);
 			//chair to sit at loan officer
 			g2.fillRect(WINDOWX/4, WINDOWY/2, 10, 60); //back of chair
 			g2.fillRect(WINDOWX/4 -20, WINDOWY/2, 20, 10);

@@ -1,8 +1,8 @@
-package restaurant;
+package chineseRestaurant;
 
+import chineseRestaurant.interfaces.Waiter;
 import application.Phonebook;
 import person.Person;
-import restaurant.interfaces.Waiter;
 
 public class AltWaiterRole extends WaiterRole implements Waiter {
 	//private RevolvingStand theRevolvingStand;
@@ -44,7 +44,7 @@ public class AltWaiterRole extends WaiterRole implements Waiter {
 
 		//cook.msgHeresAnOrder(MC.tableNumber, MC.choice, this);
 		print("Placing order on Revolving Stand.");
-		Phonebook.getPhonebook().getRestaurant().getRevolvingStand().newOrder(new Order(MC.tableNumber, MC.choice, this));
+		Phonebook.getPhonebook().getChineseRestaurant().getRevolvingStand().newOrder(new Order(MC.tableNumber, MC.choice, this));
 	}
 
 }

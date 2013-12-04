@@ -10,6 +10,7 @@ import person.Worker;
 import application.Phonebook;
 import bank.interfaces.BankCustomer;
 import bank.interfaces.BankTeller;
+import application.gui.animation.agentGui.*;
 
 public class BankTellerRole extends Role implements BankTeller {
 
@@ -20,7 +21,9 @@ public class BankTellerRole extends Role implements BankTeller {
 
 	public enum AccountState {neutral, newAccount, waiting, depositing, withdrawing, requestingLoan, 
 		closingLoan, loanApproved, loanDenied, bankEmpty, leavingBank}
-
+	private int tellerWindow;
+	private BankTellerGui gui = null;
+	
 	static public class Account {	
 		private BankCustomer customer;
 		public int accountNum; 		//the hash key
@@ -82,7 +85,7 @@ public class BankTellerRole extends Role implements BankTeller {
 	public void msgWantNewAccount (BankCustomer cust1) {	
 		print("Customer wants new account");
 		Account a1 = new Account(cust1);
-		Phonebook.getPhonebook().getBank().accounts.add(a1);
+		Phonebook.getPhonebook().getEastBank().accounts.add(a1);
 		a1.setState(AccountState.newAccount);
 		myAccounts.add(a1);
 		stateChanged();
@@ -137,6 +140,10 @@ public class BankTellerRole extends Role implements BankTeller {
 		myAccounts.remove(correct);
 		stateChanged();
 	}
+	
+	public void msgAtDestination() {
+		this.atDestination.release();
+	}
 
 	//Scheduler
 
@@ -190,8 +197,8 @@ public class BankTellerRole extends Role implements BankTeller {
 
 		if (leaveRole){
 			leaveRole = false;
-			if (((Role) Phonebook.getPhonebook().getBank().getBankGuard(test)).getPerson() != null)
-				Phonebook.getPhonebook().getBank().getBankGuard(test).msgTellerLeavingWork(this);
+			if (((Role) Phonebook.getPhonebook().getEastBank().getBankGuard(test)).getPerson() != null)
+				Phonebook.getPhonebook().getEastBank().getBankGuard(test).msgTellerLeavingWork(this);
 			try {
 				((Worker) person).roleFinishedWork();	
 			}
@@ -218,8 +225,8 @@ public class BankTellerRole extends Role implements BankTeller {
 	}
 
 	Account findPhonebookAccount (int accNum) {
-		synchronized(Phonebook.getPhonebook().getBank().accounts) {
-			for (Account a: Phonebook.getPhonebook().getBank().accounts) {
+		synchronized(Phonebook.getPhonebook().getEastBank().accounts) {
+			for (Account a: Phonebook.getPhonebook().getEastBank().accounts) {
 				if (a.getAccountNum() == accNum) {
 					myAccounts.add(a);		//Anytime we must search through the global list, 		
 					return a;						//we need add account to the local one for easy future access
@@ -232,7 +239,7 @@ public class BankTellerRole extends Role implements BankTeller {
 
 
 	void openAccount (Account account1) {
-		int hashKey = ++Phonebook.getPhonebook().getBank().accountNumKeyList;
+		int hashKey = ++Phonebook.getPhonebook().getEastBank().accountNumKeyList;
 		account1.setAccountNum(hashKey);
 		account1.getCustomer().msgHereIsNewAccount(account1.getAccountNum());
 		account1.state = AccountState.neutral;
@@ -240,7 +247,7 @@ public class BankTellerRole extends Role implements BankTeller {
 
 	void withdrawMoney(Account account1) {
 		if (account1.balance > (account1.processingMoney + balanceMinimum))  {
-			Phonebook.getPhonebook().getBank().vault -= account1.processingMoney;
+			Phonebook.getPhonebook().getEastBank().vault -= account1.processingMoney;
 			account1.getCustomer().msgHereIsYourMoney(account1.processingMoney);
 		}
 		else
@@ -251,7 +258,7 @@ public class BankTellerRole extends Role implements BankTeller {
 	}
 
 	void depositMoney(Account account1) {
-		Phonebook.getPhonebook().getBank().vault += account1.processingMoney;
+		Phonebook.getPhonebook().getEastBank().vault += account1.processingMoney;
 		print("$" + account1.processingMoney + " deposited into bank vault");
 		account1.balance +=  account1.processingMoney;
 		account1.creditScore += account1.processingMoney/10;	//every time you deposit money, your credit goes up the bank can trust that you have money
@@ -260,7 +267,7 @@ public class BankTellerRole extends Role implements BankTeller {
 	}
 
 	void requestLoan (Account account1) {
-		Phonebook.getPhonebook().getBank().getLoanOfficer(test).msgIsLoanApproved(account1, this);
+		Phonebook.getPhonebook().getEastBank().getLoanOfficer(test).msgIsLoanApproved(account1, this);
 		account1.state = AccountState.waiting;
 	}
 
@@ -284,10 +291,22 @@ public class BankTellerRole extends Role implements BankTeller {
 	}
 
 	public double getVault() {
-		return Phonebook.getPhonebook().getBank().vault;
+		return Phonebook.getPhonebook().getEastBank().vault;
 	}
 
 	public List<Account> getAccounts() {
 		return myAccounts;
+	}
+	
+	public void setTellerWindow(int window) {
+		tellerWindow = window;
+	}
+	
+	public int getTellerPosition() {
+		return tellerWindow;
+	}
+	
+	public void setGui(BankTellerGui gui) {
+		this.gui = gui;
 	}
 }
