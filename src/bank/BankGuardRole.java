@@ -57,14 +57,14 @@ public class BankGuardRole extends Role implements BankGuard {
 	public void msgTellerCameToWork (BankTeller t1) {
 	//	print("Teller" + t1.getName() + " arrived at work");	
 		tellers.add(new MyTeller(t1));
-	//	print("Teller size = " + tellers.size());
+		print("Teller size = " + tellers.size());
 	}
 
 	public void msgTellerLeavingWork(BankTeller t1) {
 		if (t1 instanceof Role)
 			print("Teller role removed " + ((Role) t1).getPerson().getName());
 		tellers.remove(findTeller(t1));
-	//	print("tellers = " + tellers.size());
+		print("tellers = " + tellers.size());
 		stateChanged();
 	}
 

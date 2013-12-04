@@ -198,14 +198,10 @@ public class BankTellerRole extends Role implements BankTeller {
 		if (leaveRole && myAccounts.size() == 0 && ((BankGuardRole) Phonebook.getPhonebook().getEastBank().getBankGuard(test)).customersInBank == 0){
 			leaveRole = false;
 			//print("" + ((BankGuardRole) Phonebook.getPhonebook().getEastBank().getBankGuard(test)).customersInBank);
+			Phonebook.getPhonebook().getEastBank().goingOffWork(person);
 			if (((Role) Phonebook.getPhonebook().getEastBank().getBankGuard(test)).getPerson() != null)
-				Phonebook.getPhonebook().getEastBank().getBankGuard(test).msgTellerLeavingWork(this);
-			try {
+				Phonebook.getPhonebook().getEastBank().getBankGuard(test).msgTellerLeavingWork(this);	
 				((Worker) person).roleFinishedWork();	
-			}
-			catch (Exception e){
-
-			};
 			return true;
 		}
 		return false;
