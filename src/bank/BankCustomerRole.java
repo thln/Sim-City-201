@@ -31,7 +31,7 @@ public class BankCustomerRole extends Role implements BankCustomer{
 		super(p1, pName, rName);
 		desire = BankCustomerDesire.openAccount;
 		state = CustomerState.atBank;
-		//gui = new BankCustomerGui(this);
+		gui = new BankCustomerGui(this);
 	}
 
 	//Messages
