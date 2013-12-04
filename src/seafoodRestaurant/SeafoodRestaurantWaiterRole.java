@@ -1,8 +1,16 @@
 package seafoodRestaurant;
 
-import agent.Agent;
+import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.Semaphore;
+
+import person.Role;
 //import seafoodRestaurant.interfaces.Check;
 import seafoodRestaurant.interfaces.SeafoodRestaurantCustomer;
+import chineseRestaurant.ChineseRestaurantCashierRole.Check;
 //import restaurant.CustomerAgent.AgentEvent;
 //import restaurant.CustomerAgent.AgentState;
 //import restaurant.HostAgent.CustomerState;
@@ -10,10 +18,6 @@ import seafoodRestaurant.interfaces.SeafoodRestaurantCustomer;
 //import restaurant.interfaces.Cashier;
 //import restaurant.interfaces.Customer;
 //import restaurant.interfaces.Waiter;
-import seafoodRestaurant.interfaces.SeafoodRestaurantWaiter;
-
-import java.util.*;
-import java.util.concurrent.Semaphore;
 
 /**
  * Restaurant Waiter Agent
@@ -24,7 +28,7 @@ import java.util.concurrent.Semaphore;
 //is proceeded as he wishes.
 
 //This is now a Waiter Agent. We are implementing the Host separately. 9/18/13
-public class SeafoodRestaurantWaiterRole extends Agent implements SeafoodRestaurantWaiter
+public class SeafoodRestaurantWaiterRole extends Role //implements SeafoodRestaurantWaiter
 {
 	//static final int NTABLES = 3;//a global for the number of tables.
 	//private int NTABLES = 1;

@@ -16,7 +16,7 @@ import java.util.*;
   */
 //This is the Host Agent
 
-public class SeafoodRestaurantHostRole extends Agent
+public class SeafoodRestaurantHostRole extends Role
 {
 	/***** DATA *****/
 	public enum CustomerState 

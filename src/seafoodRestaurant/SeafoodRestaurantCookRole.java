@@ -8,11 +8,11 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import restaurant.gui.AnimationPanel;
-import restaurant.interfaces.Market;
-import agent.Agent;
+import person.Role;
+import seafoodRestaurant.interfaces.SeafoodRestaurantMarket;
+import application.gui.animation.AnimationPanel;
 
-public class SeafoodRestaurantCookRole extends Agent 
+public class SeafoodRestaurantCookRole extends Role 
 {
 	
 	/***** DATA *****/
@@ -81,8 +81,7 @@ public class SeafoodRestaurantCookRole extends Agent
 	
 	public SeafoodRestaurantCookRole(String name)
 	{
-		super();
-		this.name = name;
+		super(name);
 		
 		RecipeBook.put("Salad",3000);
 		RecipeBook.put("Pizza",5000);

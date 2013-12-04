@@ -6,18 +6,18 @@ import java.util.Collections;
 //import restaurant.Menu;
 import java.util.List;
 
-import restaurant.Check.CheckState;
+import person.Role;
+import seafoodRestaurant.SeafoodRestaurantCheck.CheckState;
+import seafoodRestaurant.interfaces.SeafoodRestaurantCashier;
+import seafoodRestaurant.interfaces.SeafoodRestaurantCustomer;
+import seafoodRestaurant.interfaces.SeafoodRestaurantMarket;
+import seafoodRestaurant.interfaces.SeafoodRestaurantWaiter;
+import testing.EventLog;
 //import restaurant.MarketAgent.Delivery;
-import restaurant.interfaces.Cashier;
-import restaurant.interfaces.Customer;
-import restaurant.interfaces.Market;
-import restaurant.interfaces.Waiter;
-import restaurant.test.mock.EventLog;
-import agent.Agent;
 
 //import restaurant.CustomerAgent.AgentState;
 
-public class SeafoodRestaurantCashierRole extends Agent implements SeafoodRestaurantCashier
+public class SeafoodRestaurantCashierRole extends Role //implements SeafoodRestaurantCashier
 {
 	/***** DATA *****/
 	private String name;
@@ -71,8 +71,7 @@ public class SeafoodRestaurantCashierRole extends Agent implements SeafoodRestau
 	
 	public SeafoodRestaurantCashierRole(String name)
 	{
-		super();
-		this.name = name;
+		super(name);
 
 		MenuForReference = new SeafoodRestaurantMenu();
 		df.setMaximumFractionDigits(2);

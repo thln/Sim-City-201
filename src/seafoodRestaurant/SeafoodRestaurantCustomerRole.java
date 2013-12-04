@@ -13,9 +13,8 @@ import java.util.concurrent.Semaphore;
 /**
  * Restaurant customer agent.
  */
-public class SeafoodRestaurantCustomerRole extends Agent implements SeafoodRestaurantCustomer 
+public class SeafoodRestaurantCustomerRole extends Role //implements SeafoodRestaurantCustomer 
 {
-	private String name;
 	private int hungerLevel = 5;        // determines length of meal
 	Timer timer = new Timer();
 	private CustomerGui customerGui;

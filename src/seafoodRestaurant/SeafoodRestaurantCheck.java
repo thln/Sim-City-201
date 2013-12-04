@@ -1,10 +1,6 @@
 package seafoodRestaurant;
-import java.util.Random;
-import java.util.Map;
-import java.util.HashMap;
-
-import restaurant.interfaces.Customer;
-import restaurant.interfaces.Waiter;
+import seafoodRestaurant.interfaces.SeafoodRestaurantCustomer;
+import seafoodRestaurant.interfaces.SeafoodRestaurantWaiter;
 
 //import restaurant.CashierAgent.CheckState;
 
