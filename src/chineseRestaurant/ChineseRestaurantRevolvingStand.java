@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class RevolvingStand 
+public class ChineseRestaurantRevolvingStand 
 {
 
-	List<Order> AllOrders = Collections.synchronizedList(new ArrayList<Order>());
+	List<ChineseRestaurantOrder> AllOrders = Collections.synchronizedList(new ArrayList<ChineseRestaurantOrder>());
 
-	public void newOrder(Order o) 
+	public void newOrder(ChineseRestaurantOrder o) 
 	{
 		synchronized(AllOrders)
 		{
@@ -17,11 +17,11 @@ public class RevolvingStand
 		}
 	}
 
-	public Order takeOrder() 
+	public ChineseRestaurantOrder takeOrder() 
 	{
 		synchronized(AllOrders)
 		{
-			Order o = AllOrders.get(0);
+			ChineseRestaurantOrder o = AllOrders.get(0);
 			AllOrders.remove(0);
 			return o;
 		}

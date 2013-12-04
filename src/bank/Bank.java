@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
 
-import chineseRestaurant.WaiterRole;
+import chineseRestaurant.ChineseRestaurantWaiterRole;
 import market.MarketCustomerRole;
 import bank.BankGuardRole.MyTeller;
 import bank.BankTellerRole.Account;
@@ -141,13 +141,16 @@ public class Bank {
 
 		if (worker.getWorkerRole().equals(bankGuardRole)) {
 			bankGuardRole = null;
+			bankPanel.removeGui(bankGuardGui);
 		}
 		else if (worker.getWorkerRole().equals(loanOfficerRole)) {
 			loanOfficerRole = null;
+			bankPanel.removeGui(loanOfficerGui);
 		}
 		else if (worker.getWorkerRole() instanceof BankTellerRole){
 			bankGuardRole.msgTellerLeavingWork((BankTeller) worker.getWorkerRole());
 			tellers.remove(worker.getWorkerRole());
+			bankPanel.removeGui(worker.getWorkerRole().gui);
 		}
 	}
 
@@ -211,9 +214,14 @@ public class Bank {
 	public void closeBuilding(){
 		userClosed = true;
 		bankGuardRole.msgLeaveRole();
+		bankPanel.removeGui(bankGuardGui);
+		
 		for (MyTeller t1: bankGuardRole.tellers){
 			((Role) t1.tell1).msgLeaveRole();
+			bankPanel.removeGui(((Role) t1.tell1).gui);
 		}
 		loanOfficerRole.msgLeaveRole();
+		bankPanel.removeGui(loanOfficerGui);
+		
 	}
 }

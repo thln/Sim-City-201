@@ -1,8 +1,8 @@
 package chineseRestaurant.interfaces;
 
-import chineseRestaurant.Menu;
-import chineseRestaurant.interfaces.Host;
-import chineseRestaurant.interfaces.Waiter;
+import chineseRestaurant.ChineseRestaurantMenu;
+import chineseRestaurant.interfaces.ChineseRestaurantHost;
+import chineseRestaurant.interfaces.ChineseRestaurantWaiter;
 
 /**
  * A sample Customer interface built to unit test a CashierAgent.
@@ -10,9 +10,9 @@ import chineseRestaurant.interfaces.Waiter;
  * @author Kristi Hupka
  *
  */
-public interface RestaurantCustomer {
+public interface ChineseRestaurantCustomer {
 
-	public abstract void setHost(Host host);
+	public abstract void setHost(ChineseRestaurantHost chineseRestaurantHost);
 
 	public abstract String getCustomerName();
 	
@@ -27,13 +27,13 @@ public interface RestaurantCustomer {
 
 	public abstract void msgTablesAreFull();
 	
-	public abstract void msgPleaseFollowMe(int tableNumber, Menu menu, Waiter waiter);
+	public abstract void msgPleaseFollowMe(int tableNumber, ChineseRestaurantMenu chineseRestaurantMenu, ChineseRestaurantWaiter chineseRestaurantWaiter);
 
 	public abstract void msgAnimationFinishedGoToSeat();
 
 	public abstract void msgWhatWouldYouLike();
 
-	public abstract void msgPleaseReorder(Menu newMenu);
+	public abstract void msgPleaseReorder(ChineseRestaurantMenu newMenu);
 
 	public abstract void msgHeresYourOrder(String choice);
 

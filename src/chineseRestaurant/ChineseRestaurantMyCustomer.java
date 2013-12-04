@@ -1,11 +1,11 @@
 package chineseRestaurant;
 
-import chineseRestaurant.interfaces.RestaurantCustomer;
+import chineseRestaurant.interfaces.ChineseRestaurantCustomer;
 
-public class myCustomer {
+public class ChineseRestaurantMyCustomer {
 	
-	RestaurantCustomerRole customer;
-	RestaurantCustomer testCustomer;
+	ChineseRestaurantCustomerRole customer;
+	ChineseRestaurantCustomer testCustomer;
 	
 	int tableNumber;
 	double CheckAmount = 0;
@@ -20,21 +20,21 @@ public class myCustomer {
 	 * Constructor for myCustomer class
 	 */
 	
-	myCustomer (RestaurantCustomerRole customer, int tableNumber, int xHome, int yHome) {
+	ChineseRestaurantMyCustomer (ChineseRestaurantCustomerRole customer, int tableNumber, int xHome, int yHome) {
 		this.customer = customer;
 		this.tableNumber = tableNumber;
 		this.xHome = xHome;
 		this.yHome = yHome;
 	}
 	
-	myCustomer (RestaurantCustomer customerTest)
+	ChineseRestaurantMyCustomer (ChineseRestaurantCustomer customerTest)
 	{
 		testCustomer = customerTest;
 	}
 	
 	//Utilities
 	
-	RestaurantCustomer getCustomer() {
+	ChineseRestaurantCustomer getCustomer() {
 		return customer;
 	}
 

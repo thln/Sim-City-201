@@ -1,10 +1,10 @@
 package chineseRestaurant.test.mock;
 
-import chineseRestaurant.interfaces.Cashier;
-import chineseRestaurant.interfaces.Cook;
-import chineseRestaurant.interfaces.Host;
-import chineseRestaurant.interfaces.RestaurantCustomer;
-import chineseRestaurant.interfaces.Waiter;
+import chineseRestaurant.interfaces.ChineseRestaurantCashier;
+import chineseRestaurant.interfaces.ChineseRestaurantCook;
+import chineseRestaurant.interfaces.ChineseRestaurantHost;
+import chineseRestaurant.interfaces.ChineseRestaurantCustomer;
+import chineseRestaurant.interfaces.ChineseRestaurantWaiter;
 import testing.LoggedEvent;
 import testing.Mock;
 
@@ -15,10 +15,10 @@ import testing.Mock;
  *
  */
 
-public class MockWaiter extends Mock implements Waiter {
+public class ChineseRestaurantMockWaiter extends Mock implements ChineseRestaurantWaiter {
 
 
-	public MockWaiter(String name) {
+	public ChineseRestaurantMockWaiter(String name) {
 		super(name);
 	}
 
@@ -34,13 +34,13 @@ public class MockWaiter extends Mock implements Waiter {
 	}
 
 	
-	public void msgReadyToOrder(RestaurantCustomer customer) {
+	public void msgReadyToOrder(ChineseRestaurantCustomer customer) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	
-	public void msgHeresMyOrder(RestaurantCustomer customer, String choice) {
+	public void msgHeresMyOrder(ChineseRestaurantCustomer customer, String choice) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -58,13 +58,13 @@ public class MockWaiter extends Mock implements Waiter {
 	}
 
 
-	public void msgIWantMyCheck(RestaurantCustomer cust) {
+	public void msgIWantMyCheck(ChineseRestaurantCustomer cust) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	
-	public void msgLeavingTable(RestaurantCustomer cust) {
+	public void msgLeavingTable(ChineseRestaurantCustomer cust) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -94,17 +94,17 @@ public class MockWaiter extends Mock implements Waiter {
 	}
 
 
-	public void setHost(Host host) {
+	public void setHost(ChineseRestaurantHost chineseRestaurantHost) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public void setCook(Cook cook) {
+	public void setCook(ChineseRestaurantCook chineseRestaurantCook) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public void setCashier(Cashier cashier) {
+	public void setCashier(ChineseRestaurantCashier chineseRestaurantCashier) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -115,7 +115,7 @@ public class MockWaiter extends Mock implements Waiter {
 	}
 
 
-	public void msgPleaseSeatCustomer(int tableNumber, RestaurantCustomer customer, int xHome, int yHome) {
+	public void msgPleaseSeatCustomer(int tableNumber, ChineseRestaurantCustomer customer, int xHome, int yHome) {
 		// TODO Auto-generated method stub
 		
 	}

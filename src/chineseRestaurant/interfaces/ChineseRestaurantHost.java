@@ -1,5 +1,5 @@
 package chineseRestaurant.interfaces;
 
-public interface Host {
+public interface ChineseRestaurantHost {
 
 }

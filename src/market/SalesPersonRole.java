@@ -2,7 +2,7 @@ package market;
 
 import java.util.*;
 
-import chineseRestaurant.Restaurant;
+import chineseRestaurant.ChineseRestaurant;
 import application.Phonebook;
 import market.MarketOrder.orderState;
 import market.interfaces.MarketCustomer;
@@ -46,11 +46,11 @@ public class SalesPersonRole extends Role implements SalesPerson {
 	}
 
 
-	public void msgIWantProducts(Restaurant restaurant, String item, int numWanted) {
+	public void msgIWantProducts(ChineseRestaurant chineseRestaurant, String item, int numWanted) {
 
 		print("Restaurant asked for " + numWanted + " " + item + "(s)");
 		log.add(new LoggedEvent("Recieved msgIWantProducts"));
-		orders.add(new MarketOrder(restaurant, item, numWanted));
+		orders.add(new MarketOrder(chineseRestaurant, item, numWanted));
 		stateChanged();
 	}
 
@@ -99,13 +99,13 @@ public class SalesPersonRole extends Role implements SalesPerson {
 	}
 
 
-	public void msgPayment(Restaurant restaurant, double payment) {
+	public void msgPayment(ChineseRestaurant chineseRestaurant, double payment) {
 
 		print("Recieved payment of $" + payment + " from restaurant");
 
 		market.money += payment;
 		for (MarketOrder o : orders) {
-			if (o.restaurant.equals(restaurant)) {
+			if (o.chineseRestaurant.equals(chineseRestaurant)) {
 				orders.remove(o);
 				return;
 			}
@@ -147,7 +147,7 @@ public class SalesPersonRole extends Role implements SalesPerson {
 		o.state = orderState.processing;
 
 		if (market.inventory.get(o.item).amount == 0) {
-			o.restaurant.getCook(test).msgCantFulfill(o.item, 0, o.itemAmountOrdered);
+			o.chineseRestaurant.getCook(test).msgCantFulfill(o.item, 0, o.itemAmountOrdered);
 			orders.remove(o);
 			stateChanged();
 			return;
@@ -173,7 +173,7 @@ public class SalesPersonRole extends Role implements SalesPerson {
 	public void askForPayment(MarketOrder o) {
 		o.state = orderState.gaveToCustomer;
 		print("Asking for payment from the restaurant");
-		o.restaurant.getCashier(true).msgPleasePayForItems(o.item, o.itemAmountFulfilled, o.orderCost, this);
+		o.chineseRestaurant.getCashier(true).msgPleasePayForItems(o.item, o.itemAmountFulfilled, o.orderCost, this);
 		stateChanged();
 	}
 

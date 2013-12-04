@@ -7,12 +7,13 @@ import java.awt.event.*;
 import java.util.ArrayList;
 
 import application.Phonebook;
+import housing.*;
 import application.gui.animation.agentGui.*;
 
 public class AnimationPanel extends JPanel implements MouseListener {
 
 	final static int WINDOWX = 600;
-	final static int WINDOWY = 300;
+	final static int WINDOWY = 325;
 
 	public CityPanel cityPanel;
 	JPanel buildingPanels;
@@ -59,11 +60,23 @@ public class AnimationPanel extends JPanel implements MouseListener {
 		buildings = cityPanel.getBuildings();
 		for ( int i=0; i<buildings.size(); i++ ) {
 			Building b = buildings.get(i);
-			BuildingPanel bp = new BuildingPanel(b.getName(), this );
-			b.setMyBuildingPanel(bp);
+			String name = b.getName();
+			BuildingPanel panel = null;
+			if(name.toLowerCase().contains("restaurant")) {
+				panel = new RestaurantPanel(name, this );
+			}
+			else if(name.toLowerCase().contains("market")) {
+				panel = new MarketPanel(name, this );
+			}
+			else if(name.toLowerCase().contains("house") || name.toLowerCase().contains("apartment")) {
+				panel = new HousingPanel(name, this );
+			}
+			else if(name.toLowerCase().contains("bank")) {
+				panel = new BankPanel(name, this );
+			}
+			b.setMyBuildingPanel(panel);
 			setBuildingInPhonebook(b);
-			buildingPanels.add(bp, bp.getName());
-
+			buildingPanels.add(panel, name);
 			add(BorderLayout.NORTH, cityPanel);
 			add(BorderLayout.SOUTH, buildingPanels);
 		}
@@ -98,7 +111,7 @@ public class AnimationPanel extends JPanel implements MouseListener {
 		 * it is required to have multiple instances of each, so we
 		 * must code for that eventuality.
 		 */
-		
+		//setting the panels to the already-initialized businesses
 		if (building.getName().toLowerCase().contains("restaurant")) {
 			Phonebook.getPhonebook().getChineseRestaurant().setBuildingPanel(building.myBuildingPanel);
 		}
@@ -247,11 +260,23 @@ public class AnimationPanel extends JPanel implements MouseListener {
 		
 	}
 	
-	public void addAptUnit(BuildingPanel house, int i) {
-		buildingPanels.add(house);
+	public void addAptUnit(HousingPanel house, Housing housing) {
+		buildingPanels.add(house, house.name);
+		housing.setBuildingPanel(house);
+		//getting the apartment panel from the list of buildings (and thier respective panels)
 		for(Building building : buildings) {
-			if(building.getName().toLowerCase().contains("apartment")) {
-				building.myBuildingPanel.addAptUnit();
+			String name = building.getName();
+			if(name.toLowerCase().contains("apartment")) {
+			//	if(name.toLowerCase().contains("north")) { //east?
+					HousingPanel hp = (HousingPanel) building.myBuildingPanel;
+					hp.addAptUnit(housing);
+					house.setAptBuilding(building);
+			/*	}
+				else if(name.toLowerCase().contains("south")) { //west?
+					HousingPanel hp = (HousingPanel) building.myBuildingPanel;
+					hp.addAptUnit(housing);
+				}
+			*/
 			}
 		}
 	}

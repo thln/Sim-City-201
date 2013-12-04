@@ -12,7 +12,7 @@ import chineseRestaurant.*;
 
 public class RestaurantCookGui extends RestaurantGui {
 
-	private CookRole agent = null;
+	private ChineseRestaurantCookRole agent = null;
 
 	private int xPos = 405, yPos = 140;//default cook position
 	private int xDestination = 405, yDestination = 140;//default start position
@@ -31,7 +31,7 @@ public class RestaurantCookGui extends RestaurantGui {
 	public RestaurantCookGui() {	
 	}
 	
-	public RestaurantCookGui(CookRole agent) {
+	public RestaurantCookGui(ChineseRestaurantCookRole agent) {
 		this.agent = agent;
 	}
 	

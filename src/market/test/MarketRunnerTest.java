@@ -1,7 +1,7 @@
 package market.test;
 
-import chineseRestaurant.Restaurant;
-import chineseRestaurant.test.mock.MockCook;
+import chineseRestaurant.ChineseRestaurant;
+import chineseRestaurant.test.mock.ChineseRestaurantMockCook;
 import application.Phonebook;
 import junit.framework.TestCase;
 import market.Market;
@@ -20,7 +20,7 @@ import person.Worker;
 public class MarketRunnerTest extends TestCase {
 
 	Market market;
-	Restaurant restaurant;
+	ChineseRestaurant chineseRestaurant;
 	Worker worker;
 	MarketRunnerRole marketRunner;
 	MockSalesPerson salesPerson;
@@ -30,7 +30,7 @@ public class MarketRunnerTest extends TestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 		market = Phonebook.getPhonebook().getEastMarket();
-		restaurant = Phonebook.getPhonebook().getChineseRestaurant();
+		chineseRestaurant = Phonebook.getPhonebook().getChineseRestaurant();
 		salesPerson = (MockSalesPerson) Phonebook.getPhonebook().getEastMarket().getSalesPerson(true);
 		marketCustomer = new MockMarketCustomer("MockMarketCustomer");
 		UPSman = (MockUPSman) Phonebook.getPhonebook().getEastMarket().getUPSman(true);
@@ -93,7 +93,7 @@ public class MarketRunnerTest extends TestCase {
 						+ marketRunner.log.toString(), 0, marketRunner.log.size());
 				
 				//Step 1
-				marketRunner.msgHeresAnOrder(new MarketOrder(restaurant, "Steak", 1)); 
+				marketRunner.msgHeresAnOrder(new MarketOrder(chineseRestaurant, "Steak", 1)); 
 				
 				//Checking post conditions for step 1
 				assertEquals("Market Runner should have 1 order in it", marketRunner.orders.size(), 1);

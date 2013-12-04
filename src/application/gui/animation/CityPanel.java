@@ -26,7 +26,7 @@ import application.gui.animation.agentGui.Gui;
 public class CityPanel extends JPanel implements ActionListener, MouseListener {
 
 	private final int WINDOWX = 600;
-	private final int WINDOWY = 350;
+	private final int WINDOWY = 325;
 
 	AnimationPanel animationPanel;
 	private List<Gui> guis = Collections.synchronizedList(new ArrayList<Gui>());
@@ -72,7 +72,7 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		} catch (IOException e) {
 		}
 
-		addBuilding("Restaurant", WINDOWX / 2, 20);
+		addBuilding("Chinese Restaurant", WINDOWX / 2, 20);
 		addBuilding("Market", WINDOWX - 100, 100);
 		addBuilding("Bank", WINDOWX / 2, 230);
 		addBuilding("House", 20, 100);

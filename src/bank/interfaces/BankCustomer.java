@@ -27,4 +27,6 @@ public interface BankCustomer {
 	void msgNoTellerAvailable();
 
 	void msgComeIn();
+	
+	void setWaitPlace(int waitPlace);
 }

@@ -82,5 +82,10 @@ public class BankCustomerMock extends Mock implements BankCustomer {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	@Override
+	public void setWaitPlace(int waitPlace) {
+		// TODO Auto-generated method stub
+	}
 
 }

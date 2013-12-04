@@ -3,7 +3,7 @@ package chineseRestaurant;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class Menu {
+public class ChineseRestaurantMenu {
 
 	double lowestPricedItem = 5.99;
 	
@@ -15,7 +15,7 @@ public class Menu {
 	}
 
 	
-	Menu remove(String choice) {
+	ChineseRestaurantMenu remove(String choice) {
 		if (choice == "Chicken")
 			menuMap.remove(0);
 		else if (choice == "Steak")

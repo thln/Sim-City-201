@@ -3,9 +3,9 @@ package chineseRestaurant;
 
 import java.util.*;
 
-import chineseRestaurant.interfaces.Cashier;
-import chineseRestaurant.interfaces.RestaurantCustomer;
-import chineseRestaurant.interfaces.Waiter;
+import chineseRestaurant.interfaces.ChineseRestaurantCashier;
+import chineseRestaurant.interfaces.ChineseRestaurantCustomer;
+import chineseRestaurant.interfaces.ChineseRestaurantWaiter;
 import application.Phonebook;
 import market.interfaces.SalesPerson;
 import person.Person;
@@ -17,9 +17,9 @@ import person.Worker;
  * Restaurant Cashier Role
  */
 
-public class CashierRole extends Role implements Cashier {
+public class ChineseRestaurantCashierRole extends Role implements ChineseRestaurantCashier {
 
-	public Restaurant restaurant;
+	public ChineseRestaurant chineseRestaurant;
 	//private Semaphore atTable = new Semaphore(0,true);
 
 	//Keeps a list of checks
@@ -35,14 +35,14 @@ public class CashierRole extends Role implements Cashier {
 		foodPrices.put("Salad", 5.99);
 	}
 
-	public CashierRole(Person p1, String pName, String rName, Restaurant restaurant) {
+	public ChineseRestaurantCashierRole(Person p1, String pName, String rName, ChineseRestaurant chineseRestaurant) {
 		super(p1, pName, rName);
-		this.restaurant = restaurant;
+		this.chineseRestaurant = chineseRestaurant;
 	}
 
-	public CashierRole(String roleName, Restaurant restaurant) {
+	public ChineseRestaurantCashierRole(String roleName, ChineseRestaurant chineseRestaurant) {
 		super(roleName);
-		this.restaurant = restaurant;
+		this.chineseRestaurant = chineseRestaurant;
 	}
 
 	public String getName() {
@@ -54,16 +54,16 @@ public class CashierRole extends Role implements Cashier {
 	/**
 	 * Messages
 	 */
-	public void msgComputeBill(String choice, int tableNumber, Waiter waiter) {
+	public void msgComputeBill(String choice, int tableNumber, ChineseRestaurantWaiter chineseRestaurantWaiter) {
 		synchronized(Checks) {
 			print("Calculating bill for table " + tableNumber);
 			//log.add(new LoggedEvent("Calculating bill for table"));
-			Checks.add(new Check(choice, tableNumber, waiter));
+			Checks.add(new Check(choice, tableNumber, chineseRestaurantWaiter));
 			stateChanged();
 		}
 	}
 
-	public void msgPayment(String choice, double amount, RestaurantCustomer customer) {
+	public void msgPayment(String choice, double amount, ChineseRestaurantCustomer customer) {
 		synchronized(Payments)
 		{
 			print("Received payment from " + customer.getCustomerName());
@@ -165,7 +165,7 @@ public class CashierRole extends Role implements Cashier {
 		if (OrdersToPay.get(0).bill == OrdersToPay.get(0).amountOrdered * foodPrices.get(OrdersToPay.get(0).choice)) {
 			OrdersToPay.get(0).setBill(Math.round(OrdersToPay.get(0).bill * 100.0) / 100.0);
 			print("Giving Market " + OrdersToPay.get(0).market + " for " + OrdersToPay.get(0).amountOrdered + " " + OrdersToPay.get(0).choice + "(s) x $" + foodPrices.get(OrdersToPay.get(0).choice) + " = $" + OrdersToPay.get(0).bill);
-			OrdersToPay.get(0).market.msgPayment(restaurant, OrdersToPay.get(0).bill);
+			OrdersToPay.get(0).market.msgPayment(chineseRestaurant, OrdersToPay.get(0).bill);
 			//change above if implementing multiple markets
 			OrdersToPay.remove(0);
 		}
@@ -180,12 +180,12 @@ public class CashierRole extends Role implements Cashier {
 	public class Check {
 		String choice;
 		int tableNumber;
-		Waiter waiterRole;
+		ChineseRestaurantWaiter waiterRole;
 
-		Check(String choice, int tableNumber, Waiter waiter) {
+		Check(String choice, int tableNumber, ChineseRestaurantWaiter chineseRestaurantWaiter) {
 			this.choice = choice;
 			this.tableNumber = tableNumber;
-			this.waiterRole = waiter;
+			this.waiterRole = chineseRestaurantWaiter;
 		}
 	}
 
@@ -193,9 +193,9 @@ public class CashierRole extends Role implements Cashier {
 	public class Payment {
 		public String choice;
 		public double payment;
-		public RestaurantCustomer customer;
+		public ChineseRestaurantCustomer customer;
 
-		Payment(String choice, double payment, RestaurantCustomer customer) {
+		Payment(String choice, double payment, ChineseRestaurantCustomer customer) {
 			this.choice = choice;
 			this.payment = payment;
 			this.customer = customer;

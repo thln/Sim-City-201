@@ -25,6 +25,7 @@ public class BankCustomerRole extends Role implements BankCustomer{
 	public BankCustomerDesire desire;
 	public CustomerState state;
 	protected String RoleName = "Bank Customer";
+	private int waitPlace;
 	private Semaphore atDestination = new Semaphore(0, true);
 	
 	public BankCustomerRole (Person p1, String pName, String rName) {
@@ -194,7 +195,7 @@ public class BankCustomerRole extends Role implements BankCustomer{
 	}
 	
 	void waitInLine() {
-		custGui.WaitTellerLine(1); //positions to be changed later by guard
+		custGui.WaitTellerLine(waitPlace); //positions to be changed later by guard
 		try {
 			this.atDestination.acquire();
 		} catch (InterruptedException e) {
@@ -292,5 +293,9 @@ public class BankCustomerRole extends Role implements BankCustomer{
 	
 	public void setGui(BankCustomerGui gui) {
 		this.custGui = gui;
+	}
+	
+	public void setWaitPlace(int place) {
+		waitPlace = place;
 	}
 }
