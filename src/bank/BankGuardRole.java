@@ -175,6 +175,12 @@ public class BankGuardRole extends Role implements BankGuard {
 				}
 			}	
 		}
+		int waitPlace = 0;
+		for(int i=0; i < customers.size(); i++) {
+			if(customers.get(i).equals(cust1))
+				waitPlace = i;
+		}
+		cust1.setWaitPlace(waitPlace+1);
 		cust1.msgNoTellerAvailable();
 		return false;
 	}

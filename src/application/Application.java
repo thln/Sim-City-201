@@ -213,7 +213,7 @@ public class Application extends JPanel {
 				animPanel.addAptUnit(hp, house);
 			}
 		}
-		/*
+		
 		//Starting Threads
 		//Shift 1
 		bank1a.startThread();
@@ -248,7 +248,7 @@ public class Application extends JPanel {
 		wealthy2.startThread();
 //		wealthy3.startThread();
 //		wealthy4.startThread();
-		*/
+		
 		updatePeopleTime();
 		
 	}
