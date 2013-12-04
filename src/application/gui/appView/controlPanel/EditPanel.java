@@ -1,9 +1,11 @@
 package application.gui.appView.controlPanel;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+
 import application.*;
 import application.gui.appView.*;
 import application.gui.appView.listPanel.ListPanel.Profile;
@@ -18,6 +20,7 @@ public class EditPanel extends JPanel implements ActionListener {
 	ApplicationPanel appPanel;
 	Application app;
 	ControlPanel cp;
+	JButton closeBuilding;
 	int editIndex = 0;
 	
 	public EditPanel(ControlPanel cp, Application app, ApplicationPanel appPanel){
@@ -50,6 +53,11 @@ public class EditPanel extends JPanel implements ActionListener {
 		saveButton.addActionListener(this);
 		mainPanel.add(saveButton);
 		
+		closeBuilding = new JButton("Close Building");
+		closeBuilding.addActionListener(this);
+		mainPanel.add(closeBuilding);
+		
+		
 		add(mainPanel);
 	}
 	
@@ -64,6 +72,10 @@ public class EditPanel extends JPanel implements ActionListener {
 		if(e.getSource() == selectPerson){
 			editIndex = selectPerson.getSelectedIndex();
 			updateTextFields();
+		}
+		
+		if (e.getSource() == closeBuilding){
+			Phonebook.getPhonebook().closeBuildings();
 		}
 	}
 	

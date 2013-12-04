@@ -173,4 +173,10 @@ public class Phonebook{
 	public void setBusStops(List<Point> busStops) {
 		this.busStops = busStops;
 	}
+	
+	public void closeBuildings(){
+		bank.closeBuilding();
+		restaurant.closeBuilding();
+		market.closeBuilding();
+	}
 }

@@ -48,6 +48,7 @@ public class DashboardPanel extends JPanel implements AWTEventListener{
 	}
 	
 	public void updateDashboard(){
+		
 		population = app.getPopulationSize();
 		numHomes = app.getNumberHomes();
 		occupiedHomes = 1;

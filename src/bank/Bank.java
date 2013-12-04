@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Vector;
 
 import market.MarketCustomerRole;
+import bank.BankGuardRole.MyTeller;
 import bank.BankTellerRole.Account;
 import bank.interfaces.BankCustomer;
 import bank.interfaces.BankGuard;
@@ -203,5 +204,13 @@ public class Bank {
 	
 	public void removeCustomer(BankCustomerRole customerRole) {
 		bankPanel.removeGui(customerRole.gui);
+	}
+	
+	public void closeBuilding(){
+		bankGuardRole.msgLeaveRole();
+		for (MyTeller t1: bankGuardRole.tellers){
+			((Role) t1.tell1).msgLeaveRole();
+		}
+		loanOfficerRole.msgLeaveRole();
 	}
 }

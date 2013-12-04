@@ -229,4 +229,13 @@ public class Restaurant {
 		customers.remove(customerRole);
 		restPanel.removeGui(customerRole.gui);
 	}
+	
+	public void closeBuilding(){
+		hostRole.msgLeaveRole();
+		for (WaiterRole w1: waiters) {
+			w1.msgLeaveRole();
+		}
+		cookRole.msgLeaveRole();
+		cashierRole.msgLeaveRole();
+	}
 }

@@ -208,4 +208,10 @@ public class Market {
 	public void removeCustomer(MarketCustomerRole customerRole) {
 		marketPanel.removeGui(customerRole.gui);
 	}
+	
+	public void closeBuilding(){
+		salesPersonRole.msgLeaveRole();
+		marketRunnerRole.msgLeaveRole();
+		UPSmanRole.msgLeaveRole();
+	}
 }
