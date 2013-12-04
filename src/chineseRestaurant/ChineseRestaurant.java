@@ -165,6 +165,7 @@ public class ChineseRestaurant{
 
 		if (worker.getWorkerRole().equals(chineseRestaurantHostRole)) {
 			chineseRestaurantHostRole = null;
+			restPanel.removeGui(worker.getWorkerRole().gui);
 		}
 		if (worker.getWorkerRole().equals(chineseRestaurantCashierRole)) {
 			chineseRestaurantCashierRole = null;
@@ -236,8 +237,11 @@ public class ChineseRestaurant{
 		chineseRestaurantHostRole.msgLeaveRole();
 		for (ChineseRestaurantWaiterRole w1: waiters) {
 			w1.msgLeaveRole();
+			restPanel.removeGui(w1.gui);
 		}
 		chineseRestaurantCookRole.msgLeaveRole();
+		restPanel.removeGui(cookGui);
+		
 		chineseRestaurantCashierRole.msgLeaveRole();
 	}
 }
