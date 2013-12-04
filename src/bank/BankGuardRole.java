@@ -19,7 +19,7 @@ public class BankGuardRole extends Role implements BankGuard {
 	//DATA
 
 	String name;
-	List <BankCustomer> customers;
+	public List <BankCustomer> customers;
 	List <BankCustomer> robbers;
 	List <MyTeller> tellers; 
 
@@ -112,6 +112,7 @@ public class BankGuardRole extends Role implements BankGuard {
 
 		if (leaveRole){
 			leaveRole = false;
+			Phonebook.getPhonebook().getEastBank().goingOffWork(this.person);
 			try {
 				((Worker) person).roleFinishedWork();	
 			}
