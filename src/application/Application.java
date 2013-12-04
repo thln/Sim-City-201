@@ -206,14 +206,14 @@ public class Application extends JPanel {
 			animPanel.addGui(pg);
 		}
 		
-		for(int h=0; h < population.size(); h++) {
-			if(allHousing.get(h).structure.equals("Apartment")) {
-				//System.out.println(allHousing.get(h).housingStructure);
-				//System.out.println(population.get(h).getHousing().structure);
-				animPanel.addAptUnit(new BuildingPanel("", animPanel), h);
+		for(Housing house : allHousing) {
+			if(house.structure.equals("Apartment")) {
+				HousingPanel hp = new HousingPanel("House " + house.getHousingNumber(), animPanel);
+				hp.setType(house.structure);
+				animPanel.addAptUnit(hp, house);
 			}
 		}
-		
+		/*
 		//Starting Threads
 		//Shift 1
 		bank1a.startThread();
@@ -248,7 +248,7 @@ public class Application extends JPanel {
 		wealthy2.startThread();
 //		wealthy3.startThread();
 //		wealthy4.startThread();
-		
+		*/
 		updatePeopleTime();
 		
 	}
