@@ -205,64 +205,38 @@ public class BankCustomerRole extends Role implements BankCustomer{
 
 	void withdrawCash() {
 		//GUI operation
-		custGui.DoGoToTeller(myTeller.getTellerPosition());
-		try {
-			this.atDestination.acquire();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		DoGoToTeller();
 		myTeller.msgINeedMoney(person.desiredCash,person.accountNum);
 		state = CustomerState.waiting;
 	}
 
 	void depositCash () {
-		custGui.DoGoToTeller(myTeller.getTellerPosition());
-		try {
-			this.atDestination.acquire();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		//GUI operation
+		DoGoToTeller();
 		person.money -= person.depositAmount;
 		myTeller.msgHereIsMyDeposit(person.depositAmount, person.accountNum);
 		state = CustomerState.waiting;
 	}
 
 	void requestLoan () {
-		custGui.DoGoToTeller(myTeller.getTellerPosition());
-		try {
-			this.atDestination.acquire();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		//GUI operation
+		DoGoToTeller();
 		desiredLoanAmount = 10*person.desiredCash;
 		myTeller.msgINeedALoan(desiredLoanAmount, person.accountNum);
 		state = CustomerState.waiting;
 	}
 
 	void payOffLoan() {
-		custGui.DoGoToTeller(myTeller.getTellerPosition());
-		try {
-			this.atDestination.acquire();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		//GUI operation
+		DoGoToTeller();
 		person.money -= person.loan;
 		myTeller.msgPayingOffLoan(person.loan, person.accountNum);
 		state = CustomerState.waiting;
 	}
 
 	void openAccount () {
-		custGui.DoGoToTeller(myTeller.getTellerPosition());
-		try {
-			this.atDestination.acquire();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		//GUI operation
+		DoGoToTeller();
 		myTeller.msgWantNewAccount(this);
 		state = CustomerState.waiting;
 	}
@@ -287,7 +261,15 @@ public class BankCustomerRole extends Role implements BankCustomer{
 	}
 
 	void robBank() {
-		//Animation();
+		//GUI operation
+		custGui.DoRobBank();
+		try {
+			this.atDestination.acquire();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		Phonebook.getPhonebook().getBank().getBankGuard(test).msgRobbingBank(this);
 		state = CustomerState.waiting;
 	}
@@ -299,6 +281,19 @@ public class BankCustomerRole extends Role implements BankCustomer{
 			desire = BankCustomerDesire.withdraw;
 		if (d1 == "robBank")
 			desire = BankCustomerDesire.robBank;
+	}
+	
+	public void DoGoToTeller() {
+		int window = myTeller.getTellerPosition();
+		if(custGui.getXPos() != 450 || custGui.getYPos() != 20*window+30*(window-1)) {
+			custGui.DoGoToTeller(myTeller.getTellerPosition());
+			try {
+				this.atDestination.acquire();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public void setGui(BankCustomerGui gui) {

@@ -47,7 +47,7 @@ public class Bank {
 
 	//Roles
 	public BankGuardRole bankGuardRole;
-	public BankGuardGui bankGuardGui = new BankGuardGui(bankGuardRole);
+	public BankGuardGui bankGuardGui = new BankGuardGui();
 	
 	public LoanOfficerRole loanOfficerRole;
 	public BankLoanerGui loanOfficerGui = new BankLoanerGui(loanOfficerRole);
@@ -88,11 +88,12 @@ public class Bank {
 			}
 			//Setting bank guard role to new role
 			bankGuardRole.setPerson(person);
+			bankGuardRole.setGui(bankGuardGui);
+			bankGuardGui.setPerson(bankGuardRole);
 			//AlertLog.getInstance().logError(AlertTag.BANK, getName(), "bankguard role just set person: " + person.getName());
 			if (isOpen()) {
 				bankGuardRole.msgBankOpen();
 			}
-			
 			bankPanel.addGui(bankGuardGui);
 			return bankGuardRole;
 		}

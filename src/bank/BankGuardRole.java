@@ -3,6 +3,7 @@ package bank;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.Semaphore;
 
 import bank.interfaces.BankCustomer;
 import bank.interfaces.BankGuard;
@@ -11,6 +12,7 @@ import application.Phonebook;
 import person.Person;
 import person.Role;
 import person.Worker;
+import application.gui.animation.agentGui.*;
 
 public class BankGuardRole extends Role implements BankGuard {
 
@@ -22,7 +24,8 @@ public class BankGuardRole extends Role implements BankGuard {
 	List <MyTeller> tellers; 
 
 	protected String roleName = "Bank Guard";
-
+	private BankGuardGui gui = null;
+	private Semaphore atDestination = new Semaphore(0, true);
 	public enum TellerState {available, busy};
 
 	public class MyTeller {
@@ -83,6 +86,10 @@ public class BankGuardRole extends Role implements BankGuard {
 		correct.state = TellerState.available;
 		stateChanged();
 	}
+	
+	public void msgAtDestination() {
+		this.atDestination.release();
+	}
 
 
 	//SCHEDULER
@@ -133,6 +140,14 @@ public class BankGuardRole extends Role implements BankGuard {
 
 	private void catchRobber(BankCustomer robber1) {
 		boolean caught = true;
+		//GUI animation
+		gui.DoCatchRobber();
+		try {
+			this.atDestination.acquire();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		//95% chance Robber is caught, 5% he gets away;
 		if (caught)
 			robber1.msgCaughtYou();
@@ -147,6 +162,13 @@ public class BankGuardRole extends Role implements BankGuard {
 					if (teller1.tell1 instanceof Role)
 						print("Assigning " + ((Role) cust1).getPerson().getName() + " to teller " + teller1.tell1.getName());
 					cust1.msgGoToTeller(teller1.tell1);
+					gui.GoToTellers();
+					try {
+						this.atDestination.acquire();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					teller1.state = TellerState.busy;
 					customers.remove(cust1);
 					return false;
@@ -171,5 +193,9 @@ public class BankGuardRole extends Role implements BankGuard {
 				c1.msgComeIn();
 			}
 		}
+	}
+	
+	public void setGui(BankGuardGui gui) {
+		this.gui = gui;
 	}
 }
