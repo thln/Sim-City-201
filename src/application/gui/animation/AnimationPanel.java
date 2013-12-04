@@ -13,7 +13,7 @@ import application.gui.animation.agentGui.*;
 public class AnimationPanel extends JPanel implements MouseListener {
 
 	final static int WINDOWX = 600;
-	final static int WINDOWY = 300;
+	final static int WINDOWY = 325;
 
 	public CityPanel cityPanel;
 	JPanel buildingPanels;

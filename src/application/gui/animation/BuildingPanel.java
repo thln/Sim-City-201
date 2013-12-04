@@ -22,7 +22,7 @@ import application.gui.animation.agentGui.*;
 public class BuildingPanel extends JPanel implements ActionListener {
 
 	public final int WINDOWX = 590;
-	public final int WINDOWY = 300;
+	public final int WINDOWY = 325;
 
 	public String name;
 	public List<Gui> guis = Collections.synchronizedList(new ArrayList<Gui>());

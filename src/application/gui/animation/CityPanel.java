@@ -26,7 +26,7 @@ import application.gui.animation.agentGui.Gui;
 public class CityPanel extends JPanel implements ActionListener, MouseListener {
 
 	private final int WINDOWX = 600;
-	private final int WINDOWY = 350;
+	private final int WINDOWY = 325;
 
 	AnimationPanel animationPanel;
 	private List<Gui> guis = Collections.synchronizedList(new ArrayList<Gui>());
