@@ -15,8 +15,6 @@ import application.gui.animation.agentGui.MarketRunnerGui;
 public class MarketRunnerRole extends Role implements MarketRunner {
 	
 	MarketRunnerGui marketRunnerGui = (MarketRunnerGui) gui;
-	
-	protected String roleName = "Market Runner";
 
 	//Data
 	String name;

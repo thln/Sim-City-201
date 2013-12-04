@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
 
+import chineseRestaurant.WaiterRole;
 import market.MarketCustomerRole;
 import bank.BankTellerRole.Account;
 import bank.interfaces.BankCustomer;
@@ -19,7 +20,6 @@ import application.WatchTime;
 import person.Person;
 import person.Role;
 import person.Worker;
-import restaurant.WaiterRole;
 import application.gui.animation.*;
 import application.gui.animation.agentGui.BankGuardGui;
 import application.gui.animation.agentGui.BankLoanerGui;

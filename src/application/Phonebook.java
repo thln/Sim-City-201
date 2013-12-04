@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import chineseRestaurant.Restaurant;
 import bank.Bank;
 import market.Market;
-import restaurant.Restaurant;
 import application.gui.animation.*;
 
 public class Phonebook{

@@ -1,15 +1,15 @@
-package restaurant;
+package chineseRestaurant;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import chineseRestaurant.interfaces.RestaurantCustomer;
 import application.Phonebook;
 import person.Person;
 import person.Role;
 import person.Worker;
-import restaurant.interfaces.RestaurantCustomer;
 /**
  * Restaurant Host Role
  */

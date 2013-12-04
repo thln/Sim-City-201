@@ -1,7 +1,7 @@
 package market;
 
+import chineseRestaurant.Restaurant;
 import market.interfaces.MarketCustomer;
-import restaurant.Restaurant;
 
 public class MarketOrder {
 

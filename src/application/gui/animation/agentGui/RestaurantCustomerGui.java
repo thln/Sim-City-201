@@ -1,10 +1,10 @@
 package application.gui.animation.agentGui;
 
-import restaurant.*;
-
 import java.awt.*;
 
 import javax.swing.JLabel;
+
+import chineseRestaurant.*;
 
 public class RestaurantCustomerGui extends RestaurantGui{
 

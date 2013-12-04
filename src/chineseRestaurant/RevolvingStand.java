@@ -1,4 +1,4 @@
-package restaurant;
+package chineseRestaurant;
 
 import java.util.ArrayList;
 import java.util.Collections;
