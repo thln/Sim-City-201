@@ -4,10 +4,10 @@ import housing.Housing;
 
 import javax.swing.*;
 
+import chineseRestaurant.Restaurant;
 import market.*;
 import bank.*;
 import person.*;
-import restaurant.Restaurant;
 
 import java.util.*;
 import java.util.Timer;

@@ -1,16 +1,16 @@
-package restaurant;
+package chineseRestaurant;
 
 
 import java.util.*;
 
+import chineseRestaurant.interfaces.Cashier;
+import chineseRestaurant.interfaces.RestaurantCustomer;
+import chineseRestaurant.interfaces.Waiter;
 import application.Phonebook;
 import market.interfaces.SalesPerson;
 import person.Person;
 import person.Role;
 import person.Worker;
-import restaurant.interfaces.Cashier;
-import restaurant.interfaces.RestaurantCustomer;
-import restaurant.interfaces.Waiter;
 
 
 /**

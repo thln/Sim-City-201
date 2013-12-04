@@ -1,6 +1,6 @@
-package restaurant;
+package chineseRestaurant;
 
-import restaurant.interfaces.RestaurantCustomer;
+import chineseRestaurant.interfaces.RestaurantCustomer;
 
 public class Order {
 

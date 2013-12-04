@@ -2,6 +2,7 @@ package market;
 
 import java.util.*;
 
+import chineseRestaurant.Restaurant;
 import application.Phonebook;
 import market.MarketOrder.orderState;
 import market.interfaces.MarketCustomer;
@@ -9,7 +10,6 @@ import market.interfaces.SalesPerson;
 import person.Person;
 import person.Role;
 import person.Worker;
-import restaurant.Restaurant;
 import testing.EventLog;
 import testing.LoggedEvent;
 

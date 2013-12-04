@@ -1,8 +1,8 @@
-package restaurant;
+package chineseRestaurant;
 
+import chineseRestaurant.interfaces.Waiter;
 import application.Phonebook;
 import person.Person;
-import restaurant.interfaces.Waiter;
 
 public class AltWaiterRole extends WaiterRole implements Waiter {
 	//private RevolvingStand theRevolvingStand;

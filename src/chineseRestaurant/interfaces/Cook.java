@@ -1,15 +1,14 @@
-package restaurant.interfaces;
+package chineseRestaurant.interfaces;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TimerTask;
 
+import chineseRestaurant.Order;
+import chineseRestaurant.WaiterRole;
+import chineseRestaurant.CookRole.Stock;
 import market.Market;
 import person.Worker;
-import restaurant.Order;
-import restaurant.WaiterRole;
-import restaurant.CookRole.Stock;
-//import restaurant.CookRole.myMarket;
 
 public interface Cook 
 {

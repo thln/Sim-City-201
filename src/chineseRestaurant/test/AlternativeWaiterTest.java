@@ -1,16 +1,16 @@
-package restaurant.test;
+package chineseRestaurant.test;
 
 //import bank.BankGuardRole;
+import chineseRestaurant.AltWaiterRole;
+import chineseRestaurant.CookRole;
+import chineseRestaurant.RevolvingStand;
+import chineseRestaurant.myCustomer.customerState;
+import chineseRestaurant.test.mock.MockCustomer;
 import junit.framework.TestCase;
 import application.Phonebook;
 //import person.Role.RoleState;
 import person.Worker;
-import restaurant.AltWaiterRole;
-import restaurant.CookRole;
-import restaurant.RevolvingStand;
 //import restaurant.RevolvingStand;
-import restaurant.myCustomer.customerState;
-import restaurant.test.mock.MockCustomer;
 /**
  * Alternative Waiter Test
  * @author Tam Henry Le Nguyen

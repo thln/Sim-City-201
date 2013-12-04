@@ -1,11 +1,11 @@
-package restaurant.test.mock;
+package chineseRestaurant.test.mock;
 
 
-import restaurant.Menu;
-import restaurant.interfaces.Cashier;
-import restaurant.interfaces.RestaurantCustomer;
-import restaurant.interfaces.Host;
-import restaurant.interfaces.Waiter;
+import chineseRestaurant.Menu;
+import chineseRestaurant.interfaces.Cashier;
+import chineseRestaurant.interfaces.Host;
+import chineseRestaurant.interfaces.RestaurantCustomer;
+import chineseRestaurant.interfaces.Waiter;
 import testing.LoggedEvent;
 import testing.Mock;
 

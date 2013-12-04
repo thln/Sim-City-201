@@ -1,15 +1,15 @@
-package restaurant;
+package chineseRestaurant;
 
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import chineseRestaurant.interfaces.Host;
+import chineseRestaurant.interfaces.RestaurantCustomer;
+import chineseRestaurant.interfaces.Waiter;
 import person.Person;
 import person.Person.HungerLevel;
 import person.Role;
-import restaurant.interfaces.Host;
-import restaurant.interfaces.RestaurantCustomer;
-import restaurant.interfaces.Waiter;
 import application.Phonebook;
 import application.gui.animation.agentGui.RestaurantCustomerGui;
 

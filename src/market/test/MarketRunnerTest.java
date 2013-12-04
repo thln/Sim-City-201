@@ -1,5 +1,7 @@
 package market.test;
 
+import chineseRestaurant.Restaurant;
+import chineseRestaurant.test.mock.MockCook;
 import application.Phonebook;
 import junit.framework.TestCase;
 import market.Market;
@@ -14,8 +16,6 @@ import market.test.mock.MockMarketRunner;
 import market.test.mock.MockSalesPerson;
 import market.test.mock.MockUPSman;
 import person.Worker;
-import restaurant.Restaurant;
-import restaurant.test.mock.MockCook;
 
 public class MarketRunnerTest extends TestCase {
 

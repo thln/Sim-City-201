@@ -1,6 +1,6 @@
 package market.test.mock;
 
-import restaurant.Restaurant;
+import chineseRestaurant.Restaurant;
 import testing.EventLog;
 import testing.LoggedEvent;
 import testing.Mock;

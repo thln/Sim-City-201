@@ -1,4 +1,4 @@
-package restaurant;
+package chineseRestaurant;
 
 //import agent.Agent;
 import java.util.ArrayList;
@@ -6,12 +6,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Timer;
 
+import chineseRestaurant.interfaces.RestaurantCustomer;
+import chineseRestaurant.interfaces.Waiter;
+import chineseRestaurant.myCustomer.customerState;
 import person.Person;
 import person.Role;
 import person.Worker;
-import restaurant.myCustomer.customerState;
-import restaurant.interfaces.RestaurantCustomer;
-import restaurant.interfaces.Waiter;
 import application.Phonebook;
 import application.gui.animation.agentGui.RestaurantWaiterGui;
 
