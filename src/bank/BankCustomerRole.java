@@ -244,7 +244,6 @@ public class BankCustomerRole extends Role implements BankCustomer{
 
 	void leaveBank () {	
 		myTeller.msgLeavingBank(person.accountNum);
-		Phonebook.getPhonebook().getEastBank().getBankGuard(test).msgCustomerLeavingBank(myTeller);
 		print("Leaving bank");
 		//GUI operation
 		custGui.DoExit();

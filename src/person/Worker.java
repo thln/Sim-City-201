@@ -17,7 +17,7 @@ public class Worker extends Person {
 	boolean shift = false;
 	//Data
 	protected Job myJob = null;
-	protected Role workerRole = null;
+	public Role workerRole = null;
 	public boolean lateWorker;
 
 	public Worker (String name, double money, String jobTitle, String jobPlace, int startT, int lunchT, int endT) {
@@ -88,7 +88,7 @@ public class Worker extends Person {
 
 	public synchronized void roleFinishedWork(){                 //from worker role
 		print("Shift is over, time to leave work");
-		//workerRole.setPerson(null);
+		workerRole.setPerson(null);
 		workerRole = null;
 		//	scheduleNextTask(TimeManager.getTimeManager().getTime().dayHour, myJob.startTime.hour);
 		stateChanged();

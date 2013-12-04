@@ -18,8 +18,7 @@ public class BankGuardRole extends Role implements BankGuard {
 
 	//DATA
 
-	String name;
-	int customersInBank;
+	int customersInBank = 0;
 	public List <BankCustomer> customers;
 	List <BankCustomer> robbers;
 	List <MyTeller> tellers; 
@@ -56,13 +55,17 @@ public class BankGuardRole extends Role implements BankGuard {
 	//MESSAGES
 
 	public void msgTellerCameToWork (BankTeller t1) {
+	//	print("Teller" + t1.getName() + " arrived at work");	
 		tellers.add(new MyTeller(t1));
+	//	print("Teller size = " + tellers.size());
 	}
 
 	public void msgTellerLeavingWork(BankTeller t1) {
 		if (t1 instanceof Role)
 			print("Teller role removed " + ((Role) t1).getPerson().getName());
-		tellers.remove(t1);
+		tellers.remove(findTeller(t1));
+	//	print("tellers = " + tellers.size());
+		stateChanged();
 	}
 
 
@@ -72,13 +75,13 @@ public class BankGuardRole extends Role implements BankGuard {
 	}
 
 	public void msgArrivedAtBank(BankCustomer c1) {
+		customersInBank++;
 		try {
 			print("New customer " + ((BankCustomerRole) c1).getName() + " arrived");
 		}
 		catch (Exception e) {
 		}
-		customers.add(c1);
-		customersInBank++;
+		customers.add(c1);		
 		stateChanged();
 	}
 
@@ -113,15 +116,9 @@ public class BankGuardRole extends Role implements BankGuard {
 			}
 		}
 
-		if (leaveRole && customersInBank == 0){
-			leaveRole = false;
+		if (leaveRole && tellers.size() == 0){
+			leaveRole = false;			
 			Phonebook.getPhonebook().getEastBank().goingOffWork(this.person);
-			try {
-				((Worker) person).roleFinishedWork();	
-			}
-			catch (Exception e){
-
-			};
 			return true;
 		}
 
