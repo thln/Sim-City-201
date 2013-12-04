@@ -6,6 +6,8 @@ import agent.Agent;
 import java.util.*;
 //import java.util.concurrent.Semaphore;
 
+import person.Role;
+
 //import restaurant.CustomerAgent.AgentState;
 //import restaurant.WaiterAgent.Table;
 //import restaurant.WaiterAgent.MyCustomer;
@@ -92,13 +94,13 @@ public class SeafoodRestaurantHostRole extends Role
 	private int currentWaiter = 0;
 	private int currentNumberOfCustomers = 0;
 	//private int NWAITERS = 1;
-	private String name;
+	//private String name;
 	
 	public SeafoodRestaurantHostRole(String name) 
 	{
-		super();
+		super(name);
 
-		this.name = name;
+		//this.name = name;
 		// make some tables
 		tables = new ArrayList<Table>(NTABLES);
 		for (int ix = 1; ix <= NTABLES; ix++) 
@@ -118,7 +120,7 @@ public class SeafoodRestaurantHostRole extends Role
 	
 	public String getName() 
 	{
-		return name;
+		return getName();
 	}
 
 	public Collection getTables() 

@@ -1,8 +1,13 @@
 package seafoodRestaurant.test.mock;
 
-import restaurant.Check;
-import restaurant.interfaces.Cashier;
-import restaurant.interfaces.Customer;
+//import restaurant.Check;
+//import restaurant.interfaces.Cashier;
+//import restaurant.interfaces.Customer;
+import seafoodRestaurant.SeafoodRestaurantCheck;
+import seafoodRestaurant.interfaces.SeafoodRestaurantCashier;
+import seafoodRestaurant.interfaces.SeafoodRestaurantCustomer;
+import testing.LoggedEvent;
+import testing.Mock;
 
 
 public class SeafoodRestaurantMockCustomer extends Mock implements SeafoodRestaurantCustomer 
@@ -16,7 +21,7 @@ public class SeafoodRestaurantMockCustomer extends Mock implements SeafoodRestau
 
     }
 
-	public void HereIsYourCheck(Check ch)
+	public void HereIsYourCheck(SeafoodRestaurantCheck ch)
 	{
 		log.add(new LoggedEvent("Received HereIsYourTotal from cashier. Total = "+ ch.cost));
         if(this.getName().toLowerCase().contains("thief"))

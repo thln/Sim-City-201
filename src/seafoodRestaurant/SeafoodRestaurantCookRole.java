@@ -19,9 +19,9 @@ public class SeafoodRestaurantCookRole extends Role
 	public enum OrderState 
 	{Pending, Cooking, Finished, NeedMore};
 	
-	public enum state
+	public enum cookState
 	{Cooking, Plating, Ordering};
-	state S = state.Cooking;
+	cookState S = cookState.Cooking;
 	
 	private class Order
 	{
@@ -127,7 +127,7 @@ public class SeafoodRestaurantCookRole extends Role
 			//What to do here?
 			print("Looks like we have to order more.");
 			FoodInventory.get(food).OrderSize -= quantity;
-			S = state.Ordering;
+			S = cookState.Ordering;
 			stateChanged();
 		}
 		else
@@ -147,7 +147,8 @@ public class SeafoodRestaurantCookRole extends Role
 	
 	public void PickedUpOrder(String food)
 	{
-		animPanel.removeFromPlated(food);
+		//Need to implement how to remove string
+		//animPanel.removeFromPlated(food);
 	}
 	
 	
@@ -158,7 +159,7 @@ public class SeafoodRestaurantCookRole extends Role
 	protected boolean pickAndExecuteAnAction() {
 		//////FILL IN HERE
 		
-		if(S == state.Ordering)
+		if(S == cookState.Ordering)
 		{
 			CurrentMarket++;
 			if(CurrentMarket == 3)
@@ -196,7 +197,7 @@ public class SeafoodRestaurantCookRole extends Role
 		{
 			for( Order order : orders)
 			{
-				if(order.state == OrderState.Cooking && S == state.Plating)
+				if(order.state == OrderState.Cooking && S == cookState.Plating)
 				{
 					PlateIt(order);
 					return true;
@@ -220,7 +221,7 @@ public class SeafoodRestaurantCookRole extends Role
 	public void PlateIt(Order o)
 	{
 		/////FILL IN HERE
-		S = state.Cooking;
+		S = cookState.Cooking;
 		DoPlate(o);
 		o.w.OrderIsReady(o.food, o.table);
 		print("Message 8 Sent, Food is Ready" + name);
@@ -231,7 +232,8 @@ public class SeafoodRestaurantCookRole extends Role
 	private void DoPlate(Order o)
 	{
 		////Animate plate?
-		animPanel.addToPlated(o.food);
+		//need to add
+		//animPanel.addToPlated(o.food);
 	}
 	
 	public void CookIt(Order o)
@@ -257,13 +259,13 @@ public class SeafoodRestaurantCookRole extends Role
 		}
 	
 		o.state = OrderState.Cooking;
-		animPanel.addToCooking(o.food);
+		//animPanel.addToCooking(o.food);
 		CookTimer.schedule(new TimerTask() 
 		{
 			public void run() 
 			{
 				//o.state = FoodState.Ready;
-				S = state.Plating;
+				S = cookState.Plating;
 				stateChanged();
 			}
 		},
@@ -272,16 +274,16 @@ public class SeafoodRestaurantCookRole extends Role
 	
 	public void OrderFood(String foodItem)
 	{
-		S = state.Cooking;
+		S = cookState.Cooking;
 		print("We are low on " + foodItem + ". Let's order " + FoodInventory.get(foodItem).OrderSize + " more from " + markets.get(CurrentMarket) + "!");
 		//Implement a mechanism to choose between markets
 		markets.get(CurrentMarket).INeedMore(foodItem, FoodInventory.get(foodItem).OrderSize);
 	}
 	
-	public void addMarket(SeafoodRestaurantMarketRole m)
-	{
-		markets.add(m);
-	}
+//	public void addMarket(SeafoodRestaurantMarketRole m)
+//	{
+//		markets.add(m);
+//	}
 		
 	public void setLow()
 	{

@@ -1,13 +1,20 @@
 package seafoodRestaurant.test.mock;
 
-import restaurant.Check;
-import restaurant.interfaces.Cashier;
-import restaurant.interfaces.Customer;
-import restaurant.interfaces.Waiter;
+//import restaurant.Check;
+//import restaurant.interfaces.Cashier;
+//import restaurant.interfaces.Customer;
+//import restaurant.interfaces.Waiter;
+import seafoodRestaurant.SeafoodRestaurantCashierRole;
+import seafoodRestaurant.SeafoodRestaurantCheck;
+import seafoodRestaurant.SeafoodRestaurantCustomerRole;
+import seafoodRestaurant.interfaces.SeafoodRestaurantCustomer;
+import seafoodRestaurant.interfaces.SeafoodRestaurantWaiter;
+import testing.LoggedEvent;
+import testing.Mock;
 
 public class SeafoodRestaurantMockWaiter extends Mock implements SeafoodRestaurantWaiter 
 {
-	public SeafoodRestaurantCashier cashier;
+	public SeafoodRestaurantCashierRole cashier;
 
     public SeafoodRestaurantMockWaiter(String name) 
     {
@@ -15,13 +22,15 @@ public class SeafoodRestaurantMockWaiter extends Mock implements SeafoodRestaura
 
     }
 	
-	public void CanIGetMyCheck(Customer cust)
+	public void CanIGetMyCheck(SeafoodRestaurantCustomer cust)
 	{
 		
 	}
 	
-	public void ThisIsTheCheck(Customer cust, Check ch)
+	public void ThisIsTheCheck(SeafoodRestaurantCustomer cust, SeafoodRestaurantCheck ch)
 	{
 		log.add(new LoggedEvent("Received Check from cashier. Customer = "+ cust + " and check cost is : " + ch.cost));
 	}
+
+
 }

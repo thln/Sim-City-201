@@ -1,7 +1,8 @@
 package seafoodRestaurant.interfaces;
 
-import restaurant.Check;
-import restaurant.CustomerAgent;
+//import restaurant.Check;
+//import restaurant.CustomerAgent;
+import seafoodRestaurant.SeafoodRestaurantCheck;
 //import restaurant.WaiterAgent.MyCustomer;
 //import restaurant.WaiterAgent.WaiterState;
 //import restaurant.WaiterAgent.myCustomerState;
@@ -18,7 +19,7 @@ public interface SeafoodRestaurantWaiter
 	//public abstract void OrderIsReady(String food, int table);
 	//public abstract void iAmLeavingTable(Customer cust);
 	//public abstract void OutOfFood(int table, String food);
-	public abstract void ThisIsTheCheck(SeafoodRestaurantCustomer cust, Check ch);
+	public abstract void ThisIsTheCheck(SeafoodRestaurantCustomer cust, SeafoodRestaurantCheck ch);
 	//public abstract void msgAtTable();
 	//public abstract void msgAtKitchen();
 	//public abstract void msgAtFrontDesk();

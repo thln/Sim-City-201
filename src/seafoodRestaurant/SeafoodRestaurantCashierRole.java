@@ -17,7 +17,7 @@ import testing.EventLog;
 
 //import restaurant.CustomerAgent.AgentState;
 
-public class SeafoodRestaurantCashierRole extends Role //implements SeafoodRestaurantCashier
+public class SeafoodRestaurantCashierRole extends Role implements SeafoodRestaurantCashier
 {
 	/***** DATA *****/
 	private String name;

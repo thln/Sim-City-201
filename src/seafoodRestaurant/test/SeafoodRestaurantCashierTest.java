@@ -1,19 +1,24 @@
 package seafoodRestaurant.test;
 
-import restaurant.CashierAgent;
-import restaurant.Check;
-import restaurant.Check.CheckState;
-import restaurant.test.mock.EventLog;
+//import restaurant.CashierAgent;
+//import restaurant.Check;
+//import restaurant.Check.CheckState;
+//import restaurant.test.mock.EventLog;
 //import restaurant.CashierAgent.cashierBillState;
 //import restaurant.WaiterAgent.Bill;
-import restaurant.test.mock.MockCustomer;
-import restaurant.test.mock.MockWaiter;
+//import restaurant.test.mock.MockCustomer;
+//import restaurant.test.mock.MockWaiter;
+import seafoodRestaurant.SeafoodRestaurantCashierRole;
+import seafoodRestaurant.SeafoodRestaurantCheck;
+import seafoodRestaurant.SeafoodRestaurantCheck.CheckState;
+import seafoodRestaurant.test.mock.SeafoodRestaurantMockCustomer;
+import seafoodRestaurant.test.mock.SeafoodRestaurantMockWaiter;
 import junit.framework.*;
 
 public class SeafoodRestaurantCashierTest extends TestCase
 {
     //these are instantiated for each test separately via the setUp() method.
-    CashierAgent cashier;
+    SeafoodRestaurantCashierRole cashier;
     SeafoodRestaurantMockWaiter waiter;
     SeafoodRestaurantMockCustomer customer;
     
@@ -26,7 +31,7 @@ public class SeafoodRestaurantCashierTest extends TestCase
     public void setUp() throws Exception
     {
             super.setUp();                
-            cashier = new CashierAgent("cashier");                
+            cashier = new SeafoodRestaurantCashierRole("cashier");                
             customer = new SeafoodRestaurantMockCustomer("mockcustomer");                
             waiter = new SeafoodRestaurantMockWaiter("mockwaiter");
     }        
@@ -38,7 +43,7 @@ public class SeafoodRestaurantCashierTest extends TestCase
             //setUp() runs first before this test!
             
             customer.cashier = cashier;//You can do almost anything in a unit test.                        
-            Check mockCheck = new Check("Steak", customer, waiter);
+            SeafoodRestaurantCheck mockCheck = new SeafoodRestaurantCheck("Steak", customer, waiter);
             //check preconditions
             assertEquals("Cashier should have 0 bills in it. It doesn't.",cashier.AllChecks.size(), 0);                
 

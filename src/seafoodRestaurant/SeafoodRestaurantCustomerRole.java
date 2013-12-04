@@ -1,23 +1,27 @@
 package seafoodRestaurant;
 
-import restaurant.gui.CustomerGui;
-import restaurant.interfaces.Customer;
+//import restaurant.gui.CustomerGui;
+//import restaurant.interfaces.Customer;
+import seafoodRestaurant.interfaces.SeafoodRestaurantCustomer;
 //import restaurant.gui.RestaurantGui;
 import agent.Agent;
+import application.gui.animation.agentGui.SeafoodRestaurantCustomerGui;
 
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.Semaphore;
 
+import person.Role;
+
 
 /**
  * Restaurant customer agent.
  */
-public class SeafoodRestaurantCustomerRole extends Role //implements SeafoodRestaurantCustomer 
+public class SeafoodRestaurantCustomerRole extends Role implements SeafoodRestaurantCustomer 
 {
 	private int hungerLevel = 5;        // determines length of meal
 	Timer timer = new Timer();
-	private CustomerGui customerGui;
+	private SeafoodRestaurantCustomerGui customerGui;
 	private int currentTable;
 	private SeafoodRestaurantMenu myMenu;
 	private String myOrder;
@@ -291,7 +295,7 @@ public class SeafoodRestaurantCustomerRole extends Role //implements SeafoodRest
 	private void goToRestaurant() 
 	{
 		customerGui.DoEnterRestaurant();
-		Do("Going to restaurant");
+		print("Going to restaurant");
 		//waiter.msgIWantFood(this);//send our instance, so he can respond to us
 		host.IWantFood(this);
 		WaitingToBeSeated = true;
@@ -299,7 +303,7 @@ public class SeafoodRestaurantCustomerRole extends Role //implements SeafoodRest
 
 	private void SitDown() 
 	{
-		Do("Being seated. Going to table");
+		print("Being seated. Going to table");
 		customerGui.DoGoToSeat(currentTable);//hack; only one table
 	}
 	
@@ -353,19 +357,19 @@ public class SeafoodRestaurantCustomerRole extends Role //implements SeafoodRest
 		
 		
 		//Hack to Check different foods
-		if(name.equals("Salad"))
+		if(getName().equals("Salad"))
 		{
 			myOrder = "Salad";
 		}
-		if(name.equals("Pizza"))
+		if(getName().equals("Pizza"))
 		{
 			myOrder = "Pizza";
 		}
-		if(name.equals("Chicken"))
+		if(getName().equals("Chicken"))
 		{
 			myOrder = "Chicken";
 		}
-		if(name.equals("Steak"))
+		if(getName().equals("Steak"))
 		{
 			myOrder = "Steak";
 		}
@@ -405,7 +409,7 @@ public class SeafoodRestaurantCustomerRole extends Role //implements SeafoodRest
 	private void EatFood() 
 	{
 		customerGui.DoOrder(myOrder);
-		Do("Eating Food");
+		print("Eating Food");
 		//This next complicated line creates and starts a timer thread.
 		//We schedule a deadline of getHungerLevel()*1000 milliseconds.
 		//When that time elapses, it will call back to the run routine
@@ -464,7 +468,7 @@ public class SeafoodRestaurantCustomerRole extends Role //implements SeafoodRest
 		//currentTable = 0;
 		//myMenu = null;
 		//myOrder = "";
-		Do("Leaving.");
+		print("Leaving.");
 		//waiter.iAmLeavingTable(this);
 		print("Message 10 Sent - I am leaving");
 		customerGui.DoExitRestaurant();
@@ -474,7 +478,7 @@ public class SeafoodRestaurantCustomerRole extends Role //implements SeafoodRest
 
 	public String getName() 
 	{
-		return name;
+		return getName();
 	}
 	
 	public int getHungerLevel() 
@@ -509,12 +513,12 @@ public class SeafoodRestaurantCustomerRole extends Role //implements SeafoodRest
 		return "customer " + getName();
 	}
 
-	public void setGui(CustomerGui g) 
+	public void setGui(SeafoodRestaurantCustomerGui g) 
 	{
 		customerGui = g;
 	}
 
-	public CustomerGui getGui() 
+	public SeafoodRestaurantCustomerGui getGui() 
 	{
 		return customerGui;
 	}

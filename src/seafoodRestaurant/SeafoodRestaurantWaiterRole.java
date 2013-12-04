@@ -7,9 +7,14 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.Semaphore;
 
+
+
+import application.gui.animation.agentGui.SeafoodRestaurantWaiterGui;
+//import application.gui.animation.agentGui.SeafoodRestaurantWaiterGui;
 import person.Role;
 //import seafoodRestaurant.interfaces.Check;
 import seafoodRestaurant.interfaces.SeafoodRestaurantCustomer;
+import seafoodRestaurant.interfaces.SeafoodRestaurantWaiter;
 import chineseRestaurant.ChineseRestaurantCashierRole.Check;
 //import restaurant.CustomerAgent.AgentEvent;
 //import restaurant.CustomerAgent.AgentState;
@@ -28,7 +33,7 @@ import chineseRestaurant.ChineseRestaurantCashierRole.Check;
 //is proceeded as he wishes.
 
 //This is now a Waiter Agent. We are implementing the Host separately. 9/18/13
-public class SeafoodRestaurantWaiterRole extends Role //implements SeafoodRestaurantWaiter
+public class SeafoodRestaurantWaiterRole extends Role implements SeafoodRestaurantWaiter
 {
 	//static final int NTABLES = 3;//a global for the number of tables.
 	//private int NTABLES = 1;
@@ -63,7 +68,7 @@ public class SeafoodRestaurantWaiterRole extends Role //implements SeafoodRestau
 	private Semaphore atCashier = new Semaphore(0, true);
 	private Semaphore receivingCheck = new Semaphore(0, true);
 	
-	public WaiterGui waiterGui = null;
+	public SeafoodRestaurantWaiterGui waiterGui = null;
 	
 	public enum myCustomerState 
 	{Waiting, Seated, readyToOrder, TakingOrder, OrderReceived, OrderSent, OutOfOrder, DeliveringMeal, Eating, AskedForCheck, GettingCheck, WaitingForCashierCheck, CheckReceived, GivenCheckToCustomer, Leaving, Left};
@@ -97,9 +102,9 @@ public class SeafoodRestaurantWaiterRole extends Role //implements SeafoodRestau
 
 	public SeafoodRestaurantWaiterRole(String name, SeafoodRestaurantHostRole h, SeafoodRestaurantCookRole c, SeafoodRestaurantCashierRole cas, int n) 
 	{
-		super();
+		super(name);
 
-		this.name = name;
+		//this.name = name;
 		this.host = h;
 		this.cook = c;
 		this.cashier = cas;
@@ -120,7 +125,7 @@ public class SeafoodRestaurantWaiterRole extends Role //implements SeafoodRestau
 
 	public String getName() 
 	{
-		return name;
+		return getName();
 	}
 
 	public List getWaitingCustomers() 
@@ -768,12 +773,12 @@ public class SeafoodRestaurantWaiterRole extends Role //implements SeafoodRestau
 	
 	//utilities
 
-	public void setGui(WaiterGui gui) 
+	public void setGui(SeafoodRestaurantWaiterGui gui) 
 	{
 		waiterGui = gui;
 	}
 
-	public WaiterGui getGui() 
+	public SeafoodRestaurantWaiterGui getGui() 
 	{
 		return waiterGui;
 	}
@@ -786,18 +791,6 @@ public class SeafoodRestaurantWaiterRole extends Role //implements SeafoodRestau
 	public boolean isRequestingBreak()
 	{
 		return requestingBreak;
-	}
-
-	@Override
-	public void CanIGetMyCheck(SeafoodRestaurantCustomer cust) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void ThisIsTheCheck(SeafoodRestaurantCustomer cust, Check ch) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }
