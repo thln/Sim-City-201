@@ -19,6 +19,7 @@ public class BankGuardRole extends Role implements BankGuard {
 	//DATA
 
 	String name;
+	int customersInBank;
 	public List <BankCustomer> customers;
 	List <BankCustomer> robbers;
 	List <MyTeller> tellers; 
@@ -77,10 +78,12 @@ public class BankGuardRole extends Role implements BankGuard {
 		catch (Exception e) {
 		}
 		customers.add(c1);
+		customersInBank++;
 		stateChanged();
 	}
 
 	public void msgCustomerLeavingBank (BankTeller t1) {
+		customersInBank--;
 		print("Customer leaving, teller became available");
 		MyTeller correct = findTeller(t1);
 		correct.state = TellerState.available;
@@ -110,7 +113,7 @@ public class BankGuardRole extends Role implements BankGuard {
 			}
 		}
 
-		if (leaveRole){
+		if (leaveRole && customersInBank == 0){
 			leaveRole = false;
 			Phonebook.getPhonebook().getEastBank().goingOffWork(this.person);
 			try {
@@ -159,7 +162,7 @@ public class BankGuardRole extends Role implements BankGuard {
 	private boolean assignToTeller(BankCustomer cust1) {
 		synchronized(tellers){
 			for (MyTeller teller1: tellers) {
-				if (teller1.state == TellerState.available && (Phonebook.getPhonebook().getEastBank().isOpen() || test)) {
+				if (teller1.state == TellerState.available) {
 					if (teller1.tell1 instanceof Role)
 						print("Assigning " + ((Role) cust1).getPerson().getName() + " to teller " + teller1.tell1.getName());
 					cust1.msgGoToTeller(teller1.tell1);

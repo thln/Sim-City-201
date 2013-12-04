@@ -236,7 +236,6 @@ public class BankCustomerRole extends Role implements BankCustomer{
 	}
 
 	void openAccount () {
-		print("Want to open account");
 		//GUI operation
 		DoGoToTeller();
 		myTeller.msgWantNewAccount(this);
@@ -244,13 +243,13 @@ public class BankCustomerRole extends Role implements BankCustomer{
 	}
 
 	void leaveBank () {	
+		myTeller.msgLeavingBank(person.accountNum);
+		Phonebook.getPhonebook().getEastBank().getBankGuard(test).msgCustomerLeavingBank(myTeller);
 		print("Leaving bank");
 		//GUI operation
 		custGui.DoExit();
 		desire = BankCustomerDesire.none;
-		state = CustomerState.waiting;	
-		myTeller.msgLeavingBank(person.accountNum);
-		Phonebook.getPhonebook().getEastBank().getBankGuard(test).msgCustomerLeavingBank(myTeller);
+		state = CustomerState.waiting;				
 		myTeller = null;
 		this.setRoleInactive();
 		stateChanged();

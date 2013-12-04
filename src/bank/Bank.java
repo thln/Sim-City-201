@@ -140,10 +140,10 @@ public class Bank {
 		Worker worker = (Worker) person;
 
 		if (worker.getWorkerRole().equals(bankGuardRole)) {
-			bankGuardRole = null;
+			bankGuardRole.person = null;
 		}
 		else if (worker.getWorkerRole().equals(loanOfficerRole)) {
-			loanOfficerRole = null;
+			loanOfficerRole.person = null;
 		}
 		else if (worker.getWorkerRole() instanceof BankTellerRole){
 			bankGuardRole.msgTellerLeavingWork((BankTeller) worker.getWorkerRole());

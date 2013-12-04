@@ -66,13 +66,13 @@ public class LoanOfficerRole extends Role implements LoanOfficer {
 		}
 
 		if (leaveRole){
+			Phonebook.getPhonebook().getEastBank().goingOffWork(this.person);
 			try{
 			((Worker) person).roleFinishedWork();
 			}
 			catch (Exception e){
 				
-			};
-			Phonebook.getPhonebook().getEastBank().goingOffWork(this.person);
+			};	
 			leaveRole = false;
 			return true;
 		}
