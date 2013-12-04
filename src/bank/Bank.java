@@ -141,9 +141,14 @@ public class Bank {
 
 		if (worker.getWorkerRole().equals(bankGuardRole)) {
 			((Worker) bankGuardRole.getPerson()).roleFinishedWork();
+			bankPanel.removeGui(bankGuardGui);
 		}
 		else if (worker.getWorkerRole().equals(loanOfficerRole)) {
 			((Worker) loanOfficerRole.getPerson()).roleFinishedWork();
+			bankPanel.removeGui(loanOfficerGui);
+		}
+		else if (worker.getWorkerRole() instanceof BankTellerRole){
+			bankPanel.removeGui(worker.getWorkerRole().gui);
 		}
 	}
 
@@ -205,11 +210,15 @@ public class Bank {
 	}
 	
 	public void closeBuilding(){
-		userClosed = true;		
+		userClosed = true;
+		bankGuardRole.msgLeaveRole();
+		bankPanel.removeGui(bankGuardGui);
 		for (MyTeller t1: bankGuardRole.tellers){
 			((Role) t1.tell1).msgLeaveRole();
+			bankPanel.removeGui(((Role) t1.tell1).gui);
 		}
 		loanOfficerRole.msgLeaveRole();
-		bankGuardRole.msgLeaveRole();
+
+		bankPanel.removeGui(loanOfficerGui);
 	}
 }
