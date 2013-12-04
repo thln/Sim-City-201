@@ -67,6 +67,7 @@ public class RestaurantCustomerRole extends Role implements RestaurantCustomer {
 		state = AgentState.DoingNothing; 
 		event = AgentEvent.gotHungry;
 		this.money = p1.money;
+		gui = new RestaurantCustomerGui(this);
 	}
 
 	public String getCustomerName() {

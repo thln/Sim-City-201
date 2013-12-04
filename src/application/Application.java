@@ -38,7 +38,7 @@ public class Application extends JPanel {
 		Phonebook.getPhonebook().setHousingList(allHousing);
 		
 		//the following line is for dynamic building and business making in v2
-		Phonebook.getPhonebook().getBusinessFromGui(animPanel);
+		//Phonebook.getPhonebook().getBusinessFromGui(animPanel);
 		
 		//String name, int money, String jobTitle, String jobPlace, int startT, int lunchT, int endT
 		
@@ -96,8 +96,6 @@ public class Application extends JPanel {
 
 		//Standard Deadbeat
 		//Deadbeat w = new Deadbeat("Walter", 0);
-
-		//Setting Gui for everyone
 		
 		//Adding housing
 		
@@ -201,6 +199,7 @@ public class Application extends JPanel {
 //		getPopulation().add(wealthy3);
 //		getPopulation().add(wealthy4);
 		
+		//Setting Gui for everyone
 		for (Person person : getPopulation()) {
 			person.setPanel(animPanel);
 			PersonGui pg = new PersonGui(person);

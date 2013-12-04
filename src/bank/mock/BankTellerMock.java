@@ -54,5 +54,13 @@ public class BankTellerMock extends Mock implements BankTeller {
 	public void msgLeavingBank(int accountNum) {
 		log.add(new LoggedEvent("Customer left bank."));
 	}
-
+	
+	public void setTellerWindow(int window) {
+		// TODO Auto-generated method stub
+	}
+	
+	public int getTellerPosition() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

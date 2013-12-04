@@ -20,7 +20,8 @@ public class BankTellerRole extends Role implements BankTeller {
 
 	public enum AccountState {neutral, newAccount, waiting, depositing, withdrawing, requestingLoan, 
 		closingLoan, loanApproved, loanDenied, bankEmpty, leavingBank}
-
+	private int tellerWindow;
+	
 	static public class Account {	
 		private BankCustomer customer;
 		public int accountNum; 		//the hash key
@@ -289,5 +290,13 @@ public class BankTellerRole extends Role implements BankTeller {
 
 	public List<Account> getAccounts() {
 		return myAccounts;
+	}
+	
+	public void setTellerWindow(int window) {
+		tellerWindow = window;
+	}
+	
+	public int getTellerPosition() {
+		return tellerWindow;
 	}
 }

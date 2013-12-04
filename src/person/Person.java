@@ -152,7 +152,7 @@ public abstract class Person extends Agent{
 					}
 				}
 				cust1.setRoleActive();
-				//bankPanel.addGui(bg);
+				bankPanel.addGui(bg);
 				stateChanged();
 				return;
 			}
@@ -207,11 +207,9 @@ public abstract class Person extends Agent{
 			for (Role cust1 : roles) {
 				if (cust1 instanceof MarketCustomerRole) {
 					MarketCustomerRole MCR = (MarketCustomerRole) cust1;
-					MarketCustomerGui mg = new MarketCustomerGui(MCR);
-					MCR.setGui(mg);
 					MCR.setItem("");
 					cust1.setRoleActive();
-					marketPanel.addGui(mg);
+					Phonebook.getPhonebook().getMarket().arrived(MCR);
 					currentRoleName = "Market Customer";
 					stateChanged();
 					return;
@@ -222,11 +220,9 @@ public abstract class Person extends Agent{
 			for (Role cust1 : roles) {
 				if (cust1 instanceof MarketCustomerRole) {
 					MarketCustomerRole MCR = (MarketCustomerRole) cust1;
-					MarketCustomerGui mg = new MarketCustomerGui(MCR);
-					MCR.setGui(mg);
 					MCR.setItem("Car");
 					cust1.setRoleActive();
-					marketPanel.addGui(mg);
+					Phonebook.getPhonebook().getMarket().arrived(MCR);
 					currentRoleName = "Market Customer";
 					stateChanged();
 					return;
@@ -248,12 +244,9 @@ public abstract class Person extends Agent{
 		for (Role cust1 : roles) {
 			if (cust1 instanceof RestaurantCustomerRole) {
 				RestaurantCustomerRole RCR = (RestaurantCustomerRole) cust1;
-				RestaurantCustomerGui rg = new RestaurantCustomerGui(RCR);
-				RCR.setGui(rg);
 				if (Phonebook.getPhonebook().getRestaurant().arrived(RCR)) {
 					currentRoleName = "Restaurant Customer";
 					cust1.setRoleActive();
-					restPanel.addGui(rg);
 					stateChanged();
 				}
 				return;
