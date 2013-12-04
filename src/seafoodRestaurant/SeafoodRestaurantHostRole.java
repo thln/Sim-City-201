@@ -1,11 +1,6 @@
 package seafoodRestaurant;
 
-
-import agent.Agent;
-
 import java.util.*;
-//import java.util.concurrent.Semaphore;
-
 import person.Role;
 
 //import restaurant.CustomerAgent.AgentState;
@@ -366,5 +361,13 @@ public class SeafoodRestaurantHostRole extends Role
 		}
 		
 		return false;
+	}
+
+	public void msgRestaurantOpen() {
+		if (MyCustomers.size() != 0){
+			for (MyCustomer c1: MyCustomers){
+				c1.c.msgComeIn();
+			}
+		}
 	}
 }

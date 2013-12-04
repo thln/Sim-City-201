@@ -10,9 +10,11 @@ import java.util.TimerTask;
 
 import person.Role;
 import seafoodRestaurant.interfaces.SeafoodRestaurantMarket;
+import application.Phonebook;
+import application.Restaurant;
 import application.gui.animation.AnimationPanel;
 
-public class SeafoodRestaurantCookRole extends Role 
+public class SeafoodRestaurantCookRole extends Role implements Restaurant
 {
 	
 	/***** DATA *****/
@@ -77,11 +79,14 @@ public class SeafoodRestaurantCookRole extends Role
 	private Map<String, Food> FoodInventory = new HashMap<String, Food>();
 	private String name;
 	private int CurrentMarket = 0;
+	
+	private SeafoodRestaurant restaurant;
 //	private String name;
 	
-	public SeafoodRestaurantCookRole(String name)
+	public SeafoodRestaurantCookRole(String name, SeafoodRestaurant seafoodRestaurant)
 	{
 		super(name);
+		this.restaurant = seafoodRestaurant;
 		
 		RecipeBook.put("Salad",3000);
 		RecipeBook.put("Pizza",5000);
@@ -277,7 +282,7 @@ public class SeafoodRestaurantCookRole extends Role
 		S = cookState.Cooking;
 		print("We are low on " + foodItem + ". Let's order " + FoodInventory.get(foodItem).OrderSize + " more from " + markets.get(CurrentMarket) + "!");
 		//Implement a mechanism to choose between markets
-		markets.get(CurrentMarket).INeedMore(foodItem, FoodInventory.get(foodItem).OrderSize);
+		//Phonebook.getPhonebook().getEastMarket().salesPersonRole.msgIWantProducts(restaurant, foodItem, FoodInventory.get(foodItem).OrderSize);
 	}
 	
 //	public void addMarket(SeafoodRestaurantMarketRole m)

@@ -1,5 +1,6 @@
 package seafoodRestaurant;
 
+import person.Person;
 import seafoodRestaurant.interfaces.SeafoodRestaurantWaiter;
 import chineseRestaurant.ChineseRestaurantWaiterRole;
 import chineseRestaurant.interfaces.ChineseRestaurantWaiter;
@@ -7,11 +8,9 @@ import chineseRestaurant.interfaces.ChineseRestaurantWaiter;
 public class SeafoodRestaurantAltWaiterRole extends SeafoodRestaurantWaiterRole implements SeafoodRestaurantWaiter 
 {
 
-	public SeafoodRestaurantAltWaiterRole(String name,
-			SeafoodRestaurantHostRole h, SeafoodRestaurantCookRole c,
-			SeafoodRestaurantCashierRole cas, int n) 
+	public SeafoodRestaurantAltWaiterRole(Person person, String name, String title) 
 	{
-		super(name, h, c, cas, n);
+		super(person, name, title);
 	}
 
 

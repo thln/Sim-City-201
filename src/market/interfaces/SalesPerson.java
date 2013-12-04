@@ -1,5 +1,6 @@
 package market.interfaces;
 
+import application.Restaurant;
 import chineseRestaurant.ChineseRestaurant;
 import market.MarketCustomerRole;
 import market.MarketOrder;
@@ -11,8 +12,7 @@ public interface SalesPerson {
 	public void msgIWantProducts(MarketCustomer customer, String item,
 			int numWanted);
 
-	public void msgIWantProducts(ChineseRestaurant chineseRestaurant, String item,
-			int numWanted);
+	public void msgIWantProducts(Restaurant restaurant, String item, int numWanted);
 
 	public void msgOrderFulfilled(MarketOrder o);
 

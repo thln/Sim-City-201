@@ -22,6 +22,7 @@ public class SeafoodRestaurantCashierRole extends Role implements SeafoodRestaur
 	/***** DATA *****/
 	private String name;
 	private SeafoodRestaurantMenu MenuForReference;
+	private SeafoodRestaurant restaurant;
 	public double accumulatedRevenue = 35.00;
 	public double accumulatedCosts = 0.0;
 	public double profits = 35.00;
@@ -69,9 +70,10 @@ public class SeafoodRestaurantCashierRole extends Role implements SeafoodRestaur
 	//private List<MyCustomer> customers = 
 	//	    Collections.synchronizedList(new ArrayList<MyCustomer>()); example
 	
-	public SeafoodRestaurantCashierRole(String name)
+	public SeafoodRestaurantCashierRole(String name, SeafoodRestaurant seafoodRestaurant)
 	{
 		super(name);
+		this.restaurant = seafoodRestaurant;
 
 		MenuForReference = new SeafoodRestaurantMenu();
 		df.setMaximumFractionDigits(2);

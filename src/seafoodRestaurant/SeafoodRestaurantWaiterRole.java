@@ -9,7 +9,9 @@ import java.util.concurrent.Semaphore;
 
 
 
+
 import application.gui.animation.agentGui.SeafoodRestaurantWaiterGui;
+import person.Person;
 //import application.gui.animation.agentGui.SeafoodRestaurantWaiterGui;
 import person.Role;
 //import seafoodRestaurant.interfaces.Check;
@@ -98,17 +100,12 @@ public class SeafoodRestaurantWaiterRole extends Role implements SeafoodRestaura
 		}
 	}
 	
-	
 
-	public SeafoodRestaurantWaiterRole(String name, SeafoodRestaurantHostRole h, SeafoodRestaurantCookRole c, SeafoodRestaurantCashierRole cas, int n) 
+	public SeafoodRestaurantWaiterRole(Person person, String name, String title) 
 	{
 		super(name);
-
-		//this.name = name;
-		this.host = h;
-		this.cook = c;
-		this.cashier = cas;
-		this.waiterNumber = n;
+		this.person = person;
+		//this.waiterNumber = n; //I removed this from the constructor
 		
 		if(name.equals("OnBreak"))
 		{

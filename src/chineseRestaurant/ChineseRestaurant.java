@@ -9,13 +9,14 @@ import chineseRestaurant.test.mock.ChineseRestaurantMockCook;
 import person.Person;
 import person.Role;
 import person.Worker;
+import application.Restaurant;
 import application.WatchTime;
 import application.gui.animation.BuildingPanel;
 import application.gui.animation.agentGui.RestaurantCookGui;
 import application.gui.animation.agentGui.RestaurantCustomerGui;
 import application.gui.animation.agentGui.RestaurantWaiterGui;
 
-public class ChineseRestaurant{
+public class ChineseRestaurant implements Restaurant {
 
 	//Data
 	String name;

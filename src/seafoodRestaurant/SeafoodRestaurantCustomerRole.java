@@ -527,5 +527,9 @@ public class SeafoodRestaurantCustomerRole extends Role implements SeafoodRestau
 	{
 		return customerNumber;
 	}
+
+	public void msgComeIn() {
+		stateChanged();
+	}
 }
 
