@@ -236,6 +236,7 @@ public class BankCustomerRole extends Role implements BankCustomer{
 	}
 
 	void openAccount () {
+		print("Want to open account");
 		//GUI operation
 		DoGoToTeller();
 		myTeller.msgWantNewAccount(this);

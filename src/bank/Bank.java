@@ -209,11 +209,11 @@ public class Bank {
 	}
 	
 	public void closeBuilding(){
-		userClosed = true;
-		bankGuardRole.msgLeaveRole();
+		userClosed = true;		
 		for (MyTeller t1: bankGuardRole.tellers){
 			((Role) t1.tell1).msgLeaveRole();
 		}
 		loanOfficerRole.msgLeaveRole();
+		bankGuardRole.msgLeaveRole();
 	}
 }
