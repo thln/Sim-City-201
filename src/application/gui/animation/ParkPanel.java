@@ -21,7 +21,7 @@ public class ParkPanel extends BuildingPanel implements ActionListener{
 		try{
 			parkImage = ImageIO.read(new File("res/park.jpg"));
 		} catch(IOException e){
-			System.out.println("park image error");
+			System.out.println("park image read error");
 		}
 	}
 	
