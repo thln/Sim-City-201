@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import seafoodRestaurant.SeafoodRestaurant;
 import chineseRestaurant.ChineseRestaurant;
 import bank.Bank;
 import market.Market;
@@ -26,10 +27,11 @@ public class Phonebook{
 
 	//Restaurants
 	static private ChineseRestaurant chineseRestaurant;
+	static private SeafoodRestaurant seafoodRestaurant;
 	//ItalianRestaurant italianRestaurant;
 	//MexicanRestaurant mexicanRestaurant;
 	//AmericanRestaurant americanRestaurant;
-	//SeafoodRestaurant seafoodRestaurant;
+	
 
 	private HousingMaintenanceCompany housingMaintenanceCompany;
 
@@ -56,6 +58,7 @@ public class Phonebook{
 		eastMarket = new Market("Market");
 		//	westMarket = new Market("Market");
 		chineseRestaurant = new ChineseRestaurant("Restaurant");
+		seafoodRestaurant = new SeafoodRestaurant("Seafood Restaurant");
 		housingMaintenanceCompany = new HousingMaintenanceCompany("Housing maintenance company");
 		getBusStops().add(new Point(172, 28));
 		getBusStops().add(new Point(172, 230));
@@ -102,6 +105,9 @@ public class Phonebook{
 		return chineseRestaurant; //temporary stub. make more dynamic later
 	}
 
+	public SeafoodRestaurant getSeafoodRestaurant() {
+		return seafoodRestaurant;
+	}
 
 	public List<Housing> getAllHousing(boolean test)
 	{
