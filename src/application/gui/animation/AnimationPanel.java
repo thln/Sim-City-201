@@ -89,7 +89,7 @@ public class AnimationPanel extends JPanel implements MouseListener {
 		
 		//UNCOMMENT THE FOLLOWING FOR TESTING ONLY!! re-comment to display final product
 		//testGuis();
-
+		/*
 		//testing mechanisms
 		testbutton.addMouseListener(this);
     	testbutton.setSize(100, 50);
@@ -97,9 +97,9 @@ public class AnimationPanel extends JPanel implements MouseListener {
     	testbutton2.addMouseListener(this);
     	testbutton2.setBounds(100, 0, 100, 50);
     	cityPanel.add(testbutton2);
-		 
+		*/ 
 		//testGuisTwo();
-		testGuisThree();
+		//testGuisThree();
 	}
 
 	public void displayBuildingPanel(BuildingPanel bp) {
