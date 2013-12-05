@@ -15,7 +15,6 @@ public class ItalianCookGui implements Gui {
 
     private ItalianCookRole agent = null;
     BufferedImage cookIcon = null;
-    BufferedImage fridge = null;
 	BufferedImage steak = null;
 	BufferedImage chicken = null;
 	BufferedImage salad = null;
@@ -35,10 +34,6 @@ public class ItalianCookGui implements Gui {
     public ItalianCookGui() {
         try {
             cookIcon = ImageIO.read(new File("res/chef.png"));
-        	} catch (IOException e) {
-        	}
-        try {
-            fridge = ImageIO.read(new File("res/fridge.png"));
         	} catch (IOException e) {
         	}
 		try {
@@ -67,10 +62,6 @@ public class ItalianCookGui implements Gui {
         this.agent = agent;
         try {
             cookIcon = ImageIO.read(new File("res/chef.png"));
-        	} catch (IOException e) {
-        	}
-        try {
-            fridge = ImageIO.read(new File("res/fridge.png"));
         	} catch (IOException e) {
         	}
 		try {
@@ -142,7 +133,6 @@ public class ItalianCookGui implements Gui {
     public void draw(Graphics2D g) {
         g.setColor(Color.BLUE);
         g.drawImage(cookIcon, xPos, yPos, null);
-        g.drawImage(fridge, 500, 100, null);
         for(int i=0;i<cookingFoods.size();i++) {
         	g.drawImage(cookingFoods.get(i).plateImg, 380 - 50*i, 175, null);
         	g.drawImage(cookingFoods.get(i).foodImg,cookingFoods.get(i).xfPos - 50*i, cookingFoods.get(i).yfPos, null);
