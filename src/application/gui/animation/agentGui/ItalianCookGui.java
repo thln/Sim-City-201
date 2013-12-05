@@ -1,4 +1,4 @@
-package application.gui.animation.agentGui.ItalianRestaurant;
+package application.gui.animation.agentGui;
 
 import italianRestaurant.*;
 import java.awt.*;
@@ -11,7 +11,7 @@ import javax.imageio.*;
 
 import java.awt.image.BufferedImage;
 
-public class CookGui implements Gui {
+public class ItalianCookGui implements Gui {
 
     private ItalianCookRole agent = null;
     BufferedImage cookIcon = null;
@@ -26,13 +26,44 @@ public class CookGui implements Gui {
 	private enum Command {noCommand, atMarket, atFridge};
 	private Command command=Command.noCommand;
 
-    private int xPos = 450, yPos = 250;//default cook position
-    private int xDestination = 375, yDestination = 250;//default start position
+    private int xPos = 450, yPos = 150;//default cook position
+    private int xDestination = 450, yDestination = 150;//default start position
     
     static final int NTABLES = 5;
     int tables;
+    
+    public ItalianCookGui() {
+        try {
+            cookIcon = ImageIO.read(new File("res/chef.png"));
+        	} catch (IOException e) {
+        	}
+        try {
+            fridge = ImageIO.read(new File("res/fridge.png"));
+        	} catch (IOException e) {
+        	}
+		try {
+            chicken = ImageIO.read(new File("res/chicken.png"));
+        	} catch (IOException e) {
+        	}
+		try {
+            steak = ImageIO.read(new File("res/steak.png"));
+        	} catch (IOException e) {
+        	}
+		try {
+            salad = ImageIO.read(new File("res/salad.png"));
+        	} catch (IOException e) {
+        	}
+		try {
+            pizza = ImageIO.read(new File("res/pizza.png"));
+        	} catch (IOException e) {
+        	}
+		try {
+            plate = ImageIO.read(new File("res/plate.png"));
+        	} catch (IOException e) {
+        	}
+    }
 
-    public CookGui(ItalianCookRole agent) {
+    public ItalianCookGui(ItalianCookRole agent) {
         this.agent = agent;
         try {
             cookIcon = ImageIO.read(new File("res/chef.png"));
@@ -97,7 +128,7 @@ public class CookGui implements Gui {
     		else if (cookingFoods.get(i).yfPos > cookingFoods.get(i).yfDestination)
     			cookingFoods.get(i).yfPos--;
     		if (cookingFoods.get(i).xfPos == cookingFoods.get(i).xfDestination && cookingFoods.get(i).yfPos == cookingFoods.get(i).yfDestination
-    				&& (cookingFoods.get(i).xfDestination == 330 - 40*i) && (cookingFoods.get(i).yfDestination == 300)){
+    				&& (cookingFoods.get(i).xfDestination == 390 - 40*i) && (cookingFoods.get(i).yfDestination == 180)){
     			cookingFoods.remove(cookingFoods.get(i));
     			//cookingFoods.get(i).plateImg = null;
     			/*
@@ -110,15 +141,12 @@ public class CookGui implements Gui {
 
     public void draw(Graphics2D g) {
         g.setColor(Color.BLUE);
-        //g.drawImage(currImg2, 320, 295, null);
-        //g.drawImage(plate, 300, 295, null);
         g.drawImage(cookIcon, xPos, yPos, null);
-        g.drawImage(fridge, 420, 200, null);
+        g.drawImage(fridge, 500, 100, null);
         for(int i=0;i<cookingFoods.size();i++) {
-        	g.drawImage(cookingFoods.get(i).plateImg, 320 - 50*i, 295, null);
+        	g.drawImage(cookingFoods.get(i).plateImg, 380 - 50*i, 175, null);
         	g.drawImage(cookingFoods.get(i).foodImg,cookingFoods.get(i).xfPos - 50*i, cookingFoods.get(i).yfPos, null);
         }
-        //g.fillRect(xPos, yPos, 20, 20);
     }
 
     public boolean isPresent() {
@@ -142,7 +170,7 @@ public class CookGui implements Gui {
     }
     
     public void GoToFridge(){
-    	yDestination = 230;
+    	yDestination = 130;
     	command = Command.atFridge;
     }
     
@@ -151,8 +179,8 @@ public class CookGui implements Gui {
     	for(int i=0; i<cookingFoods.size();i++) {
     		if(cookingFoods.get(i).table == tablenum) {
     			cookingFoods.get(i).plateImg = plate;
-    			cookingFoods.get(i).xfDestination = 330 - 40*i;
-    			cookingFoods.get(i).yfDestination = 300;
+    			cookingFoods.get(i).xfDestination = 390 - 40*i;
+    			cookingFoods.get(i).yfDestination = 180;
     		}
     	}
     }
@@ -164,8 +192,8 @@ public class CookGui implements Gui {
     }
     
     public void BacktoPosition() {
-    	xDestination = 375;
-    	yDestination = 250;
+    	xDestination = 450;
+    	yDestination = 150;
     	//command = Command.noCommand;
     }
 
@@ -178,8 +206,8 @@ public class CookGui implements Gui {
     }
     
     private class CookingFood {
-    	int xfPos = 360, yfPos = 350; //default food position
-        int xfDestination = 360, yfDestination = 350; //default start position
+    	int xfPos = 470, yfPos = 240; //default food position
+        int xfDestination = 470, yfDestination = 240; //default start position
         int table;
         BufferedImage foodImg = null;
         BufferedImage plateImg = null;

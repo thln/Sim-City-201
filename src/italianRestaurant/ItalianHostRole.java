@@ -1,7 +1,7 @@
 package italianRestaurant;
 
 import person.*;
-import application.gui.animation.agentGui.ItalianRestaurant.*;
+import application.gui.animation.agentGui.*;
 import italianRestaurant.interfaces.*;
 
 import java.util.*;
@@ -33,7 +33,7 @@ public class ItalianHostRole extends Role {
 	
 	private Semaphore atTable = new Semaphore(0,true);
 
-	public HostGui hostGui = null;
+	public ItalianHostGui hostGui = null;
 
 	public ItalianHostRole(String name) {
 		super(name);
@@ -143,11 +143,11 @@ public class ItalianHostRole extends Role {
 		return "host " + getName();
 	}
 
-	public void setGui(HostGui gui) {
+	public void setGui(ItalianHostGui gui) {
 		hostGui = gui;
 	}
 
-	public HostGui getGui() {
+	public ItalianHostGui getGui() {
 		return hostGui;
 	}
 

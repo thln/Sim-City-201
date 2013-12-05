@@ -1,16 +1,19 @@
-package application.gui.animation.agentGui.ItalianRestaurant;
+package application.gui.animation.agentGui;
 
 import italianRestaurant.*;
+
 import java.awt.*;
 import java.io.*;
+
 import javax.imageio.*;
+
 import java.awt.image.BufferedImage;;
 
-public class CustomerGui implements Gui{
+public class ItalianCustomerGui implements Gui{
 	
 	private ItalianCustomerRole agent = null;
 	private boolean isPresent = true;
-	private boolean isHungry = false;
+	//private boolean isHungry = false;
 	
 	//RestaurantGui gui;
 	BufferedImage qmark = null;
@@ -28,13 +31,34 @@ public class CustomerGui implements Gui{
 	private Command command=Command.noCommand;
     
     static final int NTABLES = 5;
-
-	public CustomerGui(ItalianCustomerRole c/*, RestaurantGui gui*/){ //HostAgent m) {
+    
+    public ItalianCustomerGui() {
+		try {
+            qmark = ImageIO.read(new File("res/qmark.png"));
+        	} catch (IOException e) {
+        	}
+		try {
+            chicken = ImageIO.read(new File("res/chicken.png"));
+        	} catch (IOException e) {
+        	}
+		try {
+            steak = ImageIO.read(new File("res/steak.png"));
+        	} catch (IOException e) {
+        	}
+		try {
+            salad = ImageIO.read(new File("res/salad.png"));
+        	} catch (IOException e) {
+        	}
+		try {
+            pizza = ImageIO.read(new File("res/pizza.png"));
+        	} catch (IOException e) {
+        	}
+    }
+    
+	public ItalianCustomerGui(ItalianCustomerRole c/*, RestaurantGui gui*/){ //HostAgent m) {
 		agent = c;
 		
-		//maitreD = m;
 		//this.gui = gui;
-		
 		try {
             qmark = ImageIO.read(new File("res/qmark.png"));
         	} catch (IOException e) {
@@ -69,19 +93,21 @@ public class CustomerGui implements Gui{
 			yPos--;
 
 		if (xPos == xDestination && yPos == yDestination) {
-			if (command==Command.GoToRestaurant)
-				agent.msgAnimationFinishedGoToRest();
-			if (command==Command.GoToSeat) 
-				agent.msgAnimationFinishedGoToSeat();
-			else if (command==Command.LeaveRestaurant) {
-				agent.msgAnimationFinishedLeaveRestaurant();
-				System.out.println("about to call gui.setCustomerEnabled(agent);");
-				isHungry = false;
-			//	gui.setCustomerEnabled(agent);
+			if(agent != null) {
+				if (command==Command.GoToRestaurant)
+					agent.msgAnimationFinishedGoToRest();
+				if (command==Command.GoToSeat) 
+					agent.msgAnimationFinishedGoToSeat();
+				else if (command==Command.LeaveRestaurant) {
+					agent.msgAnimationFinishedLeaveRestaurant();
+					//System.out.println("about to call gui.setCustomerEnabled(agent);");
+					//isHungry = false;
+					//	gui.setCustomerEnabled(agent);
+				}
+				else if (command==Command.atCashier)
+					agent.msgAtCashier();
+				command=Command.noCommand;
 			}
-			else if (command==Command.atCashier)
-				agent.msgAtCashier();
-			command=Command.noCommand;
 		}
 		/*
 		if (xPos == xDestination && yPos == yDestination
@@ -94,21 +120,27 @@ public class CustomerGui implements Gui{
 	public void draw(Graphics2D g) {
 		g.setColor(Color.GREEN);
 		g.fillRect(xPos, yPos, 20, 20);
+		if(agent != null) {
+        	g.setColor(Color.BLACK);
+        	g.drawString(agent.getName(), xPos, yPos);
+        }
 		g.drawImage(currImg, xDestination, yDestination, null);
 	}
 
 	public boolean isPresent() {
 		return isPresent;
 	}
+	/*
 	public void setHungry() {
 		isHungry = true;
 		agent.gotHungry();
 		setPresent(true);
-	}
+	}*/
+	/*
 	public boolean isHungry() {
 		return isHungry;
 	}
-
+	*/
 	public void setPresent(boolean p) {
 		isPresent = p;
 	}
@@ -124,28 +156,9 @@ public class CustomerGui implements Gui{
 	}
 
 	public void DoGoToSeat(int seatnumber) {//later you will map seatnumber to table coordinates.
-		/*
-		for (int ix = 1; ix <= NTABLES; ix++) {
-			xDestination = 50*ix;
-			yDestination = 50*ix;
-		}
-		*/
-		
-		//if(seatnumber < 10) {
 			xDestination = 50*seatnumber;
-			yDestination = 50;
-		//	gui.removeStart(this.agent);
-		/*}
-		else {
-			int rows = seatnumber/10;
-			int cols = 10;
-			int xremainder = seatnumber - cols*rows;
-		
-			xDestination = 50*xremainder;
-			yDestination = 50*rows;
-		}*/
+			yDestination = 120;
 		command = Command.GoToSeat;
-		 
 	}
 	
 	public void DoGotoCashier(){
@@ -158,8 +171,8 @@ public class CustomerGui implements Gui{
 	public void DoGoToJail(){
 		xDestination = 400;
     	yDestination = 400;
-    	System.out.println("about to call gui.setCustomerEnabled(agent);");
-		isHungry = false;
+    	//System.out.println("about to call gui.setCustomerEnabled(agent);");
+		//isHungry = false;
 		//gui.setCustomerEnabled(agent);
 		command=Command.noCommand;
 	}

@@ -1,7 +1,7 @@
 package italianRestaurant;
 
 import person.*;
-import application.gui.animation.agentGui.ItalianRestaurant.*;
+import application.gui.animation.agentGui.*;
 import italianRestaurant.interfaces.*;
 
 import java.util.*;
@@ -24,7 +24,7 @@ public class ItalianMarketRole extends Role implements ItalianMarket{
 	 
 	//private Semaphore atTable = new Semaphore(0,true);
 	
-	public MarketGui marketGui = null;
+	public ItalianMarketGui marketGui = null;
 	private ItalianCashier cashier;
 
 	public ItalianMarketRole(String name) {
@@ -161,11 +161,11 @@ public class ItalianMarketRole extends Role implements ItalianMarket{
 		return "Market \"" + getName() + "\"";
 	}
 	
-	public void setGui(MarketGui gui) {
+	public void setGui(ItalianMarketGui gui) {
 		marketGui = gui;
 	}
 
-	public MarketGui getGui() {
+	public ItalianMarketGui getGui() {
 		return marketGui;
 	}
 	

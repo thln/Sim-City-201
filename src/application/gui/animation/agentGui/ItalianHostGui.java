@@ -1,9 +1,10 @@
-package application.gui.animation.agentGui.ItalianRestaurant;
+package application.gui.animation.agentGui;
 
 import italianRestaurant.*;
+
 import java.awt.*;
 
-public class HostGui implements Gui {
+public class ItalianHostGui implements Gui {
 
     private ItalianHostRole agent = null;
 
@@ -12,8 +13,11 @@ public class HostGui implements Gui {
     
     static final int NTABLES = 5;
     int tables;
-
-    public HostGui(ItalianHostRole agent) {
+    
+    public ItalianHostGui() {
+    }
+    
+    public ItalianHostGui(ItalianHostRole agent) {
         this.agent = agent;
     }
 
@@ -32,6 +36,9 @@ public class HostGui implements Gui {
     public void draw(Graphics2D g) {
         g.setColor(Color.MAGENTA);
         g.fillRect(xPos, yPos, 20, 20);
+        
+        g.setColor(Color.BLACK);
+        g.drawString("Host", xPos, yPos);
     }
 
     public boolean isPresent() {

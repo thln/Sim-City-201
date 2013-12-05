@@ -1,41 +1,48 @@
-package application.gui.animation.agentGui.ItalianRestaurant;
+package application.gui.animation.agentGui;
 
 import italianRestaurant.*;
+
 import java.awt.*;
 import java.io.*;
+
 import javax.imageio.*;
+
 import java.awt.image.BufferedImage;
 
-public class WaiterGui implements Gui {
+public class ItalianWaiterGui implements Gui {
 
     private ItalianWaiterRole agent = null;
 
-    private int xPos = 300, yPos = 140;//default waiter position
-    private int xDestination = 300, yDestination = 120;//default start position
+    private int xPos = 300, yPos = 0;//default waiter position
+    private int xDestination = 300, yDestination = 70;//default start position
     int homePos;
     private enum Command {noCommand, goToWaiting, GoToSeat, LeaveTable, LeaveTableAgain, atCook, atCashier};
 	private Command command=Command.noCommand;
     
     static final int NTABLES = 5;
     int tables;
-
-    public WaiterGui(ItalianWaiterRole agent) {
+    
+    public ItalianWaiterGui() {
+    }
+    
+    public ItalianWaiterGui(ItalianWaiterRole agent) {
         this.agent = agent;
     }
 
     public void updatePosition() {
     	
-    		if (xPos < xDestination)
-    			xPos++;
-    		else if (xPos > xDestination)
-    			xPos--;
+    	if (xPos < xDestination)
+    		xPos++;
+    	else if (xPos > xDestination)
+    		xPos--;
 
-    		if (yPos < yDestination)
-    			yPos++;
-    		else if (yPos > yDestination)
-    			yPos--;
+   		if (yPos < yDestination)
+    		yPos++;
+    	else if (yPos > yDestination)
+    		yPos--;
     		
-    		if (xPos == xDestination && yPos == yDestination) {
+    	if (xPos == xDestination && yPos == yDestination) {
+    		if(agent != null) {
     			if (command==Command.goToWaiting) {
 					agent.msgAtCust();
     			}
@@ -54,13 +61,18 @@ public class WaiterGui implements Gui {
    				else if(command==Command.atCashier) {
    	    			agent.msgAtCashier();
     			}
-    			command=Command.noCommand;
     		}
+    		command=Command.noCommand;
+    	}
     }
 
     public void draw(Graphics2D g) {
-        g.setColor(Color.YELLOW);
+        g.setColor(Color.MAGENTA);
         g.fillRect(xPos, yPos, 20, 20);
+        if(agent != null) {
+        	g.setColor(Color.BLACK);
+        	g.drawString("W:" + agent.getName(), xPos, yPos);
+        }
     }
 
     public boolean isPresent() {
@@ -70,26 +82,26 @@ public class WaiterGui implements Gui {
     public void StartAt(int home) {
     	homePos = home;
     	xDestination = 300 - 30*homePos;
-    	yDestination = 120;
+    	yDestination = 70;
     }
     
     public void GoToWaiting(int Pos) {
     	xDestination = 30*Pos + 40;
-    	yDestination = 0;
+    	yDestination = 70;
     	
     	command = Command.goToWaiting;
     }
     
     public void DoBringToTable(int table) {
     	xDestination = 50*table + 20;
-    	yDestination = 50 - 20;
+    	yDestination = 120 - 20;
     	
     	command = Command.GoToSeat;
     }
 
     public void GoToHome() {
     	xDestination = 300 - 30*homePos;
-    	yDestination = 120;
+    	yDestination = 70;
         command = Command.noCommand;
     }
     

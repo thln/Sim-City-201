@@ -1,7 +1,7 @@
 package italianRestaurant;
 
 import person.*;
-import application.gui.animation.agentGui.ItalianRestaurant.*;
+import application.gui.animation.agentGui.*;
 import italianRestaurant.interfaces.*;
 
 import java.util.*;
@@ -35,7 +35,7 @@ public class ItalianWaiterRole extends Role implements ItalianWaiter{
 	private ItalianCookRole cook;
 	private ItalianHostRole host;
 	private ItalianCashierRole cashier;
-	public WaiterGui waiterGui = null;
+	public ItalianWaiterGui waiterGui = null;
 
 	public ItalianWaiterRole(String name) {
 		super(name);
@@ -375,11 +375,11 @@ public class ItalianWaiterRole extends Role implements ItalianWaiter{
 		return "waiter " + getName();
 	}
 
-	public void setGui(WaiterGui gui) {
+	public void setGui(ItalianWaiterGui gui) {
 		waiterGui = gui;
 	}
 
-	public WaiterGui getGui() {
+	public ItalianWaiterGui getGui() {
 		return waiterGui;
 	}
 	

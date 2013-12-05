@@ -27,6 +27,7 @@ public class AnimationPanel extends JPanel implements MouseListener {
 	BankLoanerGui bank = new BankLoanerGui();
 	HouseMaintenanceGui house = new HouseMaintenanceGui();
 	RestaurantCookGui restaurant = new RestaurantCookGui();
+	ItalianCookGui italian = new ItalianCookGui();
 	BusGui bus = new BusGui();
 	CarGui car = new CarGui();
 	PersonGui person = new PersonGui();
@@ -85,9 +86,9 @@ public class AnimationPanel extends JPanel implements MouseListener {
 			add(BorderLayout.SOUTH, buildingPanels);
 		}
 
-		/*
+		
 		//UNCOMMENT THE FOLLOWING FOR TESTING ONLY!! re-comment to display final product
-		testGuis();
+		//testGuis();
 
 		//testing mechanisms
 		testbutton.addMouseListener(this);
@@ -96,8 +97,9 @@ public class AnimationPanel extends JPanel implements MouseListener {
     	testbutton2.addMouseListener(this);
     	testbutton2.setBounds(100, 0, 100, 50);
     	cityPanel.add(testbutton2);
-		 */
+		 
 		//testGuisTwo();
+		testGuisThree();
 	}
 
 	public void displayBuildingPanel(BuildingPanel bp) {
@@ -220,15 +222,30 @@ public class AnimationPanel extends JPanel implements MouseListener {
 			}
 		}
 	}
+	
+	public void testGuisThree() {
+		for(Building building : buildings) {
+			if(building.getName().toLowerCase().contains("italian")) {
+				building.myBuildingPanel.addGui(italian);
+				//italian.SetHome(0);
+				building.myBuildingPanel.addGui(new ItalianCustomerGui());
+				building.myBuildingPanel.addGui(new ItalianHostGui());
+				building.myBuildingPanel.addGui(new ItalianWaiterGui());
+				building.myBuildingPanel.addGui(new ItalianCashierGui());
+				//building.myBuildingPanel.addGui(new ItalianCookGui());
+				building.myBuildingPanel.addGui(new ItalianMarketGui());
+			}
+		}
+	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getSource().equals(testbutton)) {
-			restaurant.DoGoToGrill();
+			italian.DoCooking("Steak", 1);
 		}
 		if(e.getSource().equals(testbutton2)) {
-			restaurant.DoPickUpFood();
+			italian.DoPlateIt("Steak", 1);
 		}
 	}
 

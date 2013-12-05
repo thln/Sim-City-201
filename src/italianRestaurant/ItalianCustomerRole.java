@@ -1,7 +1,7 @@
 package italianRestaurant;
 
 import person.*;
-import application.gui.animation.agentGui.ItalianRestaurant.*;
+import application.gui.animation.agentGui.*;
 import italianRestaurant.interfaces.*;
 
 import java.util.*;
@@ -19,7 +19,7 @@ public class ItalianCustomerRole extends Role implements ItalianCustomer{
 	private int hungerLevel = 5;        // determines length of meal
 	Timer eattimer = new Timer();
 	Timer waittimer = new Timer(); ///////////////////////////////////
-	private CustomerGui customerGui;
+	private ItalianCustomerGui customerGui;
 	public List<String> Menu = Collections.synchronizedList(new ArrayList<String>());
 	private Map<String, Double> foodMap = new HashMap<String, Double>(); 
 	private Semaphore atRestaurant = new Semaphore(0, true);
@@ -436,11 +436,11 @@ public class ItalianCustomerRole extends Role implements ItalianCustomer{
 		return "customer " + getName();
 	}
 
-	public void setGui(CustomerGui g) {
+	public void setGui(ItalianCustomerGui g) {
 		customerGui = g;
 	}
 
-	public CustomerGui getGui() {
+	public ItalianCustomerGui getGui() {
 		return customerGui;
 	}
 }

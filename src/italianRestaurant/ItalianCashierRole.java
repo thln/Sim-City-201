@@ -1,7 +1,7 @@
 package italianRestaurant;
 
 import person.*;
-import application.gui.animation.agentGui.ItalianRestaurant.*;
+import application.gui.animation.agentGui.*;
 import italianRestaurant.interfaces.*;
 
 import java.util.*;
@@ -36,7 +36,7 @@ public class ItalianCashierRole extends Role implements ItalianCashier{
 	Double tip = 0.15;
 	//private Semaphore atTable = new Semaphore(0,true);
 	
-	public CashierGui cashierGui = null;
+	public ItalianCashierGui cashierGui = null;
 
 	public ItalianCashierRole(String name) {
 		super(name);
@@ -235,11 +235,11 @@ public class ItalianCashierRole extends Role implements ItalianCashier{
 		return "Cashier " + getName();
 	}
 	
-	public void setGui(CashierGui gui) {
+	public void setGui(ItalianCashierGui gui) {
 		cashierGui = gui;
 	}
 
-	public CashierGui getGui() {
+	public ItalianCashierGui getGui() {
 		return cashierGui;
 	}
 	
