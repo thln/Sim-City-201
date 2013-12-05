@@ -118,8 +118,11 @@ public class AnimationPanel extends JPanel implements MouseListener {
 		 * must code for that eventuality.
 		 */
 		//setting the panels to the already-initialized businesses
-		if (building.getName().toLowerCase().contains("restaurant")) {
+		if (building.getName().toLowerCase().contains("chinese")) {
 			Phonebook.getPhonebook().getChineseRestaurant().setBuildingPanel(building.myBuildingPanel);
+		}
+		if (building.getName().toLowerCase().contains("italian")) {
+			Phonebook.getPhonebook().getItalianRestaurant().setBuildingPanel(building.myBuildingPanel);
 		}
 		if (building.getName().toLowerCase().contains("market")) {
 			Phonebook.getPhonebook().getEastMarket().setBuildingPanel(building.myBuildingPanel);
