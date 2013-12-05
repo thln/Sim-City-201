@@ -12,6 +12,10 @@ public class MockItalianCustomer extends Mock implements ItalianCustomer {
 	
 	private String name;
 	
+	public void msgComeIn() {
+		
+	}
+	
 	public void msgSitAtTable(int table) {
 		
 	}

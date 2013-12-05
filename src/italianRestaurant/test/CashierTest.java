@@ -20,7 +20,7 @@ public class CashierTest extends TestCase
 	MockItalianCustomer customer;
 	MockItalianMarket market1;
 	MockItalianMarket market2;
-	
+	ItalianRestaurant restaurant;
 	
 	/**
 	 * This method is run before each test. You can use it to instantiate the class variables
@@ -28,7 +28,7 @@ public class CashierTest extends TestCase
 	 */
 	public void setUp() throws Exception{
 		super.setUp();		
-		cashier = new ItalianCashierRole("cashier");		
+		cashier = new ItalianCashierRole("cashier", restaurant);		
 		customer = new MockItalianCustomer("mockcustomer");		
 		waiter = new MockItalianWaiter("mockwaiter");
 		market1 = new MockItalianMarket("Market1");

@@ -1,5 +1,7 @@
 package italianRestaurant.interfaces;
 
+import italianRestaurant.ItalianCustomerRole.AgentEvent;
+
 /**
  * A sample Customer interface built to unit test a CashierAgent.
  *
@@ -7,6 +9,8 @@ package italianRestaurant.interfaces;
  *
  */
 public interface ItalianCustomer {
+	
+	public void msgComeIn();
 	
 	public abstract void msgSitAtTable(int table);
 	
