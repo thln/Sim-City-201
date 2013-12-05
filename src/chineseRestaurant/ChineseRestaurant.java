@@ -2,10 +2,6 @@ package chineseRestaurant;
 
 import java.util.Vector;
 
-import chineseRestaurant.interfaces.ChineseRestaurantCashier;
-import chineseRestaurant.interfaces.ChineseRestaurantCook;
-import chineseRestaurant.test.mock.ChineseRestaurantMockCashier;
-import chineseRestaurant.test.mock.ChineseRestaurantMockCook;
 import person.Person;
 import person.Role;
 import person.Worker;
@@ -15,6 +11,10 @@ import application.gui.animation.BuildingPanel;
 import application.gui.animation.agentGui.RestaurantCookGui;
 import application.gui.animation.agentGui.RestaurantCustomerGui;
 import application.gui.animation.agentGui.RestaurantWaiterGui;
+import chineseRestaurant.interfaces.ChineseRestaurantCashier;
+import chineseRestaurant.interfaces.ChineseRestaurantCook;
+import chineseRestaurant.test.mock.ChineseRestaurantMockCashier;
+import chineseRestaurant.test.mock.ChineseRestaurantMockCook;
 
 public class ChineseRestaurant implements Restaurant {
 
