@@ -7,6 +7,7 @@ import java.util.concurrent.Semaphore;
 
 import chineseRestaurant.ChineseRestaurantCustomerRole;
 import bank.BankCustomerRole;
+import bank.BankCustomerRole.CustomerState;
 import market.MarketCustomerRole;
 import person.Role;
 import agent.Agent;
@@ -109,7 +110,9 @@ public abstract class Person extends Agent{
 	}
 
 	protected void prepareForBank () {
-		Do("Becoming Bank Customer");
+
+		if (!(this instanceof Crook))
+			Do("Becoming Bank Customer");
 		//gui.walk = gui.decideForBus(gui.getxDestination(), gui.getyDestination());
 		if (!gui.walk){
 			gui.doGoToBus();
@@ -120,7 +123,7 @@ public abstract class Person extends Agent{
 				e.printStackTrace();
 			}
 		}
-		
+
 		getGui().DoGoToBank();
 		try {
 			atDestination.acquire();
@@ -136,19 +139,28 @@ public abstract class Person extends Agent{
 				BankCustomerRole BCR = (BankCustomerRole) cust1;
 				BankCustomerGui bg = new BankCustomerGui(BCR);
 				BCR.setGui(bg);
-				currentRoleName = "Bank Customer";
 
-				if (money <= moneyMinThreshold)
-					desiredCash = 100;
-				else if (money >= moneyMaxThreshold)
-					depositAmount = money-moneyMaxThreshold+100;
+				if (this instanceof Crook){
+					print("Time to rob da bank fools!");
+					currentRoleName = "Bank Robber";
+					BCR.setDesire("robBank");
+					BCR.state = CustomerState.ready;
+				}
+				else {
+					currentRoleName = "Bank Customer";
 
-				if (accountNum != 0) {
-					if (money <= moneyMinThreshold){
-						BCR.setDesire("withdraw");
-					}
-					if (money >= moneyMaxThreshold){
-						BCR.setDesire("deposit");
+					if (money <= moneyMinThreshold)
+						desiredCash = 100;
+					else if (money >= moneyMaxThreshold)
+						depositAmount = money-moneyMaxThreshold+100;
+
+					if (accountNum != 0) {
+						if (money <= moneyMinThreshold){
+							BCR.setDesire("withdraw");
+						}
+						if (money >= moneyMaxThreshold){
+							BCR.setDesire("deposit");
+						}
 					}
 				}
 				cust1.setRoleActive();
@@ -259,16 +271,16 @@ public abstract class Person extends Agent{
 	}
 
 	protected void goToSleep() {
-	//	if (gui.getxPos() != gui.getxHome() && gui.getyPos() != gui.getyHome()){
-			getGui().DoGoHome();
-			try {
-				atDestination.acquire();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				//
-			}
-//		}
+		//	if (gui.getxPos() != gui.getxHome() && gui.getyPos() != gui.getyHome()){
+		getGui().DoGoHome();
+		try {
+			atDestination.acquire();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			//
+		}
+		//		}
 
 		currentRoleName = " ";
 		//After arrives home

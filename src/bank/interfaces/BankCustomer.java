@@ -6,7 +6,7 @@ public interface BankCustomer {
 
 	void msgCaughtYou();
 
-	void msgGotAway();
+	void msgGotAway(double spoils);
 
 	void msgLoanClosed();
 

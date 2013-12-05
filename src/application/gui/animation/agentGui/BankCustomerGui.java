@@ -117,5 +117,6 @@ public class BankCustomerGui extends BankGui {
     public void DoExit() {
     	xDestination = 300;
     	yDestination = 350;
+    	command = Command.inTransit;
     }
 }
