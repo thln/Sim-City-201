@@ -30,7 +30,8 @@ public class ItalianCashierRole extends Role implements ItalianCashier{
 	//note that tables is typed with Collection semantics.
 	//Later we will see how it is implemented
 	private ItalianCook cook;
-	 
+	private ItalianRestaurant restaurant = null;
+	
 	private Double cashregister;
 	Double tax = 0.09;
 	Double tip = 0.15;
@@ -38,9 +39,9 @@ public class ItalianCashierRole extends Role implements ItalianCashier{
 	
 	public ItalianCashierGui cashierGui = null;
 
-	public ItalianCashierRole(String name) {
+	public ItalianCashierRole(String name, ItalianRestaurant restaurant) {
 		super(name);
-		
+		this.restaurant = restaurant;
 		//initializing food inventories when application starts
 		Foods.add(new Food("Steak", 5, 15.99)); //name, computing time, price
 		Foods.add(new Food("Chicken", 2, 10.99)); 

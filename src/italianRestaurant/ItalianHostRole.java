@@ -213,5 +213,13 @@ public class ItalianHostRole extends Role {
 		}
 		}
 	}
+	
+	public void msgRestaurantOpen() {
+		if (waitingCustomers.size() != 0){
+			for (ItalianCustomer c1: waitingCustomers){
+				c1.msgComeIn();
+			}
+		}
+	}
 }
 

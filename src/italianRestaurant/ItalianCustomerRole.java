@@ -109,7 +109,13 @@ public class ItalianCustomerRole extends Role implements ItalianCustomer{
 		event = AgentEvent.gotHungry;
 		stateChanged();
 	}
-
+	
+	public void msgComeIn() {//from Host
+		print("Allowed to come in. I'm hungry");
+		event = AgentEvent.gotHungry;
+		stateChanged();
+	}
+	
 	public void msgSitAtTable(int table) {
 		print("Received msgSitAtTable");
 		tablenum = table;

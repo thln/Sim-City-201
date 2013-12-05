@@ -21,7 +21,7 @@ public class ItalianWaiterRole extends Role implements ItalianWaiter{
 	//private CustomerRole currCustomer;
 	private boolean onbreak = false;
 	public List<MyCustomer> Customers = new ArrayList<MyCustomer>();
-
+	
 	//note that tables is typed with Collection semantics.
 	//Later we will see how it is implemented
 	
@@ -32,13 +32,16 @@ public class ItalianWaiterRole extends Role implements ItalianWaiter{
 	private Semaphore BackatTable = new Semaphore(0,true);
 	private Semaphore atCashier = new Semaphore(0, true);
 	private Semaphore atTableAgain = new Semaphore(0, true);
+	
+	private Person person;
 	private ItalianCookRole cook;
 	private ItalianHostRole host;
 	private ItalianCashierRole cashier;
 	public ItalianWaiterGui waiterGui = null;
 
-	public ItalianWaiterRole(String name) {
+	public ItalianWaiterRole(Person person, String name, String title) {
 		super(name);
+		this.person = person;
 	}
 
 	public List getCustomers() {

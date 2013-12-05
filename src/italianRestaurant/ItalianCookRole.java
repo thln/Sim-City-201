@@ -27,6 +27,8 @@ public class ItalianCookRole extends Role implements ItalianCook{
 	public List<ItalianMarket> Markets = Collections.synchronizedList(new ArrayList<ItalianMarket>());
 	public List<ItalianMarket> visitedMarkets = Collections.synchronizedList(new ArrayList<ItalianMarket>());
 	private List<Food> Foods = Collections.synchronizedList(new ArrayList<Food>());
+	
+	private ItalianRestaurant restaurant = null;
 	//note that tables is typed with Collection semantics.
 	//Later we will see how it is implemented
 	 
@@ -34,9 +36,9 @@ public class ItalianCookRole extends Role implements ItalianCook{
 	
 	public ItalianCookGui cookGui = null;
 
-	public ItalianCookRole(String name) {
+	public ItalianCookRole(String name, ItalianRestaurant restaurant) {
 		super(name);
-		
+		this.restaurant = restaurant;
 		//initializing food inventories when application starts
 		/*
 		Foods.add(new Food("Steak", 5, 4, 3)); //name, cooktime, inventory, low
