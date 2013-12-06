@@ -319,7 +319,7 @@ public class ItalianWaiterRole extends Role implements ItalianWaiter{
 	private void BacktoCustomer(MyCustomer customer) {
 		//DO Bring food to customer
 		print("Bringing " + customer.choice + " back to table " + customer.table);
-		waiterGui.DoGoToTable(customer.table);
+		waiterGui.DoGoToTable(customer.table, customer.choice);
 		try {
 			BackatTable.acquire();
 		} catch (InterruptedException e) {
@@ -334,7 +334,7 @@ public class ItalianWaiterRole extends Role implements ItalianWaiter{
 	private void ReorderingCustomer(MyCustomer customer) {
 		//DO Bring food to customer
 		print("Telling " + customer + " to order again.");
-		waiterGui.DoGoToTable(customer.table);
+		waiterGui.DoGoToTable(customer.table, "none");
 		try {
 			BackatTable.acquire();
 		} catch (InterruptedException e) {
