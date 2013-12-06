@@ -38,7 +38,7 @@ public class ChineseRestaurant{
 	
 	public ChineseRestaurantCashierRole chineseRestaurantCashierRole = new ChineseRestaurantCashierRole("Cashier", this);
 	public ChineseRestaurantRevolvingStand theRevolvingStand = new ChineseRestaurantRevolvingStand();
-	private BuildingPanel restPanel;
+	private BuildingPanel buildPanel;
 
 	//Mocks
 	public ChineseRestaurantMockCook chineseRestaurantMockCook = new ChineseRestaurantMockCook("MockCook");
@@ -76,7 +76,7 @@ public class ChineseRestaurant{
 			if (isOpen()) {
 				chineseRestaurantHostRole.msgRestaurantOpen();
 			}
-			restPanel.addGui(cookGui);
+			buildPanel.addGui(cookGui);
 			return chineseRestaurantCookRole;
 		}
 		else if (title.contains("cashier")) {
@@ -96,13 +96,13 @@ public class ChineseRestaurant{
 			ChineseRestaurantWaiterRole waiter = new ChineseRestaurantWaiterRole(person, person.getName(), title);
 			if (waiters.size() <= 12) {
 				RestaurantWaiterGui g = new RestaurantWaiterGui(waiter);
-				restPanel.addGui(g);
+				buildPanel.addGui(g);
 				waiter.setGui(g);
 				g.setHomePosition(5, (55 + (22 * waiters.size())));
 			}
 			else if (waiters.size() <= 24) {
 				RestaurantWaiterGui g = new RestaurantWaiterGui(waiter);
-				restPanel.addGui(g);
+				buildPanel.addGui(g);
 				waiter.setGui(g);
 				g.setHomePosition(27, (55 + (22 * (waiters.size()-12))));
 			}
@@ -118,13 +118,13 @@ public class ChineseRestaurant{
 			ChineseRestaurantAltWaiterRole altWaiter = new ChineseRestaurantAltWaiterRole(person, person.getName(), title);
 			if (waiters.size() <= 12) {
 				RestaurantWaiterGui g = new RestaurantWaiterGui(altWaiter);
-				restPanel.addGui(g);
+				buildPanel.addGui(g);
 				altWaiter.setGui(g);
 				g.setHomePosition(5, (55 + (22 * waiters.size())));
 			}
 			else if (waiters.size() <= 24) {
 				RestaurantWaiterGui g = new RestaurantWaiterGui(altWaiter);
-				restPanel.addGui(g);
+				buildPanel.addGui(g);
 				altWaiter.setGui(g);
 				g.setHomePosition(27, (55 + (22 * (waiters.size()-12))));
 			}
@@ -144,7 +144,7 @@ public class ChineseRestaurant{
 		if (customers.size() <= 12) {
 			RestaurantCustomerGui rCG = (RestaurantCustomerGui) rCR.gui;
 			rCG.setHomePosition((22 * customers.size()), 10);
-			restPanel.addGui(rCG);
+			buildPanel.addGui(rCG);
 			customers.add(rCR);
 			rCR.gotHungry((22 * customers.size()), 10);
 			return true;
@@ -152,7 +152,7 @@ public class ChineseRestaurant{
 		else if (customers.size() <= 24) {
 			RestaurantCustomerGui rCG = (RestaurantCustomerGui) rCR.gui;
 			rCG.setHomePosition((22 * (customers.size() - 12)), 32);
-			restPanel.addGui(rCG);
+			buildPanel.addGui(rCG);
 			customers.add(rCR);
 			rCR.gotHungry((22 * (customers.size() - 12)), 32);
 			return true;
@@ -165,14 +165,14 @@ public class ChineseRestaurant{
 
 		if (worker.getWorkerRole().equals(chineseRestaurantHostRole)) {
 			chineseRestaurantHostRole = null;
-			restPanel.removeGui(worker.getWorkerRole().gui);
+			buildPanel.removeGui(worker.getWorkerRole().gui);
 		}
 		if (worker.getWorkerRole().equals(chineseRestaurantCashierRole)) {
 			chineseRestaurantCashierRole = null;
 		}
 		if (worker.getWorkerRole().equals(chineseRestaurantCookRole)) {
 			chineseRestaurantCookRole = null;
-			restPanel.removeGui(cookGui);
+			buildPanel.removeGui(cookGui);
 		}
 		//WAITERS AND ALT WAITERS
 		//finish the "leave work" in Role.java 
@@ -194,7 +194,7 @@ public class ChineseRestaurant{
 	}
 
 	public void setPanel(BuildingPanel panel) {
-		restPanel = panel;
+		buildPanel = panel;
 	}
 
 	public ChineseRestaurantCook getCook(boolean test) {
@@ -219,17 +219,17 @@ public class ChineseRestaurant{
 	}
 	
 	public void setBuildingPanel (BuildingPanel buildingPanel) {
-		restPanel = buildingPanel;
+		buildPanel = buildingPanel;
 	}
 
 	public void removeWaiter(ChineseRestaurantWaiterRole chineseRestaurantWaiterRole) {
 		waiters.remove(chineseRestaurantWaiterRole);
-		restPanel.removeGui(chineseRestaurantWaiterRole.gui);
+		buildPanel.removeGui(chineseRestaurantWaiterRole.gui);
 	}
 	
 	public void removeCustomer(ChineseRestaurantCustomerRole customerRole) {
 		customers.remove(customerRole);
-		restPanel.removeGui(customerRole.gui);
+		buildPanel.removeGui(customerRole.gui);
 	}
 	
 	public void closeBuilding(){
@@ -237,10 +237,10 @@ public class ChineseRestaurant{
 		chineseRestaurantHostRole.msgLeaveRole();
 		for (ChineseRestaurantWaiterRole w1: waiters) {
 			w1.msgLeaveRole();
-			restPanel.removeGui(w1.gui);
+			buildPanel.removeGui(w1.gui);
 		}
 		chineseRestaurantCookRole.msgLeaveRole();
-		restPanel.removeGui(cookGui);
+		buildPanel.removeGui(cookGui);
 		
 		chineseRestaurantCashierRole.msgLeaveRole();
 	}
