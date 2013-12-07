@@ -7,12 +7,13 @@ import java.awt.event.*;
 import java.util.ArrayList;
 
 import application.Phonebook;
+import housing.*;
 import application.gui.animation.agentGui.*;
 
 public class AnimationPanel extends JPanel implements MouseListener {
 
 	final static int WINDOWX = 600;
-	final static int WINDOWY = 300;
+	final static int WINDOWY = 325;
 
 	public CityPanel cityPanel;
 	JPanel buildingPanels;
@@ -26,6 +27,7 @@ public class AnimationPanel extends JPanel implements MouseListener {
 	BankLoanerGui bank = new BankLoanerGui();
 	HouseMaintenanceGui house = new HouseMaintenanceGui();
 	RestaurantCookGui restaurant = new RestaurantCookGui();
+	ItalianCookGui italian = new ItalianCookGui();
 	BusGui bus = new BusGui();
 	CarGui car = new CarGui();
 	PersonGui person = new PersonGui();
@@ -59,19 +61,35 @@ public class AnimationPanel extends JPanel implements MouseListener {
 		buildings = cityPanel.getBuildings();
 		for ( int i=0; i<buildings.size(); i++ ) {
 			Building b = buildings.get(i);
-			BuildingPanel bp = new BuildingPanel(b.getName(), this );
-			b.setMyBuildingPanel(bp);
+			String name = b.getName();
+			BuildingPanel panel = null;
+			if(name.toLowerCase().contains("restaurant")) {
+				panel = new RestaurantPanel(name, this );
+			}
+			else if(name.toLowerCase().contains("market")) {
+				panel = new MarketPanel(name, this );
+			}
+			else if(name.toLowerCase().contains("house") || name.toLowerCase().contains("apartment")) {
+				panel = new HousingPanel(name, this );
+			}
+			else if(name.toLowerCase().contains("bank")) {
+				panel = new BankPanel(name, this );
+			}
+			else if(name.toLowerCase().contains("park")){
+				panel = new ParkPanel(name, this);
+			}
+			
+			b.setMyBuildingPanel(panel);
 			setBuildingInPhonebook(b);
-			buildingPanels.add(bp, bp.getName());
-
+			buildingPanels.add(panel, name);
 			add(BorderLayout.NORTH, cityPanel);
 			add(BorderLayout.SOUTH, buildingPanels);
 		}
 
-		/*
+		
 		//UNCOMMENT THE FOLLOWING FOR TESTING ONLY!! re-comment to display final product
-		testGuis();
-
+		//testGuis();
+		/*
 		//testing mechanisms
 		testbutton.addMouseListener(this);
     	testbutton.setSize(100, 50);
@@ -79,8 +97,9 @@ public class AnimationPanel extends JPanel implements MouseListener {
     	testbutton2.addMouseListener(this);
     	testbutton2.setBounds(100, 0, 100, 50);
     	cityPanel.add(testbutton2);
-		 */
+		*/ 
 		//testGuisTwo();
+		//testGuisThree();
 	}
 
 	public void displayBuildingPanel(BuildingPanel bp) {
@@ -98,9 +117,12 @@ public class AnimationPanel extends JPanel implements MouseListener {
 		 * it is required to have multiple instances of each, so we
 		 * must code for that eventuality.
 		 */
-		
-		if (building.getName().toLowerCase().contains("restaurant")) {
+		//setting the panels to the already-initialized businesses
+		if (building.getName().toLowerCase().contains("chinese")) {
 			Phonebook.getPhonebook().getChineseRestaurant().setBuildingPanel(building.myBuildingPanel);
+		}
+		if (building.getName().toLowerCase().contains("italian")) {
+			Phonebook.getPhonebook().getItalianRestaurant().setBuildingPanel(building.myBuildingPanel);
 		}
 		if (building.getName().toLowerCase().contains("market")) {
 			Phonebook.getPhonebook().getEastMarket().setBuildingPanel(building.myBuildingPanel);
@@ -203,15 +225,30 @@ public class AnimationPanel extends JPanel implements MouseListener {
 			}
 		}
 	}
+	
+	public void testGuisThree() {
+		for(Building building : buildings) {
+			if(building.getName().toLowerCase().contains("italian")) {
+				building.myBuildingPanel.addGui(italian);
+				//italian.SetHome(0);
+				building.myBuildingPanel.addGui(new ItalianCustomerGui());
+				building.myBuildingPanel.addGui(new ItalianHostGui());
+				building.myBuildingPanel.addGui(new ItalianWaiterGui());
+				building.myBuildingPanel.addGui(new ItalianCashierGui());
+				//building.myBuildingPanel.addGui(new ItalianCookGui());
+				building.myBuildingPanel.addGui(new ItalianMarketGui());
+			}
+		}
+	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getSource().equals(testbutton)) {
-			restaurant.DoGoToGrill();
+			italian.DoCooking("Steak", 1);
 		}
 		if(e.getSource().equals(testbutton2)) {
-			restaurant.DoPickUpFood();
+			italian.DoPlateIt("Steak", 1);
 		}
 	}
 
@@ -247,11 +284,30 @@ public class AnimationPanel extends JPanel implements MouseListener {
 		
 	}
 	
-	public void addAptUnit(BuildingPanel house, int i) {
-		buildingPanels.add(house);
+	public int getWindowX(){
+		return WINDOWX;
+	}
+	public int getWindowY(){
+		return WINDOWY;
+	}
+	
+	public void addAptUnit(HousingPanel house, Housing housing) {
+		buildingPanels.add(house, house.name);
+		housing.setBuildingPanel(house);
+		//getting the apartment panel from the list of buildings (and thier respective panels)
 		for(Building building : buildings) {
-			if(building.getName().toLowerCase().contains("apartment")) {
-				building.myBuildingPanel.addAptUnit();
+			String name = building.getName();
+			if(name.toLowerCase().contains("apartment")) {
+			//	if(name.toLowerCase().contains("north")) { //east?
+					HousingPanel hp = (HousingPanel) building.myBuildingPanel;
+					hp.addAptUnit(housing);
+					house.setAptBuilding(building);
+			/*	}
+				else if(name.toLowerCase().contains("south")) { //west?
+					HousingPanel hp = (HousingPanel) building.myBuildingPanel;
+					hp.addAptUnit(housing);
+				}
+			*/
 			}
 		}
 	}

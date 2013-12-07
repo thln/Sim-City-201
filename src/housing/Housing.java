@@ -1,5 +1,6 @@
 package housing;
 
+import application.gui.animation.*;
 import person.Person;
 
 public class Housing 
@@ -13,6 +14,7 @@ public class Housing
 	int housingNumber;
 	int xCordinate;
 	int yCordinate;
+	private HousingPanel housingPanel;
 	
 	public Housing()
 	{
@@ -64,5 +66,13 @@ public class Housing
 	public String getOccupantName()
 	{
 		return occupant.getName();
+	}
+	
+	public void setBuildingPanel(HousingPanel myBuildingPanel) {
+		housingPanel = myBuildingPanel;
+	}
+	
+	public HousingPanel getPanel() {
+		return housingPanel;
 	}
 }

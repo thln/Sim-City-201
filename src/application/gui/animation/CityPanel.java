@@ -21,39 +21,37 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import application.gui.animation.agentGui.BusGuiHorizontal;
+import application.gui.animation.agentGui.BusGuiVertical;
 import application.gui.animation.agentGui.Gui;
 
 public class CityPanel extends JPanel implements ActionListener, MouseListener {
 
 	private final int WINDOWX = 600;
-	private final int WINDOWY = 350;
+	private final int WINDOWY = 325;
 
 	AnimationPanel animationPanel;
 	private List<Gui> guis = Collections.synchronizedList(new ArrayList<Gui>());
 	public ArrayList<Building> buildings = new ArrayList<Building>();
 	Dimension Msize = new Dimension(75, 75);
 	Dimension Bsize = new Dimension(75, 75);
-
-	//list of images representing our different buildings
-	BufferedImage carIcon = null;
-	BufferedImage bankIcon = null;
-	BufferedImage marketIcon = null;
-	BufferedImage houseIcon = null;
-	BufferedImage restaurantIcon = null;
-
+	
 	public BufferedImage background = null;
 
 	ImageIcon bank = new ImageIcon("res/bank.png", "bank");
 	ImageIcon restaurant = new ImageIcon("res/restaurant.png", "restaurant");
 	ImageIcon market = new ImageIcon("res/market.png", "market");
 	ImageIcon house = new ImageIcon("res/house.png", "house");
-	ImageIcon apartment = new ImageIcon("res/apartment.png", "bank");
+	ImageIcon apartment = new ImageIcon("res/apartment.png", "apartment");
 	ImageIcon rave = new ImageIcon("res/rave.jpeg");
+	ImageIcon park = new ImageIcon("res/grass.jpg", "park");
 
 	public ImageIcon roadHorizontal = new ImageIcon("res/roadsHorizontal.png");
 	public ImageIcon roadVertical = new ImageIcon("res/roadsVertical.png");
 	public ImageIcon busStop = new ImageIcon("res/bus_stop.png");
-
+	
+	public BusGuiHorizontal busA = new BusGuiHorizontal();
+	public BusGuiVertical busB = new BusGuiVertical();
 
 	public CityPanel(AnimationPanel animationPanel) {
 
@@ -72,13 +70,21 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		} catch (IOException e) {
 		}
 
-		addBuilding("Restaurant", WINDOWX / 2, 20);
+		addBuilding("Chinese Restaurant", WINDOWX / 2, 20);
 		addBuilding("Market", WINDOWX - 100, 100);
 		addBuilding("Bank", WINDOWX / 2, 230);
 		addBuilding("House", 20, 100);
 		addBuilding("Apartment", 0, 0);
-
-		Timer timer = new Timer(10, this );
+		addBuilding("Park",(WINDOWX/2)-80,(WINDOWY/2)-47);
+		addBuilding("Mexican Restaurant", 20, WINDOWY-75);
+		addBuilding("Burger Restaurant", WINDOWX-100, WINDOWY-75);
+		addBuilding("Italian Restaurant", WINDOWX-100, 20);
+		addBuilding("Fancy Restaurant", WINDOWX-100, 100+market.getIconHeight()+2);
+		
+		addGui(busA);
+		addGui(busB);
+		
+		Timer timer = new Timer(10, this);
 		timer.start();
 	}
 
@@ -191,6 +197,12 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		else if (name.toLowerCase().contains("apartment")) {
 			building.setMyImage(apartment);
 			building.setLocation(x, y);
+		}
+		
+		//Park in the Middle
+		else if (name.toLowerCase().contains("park")){
+			building.setMyImage(park);
+			building.setLocation(x,y);
 		}
 
 		building.setName(name);

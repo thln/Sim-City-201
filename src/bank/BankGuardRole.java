@@ -19,7 +19,7 @@ public class BankGuardRole extends Role implements BankGuard {
 	//DATA
 
 	String name;
-	List <BankCustomer> customers;
+	public List <BankCustomer> customers;
 	List <BankCustomer> robbers;
 	List <MyTeller> tellers; 
 
@@ -112,6 +112,7 @@ public class BankGuardRole extends Role implements BankGuard {
 
 		if (leaveRole){
 			leaveRole = false;
+			Phonebook.getPhonebook().getEastBank().goingOffWork(this.person);
 			try {
 				((Worker) person).roleFinishedWork();	
 			}
@@ -175,6 +176,12 @@ public class BankGuardRole extends Role implements BankGuard {
 				}
 			}	
 		}
+		int waitPlace = 0;
+		for(int i=0; i < customers.size(); i++) {
+			if(customers.get(i).equals(cust1))
+				waitPlace = i;
+		}
+		cust1.setWaitPlace(waitPlace+1);
 		cust1.msgNoTellerAvailable();
 		return false;
 	}

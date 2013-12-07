@@ -1,8 +1,9 @@
 package market.test;
 
-import chineseRestaurant.Restaurant;
-import chineseRestaurant.test.mock.MockCook;
+import chineseRestaurant.ChineseRestaurant;
+import chineseRestaurant.test.mock.ChineseRestaurantMockCook;
 import application.Phonebook;
+import application.Restaurant;
 import junit.framework.TestCase;
 import market.Market;
 import market.MarketOrder.orderState;
@@ -21,21 +22,21 @@ import person.Worker;
 public class UPSmanTest extends TestCase {
 
 	Market market;
-	Restaurant restaurant;
+	ChineseRestaurant chineseRestaurant;
 	Worker worker;
 	MockSalesPerson salesPerson;
 	MockMarketRunner marketRunner;
-	MockCook cook;
+	ChineseRestaurantMockCook cook;
 
 	UPSmanRole UPSman;
 
 	public void setUp() throws Exception {
 		super.setUp();
 		market = Phonebook.getPhonebook().getEastMarket();
-		restaurant = Phonebook.getPhonebook().getChineseRestaurant();
+		chineseRestaurant = Phonebook.getPhonebook().getChineseRestaurant();
 		salesPerson = (MockSalesPerson) Phonebook.getPhonebook().getEastMarket().getSalesPerson(true);
 		marketRunner = (MockMarketRunner) Phonebook.getPhonebook().getEastMarket().getMarketRunner(true);
-		cook = (MockCook) Phonebook.getPhonebook().getChineseRestaurant().getCook(true);
+		cook = (ChineseRestaurantMockCook) Phonebook.getPhonebook().getChineseRestaurant().getCook(true);
 
 		worker = new Worker("Worker", 50, "UPSman", "Market", 8, 12, 24);
 		UPSman = new UPSmanRole(worker, "UPSman", "UPSman", market);
@@ -57,7 +58,7 @@ public class UPSmanTest extends TestCase {
 				+ UPSman.log.toString(), 0, UPSman.log.size());
 
 		//Step 1
-		UPSman.msgDeliverOrder(new MarketOrder(restaurant, "Steak", 1));
+		UPSman.msgDeliverOrder(new MarketOrder((Restaurant) chineseRestaurant, "Steak", 1));
 
 		//Checking post conditions for step 1
 		assertEquals("UPSman should have 1 order in it", UPSman.orders.size(), 1);

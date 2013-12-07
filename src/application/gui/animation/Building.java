@@ -1,8 +1,6 @@
 package application.gui.animation;
 
-import java.awt.Rectangle;
-import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
+import java.awt.*;
 
 import javax.swing.*;
 
@@ -75,7 +73,7 @@ public class Building {
 		return (new Rectangle(xLocation, yLocation, myImage.getIconWidth(), myImage.getIconHeight()));
 	}
 	
-	//Display building methos
+	//Display building methods
 	public void displayBuilding() {
 		myBuildingPanel.displayBuildingPanel();
 	}

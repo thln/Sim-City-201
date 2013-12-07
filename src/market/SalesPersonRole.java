@@ -2,14 +2,16 @@ package market;
 
 import java.util.*;
 
-import chineseRestaurant.Restaurant;
+import chineseRestaurant.ChineseRestaurant;
 import application.Phonebook;
+import application.Restaurant;
 import market.MarketOrder.orderState;
 import market.interfaces.MarketCustomer;
 import market.interfaces.SalesPerson;
 import person.Person;
 import person.Role;
 import person.Worker;
+import seafoodRestaurant.SeafoodRestaurant;
 import testing.EventLog;
 import testing.LoggedEvent;
 
@@ -46,8 +48,8 @@ public class SalesPersonRole extends Role implements SalesPerson {
 	}
 
 
+	
 	public void msgIWantProducts(Restaurant restaurant, String item, int numWanted) {
-
 		print("Restaurant asked for " + numWanted + " " + item + "(s)");
 		log.add(new LoggedEvent("Recieved msgIWantProducts"));
 		orders.add(new MarketOrder(restaurant, item, numWanted));
@@ -99,19 +101,34 @@ public class SalesPersonRole extends Role implements SalesPerson {
 	}
 
 
-	public void msgPayment(Restaurant restaurant, double payment) {
+	public void msgPayment(ChineseRestaurant chineseRestaurant, double payment) {
 
 		print("Recieved payment of $" + payment + " from restaurant");
 
 		market.money += payment;
 		for (MarketOrder o : orders) {
-			if (o.restaurant.equals(restaurant)) {
+			if (o.restaurant.equals(chineseRestaurant)) {
 				orders.remove(o);
 				return;
 			}
 		}
 	}
 
+	public void msgPayment(SeafoodRestaurant seafoodRestaurant, double payment) 
+	{
+		print("Recieved payment of $" + payment + " from restaurant");
+
+		market.money += payment;
+		for (MarketOrder o : orders) 
+		{
+			if (o.restaurant.equals(seafoodRestaurant)) 
+			{
+				orders.remove(o);
+				return;
+			}
+		}
+	}
+	
 	//Scheduler
 	public boolean pickAndExecuteAnAction() {
 		if (!orders.isEmpty()) {
@@ -147,7 +164,7 @@ public class SalesPersonRole extends Role implements SalesPerson {
 		o.state = orderState.processing;
 
 		if (market.inventory.get(o.item).amount == 0) {
-			o.restaurant.getCook(test).msgCantFulfill(o.item, 0, o.itemAmountOrdered);
+			((ChineseRestaurant) o.restaurant).getCook(test).msgCantFulfill(o.item, 0, o.itemAmountOrdered);
 			orders.remove(o);
 			stateChanged();
 			return;
@@ -173,7 +190,7 @@ public class SalesPersonRole extends Role implements SalesPerson {
 	public void askForPayment(MarketOrder o) {
 		o.state = orderState.gaveToCustomer;
 		print("Asking for payment from the restaurant");
-		o.restaurant.getCashier(true).msgPleasePayForItems(o.item, o.itemAmountFulfilled, o.orderCost, this);
+		((ChineseRestaurant) o.restaurant).getCashier(true).msgPleasePayForItems(o.item, o.itemAmountFulfilled, o.orderCost, this);
 		stateChanged();
 	}
 
@@ -187,4 +204,6 @@ public class SalesPersonRole extends Role implements SalesPerson {
 			}
 		}
 	}
+
+
 }
