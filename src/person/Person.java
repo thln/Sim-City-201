@@ -236,7 +236,7 @@ public abstract class Person extends Agent{
 	}
 
 	protected void prepareForRestaurant() {
-		getGui().DoGoToRestaurant("italian");
+		getGui().DoGoToRestaurant("chinese");
 		try {
 			atDestination.acquire();
 		} catch (InterruptedException e) {

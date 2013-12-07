@@ -176,7 +176,7 @@ public class Worker extends Person {
 			//If you don't have food in the fridge
 			if (!hasFoodInFridge) {
 				//Check if any restaurants are open
-				if (Phonebook.getPhonebook().getItalianRestaurant().isOpen()) {	
+				if (Phonebook.getPhonebook().getChineseRestaurant().isOpen()) {	
 					prepareForRestaurant();
 				}
 				//
@@ -257,7 +257,7 @@ public class Worker extends Person {
 
 		if (myJob.jobPlace == "restaurant") 
 		{
-			getGui().DoGoToRestaurant("italian");
+			getGui().DoGoToRestaurant("chinese");
 			try {
 				atDestination.acquire();
 			} catch (InterruptedException e) {
@@ -265,7 +265,7 @@ public class Worker extends Person {
 				e.printStackTrace();
 
 			}
-			workerRole = Phonebook.getPhonebook().getItalianRestaurant().arrivedAtWork(this, myJob.title);
+			workerRole = Phonebook.getPhonebook().getChineseRestaurant().arrivedAtWork(this, myJob.title);
 			workerRole.setRoleActive();
 			return;
 		}
@@ -296,7 +296,7 @@ public class Worker extends Person {
 		}
 
 		if (myJob.jobPlace == "restaurant") {
-			if (!Phonebook.getPhonebook().getItalianRestaurant().userClosed)
+			if (!Phonebook.getPhonebook().getChineseRestaurant().userClosed)
 				return true;
 			else
 				return false;
