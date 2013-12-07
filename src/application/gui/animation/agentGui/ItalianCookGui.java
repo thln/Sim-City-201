@@ -25,7 +25,7 @@ public class ItalianCookGui implements Gui {
 	private enum Command {noCommand, atMarket, atFridge};
 	private Command command=Command.noCommand;
 
-    private int xPos = 450, yPos = 150;//default cook position
+    private int xPos = 600, yPos = 150;//default cook position
     private int xDestination = 450, yDestination = 150;//default start position
     
     static final int NTABLES = 5;

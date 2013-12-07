@@ -74,7 +74,7 @@ public class ItalianRestaurant {
 			if (isOpen()) {
 				italianRestaurantHostRole.msgRestaurantOpen();
 			}
-			//restPanel.addGui(cookGui);
+			restPanel.addGui(cookGui);
 			return italianRestaurantCookRole;
 		}
 		else if (title.contains("cashier")) {
@@ -88,6 +88,7 @@ public class ItalianRestaurant {
 			if (isOpen()) {
 				italianRestaurantHostRole.msgRestaurantOpen();
 			}
+			restPanel.addGui(cashierGui);
 			return italianRestaurantCashierRole;
 		}
 		else if (title == "waiter") {	
