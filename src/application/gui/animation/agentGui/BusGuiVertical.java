@@ -6,20 +6,20 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.Semaphore;
 
-public class BusGuiHorizontal extends CityGui {
+public class BusGuiVertical extends CityGui {
 
 	//	private Bus agent = null;
 	private boolean isPresent = true;
 	
-	private final int stopLeftX = 130;
-	private final int stopRightX = 425;
-	private final int stopTopY = 75;
-	private final int stopBottomY = 195;
-	
-	private final int waitTime = 1000;
+	private final int stopTopY = 40;
+	private final int stopBottomY = 230;
+	private final int stopLeftX = 168;
+	private final int stopRightX = 388;
 
-	private int xPos = -25, yPos = stopTopY;//default bus position
-	private int xDestination = stopLeftX;//Stop 1
+	private final int waitTime = 1000;
+	
+	private int xPos = stopLeftX, yPos = 325;//default bus position
+	private int yDestination = stopBottomY;//Stop 1
 
 	private enum Command {noCommand, stop1, stop2, stop3, stop4};
 	private Command command = Command.stop1;
@@ -28,27 +28,26 @@ public class BusGuiHorizontal extends CityGui {
 	BusState state = BusState.stopped;
 
 	private Timer busStop = new Timer();
-	private Semaphore wait = new Semaphore(0, true);
 
-	public BusGuiHorizontal(){
+	public BusGuiVertical(){
 	}
 
 	public void updatePosition() {
-		if (xPos < xDestination)
-			xPos++;
-		else if (xPos > xDestination)
-			xPos--;
+//		if (xPos < xDestination)
+//			xPos++;
+//		else if (xPos > xDestination)
+//			xPos--;
 
-		//		if (yPos < yDestination)
-		//			yPos++;
-		//		else if (yPos > yDestination)
-		//			yPos--;
+		if (yPos < yDestination)
+			yPos++;
+		else if (yPos > yDestination)
+			yPos--;
 
-		if (xPos == 600 || xPos == -25) {
+		if (yPos == 325 || yPos == -25) {
 			changeRoads();
 		}
 
-		if (xPos == xDestination) {
+		if (yPos == yDestination) {
 			if (command == Command.stop1) {
 				busStop.schedule(new TimerTask() {
 					public void run() {
@@ -60,7 +59,7 @@ public class BusGuiHorizontal extends CityGui {
 			else if (command == Command.stop2) {
 				busStop.schedule(new TimerTask() {
 					public void run() {
-						goToEndOfTopRoad();
+						goToEndOfLeftRoad();
 					}
 				},
 				waitTime);
@@ -76,7 +75,7 @@ public class BusGuiHorizontal extends CityGui {
 			else if (command == Command.stop4) {
 				busStop.schedule(new TimerTask() {
 					public void run() {
-						goToEndOfBottomRoad();
+						goToEndOfRightRoad();
 					}
 				},
 				waitTime);
@@ -85,48 +84,48 @@ public class BusGuiHorizontal extends CityGui {
 	}
 
 	public void draw(Graphics2D g) {
-		g.setColor(Color.BLUE);
+		g.setColor(Color.RED);
 		g.fillOval(xPos, yPos, 25, 25); //keeping it uniform for now
 	}
 
 	//Actions
 	public void goToStop1() {
 		command = Command.stop1;
-		xDestination = stopLeftX;
+		yDestination = stopBottomY;
 	}
 
 	public void goToStop2() {
 		command = Command.stop2;
-		xDestination = stopRightX;
+		yDestination = stopTopY;
 		
 	}
 
 	public void goToStop3() {
 		command = Command.stop3;
-		xDestination = stopRightX;
+		yDestination = stopTopY;
 	}
 
 	public void goToStop4() {
 		command = Command.stop4;
-		xDestination = stopLeftX;
+		yDestination = stopBottomY;
 	}
 
-	public void goToEndOfTopRoad() {
-		xDestination = 600;
+	public void goToEndOfRightRoad() {
+		yDestination = 325;
 	}
 
-	public void goToEndOfBottomRoad() {
-		xDestination = -25;
+	public void goToEndOfLeftRoad() {
+		yDestination = -25;
 	}
 
 	public void changeRoads() {
-		if (xDestination == 600) {
-			yPos = stopBottomY;
-			goToStop3();
+		if (yDestination == 325) {
+			xPos = stopLeftX;
+			goToStop1();
 		}
 		else {
-			yPos = stopTopY;
-			goToStop1();
+			xPos = stopRightX;
+			goToStop3();
 		}
 	}
 
