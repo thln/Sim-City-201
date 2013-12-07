@@ -107,6 +107,7 @@ public abstract class Role {
             AlertLog.getInstance().logInfo(AlertTag.MARKET, roleName + " " + getName(), msg);
 
             }
+            //Different Restaurants IMPLEMENT
             else if (roleName.equals("Alternative Waiter") || roleName.equals("Cashier")
                             || roleName.equals("Cook") || roleName.equals("Host") 
                             || roleName.equals("Restaurant Customer") || roleName.equals("waiter") )
