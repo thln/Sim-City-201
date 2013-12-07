@@ -43,14 +43,14 @@ public class Application extends JPanel {
 
 		//Bank Workers
 		//SHIFT 1
-		Worker bank1a = new Worker("Alex", 100, "bankTeller", "bank", 1, 6, 14);
-		Worker bank1b = new Worker("Ben", 100, "loanOfficer", "bank", 1, 6, 14);
-		Worker bank1c = new Worker("Caitlyn", 100, "bankGuard", "bank", 0, 6, 13);
+		Worker bank1a = new Worker("Alex", 100, "bankTeller", "East Bank", 1, 6, 14);
+		Worker bank1b = new Worker("Ben", 100, "loanOfficer", "East Bank", 1, 6, 14);
+		Worker bank1c = new Worker("Caitlyn", 100, "bankGuard", "East Bank", 0, 6, 13);
 
 		//SHIFT 2
-		Worker bank2a = new Worker("Andy", 100, "bankTeller", "bank", 12, 18, 1);
-		Worker bank2b = new Worker("Billy", 100, "loanOfficer", "bank", 13, 18, 2);
-		Worker bank2c = new Worker("Courtney", 100, "bankGuard", "bank", 12, 18, 1);
+		Worker bank2a = new Worker("Andy", 100, "bankTeller", "East Bank", 12, 18, 1);
+		Worker bank2b = new Worker("Billy", 100, "loanOfficer", "East Bank", 13, 18, 2);
+		Worker bank2c = new Worker("Courtney", 100, "bankGuard", "East Bank", 12, 18, 1);
 
 		//Market Workers
 		//SHIFT 1

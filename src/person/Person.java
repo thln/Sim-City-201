@@ -52,7 +52,7 @@ public abstract class Person extends Agent{
 
 	//Bank Related
 	public double money;
-
+	public String myBank;
 	public int accountNum;
 	public double accountBalance;
 	public double desiredCash;
@@ -113,9 +113,17 @@ public abstract class Person extends Agent{
 
 		if (!(this instanceof Crook))
 			Do("Becoming Bank Customer");
-		//gui.walk = gui.decideForBus(gui.getxDestination(), gui.getyDestination());
+		
+		//if (home.structure == EastApartment), destination = eastBank
+			gui.walk = gui.decideForBus((int) Phonebook.getPhonebook().getEastBank().location.getX(), 
+					(int) Phonebook.getPhonebook().getEastBank().location.getY());
+			
+			//gui.walk = gui.decideForBus(Phonebook.getPhonebook().getEastBank().getClosestStop().getX(),
+			//		Phonebook.getPhonebook().getEastBank().getClosestStop().getY());
+					
 		if (!gui.walk){
-			gui.doGoToBus();
+			gui.doGoToBus(Phonebook.getPhonebook().getEastBank().getClosestStop().getX(),
+					Phonebook.getPhonebook().getEastBank().getClosestStop().getY());
 			try {
 				atDestination.acquire();
 			} catch (InterruptedException e) {
@@ -124,7 +132,10 @@ public abstract class Person extends Agent{
 			}
 		}
 
-		getGui().DoGoToBank();
+		//if (home.structure == EastApartment), destination = eastBank
+		getGui().DoGoToBank("East");
+		//else go west
+		
 		try {
 			atDestination.acquire();
 		} catch (InterruptedException e) {

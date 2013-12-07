@@ -39,9 +39,10 @@ public class PersonGui extends CityGui {
 	//	private int yRestaurant5Location;
 	private int xMarketLocation = 500 + 25;
 	private int yMarketLocation = 100 + 25;
-	private int xBankLocation = 300 + 30;
-	private int yBankLocation = 230 + 30;
 	
+	//Bus stops
+	private int busStopX;
+	private int busStopY;
 
 	private int xPos, yPos;//default person position
 	private int xDestination, yDestination;//default start position
@@ -102,37 +103,39 @@ public class PersonGui extends CityGui {
 	}
 
 	public void updatePosition() {
-		if (getxPos() < getxDestination())
-			setxPos(getxPos() + 1);
-		else if (getxPos() > getxDestination())
-			setxPos(getxPos() - 1);
+		if (xPos < getxDestination())
+			setxPos(xPos + 1);
+		else if (xPos > getxDestination())
+			setxPos(xPos - 1);
 
-		if (getyPos() < getyDestination())
-			setyPos(getyPos() + 1);
-		else if (getyPos() > getyDestination())
-			setyPos(getyPos() - 1);
+		if (yPos < getyDestination())
+			setyPos(yPos + 1);
+		else if (yPos > getyDestination())
+			setyPos(yPos - 1);
 
-		if (getxPos() == getxDestination() && getyPos() == getyDestination()) {
-			//System.out.println(command + "  " + agent.getName() + "has semaphore permits = " + agent.getAtDestination().availablePermits());
+		if (xPos == getxDestination() && yPos == getyDestination() && command != Command.noCommand) {
+		//	System.out.println(command + "  " + agent.getName() + "has semaphore permits = " + agent.getAtDestination().availablePermits());
 
 			if(agent != null) {
-				if (command == Command.GoToRestaurant && getxPos() == xRestaurant1Location && getyPos() == yRestaurant1Location) {
+				if (command == Command.GoToRestaurant && xPos == xRestaurant1Location && yPos == yRestaurant1Location) {
 					agent.msgAtDestination();
 					currColor = transColor;
 				}
-				if (command == Command.GoToMarket && getxPos() == xMarketLocation && getyPos() == yMarketLocation) {
+				if (command == Command.GoToMarket && xPos == xMarketLocation && yPos == yMarketLocation) {
 					agent.msgAtDestination();
 					currColor = transColor;
 				}
-				if (command == Command.GoToBank && getxPos() == xBankLocation && getyPos() == yBankLocation) {
+				
+				if (command == Command.GoToBank && xPos == Phonebook.getPhonebook().getEastBank().location.getX() 
+						&& yPos == Phonebook.getPhonebook().getEastBank().location.getY()) {
 					agent.msgAtDestination();
 					currColor = transColor;
 				}
-				if (command == Command.GoHome && getxPos() == getxHome() && getyPos() == yHome) {
+				if (command == Command.GoHome && xPos == getxHome() && yPos == yHome) {
 					agent.msgAtDestination();
 					currColor = transColor;
 				}
-				if (command == Command.GoToBusStop && getxPos() == xDestination && getyPos() == getyDestination()) {
+				if (command == Command.GoToBusStop) {
 					agent.msgAtDestination();
 					System.out.println("Reached bus stop");
 					currColor = transColor;
@@ -156,14 +159,14 @@ public class PersonGui extends CityGui {
 		else if (!raveMode)
 			g.setColor(currColor);
 
-		g.fillRect(getxPos(), getyPos(), 20, 20);
+		g.fillRect(xPos, yPos, 20, 20);
 		if(currColor != transColor)
 			g.setColor(Color.WHITE);
 		if(agent != null) {
-			g.drawString(agent.getName(), getxPos(), getyPos());
+			g.drawString(agent.getName(), xPos, yPos);
 		}
 		else
-			g.drawString("testGui", getxPos(), getyPos());
+			g.drawString("testGui", xPos, yPos);
 	}
 
 	public void setHungry() {
@@ -192,9 +195,18 @@ public class PersonGui extends CityGui {
 		command = Command.GoToMarket;
 	}
 
-	public void DoGoToBank() {//later you will map building to map coordinates.		
-		setxDestination(xBankLocation);
-		setyDestination(yBankLocation);
+	public void DoGoToBank(String location) {
+		
+		if (location.equals("East")){
+	//		System.out.println("x, y is " + Phonebook.getPhonebook().getEastBank().location.getX() + " , " + Phonebook.getPhonebook().getEastBank().location.getY());
+		setxDestination((int) Phonebook.getPhonebook().getEastBank().location.getX());
+		setyDestination((int) Phonebook.getPhonebook().getEastBank().location.getY());
+	//	System.out.println("x, y is " + xDestination + " , " + yDestination);
+		}
+		else {
+			setxDestination((int) Phonebook.getPhonebook().getWestBank().location.getX());
+			setyDestination((int) Phonebook.getPhonebook().getWestBank().location.getY());
+		}
 		setDefaultColor();
 		command = Command.GoToBank;
 	}
@@ -211,28 +223,33 @@ public class PersonGui extends CityGui {
 		command = Command.GoHome;
 	}
 
-	public void doGoToBus() {
+	public void doGoToBus(double stopX, double stopY) {
 		System.out.println("Going to bus stop");
-		if (xPos <= 170){
-			if (yPos <= 30){
-				xDestination = (int) Phonebook.getPhonebook().getBusStops().get(0).getX();
-				setyDestination((int) Phonebook.getPhonebook().getBusStops().get(0).getY());
-			}
-			else {
-				xDestination = (int) Phonebook.getPhonebook().getBusStops().get(1).getX();
-				setyDestination((int) Phonebook.getPhonebook().getBusStops().get(1).getY());
-			}	
-		}
-		else if (xPos > 170) {
-			if (yPos <= 30){
-				xDestination = (int) Phonebook.getPhonebook().getBusStops().get(2).getX();
-				setyDestination((int) Phonebook.getPhonebook().getBusStops().get(2).getY());
-			}
-			else {
-				xDestination = (int) Phonebook.getPhonebook().getBusStops().get(3).getX();
-				setyDestination((int) Phonebook.getPhonebook().getBusStops().get(3).getY());
-			}
-		}	
+		busStopX = (int) stopX;
+		busStopY = (int) stopY;
+		xDestination = busStopX;
+		yDestination = busStopY;
+		
+//		if (xPos <= 170){
+//			if (yPos <= 30){
+//				xDestination = (int) Phonebook.getPhonebook().getBusStops().get(0).getX();
+//				setyDestination((int) Phonebook.getPhonebook().getBusStops().get(0).getY());
+//			}
+//			else {
+//				xDestination = (int) Phonebook.getPhonebook().getBusStops().get(1).getX();
+//				setyDestination((int) Phonebook.getPhonebook().getBusStops().get(1).getY());
+//			}	
+//		}
+//		else if (xPos > 170) {
+//			if (yPos <= 30){
+//				xDestination = (int) Phonebook.getPhonebook().getBusStops().get(2).getX();
+//				setyDestination((int) Phonebook.getPhonebook().getBusStops().get(2).getY());
+//			}
+//			else {
+//				xDestination = (int) Phonebook.getPhonebook().getBusStops().get(3).getX();
+//				setyDestination((int) Phonebook.getPhonebook().getBusStops().get(3).getY());
+//			}
+//		}	
 		setDefaultColor();
 		command = Command.GoToBusStop;
 	}

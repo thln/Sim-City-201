@@ -57,7 +57,7 @@ public class Phonebook{
 		busStops.add(new Point(127, 230));		//Bottom left bus stop = busStop(2)
 		busStops.add(new Point(420, 230));		//Bottom right bus stop = busStop(3)
 		
-		eastBank = new Bank("Bank");
+		eastBank = new Bank("East Bank");
 		eastBank.setClosestStop(busStops.get(3));		//setting building's closest bus stop
 		
 		//	westBank = new Bank("Bank");

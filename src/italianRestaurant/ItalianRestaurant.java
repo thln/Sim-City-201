@@ -13,7 +13,7 @@ public class ItalianRestaurant {
 	//Data
 	String name;
 	public boolean userClosed = false;
-	private Point closestPoint;
+	private Point closestStop;
 
 
 	//List of Waiters
@@ -239,6 +239,9 @@ public class ItalianRestaurant {
 
 	public void setClosestStop(Point point) {
 		closestStop = point;
+	}
+	public Point getClosestStop() {
+		return closestStop;
 	}
 }
 

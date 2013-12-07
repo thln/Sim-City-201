@@ -37,6 +37,7 @@ public class Bank {
 	String name;
 	public boolean userClosed = false;
 	private Point closestStop;
+	public Point location;
 
 	//Open and closing times
 	public WatchTime openTime = new WatchTime(8);
@@ -68,6 +69,10 @@ public class Bank {
 		loanOfficerRole =  new LoanOfficerRole("Loan Officer");
 		//tellers  = new ArrayList<>();
 		
+		if (name.equals("East Bank"))
+			location = new Point(330, 260);
+		else if (name.equals("West Bank"))
+			location = new Point(1,1);
 		
 		this.name = name;
 		vault = 10000;
@@ -222,5 +227,10 @@ public class Bank {
 	
 	public void setClosestStop (Point p) {
 		closestStop = p;
+	}
+
+
+	public Point getClosestStop() {
+		return closestStop;
 	}
 }

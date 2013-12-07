@@ -224,9 +224,23 @@ public class Worker extends Person {
 	public void prepareForWork() {
 		currentRoleName = myJob.title;
 		print("Preparing for work as " + myJob.title);
-		if (myJob.jobPlace.equals("bank")) 
+		if (myJob.jobPlace.equals("East Bank")) 
 		{
-			getGui().DoGoToBank();
+			getGui().DoGoToBank("East");
+			try {	
+				atDestination.acquire();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			workerRole = Phonebook.getPhonebook().getEastBank().arrivedAtWork(this, myJob.title);
+			workerRole.setRoleActive();
+			return;
+		}
+		
+		if (myJob.jobPlace.equals("West Bank")) 
+		{
+			getGui().DoGoToBank("West");
 			try {	
 				atDestination.acquire();
 			} catch (InterruptedException e) {

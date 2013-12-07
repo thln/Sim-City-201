@@ -228,4 +228,8 @@ public class Market {
 	public void setClosestStop(Point point) {
 		closestStop = point;
 	}
+	
+	public Point getClosestStop() {
+		return closestStop;
+	}
 }
