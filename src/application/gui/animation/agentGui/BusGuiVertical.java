@@ -6,13 +6,15 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.Semaphore;
 
+import application.Phonebook;
+
 public class BusGuiVertical extends CityGui {
 
 	//	private Bus agent = null;
 	private boolean isPresent = true;
 	
-	private final int stopTopY = 40;
-	private final int stopBottomY = 230;
+	private final int stopTopY = (int) Phonebook.getPhonebook().getBusStops().get(0).getY()+8;
+	private final int stopBottomY = (int) Phonebook.getPhonebook().getBusStops().get(2).getY()+8;
 	private final int stopLeftX = 168;
 	private final int stopRightX = 388;
 

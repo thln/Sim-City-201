@@ -6,13 +6,15 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.Semaphore;
 
+import application.Phonebook;
+
 public class BusGuiHorizontal extends CityGui {
 
 	//	private Bus agent = null;
 	private boolean isPresent = true;
 	
-	private final int stopLeftX = 130;
-	private final int stopRightX = 425;
+	private final int stopLeftX = (int) Phonebook.getPhonebook().getBusStops().get(0).getX();
+	private final int stopRightX = (int) Phonebook.getPhonebook().getBusStops().get(1).getX();;
 	private final int stopTopY = 75;
 	private final int stopBottomY = 195;
 	
@@ -98,7 +100,6 @@ public class BusGuiHorizontal extends CityGui {
 	public void goToStop2() {
 		command = Command.stop2;
 		xDestination = stopRightX;
-		
 	}
 
 	public void goToStop3() {

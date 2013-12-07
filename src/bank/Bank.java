@@ -1,5 +1,6 @@
 package bank;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -35,6 +36,7 @@ public class Bank {
 	//Data
 	String name;
 	public boolean userClosed = false;
+	private Point closestStop;
 
 	//Open and closing times
 	public WatchTime openTime = new WatchTime(8);
@@ -216,5 +218,9 @@ public class Bank {
 			((Role) t1.tell1).msgLeaveRole();
 		}
 		loanOfficerRole.msgLeaveRole();
+	}
+	
+	public void setClosestStop (Point p) {
+		closestStop = p;
 	}
 }

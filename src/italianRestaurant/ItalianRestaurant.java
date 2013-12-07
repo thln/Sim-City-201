@@ -1,4 +1,5 @@
 package italianRestaurant;
+import java.awt.Point;
 import java.util.Vector;
 
 import person.Person;
@@ -12,6 +13,7 @@ public class ItalianRestaurant {
 	//Data
 	String name;
 	public boolean userClosed = false;
+	private Point closestPoint;
 
 
 	//List of Waiters
@@ -233,6 +235,10 @@ public class ItalianRestaurant {
 		//restPanel.removeGui(cookGui);
 
 		italianRestaurantCashierRole.msgLeaveRole();
+	}
+
+	public void setClosestStop(Point point) {
+		closestStop = point;
 	}
 }
 

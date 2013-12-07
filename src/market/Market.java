@@ -1,5 +1,6 @@
 package market;
 
+import java.awt.Point;
 import java.util.HashMap;
 
 import market.interfaces.MarketRunner;
@@ -23,6 +24,7 @@ public class Market {
 	//Data
 	String name;
 	public boolean userClosed = false;
+	private Point closestStop;
 
 	//Open and closing times
 	public WatchTime openTime = new WatchTime(9);
@@ -220,5 +222,10 @@ public class Market {
 		
 		UPSmanRole.msgLeaveRole();
 		marketPanel.removeGui(UPSmanGui);
+	}
+
+
+	public void setClosestStop(Point point) {
+		closestStop = point;
 	}
 }

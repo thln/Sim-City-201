@@ -51,17 +51,33 @@ public class Phonebook{
 
 	private Phonebook() 
 	{
+		//Set bus stops
+		busStops.add(new Point(127, 28));		//Top left bus stop = busStop(0)
+		busStops.add(new Point(420, 28));		//Top right bus stop = busStop(1)
+		busStops.add(new Point(127, 230));		//Bottom left bus stop = busStop(2)
+		busStops.add(new Point(420, 230));		//Bottom right bus stop = busStop(3)
+		
 		eastBank = new Bank("Bank");
+		eastBank.setClosestStop(busStops.get(3));		//setting building's closest bus stop
+		
 		//	westBank = new Bank("Bank");
+		//set bus stop
+		
 		eastMarket = new Market("Market");
+		eastMarket.setClosestStop(busStops.get(1));		//setting building's closest bus stop
+		
 		//	westMarket = new Market("Market");
+		// set bus stop
+		
 		chineseRestaurant = new ChineseRestaurant("Chinese Restaurant");
+		chineseRestaurant.setClosestStop(busStops.get(1));		//setting building's closest bus stop
+		
 		italianRestaurant = new ItalianRestaurant("Italian Restaurant");
+		italianRestaurant.setClosestStop(busStops.get(1));		//setting building's closest bus stop
+		
 		housingMaintenanceCompany = new HousingMaintenanceCompany("Housing maintenance company");
-		getBusStops().add(new Point(172, 28));
-		getBusStops().add(new Point(172, 230));
-		getBusStops().add(new Point(420, 28));
-		getBusStops().add(new Point(420, 230));
+		
+	
 	}
 
 	public static Phonebook getPhonebook() 
