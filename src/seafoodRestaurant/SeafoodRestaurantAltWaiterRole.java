@@ -1,5 +1,6 @@
 package seafoodRestaurant;
 
+import application.Phonebook;
 import person.Person;
 import seafoodRestaurant.SeafoodRestaurantWaiterRole.MyCustomer;
 import seafoodRestaurant.SeafoodRestaurantWaiterRole.myCustomerState;
@@ -27,8 +28,9 @@ public class SeafoodRestaurantAltWaiterRole extends SeafoodRestaurantWaiterRole 
 			e.printStackTrace();
 		}
 		waiterGui.GoHomePosition();
-		cook.pleaseCook(mc.choice, mc.table, this);
-		print("Message 7 - Sent Order");
+		//cook.pleaseCook(mc.choice, mc.table, this);
+		Phonebook.getPhonebook().getSeafoodRestaurant().getRevolvingStand().newOrder(mc.choice, mc.table, this);
+		print("Message 7 - Sent Order To Revolving Stand");
 		mc.state = myCustomerState.OrderSent;
 	}
 

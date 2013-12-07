@@ -182,7 +182,12 @@ public class SeafoodRestaurantCookRole extends Role implements Restaurant
 			}
 			return true;
 		}
-			
+		
+		if(!Phonebook.getPhonebook().getChineseRestaurant().getRevolvingStand().isStandEmpty()) {
+			takeRevolvingStandOrder();
+			return true;
+		}
+		
 		synchronized(orders)
 		{
 			for( SeafoodRestaurantOrder order : orders)
@@ -268,6 +273,12 @@ public class SeafoodRestaurantCookRole extends Role implements Restaurant
 		print("We are low on " + foodItem + ". Let's order " + FoodInventory.get(foodItem).OrderSize + " more from " + markets.get(CurrentMarket) + "!");
 		//Implement a mechanism to choose between markets
 		//Phonebook.getPhonebook().getEastMarket().salesPersonRole.msgIWantProducts(restaurant, foodItem, FoodInventory.get(foodItem).OrderSize);
+	}
+	
+	private void takeRevolvingStandOrder()
+	{
+		print("Taking order from Revolving Stand.");
+		orders.add(Phonebook.getPhonebook().getSeafoodRestaurant().getRevolvingStand().takeOrder());
 	}
 	
 //	public void addMarket(SeafoodRestaurantMarketRole m)
