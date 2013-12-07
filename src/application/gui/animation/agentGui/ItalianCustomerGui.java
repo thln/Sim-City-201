@@ -124,7 +124,7 @@ public class ItalianCustomerGui implements Gui{
         	g.setColor(Color.BLACK);
         	g.drawString(agent.getName(), xPos, yPos);
         }
-		g.drawImage(currImg, xDestination, yDestination, null);
+		g.drawImage(currImg, xPos, yPos, null);
 	}
 
 	public boolean isPresent() {
@@ -163,14 +163,14 @@ public class ItalianCustomerGui implements Gui{
 	
 	public void DoGotoCashier(){
 		xDestination = 20;
-    	yDestination = 170;
+    	yDestination = 190;
     	currImg = null;
     	command=Command.atCashier;
 	}
 	
 	public void DoGoToJail(){
-		xDestination = 400;
-    	yDestination = 400;
+		xDestination = 125;
+    	yDestination = 260;
     	//System.out.println("about to call gui.setCustomerEnabled(agent);");
 		//isHungry = false;
 		//gui.setCustomerEnabled(agent);

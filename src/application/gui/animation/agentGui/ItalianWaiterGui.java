@@ -160,12 +160,12 @@ public class ItalianWaiterGui implements Gui {
     
     public void GotoBreak() {
     	xDestination = 400;
-    	yDestination = 20;
-    }
+    	yDestination = 30;
+    } 
     
     public void GoToCashier() {
     	xDestination = 20;
-    	yDestination = 170;
+    	yDestination = 190;
     	command = Command.atCashier;
     }
 
@@ -180,12 +180,6 @@ public class ItalianWaiterGui implements Gui {
     public enum state {moving, atTable};
     class Order {
     	String choice;
-    	/*
-    	public int sXPos = xPos;
-    	public int sYPos = yPos;
-    	public int sXDestination = xPos;
-    	public int sYDestination = xPos;
-    	*/
     	public state State = state.moving;
     	
     	public Order(String choice) {

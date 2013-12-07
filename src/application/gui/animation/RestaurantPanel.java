@@ -164,12 +164,16 @@ public class RestaurantPanel extends BuildingPanel implements ActionListener{
 			g2.drawString("Lobby", xLobbyLocation + 2, yLobbyLocation + 45);
 		}
 		else if (name.toLowerCase().contains("italian")) { //for Carmen's restaurant
+			g2.setColor(Color.CYAN);
+			g2.fillRect(WINDOWX-200, 10, 150, 50);
 			g2.setColor(Color.PINK);
-			g2.fillRect(0, 10, 200, 50);
+			g2.fillRect(0, 10, 200, 50); //lobby
 			
 			g2.drawImage(fridge, 500, 100, null);
-			//cook's grill
+			
 			g2.setColor(Color.darkGray);
+			g2.fillRect(10, 220, 40, 10);
+			//cook's grill
 			g2.fillRect(WINDOWX-350, WINDOWY-80, 280, 5);
 			g2.fillRect(WINDOWX-350, WINDOWY-45, 280, 5);
 			for(int j=0;j<15;j++)
@@ -184,6 +188,7 @@ public class RestaurantPanel extends BuildingPanel implements ActionListener{
 			//labels
 			g2.setColor(Color.BLACK);
 	        g2.drawString("Lobby", 10, 20);
+	        g2.drawString("Break Room", WINDOWX - 200, 20);
 			//Here is the table
 			g2.setColor(Color.ORANGE);
 			
