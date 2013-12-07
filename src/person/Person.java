@@ -6,6 +6,7 @@ import java.util.*;
 import java.util.concurrent.Semaphore;
 
 import chineseRestaurant.ChineseRestaurantCustomerRole;
+import italianRestaurant.*;
 import bank.BankCustomerRole;
 import market.MarketCustomerRole;
 import person.Role;
@@ -235,7 +236,7 @@ public abstract class Person extends Agent{
 	}
 
 	protected void prepareForRestaurant() {
-		getGui().DoGoToRestaurant();
+		getGui().DoGoToRestaurant("italian");
 		try {
 			atDestination.acquire();
 		} catch (InterruptedException e) {
@@ -248,7 +249,16 @@ public abstract class Person extends Agent{
 			if (cust1 instanceof ChineseRestaurantCustomerRole) {
 				ChineseRestaurantCustomerRole RCR = (ChineseRestaurantCustomerRole) cust1;
 				if (Phonebook.getPhonebook().getChineseRestaurant().arrived(RCR)) {
-					currentRoleName = "Restaurant Customer";
+					currentRoleName = "Chinese Restaurant Customer";
+					cust1.setRoleActive();
+					stateChanged();
+				}
+				return;
+			}
+			if (cust1 instanceof ItalianCustomerRole) {
+				ItalianCustomerRole RCR = (ItalianCustomerRole) cust1;
+				if (Phonebook.getPhonebook().getItalianRestaurant().arrived(RCR)) {
+					currentRoleName = "Italian Restaurant Customer";
 					cust1.setRoleActive();
 					stateChanged();
 				}

@@ -16,7 +16,6 @@ public class BankTellerRole extends Role implements BankTeller {
 
 	//DATA
 	int balanceMinimum = 5;
-	String name;
 	List<Account> myAccounts;		//A list of the accounts that only this teller will handle
 
 	public enum AccountState {neutral, newAccount, waiting, depositing, withdrawing, requestingLoan, 
@@ -138,6 +137,7 @@ public class BankTellerRole extends Role implements BankTeller {
 	public void msgLeavingBank(int accountNum) {
 		Account correct = findMyAccount (accountNum);
 		myAccounts.remove(correct);
+		Phonebook.getPhonebook().getEastBank().getBankGuard(test).msgCustomerLeavingBank(this);
 		stateChanged();
 	}
 	
@@ -195,16 +195,13 @@ public class BankTellerRole extends Role implements BankTeller {
 
 		}
 
-		if (leaveRole && myAccounts.size() == 0 && ((BankGuardRole) Phonebook.getPhonebook().getEastBank().getBankGuard(test)).customers.size() == 0){
+		if (leaveRole && myAccounts.size() == 0 && ((BankGuardRole) Phonebook.getPhonebook().getEastBank().getBankGuard(test)).customersInBank == 0){
 			leaveRole = false;
+			//print("" + ((BankGuardRole) Phonebook.getPhonebook().getEastBank().getBankGuard(test)).customersInBank);
+			Phonebook.getPhonebook().getEastBank().goingOffWork(person);
 			if (((Role) Phonebook.getPhonebook().getEastBank().getBankGuard(test)).getPerson() != null)
-				Phonebook.getPhonebook().getEastBank().getBankGuard(test).msgTellerLeavingWork(this);
-			try {
+				Phonebook.getPhonebook().getEastBank().getBankGuard(test).msgTellerLeavingWork(this);	
 				((Worker) person).roleFinishedWork();	
-			}
-			catch (Exception e){
-
-			};
 			return true;
 		}
 		return false;

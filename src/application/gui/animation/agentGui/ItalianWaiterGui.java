@@ -96,6 +96,9 @@ public class ItalianWaiterGui implements Gui {
         g.setColor(Color.MAGENTA);
         g.fillRect(xPos, yPos, 20, 20);
         g.setColor(Color.BLACK);
+        if(agent != null) {
+        	g.drawString(agent.getRoleName(), xPos, yPos+40);
+        }
         synchronized(orders) {
 	        if(orders != null) {
 	        	for(Order order : orders) {

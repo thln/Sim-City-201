@@ -1,7 +1,6 @@
 package italianRestaurant;
 import java.util.*;
 
-import chineseRestaurant.ChineseRestaurantCustomerRole;
 import person.*;
 import application.WatchTime;
 import application.gui.animation.*;
@@ -25,6 +24,8 @@ public class ItalianRestaurant {
 
 	//Roles
 	public ItalianHostRole italianRestaurantHostRole = new ItalianHostRole("Host");
+	public ItalianHostGui hostGui = new ItalianHostGui(italianRestaurantHostRole);
+	
 	public ItalianCookRole italianRestaurantCookRole = new ItalianCookRole("Cook", this);
 	public ItalianCookGui cookGui = new ItalianCookGui(italianRestaurantCookRole);
 
@@ -55,6 +56,8 @@ public class ItalianRestaurant {
 			}
 			//Setting bank guard role to new role
 			italianRestaurantHostRole.setPerson(person);
+			italianRestaurantHostRole.setGui(hostGui);
+			restPanel.addGui(hostGui);
 			if (isOpen()) {
 				italianRestaurantHostRole.msgRestaurantOpen();
 			}
