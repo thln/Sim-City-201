@@ -11,6 +11,7 @@ import market.interfaces.SalesPerson;
 import person.Person;
 import person.Role;
 import person.Worker;
+import seafoodRestaurant.SeafoodRestaurant;
 import testing.EventLog;
 import testing.LoggedEvent;
 
@@ -113,6 +114,21 @@ public class SalesPersonRole extends Role implements SalesPerson {
 		}
 	}
 
+	public void msgPayment(SeafoodRestaurant seafoodRestaurant, double payment) 
+	{
+		print("Recieved payment of $" + payment + " from restaurant");
+
+		market.money += payment;
+		for (MarketOrder o : orders) 
+		{
+			if (o.restaurant.equals(seafoodRestaurant)) 
+			{
+				orders.remove(o);
+				return;
+			}
+		}
+	}
+	
 	//Scheduler
 	public boolean pickAndExecuteAnAction() {
 		if (!orders.isEmpty()) {
@@ -188,4 +204,6 @@ public class SalesPersonRole extends Role implements SalesPerson {
 			}
 		}
 	}
+
+
 }

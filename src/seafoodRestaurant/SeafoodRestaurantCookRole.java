@@ -10,7 +10,7 @@ import java.util.TimerTask;
 
 import person.Role;
 import person.Worker;
-import seafoodRestaurant.interfaces.SeafoodRestaurantMarket;
+//import seafoodRestaurant.interfaces.SeafoodRestaurantMarket;
 import seafoodRestaurant.interfaces.SeafoodRestaurantWaiter;
 import application.Phonebook;
 import application.Restaurant;
@@ -60,11 +60,11 @@ public class SeafoodRestaurantCookRole extends Role implements Restaurant
 	private AnimationPanel animPanel;
 	private Timer CookTimer  = new Timer();
 	private List <SeafoodRestaurantOrder> orders = Collections.synchronizedList(new ArrayList<SeafoodRestaurantOrder>());
-	private List <SeafoodRestaurantMarket> markets = Collections.synchronizedList(new ArrayList<SeafoodRestaurantMarket>());
+	//private List <SeafoodRestaurantMarket> markets = Collections.synchronizedList(new ArrayList<SeafoodRestaurantMarket>());
 	private Map<String, Integer> RecipeBook  = new HashMap<String, Integer>();
 	private Map<String, Food> FoodInventory = new HashMap<String, Food>();
 	private String name;
-	private int CurrentMarket = 0;
+	//private int CurrentMarket = 0;
 	
 	private SeafoodRestaurant restaurant;
 //	private String name;
@@ -152,11 +152,11 @@ public class SeafoodRestaurantCookRole extends Role implements Restaurant
 		
 		if(S == cookState.Ordering)
 		{
-			CurrentMarket++;
-			if(CurrentMarket == 3)
-			{
-				CurrentMarket = 0;
-			}
+//			CurrentMarket++;
+//			if(CurrentMarket == 3)
+//			{
+//				CurrentMarket = 0;
+//			}
 			if(FoodInventory.get("Lobster Tail and Roll").isLow)
 			{
 				//CurrentMarket++;
@@ -279,9 +279,9 @@ public class SeafoodRestaurantCookRole extends Role implements Restaurant
 	public void OrderFood(String foodItem)
 	{
 		S = cookState.Cooking;
-		print("We are low on " + foodItem + ". Let's order " + FoodInventory.get(foodItem).OrderSize + " more from " + markets.get(CurrentMarket) + "!");
+		print("We are low on " + foodItem + ". Let's order " + FoodInventory.get(foodItem).OrderSize + " more from " + Phonebook.getPhonebook().getEastMarket().getName() + "!");
 		//Implement a mechanism to choose between markets
-		//Phonebook.getPhonebook().getEastMarket().salesPersonRole.msgIWantProducts(restaurant, foodItem, FoodInventory.get(foodItem).OrderSize);
+		Phonebook.getPhonebook().getEastMarket().salesPersonRole.msgIWantProducts(Phonebook.getPhonebook().getSeafoodRestaurant(), foodItem, FoodInventory.get(foodItem).OrderSize);
 	}
 	
 	private void takeRevolvingStandOrder()

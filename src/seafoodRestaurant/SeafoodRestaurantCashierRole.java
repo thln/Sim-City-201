@@ -6,12 +6,13 @@ import java.util.Collections;
 //import restaurant.Menu;
 import java.util.List;
 
+import market.interfaces.SalesPerson;
 import person.Role;
 import person.Worker;
 import seafoodRestaurant.SeafoodRestaurantCheck.CheckState;
 import seafoodRestaurant.interfaces.SeafoodRestaurantCashier;
 import seafoodRestaurant.interfaces.SeafoodRestaurantCustomer;
-import seafoodRestaurant.interfaces.SeafoodRestaurantMarket;
+//import seafoodRestaurant.interfaces.SeafoodRestaurantMarket;
 import seafoodRestaurant.interfaces.SeafoodRestaurantWaiter;
 import testing.EventLog;
 //import restaurant.MarketAgent.Delivery;
@@ -23,7 +24,7 @@ public class SeafoodRestaurantCashierRole extends Role implements SeafoodRestaur
 	/***** DATA *****/
 	private String name;
 	private SeafoodRestaurantMenu MenuForReference;
-	private SeafoodRestaurant restaurant;
+	private SeafoodRestaurant seafoodRestaurant;
 	public double accumulatedRevenue = 35.00;
 	public double accumulatedCosts = 0.0;
 	public double profits = 35.00;
@@ -35,8 +36,9 @@ public class SeafoodRestaurantCashierRole extends Role implements SeafoodRestaur
 	{
 		public String foodItem;
 		public double finalTotal;
-		public SeafoodRestaurantMarket market;
-		MarketBill(String s, double c, SeafoodRestaurantMarket m)
+		//public SeafoodRestaurantMarket market;
+		SalesPerson market;
+		MarketBill(String s, double c, SalesPerson m)
 		{
 			foodItem = s;
 			finalTotal = c;
@@ -74,7 +76,7 @@ public class SeafoodRestaurantCashierRole extends Role implements SeafoodRestaur
 	public SeafoodRestaurantCashierRole(String name, SeafoodRestaurant seafoodRestaurant)
 	{
 		super(name);
-		this.restaurant = seafoodRestaurant;
+		this.seafoodRestaurant = seafoodRestaurant;
 
 		MenuForReference = new SeafoodRestaurantMenu();
 		df.setMaximumFractionDigits(2);
@@ -119,7 +121,7 @@ public class SeafoodRestaurantCashierRole extends Role implements SeafoodRestaur
 		}
 	}
 	
-	public void MarketCost(String foodName, double cost, SeafoodRestaurantMarket m)
+	public void MarketCost(String foodName, double cost, SalesPerson m)
 	{
 		print("I am adding a bill for " + cost + " and I have " + profits);
 		MarketBills.add(new MarketBill(foodName, cost, m));
@@ -228,7 +230,8 @@ public class SeafoodRestaurantCashierRole extends Role implements SeafoodRestaur
 	{
 		print("PayMarket runs.");
 		print("I am paying for the bill " + mb.finalTotal + " and I have " + profits);
-		mb.market.Paid(mb.finalTotal);
+		//mb.market.Paid(mb.finalTotal);
+		mb.market.msgPayment(seafoodRestaurant, mb.finalTotal);
 		mb.finalTotal = Double.parseDouble(df.format(mb.finalTotal));
 		accumulatedCosts += mb.finalTotal;
 		profits -= mb.finalTotal;

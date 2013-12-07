@@ -4,10 +4,11 @@ import java.util.Vector;
 import person.Person;
 import person.Role;
 import person.Worker;
+import application.Restaurant;
 import application.WatchTime;
 import application.gui.animation.BuildingPanel;
 
-public class SeafoodRestaurant {
+public class SeafoodRestaurant implements Restaurant {
 
 	//Data
 	String name;
