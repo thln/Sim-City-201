@@ -21,7 +21,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-import application.gui.animation.agentGui.BusGui;
+import application.gui.animation.agentGui.BusGuiHorizontal;
+import application.gui.animation.agentGui.BusGuiVertical;
 import application.gui.animation.agentGui.Gui;
 
 public class CityPanel extends JPanel implements ActionListener, MouseListener {
@@ -47,11 +48,10 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 
 	public ImageIcon roadHorizontal = new ImageIcon("res/roadsHorizontal.png");
 	public ImageIcon roadVertical = new ImageIcon("res/roadsVertical.png");
-	public ImageIcon busStop = new ImageIcon("res/bus_stop.png");
-	BusGui bus1 = new BusGui();
-	BusGui bus2 = new BusGui();
-	//BusGui bus = new BusGui();
-	
+	public ImageIcon busStop = new ImageIcon("res/bus_stop.png");	
+	public BusGuiHorizontal busA = new BusGuiHorizontal();
+	public BusGuiVertical busB = new BusGuiVertical();
+
 
 	public CityPanel(AnimationPanel animationPanel) {
 
@@ -80,11 +80,11 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		addBuilding("Burger Restaurant", WINDOWX-100, WINDOWY-75);
 		addBuilding("Italian Restaurant", WINDOWX-100, 20);
 		addBuilding("Fancy Restaurant", WINDOWX-100, 100+market.getIconHeight()+2);
+	
+		addGui(busA);
+		addGui(busB);
 		
-		guis.add(bus1);
-		guis.add(bus2);
-		
-		Timer timer = new Timer(10, this );
+		Timer timer = new Timer(10, this);
 		timer.start();
 	}
 
