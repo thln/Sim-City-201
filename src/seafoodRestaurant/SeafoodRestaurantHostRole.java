@@ -1,7 +1,12 @@
 package seafoodRestaurant;
 
 import java.util.*;
+
+import application.Phonebook;
+import chineseRestaurant.ChineseRestaurantWaiterRole;
+import chineseRestaurant.ChineseRestaurantHostRole.myWaiter;
 import person.Role;
+import person.Worker;
 
 //import restaurant.CustomerAgent.AgentState;
 //import restaurant.WaiterAgent.Table;
@@ -29,7 +34,7 @@ public class SeafoodRestaurantHostRole extends Role
 		}
 	}
 
-	public enum WaiterState {Working, Asked, onBreak};
+	public enum WaiterState {Working, Asked, onBreak, LeavingSoon, Leaving};
 	//public boolean CheckingWaiters = false;
 	
 	private class MyWaiter
@@ -38,6 +43,7 @@ public class SeafoodRestaurantHostRole extends Role
 		//used possibly to go through the waiterlist and reorganize the customers
 		public int NumberOfCustomers;
 		private WaiterState state = WaiterState.Working;
+		//boolean leaving = false;
 		//public boolean Working = true;
 		public MyWaiter(SeafoodRestaurantWaiterRole w)
 		{
@@ -162,7 +168,36 @@ public class SeafoodRestaurantHostRole extends Role
 			}
 		}
 	}
+	
+	public void msgIAmLeavingSoon(SeafoodRestaurantWaiterRole wa)
+	{
+		//Pass in to check new waiter
+			synchronized(MyWaiters)
+			{
+				for(MyWaiter mw : MyWaiters)
+				{
+					if(mw.w1 == wa)
+					{
+						mw.state = WaiterState.LeavingSoon;
+						stateChanged();
+					}
+				}
+			}
+	}
 
+	public void msgIAmLeavingWork(SeafoodRestaurantWaiterRole wa) 
+	{
+		for(MyWaiter MW: MyWaiters) 
+		{
+			if (MW.w1.equals(wa)) 
+			{
+				MW.state = WaiterState.Leaving;
+				stateChanged();
+				//MW.leaving = true;
+			}
+		}
+	}
+	
 	//WAITER ON BREAK STUFF ******************************
 	public void BackToWork(SeafoodRestaurantWaiterRole wa)
 	{
@@ -238,8 +273,13 @@ public class SeafoodRestaurantHostRole extends Role
 		{
 			for(MyWaiter mw : MyWaiters)
 			{
-				if(mw.state == WaiterState.Asked)
+				if (mw.state == WaiterState.Leaving) 
 				{
+					deleteWaiter(mw);
+				}
+				
+				if(mw.state == WaiterState.Asked)
+				{					
 					CheckWaiters(mw);
 					return true;
 				}
@@ -265,6 +305,13 @@ public class SeafoodRestaurantHostRole extends Role
 					}
 				}
 			}
+		}
+		
+		if (leaveRole)
+		{
+			((Worker) person).roleFinishedWork();
+			leaveRole = false;
+			return true;
 		}
 		
 		return false;
@@ -353,6 +400,13 @@ public class SeafoodRestaurantHostRole extends Role
 		print("The current Number of Customers is " + currentNumberOfCustomers);
 	}
 
+	public void deleteWaiter(MyWaiter mw) 
+	{
+		Phonebook.getPhonebook().getSeafoodRestaurant().removeWaiter(mw.w1);
+		mw = null;
+		MyWaiters.remove(mw);
+	}
+	
 	public boolean FullRestaurant()
 	{		
 		if(currentNumberOfCustomers == NTABLES)

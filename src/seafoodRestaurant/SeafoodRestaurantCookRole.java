@@ -9,6 +9,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import person.Role;
+import person.Worker;
 import seafoodRestaurant.interfaces.SeafoodRestaurantMarket;
 import seafoodRestaurant.interfaces.SeafoodRestaurantWaiter;
 import application.Phonebook;
@@ -73,20 +74,20 @@ public class SeafoodRestaurantCookRole extends Role implements Restaurant
 		super(name);
 		this.restaurant = seafoodRestaurant;
 		
-		RecipeBook.put("Salad",3000);
-		RecipeBook.put("Pizza",5000);
-		RecipeBook.put("Chicken",7000);
-		RecipeBook.put("Steak",8000);
+		RecipeBook.put("Clam Chowder Sourdough Bowl",3000);
+		RecipeBook.put("Grilled Shrimp Skewers",5000);
+		RecipeBook.put("Bourbon-Glazed Salmon",7000);
+		RecipeBook.put("Lobster Tail and Roll",8000);
 		
-		Food Salad = new Food("Salad", 10, 1, 3000);
-		Food Pizza = new Food("Pizza", 10, 1, 5000);
-		Food Chicken = new Food("Chicken", 10, 1, 7000);
-		Food Steak = new Food("Steak", 10, 1, 8000);
+		Food clamChowderSourdoughBowl = new Food("Clam Chowder Sourdough Bowl", 10, 1, 3000);
+		Food grilledShrimpSkewers = new Food("Grilled Shrimp Skewers", 10, 1, 5000);
+		Food bourbonGlazedSalmon = new Food("Bourbon-Glazed Salmon", 10, 1, 7000);
+		Food lobsterTailandRoll = new Food("Lobster Tail and Roll", 10, 1, 8000);
 		
-		FoodInventory.put("Salad", Salad);
-		FoodInventory.put("Pizza", Pizza);
-		FoodInventory.put("Chicken", Chicken);
-		FoodInventory.put("Steak", Steak);
+		FoodInventory.put("Clam Chowder Sourdough Bowl", clamChowderSourdoughBowl);
+		FoodInventory.put("Grilled Shrimp Skewers", grilledShrimpSkewers);
+		FoodInventory.put("Bourbon-Glazed Salmon", bourbonGlazedSalmon);
+		FoodInventory.put("Lobster Tail and Roll", lobsterTailandRoll);
 	}
 	
 	public String getName() 
@@ -156,28 +157,28 @@ public class SeafoodRestaurantCookRole extends Role implements Restaurant
 			{
 				CurrentMarket = 0;
 			}
-			if(FoodInventory.get("Steak").isLow)
+			if(FoodInventory.get("Lobster Tail and Roll").isLow)
 			{
 				//CurrentMarket++;
-				OrderFood("Steak");
+				OrderFood("Lobster Tail and Roll");
 				//return true;
 			}
-			if(FoodInventory.get("Chicken").isLow)
+			if(FoodInventory.get("Bourbon-Glazed Salmon").isLow)
 			{
 				//CurrentMarket++;
-				OrderFood("Chicken");
+				OrderFood("Bourbon-Glazed Salmon");
 				//return true;
 			}
-			if(FoodInventory.get("Pizza").isLow)
+			if(FoodInventory.get("Grilled Shrimp Skewers").isLow)
 			{
 				//CurrentMarket++;
-				OrderFood("Pizza");
+				OrderFood("Grilled Shrimp Skewers");
 				//return true;
 			}
-			if(FoodInventory.get("Salad").isLow)
+			if(FoodInventory.get("Clam Chowder Sourdough Bowl").isLow)
 			{
 				//CurrentMarket++;
-				OrderFood("Salad");
+				OrderFood("Clam Chowder Sourdough Bowl");
 				//return true;
 			}
 			return true;
@@ -205,6 +206,14 @@ public class SeafoodRestaurantCookRole extends Role implements Restaurant
 				}
 			}
 		}
+		
+		if (leaveRole)
+		{
+			((Worker) person).roleFinishedWork();
+			leaveRole = false;
+			return true;
+		}
+		
 		return false;
 		//we have tried all our rules and found
 		//nothing to do. So return false to main loop of abstract agent
@@ -288,25 +297,25 @@ public class SeafoodRestaurantCookRole extends Role implements Restaurant
 		
 	public void setLow()
 	{
-		FoodInventory.get("Steak").amount = 2;
-		FoodInventory.get("Chicken").amount = 2;
-		FoodInventory.get("Pizza").amount = 2;
-		FoodInventory.get("Salad").amount = 2;
+		FoodInventory.get("Lobster Tail and Roll").amount = 2;
+		FoodInventory.get("Bourbon-Glazed Salmon").amount = 2;
+		FoodInventory.get("Grilled Shrimp Skewers").amount = 2;
+		FoodInventory.get("Clam Chowder Sourdough Bowl").amount = 2;
 	}
 	
 	public void setEmpty()
 	{
-		FoodInventory.get("Steak").amount = 0;
-		FoodInventory.get("Chicken").amount = 0;
-		FoodInventory.get("Pizza").amount = 0;
-		FoodInventory.get("Salad").amount = 0;	
-		FoodInventory.get("Steak").isLow = true;
-		OrderFood("Steak");
-		FoodInventory.get("Chicken").isLow = true;
-		OrderFood("Chicken");
-		FoodInventory.get("Pizza").isLow = true;
-		OrderFood("Pizza");
-		FoodInventory.get("Salad").isLow = true;
-		OrderFood("Salad");
+		FoodInventory.get("Lobster Tail and Roll").amount = 0;
+		FoodInventory.get("Bourbon-Glazed Salmon").amount = 0;
+		FoodInventory.get("Grilled Shrimp Skewers").amount = 0;
+		FoodInventory.get("Clam Chowder Sourdough Bowl").amount = 0;	
+		FoodInventory.get("Lobster Tail and Roll").isLow = true;
+		OrderFood("Lobster Tail and Roll");
+		FoodInventory.get("Bourbon-Glazed Salmon").isLow = true;
+		OrderFood("Bourbon-Glazed Salmon");
+		FoodInventory.get("Grilled Shrimp Skewers").isLow = true;
+		OrderFood("Grilled Shrimp Skewers");
+		FoodInventory.get("Clam Chowder Sourdough Bowl").isLow = true;
+		OrderFood("Clam Chowder Sourdough Bowl");
 	}
 }

@@ -32,5 +32,17 @@ public class SeafoodRestaurantMockWaiter extends Mock implements SeafoodRestaura
 		log.add(new LoggedEvent("Received Check from cashier. Customer = "+ cust + " and check cost is : " + ch.cost));
 	}
 
+	@Override
+	public void OrderIsReady(String food, int table) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void OutOfFood(int table, String food) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }

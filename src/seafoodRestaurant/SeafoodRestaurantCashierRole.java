@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 import person.Role;
+import person.Worker;
 import seafoodRestaurant.SeafoodRestaurantCheck.CheckState;
 import seafoodRestaurant.interfaces.SeafoodRestaurantCashier;
 import seafoodRestaurant.interfaces.SeafoodRestaurantCustomer;
@@ -160,7 +161,12 @@ public class SeafoodRestaurantCashierRole extends Role implements SeafoodRestaur
 			}
 		}
 		
-			
+		if (leaveRole)
+		{
+			((Worker) person).roleFinishedWork();
+			leaveRole = false;
+			return true;
+		}	
 		
 		return false;
 		//we have tried all our rules and found

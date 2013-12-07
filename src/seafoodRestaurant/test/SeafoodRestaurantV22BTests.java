@@ -46,14 +46,14 @@
 //		//		+ market1.log.toString(), 0, market1.log.size());
 //		assertEquals("The Cashier should have no market bills at the moment. It does.", cashier.MarketBills.size(), 0);
 //		
-//		//cashier.MarketCost("Steak", 20.00, market1);
+//		//cashier.MarketCost("Lobster Tail and Roll", 20.00, market1);
 //		
 //		assertEquals("The Cashier should still $35 in profits. It doesn't.", cashier.profits, 35.00);
 //		assertEquals("The Cashier should still have $35 in accumulated Revenue. It doesn't.", cashier.accumulatedRevenue, 35.00);
 //		assertEquals("The Cashier should still $0 in accumulated Costs. It doesn't.", cashier.accumulatedCosts, 0.0);
 //		assertEquals("The Cashier should have one market bill at the moment. It doesn't.", cashier.MarketBills.size(), 1);
 //		//assertEquals("The Cashier should have the one market bill from the Mock Market. It doesn't.", cashier.MarketBills.get(0).market, market1);
-//		assertEquals("The Cashier should have the one market bill for Steak. It doesn't.", cashier.MarketBills.get(0).foodItem, "Steak");
+//		assertEquals("The Cashier should have the one market bill for Lobster Tail and Roll. It doesn't.", cashier.MarketBills.get(0).foodItem, "Lobster Tail and Roll");
 //		assertEquals("The Cashier should have the one market bill of $20.00. It doesn't.", cashier.MarketBills.get(0).finalTotal, 20.00);
 //
 //		assertTrue("Cashier's PickAndExecuteAction should have returned true. It didn't.", cashier.pickAndExecuteAnAction());
@@ -80,24 +80,24 @@
 //		//		+ market2.log.toString(), 0, market2.log.size());
 //		assertEquals("The Cashier should have no market bills at the moment. It does.", cashier.MarketBills.size(), 0);
 //		
-//		//cashier.MarketCost("Steak", 20.00, market1);
+//		//cashier.MarketCost("Lobster Tail and Roll", 20.00, market1);
 //		
 //		assertEquals("The Cashier should still $35 in profits. It doesn't.", cashier.profits, 35.00);
 //		assertEquals("The Cashier should still have $35 in accumulated Revenue. It doesn't.", cashier.accumulatedRevenue, 35.00);
 //		assertEquals("The Cashier should still $0 in accumulated Costs. It doesn't.", cashier.accumulatedCosts, 0.0);
 //		assertEquals("The Cashier should have one market bill at the moment. It doesn't.", cashier.MarketBills.size(), 1);
 //		//assertEquals("The Cashier should have the one market bill from the first Mock Market. It doesn't.", cashier.MarketBills.get(0).market, market1);
-//		assertEquals("The Cashier should have the one market bill for Steak from the first Mock Market. It doesn't.", cashier.MarketBills.get(0).foodItem, "Steak");
+//		assertEquals("The Cashier should have the one market bill for Lobster Tail and Roll from the first Mock Market. It doesn't.", cashier.MarketBills.get(0).foodItem, "Lobster Tail and Roll");
 //		assertEquals("The Cashier should have the one market bill of $20.00 from the first Mock Market. It doesn't.", cashier.MarketBills.get(0).finalTotal, 20.00);
 //
-//		//cashier.MarketCost("Chicken", 12.00, market2);
+//		//cashier.MarketCost("Bourbon-Glazed Salmon", 12.00, market2);
 //		
 //		assertEquals("The Cashier should still $35 in profits. It doesn't.", cashier.profits, 35.00);
 //		assertEquals("The Cashier should still have $35 in accumulated Revenue. It doesn't.", cashier.accumulatedRevenue, 35.00);
 //		assertEquals("The Cashier should still $0 in accumulated Costs. It doesn't.", cashier.accumulatedCosts, 0.0);
 //		assertEquals("The Cashier should have two market bills at the moment. It doesn't.", cashier.MarketBills.size(), 2);
 //		//assertEquals("The Cashier should have the one market bill from the second Mock Market. It doesn't.", cashier.MarketBills.get(1).market, market2);
-//		assertEquals("The Cashier should have the one market bill for Chicken from the second Mock Market. It doesn't.", cashier.MarketBills.get(1).foodItem, "Chicken");
+//		assertEquals("The Cashier should have the one market bill for Bourbon-Glazed Salmon from the second Mock Market. It doesn't.", cashier.MarketBills.get(1).foodItem, "Bourbon-Glazed Salmon");
 //		assertEquals("The Cashier should have the one market bill of $12.00 from the second Mock Market. It doesn't.", cashier.MarketBills.get(1).finalTotal, 12.00);		
 //		
 //		assertTrue("Cashier's PickAndExecuteAction should have returned true. It didn't.", cashier.pickAndExecuteAnAction());
@@ -319,11 +319,11 @@
 //		//		+ market1.log.toString(), 0, market1.log.size());
 //		assertEquals("The Cashier should have no market bills at the moment. It does.", cashier.MarketBills.size(), 0);
 //		
-//		//cashier.MarketCost("Steak", 20.00, market1);
+//		//cashier.MarketCost("Lobster Tail and Roll", 20.00, market1);
 //		
 //		assertEquals("The Cashier should have one market bill at the moment. It doesn't.", cashier.MarketBills.size(), 1);
 //		//assertEquals("The Cashier should have the one market bill from the Mock Market. It doesn't.", cashier.MarketBills.get(0).market, market1);
-//		assertEquals("The Cashier should have the one market bill for Steak. It doesn't.", cashier.MarketBills.get(0).foodItem, "Steak");
+//		assertEquals("The Cashier should have the one market bill for Lobster Tail and Roll. It doesn't.", cashier.MarketBills.get(0).foodItem, "Lobster Tail and Roll");
 //		assertEquals("The Cashier should have the one market bill of $20.00. It doesn't.", cashier.MarketBills.get(0).finalTotal, 20.00);
 //		assertEquals("The Cashier should still have one check at the moment. It doesn't.", cashier.AllChecks.size(), 1);
 //		assertEquals("The Check should still be in the 'CustomerHere' state. It isn't." + cashier.AllChecks.get(0).s, cashier.AllChecks.get(0).s, CheckState.CustomerHere);
@@ -428,11 +428,11 @@
 //		//		+ market1.log.toString(), 0, market1.log.size());
 //		assertEquals("The Cashier should have no market bills at the moment. It does.", cashier.MarketBills.size(), 0);
 //		
-//		//cashier.MarketCost("Steak", 40.00, market1);
+//		//cashier.MarketCost("Lobster Tail and Roll", 40.00, market1);
 //		
 //		assertEquals("The Cashier should have one market bill at the moment. It doesn't.", cashier.MarketBills.size(), 1);
 //		//assertEquals("The Cashier should have the one market bill from the Mock Market. It doesn't.", cashier.MarketBills.get(0).market, market1);
-//		assertEquals("The Cashier should have the one market bill for Steak. It doesn't.", cashier.MarketBills.get(0).foodItem, "Steak");
+//		assertEquals("The Cashier should have the one market bill for Lobster Tail and Roll. It doesn't.", cashier.MarketBills.get(0).foodItem, "Lobster Tail and Roll");
 //		assertEquals("The Cashier should have the one market bill of $40.00. It doesn't.", cashier.MarketBills.get(0).finalTotal, 40.00);
 //		assertEquals("The Cashier should still have one check at the moment. It doesn't.", cashier.AllChecks.size(), 1);
 //		assertEquals("The Check should still be in the 'CustomerHere' state. It isn't." + cashier.AllChecks.get(0).s, cashier.AllChecks.get(0).s, CheckState.CustomerHere);
@@ -449,7 +449,7 @@
 //		assertEquals("The Cashier should still have one check at the moment. It doesn't.", cashier.AllChecks.size(), 1);
 //		assertEquals("The Cashier should have one market bill at the moment. It doesn't.", cashier.MarketBills.size(), 1);
 //		//assertEquals("The Cashier should have the one market bill from the Mock Market. It doesn't.", cashier.MarketBills.get(0).market, market1);
-//		assertEquals("The Cashier should have the one market bill for Steak. It doesn't.", cashier.MarketBills.get(0).foodItem, "Steak");
+//		assertEquals("The Cashier should have the one market bill for Lobster Tail and Roll. It doesn't.", cashier.MarketBills.get(0).foodItem, "Lobster Tail and Roll");
 //		assertEquals("The Cashier should have the one market bill of $40.00. It doesn't.", cashier.MarketBills.get(0).finalTotal, 40.00);
 //		assertTrue("CashierBill should contain a bill with state == PaidOff. It doesn't." + cashier.AllChecks.get(0).s,
 //                cashier.AllChecks.get(0).s == CheckState.PaidOff);

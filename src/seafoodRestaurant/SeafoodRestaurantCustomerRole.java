@@ -5,12 +5,17 @@ package seafoodRestaurant;
 import seafoodRestaurant.interfaces.SeafoodRestaurantCustomer;
 //import restaurant.gui.RestaurantGui;
 import agent.Agent;
+import application.Phonebook;
+import application.gui.animation.agentGui.RestaurantCustomerGui;
 import application.gui.animation.agentGui.SeafoodRestaurantCustomerGui;
 
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.Semaphore;
 
+import chineseRestaurant.ChineseRestaurantCustomerRole.AgentEvent;
+import chineseRestaurant.ChineseRestaurantCustomerRole.AgentState;
+import person.Person;
 import person.Role;
 
 
@@ -39,8 +44,8 @@ public class SeafoodRestaurantCustomerRole extends Role implements SeafoodRestau
 	
 	// agent correspondents
 	private SeafoodRestaurantWaiterRole waiter;
-	private SeafoodRestaurantHostRole host;
-	private SeafoodRestaurantCashierRole cashier;
+	//private SeafoodRestaurantHostRole host;
+	//private SeafoodRestaurantCashierRole cashier;
 	//CashierAgent
 	
 	//    private boolean isHungry = false; //hack for gui
@@ -62,11 +67,20 @@ public class SeafoodRestaurantCustomerRole extends Role implements SeafoodRestau
 	{
 		super(name);
 		
-		this.host = h;
-		this.cashier = cas;
+		//this.host = h;
+		//this.cashier = cas;
 		this.customerNumber = n;
 	}
 
+	public SeafoodRestaurantCustomerRole(Person p1, String pName, String rName) 
+	{
+		super(p1, pName, rName);
+		state = AgentState.DoingNothing; 
+		event = AgentEvent.gotHungry;
+		//this.money = p1.money;
+		//gui = new RestaurantCustomerGui(this);
+	}
+	
 	/**
 	 * hack to establish connection to Waiter agent.
 	 */
@@ -75,10 +89,10 @@ public class SeafoodRestaurantCustomerRole extends Role implements SeafoodRestau
 		this.waiter = waiter;
 	}
 	
-	public void setHost(SeafoodRestaurantHostRole host)
-	{
-		this.host = host;
-	}
+//	public void setHost(SeafoodRestaurantHostRole host)
+//	{
+//		this.host = host;
+//	}
 
 	public String getCustomerName() 
 	{
@@ -297,7 +311,7 @@ public class SeafoodRestaurantCustomerRole extends Role implements SeafoodRestau
 		customerGui.DoEnterRestaurant();
 		print("Going to restaurant");
 		//waiter.msgIWantFood(this);//send our instance, so he can respond to us
-		host.IWantFood(this);
+		Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantHostRole.IWantFood(this);
 		WaitingToBeSeated = true;
 	}
 
@@ -324,9 +338,9 @@ public class SeafoodRestaurantCustomerRole extends Role implements SeafoodRestau
 	private void chooseOrder()
 	{
 		myOrder = myMenu.blindPick();
-		if((Cash<myMenu.FoodMenu.get("Salad").price) && !DineAndDash)
+		if((Cash<myMenu.FoodMenu.get("Clam Chowder Sourdough Bowl").price) && !DineAndDash)
 		{
-			print("Oh man, I can't even afford a salad. I should leave.");
+			print("Oh man, I can't even afford a Clam Chowder Sourdough Bowl. I should leave.");
 			myOrder = "";
 			customerGui.DoOrder("");
 			waiter.iAmLeavingTable(this);
@@ -335,9 +349,9 @@ public class SeafoodRestaurantCustomerRole extends Role implements SeafoodRestau
 			stateChanged();
 			return;
 		}
-		if((Cash<myMenu.FoodMenu.get("Pizza").price) && !DineAndDash && !(myMenu.FoodMenu.get("Salad").Available))
+		if((Cash<myMenu.FoodMenu.get("Grilled Shrimp Skewers").price) && !DineAndDash && !(myMenu.FoodMenu.get("Clam Chowder Sourdough Bowl").Available))
 		{
-			print("I only have enough for a salad. But they're out! I'll leave.");
+			print("I only have enough for a Clam Chowder Sourdough Bowl. But they're out! I'll leave.");
 			myOrder = "";
 			customerGui.DoOrder("");
 			waiter.iAmLeavingTable(this);
@@ -346,10 +360,10 @@ public class SeafoodRestaurantCustomerRole extends Role implements SeafoodRestau
 			stateChanged();
 			return;
 		}		
-		if((Cash<myMenu.FoodMenu.get("Pizza").price) && !DineAndDash && (myMenu.FoodMenu.get("Salad").Available))
+		if((Cash<myMenu.FoodMenu.get("Grilled Shrimp Skewers").price) && !DineAndDash && (myMenu.FoodMenu.get("Clam Chowder Sourdough Bowl").Available))
 		{
-			print("I only have enough for a salad. I'll get that.");
-			myOrder = "Salad";
+			print("I only have enough for a Clam Chowder Sourdough Bowl. I'll get that.");
+			myOrder = "Clam Chowder Sourdough Bowl";
 		}
 		
 		
@@ -357,21 +371,21 @@ public class SeafoodRestaurantCustomerRole extends Role implements SeafoodRestau
 		
 		
 		//Hack to Check different foods
-		if(getName().equals("Salad"))
+		if(getName().equals("ClamChowderSourdough"))
 		{
-			myOrder = "Salad";
+			myOrder = "Clam Chowder Sourdough Bowl";
 		}
-		if(getName().equals("Pizza"))
+		if(getName().equals("grilledShrimpskewers"))
 		{
-			myOrder = "Pizza";
+			myOrder = "Grilled Shrimp Skewers";
 		}
-		if(getName().equals("Chicken"))
+		if(getName().equals("bourbonGlazedSalmon"))
 		{
-			myOrder = "Chicken";
+			myOrder = "Bourbon-Glazed Salmon";
 		}
-		if(getName().equals("Steak"))
+		if(getName().equals("lobsterTailAndRoll"))
 		{
-			myOrder = "Steak";
+			myOrder = "Lobster Tail and Roll";
 		}
 		
 		print("Message 4 Sent - Chosen Order");
@@ -457,7 +471,7 @@ public class SeafoodRestaurantCustomerRole extends Role implements SeafoodRestau
 			print("I have a debt. I will add it to the bill.");
 		}
 		print("I am giving the cashier $" + Cash);
-		cashier.HereIsPayment(myCheck, Cash);
+		Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantCashierRole.HereIsPayment(myCheck, Cash);
 		Cash = 0;
 	}
 

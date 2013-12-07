@@ -10,10 +10,14 @@ import java.util.concurrent.Semaphore;
 
 
 
+
+
+import application.Phonebook;
 import application.gui.animation.agentGui.SeafoodRestaurantWaiterGui;
 import person.Person;
 //import application.gui.animation.agentGui.SeafoodRestaurantWaiterGui;
 import person.Role;
+import person.Worker;
 //import seafoodRestaurant.interfaces.Check;
 import seafoodRestaurant.interfaces.SeafoodRestaurantCustomer;
 import seafoodRestaurant.interfaces.SeafoodRestaurantWaiter;
@@ -44,17 +48,16 @@ public class SeafoodRestaurantWaiterRole extends Role implements SeafoodRestaura
 	protected int waiterNumber; 
 	//Notice that we implement waitingCustomers using ArrayList, but type it
 	//with List semantics.
-	public List<MyCustomer> MyCustomers
-	= new ArrayList<MyCustomer>();
+	public List<MyCustomer> MyCustomers = new ArrayList<MyCustomer>();
 	public boolean AtHomeboolean = true;
 	//public boolean OnBreak = false;
 	//note that tables is typed with Collection semantics.
 	//Later we will see how it is implemented
 
 	//Agent Correspondents
-	protected SeafoodRestaurantHostRole host;
-	protected SeafoodRestaurantCookRole cook;
-	protected SeafoodRestaurantCashierRole cashier;
+	//protected SeafoodRestaurantHostRole host;
+	//protected SeafoodRestaurantCookRole cook;
+	//protected SeafoodRestaurantCashierRole cashier;
 	
 	Timer relaxTimer = new Timer();
 	
@@ -342,6 +345,11 @@ public class SeafoodRestaurantWaiterRole extends Role implements SeafoodRestaura
             If so seat him at the table.
 		 */
 	
+		if (leaveRole) 
+		{
+			AskHostToLeave();
+		}
+		
 	try
 	{
 		for(MyCustomer mc : MyCustomers)
@@ -463,7 +471,7 @@ public class SeafoodRestaurantWaiterRole extends Role implements SeafoodRestaura
 	protected void AskHost()
 	{
 		state = WaiterState.AskedHost;
-		host.CanIGoOnBreak(this);
+		Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantHostRole.CanIGoOnBreak(this);
 	}
 	
 	//WAITER ON BREAK STUFF ******************************
@@ -475,7 +483,7 @@ public class SeafoodRestaurantWaiterRole extends Role implements SeafoodRestaura
 		onBreak = false;
 		waiterGui.setOffBreakbool();
 		waiterGui.GoHomePosition();
-		host.BackToWork(this);
+		Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantHostRole.BackToWork(this);
 		//stateChange
 	}
 	
@@ -568,7 +576,7 @@ public class SeafoodRestaurantWaiterRole extends Role implements SeafoodRestaura
 			e.printStackTrace();
 		}
 		waiterGui.GoHomePosition();
-		cook.pleaseCook(mc.choice, mc.table, this);
+		Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantCookRole.pleaseCook(mc.choice, mc.table, this);
 		print("Message 7 - Sent Order");
 		mc.state = myCustomerState.OrderSent;
 	}
@@ -628,7 +636,7 @@ public class SeafoodRestaurantWaiterRole extends Role implements SeafoodRestaura
 		//print ("At Kitchen " + atTable.toString());
 		///Do we need to carry the order
 		waiterGui.DoDeliver(mc.choice);
-		cook.PickedUpOrder(mc.choice);
+		Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantCookRole.PickedUpOrder(mc.choice);
 		DoGoToTable(mc.c);
 		try 
 		{
@@ -664,7 +672,7 @@ public class SeafoodRestaurantWaiterRole extends Role implements SeafoodRestaura
 		print("At Cashier");
 		waiterGui.DoDeliver("Check");
 		mc.state = myCustomerState.GettingCheck;
-		cashier.GiveMeCheck(mc.choice, mc.c, this);
+		Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantCashierRole.GiveMeCheck(mc.choice, mc.c, this);
 		try 
 		{
 			receivingCheck.acquire();
@@ -713,7 +721,7 @@ public class SeafoodRestaurantWaiterRole extends Role implements SeafoodRestaura
 				print(mc.c + " leaving table " + mc.table);
 				//table.setUnoccupied();
 				mc.state = myCustomerState.Left;
-				host.TableIsFree(mc.table, this);
+				Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantHostRole.TableIsFree(mc.table, this);
 				print("Message 11 Sent, " + mc.c + " has left, " + mc.table + " is free");
 				MyCustomers.remove(mc);
 			//}
@@ -744,6 +752,16 @@ public class SeafoodRestaurantWaiterRole extends Role implements SeafoodRestaura
 		10000);
 		*/
 	}	
+	
+	protected void AskHostToLeave()	{
+	Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantHostRole.msgIAmLeavingSoon(this);
+	if(MyCustomers.isEmpty())
+	{
+		Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantHostRole.msgIAmLeavingWork(this);
+		((Worker) person).roleFinishedWork();
+		leaveRole = false;
+	}
+}
 	
 	public void relax()
 	{

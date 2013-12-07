@@ -43,7 +43,7 @@
 //            //setUp() runs first before this test!
 //            
 //            customer.cashier = cashier;//You can do almost anything in a unit test.                        
-//            SeafoodRestaurantCheck mockCheck = new SeafoodRestaurantCheck("Steak", customer, waiter);
+//            SeafoodRestaurantCheck mockCheck = new SeafoodRestaurantCheck("Lobster Tail and Roll", customer, waiter);
 //            //check preconditions
 //            assertEquals("Cashier should have 0 bills in it. It doesn't.",cashier.AllChecks.size(), 0);                
 //
