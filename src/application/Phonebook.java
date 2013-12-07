@@ -44,7 +44,7 @@ public class Phonebook{
 
 
 	//List of bus stops
-	private List<Point> busStops = new ArrayList<>();
+	public List<Point> busStops = new ArrayList<>();
 
 
 	private static Phonebook phonebook;

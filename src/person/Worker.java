@@ -224,6 +224,18 @@ public class Worker extends Person {
 	public void prepareForWork() {
 		currentRoleName = myJob.title;
 		print("Preparing for work as " + myJob.title);
+		gui.walk = gui.decideForBus(myJob.jobPlace);
+		if (!gui.walk){
+			gui.doGoToBus(Phonebook.getPhonebook().getEastBank().getClosestStop().getX(),
+					Phonebook.getPhonebook().getEastBank().getClosestStop().getY());
+			try {
+				atDestination.acquire();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
 		if (myJob.jobPlace.equals("East Bank")) 
 		{
 			getGui().DoGoToBank("East");
@@ -237,7 +249,7 @@ public class Worker extends Person {
 			workerRole.setRoleActive();
 			return;
 		}
-		
+
 		if (myJob.jobPlace.equals("West Bank")) 
 		{
 			getGui().DoGoToBank("West");

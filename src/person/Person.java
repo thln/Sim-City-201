@@ -26,7 +26,7 @@ public abstract class Person extends Agent{
 	private Housing home;
 	private Timer alarmClock = new Timer();
 	private Timer hungerTimer = new Timer();
-	private PersonGui gui;
+	protected PersonGui gui;
 	BuildingPanel marketPanel = null;
 	BuildingPanel bankPanel = null;
 	BuildingPanel housePanel = null;
@@ -115,8 +115,7 @@ public abstract class Person extends Agent{
 			Do("Becoming Bank Customer");
 		
 		//if (home.structure == EastApartment), destination = eastBank
-			gui.walk = gui.decideForBus((int) Phonebook.getPhonebook().getEastBank().location.getX(), 
-					(int) Phonebook.getPhonebook().getEastBank().location.getY());
+			gui.walk = gui.decideForBus("East Bank");
 			
 			//gui.walk = gui.decideForBus(Phonebook.getPhonebook().getEastBank().getClosestStop().getX(),
 			//		Phonebook.getPhonebook().getEastBank().getClosestStop().getY());

@@ -41,8 +41,10 @@ public class PersonGui extends CityGui {
 	private int yMarketLocation = 100 + 25;
 	
 	//Bus stops
-	private int busStopX;
-	private int busStopY;
+	private int startStopX;
+	private int startStopY;
+	private int endStopX;
+	private int endStopY;
 
 	private int xPos, yPos;//default person position
 	private int xDestination, yDestination;//default start position
@@ -223,44 +225,41 @@ public class PersonGui extends CityGui {
 		command = Command.GoHome;
 	}
 
-	public void doGoToBus(double stopX, double stopY) {
+	public void doGoToBus(double endX, double endY) {
 		System.out.println("Going to bus stop");
-		busStopX = (int) stopX;
-		busStopY = (int) stopY;
-		xDestination = busStopX;
-		yDestination = busStopY;
-		
-//		if (xPos <= 170){
-//			if (yPos <= 30){
-//				xDestination = (int) Phonebook.getPhonebook().getBusStops().get(0).getX();
-//				setyDestination((int) Phonebook.getPhonebook().getBusStops().get(0).getY());
-//			}
-//			else {
-//				xDestination = (int) Phonebook.getPhonebook().getBusStops().get(1).getX();
-//				setyDestination((int) Phonebook.getPhonebook().getBusStops().get(1).getY());
-//			}	
-//		}
-//		else if (xPos > 170) {
-//			if (yPos <= 30){
-//				xDestination = (int) Phonebook.getPhonebook().getBusStops().get(2).getX();
-//				setyDestination((int) Phonebook.getPhonebook().getBusStops().get(2).getY());
-//			}
-//			else {
-//				xDestination = (int) Phonebook.getPhonebook().getBusStops().get(3).getX();
-//				setyDestination((int) Phonebook.getPhonebook().getBusStops().get(3).getY());
-//			}
-//		}	
+		endStopX = (int) endX;
+		endStopY = (int) endY;
+		findStartStop();
+		xDestination = startStopX;
+		yDestination = startStopY;
 		setDefaultColor();
 		command = Command.GoToBusStop;
 	}
 
-	public boolean decideForBus(int xDest, int yDest) {
-		if ((xDest - xPos >= 50) || (yDest - yPos >= 50)){
-			return true;
+	public boolean decideForBus(String location) {
+		int xDest = 0, yDest = 0;
+		
+		if (location.equals("East Bank")) {
+			xDest = (int) Phonebook.getPhonebook().getEastBank().location.getX();
+			yDest = (int) Phonebook.getPhonebook().getEastBank().location.getY();
 		}
-		else{
+		if (location.equals("West Bank")) {
+			xDest = (int) Phonebook.getPhonebook().getWestBank().location.getX();
+			yDest = (int) Phonebook.getPhonebook().getWestBank().location. getY();
+		}
+		if (location.equals("East Market")) {
+			xDest = (int) Phonebook.getPhonebook().getWestBank().location.getX();
+			yDest = (int) Phonebook.getPhonebook().getWestBank().location. getY();
+		}
+		if (location.equals("Chinese Restaurant")) {
+			xDest = (int) Phonebook.getPhonebook().getWestBank().location.getX();
+			yDest = (int) Phonebook.getPhonebook().getWestBank().location. getY();
+		}
+		
+		if ((xDest - xPos >= 50) || (yDest - yPos >= 50)){
 			return false;
 		}
+			return true;
 	}
 
 	public void setHomeLocation(int x, int y) {
@@ -314,6 +313,25 @@ public class PersonGui extends CityGui {
 		}
 		else
 			raveMode = true;
+	}
+	
+	public void findStartStop() {
+		if (xPos <= 300 && yPos <= 162.5){
+			startStopX = (int) Phonebook.getPhonebook().busStops.get(0).getX();
+			startStopY = (int) Phonebook.getPhonebook().busStops.get(0).getY();
+		}
+		if (xPos >= 300 && yPos <= 162.5){
+			startStopX = (int) Phonebook.getPhonebook().busStops.get(0).getX();
+			startStopY = (int) Phonebook.getPhonebook().busStops.get(0).getY();
+		}
+		if (xPos <= 300 && yPos >= 162.5){
+			startStopX = (int) Phonebook.getPhonebook().busStops.get(0).getX();
+			startStopY = (int) Phonebook.getPhonebook().busStops.get(0).getY();
+		}
+		else {
+			startStopX = (int) Phonebook.getPhonebook().busStops.get(0).getX();
+			startStopY = (int) Phonebook.getPhonebook().busStops.get(0).getY();
+		}
 	}
 
 	public void setDefaultColor() {
