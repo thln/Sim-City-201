@@ -139,7 +139,7 @@ public class SeafoodRestaurantCustomerGui implements Gui{
     	yDestination = yCordLobby;
     }
     
-	public void DoExitRestaurant() 
+	public void DoExit() 
 	{
 		//xCordOffscreen = -40;
 		//yCordOffscreen = -40;

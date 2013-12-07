@@ -485,7 +485,7 @@ public class SeafoodRestaurantCustomerRole extends Role implements SeafoodRestau
 		print("Leaving.");
 		//waiter.iAmLeavingTable(this);
 		print("Message 10 Sent - I am leaving");
-		customerGui.DoExitRestaurant();
+		customerGui.DoExit();
 	}
 
 	// Accessors, etc.
