@@ -98,27 +98,27 @@ public class Application extends JPanel {
 		//Adding housing
 		
 		//Shift 1
-		allHousing.add(new Housing(bank1a, allHousing.size(), "Apartment"));
+		allHousing.add(new Housing(bank1a, allHousing.size(), "East Apartment"));
 		bank1a.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(bank1b, allHousing.size(), "Apartment"));
+		allHousing.add(new Housing(bank1b, allHousing.size(), "East Apartment"));
 		bank1b.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(bank1c, allHousing.size(), "Apartment"));
+		allHousing.add(new Housing(bank1c, allHousing.size(), "East Apartment"));
 		bank1c.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(market1d, allHousing.size(), "Apartment"));
+		allHousing.add(new Housing(market1d, allHousing.size(), "East Apartment"));
 		market1d.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(market1e, allHousing.size(), "Apartment"));
+		allHousing.add(new Housing(market1e, allHousing.size(), "East Apartment"));
 		market1e.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(market1f, allHousing.size(), "Apartment"));
+		allHousing.add(new Housing(market1f, allHousing.size(), "East Apartment"));
 		market1f.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(rest1g, allHousing.size(), "Apartment"));
+		allHousing.add(new Housing(rest1g, allHousing.size(), "East Apartment"));
 		rest1g.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(rest1h, allHousing.size(), "Apartment"));
+		allHousing.add(new Housing(rest1h, allHousing.size(), "East Apartment"));
 		rest1h.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(rest1i, allHousing.size(), "Apartment"));
+		allHousing.add(new Housing(rest1i, allHousing.size(), "East Apartment"));
 		rest1i.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(rest1j, allHousing.size(), "Apartment"));
+		allHousing.add(new Housing(rest1j, allHousing.size(), "East Apartment"));
 		rest1j.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(rest1k, allHousing.size(), "Apartment"));
+		allHousing.add(new Housing(rest1k, allHousing.size(), "East Apartment"));
 		rest1k.setHome(allHousing.get(allHousing.size() - 1));
 //		allHousing.add(new Housing(l, allHousing.size(), "Apartment"));
 //		l.setHome(allHousing.get(allHousing.size() - 1));
@@ -126,30 +126,30 @@ public class Application extends JPanel {
 //		m.setHome(allHousing.get(allHousing.size() - 1));
 
 		//Shift 2
-	    allHousing.add(new Housing(bank2a, allHousing.size(), "Apartment"));
+	    allHousing.add(new Housing(bank2a, allHousing.size(), "West Apartment"));
 		bank2a.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(bank2b, allHousing.size(), "Apartment"));
+		allHousing.add(new Housing(bank2b, allHousing.size(), "West Apartment"));
 		bank2b.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(bank2c, allHousing.size(), "Apartment"));
+		allHousing.add(new Housing(bank2c, allHousing.size(), "West Apartment"));
 		bank2c.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(market2d, allHousing.size(), "Apartment"));
+		allHousing.add(new Housing(market2d, allHousing.size(), "West Apartment"));
 		market2d.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(market2e, allHousing.size(), "Apartment"));
+		allHousing.add(new Housing(market2e, allHousing.size(), "West Apartment"));
 		market2e.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(market2f, allHousing.size(), "Apartment"));
+		allHousing.add(new Housing(market2f, allHousing.size(), "West Apartment"));
 		market2f.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(rest2g, allHousing.size(), "Apartment"));
+		allHousing.add(new Housing(rest2g, allHousing.size(), "West Apartment"));
 		rest2g.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(rest2h, allHousing.size(), "Apartment"));
+		allHousing.add(new Housing(rest2h, allHousing.size(), "West Apartment"));
 		rest2h.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(rest2i, allHousing.size(), "Apartment"));
+		allHousing.add(new Housing(rest2i, allHousing.size(), "West Apartment"));
 		rest2i.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(rest2j, allHousing.size(), "Apartment"));
+		allHousing.add(new Housing(rest2j, allHousing.size(), "West Apartment"));
 		rest2j.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(rest2k, allHousing.size(), "Apartment"));
+		allHousing.add(new Housing(rest2k, allHousing.size(), "West Apartment"));
 		rest2k.setHome(allHousing.get(allHousing.size() - 1));
 
-		allHousing.add(new Housing(house1, allHousing.size(), "Apartment"));
+		allHousing.add(new Housing(house1, allHousing.size(), "West Apartment"));
 		house1.setHome(allHousing.get(allHousing.size() - 1));
 		
 		//People
@@ -207,10 +207,8 @@ public class Application extends JPanel {
 		}
 		
 		for(Housing house : allHousing) {
-			if(house.structure.equals("Apartment")) {
-				HousingPanel hp = new HousingPanel("House " + house.getHousingNumber(), animPanel);
-				hp.setType(house.structure);
-				animPanel.addAptUnit(hp, house);
+			if(house.type.toLowerCase().contains("apartment")) {
+				animPanel.addAptUnit(house);
 			}
 		}
 		

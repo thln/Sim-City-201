@@ -52,11 +52,18 @@ public class Phonebook{
 	private Phonebook() 
 	{
 		eastBank = new Bank("Bank");
-		//	westBank = new Bank("Bank");
+		westBank = new Bank("Bank");
 		eastMarket = new Market("Market");
-		//	westMarket = new Market("Market");
+		westMarket = new Market("Market");
 		chineseRestaurant = new ChineseRestaurant("Chinese Restaurant");
 		italianRestaurant = new ItalianRestaurant("Italian Restaurant");
+		
+		/* For future use after all the restaurants have been integrated
+		 * 
+		mexicanRestaurant = new MexicanRestaurant("Mexican Restaurant");
+		seafoodRestaurant = new SeafoodRestaurant("Seafood Restaurant");
+		americanRestaurant = new AmericanRestaurant("American Restaurant");
+		*/
 		housingMaintenanceCompany = new HousingMaintenanceCompany("Housing maintenance company");
 		getBusStops().add(new Point(172, 28));
 		getBusStops().add(new Point(172, 230));

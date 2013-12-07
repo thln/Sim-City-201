@@ -34,7 +34,7 @@ public class PersonGui extends CityGui {
 	//This is going to be used for future restaurants
 	private int xItalianLocation = (WINDOWX-100) + 15;
 	private int yItalianLocation = 20+10;
-	private int xMexicanLocation = 20 + 15;
+	private int xMexicanLocation = (WINDOWX/2-75) + 15;
 	private int yMexicanLocation = (WINDOWY - 75) + 10;
 	private int xAmericanLocation = (WINDOWX - 100) + 15;
 	private int yAmericanLocation = (WINDOWY - 75) + 10;
