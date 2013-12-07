@@ -196,13 +196,13 @@ public class RestaurantPanel extends BuildingPanel implements ActionListener{
 	        	g2.fill3DRect(50*ix, 120, 40, 40, true);
 	        }
 		}
-		else if (name.toLowerCase().contains(" ")) { //for Josh's restaurant
+		else if (name.toLowerCase().contains("fancy")) { //for Josh's restaurant
 			
 		}
-		else if (name.toLowerCase().contains(" ")) { //for Henry's restaurant
+		else if (name.toLowerCase().contains("mexican")) { //for Henry's restaurant
 			
 		}
-		else if (name.toLowerCase().contains(" ")) { //for Nishant's restaurant
+		else if (name.toLowerCase().contains("burger")) { //for Nishant's restaurant
 			
 		} 
 		 

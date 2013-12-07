@@ -73,7 +73,7 @@ public class Building {
 		return (new Rectangle(xLocation, yLocation, myImage.getIconWidth(), myImage.getIconHeight()));
 	}
 	
-	//Display building methos
+	//Display building methods
 	public void displayBuilding() {
 		myBuildingPanel.displayBuildingPanel();
 	}

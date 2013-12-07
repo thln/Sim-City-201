@@ -284,6 +284,13 @@ public class AnimationPanel extends JPanel implements MouseListener {
 		
 	}
 	
+	public int getWindowX(){
+		return WINDOWX;
+	}
+	public int getWindowY(){
+		return WINDOWY;
+	}
+	
 	public void addAptUnit(HousingPanel house, Housing housing) {
 		buildingPanels.add(house, house.name);
 		housing.setBuildingPanel(house);
