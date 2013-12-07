@@ -187,6 +187,10 @@ public class ItalianCustomerGui implements Gui{
 		command = Command.LeaveRestaurant;
 	}
 	
+	public void DoExit() {
+		DoExitRestaurant();
+	}
+	
 	public void showOrder(String choice) {
 		switch(choice){
 			case "Steak": currImg = steak;

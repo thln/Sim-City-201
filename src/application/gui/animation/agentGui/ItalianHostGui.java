@@ -44,7 +44,11 @@ public class ItalianHostGui implements Gui {
     public boolean isPresent() {
         return true;
     }
-
+    
+    public void DoExit() {
+    	xDestination = -20;
+    	yDestination = 300;
+    }
 
     public int getXPos() {
         return xPos;

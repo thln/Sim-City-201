@@ -168,6 +168,11 @@ public class ItalianWaiterGui implements Gui {
     	yDestination = 190;
     	command = Command.atCashier;
     }
+    
+    public void DoExit() {
+    	xDestination = -20;
+    	yDestination = 300;
+    }
 
     public int getXPos() {
         return xPos;

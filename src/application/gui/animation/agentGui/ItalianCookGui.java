@@ -186,6 +186,11 @@ public class ItalianCookGui implements Gui {
     	yDestination = 150;
     	//command = Command.noCommand;
     }
+    
+    public void DoExit() {
+    	xDestination = -20;
+    	yDestination = 300;
+    }
 
     public int getXPos() {
         return xPos;

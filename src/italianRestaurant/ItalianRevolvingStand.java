@@ -14,8 +14,7 @@ public class ItalianRevolvingStand {
 	}
 
 	public ItalianRestaurantOrder takeOrder() {
-		synchronized(AllOrders)
-		{
+		synchronized(AllOrders) {
 			ItalianRestaurantOrder o = AllOrders.get(0);
 			AllOrders.remove(0);
 			return o;

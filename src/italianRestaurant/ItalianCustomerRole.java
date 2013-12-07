@@ -309,7 +309,7 @@ public class ItalianCustomerRole extends Role implements ItalianCustomer{
 	
 	private void OrderFood() {
 		print("Now Ordering Food");
-		print(cash + "");
+		//print(cash + "");
 		print(5.99+6*(0.09 + 0.15) + "");
 		if(cash < (5.99+5.99*(0.09 + 0.15)) ) {
 			int y = JOptionPane.showConfirmDialog(null,

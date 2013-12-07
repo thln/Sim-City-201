@@ -152,7 +152,7 @@ public class ItalianCookRole extends Role implements ItalianCook{
 	 */
 	protected boolean pickAndExecuteAnAction() {
 		
-		if(!Phonebook.getPhonebook().getChineseRestaurant().getRevolvingStand().isStandEmpty()) {
+		if(!Phonebook.getPhonebook().getItalianRestaurant().getRevolvingStand().isStandEmpty()) {
 			takeRevolvingStandOrder();
 			return true;
 		}
@@ -206,7 +206,15 @@ public class ItalianCookRole extends Role implements ItalianCook{
 	
 	public void takeRevolvingStandOrder() {
 		synchronized(Orders) {
-			Orders.add(Phonebook.getPhonebook().getItalianRestaurant().getRevolvingStand().takeOrder());
+			ItalianRestaurantOrder o = Phonebook.getPhonebook().getItalianRestaurant().getRevolvingStand().takeOrder();
+			synchronized(Foods) {
+				for(int i=0; i<Foods.size();i++) {
+					if(Foods.get(i).type.equals(o.choice)) {
+						o.food = Foods.get(i);
+					}
+				}
+			}
+			Orders.add(o);
 		}
 	}
 	

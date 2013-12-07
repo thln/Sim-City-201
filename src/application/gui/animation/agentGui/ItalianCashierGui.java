@@ -62,6 +62,11 @@ public class ItalianCashierGui implements Gui {
     public void DoCashiering() {
     	
     }
+    
+    public void DoExit() {
+    	xDestination = -20;
+    	yDestination = 300;
+    }
 
     public int getXPos() {
         return xPos;

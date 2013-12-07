@@ -191,6 +191,10 @@ public class ItalianHostRole extends Role {
 		waiters.add(waiter);
 	}
 	
+	public void removeWaiter(ItalianWaiterRole waiter) {
+		waiters.remove(waiter);
+	}
+	
 	public void setWaiter(ItalianCustomerRole c){
 		//for now, randomly generated numbers assign a waiter to the customer
 		if(waiters.size() > 0) {
