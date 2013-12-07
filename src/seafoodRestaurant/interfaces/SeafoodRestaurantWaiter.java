@@ -26,5 +26,7 @@ public interface SeafoodRestaurantWaiter
 	//public abstract void msgNotAtFrontDesk();
 	//public abstract void msgAtBreakRoom();
 	//public abstract void msgAtCashier();
+	public abstract void OrderIsReady(String food, int table);
+	public abstract void OutOfFood(int table, String food);
 
 }

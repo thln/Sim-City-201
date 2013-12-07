@@ -38,10 +38,10 @@ import chineseRestaurant.ChineseRestaurantCashierRole.Check;
 public class SeafoodRestaurantWaiterRole extends Role implements SeafoodRestaurantWaiter
 {
 	//static final int NTABLES = 3;//a global for the number of tables.
-	//private int NTABLES = 1;
-	private int xCordFrontDesk = 25;
-	private int yCordFrontDesk = 25;
-	private int waiterNumber; 
+	//protected int NTABLES = 1;
+	protected int xCordFrontDesk = 25;
+	protected int yCordFrontDesk = 25;
+	protected int waiterNumber; 
 	//Notice that we implement waitingCustomers using ArrayList, but type it
 	//with List semantics.
 	public List<MyCustomer> MyCustomers
@@ -52,23 +52,23 @@ public class SeafoodRestaurantWaiterRole extends Role implements SeafoodRestaura
 	//Later we will see how it is implemented
 
 	//Agent Correspondents
-	private SeafoodRestaurantHostRole host;
-	private SeafoodRestaurantCookRole cook;
-	private SeafoodRestaurantCashierRole cashier;
+	protected SeafoodRestaurantHostRole host;
+	protected SeafoodRestaurantCookRole cook;
+	protected SeafoodRestaurantCashierRole cashier;
 	
 	Timer relaxTimer = new Timer();
 	
 	//Checks for state, since there are only two states, boolean works
-	//private boolean bringingCustomer = false; 
-	private String name;
-	private boolean onBreak = false;
-	private boolean requestingBreak = false;
-	private Semaphore atTable = new Semaphore(0,true);
-	private Semaphore receivingOrder = new Semaphore(0, true);
-	private Semaphore atKitchen = new Semaphore(0, true);
-	private Semaphore atCustomerLobby = new Semaphore(0, true);
-	private Semaphore atCashier = new Semaphore(0, true);
-	private Semaphore receivingCheck = new Semaphore(0, true);
+	//protected boolean bringingCustomer = false; 
+	protected String name;
+	protected boolean onBreak = false;
+	protected boolean requestingBreak = false;
+	protected Semaphore atTable = new Semaphore(0,true);
+	protected Semaphore receivingOrder = new Semaphore(0, true);
+	protected Semaphore atKitchen = new Semaphore(0, true);
+	protected Semaphore atCustomerLobby = new Semaphore(0, true);
+	protected Semaphore atCashier = new Semaphore(0, true);
+	protected Semaphore receivingCheck = new Semaphore(0, true);
 	
 	public SeafoodRestaurantWaiterGui waiterGui = null;
 	
@@ -80,12 +80,12 @@ public class SeafoodRestaurantWaiterRole extends Role implements SeafoodRestaura
 	{Working, WantToGoOnBreak, AskedHost, CannotGoOnBreak, OnWayToBreak, InBreakRoom, Relaxing, WantToGoOffBreak};
 	public WaiterState state = WaiterState.Working;
 	
-	private class MyCustomer
+	class MyCustomer
 	{//switch into just Customers?
 		public SeafoodRestaurantCustomerRole c;
 		int table;
 		String choice;
-		private myCustomerState state = myCustomerState.Waiting;
+		protected myCustomerState state = myCustomerState.Waiting;
 		public SeafoodRestaurantCheck CustomersCheck;
 		public int xCordCustomerLobby;
 		public int yCordCustomerLobby;
@@ -460,14 +460,14 @@ public class SeafoodRestaurantWaiterRole extends Role implements SeafoodRestaura
 	
 	///// Actions
 	//WAITER ON BREAK STUFF ******************************
-	private void AskHost()
+	protected void AskHost()
 	{
 		state = WaiterState.AskedHost;
 		host.CanIGoOnBreak(this);
 	}
 	
 	//WAITER ON BREAK STUFF ******************************
-	private void TellHost()
+	protected void TellHost()
 	{
 		state = WaiterState.Working;
 		print("I am coming back to work.");
@@ -479,7 +479,7 @@ public class SeafoodRestaurantWaiterRole extends Role implements SeafoodRestaura
 		//stateChange
 	}
 	
-	private void seatCustomer(MyCustomer mc) 
+	protected void seatCustomer(MyCustomer mc) 
 	{
 		AtHomeboolean = false;
 		if(waiterGui.getXPos() != mc.xCordCustomerLobby && waiterGui.getYPos() != mc.yCordCustomerLobby)
@@ -514,7 +514,7 @@ public class SeafoodRestaurantWaiterRole extends Role implements SeafoodRestaura
 	}
 
 	// The animation DoXYZ() routines
-	private void DoSeatCustomer(SeafoodRestaurantCustomerRole customer, int table) {
+	protected void DoSeatCustomer(SeafoodRestaurantCustomerRole customer, int table) {
 		//Notice how we print "customer" directly. It's toString method will do it.
 		//Same with "table"
 		print("Seating " + customer + " at table " + table);
@@ -547,7 +547,7 @@ public class SeafoodRestaurantWaiterRole extends Role implements SeafoodRestaura
 		}
 	}
 	
-	private void DoGoToTable(SeafoodRestaurantCustomerRole cust)
+	protected void DoGoToTable(SeafoodRestaurantCustomerRole cust)
 	{
 		//REMEMBER TO DO THIS
 		//AFFECTS GUI!!!!!!!!!
@@ -573,7 +573,7 @@ public class SeafoodRestaurantWaiterRole extends Role implements SeafoodRestaura
 		mc.state = myCustomerState.OrderSent;
 	}
 	
-	private void DoGoToCook() //REMEMBER TO PASS CHEF AS A PARAMETER
+	protected void DoGoToCook() //REMEMBER TO PASS CHEF AS A PARAMETER
 	{
 		//REMEMBER TO DO THIS
 		//AFFECTS GUI!!!!!!
@@ -675,7 +675,7 @@ public class SeafoodRestaurantWaiterRole extends Role implements SeafoodRestaura
 		}
 	}
 
-	private void DoGoToCashier() //REMEMBER TO PASS CHEF AS A PARAMETER
+	protected void DoGoToCashier() //REMEMBER TO PASS CHEF AS A PARAMETER
 	{
 		//REMEMBER TO DO THIS
 		//AFFECTS GUI!!!!!!
@@ -729,7 +729,7 @@ public class SeafoodRestaurantWaiterRole extends Role implements SeafoodRestaura
 	}
 	
 	//WAITER ON BREAK STUFF ******************************
-	private void doGoOnBreak()
+	protected void doGoOnBreak()
 	{
 		waiterGui.GoToBreakRoom();
 		/*

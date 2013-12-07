@@ -10,35 +10,20 @@ import java.util.TimerTask;
 
 import person.Role;
 import seafoodRestaurant.interfaces.SeafoodRestaurantMarket;
+import seafoodRestaurant.interfaces.SeafoodRestaurantWaiter;
 import application.Phonebook;
 import application.Restaurant;
 import application.gui.animation.AnimationPanel;
+import seafoodRestaurant.SeafoodRestaurantOrder;
+import seafoodRestaurant.SeafoodRestaurantOrder.OrderState;
 
 public class SeafoodRestaurantCookRole extends Role implements Restaurant
 {
 	
 	/***** DATA *****/
-	public enum OrderState 
-	{Pending, Cooking, Finished, NeedMore};
-	
 	public enum cookState
 	{Cooking, Plating, Ordering};
 	cookState S = cookState.Cooking;
-	
-	private class Order
-	{
-		public SeafoodRestaurantWaiterRole w;
-		public String food;
-		public int table;
-		OrderState state = OrderState.Pending;
-		
-		public Order(String foodchoice, int tablenumber, SeafoodRestaurantWaiterRole waiter)
-		{
-			w = waiter;
-			food = foodchoice;
-			table = tablenumber;
-		}
-	}
 	
 	private class Food
 	{
@@ -73,7 +58,7 @@ public class SeafoodRestaurantCookRole extends Role implements Restaurant
 	
 	private AnimationPanel animPanel;
 	private Timer CookTimer  = new Timer();
-	private List <Order> orders = Collections.synchronizedList(new ArrayList<Order>());
+	private List <SeafoodRestaurantOrder> orders = Collections.synchronizedList(new ArrayList<SeafoodRestaurantOrder>());
 	private List <SeafoodRestaurantMarket> markets = Collections.synchronizedList(new ArrayList<SeafoodRestaurantMarket>());
 	private Map<String, Integer> RecipeBook  = new HashMap<String, Integer>();
 	private Map<String, Food> FoodInventory = new HashMap<String, Food>();
@@ -119,7 +104,7 @@ public class SeafoodRestaurantCookRole extends Role implements Restaurant
 	public void pleaseCook(String food, int table, SeafoodRestaurantWaiterRole w)
 	{
 		/////FILL IN
-		orders.add(new Order(food, table, w));
+		orders.add(new SeafoodRestaurantOrder(food, table, w));
 		stateChanged();
 	}
 	
@@ -200,7 +185,7 @@ public class SeafoodRestaurantCookRole extends Role implements Restaurant
 			
 		synchronized(orders)
 		{
-			for( Order order : orders)
+			for( SeafoodRestaurantOrder order : orders)
 			{
 				if(order.state == OrderState.Cooking && S == cookState.Plating)
 				{
@@ -223,7 +208,7 @@ public class SeafoodRestaurantCookRole extends Role implements Restaurant
 	
 	
 	/***** ACTIONS *****/
-	public void PlateIt(Order o)
+	public void PlateIt(SeafoodRestaurantOrder o)
 	{
 		/////FILL IN HERE
 		S = cookState.Cooking;
@@ -234,14 +219,14 @@ public class SeafoodRestaurantCookRole extends Role implements Restaurant
 		o.state = OrderState.Finished;
 	}
 	
-	private void DoPlate(Order o)
+	private void DoPlate(SeafoodRestaurantOrder o)
 	{
 		////Animate plate?
 		//need to add
 		//animPanel.addToPlated(o.food);
 	}
 	
-	public void CookIt(Order o)
+	public void CookIt(SeafoodRestaurantOrder o)
 	{
 		
 		//Out of Food
