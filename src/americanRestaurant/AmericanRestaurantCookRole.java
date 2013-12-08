@@ -23,7 +23,7 @@ public class AmericanRestaurantCookRole extends Role {
 	//CookGui cookGui;
 	List<Order> PendingOrders;
 	List<Order> FinishedOrders;
-	List<MarketAgent> markets;
+	//List<MarketAgent> markets;
 	HashMap<String,Food> foodList;
 	boolean needToOrder;
 
