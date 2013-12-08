@@ -12,6 +12,7 @@ public class ItalianRestaurant {
 	//Data
 	String name;
 	public boolean userClosed = false;
+	public Point location; 
 	private Point closestStop;
 
 	//List of Customers

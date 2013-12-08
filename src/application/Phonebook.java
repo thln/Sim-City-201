@@ -5,7 +5,6 @@ import housing.HousingMaintenanceCompany;
 
 import java.awt.Point;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import seafoodRestaurant.SeafoodRestaurant;
@@ -13,7 +12,6 @@ import italianRestaurant.ItalianRestaurant;
 import chineseRestaurant.ChineseRestaurant;
 import bank.Bank;
 import market.Market;
-import application.gui.animation.*;
 
 public class Phonebook{
 
@@ -63,6 +61,7 @@ public class Phonebook{
 		busStops.add(new Point(420, 230));		//Bottom right bus stop = busStop(3)
 		
 		eastBank = new Bank("East Bank");
+		eastBank.location = new Point()
 		eastBank.setClosestStop(busStops.get(3));		//setting building's closest bus stop
 		
 		//	westBank = new Bank("Bank");

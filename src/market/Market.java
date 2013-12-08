@@ -24,6 +24,7 @@ public class Market {
 	//Data
 	String name;
 	public boolean userClosed = false;
+	public Point location; 
 	private Point closestStop;
 
 	//Open and closing times
@@ -60,7 +61,8 @@ public class Market {
 		marketItemsForSale.put(7, new Product("Car", 1000.00));
 	}
 
-	public HashMap<String, Item> inventory = new HashMap<String, Item>(); {
+	public HashMap<String, Item> inventory = new HashMap<String, Item>();
+	{
 		//For people
 		inventory.put("Car", new Item("Car", 1000.00, 1000));
 		inventory.put("Pasta", new Item("Pasta", 1.99, 1000));
