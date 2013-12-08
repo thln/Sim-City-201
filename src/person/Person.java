@@ -87,6 +87,16 @@ public abstract class Person extends Agent{
 	public void msgAtDestination() {
 		getAtDestination().release();
 	}
+	
+	public void msgBusIsHere()
+	{
+		
+	}
+	
+	public void msgAtBusStopDestination()
+	{
+		
+	}
 
 	//Scheduler
 	protected abstract boolean pickAndExecuteAnAction();

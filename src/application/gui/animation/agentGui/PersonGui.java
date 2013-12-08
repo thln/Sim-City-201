@@ -278,6 +278,8 @@ public class PersonGui extends CityGui {
 		setDefaultColor();
 		command = Command.GoToBusStop;
 	}
+	
+	
 
 	public boolean decideForBus(String location) {
 		int xDest = 0, yDest = 0;
@@ -304,6 +306,28 @@ public class PersonGui extends CityGui {
 		return true;
 	}
 
+	public int getClosestBusStopNumber()
+	{
+		if(returnCurrentBlock(xPos, yPos) == 1 || returnCurrentBlock(xPos, yPos) == 2 || returnCurrentBlock(xPos, yPos) == 4 ||
+				returnCurrentBlock(xPos, yPos) == 5 )
+		{
+			return 1;
+		}
+		else if(returnCurrentBlock(xPos, yPos) == 3 || returnCurrentBlock(xPos, yPos) == 6)
+		{
+			return 2;
+			
+		}
+		else if(returnCurrentBlock(xPos, yPos) == 7 || returnCurrentBlock(xPos, yPos) == 8 )
+		{
+			return 4;
+		}
+		else
+		{//forth bus stop
+			return 3;
+		}
+	}
+	
 	public void setHomeLocation(int x, int y) {
 		setxHome(x);
 		yHome = y;
@@ -433,8 +457,9 @@ public class PersonGui extends CityGui {
 	}
 
 	public int returnCurrentBlock (int xPos, int yPos){
-		if (xPos < 160 && yPos < 70)
+		if (xPos < 160 && yPos < 70){
 			return 1;
+		}
 		if ((xPos > 199 && xPos < 380) && yPos < 70){
 			return 2;
 		}
