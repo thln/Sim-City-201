@@ -2,20 +2,17 @@ package application;
 
 import housing.Housing;
 import housing.HousingMaintenanceCompany;
+import italianRestaurant.ItalianRestaurant;
 
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-import seafoodRestaurant.SeafoodRestaurant;
-import italianRestaurant.ItalianRestaurant;
-import chineseRestaurant.ChineseRestaurant;
-import bank.Bank;
 import market.Market;
-import application.gui.animation.*;
-import application.gui.animation.agentGui.Gui;
+import seafoodRestaurant.SeafoodRestaurant;
+import bank.Bank;
+import chineseRestaurant.ChineseRestaurant;
 
 public class Phonebook{
 

@@ -194,7 +194,6 @@ public class BusGuiHorizontal extends CityGui {
 				!(state == BusState.inIntersection3)) {
 			Phonebook.getPhonebook().intersection3.setIntersectionBusy(true);	
 			state = BusState.inIntersection3;
-			System.err.println("Intersection 3 busy with bus " + this);
 		}
 		else if (Phonebook.getPhonebook().intersection4.getIntersection().intersects(me) &&
 				!(state == BusState.inIntersection4)) {
