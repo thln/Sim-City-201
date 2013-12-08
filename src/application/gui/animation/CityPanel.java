@@ -77,7 +77,7 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		addBuilding("Italian Restaurant", WINDOWX-123, 20);
 		addBuilding("Seafood Restaurant", WINDOWX-175, 100+market.getIconHeight()+2);
 
-		addBuilding("East Market", WINDOWX - 85, 100);
+		addBuilding("East Market", WINDOWX - 85, 108);
 		addBuilding("West Market", WINDOWX - 520, 275);
 
 		addBuilding("East Bank", (WINDOWX / 2), 260);
