@@ -34,7 +34,8 @@ public class BusGuiHorizontal extends CityGui {
 	private Timer busStop = new Timer();
 	private Semaphore wait = new Semaphore(0, true);
 
-	public BusGuiHorizontal(){
+	public BusGuiHorizontal(BusAgent bus){
+		agent = bus;
 	}
 
 	public void updatePosition() {
@@ -58,6 +59,7 @@ public class BusGuiHorizontal extends CityGui {
 
 		if (xPos == xDestination) {
 			if (command == Command.stop1) {
+				agent.msgAtBusStop(1);
 				busStop.schedule(new TimerTask() {
 					public void run() {
 						goToStop2();
@@ -66,6 +68,7 @@ public class BusGuiHorizontal extends CityGui {
 				waitTime);
 			}
 			else if (command == Command.stop2) {
+				agent.msgAtBusStop(2);
 				busStop.schedule(new TimerTask() {
 					public void run() {
 						goToEndOfTopRoad();
@@ -74,6 +77,7 @@ public class BusGuiHorizontal extends CityGui {
 				waitTime);
 			}
 			else if (command == Command.stop3) {
+				agent.msgAtBusStop(3);
 				busStop.schedule(new TimerTask() {
 					public void run() {
 						goToStop4();
@@ -82,6 +86,7 @@ public class BusGuiHorizontal extends CityGui {
 				waitTime);
 			}
 			else if (command == Command.stop4) {
+				agent.msgAtBusStop(4);
 				busStop.schedule(new TimerTask() {
 					public void run() {
 						goToEndOfBottomRoad();

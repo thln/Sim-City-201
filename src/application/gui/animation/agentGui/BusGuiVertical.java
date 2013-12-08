@@ -6,11 +6,12 @@ import java.awt.Rectangle;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import transportation.BusAgent;
 import application.Phonebook;
 
 public class BusGuiVertical extends CityGui {
 
-	//	private Bus agent = null;
+	private BusAgent agent = null;
 	private boolean isPresent = true;
 	
 	private final int stopTopY = (int) Phonebook.getPhonebook().getBusStops().get(0).getY()+8;
@@ -31,7 +32,8 @@ public class BusGuiVertical extends CityGui {
 
 	private Timer busStop = new Timer();
 
-	public BusGuiVertical(){
+	public BusGuiVertical(BusAgent bus){
+		agent = bus;
 	}
 
 	public void updatePosition() {
@@ -57,6 +59,7 @@ public class BusGuiVertical extends CityGui {
 
 		if (yPos == yDestination) {
 			if (command == Command.stop1) {
+				agent.msgAtBusStop(1);
 				busStop.schedule(new TimerTask() {
 					public void run() {
 						goToStop2();
@@ -65,6 +68,7 @@ public class BusGuiVertical extends CityGui {
 				waitTime);
 			}
 			else if (command == Command.stop2) {
+				agent.msgAtBusStop(2);
 				busStop.schedule(new TimerTask() {
 					public void run() {
 						goToEndOfLeftRoad();
@@ -73,6 +77,7 @@ public class BusGuiVertical extends CityGui {
 				waitTime);
 			}
 			else if (command == Command.stop3) {
+				agent.msgAtBusStop(3);
 				busStop.schedule(new TimerTask() {
 					public void run() {
 						goToStop4();
@@ -81,6 +86,7 @@ public class BusGuiVertical extends CityGui {
 				waitTime);
 			}
 			else if (command == Command.stop4) {
+				agent.msgAtBusStop(4);
 				busStop.schedule(new TimerTask() {
 					public void run() {
 						goToEndOfRightRoad();

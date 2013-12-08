@@ -18,10 +18,14 @@ public abstract class BusAgent extends Agent{
 	 *********************/
 	boolean needToDeposit;
 	boolean ifHorizontal;
+	int currentBusStop;
+	int expectedNumberOfPassengers;
 	BusGuiHorizontal guiH;
 	BusGuiVertical guiV;
 	String name;
 	
+	public enum busState {Driving, ReachedStop, DroppedOffPeople, PickingUpPeople};
+	busState state = busState.Driving;
 	class busPassenger
 	{
 		Person passenger;
@@ -39,16 +43,7 @@ public abstract class BusAgent extends Agent{
 
 	public BusAgent(String name) 
 	{
-		if(name.equals("Horizontal"))
-		{
-			ifHorizontal = true;
-			guiH = new BusGuiHorizontal();
-		}
-		else if(name.equals("Vertical"))
-		{
-			ifHorizontal = false;
-			guiV = new BusGuiVertical();
-		}
+
 	}
 	
 	/**** 
@@ -66,6 +61,13 @@ public abstract class BusAgent extends Agent{
 	 ***** MESSAGES ******
 	 *********************/
 	
+	public void msgAtBusStop(int busStopNumber)
+	{
+		currentBusStop = busStopNumber;
+		state = busState.ReachedStop;
+		stateChanged();
+	}
+	
 	public void msgGettingOnBus(Person p, int bStop)
 	{
 		busPassengers.add(new busPassenger(p, bStop));
@@ -77,7 +79,21 @@ public abstract class BusAgent extends Agent{
 	 *********************/
 	protected boolean pickAndExecuteAnAction() 
 	{
-		
+		if(state == busState.ReachedStop)
+		{
+			tellPeopleGetOff();
+			return true;
+		}
+		if(state == busState.DroppedOffPeople)
+		{
+			tellPeopleWaiting();
+			return true;
+		}
+		if(state == busState.PickingUpPeople)
+		{
+			checkNumberOfPassengers();
+			return true;
+		}
 		return false;
 	}
 
@@ -87,11 +103,57 @@ public abstract class BusAgent extends Agent{
 	
 	private void tellPeopleWaiting()
 	{
-		
+		state = busState.PickingUpPeople;
+		peopleAtBusStop = Phonebook.getPhonebook().getAllBusStops().get(currentBusStop).getAllWaitingPassengers(this);
+		expectedNumberOfPassengers += peopleAtBusStop.size();
+		if(peopleAtBusStop.isEmpty())
+		{
+			return;
+		}
+		else
+		{
+			for(int i = 0; i < peopleAtBusStop.size(); i++)
+			{
+				peopleAtBusStop.get(i).msgBusIsHere();
+				peopleAtBusStop.remove(i);
+			}
+		}
 	}
 	
 	private void tellPeopleGetOff()
 	{
+		state = busState.DroppedOffPeople;
+		for(int i = 0; i < busPassengers.size(); i++)
+		{
+			if(busPassengers.get(i).busStop == currentBusStop)
+			{
+				busPassengers.get(i).passenger.msgAtBusStopDestination();
+				busPassengers.remove(i);
+			}
+		}
+		expectedNumberOfPassengers = busPassengers.size();
+	}
+	
+	private void checkNumberOfPassengers()
+	{
+		if(expectedNumberOfPassengers == busPassengers.size())
+		{
+			state = busState.Driving;
+			currentBusStop = 0;
+			expectedNumberOfPassengers = 0;
+		}
 		
+	}
+	
+	public void setGui(BusGuiHorizontal g)
+	{
+		ifHorizontal = true;
+		guiH = g;
+	}
+	
+	public void setGui(BusGuiVertical g)
+	{
+		ifHorizontal = false;
+		guiV = g;
 	}
 }

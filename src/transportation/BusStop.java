@@ -30,20 +30,15 @@ public class BusStop
 	
 	public List<Person> getAllWaitingPassengers(BusAgent bus) //WorkerRole work)
 	{	
-		
-		//There should be a way to check if a bus has called this method 
-		//if(bus instanceof Bus)
-		//{
-			currentBus = bus;
-			List<Person> loadingPassengers = waitingPassengers;
-			waitingPassengers.clear();
-			return loadingPassengers;
-			//waitingPassengers.clear();
-		//}
-//		else
-//		{
-//			
-//		}
+		currentBus = bus;
+		List<Person> loadingPassengers = waitingPassengers;
+		waitingPassengers.clear();
+		return loadingPassengers;
+	}
+	
+	public void busIsLeaving()
+	{
+		currentBus = null;
 	}
 	
 	public int getBusStopNumber()
@@ -59,5 +54,10 @@ public class BusStop
 	public int getNumberOfWaitingPassengers()
 	{
 		return waitingPassengers.size();
+	}
+	
+	public BusAgent getCurrentBus()
+	{
+		return currentBus;
 	}
 }

@@ -282,6 +282,8 @@ public class PersonGui extends CityGui {
 	
 	public void doGoToBusStop()
 	{
+		xDestination = Phonebook.getPhonebook().getAllBusStops().get(getClosestBusStopNumber()).getBusStopLocation().x;
+		yDestination = Phonebook.getPhonebook().getAllBusStops().get(getClosestBusStopNumber()).getBusStopLocation().y;
 		System.out.println("Going to bus stop");
 		setDefaultColor();
 		command = Command.GoToBusStop;
@@ -298,15 +300,15 @@ public class PersonGui extends CityGui {
 		}
 		if (location.equals("West Bank")) {
 			xDestination = (int) Phonebook.getPhonebook().getWestBank().location.getX();
-			yDestination = (int) Phonebook.getPhonebook().getWestBank().location. getY();
+			yDestination = (int) Phonebook.getPhonebook().getWestBank().location.getY();
 		}
 		if (location.equals("East Market")) {
 			xDestination = (int) Phonebook.getPhonebook().getWestBank().location.getX();
-			yDestination = (int) Phonebook.getPhonebook().getWestBank().location. getY();
+			yDestination = (int) Phonebook.getPhonebook().getWestBank().location.getY();
 		}
 		if (location.equals("Chinese Restaurant")) {
 			xDestination = (int) Phonebook.getPhonebook().getWestBank().location.getX();
-			yDestination = (int) Phonebook.getPhonebook().getWestBank().location. getY();
+			yDestination = (int) Phonebook.getPhonebook().getWestBank().location.getY();
 		}
 
 		destinationBlock = returnCurrentBlock (xDestination, yDestination);
@@ -774,5 +776,17 @@ public class PersonGui extends CityGui {
 			Phonebook.getPhonebook().crosswalk12.setCrosswalkBusy(false);	
 			state = PersonState.enroute;	
 		}
+	}
+	
+	public void setInvisible()
+	{
+		currColor = transColor;
+	}
+	
+	public void getOffBus(int busStopNumber)
+	{
+		xPos = Phonebook.getPhonebook().getAllBusStops().get(busStopNumber).getBusStopLocation().x;
+		yPos = Phonebook.getPhonebook().getAllBusStops().get(busStopNumber).getBusStopLocation().y;
+		currColor = myColor;
 	}
 }

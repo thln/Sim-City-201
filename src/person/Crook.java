@@ -23,6 +23,8 @@ public class Crook extends Person {
 	}
 
 	public boolean pickAndExecuteAnAction() {
+		goToBusStop(4);
+		
 		if (getHunger() == HungerLevel.full) {
 			startHungerTimer();
 			return true;

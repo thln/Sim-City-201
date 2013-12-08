@@ -139,9 +139,11 @@ public abstract class Person extends Agent{
 			gui.popToMiddle();
 
 		if (!gui.walk){
+
+			goToBusStop(Phonebook.getPhonebook().getEastBank().getClosestBusStop().getBusStopNumber());
+			//goToBusStop(gu)
 			//What is this supposed to mean?
-			goToBusStop();
-//			if (home.type.equals("East Apartment")){
+			//			if (home.type.equals("East Apartment")){
 //				gui.doGoToBus(Phonebook.getPhonebook().getEastBank().getClosestStop().getX(),
 //						Phonebook.getPhonebook().getEastBank().getClosestStop().getY());
 //			}
@@ -239,7 +241,7 @@ public abstract class Person extends Agent{
 		}
 	}
 
-	protected void goToBusStop()
+	protected void goToBusStop(int destinationBusStopNumber)
 	{
 //		if (home.type.equals("East Apartment")){
 //			gui.doGoToBus(Phonebook.getPhonebook().getEastBank().getClosestStop().getX(),
@@ -271,6 +273,19 @@ public abstract class Person extends Agent{
 		{
 			e.printStackTrace();
 		}
+		Phonebook.getPhonebook().getAllBusStops().get(gui.getClosestBusStopNumber()).getCurrentBus().msgGettingOnBus(this, destinationBusStopNumber);
+		gui.setInvisible();
+		try
+		{
+			beingTransported.acquire();
+			//beingTransported.acquire();
+			//maybe have to do double acquires?
+		}
+		catch (InterruptedException e)
+		{
+			e.printStackTrace();
+		}
+		gui.getOffBus(destinationBusStopNumber);
 	}
 	
 	protected void prepareForMarket() {
