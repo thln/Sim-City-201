@@ -48,6 +48,7 @@ public class PersonGui extends CityGui {
 	private int xHome, yHome;
 	private enum Command {noCommand, GoToRestaurant, GoToMarket, GoToBank, GoToBusStop, GoOnBus, GoHome};
 	private Command command = Command.noCommand;
+	
 	int currentBlock, destinationBlock;
 
 	private enum PersonState {nothing, enroute, walkingToCrosswalk, inCrosswalk1, inCrosswalk2, inCrosswalk3, inCrosswalk4, inCrosswalk5, inCrosswalk6, inCrosswalk7, inCrosswalk8, inCrosswalk9, inCrosswalk10, inCrosswalk11, inCrosswalk12};
@@ -68,7 +69,7 @@ public class PersonGui extends CityGui {
 	public PersonGui(Person p) {
 		this.agent = p;
 		if(p.home.type.equals("West Apartment")) {
-			xHome = 200;
+			xHome = 0;
 			yHome = 200;			
 		}
 		if(p.home.type.equals("East Apartment")) {
@@ -299,13 +300,14 @@ public class PersonGui extends CityGui {
 			yDestination = (int) Phonebook.getPhonebook().getWestBank().location. getY();
 		}
 
+		currentBlock = returnCurrentBlock (xPos, yPos);
 		destinationBlock = returnCurrentBlock (xDestination, yDestination);
-		System.err.println(agent.getName() + " has Destination block = " + destinationBlock);
-		
-		if ((xDestination - xPos >= 30) || (yDestination - yPos >= 30)){
+		agent.print("dest = " + destinationBlock + "currentBlock = " + currentBlock + "Block in phonebook is " + Phonebook.getPhonebook().blocks.get(currentBlock));
+		if (Phonebook.getPhonebook().blocks.get(currentBlock).doIWalk(destinationBlock)){
 			return false;
-		}
-		return true;
+		}	
+		else
+			return true;
 	}
 
 	public void setHomeLocation(int x, int y) {
@@ -382,7 +384,6 @@ public class PersonGui extends CityGui {
 
 	public void popToMiddle(){
 		currentBlock = returnCurrentBlock(xPos, yPos);
-		System.err.println(agent.getName() + " has Destination block = " + destinationBlock);
 		if (currentBlock == 1)
 		{
 			xPos = (int) Phonebook.getPhonebook().crosswalk3.getCrosswalk().getX();			//Pop to middle of block1
@@ -437,8 +438,8 @@ public class PersonGui extends CityGui {
 		//xPos -= 10;
 		//yPos = 30;
 	
-		System.err.println("Name is " + agent.getName() + " and Block = " + currentBlock + "and position = " + xPos + " , " + yPos );
-		System.err.println(agent.getName() + " has Destination block = " + destinationBlock);
+		//System.err.println("Name is " + agent.getName() + " and Block = " + currentBlock + "and position = " + xPos + " , " + yPos );
+		//System.err.println(agent.getName() + " has Destination block = " + destinationBlock);
 	}
 
 	public int returnCurrentBlock (int xPos, int yPos){
