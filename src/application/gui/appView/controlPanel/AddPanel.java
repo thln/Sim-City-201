@@ -60,6 +60,7 @@ public class AddPanel extends JPanel implements ActionListener {
 	
 	//Music testing
 	AudioStream BGM;
+	AudioPlayer MGP = AudioPlayer.player;
 
 	private String[] personType = {" ", /*"Deadbeat", "Crook", */ "Worker", "Wealthy"};
 	private String[] jobLocation = {" ", "Restaurant", "Bank", "Market", "Housing"};
@@ -71,6 +72,21 @@ public class AddPanel extends JPanel implements ActionListener {
 
 	public AddPanel(ControlPanel cp, Application app)
 	{
+		try {
+			InputStream test = new FileInputStream("res/audio/raveAudioMode.wav");
+			BGM = new AudioStream(test);
+	        //MGP.start(BGM);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			System.out.println("Won't work1.");
+			return;
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println("Won't work.");
+			return;
+		}
+		
+		
 		//initialization
 		this.cp = cp;
 		this.app = app;
@@ -324,6 +340,7 @@ public class AddPanel extends JPanel implements ActionListener {
 				rave = true;
 				try {
 					app.animPanel.cityPanel.background = ImageIO.read(new File("res/rave.jpeg"));
+					MGP.start(BGM);
 					//app.animPanel.cityPanel.paint
 				} catch (IOException e1) {
 				}
@@ -333,6 +350,8 @@ public class AddPanel extends JPanel implements ActionListener {
 				rave = false;
 				try {
 					app.animPanel.cityPanel.background = ImageIO.read(new File("res/concrete.jpg"));
+					MGP.stop(BGM);
+					MGP.interrupt();
 					//app.animPanel.cityPanel.paint
 				} catch (IOException e1) {
 				}
@@ -347,8 +366,10 @@ public class AddPanel extends JPanel implements ActionListener {
 	{
 
 		AudioPlayer MGP = AudioPlayer.player;
-		//AudioInputStream BGM;
 		AudioStream BGM;
+		
+		
+		//AudioInputStream BGM;
 		//AudioData MD;
 		//ContinuousAudioDataStream loop = null;
 		//try 
