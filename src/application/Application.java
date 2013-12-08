@@ -236,8 +236,8 @@ public class Application extends JPanel {
 		//People
 		getPopulation().add(wealthy1);
 		getPopulation().add(wealthy2);
-		//		getPopulation().add(wealthy3);
-		//		getPopulation().add(wealthy4);
+//		getPopulation().add(wealthy3);
+//		getPopulation().add(wealthy4);
 		getPopulation().add(crook1);
 	
 		//Setting Gui for everyone
@@ -287,14 +287,14 @@ public class Application extends JPanel {
 		bank4b.startThread();	
 		bank4c.startThread();		
 				
-				house1.startThread();
+//		house1.startThread();
 
 		//People
 		wealthy1.startThread();
 		wealthy2.startThread();
 		//		wealthy3.startThread();
 		//		wealthy4.startThread();
-		crook1.startThread();
+//		crook1.startThread();
 
 		updatePeopleTime();
 
