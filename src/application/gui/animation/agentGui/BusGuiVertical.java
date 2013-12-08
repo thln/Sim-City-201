@@ -16,7 +16,7 @@ public class BusGuiVertical extends CityGui {
 	private final int stopTopY = (int) Phonebook.getPhonebook().getBusStops().get(0).getY()+8;
 	private final int stopBottomY = (int) Phonebook.getPhonebook().getBusStops().get(2).getY()+8;
 	private final int stopLeftX = 168;
-	private final int stopRightX = 388;
+	private final int stopRightX = 386;
 
 	private final int waitTime = 1000;
 	
