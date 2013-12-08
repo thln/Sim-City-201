@@ -211,31 +211,31 @@ public class Application extends JPanel {
 		getPopulation().add(rest1h);
 		getPopulation().add(rest1i);
 		getPopulation().add(rest1j);
-		getPopulation().add(rest1k);
-		getPopulation().add(bank3a);
-		getPopulation().add(bank3b);
-		getPopulation().add(bank3c);
+//		getPopulation().add(rest1k);
+//		getPopulation().add(bank3a);
+//		getPopulation().add(bank3b);
+//		getPopulation().add(bank3c);
 
 		//Shift 2
-		getPopulation().add(bank2a);
-		getPopulation().add(bank2b);
-		getPopulation().add(bank2c);
-		getPopulation().add(market2d);
-		getPopulation().add(market2e);
-		getPopulation().add(market2f);
-		getPopulation().add(rest2g);
-		getPopulation().add(rest2h);
-		getPopulation().add(rest2i);
-		getPopulation().add(rest2j);
-		getPopulation().add(house1);
-		getPopulation().add(rest2k);
-		getPopulation().add(bank4a);
-		getPopulation().add(bank4b);
-		getPopulation().add(bank4c);
+//		getPopulation().add(bank2a);
+//		getPopulation().add(bank2b);
+//		getPopulation().add(bank2c);
+//		getPopulation().add(market2d);
+//		getPopulation().add(market2e);
+//		getPopulation().add(market2f);
+//		getPopulation().add(rest2g);
+//		getPopulation().add(rest2h);
+//		getPopulation().add(rest2i);
+//		getPopulation().add(rest2j);
+//		getPopulation().add(house1);
+//		getPopulation().add(rest2k);
+//		getPopulation().add(bank4a);
+//		getPopulation().add(bank4b);
+//		getPopulation().add(bank4c);
 
 		//People
-		getPopulation().add(wealthy1);
-		getPopulation().add(wealthy2);
+//		getPopulation().add(wealthy1);
+//		getPopulation().add(wealthy2);
 //		getPopulation().add(wealthy3);
 //		getPopulation().add(wealthy4);
 		getPopulation().add(crook1);
@@ -267,31 +267,31 @@ public class Application extends JPanel {
 		rest1i.startThread();
 		rest1j.startThread();
 		rest1k.startThread();
-		bank3a.startThread();
-		bank3b.startThread();	
-		bank3c.startThread();
+//		bank3a.startThread();
+//		bank3b.startThread();	
+//		bank3c.startThread();
 		
 		//Shift 2
 		bank2a.startThread();
-		bank2b.startThread();
-		bank2c.startThread();
-		market2d.startThread();
-		market2e.startThread();
-		market2f.startThread();
-		rest2g.startThread();
-		rest2h.startThread();
-		rest2i.startThread();
-		rest2j.startThread();
-		rest2k.startThread();
-		bank4a.startThread();
-		bank4b.startThread();	
-		bank4c.startThread();		
+//		bank2b.startThread();
+//		bank2c.startThread();
+//		market2d.startThread();
+//		market2e.startThread();
+//		market2f.startThread();
+//		rest2g.startThread();
+//		rest2h.startThread();
+//		rest2i.startThread();
+//		rest2j.startThread();
+//		rest2k.startThread();
+//		bank4a.startThread();
+//		bank4b.startThread();	
+//		bank4c.startThread();		
 				
 //		house1.startThread();
 
 		//People
-		wealthy1.startThread();
-		wealthy2.startThread();
+//		wealthy1.startThread();
+//		wealthy2.startThread();
 		//		wealthy3.startThread();
 		//		wealthy4.startThread();
 //		crook1.startThread();
