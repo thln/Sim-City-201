@@ -171,15 +171,14 @@ public class Worker extends Person {
 		
 		//Hunger Related ( check if you are hungry)
 		if (getHunger() == HungerLevel.hungry) {
+			hunger = HungerLevel.full;
 			//If you don't have food in the fridge
 			if (!hasFoodInFridge) {
 				//Check if any restaurants are open
 				if (Phonebook.getPhonebook().getChineseRestaurant().isOpen()) {	
 					prepareForRestaurant();
 				}
-				//
 				return true;
-
 			}
 			else //if you do have food in the fridge
 			{
@@ -258,7 +257,7 @@ public class Worker extends Person {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			workerRole = Phonebook.getPhonebook().getEastBank().arrivedAtWork(this, myJob.title);
+			workerRole = Phonebook.getPhonebook().getWestBank().arrivedAtWork(this, myJob.title);
 			workerRole.setRoleActive();
 			return;
 		}

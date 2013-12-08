@@ -46,8 +46,8 @@ public abstract class Person extends Agent{
 	//Hunger Related
 	public HashMap <String, Integer> Inventory = new HashMap<String, Integer>();                 //Food list
 	public boolean hasFoodInFridge = false;
-	public enum HungerLevel {full, moderate, hungry, starving};
-	private HungerLevel hunger = HungerLevel.hungry;
+	public enum HungerLevel {full, moderate, hungry};
+	protected HungerLevel hunger;
 	int eatTime = 4;
 	protected Semaphore eating = new Semaphore(0, true);
 

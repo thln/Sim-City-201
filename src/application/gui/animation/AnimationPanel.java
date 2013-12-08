@@ -138,8 +138,8 @@ public class AnimationPanel extends JPanel implements MouseListener {
 		if (building.getName().toLowerCase().contains("bank")) {
 			if(building.getName().toLowerCase().contains("east"))
 				Phonebook.getPhonebook().getEastBank().setBuildingPanel(building.myBuildingPanel);
-//			if(building.getName().toLowerCase().contains("west"))
-//				Phonebook.getPhonebook().getWestBank().setBuildingPanel(building.myBuildingPanel);
+			if(building.getName().toLowerCase().contains("west"))
+				Phonebook.getPhonebook().getWestBank().setBuildingPanel(building.myBuildingPanel);
 		}
 	}
 

@@ -67,21 +67,17 @@ public class Bank {
 	public Bank(String name) {
 		bankGuardRole  = new BankGuardRole("Bank Guard");
 		loanOfficerRole =  new LoanOfficerRole("Loan Officer");
-		//tellers  = new ArrayList<>();
-		
+			
 		if (name.equals("East Bank"))
 			location = new Point(330, 260);
 		else if (name.equals("West Bank"))
-			location = new Point(225,0);
+			location = new Point(255,30);
 		
 		this.name = name;
 		vault = 10000;
 		vaultMinimum = 1000;
 		accounts = Collections.synchronizedList(new ArrayList<Account>());
-		//BankTellerRole t1 = new BankTellerRole ("BankTeller 1");
-		//tellers.add(t1);
-		//bankGuardRole.msgTellerCameToWork(t1);
-			
+
 		BankTellerMock t2 = new BankTellerMock ("BankTellerMock");
 		mockTellers.add(t2);	
 	}

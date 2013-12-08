@@ -138,8 +138,7 @@ public class PersonGui extends CityGui {
 					currColor = transColor;
 				}
 				
-				if (command == Command.GoToBank && xPos == Phonebook.getPhonebook().getEastBank().location.getX() 
-						&& yPos == Phonebook.getPhonebook().getEastBank().location.getY()) {
+				if (command == Command.GoToBank) {
 					agent.msgAtDestination();
 					currColor = transColor;
 				}
