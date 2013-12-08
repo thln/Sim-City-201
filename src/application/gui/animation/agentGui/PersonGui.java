@@ -369,6 +369,48 @@ public class PersonGui extends CityGui {
 			startStopY = (int) Phonebook.getPhonebook().busStops.get(0).getY();
 		}
 	}
+	
+	public void popToMiddle(){
+		if (xPos < 160 && yPos < 70){
+			xPos = 90;			//Pop to middle of block1
+			yPos = 35;
+		}
+		if ((xPos > 205 && xPos < 380) && yPos < 70){
+			xPos = 295;			//Pop to middle of block2
+			yPos = 35;
+		}
+		if (xPos > 420 && yPos < 70){
+			xPos = 500;			//Pop to middle of block3
+			yPos = 35;
+		}
+
+		if (xPos < 160 && (yPos > 115 && yPos < 192)){
+			xPos = 76;			//Pop to middle of block4
+			yPos = 155;
+		}
+		if ((xPos > 200 && xPos < 378) && (yPos > 115 && yPos < 192)){
+			xPos = 295;			//Pop to middle of block5
+			yPos = 155;
+		}
+		if (xPos > 420 && (yPos > 115 && yPos < 192)){
+			xPos = 500;			//Pop to middle of block6
+			yPos = 155;
+		}
+		
+		
+		if (xPos < 160 && yPos > 230){
+			xPos = 75;			//Pop to middle of block7
+			yPos = 280;
+		}
+		if ((xPos > 200 && xPos < 378) && yPos > 230){
+			xPos = 295;			//Pop to middle of block8
+			yPos = 280;
+		}
+		if (xPos > 420 && yPos > 230){
+			xPos = 500;			//Pop to middle of block9
+			yPos = 280;
+		}
+	}
 
 	public void setDefaultColor() {
 		if (raveMode) {

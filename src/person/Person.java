@@ -112,6 +112,7 @@ public abstract class Person extends Agent{
 
 	protected void prepareForBank () {
 
+		gui.popToMiddle();
 		if (!(this instanceof Crook))
 			Do("Becoming Bank Customer");
 
@@ -369,7 +370,6 @@ public abstract class Person extends Agent{
 	public void setGui(PersonGui g) {
 	
 		this.gui = g;
-		print("Home =" + home + "Type =" + home.type);
 		if (home.type.equals("East Apartment")){
 			gui.setxPos(0);
 			gui.setyPos(0);
