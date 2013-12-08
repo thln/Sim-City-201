@@ -96,19 +96,21 @@ public class PersonGui extends CityGui {
 
 		//if (!inBusyIntersection()) {
 		if (state == PersonState.walkingToCrosswalk) {
-			if (xDestination > xPos){
+			int currentBlock = returnCurrentBlock (xPos, yPos);
+			int destinationBlock = returnCurrentBlock (xDestination, yDestination);
+			if (destinationBlock - currentBlock == 1) {
 				xPos++;
 				return;
 			}
-			else if (xDestination < xPos){
+			else if (destinationBlock - currentBlock == -1){
 				xPos--;
 				return;
 			}
-			else if (yDestination > yPos){
+			else if (destinationBlock - currentBlock == 3){
 				yPos++;
 				return;
 			}
-			else if (xDestination < xPos){
+			else if (destinationBlock - currentBlock == -3){
 				yPos--;
 				return;
 			}
