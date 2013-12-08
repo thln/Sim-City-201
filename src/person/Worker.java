@@ -232,6 +232,7 @@ public class Worker extends Person {
 				e.printStackTrace();
 			}
 		}
+			
 
 		if (myJob.jobPlace.equals("East Bank")) 
 		{

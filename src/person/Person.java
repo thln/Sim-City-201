@@ -122,6 +122,8 @@ public abstract class Person extends Agent{
 			gui.walk = gui.decideForBus("West Bank");
 
 		gui.walk = true;
+		if (gui.walk)
+			gui.walkToCrossWalk();
 
 		if (!gui.walk){
 			if (home.type.equals("East Apartment")){
