@@ -242,7 +242,7 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 				return;
 			}
 		}
-
+		System.out.println(e.getX() + "    " + e.getY());
 		animationPanel.displayBlankBuildingPanel();
 	}
 
