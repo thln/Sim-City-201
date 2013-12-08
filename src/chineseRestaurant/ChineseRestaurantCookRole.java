@@ -17,6 +17,7 @@ import person.Worker;
 import person.Role.RoleState;
 import application.Phonebook;
 import application.gui.animation.agentGui.RestaurantCookGui;
+import application.gui.animation.agentGui.RestaurantCustomerGui;
 import application.gui.trace.AlertLog;
 
 /**
@@ -27,7 +28,8 @@ import application.gui.trace.AlertLog;
 
 public class ChineseRestaurantCookRole extends Role implements ChineseRestaurantCook {
 
-	RestaurantCookGui cookGui = (RestaurantCookGui) gui;
+	//RestaurantCookGui cookGui = (RestaurantCookGui) gui;
+	private RestaurantCookGui cookGui;
 
 	Timer timer = new Timer();
 	private int cookTime;
@@ -194,7 +196,6 @@ public class ChineseRestaurantCookRole extends Role implements ChineseRestaurant
 	}
 	
 	private void cookOrder(final ChineseRestaurantOrder o) {
-		RestaurantCookGui cookGui = (RestaurantCookGui) gui;
 
 		if(!isInStock(o.choice)) {
 			checkInventory(o.choice);
@@ -244,7 +245,6 @@ public class ChineseRestaurantCookRole extends Role implements ChineseRestaurant
 	}
 
 	private void doneCooking(ChineseRestaurantOrder o) {
-		RestaurantCookGui cookGui = (RestaurantCookGui) gui;
 		print("Done cooking order for table " + o.tableNumber);
 
 		cookGui.DoPickUpFood();
@@ -469,5 +469,13 @@ public class ChineseRestaurantCookRole extends Role implements ChineseRestaurant
 			this.market = market;
 		}
 	}*/
+	
+	public void setGui(RestaurantCookGui gui) {
+		cookGui = gui;
+	}
+	
+	public RestaurantCookGui getGui() {
+		return cookGui;
+	}
 }
 

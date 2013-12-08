@@ -27,7 +27,8 @@ public class ChineseRestaurantWaiterRole extends Role implements ChineseRestaura
 
 	protected String name;
 	protected String RoleName = "Waiter";
-	RestaurantWaiterGui waiterGui = (RestaurantWaiterGui) gui;
+	//RestaurantWaiterGui waiterGui = (RestaurantWaiterGui) gui;
+	RestaurantWaiterGui waiterGui;
 
 	public ChineseRestaurantMenu chineseRestaurantMenu = new ChineseRestaurantMenu();
 
@@ -291,7 +292,6 @@ public class ChineseRestaurantWaiterRole extends Role implements ChineseRestaura
 	 * Actions
 	 */
 	protected void seatCustomer(ChineseRestaurantMyCustomer MC) {
-		RestaurantWaiterGui waiterGui = (RestaurantWaiterGui) gui;
 		waiterGui.DoPickUpCustomer(MC.xHome, MC.yHome);
 		try {
 			atDestination.acquire();
@@ -318,14 +318,12 @@ public class ChineseRestaurantWaiterRole extends Role implements ChineseRestaura
 
 	// The animation DoXYZ() routines
 	protected void DoSeatCustomer(ChineseRestaurantCustomerRole customer, int table) {
-		RestaurantWaiterGui waiterGui = (RestaurantWaiterGui) gui;
 		isInLobby = false;
 		print("Seating " + customer + " at " + table);
 		waiterGui.DoBringToTable(customer, table);
 	}
 
 	protected void takeOrder(ChineseRestaurantMyCustomer MC) {
-		RestaurantWaiterGui waiterGui = (RestaurantWaiterGui) gui;
 		isInLobby = false;
 		print(MC.customer.getCustomerName() + " wants to order");
 
@@ -350,7 +348,6 @@ public class ChineseRestaurantWaiterRole extends Role implements ChineseRestaura
 	}
 
 	protected void placeOrder(ChineseRestaurantMyCustomer MC) {
-		RestaurantWaiterGui waiterGui = (RestaurantWaiterGui) gui;
 		isInLobby = false;
 		print("Placing " + MC.customer.getCustomerName() + "'s order");
 
@@ -374,7 +371,6 @@ public class ChineseRestaurantWaiterRole extends Role implements ChineseRestaura
 	}
 
 	protected void retakeOrder(ChineseRestaurantMyCustomer MC) {
-		RestaurantWaiterGui waiterGui = (RestaurantWaiterGui) gui;
 		isInLobby = false;
 
 		waiterGui.DoTakeOrder(MC.tableNumber);
@@ -393,7 +389,6 @@ public class ChineseRestaurantWaiterRole extends Role implements ChineseRestaura
 	}
 
 	protected void deliverOrder() {
-		RestaurantWaiterGui waiterGui = (RestaurantWaiterGui) gui;
 		isInLobby = false;
 		waiterGui.DoGoToPlatingArea();
 
@@ -427,7 +422,6 @@ public class ChineseRestaurantWaiterRole extends Role implements ChineseRestaura
 	}
 
 	protected void giveCheck(ChineseRestaurantMyCustomer MC) {
-		RestaurantWaiterGui waiterGui = (RestaurantWaiterGui) gui;
 		isInLobby = false;
 
 		waiterGui.DoTakeOrder(MC.tableNumber); //Is going to table
@@ -500,6 +494,14 @@ public class ChineseRestaurantWaiterRole extends Role implements ChineseRestaura
 		if (state == breakStatus.onBreak)
 			return true;
 		return false;
+	}
+	
+	public void setGui(RestaurantWaiterGui waiter) {
+		waiterGui = waiter;
+	}
+	
+	public RestaurantWaiterGui getGui() {
+		return waiterGui;
 	}
 }
 

@@ -153,12 +153,15 @@ public class Bank {
 			bankPanel.removeGui(loanOfficerGui);
 		}
 		else if (worker.getWorkerRole() instanceof BankTellerRole){
-			bankPanel.removeGui(worker.getWorkerRole().gui);
+			BankTellerRole BTR = (BankTellerRole) worker.getWorkerRole();
+			bankPanel.removeGui(BTR.getGui());
+			//bankPanel.removeGui(worker.getWorkerRole().gui);
 		}
 	}
 	
 	public void msgCustomerArrived(BankCustomerRole BCR) {
-		BankCustomerGui BCG = (BankCustomerGui) BCR.gui;
+		BankCustomerGui BCG= new BankCustomerGui(BCR);
+		BCR.setGui(BCG);
 		bankPanel.addGui(BCG);
 	}
 
@@ -216,7 +219,7 @@ public class Bank {
 	}
 	
 	public void removeCustomer(BankCustomerRole customerRole) {
-		bankPanel.removeGui(customerRole.gui);
+		bankPanel.removeGui(customerRole.getGui());
 	}
 	
 	public void closeBuilding(){
