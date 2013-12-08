@@ -14,7 +14,7 @@ import person.Worker;
 
 
 /**
- * Restaurant Cashier Role
+ * Restaurant AmericanRestaurantCashier Role
  */
 
 public class ChineseRestaurantCashierRole extends Role implements ChineseRestaurantCashier {

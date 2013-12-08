@@ -22,7 +22,7 @@ public class MarketCustomerTest extends TestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 		wealthy = new Wealthy("Wealthy Person", 10);
-		marketCustomer = new MarketCustomerRole(wealthy, "Customer", "Market Customer");
+		marketCustomer = new MarketCustomerRole(wealthy, "AmericanRestaurantCustomer", "Market AmericanRestaurantCustomer");
 		marketSalesPerson = (MockSalesPerson) Phonebook.getPhonebook().getEastMarket().getSalesPerson(true);
 		marketCustomer.test = true;
 	}
@@ -41,7 +41,7 @@ public class MarketCustomerTest extends TestCase {
 		marketCustomer.msgHereAreYourThings("Ice Cream", 1, 4.99);//send the message from a SalesPerson
 
 		//check postconditions for step 1 / preconditions for step 2
-		assertEquals("MockSalesPerson should have an empty event log before the MarketCustomer's scheduler is called. Instead, the MockWaiter's event log reads: "
+		assertEquals("MockSalesPerson should have an empty event log before the MarketCustomer's scheduler is called. Instead, the AmericanRestaurantMockWaiter's event log reads: "
 				+ marketSalesPerson.log.toString(), 0, marketSalesPerson.log.size());
 
 		assertEquals("MarketCustomer should have logged \"Recieved msgHereAreYourThings\". Instead, the MarketCustomer's event log reads: "

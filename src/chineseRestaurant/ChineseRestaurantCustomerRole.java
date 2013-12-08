@@ -19,7 +19,7 @@ import application.gui.animation.agentGui.RestaurantCustomerGui;
 public class ChineseRestaurantCustomerRole extends Role implements ChineseRestaurantCustomer {
 	private int hungerLevel = 5;        // determines length of meal
 	Timer timer = new Timer();
-	protected String RoleName = "Restaurant Customer";
+	protected String RoleName = "Restaurant AmericanRestaurantCustomer";
 
 	int xHome, yHome;
 	
@@ -93,7 +93,7 @@ public class ChineseRestaurantCustomerRole extends Role implements ChineseRestau
 	}
 
 	public void msgTablesAreFull() {
-		print("Got message that all tables are full");
+		print("Got message that all americanRestaurantTables are full");
 		state = AgentState.TablesFull;
 		stateChanged();
 	}
@@ -164,7 +164,7 @@ public class ChineseRestaurantCustomerRole extends Role implements ChineseRestau
 	 * Scheduler
 	 */
 	protected boolean pickAndExecuteAnAction() {
-		//	CustomerAgent is a finite state machine
+		//	AmericanRestaurantCustomerRole is a finite state machine
 
 		if (state == AgentState.DoingNothing && event == AgentEvent.gotHungry ) {
 			goToRestaurant();
@@ -337,7 +337,7 @@ public class ChineseRestaurantCustomerRole extends Role implements ChineseRestau
 
 	private void PayingCheck() {
 		state = AgentState.PayingCheck;
-		print("Going to the cashier");
+		print("Going to the americanRestaurantCashier");
 		
 		//This stateChanged() needs to be deleted because gui isn't working
 		event = AgentEvent.atCashier;

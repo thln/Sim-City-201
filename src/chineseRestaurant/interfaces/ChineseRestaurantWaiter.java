@@ -15,23 +15,23 @@ public interface ChineseRestaurantWaiter {
 	/**
 	 * Messages
 	 */
-//	public void msgPleaseSeatCustomer(int tableNumber, Customer customer, int xHome, int yHome);
+//	public void msgPleaseSeatCustomer(int tableNumber, AmericanRestaurantCustomer customer, int xHome, int yHome);
 //
 //	public void msgAtDestination();
 //
 //	public void msgIsInLobby();
 //
-//	public void msgReadyToOrder(Customer customer);
+//	public void msgReadyToOrder(AmericanRestaurantCustomer customer);
 //
-//	public void msgHeresMyOrder(Customer customer, String choice);
+//	public void msgHeresMyOrder(AmericanRestaurantCustomer customer, String choice);
 //	
 //	public void msgOrderIsNotAvailable(String choice, int tableNumber);
 //
 //	public void msgOrderIsReady(int table, String choice);
 //	
-//	public void msgIWantMyCheck(Customer cust);
+//	public void msgIWantMyCheck(AmericanRestaurantCustomer cust);
 //
-//	public void msgLeavingTable(Customer cust);
+//	public void msgLeavingTable(AmericanRestaurantCustomer cust);
 //	
 //	public void msgWantToGoOnBreak();
 //
@@ -47,11 +47,11 @@ public interface ChineseRestaurantWaiter {
 //
 //	//public WaiterGui getGui();
 //
-//	public void setHost(Host host);
+//	public void setHost(AmericanRestaurantHost host);
 //
 //	public void setCook(Cook cook);
 //	
-//	public void setCashier(Cashier cashier);
+//	public void setCashier(AmericanRestaurantCashier americanRestaurantCashier);
 //	
 //	public boolean isOnBreak();
 }

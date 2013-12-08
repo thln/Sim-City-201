@@ -10,14 +10,14 @@ import java.util.concurrent.Semaphore;
 import javax.swing.*;
 
 /**
- * Restaurant Host Agent
+ * Restaurant AmericanRestaurantHost Agent
  */
 //We only have 2 types of agents in this prototype. A customer and an agent that
 //does all the rest. Rather than calling the other agent a waiter, we called him
-//the HostAgent. A Host is the manager of a restaurant who sees that all
+//the AmericanRestaurantHostRole. A AmericanRestaurantHost is the manager of a restaurant who sees that all
 //is proceeded as he wishes.
 public class ItalianHostRole extends Role {
-	static final int NTABLES = 5;//a global for the number of tables.
+	static final int NTABLES = 5;//a global for the number of americanRestaurantTables.
 	Random rn = new Random(3469117);
 	public List<ItalianWaiterRole> waiters = Collections.synchronizedList(new ArrayList<ItalianWaiterRole>());
 	//Notice that we implement waitingCustomers using ArrayList, but type it
@@ -28,7 +28,7 @@ public class ItalianHostRole extends Role {
 	public List<Integer> startPoses
 	= Collections.synchronizedList(new ArrayList<Integer>());
 	public Collection<Table> tables;
-	//note that tables is typed with Collection semantics.
+	//note that americanRestaurantTables is typed with Collection semantics.
 	//Later we will see how it is implemented
 	
 	private Semaphore atTable = new Semaphore(0,true);
@@ -37,7 +37,7 @@ public class ItalianHostRole extends Role {
 
 	public ItalianHostRole(String name) {
 		super(name);
-		// make some tables
+		// make some americanRestaurantTables
 		tables = Collections.synchronizedList(new ArrayList<Table>(NTABLES));
 		for (int ix = 1; ix <= NTABLES; ix++) {
 			tables.add(new Table(ix));//how you add to a collections
@@ -182,7 +182,7 @@ public class ItalianHostRole extends Role {
 	
 /*
  * There will be a specification that will appropriate the # of waiters 
- * necessary for the # of open tables. (Ex. 1 waiter per 3 tables, etc.)
+ * necessary for the # of open americanRestaurantTables. (Ex. 1 waiter per 3 americanRestaurantTables, etc.)
  * Waiters will be randomly chosen OR HARDCODED for NOW --- 
  * later will have a mechanism to see which waiter is available (not on break,etc.)
  * 	--- and that waiter will be used in the restaurant as needed.
@@ -205,7 +205,7 @@ public class ItalianHostRole extends Role {
 		else {
 			JOptionPane.showMessageDialog(null,
 				    "You must add a waiter in order to add a customer.",
-				    "Customer Error",
+				    "AmericanRestaurantCustomer Error",
 				    JOptionPane.ERROR_MESSAGE);
 		}
 	}

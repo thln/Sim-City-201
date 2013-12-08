@@ -83,12 +83,12 @@ public class Application extends JPanel {
 		//Restaurant Workers
 		//SHIFT 1
 		Worker rest1h = new Worker("Henry", 100, "host", "Chinese Restaurant", 1, 1800, 14);
-		Worker rest1g = new Worker("Greg", 100, "cashier", "Chinese Restaurant", 2, 1800, 15);        
+		Worker rest1g = new Worker("Greg", 100, "americanRestaurantCashier", "Chinese Restaurant", 2, 1800, 15);        
 		Worker rest1i = new Worker("Iris", 100, "cook", "Chinese Restaurant", 2, 1800, 15);
 		Worker rest1j = new Worker("Josh", 100, "waiter", "Chinese Restaurant", 2, 1800, 15);
 		Worker rest1k = new Worker("Kristi", 100, "altWaiter", "Chinese Restaurant", 1, 1800, 14);
 		//SHIFT 2
-		Worker rest2g = new Worker("Gil", 100, "cashier", "Chinese Restaurant", 13, 600, 2);
+		Worker rest2g = new Worker("Gil", 100, "americanRestaurantCashier", "Chinese Restaurant", 13, 600, 2);
 		Worker rest2h = new Worker("Hannah", 100, "host", "Chinese Restaurant", 14, 600, 3);
 		Worker rest2i = new Worker("Isaac", 100, "cook", "Chinese Restaurant", 14, 600, 3);
 		Worker rest2j = new Worker("Jacob", 100, "waiter", "Chinese Restaurant", 13, 600, 2);

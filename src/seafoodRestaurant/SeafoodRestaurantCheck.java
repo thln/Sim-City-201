@@ -13,11 +13,11 @@ public class SeafoodRestaurantCheck
 		public String foodItem;
 		public double cost;
 		public double cash;
-		public SeafoodRestaurantCustomer c; //CustomerAgent
-		public SeafoodRestaurantWaiter w; //WaiterAgent
+		public SeafoodRestaurantCustomer c; //AmericanRestaurantCustomerRole
+		public SeafoodRestaurantWaiter w; //AmericanRestaurantWaiterRole
 		public CheckState s = CheckState.Created;
 		
-		public SeafoodRestaurantCheck(String choice, SeafoodRestaurantCustomer cust, SeafoodRestaurantWaiter wait) //CustomerAgent, WaiterAgent
+		public SeafoodRestaurantCheck(String choice, SeafoodRestaurantCustomer cust, SeafoodRestaurantWaiter wait) //AmericanRestaurantCustomerRole, AmericanRestaurantWaiterRole
 		{
 			//STUB
 			foodItem = choice;

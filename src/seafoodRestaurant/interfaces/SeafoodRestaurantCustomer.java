@@ -7,7 +7,7 @@ import seafoodRestaurant.SeafoodRestaurantCheck;
 
 public interface SeafoodRestaurantCustomer {
 	//public abstract void gotHungry();
-	//public abstract void followMe(Menu m, WaiterAgent w, int t);
+	//public abstract void followMe(Menu m, AmericanRestaurantWaiterRole w, int t);
 	//public abstract void WhatDoYouWant();
 	//public abstract void OutOfChoice(String o);
 	//public abstract void HereIsYourOrder(String o);

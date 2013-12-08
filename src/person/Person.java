@@ -72,9 +72,9 @@ public abstract class Person extends Agent{
 	Person(String name, double moneyz) {
 		this.name = name;
 		this.money = moneyz;
-		roles.add(new BankCustomerRole(this, getName(), "Bank Customer"));
-		roles.add(new MarketCustomerRole(this, getName(), "Market Customer"));
-		roles.add(new ChineseRestaurantCustomerRole(this, getName(), "Restaurant Customer"));
+		roles.add(new BankCustomerRole(this, getName(), "Bank AmericanRestaurantCustomer"));
+		roles.add(new MarketCustomerRole(this, getName(), "Market AmericanRestaurantCustomer"));
+		roles.add(new ChineseRestaurantCustomerRole(this, getName(), "Restaurant AmericanRestaurantCustomer"));
 		nextTask = new Timer();
 		atDestination = new Semaphore(0,true);
 		setHunger(HungerLevel.full);
@@ -114,7 +114,7 @@ public abstract class Person extends Agent{
 
 		gui.popToMiddle();
 		if (!(this instanceof Crook))
-			Do("Becoming Bank Customer");
+			Do("Becoming Bank AmericanRestaurantCustomer");
 
 		if (home.type.equals("East Apartment"))
 			gui.walk = gui.decideForBus("East Bank");
@@ -170,7 +170,7 @@ public abstract class Person extends Agent{
 					BCR.state = CustomerState.ready;
 				}
 				else {
-					currentRoleName = "Bank Customer";
+					currentRoleName = "Bank AmericanRestaurantCustomer";
 
 					if (money <= moneyMinThreshold)
 						desiredCash = 100;
@@ -261,7 +261,7 @@ public abstract class Person extends Agent{
 					MCR.setItem("");
 					cust1.setRoleActive();
 					Phonebook.getPhonebook().getEastMarket().arrived(MCR);
-					currentRoleName = "Market Customer";
+					currentRoleName = "Market AmericanRestaurantCustomer";
 					stateChanged();
 					return;
 				}
@@ -274,7 +274,7 @@ public abstract class Person extends Agent{
 					MCR.setItem("Car");
 					cust1.setRoleActive();
 					Phonebook.getPhonebook().getEastMarket().arrived(MCR);
-					currentRoleName = "Market Customer";
+					currentRoleName = "Market AmericanRestaurantCustomer";
 					stateChanged();
 					return;
 				}
@@ -299,7 +299,7 @@ public abstract class Person extends Agent{
 			if (cust1 instanceof ChineseRestaurantCustomerRole) {
 				ChineseRestaurantCustomerRole RCR = (ChineseRestaurantCustomerRole) cust1;
 				if (Phonebook.getPhonebook().getChineseRestaurant().arrived(RCR)) {
-					currentRoleName = "Chinese Restaurant Customer";
+					currentRoleName = "Chinese Restaurant AmericanRestaurantCustomer";
 					cust1.setRoleActive();
 					stateChanged();
 				}
@@ -308,7 +308,7 @@ public abstract class Person extends Agent{
 			if (cust1 instanceof ItalianCustomerRole) {
 				ItalianCustomerRole RCR = (ItalianCustomerRole) cust1;
 				if (Phonebook.getPhonebook().getItalianRestaurant().arrived(RCR)) {
-					currentRoleName = "Italian Restaurant Customer";
+					currentRoleName = "Italian Restaurant AmericanRestaurantCustomer";
 					cust1.setRoleActive();
 					stateChanged();
 				}

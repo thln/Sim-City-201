@@ -1,13 +1,13 @@
 package italianRestaurant.interfaces;
 
 /**
- * A sample Cashier interface built to unit test a CashierAgent.
+ * A sample AmericanRestaurantCashier interface built to unit test a AmericanRestaurantCashierRole.
  *
  *
  */
 public interface ItalianCashier {
 	
-	 //Sent by the waiter prompting the cashier to compute the bill
+	 //Sent by the waiter prompting the americanRestaurantCashier to compute the bill
 	
 	public abstract void msgComputeBill(ItalianWaiter w, ItalianCustomer c, String choice);
 	

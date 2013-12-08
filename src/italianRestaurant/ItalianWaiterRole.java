@@ -8,21 +8,21 @@ import java.util.*;
 import java.util.concurrent.Semaphore;
 
 /**
- * Restaurant Waiter Role
+ * Restaurant AmericanRestaurantWaiter Role
  */
 //We only have 2 types of agents in this prototype. A customer and an agent that
 //does all the rest. Rather than calling the other agent a waiter, we called him
-//the WaiterRole. A Waiter is the manager of a restaurant who sees that all
+//the WaiterRole. A AmericanRestaurantWaiter is the manager of a restaurant who sees that all
 //is proceeded as he wishes.
 public class ItalianWaiterRole extends Role implements ItalianWaiter{
-	static final int NTABLES = 5;//a global for the number of tables.
+	static final int NTABLES = 5;//a global for the number of americanRestaurantTables.
 	//Notice that we implement Customers using ArrayList, but type it
 	//with List semantics.
 	//private CustomerRole currCustomer;
 	private boolean onbreak = false;
 	public List<ItalianMyCustomer> Customers = new ArrayList<ItalianMyCustomer>();
 	
-	//note that tables is typed with Collection semantics.
+	//note that americanRestaurantTables is typed with Collection semantics.
 	//Later we will see how it is implemented
  
 	private Semaphore atCust = new Semaphore(0,true);
@@ -83,7 +83,7 @@ public class ItalianWaiterRole extends Role implements ItalianWaiter{
 		}
 	}
 	
-	//message from Cook to Waiter stating that order from table is done cooking
+	//message from Cook to AmericanRestaurantWaiter stating that order from table is done cooking
 	public void msgOrderDone(String choice, int table) {
 		for(int i=0; i<Customers.size(); i++) {
 			if(Customers.get(i).table == table) {
@@ -233,7 +233,7 @@ public class ItalianWaiterRole extends Role implements ItalianWaiter{
 			e.printStackTrace();
 		}
 		/************
-		for (Table table : tables) {
+		for (AmericanRestaurantTable table : americanRestaurantTables) {
 			if (!table.isOccupied()) {
 				if (!Customers.isEmpty()) {
 					seatCustomer(Customers.get(0), table);//the action

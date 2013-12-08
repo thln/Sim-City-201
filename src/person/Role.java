@@ -92,7 +92,7 @@ public abstract class Role {
            {
         	   AlertLog.getInstance().logError(AlertTag.GENERAL_CITY, roleName + " null", msg);
            }
-    		else if (roleName.equals("Bank Customer") || roleName.equals("Bank Guard") 
+    		else if (roleName.equals("Bank AmericanRestaurantCustomer") || roleName.equals("Bank Guard") 
                             || roleName.equals("Bank Teller") || roleName.equals("Loan Officer")
                             || roleName.contains("bankTeller"))
             {
@@ -102,15 +102,15 @@ public abstract class Role {
             {
             AlertLog.getInstance().logInfo(AlertTag.HOUSING, roleName + " " + getName(), msg);
             }
-            else if (roleName.equals("Market Customer") || roleName.contains("MarketCustomer") || roleName.equals("Market Runner") 
+            else if (roleName.equals("Market AmericanRestaurantCustomer") || roleName.contains("MarketCustomer") || roleName.equals("Market Runner") 
                             || roleName.contains("MarketRunner") || roleName.equals("Sales Person") || roleName.contains("SalesPerson") || roleName.contains("Market") || roleName.equals("UPS Man"))
             {
             AlertLog.getInstance().logInfo(AlertTag.MARKET, roleName + " " + getName(), msg);
             }
             //Different Restaurants IMPLEMENT
-            else if (roleName.equals("Alternative Waiter") || roleName.equals("Cashier")
-                            || roleName.equals("Cook") || roleName.equals("Host") 
-                            || roleName.equals("Restaurant Customer") || roleName.equals("waiter") )
+            else if (roleName.equals("Alternative AmericanRestaurantWaiter") || roleName.equals("AmericanRestaurantCashier")
+                            || roleName.equals("Cook") || roleName.equals("AmericanRestaurantHost") 
+                            || roleName.equals("Restaurant AmericanRestaurantCustomer") || roleName.equals("waiter") )
             {
             AlertLog.getInstance().logInfo(AlertTag.RESTAURANT, roleName + " " + getName(), msg);
             }

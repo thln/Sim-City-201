@@ -34,11 +34,11 @@ public class ChineseRestaurant implements Restaurant {
 	public WatchTime closeTime = new WatchTime(21);
 
 	//Roles
-	public ChineseRestaurantHostRole chineseRestaurantHostRole = new ChineseRestaurantHostRole("Host");
+	public ChineseRestaurantHostRole chineseRestaurantHostRole = new ChineseRestaurantHostRole("AmericanRestaurantHost");
 	public ChineseRestaurantCookRole chineseRestaurantCookRole = new ChineseRestaurantCookRole("Cook", this);
 	public RestaurantCookGui cookGui = new RestaurantCookGui(chineseRestaurantCookRole);
 	
-	public ChineseRestaurantCashierRole chineseRestaurantCashierRole = new ChineseRestaurantCashierRole("Cashier", this);
+	public ChineseRestaurantCashierRole chineseRestaurantCashierRole = new ChineseRestaurantCashierRole("AmericanRestaurantCashier", this);
 	public ChineseRestaurantRevolvingStand theRevolvingStand = new ChineseRestaurantRevolvingStand();
 	private BuildingPanel restPanel;
 
@@ -83,13 +83,13 @@ public class ChineseRestaurant implements Restaurant {
 			restPanel.addGui(cookGui);
 			return chineseRestaurantCookRole;
 		}
-		else if (title.contains("cashier")) {
+		else if (title.contains("americanRestaurantCashier")) {
 			//Setting previous bank guard role to inactive
 			if (chineseRestaurantCashierRole.getPerson() != null) {
 				Worker worker = (Worker) chineseRestaurantCashierRole.getPerson();
 				worker.roleFinishedWork();
 			}
-			//Setting cashier role to new role
+			//Setting americanRestaurantCashier role to new role
 			chineseRestaurantCashierRole.setPerson(person);
 			if (isOpen()) {
 				chineseRestaurantHostRole.msgRestaurantOpen();

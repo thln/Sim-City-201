@@ -54,7 +54,7 @@ public class AddPanel extends JPanel implements ActionListener {
 	private String[] personType = {" ", /*"Deadbeat", "Crook", */ "Worker", "Wealthy"};
 	private String[] jobLocation = {" ", "Restaurant", "Bank", "Market", "Housing"};
 	private String[] emptyList = {" "};
-	private String[] restaurantJobs = {" ", "Host", "Cook", "Cashier", "Waiter", "Alt Waiter"};
+	private String[] restaurantJobs = {" ", "AmericanRestaurantHost", "Cook", "AmericanRestaurantCashier", "AmericanRestaurantWaiter", "Alt AmericanRestaurantWaiter"};
 	private String[] marketJobs = {" ", "UPS Man", "Sales Person", "Market Runner"};
 	private String[] bankJobs = {" ", "Bank Guard", "Bank Teller", "Loan Officer"};
 	private String[] housingJobs = {" ", "Maintenance Worker"};

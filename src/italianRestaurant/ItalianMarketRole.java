@@ -13,13 +13,13 @@ import java.util.*;
 //the MarketAgent. A Market is the manager of a restaurant who sees that all
 //is proceeded as he wishes.
 public class ItalianMarketRole extends Role implements ItalianMarket{
-	static final int NTABLES = 5;//a global for the number of tables.
+	static final int NTABLES = 5;//a global for the number of americanRestaurantTables.
 	//Notice that we implement waitingCustomers using ArrayList, but type it
 	//with List semantics.
 	private Timer restockingtimer = new Timer();
 	private List<Order> Orders = Collections.synchronizedList(new ArrayList<Order>());
 	private List<Food> Foods = Collections.synchronizedList(new ArrayList<Food>());
-	//note that tables is typed with Collection semantics.
+	//note that americanRestaurantTables is typed with Collection semantics.
 	//Later we will see how it is implemented
 	 
 	//private Semaphore atTable = new Semaphore(0,true);
