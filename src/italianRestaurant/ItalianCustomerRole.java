@@ -33,6 +33,8 @@ public class ItalianCustomerRole extends Role implements ItalianCustomer{
 	private ItalianWaiterRole waiter;
 	private ItalianHostRole host;
 	private ItalianCashierRole cashier;
+	
+	protected String RoleName = "Restaurant Customer";
 
 	//    private boolean isHungry = false; //hack for gui
 	public enum AgentState

@@ -34,7 +34,8 @@ public class ItalianHostRole extends Role {
 	private Semaphore atTable = new Semaphore(0,true);
 
 	public ItalianHostGui hostGui = null;
-
+	protected String RoleName = "Host";
+	
 	public ItalianHostRole(String name) {
 		super(name);
 		// make some tables

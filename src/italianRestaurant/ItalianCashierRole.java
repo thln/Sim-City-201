@@ -38,6 +38,7 @@ public class ItalianCashierRole extends Role implements ItalianCashier{
 	//private Semaphore atTable = new Semaphore(0,true);
 	
 	public ItalianCashierGui cashierGui = null;
+	protected String RoleName = "Cashier";
 
 	public ItalianCashierRole(String name, ItalianRestaurant restaurant) {
 		super(name);

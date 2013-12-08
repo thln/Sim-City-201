@@ -4,6 +4,7 @@ import person.*;
 import application.gui.animation.agentGui.*;
 import italianRestaurant.interfaces.*;
 import italianRestaurant.ItalianMyCustomer.MyCustState;
+
 import java.util.*;
 import java.util.concurrent.Semaphore;
 
@@ -37,6 +38,8 @@ public class ItalianWaiterRole extends Role implements ItalianWaiter{
 	private ItalianHostRole host;
 	private ItalianCashierRole cashier;
 	public ItalianWaiterGui waiterGui = null;
+	
+	protected String RoleName = "waiter";
 
 	public ItalianWaiterRole(Person person, String name, String title) {
 		super(name);

@@ -6,6 +6,7 @@ import application.gui.animation.agentGui.*;
 import italianRestaurant.interfaces.*;
 import italianRestaurant.ItalianRestaurantOrder.OrderState;
 import italianRestaurant.ItalianFood.FoodState;
+
 import java.util.*;
 import java.util.concurrent.Semaphore;
 
@@ -37,7 +38,7 @@ public class ItalianCookRole extends Role implements ItalianCook{
 	//Later we will see how it is implemented
 	 
 	//private Semaphore atTable = new Semaphore(0,true);
-	
+	protected String RoleName = "Cook";
 	public ItalianCookGui cookGui = null;
 
 	public ItalianCookRole(String name, ItalianRestaurant restaurant) {
