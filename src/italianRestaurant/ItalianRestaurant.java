@@ -1,6 +1,7 @@
 package italianRestaurant;
+import java.awt.Point;
+import java.util.Vector;
 import java.util.*;
-
 import person.*;
 import application.WatchTime;
 import application.gui.animation.*;
@@ -11,7 +12,9 @@ public class ItalianRestaurant {
 	//Data
 	String name;
 	public boolean userClosed = false;
-	
+	public Point location; 
+	private Point closestStop;
+
 	//List of Customers
 	private Vector<ItalianCustomerRole> customers = new Vector<ItalianCustomerRole>();
 		
@@ -39,6 +42,7 @@ public class ItalianRestaurant {
 	//public ItalianMockCashier italianRestaurantMockCashier = new ItalianMockCashier("MockCashier");
 
 	public ItalianRestaurant(String name) {
+		location = new Point(300, 20);
 		this.name = name;
 		italianRestaurantCookRole.setGui(cookGui);
 		italianRestaurantCashierRole.setGui(cashierGui);
@@ -135,8 +139,10 @@ public class ItalianRestaurant {
 	
 	public boolean arrived(ItalianCustomerRole rCR) {
 		
-			ItalianCustomerGui rCG = (ItalianCustomerGui) rCR.gui;
+			//ItalianCustomerGui rCG = (ItalianCustomerGui) rCR.gui;
+			ItalianCustomerGui rCG = new ItalianCustomerGui(rCR);
 			rCG.SetHome(customers.size());
+			rCR.setGui(rCG);
 			restPanel.addGui(rCG);
 			customers.add(rCR);
 			rCR.gotHungry();
@@ -210,12 +216,12 @@ public class ItalianRestaurant {
 
 	public void removeWaiter(ItalianWaiterRole italianItalianWaiterRole) {
 		waiters.remove(italianItalianWaiterRole);
-		restPanel.removeGui(italianItalianWaiterRole.gui);
+		restPanel.removeGui(italianItalianWaiterRole.getGui());
 	}
 
 	public void removeCustomer(ItalianCustomerRole customerRole) {
 		customers.remove(customerRole);
-		restPanel.removeGui(customerRole.gui);
+		restPanel.removeGui(customerRole.getGui());
 	}
 
 	public void closeBuilding(){
@@ -223,12 +229,19 @@ public class ItalianRestaurant {
 		italianRestaurantHostRole.msgLeaveRole();
 		for (ItalianWaiterRole w1: waiters) {
 			w1.msgLeaveRole();
-			restPanel.removeGui(w1.gui);
+			restPanel.removeGui(w1.getGui());
 		}
 		italianRestaurantCookRole.msgLeaveRole();
 		restPanel.removeGui(cookGui);
 
 		italianRestaurantCashierRole.msgLeaveRole();
+	}
+
+	public void setClosestStop(Point point) {
+		closestStop = point;
+	}
+	public Point getClosestStop() {
+		return closestStop;
 	}
 }
 

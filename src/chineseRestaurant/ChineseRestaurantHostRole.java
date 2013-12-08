@@ -7,6 +7,7 @@ import java.util.List;
 
 import chineseRestaurant.interfaces.ChineseRestaurantCustomer;
 import application.Phonebook;
+import application.gui.animation.agentGui.*;
 import person.Person;
 import person.Role;
 import person.Worker;
@@ -36,6 +37,8 @@ public class ChineseRestaurantHostRole extends Role {
 
 	//GUI stuff
 	//public HostGui hostGui = null;
+	//ITALIAN IS TEMP UNTIL CHINESE ONE IS MADE
+	private ItalianHostGui hostGui;
 
 	public ChineseRestaurantHostRole(Person p1, String pName, String rName) 
 	{
@@ -451,6 +454,14 @@ public class ChineseRestaurantHostRole extends Role {
 				c1.customer.msgComeIn();
 			}
 		}
+	}
+	//ITALIAN IS TEMP UNTIL CHINESE ONE IS MADE
+	public void setGui(ItalianHostGui gui) { 
+		hostGui = gui;
+	}
+	
+	public ItalianHostGui getGui() {
+		return hostGui;
 	}
 }
 

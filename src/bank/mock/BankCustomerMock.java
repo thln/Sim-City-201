@@ -26,7 +26,7 @@ public class BankCustomerMock extends Mock implements BankCustomer {
 	}
 
 	@Override
-	public void msgGotAway() {
+	public void msgGotAway(double spoils) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -1,5 +1,6 @@
 package chineseRestaurant;
 
+import java.awt.Point;
 import java.util.Vector;
 
 import person.Person;
@@ -7,10 +8,8 @@ import person.Role;
 import person.Worker;
 import application.Restaurant;
 import application.WatchTime;
-import application.gui.animation.BuildingPanel;
-import application.gui.animation.agentGui.RestaurantCookGui;
-import application.gui.animation.agentGui.RestaurantCustomerGui;
-import application.gui.animation.agentGui.RestaurantWaiterGui;
+import application.gui.animation.*;
+import application.gui.animation.agentGui.*;
 import chineseRestaurant.interfaces.ChineseRestaurantCashier;
 import chineseRestaurant.interfaces.ChineseRestaurantCook;
 import chineseRestaurant.test.mock.ChineseRestaurantMockCashier;
@@ -21,6 +20,8 @@ public class ChineseRestaurant implements Restaurant {
 	//Data
 	String name;
 	public boolean userClosed = false;
+	public Point location; 
+	private Point closestStop;
 
 	//List of Customers
 	private Vector<ChineseRestaurantCustomerRole> customers = new Vector<ChineseRestaurantCustomerRole>();
@@ -39,15 +40,16 @@ public class ChineseRestaurant implements Restaurant {
 	
 	public ChineseRestaurantCashierRole chineseRestaurantCashierRole = new ChineseRestaurantCashierRole("Cashier", this);
 	public ChineseRestaurantRevolvingStand theRevolvingStand = new ChineseRestaurantRevolvingStand();
-	private BuildingPanel buildPanel;
+	private BuildingPanel restPanel;
 
 	//Mocks
 	public ChineseRestaurantMockCook chineseRestaurantMockCook = new ChineseRestaurantMockCook("MockCook");
 	public ChineseRestaurantMockCashier chineseRestaurantMockCashier = new ChineseRestaurantMockCashier("MockCashier");
 
 	public ChineseRestaurant(String name) {
+		location = new Point(300, 20);
 		this.name = name;
-		chineseRestaurantCookRole.setGui(cookGui);
+		//chineseRestaurantCookRole.setGui(cookGui);
 	}
 
 	//Methods
@@ -77,7 +79,8 @@ public class ChineseRestaurant implements Restaurant {
 			if (isOpen()) {
 				chineseRestaurantHostRole.msgRestaurantOpen();
 			}
-			buildPanel.addGui(cookGui);
+			chineseRestaurantCookRole.setGui(cookGui);
+			restPanel.addGui(cookGui);
 			return chineseRestaurantCookRole;
 		}
 		else if (title.contains("cashier")) {
@@ -97,13 +100,13 @@ public class ChineseRestaurant implements Restaurant {
 			ChineseRestaurantWaiterRole waiter = new ChineseRestaurantWaiterRole(person, person.getName(), title);
 			if (waiters.size() <= 12) {
 				RestaurantWaiterGui g = new RestaurantWaiterGui(waiter);
-				buildPanel.addGui(g);
+				restPanel.addGui(g);
 				waiter.setGui(g);
 				g.setHomePosition(5, (55 + (22 * waiters.size())));
 			}
 			else if (waiters.size() <= 24) {
 				RestaurantWaiterGui g = new RestaurantWaiterGui(waiter);
-				buildPanel.addGui(g);
+				restPanel.addGui(g);
 				waiter.setGui(g);
 				g.setHomePosition(27, (55 + (22 * (waiters.size()-12))));
 			}
@@ -119,13 +122,13 @@ public class ChineseRestaurant implements Restaurant {
 			ChineseRestaurantAltWaiterRole altWaiter = new ChineseRestaurantAltWaiterRole(person, person.getName(), title);
 			if (waiters.size() <= 12) {
 				RestaurantWaiterGui g = new RestaurantWaiterGui(altWaiter);
-				buildPanel.addGui(g);
+				restPanel.addGui(g);
 				altWaiter.setGui(g);
 				g.setHomePosition(5, (55 + (22 * waiters.size())));
 			}
 			else if (waiters.size() <= 24) {
 				RestaurantWaiterGui g = new RestaurantWaiterGui(altWaiter);
-				buildPanel.addGui(g);
+				restPanel.addGui(g);
 				altWaiter.setGui(g);
 				g.setHomePosition(27, (55 + (22 * (waiters.size()-12))));
 			}
@@ -143,17 +146,17 @@ public class ChineseRestaurant implements Restaurant {
 
 	public boolean arrived(ChineseRestaurantCustomerRole rCR) {
 		if (customers.size() <= 12) {
-			RestaurantCustomerGui rCG = (RestaurantCustomerGui) rCR.gui;
+			RestaurantCustomerGui rCG = (RestaurantCustomerGui) rCR.getGui();
 			rCG.setHomePosition((22 * customers.size()), 10);
-			buildPanel.addGui(rCG);
+			restPanel.addGui(rCG);
 			customers.add(rCR);
 			rCR.gotHungry((22 * customers.size()), 10);
 			return true;
 		}
 		else if (customers.size() <= 24) {
-			RestaurantCustomerGui rCG = (RestaurantCustomerGui) rCR.gui;
+			RestaurantCustomerGui rCG = (RestaurantCustomerGui) rCR.getGui();
 			rCG.setHomePosition((22 * (customers.size() - 12)), 32);
-			buildPanel.addGui(rCG);
+			restPanel.addGui(rCG);
 			customers.add(rCR);
 			rCR.gotHungry((22 * (customers.size() - 12)), 32);
 			return true;
@@ -166,14 +169,14 @@ public class ChineseRestaurant implements Restaurant {
 
 		if (worker.getWorkerRole().equals(chineseRestaurantHostRole)) {
 			chineseRestaurantHostRole = null;
-			buildPanel.removeGui(worker.getWorkerRole().gui);
+			//restPanel.removeGui(ChineseRestaurantHostRole.getGui());
 		}
 		if (worker.getWorkerRole().equals(chineseRestaurantCashierRole)) {
 			chineseRestaurantCashierRole = null;
 		}
 		if (worker.getWorkerRole().equals(chineseRestaurantCookRole)) {
 			chineseRestaurantCookRole = null;
-			buildPanel.removeGui(cookGui);
+			restPanel.removeGui(cookGui);
 		}
 		//WAITERS AND ALT WAITERS
 		//finish the "leave work" in Role.java 
@@ -195,7 +198,7 @@ public class ChineseRestaurant implements Restaurant {
 	}
 
 	public void setPanel(BuildingPanel panel) {
-		buildPanel = panel;
+		restPanel = panel;
 	}
 
 	public ChineseRestaurantCook getCook(boolean test) {
@@ -219,18 +222,18 @@ public class ChineseRestaurant implements Restaurant {
 			return false;
 	}
 	
-	public void setBuildingPanel (BuildingPanel buildingPanel) {
-		buildPanel = buildingPanel;
+	public void setBuildingPanel (BuildingPanel rp) {
+		restPanel = rp;
 	}
 
 	public void removeWaiter(ChineseRestaurantWaiterRole chineseRestaurantWaiterRole) {
 		waiters.remove(chineseRestaurantWaiterRole);
-		buildPanel.removeGui(chineseRestaurantWaiterRole.gui);
+		restPanel.removeGui(chineseRestaurantWaiterRole.getGui());
 	}
 	
 	public void removeCustomer(ChineseRestaurantCustomerRole customerRole) {
 		customers.remove(customerRole);
-		buildPanel.removeGui(customerRole.gui);
+		restPanel.removeGui(customerRole.getGui());
 	}
 	
 	public void closeBuilding(){
@@ -238,11 +241,19 @@ public class ChineseRestaurant implements Restaurant {
 		chineseRestaurantHostRole.msgLeaveRole();
 		for (ChineseRestaurantWaiterRole w1: waiters) {
 			w1.msgLeaveRole();
-			buildPanel.removeGui(w1.gui);
+			restPanel.removeGui(w1.getGui());
 		}
 		chineseRestaurantCookRole.msgLeaveRole();
-		buildPanel.removeGui(cookGui);
+		restPanel.removeGui(cookGui);
 		
 		chineseRestaurantCashierRole.msgLeaveRole();
+	}
+
+	public void setClosestStop(Point point) {
+		closestStop = point;
+	}
+	
+	public Point getClosestStop() {
+		return closestStop;
 	}
 }
