@@ -4,19 +4,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import testing.LoggedEvent;
-import agent.Agent;
+import person.Role;
+import testing.EventLog;
 import americanRestaurant.AmericanRestaurantWaiterRole.Menu;
 import americanRestaurant.interfaces.AmericanRestaurantCashier;
 import americanRestaurant.interfaces.AmericanRestaurantCustomer;
 import americanRestaurant.interfaces.AmericanRestaurantHost;
 import americanRestaurant.interfaces.AmericanRestaurantWaiter;
 import americanRestaurant.interfaces.Market;
-import americanRestaurant.test.EventLog;
 
-public class AmericanRestaurantCashierRole extends Agent implements AmericanRestaurantCashier{
-
-
+public class AmericanRestaurantCashierRole extends Role implements AmericanRestaurantCashier{
 	//DATA
 
 	public enum checkState {ready, paying, unpaid, waitingForCust, inDebt, paidDebt};

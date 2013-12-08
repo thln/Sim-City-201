@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Semaphore;
 
-import agent.Agent;
+import person.Role;
 import americanRestaurant.interfaces.AmericanRestaurantCustomer;
 import americanRestaurant.interfaces.AmericanRestaurantHost;
 
@@ -19,7 +19,7 @@ import americanRestaurant.interfaces.AmericanRestaurantHost;
 //is proceeded as he wishes.
 
 
-public class AmericanRestaurantHostRole extends Agent implements AmericanRestaurantHost {
+public class AmericanRestaurantHostRole extends Role implements AmericanRestaurantHost {
 	static final int NTABLES = 4;//a global for the number of americanRestaurantTables.
 	static final int NWaiters = 3;
 	//Notice that we implement waitingCustomers using ArrayList, but type it

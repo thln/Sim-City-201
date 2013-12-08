@@ -1,6 +1,7 @@
 package americanRestaurant.interfaces;
 
 import americanRestaurant.AmericanRestaurantCookRole.Order;
+import americanRestaurant.AmericanRestaurantTable;
 
 public interface AmericanRestaurantWaiter {
 	
@@ -14,13 +15,13 @@ public interface AmericanRestaurantWaiter {
 
 	void msgOutOfFood(Order order1);
 
-	void msgOrderIsReady(Table tab1, String choice);
+	void msgOrderIsReady(AmericanRestaurantTable tab1, String choice);
 
 	void msgHereIsMyChoice(AmericanRestaurantCustomer c1, String choice1);
 
 	void msgReadyToOrder(AmericanRestaurantCustomer c);
 
-	void msgSeatAtTable(AmericanRestaurantCustomer c1, Table t1);
+	void msgSeatAtTable(AmericanRestaurantCustomer c1, AmericanRestaurantTable t1);
 
 	void msgFoodHere(AmericanRestaurantCustomer c1);
 

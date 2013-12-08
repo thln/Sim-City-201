@@ -4,7 +4,7 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import agent.Agent;
+import person.Role;
 import americanRestaurant.AmericanRestaurantWaiterRole.Menu;
 import americanRestaurant.interfaces.AmericanRestaurantCashier;
 import americanRestaurant.interfaces.AmericanRestaurantCustomer;
@@ -14,7 +14,7 @@ import application.gui.animation.RestaurantPanel;
 /**
  * Restaurant customer agent.
  */
-public class AmericanRestaurantCustomerRole extends Agent implements AmericanRestaurantCustomer {
+public class AmericanRestaurantCustomerRole extends Role implements AmericanRestaurantCustomer {
 
 	//data
 	static AmericanRestaurantHostRole myHost;

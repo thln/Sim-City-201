@@ -8,19 +8,19 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.Semaphore;
 
-import agent.Agent;
+import person.Role;
 import americanRestaurant.interfaces.AmericanRestaurantCashier;
 
 /**
  * Restaurant Cook Agent
  */
 
-public class AmericanRestaurantCookRole extends Agent {
+public class AmericanRestaurantCookRole extends Role {
 
 
 	//DATA
 
-	CookGui cookGui;
+	//CookGui cookGui;
 	List<Order> PendingOrders;
 	List<Order> FinishedOrders;
 	List<MarketAgent> markets;

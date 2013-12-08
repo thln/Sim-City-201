@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.concurrent.Semaphore;
 
-import agent.Agent;
+import person.Role;
 import americanRestaurant.AmericanRestaurantCookRole.Order;
 import americanRestaurant.interfaces.AmericanRestaurantCashier;
 import americanRestaurant.interfaces.AmericanRestaurantCustomer;
@@ -21,7 +21,7 @@ import application.gui.animation.RestaurantPanel;
 //does all the rest. Rather than calling the other agent a waiter, we called him
 //the AmericanRestaurantCookRole. A AmericanRestaurantHost is the manager of a restaurant who sees that all
 //is proceeded as he wishes.
-public class AmericanRestaurantWaiterRole extends Agent implements AmericanRestaurantWaiter{
+public class AmericanRestaurantWaiterRole extends Role implements AmericanRestaurantWaiter{
 
 	public enum customerState
 	{WaitingInRestaurant, BeingSeated, Seated, Ordering, ReadyToOrder, WaitingForReOrder, ReOrder, 
