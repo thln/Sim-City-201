@@ -217,21 +217,21 @@ public class Application extends JPanel {
 //		getPopulation().add(bank3c);
 
 		//Shift 2
-//		getPopulation().add(bank2a);
-//		getPopulation().add(bank2b);
-//		getPopulation().add(bank2c);
-//		getPopulation().add(market2d);
-//		getPopulation().add(market2e);
-//		getPopulation().add(market2f);
-//		getPopulation().add(rest2g);
-//		getPopulation().add(rest2h);
-//		getPopulation().add(rest2i);
-//		getPopulation().add(rest2j);
-//		getPopulation().add(house1);
-//		getPopulation().add(rest2k);
-//		getPopulation().add(bank4a);
-//		getPopulation().add(bank4b);
-//		getPopulation().add(bank4c);
+		getPopulation().add(bank2a);
+		getPopulation().add(bank2b);
+		getPopulation().add(bank2c);
+		getPopulation().add(market2d);
+		getPopulation().add(market2e);
+		getPopulation().add(market2f);
+		getPopulation().add(rest2g);
+		getPopulation().add(rest2h);
+		getPopulation().add(rest2i);
+		getPopulation().add(rest2j);
+		getPopulation().add(house1);
+		getPopulation().add(rest2k);
+		getPopulation().add(bank4a);
+		getPopulation().add(bank4b);
+		getPopulation().add(bank4c);
 
 		//People
 //		getPopulation().add(wealthy1);
@@ -273,19 +273,19 @@ public class Application extends JPanel {
 		
 		//Shift 2
 		bank2a.startThread();
-//		bank2b.startThread();
-//		bank2c.startThread();
-//		market2d.startThread();
-//		market2e.startThread();
-//		market2f.startThread();
-//		rest2g.startThread();
-//		rest2h.startThread();
-//		rest2i.startThread();
-//		rest2j.startThread();
-//		rest2k.startThread();
-//		bank4a.startThread();
-//		bank4b.startThread();	
-//		bank4c.startThread();		
+		bank2b.startThread();
+		bank2c.startThread();
+		market2d.startThread();
+		market2e.startThread();
+		market2f.startThread();
+		rest2g.startThread();
+		rest2h.startThread();
+		rest2i.startThread();
+		rest2j.startThread();
+		rest2k.startThread();
+		bank4a.startThread();
+		bank4b.startThread();	
+		bank4c.startThread();		
 				
 //		house1.startThread();
 
