@@ -112,7 +112,7 @@ public abstract class Person extends Agent{
 
 	protected void prepareForBank () {
 
-		gui.popToMiddle();
+		gui.walk = true;
 		if (!(this instanceof Crook))
 			Do("Becoming Bank Customer");
 
@@ -121,7 +121,6 @@ public abstract class Person extends Agent{
 		else
 			gui.walk = gui.decideForBus("West Bank");
 
-		gui.walk = true;
 		if (gui.walk)
 			gui.popToMiddle();
 
@@ -283,6 +282,7 @@ public abstract class Person extends Agent{
 	}
 
 	protected void prepareForRestaurant() {
+	
 		gui.walk = true;
 		if (gui.walk)
 			gui.popToMiddle();
@@ -319,7 +319,7 @@ public abstract class Person extends Agent{
 	}
 
 	protected void goToSleep() {
-//	if (gui.getxPos() != gui.getxHome() && gui.getyPos() != gui.getyHome()){
+		gui.walk = true;
 		getGui().DoGoHome();
 		try {
 			atDestination.acquire();

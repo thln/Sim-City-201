@@ -88,10 +88,10 @@ public class Market {
 	//Constructor
 	public Market(String name) 	{
 		if (name == "East Market"){
-			location = new Point(500, 140);
+			location = new Point(530, 123);
 		}
 		if (name == "West Market"){
-			location = new Point(90, 120);	
+			location = new Point(95, 290);	
 		}
 		
 		this.name = name;

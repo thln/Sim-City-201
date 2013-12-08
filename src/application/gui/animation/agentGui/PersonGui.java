@@ -69,16 +69,16 @@ public class PersonGui extends CityGui {
 	public PersonGui(Person p) {
 		this.agent = p;
 		if(p.home.type.equals("West Apartment")) {
-			xHome = 0;
-			yHome = 200;			
+			xHome = 20;
+			yHome = 30;			
 		}
 		if(p.home.type.equals("East Apartment")) {
 			xHome = 520;
 			yHome = 300;			
 		}
 		if (p.home.type.equals("Mansion")){
-			xHome = 20;
-			yHome = 100;
+			xHome = 30;
+			yHome = 150;
 		}
 
 		setxPos(xHome);
@@ -302,7 +302,7 @@ public class PersonGui extends CityGui {
 
 		currentBlock = returnCurrentBlock (xPos, yPos);
 		destinationBlock = returnCurrentBlock (xDestination, yDestination);
-		agent.print("dest = " + destinationBlock + "currentBlock = " + currentBlock + "Block in phonebook is " + Phonebook.getPhonebook().blocks.get(currentBlock));
+	//	agent.print("dest = " + destinationBlock + "currentBlock = " + currentBlock + "Block in phonebook is " + Phonebook.getPhonebook().blocks.get(currentBlock));
 		if (Phonebook.getPhonebook().blocks.get(currentBlock).doIWalk(destinationBlock)){
 			return false;
 		}	
