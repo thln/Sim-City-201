@@ -23,9 +23,11 @@ import person.Person;
 import person.Role;
 import person.Worker;
 import application.gui.animation.*;
+import application.gui.animation.agentGui.BankCustomerGui;
 import application.gui.animation.agentGui.BankGuardGui;
 import application.gui.animation.agentGui.BankLoanerGui;
 import application.gui.animation.agentGui.BankTellerGui;
+import application.gui.animation.agentGui.MarketCustomerGui;
 import application.gui.animation.agentGui.MarketSalesPersonGui;
 import application.gui.animation.agentGui.RestaurantWaiterGui;
 import application.gui.trace.AlertLog;
@@ -61,7 +63,7 @@ public class Bank {
 	public BankGuardMock bankGuardMock = new BankGuardMock("Bank Guard");
 	public LoanOfficerMock loanOfficerMock = new LoanOfficerMock("Loan Officer");
 	public List <BankTellerMock> mockTellers = new ArrayList<>();
-	private BuildingPanel bankPanel;
+	private BankPanel bankPanel;
 	
 	//Constructor
 	public Bank(String name) {
@@ -154,6 +156,11 @@ public class Bank {
 			bankPanel.removeGui(worker.getWorkerRole().gui);
 		}
 	}
+	
+	public void msgCustomerArrived(BankCustomerRole BCR) {
+		BankCustomerGui BCG = (BankCustomerGui) BCR.gui;
+		bankPanel.addGui(BCG);
+	}
 
 	public void setTellerPosition(BankTeller t1, BankTellerGui g) {
 		if (tellers.size() == 0) {
@@ -205,7 +212,7 @@ public class Bank {
 	}
 
 	public void setBuildingPanel(BuildingPanel myBuildingPanel) {
-		bankPanel = myBuildingPanel;
+		bankPanel = (BankPanel) myBuildingPanel;
 	}
 	
 	public void removeCustomer(BankCustomerRole customerRole) {

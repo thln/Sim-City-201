@@ -106,7 +106,7 @@ public class Crook extends Person {
 				stateChanged();
 			}
 		},
-		(300000)); 
+		(30000)); 
 	}
 }
 

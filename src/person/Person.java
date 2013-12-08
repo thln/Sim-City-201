@@ -185,7 +185,10 @@ public abstract class Person extends Agent{
 					}
 				}
 				cust1.setRoleActive();
-				bankPanel.addGui(bg);
+				if (home.type.equals("East Apartment"))
+					Phonebook.getPhonebook().getEastBank().msgCustomerArrived(BCR);
+				else
+					Phonebook.getPhonebook().getWestBank().msgCustomerArrived(BCR);
 				stateChanged();
 				return;
 			}
