@@ -89,7 +89,7 @@ public class PersonGui extends CityGui {
 	}
 
 	public void updatePosition() {
-		
+
 		if (inBusyCrosswalk()) {
 			return;
 		}
@@ -103,7 +103,7 @@ public class PersonGui extends CityGui {
 			setyPos(getyPos() + 1);
 		else if (getyPos() > getyDestination())
 			setyPos(getyPos() - 1);
-		
+
 		inACrosswalk();
 		leftACrosswalk();
 
@@ -662,8 +662,3 @@ public class PersonGui extends CityGui {
 		}
 	}
 }
-
-
-
-
-
