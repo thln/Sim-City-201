@@ -46,7 +46,7 @@ public class PersonGui extends CityGui {
 	private int xPos, yPos;//default person position
 	private int xDestination, yDestination;//default start position
 	private int xHome, yHome;
-	private enum Command {noCommand, GoToRestaurant, GoToMarket, GoToBank, GoToBusStop, GoOnBus, GoHome};
+	private enum Command {noCommand, GoToRestaurant, GoToMarket, GoToBank, GoToBusStop, GoOnBus, GoHome, walking};
 	private Command command = Command.noCommand;
 
 	private enum PersonState {nothing, enroute, inCrosswalk1, inCrosswalk2, inCrosswalk3, inCrosswalk4, inCrosswalk5, inCrosswalk6, inCrosswalk7, inCrosswalk8, inCrosswalk9, inCrosswalk10, inCrosswalk11, inCrosswalk12};
@@ -93,6 +93,48 @@ public class PersonGui extends CityGui {
 		if (inBusyCrosswalk()) {
 			return;
 		}
+
+		//if (!inBusyIntersection()) {
+		if (command == Command.walking) {
+			int currentBlock = returnCurrentBlock(xPos, yPos);
+			if (currentBlock == 1 && xDestination > xPos){
+				xPos++;
+				return;
+			}
+			if (currentBlock == 2 && xDestination > xPos){
+				xPos++;
+				return;
+			}
+			if (currentBlock == 3 && xDestination > xPos){
+				xPos++;
+				return;
+			}
+			if (currentBlock == 4 && xDestination > xPos){
+				xPos++;
+				return;
+			}
+			if (currentBlock == 5 && xDestination > xPos){
+				xPos++;
+				return;
+			}
+			if (currentBlock == 6 && xDestination > xPos){
+				xPos++;
+				return;
+			}
+			if (currentBlock == 7 && xDestination > xPos){
+				xPos++;
+				return;
+			}
+			if (currentBlock == 8 && xDestination > xPos){
+				xPos++;
+				return;
+			}
+			if (currentBlock == 9 && xDestination > xPos){
+				xPos++;
+				return;
+			}
+		}
+		
 
 		if (getxPos() < getxDestination())
 			setxPos(getxPos() + 1);
@@ -280,7 +322,7 @@ public class PersonGui extends CityGui {
 			yDest = (int) Phonebook.getPhonebook().getWestBank().location. getY();
 		}
 
-		if ((xDest - xPos >= 50) || (yDest - yPos >= 50)){
+		if ((xDest - xPos >= 30) || (yDest - yPos >= 30)){
 			return false;
 		}
 		return true;
@@ -359,45 +401,81 @@ public class PersonGui extends CityGui {
 	}
 
 	public void popToMiddle(){
-		if (xPos < 160 && yPos < 70){
-			xPos = 90;			//Pop to middle of block1
-			yPos = 35;
+		int currentBlock = returnCurrentBlock(xPos, yPos);
+		if (currentBlock == 1)
+		{
+			xPos = (int) Phonebook.getPhonebook().crosswalk3.getCrosswalk().getX();			//Pop to middle of block1
+			yPos = (int) Phonebook.getPhonebook().crosswalk1.getCrosswalk().getY();
 		}
+		if (currentBlock == 2){
+			xPos = (int) Phonebook.getPhonebook().crosswalk4.getCrosswalk().getX();			//Pop to middle of block1
+			yPos = (int) Phonebook.getPhonebook().crosswalk1.getCrosswalk().getY();
+		}
+		if (currentBlock == 3){
+			xPos = (int) Phonebook.getPhonebook().crosswalk5.getCrosswalk().getX();			//Pop to middle of block1
+			yPos = (int) Phonebook.getPhonebook().crosswalk2.getCrosswalk().getY();
+		}
+
+		if (currentBlock == 4){
+			xPos = (int) Phonebook.getPhonebook().crosswalk3.getCrosswalk().getX();			//Pop to middle of block1
+			yPos = (int) Phonebook.getPhonebook().crosswalk6.getCrosswalk().getY();
+		}
+		if (currentBlock == 5){
+			xPos = (int) Phonebook.getPhonebook().crosswalk4.getCrosswalk().getX();			//Pop to middle of block1
+			yPos = (int) Phonebook.getPhonebook().crosswalk6.getCrosswalk().getY();
+		}
+		if (currentBlock == 6){
+			xPos = (int) Phonebook.getPhonebook().crosswalk5.getCrosswalk().getX();			//Pop to middle of block1
+			yPos = (int) Phonebook.getPhonebook().crosswalk7.getCrosswalk().getY();
+		}
+
+		if (currentBlock == 7){
+			xPos = (int) Phonebook.getPhonebook().crosswalk8.getCrosswalk().getX();			//Pop to middle of block1
+			yPos = (int) Phonebook.getPhonebook().crosswalk11.getCrosswalk().getY();
+		}
+		if (currentBlock == 8){
+			xPos = (int) Phonebook.getPhonebook().crosswalk9.getCrosswalk().getX();			//Pop to middle of block1
+			yPos = (int) Phonebook.getPhonebook().crosswalk11.getCrosswalk().getY();
+		}
+		if (currentBlock == 9){
+			xPos = (int) Phonebook.getPhonebook().crosswalk10.getCrosswalk().getX();			//Pop to middle of block1
+			yPos = (int) Phonebook.getPhonebook().crosswalk12.getCrosswalk().getY();
+		}
+	}
+
+	public int returnCurrentBlock (int xPos, int yPos){
+		if (xPos < 160 && yPos < 70)
+			return 1;
 		if ((xPos > 205 && xPos < 380) && yPos < 70){
-			xPos = 295;			//Pop to middle of block2
-			yPos = 35;
+			return 2;
 		}
 		if (xPos > 420 && yPos < 70){
-			xPos = 500;			//Pop to middle of block3
-			yPos = 35;
+			return 3;
 		}
 
 		if (xPos < 160 && (yPos > 115 && yPos < 192)){
-			xPos = 76;			//Pop to middle of block4
-			yPos = 155;
+			return 4;
 		}
 		if ((xPos > 200 && xPos < 378) && (yPos > 115 && yPos < 192)){
-			xPos = 295;			//Pop to middle of block5
-			yPos = 155;
+			return 5;
 		}
 		if (xPos > 420 && (yPos > 115 && yPos < 192)){
-			xPos = 500;			//Pop to middle of block6
-			yPos = 155;
+			return 6;
 		}
 
 
 		if (xPos < 160 && yPos > 230){
-			xPos = 75;			//Pop to middle of block7
-			yPos = 280;
+			return 7;
 		}
 		if ((xPos > 200 && xPos < 378) && yPos > 230){
-			xPos = 295;			//Pop to middle of block8
-			yPos = 280;
+			return 8;
 		}
 		if (xPos > 420 && yPos > 230){
-			xPos = 500;			//Pop to middle of block9
-			yPos = 280;
+			return 9;
 		}
+		
+		else
+			return 0;
 	}
 
 	public void setDefaultColor() {
