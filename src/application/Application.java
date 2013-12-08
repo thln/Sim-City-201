@@ -211,10 +211,10 @@ public class Application extends JPanel {
 		getPopulation().add(rest1h);
 		getPopulation().add(rest1i);
 		getPopulation().add(rest1j);
-//		getPopulation().add(rest1k);
-//		getPopulation().add(bank3a);
-//		getPopulation().add(bank3b);
-//		getPopulation().add(bank3c);
+		getPopulation().add(rest1k);
+		getPopulation().add(bank3a);
+		getPopulation().add(bank3b);
+		getPopulation().add(bank3c);
 
 		//Shift 2
 		getPopulation().add(bank2a);
@@ -234,8 +234,8 @@ public class Application extends JPanel {
 		getPopulation().add(bank4c);
 
 		//People
-//		getPopulation().add(wealthy1);
-//		getPopulation().add(wealthy2);
+		getPopulation().add(wealthy1);
+		getPopulation().add(wealthy2);
 //		getPopulation().add(wealthy3);
 //		getPopulation().add(wealthy4);
 		getPopulation().add(crook1);
@@ -267,9 +267,9 @@ public class Application extends JPanel {
 		rest1i.startThread();
 		rest1j.startThread();
 		rest1k.startThread();
-//		bank3a.startThread();
-//		bank3b.startThread();	
-//		bank3c.startThread();
+		bank3a.startThread();
+		bank3b.startThread();	
+		bank3c.startThread();
 		
 		//Shift 2
 		bank2a.startThread();
@@ -290,8 +290,8 @@ public class Application extends JPanel {
 //		house1.startThread();
 
 		//People
-//		wealthy1.startThread();
-//		wealthy2.startThread();
+		wealthy1.startThread();
+		wealthy2.startThread();
 		//		wealthy3.startThread();
 		//		wealthy4.startThread();
 //		crook1.startThread();

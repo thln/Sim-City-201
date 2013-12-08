@@ -48,6 +48,7 @@ public class PersonGui extends CityGui {
 	private int xHome, yHome;
 	private enum Command {noCommand, GoToRestaurant, GoToMarket, GoToBank, GoToBusStop, GoOnBus, GoHome};
 	private Command command = Command.noCommand;
+	int currentBlock, destinationBlock;
 
 	private enum PersonState {nothing, enroute, walkingToCrosswalk, inCrosswalk1, inCrosswalk2, inCrosswalk3, inCrosswalk4, inCrosswalk5, inCrosswalk6, inCrosswalk7, inCrosswalk8, inCrosswalk9, inCrosswalk10, inCrosswalk11, inCrosswalk12};
 	PersonState state = PersonState.nothing;
@@ -96,8 +97,6 @@ public class PersonGui extends CityGui {
 
 		//if (!inBusyIntersection()) {
 		if (state == PersonState.walkingToCrosswalk) {
-			int currentBlock = returnCurrentBlock (xPos, yPos);
-			int destinationBlock = returnCurrentBlock (xDestination, yDestination);
 			if (destinationBlock - currentBlock == 1) {
 				xPos++;
 				return;
@@ -382,7 +381,7 @@ public class PersonGui extends CityGui {
 	}
 
 	public void popToMiddle(){
-		int currentBlock = returnCurrentBlock(xPos, yPos);
+		currentBlock = returnCurrentBlock(xPos, yPos);
 		agent.print("Block = " + currentBlock + "and position = " + xPos + " , " + yPos);
 		if (currentBlock == 1)
 		{
@@ -435,6 +434,7 @@ public class PersonGui extends CityGui {
 		else {
 			//agent.print("No pop");
 		}
+		destinationBlock = returnCurrentBlock (xDestination, yDestination);
 	}
 
 	public int returnCurrentBlock (int xPos, int yPos){
