@@ -8,8 +8,8 @@ public class ItalianHostGui implements Gui {
 
     private ItalianHostRole agent = null;
 
-    private int xPos = 20, yPos = 400;//default HOST position
-    private int xDestination = 20, yDestination = 350;//default start position
+    private int xPos = 300, yPos = 0;//default HOST position
+    private int xDestination = 170, yDestination = 20;//default start position
     
     static final int NTABLES = 5;
     int tables;
@@ -34,7 +34,7 @@ public class ItalianHostGui implements Gui {
     }
 
     public void draw(Graphics2D g) {
-        g.setColor(Color.MAGENTA);
+        g.setColor(Color.RED);
         g.fillRect(xPos, yPos, 20, 20);
         
         g.setColor(Color.BLACK);
@@ -44,7 +44,11 @@ public class ItalianHostGui implements Gui {
     public boolean isPresent() {
         return true;
     }
-
+    
+    public void DoExit() {
+    	xDestination = -20;
+    	yDestination = 300;
+    }
 
     public int getXPos() {
         return xPos;

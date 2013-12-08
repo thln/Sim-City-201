@@ -140,16 +140,14 @@ public class Bank {
 		Worker worker = (Worker) person;
 
 		if (worker.getWorkerRole().equals(bankGuardRole)) {
-			bankGuardRole = null;
+			((Worker) bankGuardRole.getPerson()).roleFinishedWork();
 			bankPanel.removeGui(bankGuardGui);
 		}
 		else if (worker.getWorkerRole().equals(loanOfficerRole)) {
-			loanOfficerRole = null;
+			((Worker) loanOfficerRole.getPerson()).roleFinishedWork();
 			bankPanel.removeGui(loanOfficerGui);
 		}
 		else if (worker.getWorkerRole() instanceof BankTellerRole){
-			bankGuardRole.msgTellerLeavingWork((BankTeller) worker.getWorkerRole());
-			tellers.remove(worker.getWorkerRole());
 			bankPanel.removeGui(worker.getWorkerRole().gui);
 		}
 	}
@@ -214,13 +212,9 @@ public class Bank {
 	public void closeBuilding(){
 		userClosed = true;
 		bankGuardRole.msgLeaveRole();
-		bankPanel.removeGui(bankGuardGui);
 		for (MyTeller t1: bankGuardRole.tellers){
 			((Role) t1.tell1).msgLeaveRole();
-			bankPanel.removeGui(((Role) t1.tell1).gui);
 		}
 		loanOfficerRole.msgLeaveRole();
-
-		bankPanel.removeGui(loanOfficerGui);
 	}
 }

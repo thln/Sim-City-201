@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import italianRestaurant.ItalianCustomerRole;
+import seafoodRestaurant.SeafoodRestaurant;
 import italianRestaurant.ItalianRestaurant;
 import chineseRestaurant.ChineseRestaurant;
 import bank.Bank;
@@ -27,12 +27,15 @@ public class Phonebook{
 	static private Market eastMarket;
 	static private Market westMarket;
 
-	//Restaruants
+
+	//Restaurants
 	static private ChineseRestaurant chineseRestaurant;
+	static private SeafoodRestaurant seafoodRestaurant;
+	//ItalianRestaurant italianRestaurant;
 	static private ItalianRestaurant italianRestaurant;
 	//MexicanRestaurant mexicanRestaurant;
 	//AmericanRestaurant americanRestaurant;
-	//SeafoodRestaurant seafoodRestaurant;
+	
 
 	private HousingMaintenanceCompany housingMaintenanceCompany;
 
@@ -61,11 +64,19 @@ public class Phonebook{
 	private Phonebook() 
 	{
 		eastBank = new Bank("Bank");
-		//	westBank = new Bank("Bank");
+		westBank = new Bank("Bank");
 		eastMarket = new Market("Market");
-		//	westMarket = new Market("Market");
+		westMarket = new Market("Market");
+		seafoodRestaurant = new SeafoodRestaurant("Seafood Restaurant");
 		chineseRestaurant = new ChineseRestaurant("Chinese Restaurant");
 		italianRestaurant = new ItalianRestaurant("Italian Restaurant");
+		
+		/* For future use after all the restaurants have been integrated
+		 * 
+		mexicanRestaurant = new MexicanRestaurant("Mexican Restaurant");
+		seafoodRestaurant = new SeafoodRestaurant("Seafood Restaurant");
+		americanRestaurant = new AmericanRestaurant("American Restaurant");
+		*/
 		housingMaintenanceCompany = new HousingMaintenanceCompany("Housing maintenance company");
 		getBusStops().add(new Point(172, 28));
 		getBusStops().add(new Point(172, 230));
@@ -110,6 +121,10 @@ public class Phonebook{
 	public ChineseRestaurant getChineseRestaurant() 
 	{
 		return chineseRestaurant; //temporary stub. make more dynamic later
+	}
+
+	public SeafoodRestaurant getSeafoodRestaurant() {
+		return seafoodRestaurant;
 	}
 	
 	public ItalianRestaurant getItalianRestaurant() 

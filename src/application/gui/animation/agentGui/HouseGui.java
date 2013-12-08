@@ -22,4 +22,8 @@ public class HouseGui implements Gui {
 	public void setPresent(boolean p) {
 		isPresent = p;
 	}
+	
+	public void DoExit() {
+		
+	}
 }

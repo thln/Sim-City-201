@@ -69,8 +69,11 @@ public class AnimationPanel extends JPanel implements MouseListener {
 			else if(name.toLowerCase().contains("market")) {
 				panel = new MarketPanel(name, this );
 			}
-			else if(name.toLowerCase().contains("house") || name.toLowerCase().contains("apartment")) {
+			else if(name.toLowerCase().contains("house")) {
 				panel = new HousingPanel(name, this );
+			}
+			else if(name.toLowerCase().contains("apartment")) {
+				panel = new ApartmentPanel(name, this);
 			}
 			else if(name.toLowerCase().contains("bank")) {
 				panel = new BankPanel(name, this );
@@ -118,17 +121,25 @@ public class AnimationPanel extends JPanel implements MouseListener {
 		 * must code for that eventuality.
 		 */
 		//setting the panels to the already-initialized businesses
-		if (building.getName().toLowerCase().contains("chinese")) {
-			Phonebook.getPhonebook().getChineseRestaurant().setBuildingPanel(building.myBuildingPanel);
-		}
-		if (building.getName().toLowerCase().contains("italian")) {
-			Phonebook.getPhonebook().getItalianRestaurant().setBuildingPanel(building.myBuildingPanel);
+		if(building.getName().toLowerCase().contains("restaurant")) {
+			if (building.getName().toLowerCase().contains("chinese")) {
+				Phonebook.getPhonebook().getChineseRestaurant().setBuildingPanel(building.myBuildingPanel);
+			}
+			if (building.getName().toLowerCase().contains("italian")) {
+				Phonebook.getPhonebook().getItalianRestaurant().setBuildingPanel(building.myBuildingPanel);
+			}
 		}
 		if (building.getName().toLowerCase().contains("market")) {
-			Phonebook.getPhonebook().getEastMarket().setBuildingPanel(building.myBuildingPanel);
+			if(building.getName().toLowerCase().contains("east"))
+				Phonebook.getPhonebook().getEastMarket().setBuildingPanel(building.myBuildingPanel);
+			if(building.getName().toLowerCase().contains("west"))
+				Phonebook.getPhonebook().getWestMarket().setBuildingPanel(building.myBuildingPanel);
 		}
 		if (building.getName().toLowerCase().contains("bank")) {
-			Phonebook.getPhonebook().getEastBank().setBuildingPanel(building.myBuildingPanel);
+			if(building.getName().toLowerCase().contains("east"))
+				Phonebook.getPhonebook().getEastBank().setBuildingPanel(building.myBuildingPanel);
+			if(building.getName().toLowerCase().contains("west"))
+				Phonebook.getPhonebook().getWestBank().setBuildingPanel(building.myBuildingPanel);
 		}
 	}
 
@@ -281,7 +292,10 @@ public class AnimationPanel extends JPanel implements MouseListener {
 		if (gui instanceof CityGui) {
 			cityPanel.addGui(gui);
 		}
-		
+	}
+	
+	public void addBuildingPanel(BuildingPanel panel) {
+		buildingPanels.add(panel, panel.name);
 	}
 	
 	public int getWindowX(){
@@ -291,23 +305,23 @@ public class AnimationPanel extends JPanel implements MouseListener {
 		return WINDOWY;
 	}
 	
-	public void addAptUnit(HousingPanel house, Housing housing) {
-		buildingPanels.add(house, house.name);
-		housing.setBuildingPanel(house);
-		//getting the apartment panel from the list of buildings (and thier respective panels)
+	public void addAptUnit(Housing unit) {
+		//assigning apartment unit to either east or west apartment
 		for(Building building : buildings) {
 			String name = building.getName();
 			if(name.toLowerCase().contains("apartment")) {
-			//	if(name.toLowerCase().contains("north")) { //east?
-					HousingPanel hp = (HousingPanel) building.myBuildingPanel;
-					hp.addAptUnit(housing);
-					house.setAptBuilding(building);
-			/*	}
-				else if(name.toLowerCase().contains("south")) { //west?
-					HousingPanel hp = (HousingPanel) building.myBuildingPanel;
-					hp.addAptUnit(housing);
+				if(name.toLowerCase().contains("east")) {
+					if(unit.type.toLowerCase().contains("east")) {
+						ApartmentPanel Apt = (ApartmentPanel) building.myBuildingPanel;
+						Apt.addAptUnit(unit);
+					}
 				}
-			*/
+				else if(name.toLowerCase().contains("west")) {
+					if(unit.type.toLowerCase().contains("west")) {
+						ApartmentPanel Apt = (ApartmentPanel) building.myBuildingPanel;
+						Apt.addAptUnit(unit);
+					}
+				}
 			}
 		}
 	}

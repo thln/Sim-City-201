@@ -1,6 +1,8 @@
 package market.test.mock;
 
+import application.Restaurant;
 import chineseRestaurant.ChineseRestaurant;
+import seafoodRestaurant.SeafoodRestaurant;
 import testing.EventLog;
 import testing.LoggedEvent;
 import testing.Mock;
@@ -21,7 +23,7 @@ public class MockSalesPerson extends Mock implements SalesPerson {
 	public void msgIWantProducts(MarketCustomer customer, String item, int numWanted) {
 	}
 
-	public void msgIWantProducts(ChineseRestaurant chineseRestaurant, String item, int numWanted) {
+	public void msgIWantProducts(Restaurant restaurant, String item, int numWanted) {
 	}
 
 	public void msgOrderFulfilled(MarketOrder o) {
@@ -39,6 +41,10 @@ public class MockSalesPerson extends Mock implements SalesPerson {
 	public void msgPayment(ChineseRestaurant chineseRestaurant, double payment) {
 	}
 
+	public void msgPayment(SeafoodRestaurant seafoodRestaurant, double payment) {
+		
+	}
+	
 	//Actions
 	public void findItems(MarketOrder o) {
 	}

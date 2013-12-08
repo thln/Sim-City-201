@@ -65,14 +65,15 @@ public class LoanOfficerRole extends Role implements LoanOfficer {
 			return false;
 		}
 
-		if (leaveRole){
+		if (leaveRole && (((BankGuardRole) Phonebook.getPhonebook().getEastBank().getBankGuard(test)).tellers.size () == 0 || 
+				((BankGuardRole) Phonebook.getPhonebook().getEastBank().getBankGuard(test)).person == null)){
+			Phonebook.getPhonebook().getEastBank().goingOffWork(this.person);
 			try{
 			((Worker) person).roleFinishedWork();
 			}
 			catch (Exception e){
 				
-			};
-			Phonebook.getPhonebook().getEastBank().goingOffWork(this.person);
+			};	
 			leaveRole = false;
 			return true;
 		}

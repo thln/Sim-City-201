@@ -1,9 +1,13 @@
 package application.gui.animation;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,9 +17,14 @@ import application.gui.animation.agentGui.*;
 public class RestaurantPanel extends BuildingPanel implements ActionListener{
 	
 	static final int NTABLES = 5;
+    BufferedImage fridge = null;
 	
 	public RestaurantPanel(String buildName, AnimationPanel ap) {
 		super(buildName, ap);
+        try {
+            fridge = ImageIO.read(new File("res/fridge.png"));
+        	} catch (IOException e) {
+        	}
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -155,19 +164,31 @@ public class RestaurantPanel extends BuildingPanel implements ActionListener{
 			g2.drawString("Lobby", xLobbyLocation + 2, yLobbyLocation + 45);
 		}
 		else if (name.toLowerCase().contains("italian")) { //for Carmen's restaurant
+			g2.setColor(Color.CYAN);
+			g2.fillRect(WINDOWX-200, 10, 150, 50);
 			g2.setColor(Color.PINK);
-			g2.fillRect(0, 10, 200, 50);
+			g2.fillRect(0, 10, 200, 50); //lobby
 			
-			//cook's grill
+			g2.drawImage(fridge, 500, 100, null);
+			
 			g2.setColor(Color.darkGray);
+			g2.fillRect(10, 220, 40, 10);
+			//cook's grill
 			g2.fillRect(WINDOWX-350, WINDOWY-80, 280, 5);
 			g2.fillRect(WINDOWX-350, WINDOWY-45, 280, 5);
 			for(int j=0;j<15;j++)
 				g2.fill3DRect(WINDOWX-70-20*j, WINDOWY-80, 10, 40, true);
 			
+			g2.setColor(Color.LIGHT_GRAY);
+			g2.fill3DRect(100, WINDOWY-95, 90, 15, true);
+			g2.fill3DRect(100, WINDOWY-20, 90, 5, true);
+			for(int k=0;k<5;k++)
+				g2.fill3DRect(100+20*k, WINDOWY-80, 10, 60, true);
+			
 			//labels
 			g2.setColor(Color.BLACK);
 	        g2.drawString("Lobby", 10, 20);
+	        g2.drawString("Break Room", WINDOWX - 200, 20);
 			//Here is the table
 			g2.setColor(Color.ORANGE);
 			

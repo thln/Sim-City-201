@@ -7,7 +7,7 @@ public class Housing
 {
 	//public enum differentHousingTypes {Apartment, Park, Mansion};
 	//public static differentHousingTypes housingStructure;
-	public String structure;
+	public String type;
 	public enum housingState {UrgentWorkOrder, CheckUpNeeded, RecentlyChecked, Checking};
 	public housingState state;
 	public Person occupant;
@@ -26,25 +26,27 @@ public class Housing
 		occupant = newP;
 		housingNumber = Address;
 		state = housingState.CheckUpNeeded;
-		
+		this.type = type;
+		/*
 		if(type.toLowerCase().contains(("apartment")))
 		{
 			//housingStructure = differentHousingTypes.Apartment;
-			structure = "Apartment";
+			type = "Apartment";
 			//some X and Y coordinate stuff
 		}
 		else if(type.toLowerCase().contains(("park")))
 		{
 			//housingStructure = differentHousingTypes.Park;
-			structure = "Park";
+			type = "Park";
 			//some X and Y Coordinate stuff
 		}
 		else if(type.toLowerCase().contains(("mansion")))
 		{
 			//housingStructure = differentHousingTypes.Mansion;
-			structure = "Mansion";
+			type = "Mansion";
 			//some X and Y Coordinate stuff
 		}
+		*/
 		
 	}
 	

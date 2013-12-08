@@ -3,7 +3,7 @@ package italianRestaurant;
 import person.*;
 import application.gui.animation.agentGui.*;
 import italianRestaurant.interfaces.*;
-
+import italianRestaurant.ItalianMyCustomer.MyCustState;
 import java.util.*;
 import java.util.concurrent.Semaphore;
 
@@ -20,12 +20,11 @@ public class ItalianWaiterRole extends Role implements ItalianWaiter{
 	//with List semantics.
 	//private CustomerRole currCustomer;
 	private boolean onbreak = false;
-	public List<MyCustomer> Customers = new ArrayList<MyCustomer>();
+	public List<ItalianMyCustomer> Customers = new ArrayList<ItalianMyCustomer>();
 	
 	//note that tables is typed with Collection semantics.
 	//Later we will see how it is implemented
-	
-	 
+ 
 	private Semaphore atCust = new Semaphore(0,true);
 	private Semaphore atTable = new Semaphore(0,true);
 	private Semaphore atCook = new Semaphore(0,true);
@@ -52,7 +51,7 @@ public class ItalianWaiterRole extends Role implements ItalianWaiter{
 	
 	//message host uses to tell waiter that a customer 
 	public void msgPleaseSitCustomer(ItalianCustomer c, int tablenum, Integer startPos){
-		Customers.add(new MyCustomer(c, tablenum, startPos));
+		Customers.add(new ItalianMyCustomer(c, tablenum, startPos));
 		print("Received message from host to seat " + c + " at table " + tablenum);
 		//c.msgSitAtTable();
 		stateChanged();
@@ -66,7 +65,7 @@ public class ItalianWaiterRole extends Role implements ItalianWaiter{
 		for(int i=0; i<Customers.size();i++){
 			if(Customers.get(i).c.equals(c)){
 				print(c + " is following me to table " + Customers.get(i).table);
-				MyCustomer mc = Customers.get(i);
+				ItalianMyCustomer mc = Customers.get(i);
 				mc.s = MyCustState.seating;
 				stateChanged();
 			}
@@ -131,7 +130,7 @@ public class ItalianWaiterRole extends Role implements ItalianWaiter{
 	public void msgLeavingTable(ItalianCustomer c) {
 		for(int i=0; i<Customers.size();i++){
 			if(Customers.get(i).c.equals(c)){
-				MyCustomer mc = Customers.get(i);
+				ItalianMyCustomer mc = Customers.get(i);
 				Customers.remove(mc); //to be removed in V2.1 to calculate orders?
 				print("Telling host that " + c + " is leaving table.");
 				host.msgLeavingTable(c);
@@ -199,7 +198,7 @@ public class ItalianWaiterRole extends Role implements ItalianWaiter{
 			}
 			for(int i=0; i<Customers.size();i++){
 				if(Customers.get(i).s == MyCustState.readytoorder) {
-					GotoCook(Customers.get(i));
+					PlaceOrder(Customers.get(i));
 					return true;
 				}
 			}
@@ -250,7 +249,7 @@ public class ItalianWaiterRole extends Role implements ItalianWaiter{
 	}
 
 	// Actions
-	public void BringCustFromWaiting(MyCustomer customer) {
+	public void BringCustFromWaiting(ItalianMyCustomer customer) {
 		print("Ready to seat " + customer.c);
 		waiterGui.GoToWaiting(customer.home);
 		try {
@@ -269,7 +268,7 @@ public class ItalianWaiterRole extends Role implements ItalianWaiter{
 		}*/
 	}
 
-	public void seatCustomer(MyCustomer customer, int table) {
+	public void seatCustomer(ItalianMyCustomer customer, int table) {
 		customer.c.msgSitAtTable(table);
 		DoSeatCustomer(customer, table);
 		try {
@@ -283,7 +282,7 @@ public class ItalianWaiterRole extends Role implements ItalianWaiter{
 	}
 
 	// The animation DoXYZ() routines
-	private void DoSeatCustomer(MyCustomer customer, int table) {
+	private void DoSeatCustomer(ItalianMyCustomer customer, int table) {
 		//Notice how we print "customer" directly. It's toString method will do it.
 		//Same with "table"
 		print("Seating " + customer + " at table " + table);
@@ -291,7 +290,7 @@ public class ItalianWaiterRole extends Role implements ItalianWaiter{
 		
 	}
 	
-	public void leaveCustomer(MyCustomer customer) {
+	public void leaveCustomer(ItalianMyCustomer customer) {
 		if(customer.s == MyCustState.done)
 			waiterGui.GoToHome();
 		else if(customer.s == MyCustState.finished) {
@@ -302,7 +301,7 @@ public class ItalianWaiterRole extends Role implements ItalianWaiter{
 		}
 	}
 	
-	private void GotoCook(MyCustomer customer) {
+	private void PlaceOrder(ItalianMyCustomer customer) {
 		customer.c.msgdoneOrdering();
 		print("Going to " + cook);
 		waiterGui.DoGotoCook();
@@ -316,10 +315,10 @@ public class ItalianWaiterRole extends Role implements ItalianWaiter{
 		customer.s = MyCustState.waiting;
 	}
 	
-	private void BacktoCustomer(MyCustomer customer) {
+	private void BacktoCustomer(ItalianMyCustomer customer) {
 		//DO Bring food to customer
 		print("Bringing " + customer.choice + " back to table " + customer.table);
-		waiterGui.DoGoToTable(customer.table);
+		waiterGui.DoGoToTable(customer.table, customer.choice);
 		try {
 			BackatTable.acquire();
 		} catch (InterruptedException e) {
@@ -331,10 +330,10 @@ public class ItalianWaiterRole extends Role implements ItalianWaiter{
 		//customer.c.msgdoneWaitingForFood();//hack; to be commented out LATER
 	}
 	
-	private void ReorderingCustomer(MyCustomer customer) {
+	private void ReorderingCustomer(ItalianMyCustomer customer) {
 		//DO Bring food to customer
 		print("Telling " + customer + " to order again.");
-		waiterGui.DoGoToTable(customer.table);
+		waiterGui.DoGoToTable(customer.table, "none");
 		try {
 			BackatTable.acquire();
 		} catch (InterruptedException e) {
@@ -346,7 +345,7 @@ public class ItalianWaiterRole extends Role implements ItalianWaiter{
 		//customer.c.msgdoneWaitingForFood();//hack; to be commented out LATER
 	}
 	
-	private void GotoCashier(MyCustomer customer) {
+	private void GotoCashier(ItalianMyCustomer customer) {
 		print("Getting check for " + customer);
 		waiterGui.GoToCashier();
 		try {
@@ -359,7 +358,7 @@ public class ItalianWaiterRole extends Role implements ItalianWaiter{
 		customer.s = MyCustState.waiting;
 	}
 	
-	public void ChecktoCust(MyCustomer customer) {
+	public void ChecktoCust(ItalianMyCustomer customer) {
 		print("Giving Check to " + customer);
 		waiterGui.DoGoToTableAgain(customer.table);
 		try {
@@ -414,30 +413,5 @@ public class ItalianWaiterRole extends Role implements ItalianWaiter{
 		return onbreak;
 	}
 	
-	//stores the states in which the waiter's MyCustomer can be in
-	public enum MyCustState {readytoseat, seating, readytoorder, ordered, pending, orderingAgain, waiting, readyforCheck, paying, done, finished};
-	
-	/*MyCustomer Class stores details of each specific customer
-	 * each waiter has to deal with in the program.
-	 */
-	private static class MyCustomer {
-		private ItalianCustomer c;
-		private String choice;
-		private int table;
-		private Integer home;
-		Double billtotal = 0.0;
-		public MyCustState s;
-		
-		MyCustomer(ItalianCustomer cust, int tablenum, Integer startPos){
-			c = cust;
-			table = tablenum;
-			home = startPos;
-			s = MyCustState.readytoseat; //initializes customer as waiting, before being seated
-		}
-		
-		public String toString() {
-			return "" + c;
-		}
-	}
 }
 

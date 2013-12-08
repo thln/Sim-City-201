@@ -11,7 +11,10 @@ import javax.swing.JLabel;
 import application.Phonebook;
 
 public class PersonGui extends CityGui {
-
+	
+	private final int WINDOWX = 600;
+	private final int WINDOWY = 325;
+	
 	private Person agent = null;
 	private boolean isHungry = false;
 	public boolean walk = true;
@@ -26,17 +29,18 @@ public class PersonGui extends CityGui {
 	Color transColor = new Color(0,0,0,1);
 	Color currColor;
 
-	private int xRestaurant1Location = 300 + 15;
-	private int yRestaurant1Location = 20 + 10;
+	private int xChineseLocation = WINDOWX/2 + 15;
+	private int yChineseLocation = 20 + 10;
 	//This is going to be used for future restaurants
-	//	private int xRestaurant2Location;
-	//	private int yRestaurant2Location;
-	//	private int xRestaurant3Location;
-	//	private int yRestaurant3Location;
-	//	private int xRestaurant4Location;
-	//	private int yRestaurant4Location;
-	//	private int xRestaurant5Location;
-	//	private int yRestaurant5Location;
+	private int xItalianLocation = (WINDOWX-100) + 15;
+	private int yItalianLocation = 20+10;
+	private int xMexicanLocation = (WINDOWX/2-75) + 15;
+	private int yMexicanLocation = (WINDOWY - 75) + 10;
+	private int xAmericanLocation = (WINDOWX - 100) + 15;
+	private int yAmericanLocation = (WINDOWY - 75) + 10;
+	private int xSeafoodLocation = (WINDOWX-100) + 15;
+	private int ySeafoodLocation = 150 + 10; //?
+	
 	private int xMarketLocation = 500 + 25;
 	private int yMarketLocation = 100 + 25;
 	private int xBankLocation = 300 + 30;
@@ -119,7 +123,7 @@ public class PersonGui extends CityGui {
 			//System.out.println(command + "  " + agent.getName() + "has semaphore permits = " + agent.getAtDestination().availablePermits());
 
 			if(agent != null) {
-				if (command == Command.GoToRestaurant && getxPos() == xRestaurant1Location && getyPos() == yRestaurant1Location) {
+				if (command == Command.GoToRestaurant) {
 					agent.msgAtDestination();
 					currColor = transColor;
 				}
@@ -181,9 +185,36 @@ public class PersonGui extends CityGui {
 	}
 
 	//Actions
-	public void DoGoToRestaurant() {//later you will map building to map coordinates.
-		setxDestination(xRestaurant1Location);
-		setyDestination(yRestaurant1Location);
+	public void DoGoToRestaurant(String restaurantType) {//later you will map building to map coordinates.
+		switch(restaurantType.toLowerCase()) {
+			case "chinese" : {
+				setxDestination(xChineseLocation);
+				setyDestination(yChineseLocation);
+			}
+			break;
+			case "italian" : {
+				setxDestination(xItalianLocation);
+				setyDestination(yItalianLocation);
+			}
+			break;
+			case "mexican" : {
+				setxDestination(xMexicanLocation);
+				setyDestination(xMexicanLocation);
+			}
+			break;
+			case "american" : {
+				setxDestination(xAmericanLocation);
+				setyDestination(yAmericanLocation);
+			}
+			break;
+			case "seafood" : {
+				setxDestination(xSeafoodLocation);
+				setyDestination(ySeafoodLocation);
+			}
+			break;
+			default:
+			break;
+		}
 		setDefaultColor();
 		command = Command.GoToRestaurant;
 	}
