@@ -347,7 +347,8 @@ public class ChineseRestaurantHostRole extends Role {
 	{
 		waiters.add(new myWaiter(chineseRestaurantWaiterRole));
 		print("Hired new waiter, " + chineseRestaurantWaiterRole.getPerson().getName());
-		stateChanged();
+		if (person != null)
+			stateChanged();
 	}
 
 	public void addCustomerToWaiter(ChineseRestaurantWaiterRole chineseRestaurantWaiterRole) 
