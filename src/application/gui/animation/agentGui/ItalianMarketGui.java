@@ -78,6 +78,11 @@ public class ItalianMarketGui implements Gui {
     public void DoPlateIt() {
     	
     }
+    
+    public void DoExit() {
+    	xDestination = -20;
+    	yDestination = 300;
+    }
 
     public int getXPos() {
         return xPos;

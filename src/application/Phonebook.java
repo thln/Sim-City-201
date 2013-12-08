@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import seafoodRestaurant.SeafoodRestaurant;
 import italianRestaurant.ItalianRestaurant;
 import chineseRestaurant.ChineseRestaurant;
 import bank.Bank;
@@ -24,12 +25,15 @@ public class Phonebook{
 	static private Market eastMarket;
 	static private Market westMarket;
 
-	//Restaruants
+
+	//Restaurants
 	static private ChineseRestaurant chineseRestaurant;
+	static private SeafoodRestaurant seafoodRestaurant;
+	//ItalianRestaurant italianRestaurant;
 	static private ItalianRestaurant italianRestaurant;
 	//MexicanRestaurant mexicanRestaurant;
 	//AmericanRestaurant americanRestaurant;
-	//SeafoodRestaurant seafoodRestaurant;
+	
 
 	private HousingMaintenanceCompany housingMaintenanceCompany;
 
@@ -51,6 +55,7 @@ public class Phonebook{
 
 	private Phonebook() 
 	{
+
 		//Set bus stops
 		busStops.add(new Point(127, 28));		//Top left bus stop = busStop(0)
 		busStops.add(new Point(420, 28));		//Top right bus stop = busStop(1)
@@ -68,16 +73,28 @@ public class Phonebook{
 		
 		//	westMarket = new Market("Market");
 		// set bus stop
-		
+
+		eastBank = new Bank("Bank");
+		westBank = new Bank("Bank");
+		eastMarket = new Market("Market");
+		westMarket = new Market("Market");
+		seafoodRestaurant = new SeafoodRestaurant("Seafood Restaurant");
+
 		chineseRestaurant = new ChineseRestaurant("Chinese Restaurant");
 		chineseRestaurant.setClosestStop(busStops.get(1));		//setting building's closest bus stop
 		
 		italianRestaurant = new ItalianRestaurant("Italian Restaurant");
 		italianRestaurant.setClosestStop(busStops.get(1));		//setting building's closest bus stop
 		
-		housingMaintenanceCompany = new HousingMaintenanceCompany("Housing maintenance company");
-		
-	
+
+		/* For future use after all the restaurants have been integrated
+		 * 
+		mexicanRestaurant = new MexicanRestaurant("Mexican Restaurant");
+		seafoodRestaurant = new SeafoodRestaurant("Seafood Restaurant");
+		americanRestaurant = new AmericanRestaurant("American Restaurant");
+		*/
+
+		housingMaintenanceCompany = new HousingMaintenanceCompany("Housing maintenance company");		
 	}
 
 	public static Phonebook getPhonebook() 
@@ -117,6 +134,10 @@ public class Phonebook{
 	public ChineseRestaurant getChineseRestaurant() 
 	{
 		return chineseRestaurant; //temporary stub. make more dynamic later
+	}
+
+	public SeafoodRestaurant getSeafoodRestaurant() {
+		return seafoodRestaurant;
 	}
 	
 	public ItalianRestaurant getItalianRestaurant() 

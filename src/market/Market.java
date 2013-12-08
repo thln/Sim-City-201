@@ -76,6 +76,11 @@ public class Market {
 		inventory.put("Steak", new Item("Steak", 15.99, 1000));
 		inventory.put("Pizza", new Item("Pizza", 8.99, 1000));
 		inventory.put("Salad", new Item("Salad", 5.99, 1000));
+		
+		inventory.put("Bourbon-Glazed Salmon", new Item("Bourbon-Glazed Salmon", 10.99, 1000));
+		inventory.put("Lobster Tail and Roll", new Item("Lobster Tail and Roll", 15.99, 1000));
+		inventory.put("Grilled Shrimp Skewers", new Item("Grilled Shrimp Skewers", 8.99, 1000));
+		inventory.put("Clam Chowder Sourdough Bowl", new Item("Clam Chowder Sourdough Bowl", 5.99, 1000));		
 	}
 
 	//Constructor

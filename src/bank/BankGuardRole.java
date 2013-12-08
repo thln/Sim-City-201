@@ -56,16 +56,17 @@ public class BankGuardRole extends Role implements BankGuard {
 	//MESSAGES
 
 	public void msgTellerCameToWork (BankTeller t1) {
+
 		//	print("Teller" + t1.getName() + " arrived at work");	
 		tellers.add(new MyTeller(t1));
-		//	print("Teller size = " + tellers.size());
+		print("Teller size = " + tellers.size());
 	}
 
 	public void msgTellerLeavingWork(BankTeller t1) {
 		if (t1 instanceof Role)
 			print("Teller role removed " + ((Role) t1).getPerson().getName());
 		tellers.remove(findTeller(t1));
-		//	print("tellers = " + tellers.size());
+		print("tellers = " + tellers.size());
 		stateChanged();
 	}
 
@@ -148,9 +149,9 @@ public class BankGuardRole extends Role implements BankGuard {
 		if (chance == 1){
 			caught = false;
 			try {
-			    Thread.sleep(1000);
+				Thread.sleep(1000);
 			} catch(InterruptedException ex) {
-			    Thread.currentThread().interrupt();
+				Thread.currentThread().interrupt();
 			}
 		}
 		else {
@@ -158,13 +159,13 @@ public class BankGuardRole extends Role implements BankGuard {
 		}
 
 		//GUI animation
-			gui.DoCatchRobber();
-			try {
-				this.atDestination.acquire();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		gui.DoCatchRobber();
+		try {
+			this.atDestination.acquire();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if (caught){
 			robber1.msgCaughtYou();
 		}

@@ -1,9 +1,11 @@
 package italianRestaurant;
 
 import person.*;
+import application.Phonebook;
 import application.gui.animation.agentGui.*;
 import italianRestaurant.interfaces.*;
-
+import italianRestaurant.ItalianRestaurantOrder.OrderState;
+import italianRestaurant.ItalianFood.FoodState;
 import java.util.*;
 import java.util.concurrent.Semaphore;
 
@@ -21,12 +23,14 @@ public class ItalianCookRole extends Role implements ItalianCook{
 	Random rn = new Random();
 	boolean AllowedtoOrder = true;
 	private Timer cookingtimer = new Timer();
+	private Timer revolvingStandTimer = new Timer();
+	
 	private Semaphore atMarket = new Semaphore(0, true);
 	private Semaphore atFridge = new Semaphore(0, true);
-	private List<Order> Orders = Collections.synchronizedList(new ArrayList<Order>());
+	private List<ItalianRestaurantOrder> Orders = Collections.synchronizedList(new ArrayList<ItalianRestaurantOrder>());
 	public List<ItalianMarket> Markets = Collections.synchronizedList(new ArrayList<ItalianMarket>());
 	public List<ItalianMarket> visitedMarkets = Collections.synchronizedList(new ArrayList<ItalianMarket>());
-	private List<Food> Foods = Collections.synchronizedList(new ArrayList<Food>());
+	private List<ItalianFood> Foods = Collections.synchronizedList(new ArrayList<ItalianFood>());
 	
 	private ItalianRestaurant restaurant = null;
 	//note that tables is typed with Collection semantics.
@@ -48,27 +52,27 @@ public class ItalianCookRole extends Role implements ItalianCook{
 		*/
 		
 		
-		Foods.add(new Food("Steak", 5, 12, 3)); //name, cooktime, inventory, low
-		Foods.add(new Food("Chicken", 2, 10, 2)); 
-		Foods.add(new Food("Salad", 3, 10, 1));
-		Foods.add(new Food("Pizza", 4, 12, 2));
+		Foods.add(new ItalianFood("Steak", 5, 12, 3)); //name, cooktime, inventory, low
+		Foods.add(new ItalianFood("Chicken", 2, 10, 2)); 
+		Foods.add(new ItalianFood("Salad", 3, 10, 1));
+		Foods.add(new ItalianFood("Pizza", 4, 12, 2));
 		
 	}
 
 	// Messages
 	public void msgHereIsCustOrder(ItalianWaiter w, String choice, int table) {
 		synchronized(Foods) {
-		for(int i=0; i<Foods.size();i++) {
-			if(Foods.get(i).type.equals(choice)) {
-				Orders.add(new Order(w, Foods.get(i), table));
-				print("Received order from " + w + " for " + Foods.get(i));
-				stateChanged();
+			for(int i=0; i<Foods.size();i++) {
+				if(Foods.get(i).type.equals(choice)) {
+					Orders.add(new ItalianRestaurantOrder(w, Foods.get(i), table));
+					print("Received order from " + w + " for " + Foods.get(i));
+					stateChanged();
+				}
 			}
-		}
 		}
 	}
 	
-	public void FoodDone(Order o) {
+	public void FoodDone(ItalianRestaurantOrder o) {
 		o.s = OrderState.done;
 		print(o.food + " is Done!");
 		System.out.print(o.food.inventory + "\n");
@@ -80,32 +84,32 @@ public class ItalianCookRole extends Role implements ItalianCook{
 	public void msgOrderDone(ItalianMarket market, String foodname, int foodamt){
 		
 		synchronized(Foods) {
-		for(int i=0; i<Foods.size();i++) {
-			if(Foods.get(i).type.equals(foodname)){
-				Foods.get(i).inventory+= foodamt;
-				//Foods.get(i).inventory++;
-				//Foods.get(i).inventory = Foods.get(i).capacity;
-				
-				if(Foods.get(i).inventory == Foods.get(i).capacity) {
-					print("Restocked " + foodname + " to capacity from the ItalianMarket!");
-					//if any markets were visited, refresh the list for reuse to restock other foods
-					for(int n=0; n<visitedMarkets.size();n++) {
-						Markets.add(visitedMarkets.get(n));
-					}
-					visitedMarkets.clear();
+			for(int i=0; i<Foods.size();i++) {
+				if(Foods.get(i).type.equals(foodname)){
+					Foods.get(i).inventory+= foodamt;
+					//Foods.get(i).inventory++;
+					//Foods.get(i).inventory = Foods.get(i).capacity;
 					
-					Foods.get(i).fs = FoodState.inStock;
-					System.out.print(Foods.get(i).inventory);
-					stateChanged();
-				}
-				else {
-					print("Order partially filled. Restocking the rest from another market");
-					Markets.remove(market);
-					Foods.get(i).fs = FoodState.isLow;
-					stateChanged();
+					if(Foods.get(i).inventory == Foods.get(i).capacity) {
+						print("Restocked " + foodname + " to capacity from the ItalianMarket!");
+						//if any markets were visited, refresh the list for reuse to restock other foods
+						for(int n=0; n<visitedMarkets.size();n++) {
+							Markets.add(visitedMarkets.get(n));
+						}
+						visitedMarkets.clear();
+						
+						Foods.get(i).fs = FoodState.inStock;
+						System.out.print(Foods.get(i).inventory);
+						stateChanged();
+					}
+					else {
+						print("Order partially filled. Restocking the rest from another market");
+						Markets.remove(market);
+						Foods.get(i).fs = FoodState.isLow;
+						stateChanged();
+					}
 				}
 			}
-		}
 		}
 	}
 	
@@ -147,11 +151,11 @@ public class ItalianCookRole extends Role implements ItalianCook{
 	 * Scheduler.  Determine what action is called for, and do it.
 	 */
 	protected boolean pickAndExecuteAnAction() {
-		/* Think of this next rule as:
-            Does there exist a table and customer,
-            so that table is unoccupied and customer is waiting.
-            If so seat him at the table.
-		 */
+		
+		if(!Phonebook.getPhonebook().getItalianRestaurant().getRevolvingStand().isStandEmpty()) {
+			takeRevolvingStandOrder();
+			return true;
+		}
 		
 		if(Orders != null) {
 			synchronized(Orders) {
@@ -181,6 +185,8 @@ public class ItalianCookRole extends Role implements ItalianCook{
 				}
 			}
 		}
+		
+		startRevolvingStandTimer();
 
 		return false;
 		//we have tried all our rules and found
@@ -189,9 +195,30 @@ public class ItalianCookRole extends Role implements ItalianCook{
 	}
 
 	// Actions
+	public void startRevolvingStandTimer() {
+		revolvingStandTimer.schedule(new TimerTask() {
+			public void run() {
+				stateChanged();
+			}
+		},
+		300);
+	}
 	
+	public void takeRevolvingStandOrder() {
+		synchronized(Orders) {
+			ItalianRestaurantOrder o = Phonebook.getPhonebook().getItalianRestaurant().getRevolvingStand().takeOrder();
+			synchronized(Foods) {
+				for(int i=0; i<Foods.size();i++) {
+					if(Foods.get(i).type.equals(o.choice)) {
+						o.food = Foods.get(i);
+					}
+				}
+			}
+			Orders.add(o);
+		}
+	}
 	
-	private void TryCookIt(final Order o) {
+	private void TryCookIt(final ItalianRestaurantOrder o) {
 		if(o.food.inventory == 0) {
 			print("OUT of " + o.food);
 			o.w.msgFoodOut(o.food.type, o.table);
@@ -221,14 +248,14 @@ public class ItalianCookRole extends Role implements ItalianCook{
 		
 	}
 	
-	private void TryPlateIt(Order o) {
+	private void TryPlateIt(ItalianRestaurantOrder o) {
 			print("Plating Food");
 			cookGui.DoPlateIt(o.food.type, o.table);
 			o.w.msgOrderDone(o.food.type, o.table);
 		o.s = OrderState.finished;
 	}
 	
-	private void OrderFoodThatLow(Food f){
+	private void OrderFoodThatLow(ItalianFood f){
 		if(Markets.size()>0) {
 			if(f.fs == FoodState.inStock)
 				print("Ordering " + f + " that is low");
@@ -255,6 +282,7 @@ public class ItalianCookRole extends Role implements ItalianCook{
 	}
 
 	//utilities
+	
 	public String toString() {
 		return "Cook " + getName();
 	}
@@ -275,53 +303,6 @@ public class ItalianCookRole extends Role implements ItalianCook{
 		Markets.add(market);
 		//market.startThread();
 		print("added ItalianMarket \"" + randName + "\"");
-	}
-	
-	/*Order class stores the different customer orders
-	 * the waiter gives to the cook, and its state
-	 * of cooking on the cook's "grill".
-	 */
-	
-	private enum OrderState {pending, cooking, done, finished};
-	
-	private class Order {
-		ItalianWaiter w;
-		Food food;
-		int table;
-		OrderState s;
-		Order(ItalianWaiter waiter, Food f, int t) {
-			w = waiter;
-			food = f;
-			table = t;
-			s = OrderState.pending;
-		}
-		
-		public String toString() {
-			return "Order " + food;
-		}
-	}
-	
-	private enum FoodState {inStock, isLow, ordered, orderingAgain, delivered};
-	private class Food {
-		String type;
-		int cookingTime;
-		int low;
-		int inventory;
-		int capacity;
-		FoodState fs;
-		
-		Food(String choice, int time, int invent, int lownum) {
-			type = choice;
-			cookingTime = time;
-			inventory = invent;
-			low = lownum;
-			capacity = 20;
-			fs = FoodState.inStock;
-		}
-		
-		public String toString() {
-			return type;
-		}
 	}
 
 }

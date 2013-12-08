@@ -283,7 +283,7 @@ public class Worker extends Person {
 
 		if (myJob.jobPlace == "restaurant") 
 		{
-			getGui().DoGoToRestaurant();
+			getGui().DoGoToRestaurant("chinese");
 			try {
 				atDestination.acquire();
 			} catch (InterruptedException e) {

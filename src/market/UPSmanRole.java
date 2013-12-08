@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import chineseRestaurant.ChineseRestaurant;
 import market.interfaces.UPSman;
 import person.Person;
 import person.Role;
@@ -58,7 +59,7 @@ public class UPSmanRole extends Role implements UPSman {
 	//Actions
 	public void deliverOrder(MarketOrder o) {
 		print("Delivered order ot restaurant");
-		o.chineseRestaurant.getCook(test).msgOrderFulfillment(o.item, o.itemAmountFulfilled, o.itemAmountOrdered);
+		((ChineseRestaurant) o.restaurant).getCook(test).msgOrderFulfillment(o.item, o.itemAmountFulfilled, o.itemAmountOrdered);
 		market.getSalesPerson(test).msgOrderDelivered(o);
 		orders.remove(o);
 	}
