@@ -1,13 +1,14 @@
 package application.gui.animation.agentGui;
 
-import person.*;
-
-import java.awt.*;
-import java.util.ArrayList;
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.util.Random;
 
-import javax.swing.JLabel;
-
+import person.Crook;
+import person.Deadbeat;
+import person.Person;
+import person.Wealthy;
+import person.Worker;
 import application.Phonebook;
 
 public class PersonGui extends CityGui {
@@ -43,9 +44,12 @@ public class PersonGui extends CityGui {
 	
 	private int xMarketLocation = 500 + 25;
 	private int yMarketLocation = 100 + 25;
-	private int xBankLocation = 300 + 30;
-	private int yBankLocation = 230 + 30;
 	
+	//Bus stops
+	private int startStopX;
+	private int startStopY;
+	private int endStopX;
+	private int endStopY;
 
 	private int xPos, yPos;//default person position
 	private int xDestination, yDestination;//default start position
@@ -106,6 +110,8 @@ public class PersonGui extends CityGui {
 	}
 
 	public void updatePosition() {
+
+
 		//if (!inBusyIntersection()) {
 		if (true){
 			if (getxPos() < getxDestination())
@@ -119,27 +125,28 @@ public class PersonGui extends CityGui {
 				setyPos(getyPos() - 1);
 		}
 
-		if (getxPos() == getxDestination() && getyPos() == getyDestination()) {
-			//System.out.println(command + "  " + agent.getName() + "has semaphore permits = " + agent.getAtDestination().availablePermits());
+		if (xPos == getxDestination() && yPos == getyDestination() && command != Command.noCommand) {
+		//	System.out.println(command + "  " + agent.getName() + "has semaphore permits = " + agent.getAtDestination().availablePermits());
 
 			if(agent != null) {
 				if (command == Command.GoToRestaurant) {
 					agent.msgAtDestination();
 					currColor = transColor;
 				}
-				if (command == Command.GoToMarket && getxPos() == xMarketLocation && getyPos() == yMarketLocation) {
+				if (command == Command.GoToMarket && xPos == xMarketLocation && yPos == yMarketLocation) {
 					agent.msgAtDestination();
 					currColor = transColor;
 				}
-				if (command == Command.GoToBank && getxPos() == xBankLocation && getyPos() == yBankLocation) {
+				
+				if (command == Command.GoToBank) {
 					agent.msgAtDestination();
 					currColor = transColor;
 				}
-				if (command == Command.GoHome && getxPos() == getxHome() && getyPos() == yHome) {
+				if (command == Command.GoHome && xPos == getxHome() && yPos == yHome) {
 					agent.msgAtDestination();
 					currColor = transColor;
 				}
-				if (command == Command.GoToBusStop && getxPos() == xDestination && getyPos() == getyDestination()) {
+				if (command == Command.GoToBusStop) {
 					agent.msgAtDestination();
 					System.out.println("Reached bus stop");
 					currColor = transColor;
@@ -163,14 +170,14 @@ public class PersonGui extends CityGui {
 		else if (!raveMode)
 			g.setColor(currColor);
 
-		g.fillRect(getxPos(), getyPos(), 20, 20);
+		g.fillRect(xPos, yPos, 20, 20);
 		if(currColor != transColor)
 			g.setColor(Color.WHITE);
 		if(agent != null) {
-			g.drawString(agent.getName(), getxPos(), getyPos());
+			g.drawString(agent.getName(), xPos, yPos);
 		}
 		else
-			g.drawString("testGui", getxPos(), getyPos());
+			g.drawString("testGui", xPos, yPos);
 	}
 
 	public void setHungry() {
@@ -226,9 +233,18 @@ public class PersonGui extends CityGui {
 		command = Command.GoToMarket;
 	}
 
-	public void DoGoToBank() {//later you will map building to map coordinates.		
-		setxDestination(xBankLocation);
-		setyDestination(yBankLocation);
+	public void DoGoToBank(String location) {
+		
+		if (location.equals("East")){
+	//		System.out.println("x, y is " + Phonebook.getPhonebook().getEastBank().location.getX() + " , " + Phonebook.getPhonebook().getEastBank().location.getY());
+		setxDestination((int) Phonebook.getPhonebook().getEastBank().location.getX());
+		setyDestination((int) Phonebook.getPhonebook().getEastBank().location.getY());
+	//	System.out.println("x, y is " + xDestination + " , " + yDestination);
+		}
+		else {
+			setxDestination((int) Phonebook.getPhonebook().getWestBank().location.getX());
+			setyDestination((int) Phonebook.getPhonebook().getWestBank().location.getY());
+		}
 		setDefaultColor();
 		command = Command.GoToBank;
 	}
@@ -245,39 +261,40 @@ public class PersonGui extends CityGui {
 		command = Command.GoHome;
 	}
 
-	public void doGoToBus() {
+	public void doGoToBus(double endX, double endY) {
 		System.out.println("Going to bus stop");
-		if (xPos <= 170){
-			if (yPos <= 30){
-				xDestination = (int) Phonebook.getPhonebook().getBusStops().get(0).getX();
-				setyDestination((int) Phonebook.getPhonebook().getBusStops().get(0).getY());
-			}
-			else {
-				xDestination = (int) Phonebook.getPhonebook().getBusStops().get(1).getX();
-				setyDestination((int) Phonebook.getPhonebook().getBusStops().get(1).getY());
-			}	
-		}
-		else if (xPos > 170) {
-			if (yPos <= 30){
-				xDestination = (int) Phonebook.getPhonebook().getBusStops().get(2).getX();
-				setyDestination((int) Phonebook.getPhonebook().getBusStops().get(2).getY());
-			}
-			else {
-				xDestination = (int) Phonebook.getPhonebook().getBusStops().get(3).getX();
-				setyDestination((int) Phonebook.getPhonebook().getBusStops().get(3).getY());
-			}
-		}	
+		endStopX = (int) endX;
+		endStopY = (int) endY;
+		findStartStop();
+		xDestination = startStopX;
+		yDestination = startStopY;
 		setDefaultColor();
 		command = Command.GoToBusStop;
 	}
 
-	public boolean decideForBus(int xDest, int yDest) {
-		if ((xDest - xPos >= 50) || (yDest - yPos >= 50)){
-			return true;
+	public boolean decideForBus(String location) {
+		int xDest = 0, yDest = 0;
+		if (location.equals("East Bank")) {
+			xDest = (int) Phonebook.getPhonebook().getEastBank().location.getX();
+			yDest = (int) Phonebook.getPhonebook().getEastBank().location.getY();
 		}
-		else{
+		if (location.equals("West Bank")) {
+			xDest = (int) Phonebook.getPhonebook().getWestBank().location.getX();
+			yDest = (int) Phonebook.getPhonebook().getWestBank().location. getY();
+		}
+		if (location.equals("East Market")) {
+			xDest = (int) Phonebook.getPhonebook().getWestBank().location.getX();
+			yDest = (int) Phonebook.getPhonebook().getWestBank().location. getY();
+		}
+		if (location.equals("Chinese Restaurant")) {
+			xDest = (int) Phonebook.getPhonebook().getWestBank().location.getX();
+			yDest = (int) Phonebook.getPhonebook().getWestBank().location. getY();
+		}
+		
+		if ((xDest - xPos >= 50) || (yDest - yPos >= 50)){
 			return false;
 		}
+			return true;
 	}
 
 	public void setHomeLocation(int x, int y) {
@@ -331,6 +348,67 @@ public class PersonGui extends CityGui {
 		}
 		else
 			raveMode = true;
+	}
+	
+	public void findStartStop() {
+		if (xPos <= 300 && yPos <= 162.5){
+			startStopX = (int) Phonebook.getPhonebook().busStops.get(0).getX();
+			startStopY = (int) Phonebook.getPhonebook().busStops.get(0).getY();
+		}
+		if (xPos >= 300 && yPos <= 162.5){
+			startStopX = (int) Phonebook.getPhonebook().busStops.get(0).getX();
+			startStopY = (int) Phonebook.getPhonebook().busStops.get(0).getY();
+		}
+		if (xPos <= 300 && yPos >= 162.5){
+			startStopX = (int) Phonebook.getPhonebook().busStops.get(0).getX();
+			startStopY = (int) Phonebook.getPhonebook().busStops.get(0).getY();
+		}
+		else {
+			startStopX = (int) Phonebook.getPhonebook().busStops.get(0).getX();
+			startStopY = (int) Phonebook.getPhonebook().busStops.get(0).getY();
+		}
+	}
+	
+	public void popToMiddle(){
+		if (xPos < 160 && yPos < 70){
+			xPos = 90;			//Pop to middle of block1
+			yPos = 35;
+		}
+		if ((xPos > 205 && xPos < 380) && yPos < 70){
+			xPos = 295;			//Pop to middle of block2
+			yPos = 35;
+		}
+		if (xPos > 420 && yPos < 70){
+			xPos = 500;			//Pop to middle of block3
+			yPos = 35;
+		}
+
+		if (xPos < 160 && (yPos > 115 && yPos < 192)){
+			xPos = 76;			//Pop to middle of block4
+			yPos = 155;
+		}
+		if ((xPos > 200 && xPos < 378) && (yPos > 115 && yPos < 192)){
+			xPos = 295;			//Pop to middle of block5
+			yPos = 155;
+		}
+		if (xPos > 420 && (yPos > 115 && yPos < 192)){
+			xPos = 500;			//Pop to middle of block6
+			yPos = 155;
+		}
+		
+		
+		if (xPos < 160 && yPos > 230){
+			xPos = 75;			//Pop to middle of block7
+			yPos = 280;
+		}
+		if ((xPos > 200 && xPos < 378) && yPos > 230){
+			xPos = 295;			//Pop to middle of block8
+			yPos = 280;
+		}
+		if (xPos > 420 && yPos > 230){
+			xPos = 500;			//Pop to middle of block9
+			yPos = 280;
+		}
 	}
 
 	public void setDefaultColor() {

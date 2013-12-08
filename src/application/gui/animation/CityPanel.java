@@ -50,12 +50,10 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 
 	public ImageIcon roadHorizontal = new ImageIcon("res/roadsHorizontal.png");
 	public ImageIcon roadVertical = new ImageIcon("res/roadsVertical.png");
-	public ImageIcon busStop = new ImageIcon("res/bus_stop.png");
-	
+	public ImageIcon busStop = new ImageIcon("res/bus_stop.png");	
 	public BusGuiHorizontal busA = new BusGuiHorizontal();
 	public BusGuiVertical busB = new BusGuiVertical();
 
-	
 	public CityPanel(AnimationPanel animationPanel) {
 
 		this.animationPanel = animationPanel;
@@ -87,9 +85,14 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		
 		addBuilding("House", 20, 100);
 		addBuilding("East Apartment", 0, 0);
-		addBuilding("West Apartment", 0, WINDOWY-75);
+		addBuilding("West Apartment", 500, WINDOWY-75);
 		addBuilding("Park",(WINDOWX/2)-80,(WINDOWY/2)-47);
-		
+
+		addBuilding("Mexican Restaurant", 20, WINDOWY-75);
+		addBuilding("Burger Restaurant", WINDOWX-100, WINDOWY-75);
+		addBuilding("Italian Restaurant", WINDOWX-100, 20);
+		addBuilding("Fancy Restaurant", WINDOWX-100, 100+market.getIconHeight()+2);
+	
 		addGui(busA);
 		addGui(busB);
 		
@@ -174,6 +177,9 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		g2.drawImage(busStop.getImage(), 420, 28, null);
 		g2.drawImage(busStop.getImage(), 420, 230, null);
 
+		//Busses
+		
+		
 		//Drawing all buildings
 		for (int i=0; i<buildings.size(); i++ ) {
 			Building b = buildings.get(i);

@@ -14,6 +14,7 @@ import seafoodRestaurant.SeafoodRestaurant;
 import bank.Bank;
 import chineseRestaurant.ChineseRestaurant;
 
+
 public class Phonebook{
 
 	//Banks
@@ -47,7 +48,7 @@ public class Phonebook{
 
 
 	//List of bus stops
-	private List<Point> busStops = new ArrayList<>();
+	public List<Point> busStops = new ArrayList<>();
 
 	//Intersections	
 	public Intersection intersection1 = new Intersection(170, 72, 30, 38, 1);
@@ -70,26 +71,65 @@ public class Phonebook{
 
 	private static Phonebook phonebook;
 
+<<<<<<< HEAD
 	private Phonebook() {
 		eastBank = new Bank("Bank");
 		westBank = new Bank("Bank");
 		eastMarket = new Market("Market");
 		westMarket = new Market("Market");
+=======
+	private Phonebook() 
+	{
+
+		//Set bus stops
+		busStops.add(new Point(127, 28));		//Top left bus stop = busStop(0)
+		busStops.add(new Point(420, 28));		//Top right bus stop = busStop(1)
+		busStops.add(new Point(127, 230));		//Bottom left bus stop = busStop(2)
+		busStops.add(new Point(420, 230));		//Bottom right bus stop = busStop(3)
+		
+		eastBank = new Bank("East Bank");
+		eastBank.setClosestStop(busStops.get(3));		//setting building's closest bus stop
+		
+		westBank = new Bank("West Bank");
+		westBank.setClosestStop(busStops.get(0));		//setting building's closest bus stop
+		
+		eastMarket = new Market("East Market");
+		eastMarket.setClosestStop(busStops.get(1));		//setting building's closest bus stop
+		
+		westMarket = new Market("West Market");
+		eastMarket.setClosestStop(busStops.get(0));		//setting building's closest bus stop
+		
+		
+>>>>>>> master
 		seafoodRestaurant = new SeafoodRestaurant("Seafood Restaurant");
+
 		chineseRestaurant = new ChineseRestaurant("Chinese Restaurant");
+		chineseRestaurant.setClosestStop(busStops.get(1));		//setting building's closest bus stop
+		
 		italianRestaurant = new ItalianRestaurant("Italian Restaurant");
+<<<<<<< HEAD
+=======
+		italianRestaurant.setClosestStop(busStops.get(1));		//setting building's closest bus stop
+		
+>>>>>>> master
 
 		/* For future use after all the restaurants have been integrated
 		 * 
 		mexicanRestaurant = new MexicanRestaurant("Mexican Restaurant");
 		seafoodRestaurant = new SeafoodRestaurant("Seafood Restaurant");
 		americanRestaurant = new AmericanRestaurant("American Restaurant");
+<<<<<<< HEAD
 		 */
 		housingMaintenanceCompany = new HousingMaintenanceCompany("Housing maintenance company");
 		getBusStops().add(new Point(172, 28));
 		getBusStops().add(new Point(172, 230));
 		getBusStops().add(new Point(420, 28));
 		getBusStops().add(new Point(420, 230));
+=======
+		*/
+
+		housingMaintenanceCompany = new HousingMaintenanceCompany("Housing maintenance company");		
+>>>>>>> master
 	}
 
 	public static Phonebook getPhonebook() {
