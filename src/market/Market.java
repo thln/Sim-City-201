@@ -93,7 +93,7 @@ public class Market {
 			location = new Point(500, 140);
 		}
 		if (name == "West Market"){
-			location = new Point(75, 100);	
+			location = new Point(90, 120);	
 		}
 		
 		this.name = name;
@@ -161,6 +161,23 @@ public class Market {
 		//MCG.waitInLine();
 	}
 
+	public void goingOffWork(Person person) {
+		Worker worker = (Worker) person;
+
+		if (worker.getWorkerRole().equals(salesPersonRole)) {
+			salesPersonRole.person = null;
+			marketPanel.removeGui(salesPersonGui);
+		}
+		if (worker.getWorkerRole().equals(marketRunnerRole)) {
+			marketRunnerRole.person = null;
+			marketPanel.removeGui(marketRunnerGui);
+		}
+		if (worker.getWorkerRole().equals(UPSmanRole)) {
+			UPSmanRole.person = null;
+			marketPanel.removeGui(UPSmanGui);
+		}
+		worker.workerRole = null;
+	}
 
 	public class Item {
 		public String itemName;

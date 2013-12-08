@@ -1,9 +1,12 @@
 package italianRestaurant.test;
 
-import italianRestaurant.*;
+import italianRestaurant.ItalianCashierRole;
 import italianRestaurant.ItalianCashierRole.BillState;
-import italianRestaurant.test.mock.*;
-import junit.framework.*;
+import italianRestaurant.ItalianRestaurant;
+import italianRestaurant.test.mock.MockItalianCustomer;
+import italianRestaurant.test.mock.MockItalianMarket;
+import italianRestaurant.test.mock.MockItalianWaiter;
+import junit.framework.TestCase;
 
 /**
  * 

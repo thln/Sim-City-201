@@ -220,8 +220,13 @@ public class Worker extends Person {
 	public void prepareForWork() {
 		currentRoleName = myJob.title;
 		print("Preparing for work as " + myJob.title + " at " + myJob.jobPlace);
-		//gui.walk = gui.decideForBus(myJob.jobPlace);
+		gui.walk = gui.decideForBus(myJob.jobPlace);
+		
 		gui.walk = true;
+		
+		if (gui.walk)
+			gui.popToMiddle();
+		
 		if (!gui.walk){
 			gui.doGoToBus(Phonebook.getPhonebook().getEastBank().getClosestStop().getX(),
 					Phonebook.getPhonebook().getEastBank().getClosestStop().getY());
@@ -232,9 +237,11 @@ public class Worker extends Person {
 				e.printStackTrace();
 			}
 		}
+			
 
 		if (myJob.jobPlace.equals("East Bank")) 
 		{
+			gui.walk = true;
 			getGui().DoGoToBank("East");
 			try {	
 				atDestination.acquire();
@@ -249,6 +256,7 @@ public class Worker extends Person {
 
 		if (myJob.jobPlace.equals("West Bank")) 
 		{
+			gui.walk = true;
 			getGui().DoGoToBank("West");
 			try {	
 				atDestination.acquire();
@@ -263,6 +271,7 @@ public class Worker extends Person {
 
 		if (myJob.jobPlace == "East Market") 
 		{
+			gui.walk = true;
 			print("Going to work at east market");
 			getGui().DoGoToMarket("East");
 			try {
@@ -280,7 +289,8 @@ public class Worker extends Person {
 		
 		if (myJob.jobPlace == "West Market") 
 		{
-				print("Going to work at west market");
+			gui.walk = true;
+			print("Going to work at west market");
 			getGui().DoGoToMarket("West");
 			try {
 				atDestination.acquire();
@@ -297,6 +307,7 @@ public class Worker extends Person {
 
 		if (myJob.jobPlace == "Chinese Restaurant") 
 		{
+			gui.walk = true;
 			print("Going to work at Chinese Restaurant");
 			getGui().DoGoToRestaurant("chinese");
 			try {

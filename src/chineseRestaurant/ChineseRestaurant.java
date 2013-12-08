@@ -173,21 +173,16 @@ public class ChineseRestaurant implements Restaurant {
 		Worker worker = (Worker) person;
 
 		if (worker.getWorkerRole().equals(chineseRestaurantHostRole)) {
-			chineseRestaurantHostRole = null;
-			//restPanel.removeGui(ChineseRestaurantHostRole.getGui());
+			chineseRestaurantHostRole.person = null;
 		}
 		if (worker.getWorkerRole().equals(chineseRestaurantCashierRole)) {
-			chineseRestaurantCashierRole = null;
+			chineseRestaurantCashierRole.person = null;
 		}
 		if (worker.getWorkerRole().equals(chineseRestaurantCookRole)) {
-			chineseRestaurantCookRole = null;
+			chineseRestaurantCookRole.person = null;
 			restPanel.removeGui(cookGui);
 		}
-		//WAITERS AND ALT WAITERS
-		//finish the "leave work" in Role.java 
-		//make function in host to delete waiter
-		//waiters have to finish duties before finishing waiter & no assignments
-		//look at onBreak code to follow
+		worker.workerRole = null;
 	}
 
 	public String getName() {

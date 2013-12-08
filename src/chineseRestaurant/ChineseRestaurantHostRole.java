@@ -139,14 +139,15 @@ public class ChineseRestaurantHostRole extends Role {
 		}
 	}
 	
-	public void msgIAmLeavingSoon(ChineseRestaurantWaiterRole chineseRestaurantWaiterRole)
-	{
-		for(myWaiter MW: waiters)
+	public void msgIAmLeavingSoon(ChineseRestaurantWaiterRole chineseRestaurantWaiterRole) {
+		for (myWaiter MW: waiters)
 		{
-			if(MW.chineseRestaurantWaiterRole.equals(chineseRestaurantWaiterRole))
+			if (MW.chineseRestaurantWaiterRole.equals(chineseRestaurantWaiterRole))
 			{
 				MW.state = myWaiterState.LeavingSoon;
-				stateChanged();
+				if (person!=null) {
+					stateChanged();
+				}
 			}
 		}
 	}
