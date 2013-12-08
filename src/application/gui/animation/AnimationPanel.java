@@ -28,9 +28,9 @@ public class AnimationPanel extends JPanel implements MouseListener {
 	HouseMaintenanceGui house = new HouseMaintenanceGui();
 	RestaurantCookGui restaurant = new RestaurantCookGui();
 	ItalianCookGui italian = new ItalianCookGui();
-	BusGui bus = new BusGui();
-	CarGui car = new CarGui();
-	PersonGui person = new PersonGui();
+	//BusGui bus = new BusGui();
+	//CarGui car = new CarGui();
+	//PersonGui person = new PersonGui();
 	//end list of testing mechanisms
 
 	public AnimationPanel() {
@@ -173,9 +173,9 @@ public class AnimationPanel extends JPanel implements MouseListener {
 			}
 		}
 
-		cityPanel.addGui(car);
-		cityPanel.addGui(bus);
-		cityPanel.addGui(person);
+//		cityPanel.addGui(car);
+//		cityPanel.addGui(bus);
+//		cityPanel.addGui(person);
 
 	}
 
