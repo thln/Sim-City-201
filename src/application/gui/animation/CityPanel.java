@@ -71,21 +71,21 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		} catch (IOException e) {
 		}
 
-		addBuilding("Chinese Restaurant", WINDOWX / 2, 20);
-		addBuilding("Mexican Restaurant", WINDOWX-550, WINDOWY-65);
-		addBuilding("American Restaurant", WINDOWX-375, WINDOWY-70);
-		addBuilding("Italian Restaurant", WINDOWX-100, 20);
-		addBuilding("Seafood Restaurant", WINDOWX-100, 100+market.getIconHeight()+2);
+		addBuilding("Chinese Restaurant", (WINDOWX / 2)+20, 5);
+		addBuilding("Mexican Restaurant", WINDOWX-590, WINDOWY-90);
+		addBuilding("American Restaurant", WINDOWX-395, WINDOWY-90);
+		addBuilding("Italian Restaurant", WINDOWX-123, 20);
+		addBuilding("Seafood Restaurant", WINDOWX-175, 100+market.getIconHeight()+2);
 
-		addBuilding("East Market", WINDOWX - 100, 100);
-		addBuilding("West Market", 75, 100);
+		addBuilding("East Market", WINDOWX - 85, 108);
+		addBuilding("West Market", WINDOWX - 520, 275);
 
-		addBuilding("East Bank", WINDOWX / 2, 230);
-		addBuilding("West Bank", WINDOWX / 2-75, 0);
+		addBuilding("East Bank", (WINDOWX / 2), 260);
+		addBuilding("West Bank", (WINDOWX / 2)-105, 10);
 
-		addBuilding("House", 20, 100);
+		addBuilding("House", 50, 115);
 		addBuilding("West Apartment", 0, 0);
-		addBuilding("East Apartment", 500, WINDOWY-50);
+		addBuilding("East Apartment", 510, WINDOWY-55);
 		addBuilding("Park",(WINDOWX/2)-80,(WINDOWY/2)-47);
 
 
