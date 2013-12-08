@@ -7,11 +7,12 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.Semaphore;
 
+import transportation.BusAgent;
 import application.Phonebook;
 
 public class BusGuiHorizontal extends CityGui {
 
-	//	private Bus agent = null;
+	private BusAgent agent = null;
 	private boolean isPresent = true;
 	
 	private final int stopLeftX = (int) Phonebook.getPhonebook().getBusStops().get(0).getX();

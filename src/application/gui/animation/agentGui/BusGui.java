@@ -10,7 +10,7 @@ import application.Phonebook;
 
 public class BusGui extends CityGui{
 
-	private Bus agent = null;
+	private BusAgent agent = null;
 	private boolean isPresent = true;
 
 	//RestaurantGui gui;
@@ -28,7 +28,7 @@ public class BusGui extends CityGui{
 	
 	public BusGui(){
 	}
-	public BusGui(Bus b/*, RestaurantGui gui*/){ //HostAgent m) {
+	public BusGui(BusAgent b/*, RestaurantGui gui*/){ //HostAgent m) {
 		agent = b;
 		//this.gui = gui;
 	}
