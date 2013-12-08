@@ -17,7 +17,6 @@ import americanRestaurant.interfaces.AmericanRestaurantCashier;
 
 public class AmericanRestaurantCookRole extends Role {
 
-
 	//DATA
 
 	//CookGui cookGui;
