@@ -6,6 +6,8 @@ import java.awt.*;
 
 import javax.swing.JLabel;
 
+import application.Phonebook;
+
 public class BusGui extends CityGui{
 
 	private Bus agent = null;
