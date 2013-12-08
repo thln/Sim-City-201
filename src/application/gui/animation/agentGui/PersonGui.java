@@ -688,7 +688,7 @@ public class PersonGui extends CityGui {
 		else if (!Phonebook.getPhonebook().crosswalk3.getCrosswalk().intersects(me)
 				&& (state == PersonState.inCrosswalk3)) {
 			Phonebook.getPhonebook().crosswalk3.setCrosswalkBusy(false);	
-			state = PersonState.enroute;	
+			state = PersonState.enroute;
 		}
 		else if (!Phonebook.getPhonebook().crosswalk4.getCrosswalk().intersects(me)
 				&& (state == PersonState.inCrosswalk4)) {
