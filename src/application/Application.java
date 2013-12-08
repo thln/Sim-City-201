@@ -233,13 +233,13 @@ public class Application extends JPanel {
 		//People
 		getPopulation().add(wealthy1);
 		getPopulation().add(wealthy2);
+
 		getPopulation().add(wealthy3);
 		getPopulation().add(wealthy4);
 		getPopulation().add(crook1);
 
 		//Setting Gui for everyone
 		for (Person person : getPopulation()) {
-			System.err.println("Person: " + person.getName());
 			person.setPanel(animPanel);
 			PersonGui pg = new PersonGui(person);
 			person.setGui(pg);
@@ -289,6 +289,7 @@ public class Application extends JPanel {
 		//People
 		wealthy1.startThread();
 		wealthy2.startThread();
+
 		wealthy3.startThread();
 		wealthy4.startThread();
 		crook1.startThread();
