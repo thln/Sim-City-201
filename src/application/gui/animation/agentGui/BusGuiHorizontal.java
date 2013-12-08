@@ -8,7 +8,6 @@ import java.util.TimerTask;
 import java.util.concurrent.Semaphore;
 
 import application.Phonebook;
-import application.gui.animation.agentGui.BusGuiVertical.BusState;
 
 public class BusGuiHorizontal extends CityGui {
 
@@ -94,7 +93,23 @@ public class BusGuiHorizontal extends CityGui {
 
 	public void draw(Graphics2D g) {
 		g.setColor(Color.BLUE);
-		g.fillOval(xPos, yPos, 25, 25); //keeping it uniform for now
+		g.fillOval(xPos, yPos, 25, 25);
+		g.setColor(Color.WHITE);
+		g.drawString("A", xPos + 9, yPos + 18);
+		
+		if(xPos == stopLeftX && yPos == stopTopY) {
+			g.fillRect(xPos+4, yPos-4, 20, 5);
+		}
+		else if(xPos == stopRightX && yPos == stopTopY) {
+			g.fillRect(xPos+4, yPos-4, 20, 5);
+		}
+
+		else if(xPos == stopLeftX && yPos == stopBottomY) {
+			g.fillRect(xPos+4, yPos+26, 20, 5);
+		}
+		else if(xPos == stopRightX && yPos == stopBottomY) {
+			g.fillRect(xPos+4, yPos+26, 20, 5);
+		}
 	}
 
 	//Actions

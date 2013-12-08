@@ -93,7 +93,23 @@ public class BusGuiVertical extends CityGui {
 
 	public void draw(Graphics2D g) {
 		g.setColor(Color.RED);
-		g.fillOval(xPos, yPos, 25, 25); //keeping it uniform for now
+		g.fillOval(xPos, yPos, 25, 25);
+		g.setColor(Color.WHITE);
+		g.drawString("B", xPos + 9, yPos + 18);
+		
+		if(xPos == stopLeftX && yPos == stopTopY) {
+			g.fillRect(xPos-4, yPos+4, 5, 20);
+		}
+		else if(xPos == stopRightX && yPos == stopTopY) {
+			g.fillRect(xPos+26, yPos+4, 5, 20);
+		}
+
+		else if(xPos == stopLeftX && yPos == stopBottomY) {
+			g.fillRect(xPos-4, yPos+4, 5, 20);
+		}
+		else if(xPos == stopRightX && yPos == stopBottomY) {
+			g.fillRect(xPos+26, yPos+4, 5, 20);
+		}
 	}
 
 	//Actions

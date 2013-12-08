@@ -109,38 +109,44 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		g2.drawImage(background, 0, 0, null);
 
 		//Horizontal Roads 1
-		g2.drawImage(roadHorizontal.getImage(), 0, 70, null);
-		g2.drawImage(roadHorizontal.getImage(), 73, 70, null);
-		g2.drawImage(roadHorizontal.getImage(), 146, 70, null);
-		g2.drawImage(roadHorizontal.getImage(), 219, 70, null);
-		g2.drawImage(roadHorizontal.getImage(), 292, 70, null);
-		g2.drawImage(roadHorizontal.getImage(), 365, 70, null);
-		g2.drawImage(roadHorizontal.getImage(), 438, 70, null);
-		g2.drawImage(roadHorizontal.getImage(), 511, 70, null);
+//		g2.drawImage(roadHorizontal.getImage(), 0, 70, null);
+//		g2.drawImage(roadHorizontal.getImage(), 73, 70, null);
+//		g2.drawImage(roadHorizontal.getImage(), 146, 70, null);
+//		g2.drawImage(roadHorizontal.getImage(), 219, 70, null);
+//		g2.drawImage(roadHorizontal.getImage(), 292, 70, null);
+//		g2.drawImage(roadHorizontal.getImage(), 365, 70, null);
+//		g2.drawImage(roadHorizontal.getImage(), 438, 70, null);
+//		g2.drawImage(roadHorizontal.getImage(), 511, 70, null);
+		g2.setColor(Color.BLACK);
+		g2.fillRect(0, 70, 600, 39);
 
 		//Horizontal Roads 2
-		g2.drawImage(roadHorizontal.getImage(), 0, 190, null);
-		g2.drawImage(roadHorizontal.getImage(), 73, 190, null);
-		g2.drawImage(roadHorizontal.getImage(), 146, 190, null);
-		g2.drawImage(roadHorizontal.getImage(), 219, 190, null);
-		g2.drawImage(roadHorizontal.getImage(), 292, 190, null);
-		g2.drawImage(roadHorizontal.getImage(), 365, 190, null);
-		g2.drawImage(roadHorizontal.getImage(), 438, 190, null);
-		g2.drawImage(roadHorizontal.getImage(), 511, 190, null);
+//		g2.drawImage(roadHorizontal.getImage(), 0, 190, null);
+//		g2.drawImage(roadHorizontal.getImage(), 73, 190, null);
+//		g2.drawImage(roadHorizontal.getImage(), 146, 190, null);
+//		g2.drawImage(roadHorizontal.getImage(), 219, 190, null);
+//		g2.drawImage(roadHorizontal.getImage(), 292, 190, null);
+//		g2.drawImage(roadHorizontal.getImage(), 365, 190, null);
+//		g2.drawImage(roadHorizontal.getImage(), 438, 190, null);
+//		g2.drawImage(roadHorizontal.getImage(), 511, 190, null);
+		g2.fillRect(0, 190, 600, 39);
 
 		//Vertical Roads 1
-		g2.drawImage(roadVertical.getImage(), 160, 0, null);
-		g2.drawImage(roadVertical.getImage(), 160, 73, null);
-		g2.drawImage(roadVertical.getImage(), 160, 146, null);
-		g2.drawImage(roadVertical.getImage(), 160, 219, null);
-		g2.drawImage(roadVertical.getImage(), 160, 292, null);
+//		g2.drawImage(roadVertical.getImage(), 160, 0, null);
+//		g2.drawImage(roadVertical.getImage(), 160, 73, null);
+//		g2.drawImage(roadVertical.getImage(), 160, 146, null);
+//		g2.drawImage(roadVertical.getImage(), 160, 219, null);
+//		g2.drawImage(roadVertical.getImage(), 160, 292, null);
+		
+		g2.fillRect(160, 0, 39, 325);
 
 		//Vertical Roads 2
-		g2.drawImage(roadVertical.getImage(), 380, 0, null);
-		g2.drawImage(roadVertical.getImage(), 380, 73, null);
-		g2.drawImage(roadVertical.getImage(), 380, 146, null);
-		g2.drawImage(roadVertical.getImage(), 380, 219, null);
-		g2.drawImage(roadVertical.getImage(), 380, 292, null);
+//		g2.drawImage(roadVertical.getImage(), 380, 0, null);
+//		g2.drawImage(roadVertical.getImage(), 380, 73, null);
+//		g2.drawImage(roadVertical.getImage(), 380, 146, null);
+//		g2.drawImage(roadVertical.getImage(), 380, 219, null);
+//		g2.drawImage(roadVertical.getImage(), 380, 292, null);
+		g2.fillRect(380, 0, 39, 325);
 
 		//Intersections
 		g2.setColor(Color.BLACK);
