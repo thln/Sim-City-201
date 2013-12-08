@@ -71,8 +71,8 @@ public class PersonGui extends CityGui {
 			yHome = 200;			
 		}
 		if(p.home.type.equals("East Apartment")) {
-			xHome = 500;
-			yHome = 250;			
+			xHome = 520;
+			yHome = 300;			
 		}
 		if (p.home.type.equals("Mansion")){
 			xHome = 20;
