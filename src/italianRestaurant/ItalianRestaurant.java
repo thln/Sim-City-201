@@ -139,8 +139,10 @@ public class ItalianRestaurant {
 	
 	public boolean arrived(ItalianCustomerRole rCR) {
 		
-			ItalianCustomerGui rCG = (ItalianCustomerGui) rCR.gui;
+			//ItalianCustomerGui rCG = (ItalianCustomerGui) rCR.gui;
+			ItalianCustomerGui rCG = new ItalianCustomerGui(rCR);
 			rCG.SetHome(customers.size());
+			rCR.setGui(rCG);
 			restPanel.addGui(rCG);
 			customers.add(rCR);
 			rCR.gotHungry();
@@ -214,12 +216,12 @@ public class ItalianRestaurant {
 
 	public void removeWaiter(ItalianWaiterRole italianItalianWaiterRole) {
 		waiters.remove(italianItalianWaiterRole);
-		restPanel.removeGui(italianItalianWaiterRole.gui);
+		restPanel.removeGui(italianItalianWaiterRole.getGui());
 	}
 
 	public void removeCustomer(ItalianCustomerRole customerRole) {
 		customers.remove(customerRole);
-		restPanel.removeGui(customerRole.gui);
+		restPanel.removeGui(customerRole.getGui());
 	}
 
 	public void closeBuilding(){
@@ -227,7 +229,7 @@ public class ItalianRestaurant {
 		italianRestaurantHostRole.msgLeaveRole();
 		for (ItalianWaiterRole w1: waiters) {
 			w1.msgLeaveRole();
-			restPanel.removeGui(w1.gui);
+			restPanel.removeGui(w1.getGui());
 		}
 		italianRestaurantCookRole.msgLeaveRole();
 		restPanel.removeGui(cookGui);

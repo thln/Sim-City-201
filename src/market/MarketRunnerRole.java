@@ -3,6 +3,7 @@ package market;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.Semaphore;
 
 import market.interfaces.MarketRunner;
 import person.Person;
@@ -14,13 +15,15 @@ import application.gui.animation.agentGui.MarketRunnerGui;
 
 public class MarketRunnerRole extends Role implements MarketRunner {
 	
-	MarketRunnerGui marketRunnerGui = (MarketRunnerGui) gui;
+	//MarketRunnerGui marketRunnerGui = (MarketRunnerGui) gui;
+	MarketRunnerGui marketRunnerGui;
 
 	//Data
 	String name;
 	Market market;
 	
 	public List<MarketOrder> orders = Collections.synchronizedList(new ArrayList<MarketOrder>());
+	private Semaphore atDestination = new Semaphore(0, true);
 	
 	public EventLog log = new EventLog();
 
@@ -36,10 +39,14 @@ public class MarketRunnerRole extends Role implements MarketRunner {
 
 	//Messages
 	public void msgHeresAnOrder(MarketOrder o) {
-		print("Recieved and order to fulfill");
+		print("Recieved an order to fulfill");
 		log.add(new LoggedEvent("Recieved msgHeresAnOrder"));
 		orders.add(o);
 		stateChanged();
+	}
+	
+	public void msgAtDestination() {
+		atDestination.release();
 	}
 
 	//Scheduler
@@ -62,12 +69,30 @@ public class MarketRunnerRole extends Role implements MarketRunner {
 
 	//Actions
 	public void processOrder(MarketOrder o) {
+		print("getting order from inventory");
+		//if(!marketRunnerGui.atInventory()) {
+			marketRunnerGui.DoGoToInventory();
+			try {
+				this.atDestination.acquire();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		//}
 		
 		if (o.customer != null) {
 			decreaseInventoryBy(o.item, o.itemAmountOrdered);
 			o.itemAmountFulfilled = o.itemAmountOrdered;
 			if (o.customer instanceof MarketCustomerRole) {
 				print("Fulfilled order for customer: " + ((MarketCustomerRole) o.customer).getName());
+			}
+			
+			marketRunnerGui.DoGoToSalesPerson();
+			try {
+				this.atDestination.acquire();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			market.getSalesPerson(test).msgOrderFulfilled(o);
 			orders.remove(o);
@@ -84,5 +109,9 @@ public class MarketRunnerRole extends Role implements MarketRunner {
 	public void decreaseInventoryBy(String item, int amount) {
 		int newAmount = market.inventory.get(item).amount - amount;
 		market.inventory.get(item).setInventory(newAmount);
+	}
+	
+	public void setGui(MarketRunnerGui gui) {
+		marketRunnerGui = gui;
 	}
 }

@@ -24,7 +24,7 @@ public abstract class Person extends Agent{
 	//Data
 	String name;
 	protected Semaphore atDestination;
-	private Housing home;
+	public Housing home;
 	private Timer alarmClock = new Timer();
 	private Timer hungerTimer = new Timer();
 	protected PersonGui gui;
@@ -77,7 +77,7 @@ public abstract class Person extends Agent{
 		roles.add(new ChineseRestaurantCustomerRole(this, getName(), "Restaurant Customer"));
 		nextTask = new Timer();
 		atDestination = new Semaphore(0,true);
-		setHunger(HungerLevel.hungry);
+		setHunger(HungerLevel.full);
 		hasFoodInFridge = false;
 	}
 
@@ -225,7 +225,14 @@ public abstract class Person extends Agent{
 	}
 
 	protected void prepareForMarket() {
-		getGui().DoGoToMarket();
+		print("Going to market as a customer");
+		if (home.type.equals("East Apartment")){
+			getGui().DoGoToMarket("East");
+		}
+		else{
+			getGui().DoGoToMarket("West");
+		}
+			
 		try {
 			atDestination.acquire();
 		} catch (InterruptedException e) {
@@ -304,7 +311,7 @@ public abstract class Person extends Agent{
 	}
 
 	protected void goToSleep() {
-		//	if (gui.getxPos() != gui.getxHome() && gui.getyPos() != gui.getyHome()){
+//	if (gui.getxPos() != gui.getxHome() && gui.getyPos() != gui.getyHome()){
 		getGui().DoGoHome();
 		try {
 			atDestination.acquire();
@@ -313,7 +320,7 @@ public abstract class Person extends Agent{
 			e.printStackTrace();
 			//
 		}
-		//		}
+//			}
 
 		currentRoleName = " ";
 		//After arrives home
@@ -371,21 +378,7 @@ public abstract class Person extends Agent{
 	}
 
 	public void setGui(PersonGui g) {
-
 		this.gui = g;
-		if (home.type.equals("East Apartment")){
-			gui.setxPos(0);
-			gui.setyPos(0);
-		}
-		if (home.type.equals("West Apartment")){
-			gui.setxPos(500);
-			gui.setyPos(225);
-		}
-		if (home.type.equals("Mansion")){
-			gui.setxPos(20);
-			gui.setyPos(100);
-		}
-
 	}
 
 	public void setPanel(AnimationPanel ap) {

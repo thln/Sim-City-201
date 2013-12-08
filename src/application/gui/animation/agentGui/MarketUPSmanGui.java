@@ -1,7 +1,9 @@
 package application.gui.animation.agentGui;
 
 import market.*;
+
 import java.awt.*;
+
 import javax.swing.*;
 
 public class MarketUPSmanGui extends MarketGui{
@@ -40,6 +42,8 @@ public class MarketUPSmanGui extends MarketGui{
 			yPos--;
 
 		if (xPos == xDestination && yPos == yDestination) {
+			if(agent != null)
+				agent.msgAtDestination();
 			command = Command.noCommand;
 		}
 	}
@@ -49,6 +53,9 @@ public class MarketUPSmanGui extends MarketGui{
 		g.fillRect(xPos, yPos, 30, 30);
 		g.setColor(Color.YELLOW);
 		g.drawString("UPS", xPos, yPos+20);
+		g.setColor(Color.BLACK);
+        if(agent != null)
+        	g.drawString(agent.getName(), xPos, yPos);
 	}
 
 	public boolean isPresent() {

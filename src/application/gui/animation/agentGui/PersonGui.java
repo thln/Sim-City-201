@@ -12,10 +12,10 @@ import person.Worker;
 import application.Phonebook;
 
 public class PersonGui extends CityGui {
-	
+
 	private final int WINDOWX = 600;
 	private final int WINDOWY = 325;
-	
+
 	private Person agent = null;
 	private boolean isHungry = false;
 	public boolean walk = true;
@@ -30,8 +30,6 @@ public class PersonGui extends CityGui {
 	Color transColor = new Color(0,0,0,1);
 	Color currColor;
 
-	private int xChineseLocation = WINDOWX/2 + 15;
-	private int yChineseLocation = 20 + 10;
 	//This is going to be used for future restaurants
 	private int xItalianLocation = (WINDOWX-100) + 15;
 	private int yItalianLocation = 20+10;
@@ -41,10 +39,7 @@ public class PersonGui extends CityGui {
 	private int yAmericanLocation = (WINDOWY - 75) + 10;
 	private int xSeafoodLocation = (WINDOWX-100) + 15;
 	private int ySeafoodLocation = 150 + 10; //?
-	
-	private int xMarketLocation = 500 + 25;
-	private int yMarketLocation = 100 + 25;
-	
+
 	//Bus stops
 	private int startStopX;
 	private int startStopY;
@@ -61,10 +56,11 @@ public class PersonGui extends CityGui {
 	PersonState state = PersonState.nothing;
 
 	private String choice;
+
 	public PersonGui() {
 		setxPos(0);
 		setyPos(125);
-		setxHome(0);
+		xHome = 30;
 		yHome = 125;
 		setxDestination(25);
 		setyDestination(125);
@@ -73,38 +69,24 @@ public class PersonGui extends CityGui {
 
 	public PersonGui(Person p) {
 		this.agent = p;
-		if(p instanceof Worker) {
-			setxPos(0);
-			setyPos(25);
-			setxHome(0);
-			yHome = 25;
-			setxDestination(25);
-			setyDestination(25);
+		if(p.home.type.equals("West Apartment")) {
+			xHome = 0;
+			yHome = 0;			
 		}
-		if(p instanceof Wealthy) {
-			setxPos(0);
-			setyPos(125);
-			setxHome(0);
-			yHome = 125;
-			setxDestination(25);
-			setyDestination(125);
+		if(p.home.type.equals("East Apartment")) {
+			xHome = 500;
+			yHome = 225;			
 		}
-		if(p instanceof Crook) {
-			setxPos(280);
-			setyPos(250);
-			setxHome(280);
-			yHome = 250;
-			setxDestination(300);
-			setyDestination(250);
+		if (p.home.type.equals("Mansion")){
+			xHome = 20;
+			yHome = 100;
 		}
-		if(p instanceof Deadbeat) {
-			setxPos(280);
-			setyPos(250);
-			setxHome(280);
-			yHome = 250;
-			setxDestination(300);
-			setyDestination(250);
-		}
+
+		setxPos(xHome);
+		setyPos(yHome);
+		setxDestination(xHome);
+		setyDestination(yHome);
+
 		setDefaultColor();
 		//this.gui = gui;
 	}
@@ -126,26 +108,26 @@ public class PersonGui extends CityGui {
 		}
 
 		if (xPos == getxDestination() && yPos == getyDestination() && command != Command.noCommand) {
-		//	System.out.println(command + "  " + agent.getName() + "has semaphore permits = " + agent.getAtDestination().availablePermits());
-
 			if(agent != null) {
+
 				if (command == Command.GoToRestaurant) {
 					agent.msgAtDestination();
 					currColor = transColor;
 				}
-				if (command == Command.GoToMarket && xPos == xMarketLocation && yPos == yMarketLocation) {
+				if (command == Command.GoToMarket) {
 					agent.msgAtDestination();
 					currColor = transColor;
 				}
-				
+
 				if (command == Command.GoToBank) {
 					agent.msgAtDestination();
 					currColor = transColor;
 				}
-				if (command == Command.GoHome && xPos == getxHome() && yPos == yHome) {
+				if (command == Command.GoHome) {
 					agent.msgAtDestination();
-					currColor = transColor;
+					currColor = transColor;			
 				}
+
 				if (command == Command.GoToBusStop) {
 					agent.msgAtDestination();
 					System.out.println("Reached bus stop");
@@ -171,8 +153,10 @@ public class PersonGui extends CityGui {
 			g.setColor(currColor);
 
 		g.fillRect(xPos, yPos, 20, 20);
+
 		if(currColor != transColor)
 			g.setColor(Color.WHITE);
+
 		if(agent != null) {
 			g.drawString(agent.getName(), xPos, yPos);
 		}
@@ -192,54 +176,58 @@ public class PersonGui extends CityGui {
 	}
 
 	//Actions
-	public void DoGoToRestaurant(String restaurantType) {//later you will map building to map coordinates.
+	public void DoGoToRestaurant(String restaurantType) {
 		switch(restaurantType.toLowerCase()) {
-			case "chinese" : {
-				setxDestination(xChineseLocation);
-				setyDestination(yChineseLocation);
-			}
-			break;
-			case "italian" : {
-				setxDestination(xItalianLocation);
-				setyDestination(yItalianLocation);
-			}
-			break;
-			case "mexican" : {
-				setxDestination(xMexicanLocation);
-				setyDestination(xMexicanLocation);
-			}
-			break;
-			case "american" : {
-				setxDestination(xAmericanLocation);
-				setyDestination(yAmericanLocation);
-			}
-			break;
-			case "seafood" : {
-				setxDestination(xSeafoodLocation);
-				setyDestination(ySeafoodLocation);
-			}
-			break;
-			default:
+		case "chinese" : {
+			setxDestination((int) Phonebook.getPhonebook().getChineseRestaurant().location.getX());
+			yDestination = (int) Phonebook.getPhonebook().getChineseRestaurant().location.getY();
+		}
+		break;
+		case "italian" : {
+			setxDestination((int) Phonebook.getPhonebook().getItalianRestaurant().location.getX());
+			setyDestination((int) Phonebook.getPhonebook().getChineseRestaurant().location.getY());
+		}
+		break;
+		case "mexican" : {
+			setxDestination(xMexicanLocation);
+			setyDestination(xMexicanLocation);
+		}
+		break;
+		case "american" : {
+			setxDestination(xAmericanLocation);
+			setyDestination(yAmericanLocation);
+		}
+		break;
+		case "seafood" : {
+			setxDestination(xSeafoodLocation);
+			setyDestination(ySeafoodLocation);
+		}
+		break;
+		default:
 			break;
 		}
 		setDefaultColor();
 		command = Command.GoToRestaurant;
 	}
 
-	public void DoGoToMarket() {//later you will map building to map coordinates.
-		setxDestination(xMarketLocation);
-		setyDestination(yMarketLocation);
+	public void DoGoToMarket(String location) {
+		if (location.equals("East")){
+			setxDestination((int) Phonebook.getPhonebook().getEastMarket().location.getX());
+			setyDestination((int) Phonebook.getPhonebook().getEastMarket().location.getY());
+		}
+		else {
+			setxDestination((int) Phonebook.getPhonebook().getWestMarket().location.getX());
+			setyDestination((int) Phonebook.getPhonebook().getWestMarket().location.getY());
+		}
 		setDefaultColor();
 		command = Command.GoToMarket;
 	}
 
 	public void DoGoToBank(String location) {
-		
+
 		if (location.equals("East")){
-	//		System.out.println("x, y is " + Phonebook.getPhonebook().getEastBank().location.getX() + " , " + Phonebook.getPhonebook().getEastBank().location.getY());
-		setxDestination((int) Phonebook.getPhonebook().getEastBank().location.getX());
-		setyDestination((int) Phonebook.getPhonebook().getEastBank().location.getY());
-	//	System.out.println("x, y is " + xDestination + " , " + yDestination);
+			setxDestination((int) Phonebook.getPhonebook().getEastBank().location.getX());
+			setyDestination((int) Phonebook.getPhonebook().getEastBank().location.getY());
 		}
 		else {
 			setxDestination((int) Phonebook.getPhonebook().getWestBank().location.getX());
@@ -254,8 +242,9 @@ public class PersonGui extends CityGui {
 		setyDestination(100);
 	}
 
-	public void DoGoHome() { //the person's assigned home number. Maybe use coordinates instead?
-		setxDestination(getxHome());
+	public void DoGoHome() { 
+	//	agent.print("Called again");
+		setxDestination(xHome);
 		setyDestination(yHome);
 		setDefaultColor();
 		command = Command.GoHome;
@@ -290,11 +279,11 @@ public class PersonGui extends CityGui {
 			xDest = (int) Phonebook.getPhonebook().getWestBank().location.getX();
 			yDest = (int) Phonebook.getPhonebook().getWestBank().location. getY();
 		}
-		
+
 		if ((xDest - xPos >= 50) || (yDest - yPos >= 50)){
 			return false;
 		}
-			return true;
+		return true;
 	}
 
 	public void setHomeLocation(int x, int y) {
@@ -349,7 +338,7 @@ public class PersonGui extends CityGui {
 		else
 			raveMode = true;
 	}
-	
+
 	public void findStartStop() {
 		if (xPos <= 300 && yPos <= 162.5){
 			startStopX = (int) Phonebook.getPhonebook().busStops.get(0).getX();
@@ -368,7 +357,7 @@ public class PersonGui extends CityGui {
 			startStopY = (int) Phonebook.getPhonebook().busStops.get(0).getY();
 		}
 	}
-	
+
 	public void popToMiddle(){
 		if (xPos < 160 && yPos < 70){
 			xPos = 90;			//Pop to middle of block1
@@ -395,8 +384,8 @@ public class PersonGui extends CityGui {
 			xPos = 500;			//Pop to middle of block6
 			yPos = 155;
 		}
-		
-		
+
+
 		if (xPos < 160 && yPos > 230){
 			xPos = 75;			//Pop to middle of block7
 			yPos = 280;
@@ -430,40 +419,6 @@ public class PersonGui extends CityGui {
 	public void setyDestination(int yDestination) {
 		this.yDestination = yDestination;
 	}
-
-//	public boolean inBusyIntersection() {
-//		if (Phonebook.getPhonebook().intersection1.getIntersection().contains(xPos, yPos)) {
-//			if (Phonebook.getPhonebook().intersection1.isIntersectionBusy() == true &&
-//					!this.equals(Phonebook.getPhonebook().intersection1.getInhabitant())) {
-//				return  true;
-//			}
-//			return false;
-//		}
-//		else if (Phonebook.getPhonebook().intersection2.getIntersection().contains(xPos, yPos)) {
-//			if (Phonebook.getPhonebook().intersection2.isIntersectionBusy() == true &&
-//					!this.equals(Phonebook.getPhonebook().intersection2.getInhabitant())) {
-//				return  true;
-//			}
-//			return false;
-//		}
-//		else if (Phonebook.getPhonebook().intersection3.getIntersection().contains(xPos, yPos)) {
-//			if (Phonebook.getPhonebook().intersection3.isIntersectionBusy() == true &&
-//					!this.equals(Phonebook.getPhonebook().intersection3.getInhabitant())) {
-//				return  true;
-//			}
-//			return false;
-//		}
-//		else if (Phonebook.getPhonebook().intersection4.getIntersection().contains(xPos, yPos)) {
-//			if (Phonebook.getPhonebook().intersection4.isIntersectionBusy() == true &&
-//					!this.equals(Phonebook.getPhonebook().intersection4.getInhabitant())) {
-//				return  true;
-//			}
-//			return false;
-//		}
-//		else {
-//			return false;
-//		}
-//	}
 }
 
 

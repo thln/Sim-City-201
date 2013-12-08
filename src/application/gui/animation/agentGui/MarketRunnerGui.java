@@ -1,6 +1,7 @@
 package application.gui.animation.agentGui;
 
 import market.*;
+
 import java.awt.*;
 
 import javax.swing.*;
@@ -14,7 +15,7 @@ public class MarketRunnerGui extends MarketGui{
     private int xPos = 340, yPos = 100;//default MarketRunner position
     private int xDestination = 300, yDestination = 100;//default start position
 	
-	private enum Command {noCommand};
+	private enum Command {noCommand, inTransit};
 	private Command command = Command.noCommand;
 
 	private enum CustomerState {nothing};
@@ -39,6 +40,10 @@ public class MarketRunnerGui extends MarketGui{
 			yPos--;
 
 		if (xPos == xDestination && yPos == yDestination) {
+			if(agent != null) {
+				if(command == Command.inTransit)
+					agent.msgAtDestination();
+			}
 			command = Command.noCommand;
 		}
 	}
@@ -46,6 +51,9 @@ public class MarketRunnerGui extends MarketGui{
 	public void draw(Graphics2D g) {
 		g.setColor(Color.GREEN);
 		g.fillRect(xPos, yPos, 20, 20);
+		g.setColor(Color.BLACK);
+        if(agent != null)
+        	g.drawString(agent.getName(), xPos, yPos);
 	}
 
 	public boolean isPresent() {
@@ -67,15 +75,23 @@ public class MarketRunnerGui extends MarketGui{
     public void DoGoToInventory() {
     	xDestination = 450;
     	yDestination = 60;
+    	command = Command.inTransit;
     }
     
     public void DoGoToSalesPerson() {
-    	xDestination = 200;
+    	xDestination = 300;
     	yDestination = 100;
+    	command = Command.inTransit;
     }
     
     public void DoExit() {
     	xDestination = 300;
-    	yDestination = 300;
+    	yDestination = 325;
+    }
+    
+    public boolean atInventory() {
+    	if(xPos == 450 && yPos == 60)
+    		return true;
+    	return false;
     }
 }

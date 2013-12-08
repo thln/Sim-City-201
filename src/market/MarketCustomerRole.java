@@ -1,6 +1,7 @@
 package market;
 
 import java.util.Random;
+import java.util.concurrent.Semaphore;
 
 import market.interfaces.MarketCustomer;
 import application.Phonebook;
@@ -15,11 +16,12 @@ public class MarketCustomerRole extends Role implements MarketCustomer {
 
 	public EventLog log = new EventLog();
 
-	MarketCustomerGui marketCustomerGui = (MarketCustomerGui) gui;
+	MarketCustomerGui marketCustomerGui;
 
 	//Data
 	public enum MarketCustomerState {atMarket, waitingForOrders, recievedOrders, payed, disputingBill, waitingToOpen}
 	public MarketCustomerState state = MarketCustomerState.atMarket;
+	private Semaphore atDestination = new Semaphore(0, true);
 
 	public double bill = 0;
 	String item;
@@ -28,7 +30,6 @@ public class MarketCustomerRole extends Role implements MarketCustomer {
 
 	public MarketCustomerRole(Person person, String pName, String rName) {
 		super(person, pName, rName);
-		gui = new MarketCustomerGui(this);
 	}
 
 	//Messages
@@ -44,6 +45,10 @@ public class MarketCustomerRole extends Role implements MarketCustomer {
 		bill = orderCost;
 		log.add(new LoggedEvent("Recieved msgHereAreYourThings"));
 		stateChanged();
+	}
+	
+	public void msgAtDestination() {
+		atDestination.release();
 	}
 
 	//Scheduler
@@ -81,6 +86,15 @@ public class MarketCustomerRole extends Role implements MarketCustomer {
 			return;
 		}
 		item = chooseMarketItem();
+		
+		marketCustomerGui.DoGoToSalesPerson();
+		try {
+			this.atDestination.acquire();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		Phonebook.getPhonebook().getEastMarket().salesPersonRole.msgIWantProducts(this, item, 3);
 		print("Asking sales person for: " + item);
 		state = MarketCustomerState.waitingForOrders;
@@ -102,6 +116,13 @@ public class MarketCustomerRole extends Role implements MarketCustomer {
 	public void payBill(){
 		if (bill == Phonebook.getPhonebook().getEastMarket().inventory.get(item).price * itemAmount) {
 			print("Paying my bill");
+			marketCustomerGui.DoGoToSalesPerson();
+			try {
+				this.atDestination.acquire();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			Phonebook.getPhonebook().getEastMarket().getSalesPerson(test).msgPayment(this, bill);
 			person.money -= bill;
 			state = MarketCustomerState.payed;
@@ -119,8 +140,24 @@ public class MarketCustomerRole extends Role implements MarketCustomer {
 
 	public void exitMarket() {
 		print("Leaving Market");
+		marketCustomerGui.DoExit();
+		try {
+			this.atDestination.acquire();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		state = MarketCustomerState.atMarket;
 		person.hasFoodInFridge = true;
 		this.setRoleInactive();
 	}
+	
+	public void setGui(MarketCustomerGui gui) {
+		this.marketCustomerGui = gui;
+	}
+	
+	public MarketCustomerGui getGui() {
+		return marketCustomerGui;
+	}
+	
 }

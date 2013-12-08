@@ -214,7 +214,6 @@ public class Worker extends Person {
 				stateChanged();                
 			}
 		},
-		//((i % 5) + 5) % 5)
 		((((nextTaskTime - currentTime) % 24) + 24) % 24) * timeConversion);
 	}
 
@@ -264,8 +263,8 @@ public class Worker extends Person {
 
 		if (myJob.jobPlace == "East Market") 
 		{
-			//print("Going to work at market");
-			getGui().DoGoToMarket();
+			print("Going to work at east market");
+			getGui().DoGoToMarket("East");
 			try {
 				atDestination.acquire();
 			} catch (InterruptedException e) {
@@ -278,9 +277,27 @@ public class Worker extends Person {
 			workerRole.setRoleActive();
 			return;
 		}
+		
+		if (myJob.jobPlace == "West Market") 
+		{
+				print("Going to work at west market");
+			getGui().DoGoToMarket("West");
+			try {
+				atDestination.acquire();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+
+			}
+			print("Going to work at market, job time = " + myJob.startTime.hour);
+			workerRole = Phonebook.getPhonebook().getWestMarket().arrivedAtWork(this, myJob.title);
+			workerRole.setRoleActive();
+			return;
+		}
 
 		if (myJob.jobPlace == "Chinese Restaurant") 
 		{
+			print("Going to work at Chinese Restaurant");
 			getGui().DoGoToRestaurant("chinese");
 			try {
 				atDestination.acquire();

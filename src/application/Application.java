@@ -236,8 +236,8 @@ public class Application extends JPanel {
 		//People
 		getPopulation().add(wealthy1);
 		getPopulation().add(wealthy2);
-		//		getPopulation().add(wealthy3);
-		//		getPopulation().add(wealthy4);
+//		getPopulation().add(wealthy3);
+//		getPopulation().add(wealthy4);
 		getPopulation().add(crook1);
 	
 		//Setting Gui for everyone
@@ -259,42 +259,42 @@ public class Application extends JPanel {
 		bank1a.startThread();
 		bank1b.startThread();	
 		bank1c.startThread();
-//				market1d.startThread();
-//				market1e.startThread();
-//				market1f.startThread();
-//				rest1g.startThread();
-//				rest1h.startThread();
-//				rest1i.startThread();
-//				rest1j.startThread();
-//				rest1k.startThread();
+		market1d.startThread();
+		market1e.startThread();
+		market1f.startThread();
+		rest1g.startThread();
+		rest1h.startThread();
+		rest1i.startThread();
+		rest1j.startThread();
+		rest1k.startThread();
 		bank3a.startThread();
 		bank3b.startThread();	
 		bank3c.startThread();
-//				
-//				//Shift 2
-//				bank2a.startThread();
-//				bank2b.startThread();
-//				bank2c.startThread();
-//				market2d.startThread();
-//				market2e.startThread();
-//				market2f.startThread();
-				rest2g.startThread();
-				rest2h.startThread();
-				rest2i.startThread();
-				rest2j.startThread();
-				rest2k.startThread();
+		
+		//Shift 2
+		bank2a.startThread();
+		bank2b.startThread();
+		bank2c.startThread();
+		market2d.startThread();
+		market2e.startThread();
+		market2f.startThread();
+		rest2g.startThread();
+		rest2h.startThread();
+		rest2i.startThread();
+		rest2j.startThread();
+		rest2k.startThread();
 		bank4a.startThread();
 		bank4b.startThread();	
 		bank4c.startThread();		
 				
-				house1.startThread();
+//		house1.startThread();
 
 		//People
-		//		wealthy1.startThread();
-		//		wealthy2.startThread();
+		wealthy1.startThread();
+		wealthy2.startThread();
 		//		wealthy3.startThread();
 		//		wealthy4.startThread();
-		crook1.startThread();
+//		crook1.startThread();
 
 		updatePeopleTime();
 

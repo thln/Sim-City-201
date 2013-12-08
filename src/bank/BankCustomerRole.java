@@ -21,7 +21,7 @@ public class BankCustomerRole extends Role implements BankCustomer{
 
 	public BankTeller myTeller;
 	//private BankCustomerGui custGui = (BankCustomerGui) gui;
-	//private BankCustomerGui custGui = null;
+	private BankCustomerGui custGui = null;
 	public double desiredLoanAmount;
 	public BankCustomerDesire desire;
 	public CustomerState state;
@@ -33,7 +33,6 @@ public class BankCustomerRole extends Role implements BankCustomer{
 		super(p1, pName, rName);
 		desire = BankCustomerDesire.openAccount;
 		state = CustomerState.atBank;
-		gui = new BankCustomerGui(this);
 	}
 
 	//Messages
@@ -204,7 +203,7 @@ public class BankCustomerRole extends Role implements BankCustomer{
 	}
 
 	void waitInLine() {
-		((BankCustomerGui) gui).WaitTellerLine(waitPlace); //positions to be changed later by guard
+		custGui.WaitTellerLine(waitPlace); //positions to be changed later by guard
 		try {
 			this.atDestination.acquire();
 		} catch (InterruptedException e) {
@@ -261,7 +260,7 @@ public class BankCustomerRole extends Role implements BankCustomer{
 			myTeller = null;
 		}
 			//GUI operation
-			gui.DoExit();
+			custGui.DoExit();
 			try {
 				this.atDestination.acquire();
 			} catch (InterruptedException e) {
@@ -275,7 +274,7 @@ public class BankCustomerRole extends Role implements BankCustomer{
 	void robBank() {
 		//GUI operation
 		print("Catch me if you can!");
-		((BankCustomerGui) gui).DoRobBank();
+		custGui.DoRobBank();
 		Phonebook.getPhonebook().getEastBank().getBankGuard(test).msgRobbingBank(this);
 		state = CustomerState.waiting;
 		try {
@@ -300,8 +299,8 @@ public class BankCustomerRole extends Role implements BankCustomer{
 
 	public void DoGoToTeller() {
 		int window = myTeller.getTellerPosition();
-		if(((BankCustomerGui) gui).getXPos() != 450 || ((BankCustomerGui) gui).getYPos() != 20*window+30*(window-1)) {
-			((BankCustomerGui) gui).DoGoToTeller(myTeller.getTellerPosition());
+		if(custGui.getXPos() != 450 || custGui.getYPos() != 20*window+30*(window-1)) {
+			custGui.DoGoToTeller(myTeller.getTellerPosition());
 			try {
 				this.atDestination.acquire();
 			} catch (InterruptedException e) {
@@ -312,7 +311,11 @@ public class BankCustomerRole extends Role implements BankCustomer{
 	}
 
 	public void setGui(BankCustomerGui gui) {
-		this.gui = gui;
+		custGui = gui;
+	}
+	
+	public BankCustomerGui getGui() {
+		return custGui;
 	}
 
 	public void setWaitPlace(int place) {
