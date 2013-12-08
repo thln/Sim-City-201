@@ -43,13 +43,17 @@ public class MarketCustomerGui extends MarketGui {
     			yPos--;
 
     		if (xPos == xDestination && yPos == yDestination) {
-    			
+    			if(agent != null)
+    				agent.msgAtDestination();
     		}
     }
 
     public void draw(Graphics2D g) {
         g.setColor(Color.BLUE);
         g.fillRect(xPos, yPos, 20, 20);
+        g.setColor(Color.BLACK);
+        if(agent != null)
+        	g.drawString(agent.getName(), xPos, yPos);
     }
 
 	public boolean isPresent() {
@@ -71,11 +75,11 @@ public class MarketCustomerGui extends MarketGui {
     //Actions
     public void DoGoToSalesPerson() {
     	xDestination = 150;
-    	yDestination = 180;
+    	yDestination = 220;
     }
     
     public void DoExit() {
     	xDestination = 300;
-    	yDestination = 300;
+    	yDestination = 325;
     }
 }

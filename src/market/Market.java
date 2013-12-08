@@ -100,6 +100,7 @@ public class Market {
 			if (isOpen()) {
 				salesPersonRole.msgMarketOpen();
 			}
+			salesPersonRole.setGui(salesPersonGui);
 			marketPanel.addGui(salesPersonGui);
 			return salesPersonRole;
 		}
@@ -114,6 +115,7 @@ public class Market {
 			if (isOpen()) {
 				salesPersonRole.msgMarketOpen();
 			}
+			marketRunnerRole.setGui(marketRunnerGui);
 			marketPanel.addGui(marketRunnerGui);
 			return marketRunnerRole;
 		}
@@ -128,6 +130,7 @@ public class Market {
 			if (isOpen()) {
 				salesPersonRole.msgMarketOpen();
 			}
+			UPSmanRole.setGui(UPSmanGui);
 			marketPanel.addGui(UPSmanGui);
 			return UPSmanRole;
 		}
@@ -136,8 +139,10 @@ public class Market {
 	}
 
 	public void arrived(MarketCustomerRole mCR) {
-		MarketCustomerGui rCG = (MarketCustomerGui) mCR.gui;
-		marketPanel.addGui(rCG);
+		//MarketCustomerGui rCG = (MarketCustomerGui) mCR.gui;
+		MarketCustomerGui MCG = new MarketCustomerGui(mCR);
+		mCR.setGui(MCG);
+		marketPanel.addGui(MCG);
 	}
 
 
@@ -212,7 +217,7 @@ public class Market {
 	}
 	
 	public void removeCustomer(MarketCustomerRole customerRole) {
-		marketPanel.removeGui(customerRole.gui);
+		marketPanel.removeGui(customerRole.getGui());
 	}
 	
 	public void closeBuilding(){

@@ -13,7 +13,7 @@ public class MarketSalesPersonGui extends MarketGui{
 
 	//RestaurantGui gui;
 
-    private int xPos = 150, yPos = 100;//default MarketRunner position
+    private int xPos = 120, yPos = 100;//default MarketRunner position
     private int xDestination = 150, yDestination = 100;//default start position
 	
 	private enum Command {noCommand};
@@ -42,6 +42,9 @@ public class MarketSalesPersonGui extends MarketGui{
 			yPos--;
 
 		if (xPos == xDestination && yPos == yDestination) {
+			if(agent != null)
+				agent.msgAtDestination();
+			BacktoPosition();
 			command = Command.noCommand;
 		}
 	}
@@ -49,6 +52,9 @@ public class MarketSalesPersonGui extends MarketGui{
 	public void draw(Graphics2D g) {
 		g.setColor(Color.ORANGE);
 		g.fillRect(xPos, yPos, 20, 20);
+		g.setColor(Color.BLACK);
+        if(agent != null)
+        	g.drawString(agent.getName(), xPos, yPos);
 	}
 
 	public boolean isPresent() {
@@ -68,8 +74,17 @@ public class MarketSalesPersonGui extends MarketGui{
     }
 	
 	//Actions
+    public void DoGotoRunner() {
+    	xDestination = 170;
+    }
+    
+    public void BacktoPosition() {
+    	xDestination = 150;
+    	yDestination = 100;
+    }
+    
     public void DoExit() {
     	xDestination = 300;
-    	yDestination = 300;
+    	yDestination = 325;
     }
 }

@@ -166,7 +166,7 @@ public class ChineseRestaurant implements Restaurant {
 
 		if (worker.getWorkerRole().equals(chineseRestaurantHostRole)) {
 			chineseRestaurantHostRole = null;
-			buildPanel.removeGui(worker.getWorkerRole().gui);
+			buildPanel.removeGui(worker.getWorkerRole());
 		}
 		if (worker.getWorkerRole().equals(chineseRestaurantCashierRole)) {
 			chineseRestaurantCashierRole = null;
