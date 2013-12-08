@@ -14,6 +14,7 @@ public class BusStop
 	private int BusStopNumber;
 	List<Person> waitingPassengers = Collections.synchronizedList(new ArrayList<Person>());
 	Point location;
+	private BusAgent currentBus;
 	
 	public BusStop(int number, int xCord, int yCord)
 	{
@@ -24,7 +25,7 @@ public class BusStop
 	public void waitingForBus(Person waitingPassenger)
 	{
 		waitingPassengers.add(waitingPassenger);
-		 AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, "Bus Stop #" + BusStopNumber, "Adding "+ waitingPassenger.getName());
+		 AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, "Bus Stop # " + BusStopNumber, "Adding "+ waitingPassenger.getName());
 	}
 	
 	public List<Person> getAllWaitingPassengers(BusAgent bus) //WorkerRole work)
@@ -33,6 +34,7 @@ public class BusStop
 		//There should be a way to check if a bus has called this method 
 		//if(bus instanceof Bus)
 		//{
+			currentBus = bus;
 			List<Person> loadingPassengers = waitingPassengers;
 			waitingPassengers.clear();
 			return loadingPassengers;

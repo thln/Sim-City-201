@@ -152,7 +152,7 @@ public class PersonGui extends CityGui {
 				if (command == Command.GoToBusStop) {
 					agent.msgAtDestination();
 					System.out.println("Reached bus stop");
-					currColor = transColor;
+					//currColor = transColor;
 				}
 				command = Command.noCommand;
 			}
@@ -279,7 +279,15 @@ public class PersonGui extends CityGui {
 		command = Command.GoToBusStop;
 	}
 	
-	
+	public void doGoToBusStop()
+	{
+		System.out.println("Going to bus stop");
+		setDefaultColor();
+		command = Command.GoToBusStop;
+		//Phonebook.getPhonebook().getAllBusStops().get(index);
+		//getClosestBusStop, use Phonebook to get point
+		//set XDestination and yDestination
+	}
 
 	public boolean decideForBus(String location) {
 		int xDest = 0, yDest = 0;

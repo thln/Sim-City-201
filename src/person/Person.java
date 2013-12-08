@@ -84,13 +84,14 @@ public abstract class Person extends Agent{
 		hasFoodInFridge = false;
 	}
 
-	public void msgAtDestination() {
+	public void msgAtDestination() 
+	{
 		getAtDestination().release();
 	}
 	
 	public void msgBusIsHere()
 	{
-		
+		getWaitingAtBus().release();
 	}
 	
 	public void msgAtBusStopDestination()
@@ -240,18 +241,34 @@ public abstract class Person extends Agent{
 
 	protected void goToBusStop()
 	{
-		if (home.type.equals("East Apartment")){
-			gui.doGoToBus(Phonebook.getPhonebook().getEastBank().getClosestStop().getX(),
-					Phonebook.getPhonebook().getEastBank().getClosestStop().getY());
-		}
-		else {
-			gui.doGoToBus(Phonebook.getPhonebook().getWestBank().getClosestStop().getX(),
-					Phonebook.getPhonebook().getWestBank().getClosestStop().getY());
-		}
-
-		try {
+//		if (home.type.equals("East Apartment")){
+//			gui.doGoToBus(Phonebook.getPhonebook().getEastBank().getClosestStop().getX(),
+//					Phonebook.getPhonebook().getEastBank().getClosestStop().getY());
+//		}
+//		else {
+//			gui.doGoToBus(Phonebook.getPhonebook().getWestBank().getClosestStop().getX(),
+//					Phonebook.getPhonebook().getWestBank().getClosestStop().getY());
+//		}
+		
+		gui.doGoToBusStop();
+		//Finish the GUI version of it
+		try 
+		{
 			atDestination.acquire();
-		} catch (InterruptedException e) {
+		} 
+		catch (InterruptedException e) 
+		{
+			e.printStackTrace();
+		}
+		Phonebook.getPhonebook().getAllBusStops().get(gui.getClosestBusStopNumber()).waitingForBus(this);
+		try
+		{
+			waitingAtBus.acquire();
+			//waitingAtBus.acquire();
+			//maybe have to do double acquires?
+		}
+		catch (InterruptedException e)
+		{
 			e.printStackTrace();
 		}
 	}
@@ -436,6 +453,11 @@ public abstract class Person extends Agent{
 
 	public Semaphore getAtDestination() {
 		return atDestination;
+	}
+	
+	public Semaphore getWaitingAtBus()
+	{
+		return waitingAtBus;
 	}
 
 	public void setAtDestination(Semaphore atDestination) {
