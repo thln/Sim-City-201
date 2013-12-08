@@ -130,30 +130,37 @@ public class ItalianCashierRole extends Role implements ItalianCashier{
 		
 		if(BillOrders != null) {
 			synchronized(BillOrders){
-			for(int i=0; i<BillOrders.size();i++){
-				if(BillOrders.get(i).s == BillState.done) {
-					ChecktoWaiter(BillOrders.get(i));
-					return true;
+				for(int i=0; i<BillOrders.size();i++){
+					if(BillOrders.get(i).s == BillState.done) {
+						ChecktoWaiter(BillOrders.get(i));
+						return true;
+					}
+					else if(BillOrders.get(i).s == BillState.pending) {
+						Compute(BillOrders.get(i));
+						return true;				
+					}
+					else if(BillOrders.get(i).s == BillState.paying) {
+						MoneyExchange(BillOrders.get(i));
+					}
 				}
-				else if(BillOrders.get(i).s == BillState.pending) {
-					Compute(BillOrders.get(i));
-					return true;				
-				}
-				else if(BillOrders.get(i).s == BillState.paying) {
-					MoneyExchange(BillOrders.get(i));
-				}
-			}
 			}
 		}
 		
 		if(BillFoods != null) {
 			synchronized(BillFoods){
-			for(int i=0; i<BillFoods.size();i++){
-				if(BillFoods.get(i).s == BillState.pending) {
-					PayBill(BillFoods.get(i));
+				for(int i=0; i<BillFoods.size();i++){
+					if(BillFoods.get(i).s == BillState.pending) {
+						PayBill(BillFoods.get(i));
+					}
 				}
 			}
-			}
+		}
+		
+		if (leaveRole)
+		{
+			((Worker) person).roleFinishedWork();
+			leaveRole = false;
+			return true;
 		}
 
 		return false;

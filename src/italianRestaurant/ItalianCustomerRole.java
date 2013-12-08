@@ -265,6 +265,14 @@ public class ItalianCustomerRole extends Role implements ItalianCustomer{
 			//no action
 			return true;
 		}
+		
+		if (leaveRole)
+		{
+			((Worker) person).roleFinishedWork();
+			leaveRole = false;
+			return true;
+		}
+		
 		return false;
 	}
 

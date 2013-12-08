@@ -188,6 +188,13 @@ public class ItalianCookRole extends Role implements ItalianCook{
 		}
 		
 		startRevolvingStandTimer();
+		
+		if (leaveRole)
+		{
+			((Worker) person).roleFinishedWork();
+			leaveRole = false;
+			return true;
+		}
 
 		return false;
 		//we have tried all our rules and found

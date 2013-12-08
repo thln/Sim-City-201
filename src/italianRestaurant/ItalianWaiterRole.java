@@ -235,16 +235,14 @@ public class ItalianWaiterRole extends Role implements ItalianWaiter{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		/************
-		for (Table table : tables) {
-			if (!table.isOccupied()) {
-				if (!Customers.isEmpty()) {
-					seatCustomer(Customers.get(0), table);//the action
-					return true;//return true to the abstract agent to reinvoke the scheduler.
-				}
-			}
+		
+		if (leaveRole)
+		{
+			((Worker) person).roleFinishedWork();
+			leaveRole = false;
+			return true;
 		}
-*******************/
+		
 		return false;
 		//we have tried all our rules and found
 		//nothing to do. So return false to main loop of abstract agent

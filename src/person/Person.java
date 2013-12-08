@@ -7,6 +7,7 @@ import java.util.concurrent.Semaphore;
 
 import chineseRestaurant.ChineseRestaurantCustomerRole;
 import italianRestaurant.*;
+import seafoodRestaurant.*;
 import bank.BankCustomerRole;
 import market.MarketCustomerRole;
 import person.Role;
@@ -256,12 +257,21 @@ public abstract class Person extends Agent{
 				return;
 			}
 			if (cust1 instanceof ItalianCustomerRole) {
-				ItalianCustomerRole RCR = (ItalianCustomerRole) cust1;
-				if (Phonebook.getPhonebook().getItalianRestaurant().arrived(RCR)) {
+				ItalianCustomerRole ICR = (ItalianCustomerRole) cust1;
+				if (Phonebook.getPhonebook().getItalianRestaurant().arrived(ICR)) {
 					currentRoleName = "Italian Restaurant Customer";
 					cust1.setRoleActive();
 					stateChanged();
 				}
+				return;
+			}
+			if (cust1 instanceof SeafoodRestaurantCustomerRole) {
+				SeafoodRestaurantCustomerRole SCR = (SeafoodRestaurantCustomerRole) cust1;
+				//if (Phonebook.getPhonebook().getSeafoodRestaurant().arrived(SCR)) {
+					currentRoleName = "Seafood Restaurant Customer";
+					cust1.setRoleActive();
+					stateChanged();
+				//}
 				return;
 			}
 		}
