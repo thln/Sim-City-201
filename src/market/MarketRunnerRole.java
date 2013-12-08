@@ -11,6 +11,7 @@ import person.Role;
 import person.Worker;
 import testing.EventLog;
 import testing.LoggedEvent;
+import application.Phonebook;
 import application.gui.animation.agentGui.MarketRunnerGui;
 
 public class MarketRunnerRole extends Role implements MarketRunner {
@@ -58,8 +59,8 @@ public class MarketRunnerRole extends Role implements MarketRunner {
 			}
 		}
 		
-		if (leaveRole){
-			((Worker) person).roleFinishedWork();
+		if (leaveRole) {
+			market.goingOffWork(person);
 			leaveRole = false;
 			return true;
 		}

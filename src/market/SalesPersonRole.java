@@ -158,8 +158,8 @@ public class SalesPersonRole extends Role implements SalesPerson {
 			}
 		}
 
-		if (leaveRole){
-			((Worker) person).roleFinishedWork();
+		if (leaveRole) {
+			market.goingOffWork(person);
 			leaveRole = false;
 			return true;
 		}
