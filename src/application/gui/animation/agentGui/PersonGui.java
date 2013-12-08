@@ -102,15 +102,18 @@ public class PersonGui extends CityGui {
 	}
 
 	public void updatePosition() {
-		if (getxPos() < getxDestination())
-			setxPos(getxPos() + 1);
-		else if (getxPos() > getxDestination())
-			setxPos(getxPos() - 1);
+		//if (!inBusyIntersection()) {
+		if (true){
+			if (getxPos() < getxDestination())
+				setxPos(getxPos() + 1);
+			else if (getxPos() > getxDestination())
+				setxPos(getxPos() - 1);
 
-		if (getyPos() < getyDestination())
-			setyPos(getyPos() + 1);
-		else if (getyPos() > getyDestination())
-			setyPos(getyPos() - 1);
+			if (getyPos() < getyDestination())
+				setyPos(getyPos() + 1);
+			else if (getyPos() > getyDestination())
+				setyPos(getyPos() - 1);
+		}
 
 		if (getxPos() == getxDestination() && getyPos() == getyDestination()) {
 			//System.out.println(command + "  " + agent.getName() + "has semaphore permits = " + agent.getAtDestination().availablePermits());
@@ -318,6 +321,40 @@ public class PersonGui extends CityGui {
 	public void setyDestination(int yDestination) {
 		this.yDestination = yDestination;
 	}
+
+//	public boolean inBusyIntersection() {
+//		if (Phonebook.getPhonebook().intersection1.getIntersection().contains(xPos, yPos)) {
+//			if (Phonebook.getPhonebook().intersection1.isIntersectionBusy() == true &&
+//					!this.equals(Phonebook.getPhonebook().intersection1.getInhabitant())) {
+//				return  true;
+//			}
+//			return false;
+//		}
+//		else if (Phonebook.getPhonebook().intersection2.getIntersection().contains(xPos, yPos)) {
+//			if (Phonebook.getPhonebook().intersection2.isIntersectionBusy() == true &&
+//					!this.equals(Phonebook.getPhonebook().intersection2.getInhabitant())) {
+//				return  true;
+//			}
+//			return false;
+//		}
+//		else if (Phonebook.getPhonebook().intersection3.getIntersection().contains(xPos, yPos)) {
+//			if (Phonebook.getPhonebook().intersection3.isIntersectionBusy() == true &&
+//					!this.equals(Phonebook.getPhonebook().intersection3.getInhabitant())) {
+//				return  true;
+//			}
+//			return false;
+//		}
+//		else if (Phonebook.getPhonebook().intersection4.getIntersection().contains(xPos, yPos)) {
+//			if (Phonebook.getPhonebook().intersection4.isIntersectionBusy() == true &&
+//					!this.equals(Phonebook.getPhonebook().intersection4.getInhabitant())) {
+//				return  true;
+//			}
+//			return false;
+//		}
+//		else {
+//			return false;
+//		}
+//	}
 }
 
 

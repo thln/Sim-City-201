@@ -4,15 +4,18 @@ import housing.Housing;
 import housing.HousingMaintenanceCompany;
 
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import italianRestaurant.ItalianCustomerRole;
 import italianRestaurant.ItalianRestaurant;
 import chineseRestaurant.ChineseRestaurant;
 import bank.Bank;
 import market.Market;
 import application.gui.animation.*;
+import application.gui.animation.agentGui.Gui;
 
 public class Phonebook{
 
@@ -46,6 +49,12 @@ public class Phonebook{
 	//List of bus stops
 	private List<Point> busStops = new ArrayList<>();
 
+	//Intersections	
+	public Intersection intersection1 = new Intersection(170, 72, 30, 38, 1);
+	public Intersection intersection2 = new Intersection(390, 72, 30, 38, 2);
+	public Intersection intersection3 = new Intersection(170, 192, 30, 38, 3);
+	public Intersection intersection4 = new Intersection(390, 192, 30, 38, 4);
+	
 
 	private static Phonebook phonebook;
 
@@ -174,5 +183,34 @@ public class Phonebook{
 			westMarket.userClosed = false;
 		if (type == "chineseRestaurant")
 			chineseRestaurant.userClosed = false;
+	}
+	
+	public class Intersection {
+		public Rectangle intersection;
+		public int number;
+
+		public boolean intersectionBusy;
+		
+		public Intersection(int x, int y, int width, int height, int n) {
+			intersection = new Rectangle(x, y, width, height);
+			intersectionBusy = false;
+			number = n;
+		}
+		
+		public Rectangle getIntersection() {
+			return intersection;
+		}
+
+		public void setIntersection(Rectangle intersection) {
+			this.intersection = intersection;
+		}
+
+		public boolean isIntersectionBusy() {
+			return intersectionBusy;
+		}
+
+		public void setIntersectionBusy(boolean intersectionBusy) {
+			this.intersectionBusy = intersectionBusy;
+		}
 	}
 }
