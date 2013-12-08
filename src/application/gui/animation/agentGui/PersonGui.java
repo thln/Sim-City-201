@@ -269,7 +269,6 @@ public class PersonGui extends CityGui {
 
 	public boolean decideForBus(String location) {
 		int xDest = 0, yDest = 0;
-		System.out.println("Number is " + Phonebook.getPhonebook().getEastBank().getName());
 		if (location.equals("East Bank")) {
 			xDest = (int) Phonebook.getPhonebook().getEastBank().location.getX();
 			yDest = (int) Phonebook.getPhonebook().getEastBank().location.getY();

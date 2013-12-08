@@ -49,6 +49,7 @@ public class ChineseRestaurant implements Restaurant {
 	public ChineseRestaurantMockCashier chineseRestaurantMockCashier = new ChineseRestaurantMockCashier("MockCashier");
 
 	public ChineseRestaurant(String name) {
+		location = new Point(300, 20);
 		this.name = name;
 		chineseRestaurantCookRole.setGui(cookGui);
 	}

@@ -39,6 +39,7 @@ public class SeafoodRestaurant implements Restaurant {
 
 	public SeafoodRestaurant(String name) {
 		this.name = name;
+		location = new Point(200, 20);
 		//seafoodRestaurantCookRole.setGui(cookGui);
 	}
 

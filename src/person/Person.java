@@ -114,16 +114,24 @@ public abstract class Person extends Agent{
 
 		if (!(this instanceof Crook))
 			Do("Becoming Bank Customer");
-		
-		//if (home.structure == EastApartment), destination = eastBank
+
+		if (home.type.equals("EastApartment"))
 			gui.walk = gui.decideForBus("East Bank");
-			
-			//gui.walk = gui.decideForBus(Phonebook.getPhonebook().getEastBank().getClosestStop().getX(),
-			//		Phonebook.getPhonebook().getEastBank().getClosestStop().getY());
-					
+		else
+			gui.walk = gui.decideForBus("West Bank");
+
+
+
 		if (!gui.walk){
-			gui.doGoToBus(Phonebook.getPhonebook().getEastBank().getClosestStop().getX(),
-					Phonebook.getPhonebook().getEastBank().getClosestStop().getY());
+			if (home.type.equals("EastApartment")){
+				gui.doGoToBus(Phonebook.getPhonebook().getEastBank().getClosestStop().getX(),
+						Phonebook.getPhonebook().getEastBank().getClosestStop().getY());
+			}
+			else {
+				gui.doGoToBus(Phonebook.getPhonebook().getWestBank().getClosestStop().getX(),
+						Phonebook.getPhonebook().getWestBank().getClosestStop().getY());
+			}
+
 			try {
 				atDestination.acquire();
 			} catch (InterruptedException e) {
@@ -132,10 +140,11 @@ public abstract class Person extends Agent{
 			}
 		}
 
-		//if (home.structure == EastApartment), destination = eastBank
-		getGui().DoGoToBank("East");
-		//else go west
-		
+		if (home.type.equals("EastApartment"))
+			getGui().DoGoToBank("East");
+		else
+			getGui().DoGoToBank("West");
+
 		try {
 			atDestination.acquire();
 		} catch (InterruptedException e) {
