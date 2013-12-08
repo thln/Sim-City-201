@@ -2,13 +2,10 @@ package application.gui.animation.agentGui;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.util.Random;
 
-import person.Crook;
-import person.Deadbeat;
 import person.Person;
-import person.Wealthy;
-import person.Worker;
 import application.Phonebook;
 
 public class PersonGui extends CityGui {
@@ -52,7 +49,7 @@ public class PersonGui extends CityGui {
 	private enum Command {noCommand, GoToRestaurant, GoToMarket, GoToBank, GoToBusStop, GoOnBus, GoHome};
 	private Command command = Command.noCommand;
 
-	private enum PersonState {nothing};
+	private enum PersonState {nothing, enroute, inCrosswalk1, inCrosswalk2, inCrosswalk3, inCrosswalk4, inCrosswalk5, inCrosswalk6, inCrosswalk7, inCrosswalk8, inCrosswalk9, inCrosswalk10, inCrosswalk11, inCrosswalk12};
 	PersonState state = PersonState.nothing;
 
 	private String choice;
@@ -92,20 +89,23 @@ public class PersonGui extends CityGui {
 	}
 
 	public void updatePosition() {
-
-
-		//if (!inBusyIntersection()) {
-		if (true){
-			if (getxPos() < getxDestination())
-				setxPos(getxPos() + 1);
-			else if (getxPos() > getxDestination())
-				setxPos(getxPos() - 1);
-
-			if (getyPos() < getyDestination())
-				setyPos(getyPos() + 1);
-			else if (getyPos() > getyDestination())
-				setyPos(getyPos() - 1);
+		
+		if (inBusyCrosswalk()) {
+			return;
 		}
+
+		if (getxPos() < getxDestination())
+			setxPos(getxPos() + 1);
+		else if (getxPos() > getxDestination())
+			setxPos(getxPos() - 1);
+
+		if (getyPos() < getyDestination())
+			setyPos(getyPos() + 1);
+		else if (getyPos() > getyDestination())
+			setyPos(getyPos() - 1);
+		
+		inACrosswalk();
+		leftACrosswalk();
 
 		if (xPos == getxDestination() && yPos == getyDestination() && command != Command.noCommand) {
 			if(agent != null) {
@@ -243,7 +243,7 @@ public class PersonGui extends CityGui {
 	}
 
 	public void DoGoHome() { 
-	//	agent.print("Called again");
+		//	agent.print("Called again");
 		setxDestination(xHome);
 		setyDestination(yHome);
 		setDefaultColor();
@@ -418,6 +418,248 @@ public class PersonGui extends CityGui {
 
 	public void setyDestination(int yDestination) {
 		this.yDestination = yDestination;
+	}
+
+	synchronized public boolean inBusyCrosswalk() {
+		Rectangle me = new Rectangle(xPos, yPos-1, 25, 25);
+		if (Phonebook.getPhonebook().crosswalk1.getCrosswalk().intersects(me)) {
+			if (Phonebook.getPhonebook().crosswalk1.isCrosswalkBusy() == true &&
+					!(state == PersonState.inCrosswalk1)) {
+				return true;
+			}
+			return false;
+		}
+
+		me.setLocation(xPos, yPos+1);
+		if (Phonebook.getPhonebook().crosswalk2.getCrosswalk().intersects(me)) {
+			if (Phonebook.getPhonebook().crosswalk2.isCrosswalkBusy() == true &&
+					!(state == PersonState.inCrosswalk2)) {
+				return true;
+			}
+			return false;
+		}
+		me.setLocation(xPos+1, yPos);
+		if (Phonebook.getPhonebook().crosswalk3.getCrosswalk().intersects(me)) {
+			if (Phonebook.getPhonebook().crosswalk3.isCrosswalkBusy() == true &&
+					!(state == PersonState.inCrosswalk3)) {
+				return true;
+			}
+			return false;
+		}
+
+		me.setLocation(xPos+1, yPos);
+		if (Phonebook.getPhonebook().crosswalk4.getCrosswalk().intersects(me)) {
+			if (Phonebook.getPhonebook().crosswalk4.isCrosswalkBusy() == true &&
+					!(state == PersonState.inCrosswalk4)) {
+				return true;
+			}
+			return false;
+		}
+
+		me.setLocation(xPos+1, yPos);
+		if (Phonebook.getPhonebook().crosswalk5.getCrosswalk().intersects(me)) {
+			if (Phonebook.getPhonebook().crosswalk5.isCrosswalkBusy() == true &&
+					!(state == PersonState.inCrosswalk5)) {
+				return true;
+			}
+			return false;
+		}
+
+		me.setLocation(xPos, yPos-1);
+		if (Phonebook.getPhonebook().crosswalk6.getCrosswalk().intersects(me)) {
+			if (Phonebook.getPhonebook().crosswalk6.isCrosswalkBusy() == true &&
+					!(state == PersonState.inCrosswalk6)) {
+				return  true;
+			}
+			return false;
+		}
+
+		me.setLocation(xPos, yPos+1);
+		if (Phonebook.getPhonebook().crosswalk7.getCrosswalk().intersects(me)) {
+			if (Phonebook.getPhonebook().crosswalk7.isCrosswalkBusy() == true &&
+					!(state == PersonState.inCrosswalk7)) {
+				return  true;
+			}
+			return false;
+		}
+
+		me.setLocation(xPos-1, yPos);
+		if (Phonebook.getPhonebook().crosswalk8.getCrosswalk().intersects(me)) {
+			if (Phonebook.getPhonebook().crosswalk8.isCrosswalkBusy() == true &&
+					!(state == PersonState.inCrosswalk8)) {
+				return true;
+			}
+			return false;
+		}
+
+		me.setLocation(xPos-1, yPos);
+		if (Phonebook.getPhonebook().crosswalk9.getCrosswalk().intersects(me)) {
+			if (Phonebook.getPhonebook().crosswalk9.isCrosswalkBusy() == true &&
+					!(state == PersonState.inCrosswalk9)) {
+				return true;
+			}
+			return false;
+		}
+
+		me.setLocation(xPos-1, yPos);
+		if (Phonebook.getPhonebook().crosswalk10.getCrosswalk().intersects(me)) {
+			if (Phonebook.getPhonebook().crosswalk10.isCrosswalkBusy() == true &&
+					!(state == PersonState.inCrosswalk10)) {
+				return true;
+			}
+			return false;
+		}
+
+		me.setLocation(xPos, yPos-1);
+		if (Phonebook.getPhonebook().crosswalk11.getCrosswalk().intersects(me)) {
+			if (Phonebook.getPhonebook().crosswalk11.isCrosswalkBusy() == true &&
+					!(state == PersonState.inCrosswalk11)) {
+				return  true;
+			}
+			return false;
+		}
+
+		me.setLocation(xPos, yPos+1);
+		if (Phonebook.getPhonebook().crosswalk12.getCrosswalk().intersects(me)) {
+			if (Phonebook.getPhonebook().crosswalk12.isCrosswalkBusy() == true &&
+					!(state == PersonState.inCrosswalk12)) {
+				return  true;
+			}
+			return false;
+		}
+		else {
+			return false;
+		}
+	}
+
+	public void inACrosswalk() {
+		Rectangle me = new Rectangle(xPos, yPos, 25, 25);
+
+		if (Phonebook.getPhonebook().crosswalk1.getCrosswalk().intersects(me) &&
+				!(state == PersonState.inCrosswalk1)) {
+			Phonebook.getPhonebook().crosswalk1.setCrosswalkBusy(true);	
+			state = PersonState.inCrosswalk1;
+		}
+		else if (Phonebook.getPhonebook().crosswalk2.getCrosswalk().intersects(me) &&
+				!(state == PersonState.inCrosswalk2)) {
+			Phonebook.getPhonebook().crosswalk2.setCrosswalkBusy(true);	
+			state = PersonState.inCrosswalk2;
+		}	
+		else if (Phonebook.getPhonebook().crosswalk3.getCrosswalk().intersects(me) &&
+				!(state == PersonState.inCrosswalk3)) {
+			Phonebook.getPhonebook().crosswalk3.setCrosswalkBusy(true);	
+			state = PersonState.inCrosswalk3;
+		}
+		else if (Phonebook.getPhonebook().crosswalk4.getCrosswalk().intersects(me) &&
+				!(state == PersonState.inCrosswalk4)) {
+			Phonebook.getPhonebook().crosswalk4.setCrosswalkBusy(true);	
+			state = PersonState.inCrosswalk4;
+		}
+		else if (Phonebook.getPhonebook().crosswalk5.getCrosswalk().intersects(me) &&
+				!(state == PersonState.inCrosswalk5)) {
+			Phonebook.getPhonebook().crosswalk5.setCrosswalkBusy(true);	
+			state = PersonState.inCrosswalk5;
+		}
+		else if (Phonebook.getPhonebook().crosswalk6.getCrosswalk().intersects(me) &&
+				!(state == PersonState.inCrosswalk6)) {
+			Phonebook.getPhonebook().crosswalk6.setCrosswalkBusy(true);	
+			state = PersonState.inCrosswalk6;
+		}
+		else if (Phonebook.getPhonebook().crosswalk7.getCrosswalk().intersects(me) &&
+				!(state == PersonState.inCrosswalk7)) {
+			Phonebook.getPhonebook().crosswalk7.setCrosswalkBusy(true);	
+			state = PersonState.inCrosswalk7;
+		}
+		else if (Phonebook.getPhonebook().crosswalk8.getCrosswalk().intersects(me) &&
+				!(state == PersonState.inCrosswalk8)) {
+			Phonebook.getPhonebook().crosswalk8.setCrosswalkBusy(true);	
+			state = PersonState.inCrosswalk8;
+		}
+		else if (Phonebook.getPhonebook().crosswalk9.getCrosswalk().intersects(me) &&
+				!(state == PersonState.inCrosswalk9)) {
+			Phonebook.getPhonebook().crosswalk9.setCrosswalkBusy(true);	
+			state = PersonState.inCrosswalk9;
+		}
+		else if (Phonebook.getPhonebook().crosswalk10.getCrosswalk().intersects(me) &&
+				!(state == PersonState.inCrosswalk10)) {
+			Phonebook.getPhonebook().crosswalk10.setCrosswalkBusy(true);	
+			state = PersonState.inCrosswalk10;
+		}
+		else if (Phonebook.getPhonebook().crosswalk11.getCrosswalk().intersects(me) &&
+				!(state == PersonState.inCrosswalk11)) {
+			Phonebook.getPhonebook().crosswalk11.setCrosswalkBusy(true);	
+			state = PersonState.inCrosswalk11;
+		}
+		else if (Phonebook.getPhonebook().crosswalk12.getCrosswalk().intersects(me) &&
+				!(state == PersonState.inCrosswalk12)) {
+			Phonebook.getPhonebook().crosswalk12.setCrosswalkBusy(true);	
+			state = PersonState.inCrosswalk12;
+		}
+	}
+
+	public void leftACrosswalk() {
+		Rectangle me = new Rectangle(xPos, yPos, 25, 25);
+
+		if (!Phonebook.getPhonebook().crosswalk1.getCrosswalk().intersects(me)
+				&& (state == PersonState.inCrosswalk1)) {
+			Phonebook.getPhonebook().crosswalk1.setCrosswalkBusy(false);	
+			state = PersonState.enroute;	
+		}
+		else if (!Phonebook.getPhonebook().crosswalk2.getCrosswalk().intersects(me)
+				&& (state == PersonState.inCrosswalk2)) {
+			Phonebook.getPhonebook().crosswalk2.setCrosswalkBusy(false);	
+			state = PersonState.enroute;	
+		}
+		else if (!Phonebook.getPhonebook().crosswalk3.getCrosswalk().intersects(me)
+				&& (state == PersonState.inCrosswalk3)) {
+			Phonebook.getPhonebook().crosswalk3.setCrosswalkBusy(false);	
+			state = PersonState.enroute;	
+		}
+		else if (!Phonebook.getPhonebook().crosswalk4.getCrosswalk().intersects(me)
+				&& (state == PersonState.inCrosswalk4)) {
+			Phonebook.getPhonebook().crosswalk4.setCrosswalkBusy(false);	
+			state = PersonState.enroute;	
+		}
+		else if (!Phonebook.getPhonebook().crosswalk5.getCrosswalk().intersects(me)
+				&& (state == PersonState.inCrosswalk5)) {
+			Phonebook.getPhonebook().crosswalk5.setCrosswalkBusy(false);	
+			state = PersonState.enroute;	
+		}
+		else if (!Phonebook.getPhonebook().crosswalk6.getCrosswalk().intersects(me)
+				&& (state == PersonState.inCrosswalk6)) {
+			Phonebook.getPhonebook().crosswalk6.setCrosswalkBusy(false);	
+			state = PersonState.enroute;	
+		}
+		else if (!Phonebook.getPhonebook().crosswalk7.getCrosswalk().intersects(me)
+				&& (state == PersonState.inCrosswalk7)) {
+			Phonebook.getPhonebook().crosswalk7.setCrosswalkBusy(false);	
+			state = PersonState.enroute;	
+		}
+		else if (!Phonebook.getPhonebook().crosswalk8.getCrosswalk().intersects(me)
+				&& (state == PersonState.inCrosswalk8)) {
+			Phonebook.getPhonebook().crosswalk8.setCrosswalkBusy(false);	
+			state = PersonState.enroute;	
+		}
+		else if (!Phonebook.getPhonebook().crosswalk9.getCrosswalk().intersects(me)
+				&& (state == PersonState.inCrosswalk9)) {
+			Phonebook.getPhonebook().crosswalk9.setCrosswalkBusy(false);	
+			state = PersonState.enroute;	
+		}
+		else if (!Phonebook.getPhonebook().crosswalk10.getCrosswalk().intersects(me)
+				&& (state == PersonState.inCrosswalk10)) {
+			Phonebook.getPhonebook().crosswalk10.setCrosswalkBusy(false);	
+			state = PersonState.enroute;	
+		}
+		else if (!Phonebook.getPhonebook().crosswalk11.getCrosswalk().intersects(me)
+				&& (state == PersonState.inCrosswalk11)) {
+			Phonebook.getPhonebook().crosswalk11.setCrosswalkBusy(false);	
+			state = PersonState.enroute;	
+		}
+		else if (!Phonebook.getPhonebook().crosswalk12.getCrosswalk().intersects(me)
+				&& (state == PersonState.inCrosswalk12)) {
+			Phonebook.getPhonebook().crosswalk12.setCrosswalkBusy(false);	
+			state = PersonState.enroute;	
+		}
 	}
 }
 
