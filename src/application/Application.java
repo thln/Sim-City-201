@@ -55,7 +55,7 @@ public class Application extends JPanel {
 		Worker bank2a = new Worker("Andy", 100, "bankTeller", "East Bank", 12, 18, 1);
 		Worker bank2b = new Worker("Billy", 100, "loanOfficer", "East Bank", 13, 18, 2);
 		Worker bank2c = new Worker("Courtney", 100, "bankGuard", "East Bank", 12, 18, 1);
-		
+
 		//West Bank Workers
 		//SHIFT 1
 		Worker bank3a = new Worker("Albert", 100, "bankTeller", "West Bank", 1, 6, 14);
@@ -66,8 +66,8 @@ public class Application extends JPanel {
 		Worker bank4a = new Worker("Ashley", 100, "bankTeller", "West Bank", 12, 18, 1);
 		Worker bank4b = new Worker("Brenna", 100, "loanOfficer", "West Bank", 13, 18, 2);
 		Worker bank4c = new Worker("Catherine", 100, "bankGuard", "West Bank", 12, 18, 1);
-		
-		
+
+
 
 		//Market Workers
 		//SHIFT 1
@@ -103,8 +103,8 @@ public class Application extends JPanel {
 		//Standard Wealthy Person
 		Wealthy wealthy1 = new Wealthy("Tam Henry", 700);
 		Wealthy wealthy2 = new Wealthy("Kristi Hupka", 10000);
-		//		Wealthy wealthy3 = new Wealthy("Josh Greenburger", 700);
-		//		Wealthy wealthy4 = new Wealthy("Keith DeRuiter", 700);
+		Wealthy wealthy3 = new Wealthy("Josh Greenburger", 700);
+		Wealthy wealthy4 = new Wealthy("Keith DeRuiter", 700);
 
 		//Standard Crook
 		Crook crook1 = new Crook("Vinny", 250);
@@ -137,10 +137,6 @@ public class Application extends JPanel {
 		rest1j.setHome(allHousing.get(allHousing.size() - 1));
 		allHousing.add(new Housing(rest1k, allHousing.size(), "East Apartment"));
 		rest1k.setHome(allHousing.get(allHousing.size() - 1));
-		//		allHousing.add(new Housing(l, allHousing.size(), "Apartment"));
-		//		l.setHome(allHousing.get(allHousing.size() - 1));
-		//		allHousing.add(new Housing(m, allHousing.size(), "Apartment"));
-		//		m.setHome(allHousing.get(allHousing.size() - 1));
 
 		allHousing.add(new Housing(bank3a, allHousing.size(), "East Apartment"));
 		bank3a.setHome(allHousing.get(allHousing.size() - 1));
@@ -148,10 +144,10 @@ public class Application extends JPanel {
 		bank3b.setHome(allHousing.get(allHousing.size() - 1));
 		allHousing.add(new Housing(bank3c, allHousing.size(), "East Apartment"));
 		bank3c.setHome(allHousing.get(allHousing.size() - 1));
-		
+
 		//Shift 2
 
-	    allHousing.add(new Housing(bank2a, allHousing.size(), "West Apartment"));
+		allHousing.add(new Housing(bank2a, allHousing.size(), "West Apartment"));
 		bank2a.setHome(allHousing.get(allHousing.size() - 1));
 		allHousing.add(new Housing(bank2b, allHousing.size(), "East Apartment"));
 		bank2b.setHome(allHousing.get(allHousing.size() - 1));
@@ -173,9 +169,6 @@ public class Application extends JPanel {
 		rest2j.setHome(allHousing.get(allHousing.size() - 1));
 		allHousing.add(new Housing(rest2k, allHousing.size(), "West Apartment"));
 		rest2k.setHome(allHousing.get(allHousing.size() - 1));
-		
-		allHousing.add(new Housing(crook1, allHousing.size(), "East Apartment"));
-		crook1.setHome(allHousing.get(allHousing.size() - 1));
 
 		allHousing.add(new Housing(house1, allHousing.size(), "West Apartment"));
 		house1.setHome(allHousing.get(allHousing.size() - 1));
@@ -186,16 +179,20 @@ public class Application extends JPanel {
 		bank4b.setHome(allHousing.get(allHousing.size() - 1));
 		allHousing.add(new Housing(bank4c, allHousing.size(), "East Apartment"));
 		bank4c.setHome(allHousing.get(allHousing.size() - 1));
-		
+
 		//People
 		allHousing.add(new Housing(wealthy1, allHousing.size(), "Mansion"));
 		wealthy1.setHome(allHousing.get(allHousing.size() - 1));
 		allHousing.add(new Housing(wealthy2, allHousing.size(), "Mansion"));
 		wealthy2.setHome(allHousing.get(allHousing.size() - 1));
-//		allHousing.add(new Housing(wealthy3, allHousing.size(), "Mansion"));
-//		wealthy3.setHome(allHousing.get(allHousing.size() - 1));
-//		allHousing.add(new Housing(wealthy4, allHousing.size(), "Mansion"));
-//		wealthy4.setHome(allHousing.get(allHousing.size() - 1));
+		allHousing.add(new Housing(wealthy3, allHousing.size(), "Mansion"));
+		wealthy3.setHome(allHousing.get(allHousing.size() - 1));
+		allHousing.add(new Housing(wealthy4, allHousing.size(), "Mansion"));
+		wealthy4.setHome(allHousing.get(allHousing.size() - 1));
+
+		allHousing.add(new Housing(crook1, allHousing.size(), "East Apartment"));
+		crook1.setHome(allHousing.get(allHousing.size() - 1));
+
 		Phonebook.getPhonebook().setHousingList(allHousing);
 
 
@@ -211,10 +208,10 @@ public class Application extends JPanel {
 		getPopulation().add(rest1h);
 		getPopulation().add(rest1i);
 		getPopulation().add(rest1j);
-//		getPopulation().add(rest1k);
-//		getPopulation().add(bank3a);
-//		getPopulation().add(bank3b);
-//		getPopulation().add(bank3c);
+		getPopulation().add(rest1k);
+		getPopulation().add(bank3a);
+		getPopulation().add(bank3b);
+		getPopulation().add(bank3c);
 
 		//Shift 2
 		getPopulation().add(bank2a);
@@ -227,28 +224,29 @@ public class Application extends JPanel {
 		getPopulation().add(rest2h);
 		getPopulation().add(rest2i);
 		getPopulation().add(rest2j);
-		getPopulation().add(house1);
 		getPopulation().add(rest2k);
+		getPopulation().add(house1);
 		getPopulation().add(bank4a);
 		getPopulation().add(bank4b);
 		getPopulation().add(bank4c);
 
 		//People
-//		getPopulation().add(wealthy1);
-//		getPopulation().add(wealthy2);
-//		getPopulation().add(wealthy3);
-//		getPopulation().add(wealthy4);
+		getPopulation().add(wealthy1);
+		getPopulation().add(wealthy2);
+		getPopulation().add(wealthy3);
+		getPopulation().add(wealthy4);
 		getPopulation().add(crook1);
-	
+
 		//Setting Gui for everyone
 		for (Person person : getPopulation()) {
+			System.err.println("Person: " + person.getName());
 			person.setPanel(animPanel);
 			PersonGui pg = new PersonGui(person);
 			person.setGui(pg);
 			animPanel.addGui(pg);
 		}
-		
-		for(Housing house : allHousing) {
+
+		for (Housing house : allHousing) {
 			if(house.type.toLowerCase().contains("apartment")) {
 				animPanel.addAptUnit(house);
 			}
@@ -267,10 +265,10 @@ public class Application extends JPanel {
 		rest1i.startThread();
 		rest1j.startThread();
 		rest1k.startThread();
-//		bank3a.startThread();
-//		bank3b.startThread();	
-//		bank3c.startThread();
-		
+		bank3a.startThread();
+		bank3b.startThread();	
+		bank3c.startThread();
+
 		//Shift 2
 		bank2a.startThread();
 		bank2b.startThread();
@@ -283,18 +281,17 @@ public class Application extends JPanel {
 		rest2i.startThread();
 		rest2j.startThread();
 		rest2k.startThread();
+		house1.startThread();
 		bank4a.startThread();
 		bank4b.startThread();	
 		bank4c.startThread();		
-				
-//		house1.startThread();
 
 		//People
-//		wealthy1.startThread();
-//		wealthy2.startThread();
-		//		wealthy3.startThread();
-		//		wealthy4.startThread();
-//		crook1.startThread();
+		wealthy1.startThread();
+		wealthy2.startThread();
+		wealthy3.startThread();
+		wealthy4.startThread();
+		crook1.startThread();
 
 		updatePeopleTime();
 

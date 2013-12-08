@@ -67,8 +67,8 @@ public class PersonGui extends CityGui {
 	public PersonGui(Person p) {
 		this.agent = p;
 		if(p.home.type.equals("West Apartment")) {
-			xHome = 0;
-			yHome = 0;			
+			xHome = 200;
+			yHome = 200;			
 		}
 		if(p.home.type.equals("East Apartment")) {
 			xHome = 500;
