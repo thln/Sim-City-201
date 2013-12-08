@@ -1,7 +1,7 @@
 package market;
 
 import java.awt.Point;
-import java.util.HashMap;
+import java.util.*;
 
 import market.interfaces.MarketRunner;
 import market.interfaces.SalesPerson;
@@ -45,6 +45,8 @@ public class Market {
 	public MockSalesPerson mockSalesPerson = new MockSalesPerson("MockSalesPerson");
 	public MockMarketRunner mockMarketRunner = new MockMarketRunner("MockMarketRunner");
 	public MockUPSman mockUPSman = new MockUPSman("MockUPSMan");
+	
+	List <MarketCustomerGui> marketGuis = new ArrayList<MarketCustomerGui>();
 
 	private BuildingPanel marketPanel;
 
@@ -153,7 +155,10 @@ public class Market {
 		//MarketCustomerGui rCG = (MarketCustomerGui) mCR.gui;
 		MarketCustomerGui MCG = new MarketCustomerGui(mCR);
 		mCR.setGui(MCG);
+		MCG.setHome(marketGuis.size());
+		marketGuis.add(MCG);
 		marketPanel.addGui(MCG);
+		//MCG.waitInLine();
 	}
 
 

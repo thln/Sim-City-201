@@ -78,6 +78,14 @@ public class MarketCustomerRole extends Role implements MarketCustomer {
 			state = MarketCustomerState.waitingToOpen;
 			return;
 		}
+		
+		marketCustomerGui.waitInLine();
+		try {
+			this.atDestination.acquire();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		if (item == "Car") {
 			Phonebook.getPhonebook().getEastMarket().salesPersonRole.msgIWantProducts(this, "Car", 1);
