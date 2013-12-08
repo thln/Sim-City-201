@@ -200,6 +200,11 @@ public class SeafoodRestaurantWaiterGui implements Gui {
     {
     	
     }
+    
+    public void DoExit() {
+    	xDestination = -20;
+    	yDestination = 300;
+    }
 
     public int getXPos() 
     {

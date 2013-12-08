@@ -188,7 +188,12 @@ public class ItalianHostRole extends Role {
  * 	--- and that waiter will be used in the restaurant as needed.
  */
 	public void addWaiter(ItalianWaiterRole waiter){
+		waiter.getGui().StartAt(waiters.size());
 		waiters.add(waiter);
+	}
+	
+	public void removeWaiter(ItalianWaiterRole waiter) {
+		waiters.remove(waiter);
 	}
 	
 	public void setWaiter(ItalianCustomerRole c){

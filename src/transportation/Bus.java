@@ -36,6 +36,17 @@ public abstract class Bus extends Agent{
 	{
 		
 	}
+	
+	/**** 
+	 * Interaction to go -
+	 * Person messaging bus stop and going to sleep with metaphor
+	 * Bus arrives at bus stops and gets all waiting customers
+	 * Messages all sleeping customers to wake up
+	 * Customers responds by messaging bus I am getting on
+	 * Customer goes to sleep, Gui disappears
+	 * Bus arrives at next bus stop, messages all customers with that destination
+	 * Customer wakes up, GUI reappears at that spot
+	 * ***/
 
 	/*********************
 	 ***** MESSAGES ******

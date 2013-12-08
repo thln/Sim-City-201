@@ -22,4 +22,8 @@ public class CityGui implements Gui {
 	public void setPresent(boolean p) {
 		isPresent = p;
 	}
+	
+	public void DoExit() {
+		
+	}
 }
