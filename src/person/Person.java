@@ -311,7 +311,7 @@ public abstract class Person extends Agent{
 	}
 
 	protected void goToSleep() {
-	if (gui.getxPos() != gui.getxHome() && gui.getyPos() != gui.getyHome()){
+//	if (gui.getxPos() != gui.getxHome() && gui.getyPos() != gui.getyHome()){
 		getGui().DoGoHome();
 		try {
 			atDestination.acquire();
@@ -320,7 +320,7 @@ public abstract class Person extends Agent{
 			e.printStackTrace();
 			//
 		}
-			}
+//			}
 
 		currentRoleName = " ";
 		//After arrives home
