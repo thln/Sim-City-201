@@ -39,7 +39,7 @@ public class AmericanRestaurantCustomerRole extends Role implements AmericanRest
 	private String name;
 	private int hungerLevel = 5;        // determines length of meal
 
-	private CustomerGui customerGui;
+	//private CustomerGui customerGui;
 
 	// agent correspondents
 

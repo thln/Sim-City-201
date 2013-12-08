@@ -24,7 +24,7 @@ public class AmericanRestaurantHostRole extends Role implements AmericanRestaura
 	static final int NWaiters = 3;
 	//Notice that we implement waitingCustomers using ArrayList, but type it
 	//with List semantics.
-	private Table[] tableList;
+	private AmericanRestaurantTable[] tableList;
 	public List<AmericanRestaurantCustomerRole> waitingCustomers;
 	private List<AmericanRestaurantCustomerRole> leavingCustomers;
 	private List<AmericanRestaurantCustomerRole> dishonestCustomers;
@@ -38,7 +38,7 @@ public class AmericanRestaurantHostRole extends Role implements AmericanRestaura
 		waitingCustomers = Collections.synchronizedList(new ArrayList<AmericanRestaurantCustomerRole>());
 		leavingCustomers = Collections.synchronizedList(new ArrayList<AmericanRestaurantCustomerRole>());
 		dishonestCustomers = Collections.synchronizedList(new ArrayList<AmericanRestaurantCustomerRole>());
-		tableList = new Table[NTABLES];
+		tableList = new AmericanRestaurantTable[NTABLES];
 		for (int i = 0; i < NTABLES; i++) {
 			tableList[i] = new Table();
 			tableList[i].setSeatNum(i);
