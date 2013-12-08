@@ -115,15 +115,15 @@ public abstract class Person extends Agent{
 		if (!(this instanceof Crook))
 			Do("Becoming Bank Customer");
 
-		if (home.type.equals("EastApartment"))
+		if (home.type.equals("East Apartment"))
 			gui.walk = gui.decideForBus("East Bank");
 		else
 			gui.walk = gui.decideForBus("West Bank");
-
-
+		
+		gui.walk = true;
 
 		if (!gui.walk){
-			if (home.type.equals("EastApartment")){
+			if (home.type.equals("East Apartment")){
 				gui.doGoToBus(Phonebook.getPhonebook().getEastBank().getClosestStop().getX(),
 						Phonebook.getPhonebook().getEastBank().getClosestStop().getY());
 			}
@@ -140,7 +140,7 @@ public abstract class Person extends Agent{
 			}
 		}
 
-		if (home.type.equals("EastApartment"))
+		if (home.type.equals("East Apartment"))
 			getGui().DoGoToBank("East");
 		else
 			getGui().DoGoToBank("West");
@@ -366,8 +366,23 @@ public abstract class Person extends Agent{
 		return home;
 	}
 
-	public void setGui(PersonGui gui) {
-		this.gui = gui;
+	public void setGui(PersonGui g) {
+	
+		this.gui = g;
+		print("Home =" + home + "Type =" + home.type);
+		if (home.type.equals("East Apartment")){
+			gui.setxPos(0);
+			gui.setyPos(0);
+		}
+		if (home.type.equals("West Apartment")){
+			gui.setxPos(500);
+			gui.setyPos(225);
+		}
+		if (home.type.equals("Mansion")){
+			gui.setxPos(20);
+			gui.setyPos(100);
+		}
+		
 	}
 
 	public void setPanel(AnimationPanel ap) {

@@ -1,13 +1,14 @@
 package application.gui.animation.agentGui;
 
-import person.*;
-
-import java.awt.*;
-import java.util.ArrayList;
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.util.Random;
 
-import javax.swing.JLabel;
-
+import person.Crook;
+import person.Deadbeat;
+import person.Person;
+import person.Wealthy;
+import person.Worker;
 import application.Phonebook;
 
 public class PersonGui extends CityGui {

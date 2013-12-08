@@ -99,23 +99,23 @@ public class Application extends JPanel {
 		//Shift 1
 		allHousing.add(new Housing(bank1a, allHousing.size(), "East Apartment"));
 		bank1a.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(bank1b, allHousing.size(), "East Apartment"));
+		allHousing.add(new Housing(bank1b, allHousing.size(), "West Apartment"));
 		bank1b.setHome(allHousing.get(allHousing.size() - 1));
 		allHousing.add(new Housing(bank1c, allHousing.size(), "East Apartment"));
 		bank1c.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(market1d, allHousing.size(), "East Apartment"));
+		allHousing.add(new Housing(market1d, allHousing.size(), "West Apartment"));
 		market1d.setHome(allHousing.get(allHousing.size() - 1));
 		allHousing.add(new Housing(market1e, allHousing.size(), "East Apartment"));
 		market1e.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(market1f, allHousing.size(), "East Apartment"));
+		allHousing.add(new Housing(market1f, allHousing.size(), "West Apartment"));
 		market1f.setHome(allHousing.get(allHousing.size() - 1));
 		allHousing.add(new Housing(rest1g, allHousing.size(), "East Apartment"));
 		rest1g.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(rest1h, allHousing.size(), "East Apartment"));
+		allHousing.add(new Housing(rest1h, allHousing.size(), "West Apartment"));
 		rest1h.setHome(allHousing.get(allHousing.size() - 1));
 		allHousing.add(new Housing(rest1i, allHousing.size(), "East Apartment"));
 		rest1i.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(rest1j, allHousing.size(), "East Apartment"));
+		allHousing.add(new Housing(rest1j, allHousing.size(), "West Apartment"));
 		rest1j.setHome(allHousing.get(allHousing.size() - 1));
 		allHousing.add(new Housing(rest1k, allHousing.size(), "East Apartment"));
 		rest1k.setHome(allHousing.get(allHousing.size() - 1));
@@ -128,28 +128,29 @@ public class Application extends JPanel {
 
 	    allHousing.add(new Housing(bank2a, allHousing.size(), "West Apartment"));
 		bank2a.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(bank2b, allHousing.size(), "West Apartment"));
+		allHousing.add(new Housing(bank2b, allHousing.size(), "East Apartment"));
 		bank2b.setHome(allHousing.get(allHousing.size() - 1));
 		allHousing.add(new Housing(bank2c, allHousing.size(), "West Apartment"));
 		bank2c.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(market2d, allHousing.size(), "West Apartment"));
+		allHousing.add(new Housing(market2d, allHousing.size(), "East Apartment"));
 		market2d.setHome(allHousing.get(allHousing.size() - 1));
 		allHousing.add(new Housing(market2e, allHousing.size(), "West Apartment"));
 		market2e.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(market2f, allHousing.size(), "West Apartment"));
+		allHousing.add(new Housing(market2f, allHousing.size(), "East Apartment"));
 		market2f.setHome(allHousing.get(allHousing.size() - 1));
 		allHousing.add(new Housing(rest2g, allHousing.size(), "West Apartment"));
 		rest2g.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(rest2h, allHousing.size(), "West Apartment"));
+		allHousing.add(new Housing(rest2h, allHousing.size(), "East Apartment"));
 		rest2h.setHome(allHousing.get(allHousing.size() - 1));
 		allHousing.add(new Housing(rest2i, allHousing.size(), "West Apartment"));
 		rest2i.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(rest2j, allHousing.size(), "West Apartment"));
+		allHousing.add(new Housing(rest2j, allHousing.size(), "East Apartment"));
 		rest2j.setHome(allHousing.get(allHousing.size() - 1));
 		allHousing.add(new Housing(rest2k, allHousing.size(), "West Apartment"));
 		rest2k.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(crook1, allHousing.size(), "Apartment"));
-		rest2k.setHome(allHousing.get(allHousing.size() - 1));
+		
+		allHousing.add(new Housing(crook1, allHousing.size(), "East Apartment"));
+		crook1.setHome(allHousing.get(allHousing.size() - 1));
 
 		allHousing.add(new Housing(house1, allHousing.size(), "West Apartment"));
 		house1.setHome(allHousing.get(allHousing.size() - 1));
@@ -159,10 +160,10 @@ public class Application extends JPanel {
 		wealthy1.setHome(allHousing.get(allHousing.size() - 1));
 		allHousing.add(new Housing(wealthy2, allHousing.size(), "Mansion"));
 		wealthy2.setHome(allHousing.get(allHousing.size() - 1));
-		//		allHousing.add(new Housing(wealthy3, allHousing.size(), "Mansion"));
-		//		wealthy3.setHome(allHousing.get(allHousing.size() - 1));
-		//		allHousing.add(new Housing(wealthy4, allHousing.size(), "Mansion"));
-		//		wealthy4.setHome(allHousing.get(allHousing.size() - 1));
+//		allHousing.add(new Housing(wealthy3, allHousing.size(), "Mansion"));
+//		wealthy3.setHome(allHousing.get(allHousing.size() - 1));
+//		allHousing.add(new Housing(wealthy4, allHousing.size(), "Mansion"));
+//		wealthy4.setHome(allHousing.get(allHousing.size() - 1));
 		Phonebook.getPhonebook().setHousingList(allHousing);
 
 
@@ -200,7 +201,7 @@ public class Application extends JPanel {
 		//		getPopulation().add(wealthy3);
 		//		getPopulation().add(wealthy4);
 		getPopulation().add(crook1);
-
+	
 		//Setting Gui for everyone
 		for (Person person : getPopulation()) {
 			person.setPanel(animPanel);
@@ -208,7 +209,7 @@ public class Application extends JPanel {
 			person.setGui(pg);
 			animPanel.addGui(pg);
 		}
-
+		
 		for(Housing house : allHousing) {
 			if(house.type.toLowerCase().contains("apartment")) {
 				animPanel.addAptUnit(house);

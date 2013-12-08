@@ -224,7 +224,8 @@ public class Worker extends Person {
 	public void prepareForWork() {
 		currentRoleName = myJob.title;
 		print("Preparing for work as " + myJob.title);
-		gui.walk = gui.decideForBus(myJob.jobPlace);
+		//gui.walk = gui.decideForBus(myJob.jobPlace);
+		gui.walk = true;
 		if (!gui.walk){
 			gui.doGoToBus(Phonebook.getPhonebook().getEastBank().getClosestStop().getX(),
 					Phonebook.getPhonebook().getEastBank().getClosestStop().getY());
