@@ -48,6 +48,9 @@ public abstract class Person extends Agent{
 	private HungerLevel hunger = HungerLevel.full;
 	int eatTime = 4;
 	protected Semaphore eating = new Semaphore(0, true);
+	//IMPORTANT ADD TO MESSAGES
+	protected Semaphore waitingAtBus = new Semaphore(0, true);
+	protected Semaphore beingTransported = new Semaphore(0, true);
 
 	//Bank Related
 	public double money;

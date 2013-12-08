@@ -45,4 +45,9 @@ public class BusStop
 	{
 		return BusStopNumber;
 	}
+	
+	public int getNumberOfWaitingPassengers()
+	{
+		return waitingPassengers.size();
+	}
 }
