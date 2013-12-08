@@ -61,20 +61,17 @@ public class Phonebook{
 		busStops.add(new Point(420, 230));		//Bottom right bus stop = busStop(3)
 		
 		eastBank = new Bank("East Bank");
-		eastBank.location = new Point()
 		eastBank.setClosestStop(busStops.get(3));		//setting building's closest bus stop
 		
 		//	westBank = new Bank("Bank");
 		//set bus stop
 		
 		eastMarket = new Market("Market");
+		//eastMarket.location = new Point(525, 125);
 		eastMarket.setClosestStop(busStops.get(1));		//setting building's closest bus stop
 		
 		//	westMarket = new Market("Market");
 		// set bus stop
-
-		eastBank = new Bank("Bank");
-		westBank = new Bank("Bank");
 		eastMarket = new Market("Market");
 		westMarket = new Market("Market");
 		seafoodRestaurant = new SeafoodRestaurant("Seafood Restaurant");

@@ -34,7 +34,6 @@ public class Application extends JPanel {
 	public Application(AnimationPanel ap) {
 
 		animPanel = ap;
-
 		//the following line is for dynamic building and business making in v2
 		//Phonebook.getPhonebook().getBusinessFromGui(animPanel);
 
