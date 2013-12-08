@@ -32,7 +32,7 @@ public class Phonebook{
 	static private ItalianRestaurant italianRestaurant;
 	//MexicanRestaurant mexicanRestaurant;
 	//AmericanRestaurant americanRestaurant;
-	
+
 
 	private HousingMaintenanceCompany housingMaintenanceCompany;
 
@@ -55,11 +55,22 @@ public class Phonebook{
 	public Intersection intersection3 = new Intersection(170, 192, 30, 38, 3);
 	public Intersection intersection4 = new Intersection(390, 192, 30, 38, 4);
 	
+	public Crosswalk crosswalk1 = new Crosswalk(70, 70, 30, 39, 1);
+//	public Crosswalk crosswalk2 = new Crosswalk(,,,,1);
+//	public Crosswalk crosswalk3 = new Crosswalk(,,,,1);
+//	public Crosswalk crosswalk4 = new Crosswalk(,,,,1);
+//	public Crosswalk crosswalk5 = new Crosswalk(,,,,1);
+//	public Crosswalk crosswalk6 = new Crosswalk(,,,,1);
+//	public Crosswalk crosswalk7 = new Crosswalk(,,,,1);
+//	public Crosswalk crosswalk8 = new Crosswalk(,,,,1);
+//	public Crosswalk crosswalk9 = new Crosswalk(,,,,1);
+//	public Crosswalk crosswalk10 = new Crosswalk(,,,,1);
+//	public Crosswalk crosswalk11 = new Crosswalk(,,,,1);
+//	public Crosswalk crosswalk12 = new Crosswalk(,,,,1);
 
 	private static Phonebook phonebook;
 
-	private Phonebook() 
-	{
+	private Phonebook() {
 		eastBank = new Bank("Bank");
 		westBank = new Bank("Bank");
 		eastMarket = new Market("Market");
@@ -67,13 +78,13 @@ public class Phonebook{
 		seafoodRestaurant = new SeafoodRestaurant("Seafood Restaurant");
 		chineseRestaurant = new ChineseRestaurant("Chinese Restaurant");
 		italianRestaurant = new ItalianRestaurant("Italian Restaurant");
-		
+
 		/* For future use after all the restaurants have been integrated
 		 * 
 		mexicanRestaurant = new MexicanRestaurant("Mexican Restaurant");
 		seafoodRestaurant = new SeafoodRestaurant("Seafood Restaurant");
 		americanRestaurant = new AmericanRestaurant("American Restaurant");
-		*/
+		 */
 		housingMaintenanceCompany = new HousingMaintenanceCompany("Housing maintenance company");
 		getBusStops().add(new Point(172, 28));
 		getBusStops().add(new Point(172, 230));
@@ -81,38 +92,32 @@ public class Phonebook{
 		getBusStops().add(new Point(420, 230));
 	}
 
-	public static Phonebook getPhonebook() 
-	{
-		if (phonebook == null) 
-		{
+	public static Phonebook getPhonebook() {
+		if (phonebook == null) {
 			phonebook = new Phonebook();
 			return phonebook;
 		}
-		else 
-		{
+		else {
 			return phonebook;
 		}
 	}
 
-	
-	public Bank getEastBank() 
-	{
-			return eastBank; 
-	}
-	
-	public Bank getWestBank() 
-	{
-			return westBank; 
+
+	public Bank getEastBank() {
+		return eastBank; 
 	}
 
-	public Market getEastMarket() 
-	{
-			return eastMarket;
+	public Bank getWestBank() {
+		return westBank; 
 	}
-	
+
+	public Market getEastMarket() {
+		return eastMarket;
+	}
+
 	public Market getWestMarket() 
 	{
-			return westMarket;
+		return westMarket;
 	}
 
 	public ChineseRestaurant getChineseRestaurant() 
@@ -123,7 +128,7 @@ public class Phonebook{
 	public SeafoodRestaurant getSeafoodRestaurant() {
 		return seafoodRestaurant;
 	}
-	
+
 	public ItalianRestaurant getItalianRestaurant() 
 	{
 		return italianRestaurant; //temporary stub. make more dynamic later
@@ -182,7 +187,7 @@ public class Phonebook{
 		if (type == "chineseRestaurant")
 			chineseRestaurant.closeBuilding();
 	}
-	
+
 	public void openBuilding(String type){
 		System.out.println("Opening " + type);
 		if (type == "eastBank")
@@ -196,19 +201,19 @@ public class Phonebook{
 		if (type == "chineseRestaurant")
 			chineseRestaurant.userClosed = false;
 	}
-	
+
 	public class Intersection {
 		public Rectangle intersection;
 		public int number;
 
 		public boolean intersectionBusy;
-		
+
 		public Intersection(int x, int y, int width, int height, int n) {
 			intersection = new Rectangle(x, y, width, height);
 			intersectionBusy = false;
 			number = n;
 		}
-		
+
 		public Rectangle getIntersection() {
 			return intersection;
 		}
@@ -223,6 +228,35 @@ public class Phonebook{
 
 		public void setIntersectionBusy(boolean intersectionBusy) {
 			this.intersectionBusy = intersectionBusy;
+		}
+	}
+	
+	public class Crosswalk {
+		public Rectangle crosswalk;
+		public int number;
+
+		public boolean crosswalkBusy;
+
+		public Crosswalk(int x, int y, int width, int height, int n) {
+			crosswalk = new Rectangle(x, y, width, height);
+			crosswalkBusy = false;
+			number = n;
+		}
+
+		public Rectangle getCrosswalk() {
+			return crosswalk;
+		}
+
+		public void setIntersection(Rectangle intersection) {
+			this.crosswalk = intersection;
+		}
+
+		public boolean isIntersectionBusy() {
+			return crosswalkBusy;
+		}
+
+		public void setIntersectionBusy(boolean intersectionBusy) {
+			this.crosswalkBusy = intersectionBusy;
 		}
 	}
 }

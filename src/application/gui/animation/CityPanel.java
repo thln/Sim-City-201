@@ -141,12 +141,33 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		
 		//Intersections
 		g2.setColor(Color.BLACK);
-		g2.fillRect((int) Phonebook.getPhonebook().intersection1.getIntersection().getX(), (int) Phonebook.getPhonebook().intersection1.getIntersection().getY(), (int) Phonebook.getPhonebook().intersection1.getIntersection().getWidth(), (int) Phonebook.getPhonebook().intersection1.getIntersection().getHeight());
-		g2.fillRect((int) Phonebook.getPhonebook().intersection2.getIntersection().getX(), (int) Phonebook.getPhonebook().intersection2.getIntersection().getY(), (int) Phonebook.getPhonebook().intersection2.getIntersection().getWidth(), (int) Phonebook.getPhonebook().intersection2.getIntersection().getHeight());
-		g2.fillRect((int) Phonebook.getPhonebook().intersection3.getIntersection().getX(), (int) Phonebook.getPhonebook().intersection3.getIntersection().getY(), (int) Phonebook.getPhonebook().intersection3.getIntersection().getWidth(), (int) Phonebook.getPhonebook().intersection3.getIntersection().getHeight());
-		g2.fillRect((int) Phonebook.getPhonebook().intersection4.getIntersection().getX(), (int) Phonebook.getPhonebook().intersection4.getIntersection().getY(), (int) Phonebook.getPhonebook().intersection4.getIntersection().getWidth(), (int) Phonebook.getPhonebook().intersection4.getIntersection().getHeight());
+		g2.fillRect((int) Phonebook.getPhonebook().intersection1.getIntersection().getX(),
+				(int) Phonebook.getPhonebook().intersection1.getIntersection().getY(),
+				(int) Phonebook.getPhonebook().intersection1.getIntersection().getWidth(),
+				(int) Phonebook.getPhonebook().intersection1.getIntersection().getHeight());
+		g2.fillRect((int) Phonebook.getPhonebook().intersection2.getIntersection().getX(),
+				(int) Phonebook.getPhonebook().intersection2.getIntersection().getY(),
+				(int) Phonebook.getPhonebook().intersection2.getIntersection().getWidth(),
+				(int) Phonebook.getPhonebook().intersection2.getIntersection().getHeight());
+		g2.fillRect((int) Phonebook.getPhonebook().intersection3.getIntersection().getX(),
+				(int) Phonebook.getPhonebook().intersection3.getIntersection().getY(),
+				(int) Phonebook.getPhonebook().intersection3.getIntersection().getWidth(),
+				(int) Phonebook.getPhonebook().intersection3.getIntersection().getHeight());
+		g2.fillRect((int) Phonebook.getPhonebook().intersection4.getIntersection().getX(),
+				(int) Phonebook.getPhonebook().intersection4.getIntersection().getY(),
+				(int) Phonebook.getPhonebook().intersection4.getIntersection().getWidth(),
+				(int) Phonebook.getPhonebook().intersection4.getIntersection().getHeight());
 
-				
+		//Crosswalks
+		g2.setColor(Color.DARK_GRAY);
+		g2.fillRect((int) Phonebook.getPhonebook().crosswalk1.getCrosswalk().getX(),
+				(int) Phonebook.getPhonebook().crosswalk1.getCrosswalk().getY(),
+				(int) Phonebook.getPhonebook().crosswalk1.getCrosswalk().getWidth(),
+				(int) Phonebook.getPhonebook().crosswalk1.getCrosswalk().getHeight());
+		
+		//Crosswalk Line Details
+		drawCrosswalkLines(g2);
+		
 		//Bus Stops
 		g2.drawImage(busStop.getImage(), 127, 28, null);
 		g2.drawImage(busStop.getImage(), 127, 230, null);
@@ -245,6 +266,8 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 
 		animationPanel.displayBlankBuildingPanel();
 	}
+	
+	
 
 	public void mousePressed(MouseEvent e) {
 
@@ -260,5 +283,45 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 
 	public void mouseExited(MouseEvent e) {
 
+	}
+	
+	public void drawCrosswalkLines(Graphics2D g2) {
+		g2.setColor(Color.YELLOW);
+		g2.fillRect((int) Phonebook.getPhonebook().crosswalk1.getCrosswalk().getX(),
+				(int) (Phonebook.getPhonebook().crosswalk1.getCrosswalk().getY() + (Phonebook.getPhonebook().crosswalk1.getCrosswalk().getHeight()/20*2)),
+				(int) Phonebook.getPhonebook().crosswalk1.getCrosswalk().getWidth(),
+				(int) Phonebook.getPhonebook().crosswalk1.getCrosswalk().getHeight()/20);
+		g2.fillRect((int) Phonebook.getPhonebook().crosswalk1.getCrosswalk().getX(),
+				(int) (Phonebook.getPhonebook().crosswalk1.getCrosswalk().getY() + (Phonebook.getPhonebook().crosswalk1.getCrosswalk().getHeight()/20*4)),
+				(int) Phonebook.getPhonebook().crosswalk1.getCrosswalk().getWidth(),
+				(int) Phonebook.getPhonebook().crosswalk1.getCrosswalk().getHeight()/20);
+		g2.fillRect((int) Phonebook.getPhonebook().crosswalk1.getCrosswalk().getX(),
+				(int) (Phonebook.getPhonebook().crosswalk1.getCrosswalk().getY() + (Phonebook.getPhonebook().crosswalk1.getCrosswalk().getHeight()/20*6)),
+				(int) Phonebook.getPhonebook().crosswalk1.getCrosswalk().getWidth(),
+				(int) Phonebook.getPhonebook().crosswalk1.getCrosswalk().getHeight()/20);
+		g2.fillRect((int) Phonebook.getPhonebook().crosswalk1.getCrosswalk().getX(),
+				(int) (Phonebook.getPhonebook().crosswalk1.getCrosswalk().getY() + (Phonebook.getPhonebook().crosswalk1.getCrosswalk().getHeight()/20*8)),
+				(int) Phonebook.getPhonebook().crosswalk1.getCrosswalk().getWidth(),
+				(int) Phonebook.getPhonebook().crosswalk1.getCrosswalk().getHeight()/20);
+		g2.fillRect((int) Phonebook.getPhonebook().crosswalk1.getCrosswalk().getX(),
+				(int) (Phonebook.getPhonebook().crosswalk1.getCrosswalk().getY() + (Phonebook.getPhonebook().crosswalk1.getCrosswalk().getHeight()/20*10)),
+				(int) Phonebook.getPhonebook().crosswalk1.getCrosswalk().getWidth(),
+				(int) Phonebook.getPhonebook().crosswalk1.getCrosswalk().getHeight()/20);
+		g2.fillRect((int) Phonebook.getPhonebook().crosswalk1.getCrosswalk().getX(),
+				(int) (Phonebook.getPhonebook().crosswalk1.getCrosswalk().getY() + (Phonebook.getPhonebook().crosswalk1.getCrosswalk().getHeight()/20*12)),
+				(int) Phonebook.getPhonebook().crosswalk1.getCrosswalk().getWidth(),
+				(int) Phonebook.getPhonebook().crosswalk1.getCrosswalk().getHeight()/20);
+		g2.fillRect((int) Phonebook.getPhonebook().crosswalk1.getCrosswalk().getX(),
+				(int) (Phonebook.getPhonebook().crosswalk1.getCrosswalk().getY() + (Phonebook.getPhonebook().crosswalk1.getCrosswalk().getHeight()/20*14)),
+				(int) Phonebook.getPhonebook().crosswalk1.getCrosswalk().getWidth(),
+				(int) Phonebook.getPhonebook().crosswalk1.getCrosswalk().getHeight()/20);
+		g2.fillRect((int) Phonebook.getPhonebook().crosswalk1.getCrosswalk().getX(),
+				(int) (Phonebook.getPhonebook().crosswalk1.getCrosswalk().getY() + (Phonebook.getPhonebook().crosswalk1.getCrosswalk().getHeight()/20*16)),
+				(int) Phonebook.getPhonebook().crosswalk1.getCrosswalk().getWidth(),
+				(int) Phonebook.getPhonebook().crosswalk1.getCrosswalk().getHeight()/20);
+		g2.fillRect((int) Phonebook.getPhonebook().crosswalk1.getCrosswalk().getX(),
+				(int) (Phonebook.getPhonebook().crosswalk1.getCrosswalk().getY() + (Phonebook.getPhonebook().crosswalk1.getCrosswalk().getHeight()/20*18)),
+				(int) Phonebook.getPhonebook().crosswalk1.getCrosswalk().getWidth(),
+				(int) Phonebook.getPhonebook().crosswalk1.getCrosswalk().getHeight()/20);
 	}
 }
