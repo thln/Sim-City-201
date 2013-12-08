@@ -58,14 +58,18 @@ public class Phonebook{
 	
 	public Crosswalk crosswalk1 = new Crosswalk(160, 10, 39, 25, 1);
 	public Crosswalk crosswalk2 = new Crosswalk(380, 10, 39, 25, 1);
+	
 	public Crosswalk crosswalk3 = new Crosswalk(70, 70, 25, 39, 3);
 	public Crosswalk crosswalk4 = new Crosswalk(280, 70, 25, 39, 4);
 	public Crosswalk crosswalk5 = new Crosswalk(490, 70, 25, 39, 5);
+	
 	public Crosswalk crosswalk6 = new Crosswalk(160, 137, 39, 25, 6);
 	public Crosswalk crosswalk7 = new Crosswalk(380, 137, 39, 25, 7);
+	
 	public Crosswalk crosswalk8 = new Crosswalk(70, 190, 25, 39, 8);
 	public Crosswalk crosswalk9 = new Crosswalk(280, 190, 25, 39, 9);
 	public Crosswalk crosswalk10 = new Crosswalk(490, 190, 25, 39, 10);
+	
 	public Crosswalk crosswalk11 = new Crosswalk(160, 270, 39, 25, 11);
 	public Crosswalk crosswalk12 = new Crosswalk(380, 270, 39, 25, 12);
 
