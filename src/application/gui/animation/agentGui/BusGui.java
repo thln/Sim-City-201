@@ -6,6 +6,8 @@ import java.awt.*;
 
 import javax.swing.JLabel;
 
+import application.Phonebook;
+
 public class BusGui extends CityGui{
 
 	private Bus agent = null;
@@ -70,7 +72,6 @@ public class BusGui extends CityGui{
 
 	public void draw(Graphics2D g) {
 		g.setColor(Color.YELLOW);
-		//g.fillOval(xPos, yPos, currWidth, currHeight); //for rounding corners, fancy animation later?
 		g.fillOval(xPos, yPos, 20, 20); //keeping it uniform for now
 	}
 

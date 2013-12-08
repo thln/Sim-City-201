@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -21,6 +22,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import application.Phonebook;
 import application.gui.animation.agentGui.BusGuiHorizontal;
 import application.gui.animation.agentGui.BusGuiVertical;
 import application.gui.animation.agentGui.Gui;
@@ -48,8 +50,7 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 
 	public ImageIcon roadHorizontal = new ImageIcon("res/roadsHorizontal.png");
 	public ImageIcon roadVertical = new ImageIcon("res/roadsVertical.png");
-	public ImageIcon busStop = new ImageIcon("res/bus_stop.png");
-	
+	public ImageIcon busStop = new ImageIcon("res/bus_stop.png");	
 	public BusGuiHorizontal busA = new BusGuiHorizontal();
 	public BusGuiVertical busB = new BusGuiVertical();
 
@@ -84,9 +85,14 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		
 		addBuilding("House", 20, 100);
 		addBuilding("East Apartment", 0, 0);
-		addBuilding("West Apartment", 0, WINDOWY-75);
+		addBuilding("West Apartment", 500, WINDOWY-75);
 		addBuilding("Park",(WINDOWX/2)-80,(WINDOWY/2)-47);
-		
+
+		addBuilding("Mexican Restaurant", 20, WINDOWY-75);
+		addBuilding("Burger Restaurant", WINDOWX-100, WINDOWY-75);
+		addBuilding("Italian Restaurant", WINDOWX-100, 20);
+		addBuilding("Fancy Restaurant", WINDOWX-100, 100+market.getIconHeight()+2);
+	
 		addGui(busA);
 		addGui(busB);
 		
@@ -138,17 +144,21 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		
 		//Intersections
 		g2.setColor(Color.BLACK);
-		g2.fillRect(170, 72, 30, 38);
-		g2.fillRect(390, 72, 30, 38);
-		g2.fillRect(170, 192, 30, 38);
-		g2.fillRect(390, 192, 30, 38);
+		g2.fillRect((int) Phonebook.getPhonebook().intersection1.getIntersection().getX(), (int) Phonebook.getPhonebook().intersection1.getIntersection().getY(), (int) Phonebook.getPhonebook().intersection1.getIntersection().getWidth(), (int) Phonebook.getPhonebook().intersection1.getIntersection().getHeight());
+		g2.fillRect((int) Phonebook.getPhonebook().intersection2.getIntersection().getX(), (int) Phonebook.getPhonebook().intersection2.getIntersection().getY(), (int) Phonebook.getPhonebook().intersection2.getIntersection().getWidth(), (int) Phonebook.getPhonebook().intersection2.getIntersection().getHeight());
+		g2.fillRect((int) Phonebook.getPhonebook().intersection3.getIntersection().getX(), (int) Phonebook.getPhonebook().intersection3.getIntersection().getY(), (int) Phonebook.getPhonebook().intersection3.getIntersection().getWidth(), (int) Phonebook.getPhonebook().intersection3.getIntersection().getHeight());
+		g2.fillRect((int) Phonebook.getPhonebook().intersection4.getIntersection().getX(), (int) Phonebook.getPhonebook().intersection4.getIntersection().getY(), (int) Phonebook.getPhonebook().intersection4.getIntersection().getWidth(), (int) Phonebook.getPhonebook().intersection4.getIntersection().getHeight());
 
+				
 		//Bus Stops
 		g2.drawImage(busStop.getImage(), 127, 28, null);
 		g2.drawImage(busStop.getImage(), 127, 230, null);
 		g2.drawImage(busStop.getImage(), 420, 28, null);
 		g2.drawImage(busStop.getImage(), 420, 230, null);
 
+		//Busses
+		
+		
 		//Drawing all buildings
 		for (int i=0; i<buildings.size(); i++ ) {
 			Building b = buildings.get(i);
@@ -257,6 +267,4 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 	public void mouseExited(MouseEvent e) {
 
 	}
-
-
 }

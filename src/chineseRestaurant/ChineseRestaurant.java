@@ -1,5 +1,6 @@
 package chineseRestaurant;
 
+import java.awt.Point;
 import java.util.Vector;
 
 import person.Person;
@@ -21,6 +22,8 @@ public class ChineseRestaurant implements Restaurant {
 	//Data
 	String name;
 	public boolean userClosed = false;
+	public Point location; 
+	private Point closestStop;
 
 	//List of Customers
 	private Vector<ChineseRestaurantCustomerRole> customers = new Vector<ChineseRestaurantCustomerRole>();
@@ -46,6 +49,7 @@ public class ChineseRestaurant implements Restaurant {
 	public ChineseRestaurantMockCashier chineseRestaurantMockCashier = new ChineseRestaurantMockCashier("MockCashier");
 
 	public ChineseRestaurant(String name) {
+		location = new Point(300, 20);
 		this.name = name;
 		chineseRestaurantCookRole.setGui(cookGui);
 	}
@@ -244,5 +248,13 @@ public class ChineseRestaurant implements Restaurant {
 		buildPanel.removeGui(cookGui);
 		
 		chineseRestaurantCashierRole.msgLeaveRole();
+	}
+
+	public void setClosestStop(Point point) {
+		closestStop = point;
+	}
+	
+	public Point getClosestStop() {
+		return closestStop;
 	}
 }

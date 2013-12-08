@@ -3,6 +3,7 @@ package bank;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.Semaphore;
 
 import bank.interfaces.BankCustomer;
@@ -55,7 +56,8 @@ public class BankGuardRole extends Role implements BankGuard {
 	//MESSAGES
 
 	public void msgTellerCameToWork (BankTeller t1) {
-	//	print("Teller" + t1.getName() + " arrived at work");	
+
+		//	print("Teller" + t1.getName() + " arrived at work");	
 		tellers.add(new MyTeller(t1));
 		print("Teller size = " + tellers.size());
 	}
@@ -92,7 +94,7 @@ public class BankGuardRole extends Role implements BankGuard {
 		correct.state = TellerState.available;
 		stateChanged();
 	}
-	
+
 	public void msgAtDestination() {
 		this.atDestination.release();
 	}
@@ -140,7 +142,22 @@ public class BankGuardRole extends Role implements BankGuard {
 	}
 
 	private void catchRobber(BankCustomer robber1) {
-		boolean caught = true;
+		boolean caught;
+		Random rand = new Random();
+		//90% chance Robber is caught, 10% he gets away;
+		int chance = rand.nextInt(2);
+		if (chance == 1){
+			caught = false;
+			try {
+				Thread.sleep(1000);
+			} catch(InterruptedException ex) {
+				Thread.currentThread().interrupt();
+			}
+		}
+		else {
+			caught = true;
+		}
+
 		//GUI animation
 		gui.DoCatchRobber();
 		try {
@@ -149,11 +166,15 @@ public class BankGuardRole extends Role implements BankGuard {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//95% chance Robber is caught, 5% he gets away;
-		if (caught)
+		if (caught){
 			robber1.msgCaughtYou();
-		if (!caught)
-			robber1.msgGotAway();  
+		}
+		if (!caught) {
+			double spoils = Phonebook.getPhonebook().getEastBank().vault/10;
+			Phonebook.getPhonebook().getEastBank().vault -= spoils;
+			robber1.msgGotAway(spoils); 
+		}
+		robbers.remove(robber1);
 	}
 
 	private boolean assignToTeller(BankCustomer cust1) {
@@ -201,7 +222,7 @@ public class BankGuardRole extends Role implements BankGuard {
 			}
 		}
 	}
-	
+
 	public void setGui(BankGuardGui gui) {
 		this.gui = gui;
 	}

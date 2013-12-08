@@ -2,17 +2,19 @@ package application.gui.animation.agentGui;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.Semaphore;
+
+import application.Phonebook;
 
 public class BusGuiVertical extends CityGui {
 
 	//	private Bus agent = null;
 	private boolean isPresent = true;
 	
-	private final int stopTopY = 40;
-	private final int stopBottomY = 230;
+	private final int stopTopY = (int) Phonebook.getPhonebook().getBusStops().get(0).getY()+8;
+	private final int stopBottomY = (int) Phonebook.getPhonebook().getBusStops().get(2).getY()+8;
 	private final int stopLeftX = 168;
 	private final int stopRightX = 388;
 
@@ -24,7 +26,7 @@ public class BusGuiVertical extends CityGui {
 	private enum Command {noCommand, stop1, stop2, stop3, stop4};
 	private Command command = Command.stop1;
 
-	private enum BusState {stopped, enroute};
+	private enum BusState {stopped, enroute, inIntersection1, inIntersection2, inIntersection3, inIntersection4};
 	BusState state = BusState.stopped;
 
 	private Timer busStop = new Timer();
@@ -33,16 +35,20 @@ public class BusGuiVertical extends CityGui {
 	}
 
 	public void updatePosition() {
-//		if (xPos < xDestination)
-//			xPos++;
-//		else if (xPos > xDestination)
-//			xPos--;
+		
+		if (inBusyIntersection()) {
+			return;
+		}
 
 		if (yPos < yDestination)
 			yPos++;
 		else if (yPos > yDestination)
 			yPos--;
-
+		
+		inAnIntersection();
+		leftAnIntersection();
+		
+		
 		if (yPos == 325 || yPos == -25) {
 			changeRoads();
 		}
@@ -128,5 +134,96 @@ public class BusGuiVertical extends CityGui {
 			goToStop3();
 		}
 	}
+	
+	synchronized public boolean inBusyIntersection() {
 
+		Rectangle me = new Rectangle(xPos, yPos-1, 25, 25);
+		if (Phonebook.getPhonebook().intersection1.getIntersection().intersects(me)) {
+			if (Phonebook.getPhonebook().intersection1.isIntersectionBusy() == true &&
+					!(state == BusState.inIntersection1)) {
+				return  true;
+			}
+			return false;
+		}
+		
+		me.setLocation(xPos, yPos+1);
+		if (Phonebook.getPhonebook().intersection2.getIntersection().intersects(me)) {
+			if (Phonebook.getPhonebook().intersection2.isIntersectionBusy() == true &&
+					!(state == BusState.inIntersection2)) {
+				return  true;
+			}
+			return false;
+		}
+		
+		me.setLocation(xPos, yPos-1);
+		if (Phonebook.getPhonebook().intersection3.getIntersection().intersects(me)) {
+			if (Phonebook.getPhonebook().intersection3.isIntersectionBusy() == true &&
+					!(state == BusState.inIntersection3)) {
+				return  true;
+			}
+			return false;
+		}
+		
+		me.setLocation(xPos, yPos+1);
+		if (Phonebook.getPhonebook().intersection4.getIntersection().intersects(me)) {
+			if (Phonebook.getPhonebook().intersection4.isIntersectionBusy() == true &&
+					!(state == BusState.inIntersection4)) {
+				return  true;
+			}
+			return false;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	public void inAnIntersection() {
+		Rectangle me = new Rectangle(xPos, yPos, 25, 25);
+		
+		if (Phonebook.getPhonebook().intersection1.getIntersection().intersects(me) &&
+				!(state == BusState.inIntersection1)) {
+			Phonebook.getPhonebook().intersection1.setIntersectionBusy(true);	
+			state = BusState.inIntersection1;
+		}
+		else if (Phonebook.getPhonebook().intersection2.getIntersection().intersects(me) &&
+				!(state == BusState.inIntersection2)) {
+			Phonebook.getPhonebook().intersection2.setIntersectionBusy(true);	
+			state = BusState.inIntersection2;
+		}
+		else if (Phonebook.getPhonebook().intersection3.getIntersection().intersects(me) &&
+				!(state == BusState.inIntersection3)) {
+			Phonebook.getPhonebook().intersection3.setIntersectionBusy(true);	
+			state = BusState.inIntersection3;
+		}
+		else if (Phonebook.getPhonebook().intersection4.getIntersection().intersects(me) &&
+				!(state == BusState.inIntersection4)) {
+			Phonebook.getPhonebook().intersection4.setIntersectionBusy(true);	
+			state = BusState.inIntersection4;			
+		}
+	}
+	
+	public void leftAnIntersection() {
+		Rectangle me = new Rectangle(xPos, yPos, 25, 25);
+		
+		if (!Phonebook.getPhonebook().intersection1.getIntersection().intersects(me)
+				&& (state == BusState.inIntersection1)) {
+			Phonebook.getPhonebook().intersection1.setIntersectionBusy(false);	
+			state = BusState.enroute;	
+		}
+		else if (!Phonebook.getPhonebook().intersection2.getIntersection().intersects(me)
+				&& (state == BusState.inIntersection2)) {
+			Phonebook.getPhonebook().intersection2.setIntersectionBusy(false);	
+			state = BusState.enroute;	
+		}
+		else if (!Phonebook.getPhonebook().intersection3.getIntersection().intersects(me) 
+				&& (state == BusState.inIntersection3)) {
+			Phonebook.getPhonebook().intersection3.setIntersectionBusy(false);	
+			state = BusState.enroute;	
+		}
+		else if (!Phonebook.getPhonebook().intersection4.getIntersection().intersects(me) 
+				&& (state == BusState.inIntersection4)) {
+			Phonebook.getPhonebook().intersection4.setIntersectionBusy(false);	
+			state = BusState.enroute;	
+		}
+	}
 }

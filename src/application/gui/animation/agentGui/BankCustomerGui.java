@@ -14,7 +14,7 @@ public class BankCustomerGui extends BankGui {
     //RestaurantGui gui;
 
     private int xPos = 300, yPos = 300;//default Customer position
-    private int xDestination = 300, yDestination = 260;//default start position
+    private int xDestination, yDestination;//default start position
     
     private enum Command {inTransit, noCommand};
 	private Command command = Command.noCommand;
@@ -32,24 +32,24 @@ public class BankCustomerGui extends BankGui {
 
     public void updatePosition() {
     	 
-    		if (xPos < xDestination)
-    			xPos++;
-    		else if (xPos > xDestination)
-    			xPos--;
+    	if (xPos < xDestination)
+    		xPos++;
+    	else if (xPos > xDestination)
+    		xPos--;
 
-    		if (yPos < yDestination)
-    			yPos++;
-    		else if (yPos > yDestination)
-    			yPos--;
+    	if (yPos < yDestination)
+    		yPos++;
+    	else if (yPos > yDestination)
+    		yPos--;
 
-    		if (xPos == xDestination && yPos == yDestination) {
-    			if(command != Command.noCommand) {
-    				if(agent != null) {
-    					agent.msgAtDestination();
-    				}
+    	if (xPos == xDestination && yPos == yDestination) {
+      		if (command == Command.inTransit) {
+       		if(agent != null) {
+    			agent.msgAtDestination();
     			}
-    			command = Command.noCommand;
     		}
+    		command = Command.noCommand;
+    	}
     }
 
     public void draw(Graphics2D g) {
@@ -117,5 +117,6 @@ public class BankCustomerGui extends BankGui {
     public void DoExit() {
     	xDestination = 300;
     	yDestination = 350;
+    	command = Command.inTransit;
     }
 }

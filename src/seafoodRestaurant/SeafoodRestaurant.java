@@ -1,4 +1,5 @@
 package seafoodRestaurant;
+import java.awt.Point;
 import java.util.Vector;
 
 import person.Person;
@@ -13,6 +14,7 @@ public class SeafoodRestaurant implements Restaurant {
 	//Data
 	String name;
 	public boolean userClosed = false;
+	public Point location; 
 
 
 	//List of Waiters
@@ -37,6 +39,7 @@ public class SeafoodRestaurant implements Restaurant {
 
 	public SeafoodRestaurant(String name) {
 		this.name = name;
+		location = new Point(200, 20);
 		//seafoodRestaurantCookRole.setGui(cookGui);
 	}
 

@@ -40,7 +40,7 @@ public abstract class Role {
         }
         
         public Person getPerson() {
-                return person;
+        		return person;
         }
         
         public void setPerson(Person person) {
