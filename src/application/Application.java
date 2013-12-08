@@ -240,7 +240,6 @@ public class Application extends JPanel {
 
 		//Setting Gui for everyone
 		for (Person person : getPopulation()) {
-			System.err.println("Person: " + person.getName());
 			person.setPanel(animPanel);
 			PersonGui pg = new PersonGui(person);
 			person.setGui(pg);

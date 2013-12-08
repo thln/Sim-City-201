@@ -7,14 +7,19 @@ import java.util.List;
 import person.Person;
 import application.Phonebook;
 import application.TimeManager;
+import application.gui.animation.agentGui.BusGuiHorizontal;
+import application.gui.animation.agentGui.BusGuiVertical;
 import agent.Agent;
 
-public abstract class Bus extends Agent{
+public abstract class BusAgent extends Agent{
 
 	/*********************
 	 ****** DATA *********
 	 *********************/
 	boolean needToDeposit;
+	boolean ifHorizontal;
+	BusGuiHorizontal guiH;
+	BusGuiVertical guiV;
 	String name;
 	
 	class busPassenger
@@ -32,9 +37,18 @@ public abstract class Bus extends Agent{
 	List<Person> peopleAtBusStop = Collections.synchronizedList(new ArrayList<Person>());
 	
 
-	public Bus(String name) 
+	public BusAgent(String name) 
 	{
-		
+		if(name.equals("Horizontal"))
+		{
+			ifHorizontal = true;
+			guiH = new BusGuiHorizontal();
+		}
+		else if(name.equals("Vertical"))
+		{
+			ifHorizontal = false;
+			guiV = new BusGuiVertical();
+		}
 	}
 	
 	/**** 
