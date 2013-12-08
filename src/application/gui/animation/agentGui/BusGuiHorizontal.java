@@ -333,7 +333,6 @@ public class BusGuiHorizontal extends CityGui {
 				&& (state == BusState.inIntersection3)) {
 			Phonebook.getPhonebook().intersection3.setIntersectionBusy(false);	
 			state = BusState.enroute;	
-			System.err.println(this + " left Intersection 3");
 		}
 		else if (!Phonebook.getPhonebook().intersection4.getIntersection().intersects(me)
 				&& (state == BusState.inIntersection4)) {

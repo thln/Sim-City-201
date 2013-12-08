@@ -72,8 +72,8 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		}
 
 		addBuilding("Chinese Restaurant", WINDOWX / 2, 20);
-		addBuilding("Mexican Restaurant", WINDOWX/2-75, WINDOWY-75);
-		addBuilding("American Restaurant", WINDOWX-100, WINDOWY-75);
+		addBuilding("Mexican Restaurant", WINDOWX-550, WINDOWY-65);
+		addBuilding("American Restaurant", WINDOWX-375, WINDOWY-70);
 		addBuilding("Italian Restaurant", WINDOWX-100, 20);
 		addBuilding("Seafood Restaurant", WINDOWX-100, 100+market.getIconHeight()+2);
 
@@ -88,10 +88,6 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		addBuilding("East Apartment", 500, WINDOWY-50);
 		addBuilding("Park",(WINDOWX/2)-80,(WINDOWY/2)-47);
 
-		addBuilding("Mexican Restaurant", 20, WINDOWY-75);
-		addBuilding("Burger Restaurant", WINDOWX-100, WINDOWY-75);
-		addBuilding("Italian Restaurant", WINDOWX-100, 20);
-		addBuilding("Fancy Restaurant", WINDOWX-100, 100+market.getIconHeight()+2);
 
 		addGui(busA);
 		addGui(busB);
@@ -346,7 +342,7 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 
 
 		//Details
-		g2.setColor(Color.YELLOW);
+		g2.setColor(Color.WHITE);
 
 		//Crosswalk 1
 		g2.fillRect((int) (Phonebook.getPhonebook().crosswalk1.getCrosswalk().getX() + (Phonebook.getPhonebook().crosswalk1.getCrosswalk().getWidth()/20*2)),

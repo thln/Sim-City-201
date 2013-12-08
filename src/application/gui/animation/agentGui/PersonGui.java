@@ -68,12 +68,12 @@ public class PersonGui extends CityGui {
 	public PersonGui(Person p) {
 		this.agent = p;
 		if(p.home.type.equals("West Apartment")) {
-			xHome = 0;
-			yHome = 0;			
+			xHome = 200;
+			yHome = 200;			
 		}
 		if(p.home.type.equals("East Apartment")) {
-			xHome = 500;
-			yHome = 250;			
+			xHome = 520;
+			yHome = 300;			
 		}
 		if (p.home.type.equals("Mansion")){
 			xHome = 20;
@@ -175,9 +175,6 @@ public class PersonGui extends CityGui {
 			g.setColor(currColor);
 
 		g.fillRect(xPos, yPos, 20, 20);
-
-		if(currColor != transColor)
-			g.setColor(Color.WHITE);
 
 		if(agent != null) {
 			g.drawString(agent.getName(), xPos, yPos);
