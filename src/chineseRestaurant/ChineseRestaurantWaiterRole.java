@@ -477,7 +477,9 @@ public class ChineseRestaurantWaiterRole extends Role implements ChineseRestaura
 	}
 
 	protected void AskHostToLeave()	{
-		Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantHostRole.msgIAmLeavingSoon(this);
+		if(Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantHostRole != null)
+			Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantHostRole.msgIAmLeavingSoon(this);
+		
 		if(ChineseRestaurantMyCustomers.isEmpty())
 		{
 			Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantHostRole.msgIAmLeavingWork(this);

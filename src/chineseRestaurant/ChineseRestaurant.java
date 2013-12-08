@@ -98,16 +98,19 @@ public class ChineseRestaurant implements Restaurant {
 		}
 		else if (title == "waiter") {	
 			ChineseRestaurantWaiterRole waiter = new ChineseRestaurantWaiterRole(person, person.getName(), title);
+			RestaurantWaiterGui g = new RestaurantWaiterGui(waiter);
+			restPanel.addGui(g);
+			waiter.setGui(g);
 			if (waiters.size() <= 12) {
-				RestaurantWaiterGui g = new RestaurantWaiterGui(waiter);
-				restPanel.addGui(g);
-				waiter.setGui(g);
+				
 				g.setHomePosition(5, (55 + (22 * waiters.size())));
 			}
 			else if (waiters.size() <= 24) {
+				/*
 				RestaurantWaiterGui g = new RestaurantWaiterGui(waiter);
 				restPanel.addGui(g);
 				waiter.setGui(g);
+				*/
 				g.setHomePosition(27, (55 + (22 * (waiters.size()-12))));
 			}
 			
@@ -120,16 +123,17 @@ public class ChineseRestaurant implements Restaurant {
 		}
 		else if (title == "altWaiter") {
 			ChineseRestaurantAltWaiterRole altWaiter = new ChineseRestaurantAltWaiterRole(person, person.getName(), title);
+			RestaurantWaiterGui g = new RestaurantWaiterGui(altWaiter);
+			restPanel.addGui(g);
+			altWaiter.setGui(g);
 			if (waiters.size() <= 12) {
-				RestaurantWaiterGui g = new RestaurantWaiterGui(altWaiter);
-				restPanel.addGui(g);
-				altWaiter.setGui(g);
+				
 				g.setHomePosition(5, (55 + (22 * waiters.size())));
 			}
 			else if (waiters.size() <= 24) {
-				RestaurantWaiterGui g = new RestaurantWaiterGui(altWaiter);
+				/*RestaurantWaiterGui g = new RestaurantWaiterGui(altWaiter);
 				restPanel.addGui(g);
-				altWaiter.setGui(g);
+				altWaiter.setGui(g);*/
 				g.setHomePosition(27, (55 + (22 * (waiters.size()-12))));
 			}
 			
@@ -145,22 +149,23 @@ public class ChineseRestaurant implements Restaurant {
 	}
 
 	public boolean arrived(ChineseRestaurantCustomerRole rCR) {
+		RestaurantCustomerGui rCG = new RestaurantCustomerGui(rCR);
+		rCR.setGui(rCG);
 		if (customers.size() <= 12) {
-			RestaurantCustomerGui rCG = (RestaurantCustomerGui) rCR.getGui();
+			
 			rCG.setHomePosition((22 * customers.size()), 10);
-			restPanel.addGui(rCG);
-			customers.add(rCR);
 			rCR.gotHungry((22 * customers.size()), 10);
 			return true;
 		}
 		else if (customers.size() <= 24) {
-			RestaurantCustomerGui rCG = (RestaurantCustomerGui) rCR.getGui();
 			rCG.setHomePosition((22 * (customers.size() - 12)), 32);
-			restPanel.addGui(rCG);
-			customers.add(rCR);
+			//restPanel.addGui(rCG);
+			//customers.add(rCR);
 			rCR.gotHungry((22 * (customers.size() - 12)), 32);
 			return true;
 		}
+		restPanel.addGui(rCG);
+		customers.add(rCR);
 		return false;
 	}
 
