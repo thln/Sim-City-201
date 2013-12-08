@@ -175,9 +175,6 @@ public class PersonGui extends CityGui {
 
 		g.fillRect(xPos, yPos, 20, 20);
 
-		if(currColor != transColor)
-			g.setColor(Color.WHITE);
-
 		if(agent != null) {
 			g.drawString(agent.getName(), xPos, yPos);
 		}

@@ -346,7 +346,7 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 
 
 		//Details
-		g2.setColor(Color.YELLOW);
+		g2.setColor(Color.WHITE);
 
 		//Crosswalk 1
 		g2.fillRect((int) (Phonebook.getPhonebook().crosswalk1.getCrosswalk().getX() + (Phonebook.getPhonebook().crosswalk1.getCrosswalk().getWidth()/20*2)),
