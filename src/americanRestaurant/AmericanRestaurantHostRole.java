@@ -34,22 +34,16 @@ public class AmericanRestaurantHostRole extends Role implements AmericanRestaura
 	boolean wantToBreak = false;
 
 	public AmericanRestaurantHostRole (){
-		super();
+		super("name");
 		waitingCustomers = Collections.synchronizedList(new ArrayList<AmericanRestaurantCustomerRole>());
 		leavingCustomers = Collections.synchronizedList(new ArrayList<AmericanRestaurantCustomerRole>());
 		dishonestCustomers = Collections.synchronizedList(new ArrayList<AmericanRestaurantCustomerRole>());
 		tableList = new AmericanRestaurantTable[NTABLES];
 		for (int i = 0; i < NTABLES; i++) {
-			tableList[i] = new Table();
+			tableList[i] = new AmericanRestaurantTable();
 			tableList[i].setSeatNum(i);
 		}
 		Waiters = Collections.synchronizedList(new ArrayList<AmericanRestaurantWaiterRole>());
-	}
-	//copy constructor
-	public AmericanRestaurantHostRole (AmericanRestaurantHostRole H1) {
-		this.waitingCustomers = H1.waitingCustomers;
-		this.tableList = H1.tableList;
-		this.Waiters = H1.Waiters;
 	}
 
 	private Semaphore atTable = new Semaphore(0,true);        //Way to coordinate which agents are doing what
@@ -58,7 +52,7 @@ public class AmericanRestaurantHostRole extends Role implements AmericanRestaura
 		return waitingCustomers;
 	}
 
-	public Table[] getTables() {
+	public AmericanRestaurantTable[] getTables() {
 		return tableList;
 	}
 
@@ -81,9 +75,9 @@ public class AmericanRestaurantHostRole extends Role implements AmericanRestaura
 			}
 		}
 		
-		Do("Finding AmericanRestaurantWaiter");
+		print("Finding AmericanRestaurantWaiter");
 		waitingCustomers.add(C1);         
-		C1.getGui().setHomePosition(waitingCustomers.size()-1);
+	//	C1.getGui().setHomePosition(waitingCustomers.size()-1);
 		stateChanged();
 	}
 
@@ -99,7 +93,7 @@ public class AmericanRestaurantHostRole extends Role implements AmericanRestaura
 		stateChanged();
 	}
 
-	public void msgTableIsClear (Table t1){
+	public void msgTableIsClear (AmericanRestaurantTable t1){
 		RemoveTable(t1);
 		stateChanged();
 	}
@@ -113,12 +107,12 @@ public class AmericanRestaurantHostRole extends Role implements AmericanRestaura
 	}
 
 	public void msgWatchThisCust (AmericanRestaurantCustomer c1) {
-		Do("Putting " + c1.getName() + " on the blacklist.");
+		print("Putting " + c1.getName() + " on the blacklist.");
 		dishonestCustomers.add((AmericanRestaurantCustomerRole) c1);
 	}
 
 	public void msgDebtPaid (AmericanRestaurantCustomer c1) {
-		Do("Taking " + c1.getName() + " off the blacklist.");
+		print("Taking " + c1.getName() + " off the blacklist.");
 		dishonestCustomers.remove(c1);
 		waitingCustomers.add((AmericanRestaurantCustomerRole) c1);
 		stateChanged();
@@ -141,7 +135,7 @@ public class AmericanRestaurantHostRole extends Role implements AmericanRestaura
 			synchronized(waitingCustomers){
 				for (AmericanRestaurantCustomerRole c1: waitingCustomers) {
 					if (!c1.waiting) {
-						Do("Restaurant full.");
+						print("Restaurant full.");
 						c1.msgRestaurantFull();
 					}
 				}
@@ -216,11 +210,11 @@ public class AmericanRestaurantHostRole extends Role implements AmericanRestaura
 	void OccupyTable (AmericanRestaurantCustomerRole c1){
 
 		int seatNumber = 0;
-		for (Table table1 : tableList) {                //Find an available table
+		for (AmericanRestaurantTable table1 : tableList) {                //Find an available table
 			if (!table1.isOccupied()){
 				c1.setSeatNumber(seatNumber);                                        //give the customer their seat number
 				AmericanRestaurantWaiterRole w = findAvailableWaiter();                        //find an available waiter
-				Do("Seating " +c1 + " with AmericanRestaurantWaiter " + w.getName());
+				print("Seating " +c1 + " with AmericanRestaurantWaiter " + w.getName());
 				w.msgSeatAtTable(c1, table1);                                //message the waiter to seat the customer
 				table1.setOccupant(c1);                                        //set the table as occupied
 				waitingCustomers.remove(c1);								//remove customer
@@ -233,20 +227,20 @@ public class AmericanRestaurantHostRole extends Role implements AmericanRestaura
 	void BreakWaiter (AmericanRestaurantWaiterRole w) {
 		w.msgCanBreak();
 		wantToBreak = false;
-		Do ("AmericanRestaurantWaiter " + w.getName() + " go on break");
-		w.getGui().getGui().setWaiterEnabled(w, true);
+		print ("AmericanRestaurantWaiter " + w.getName() + " go on break");
+//		w.getGui().getGui().setWaiterEnabled(w, true);
 		Waiters.remove(w);        
 	}
 
 	void DenyWaiter (AmericanRestaurantWaiterRole w) {
 		wantToBreak = false;
-		Do ("Break not allowed");
+		print ("Break not allowed");
 		w.msgNoBreak();
-		w.getGui().getGui().setWaiterEnabled(w, false);
+//		w.getGui().getGui().setWaiterEnabled(w, false);
 	}
 
-	void RemoveTable (Table t1) {
-		for (Table table1 : tableList) {
+	void RemoveTable (AmericanRestaurantTable t1) {
+		for (AmericanRestaurantTable table1 : tableList) {
 			if (table1 == t1) 
 				table1.setUnoccupied();
 		}
@@ -277,9 +271,24 @@ public class AmericanRestaurantHostRole extends Role implements AmericanRestaura
 	public void SlideCustomers() {
 		synchronized(waitingCustomers) {						//slide customer guis over to front 
 			for (int i = 0; i < waitingCustomers.size(); i++) {
-				waitingCustomers.get(i).getGui().setHomePosition(i);
+			//	waitingCustomers.get(i).getGui().setHomePosition(i);
 			}
 		}
+	}
+	@Override
+	public void msgIWantToEat(AmericanRestaurantCustomer C1) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void msgWillWait(AmericanRestaurantCustomer c1) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void msgWontWait(AmericanRestaurantCustomer c1) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

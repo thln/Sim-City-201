@@ -10,5 +10,5 @@ public interface AmericanRestaurantCashier {
 	public void msgNotEnoughMoney (AmericanRestaurantCustomer c1, int check, int cash);
 	public void msgPayDebt (AmericanRestaurantCustomer c1, int debt, int cash);
 
-	public void msgPayMarketBill(Market marketAgent, int bill);
+	//public void msgPayMarketBill(Market marketAgent, int bill);
 }

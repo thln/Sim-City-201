@@ -11,7 +11,6 @@ import americanRestaurant.interfaces.AmericanRestaurantCashier;
 import americanRestaurant.interfaces.AmericanRestaurantCustomer;
 import americanRestaurant.interfaces.AmericanRestaurantHost;
 import americanRestaurant.interfaces.AmericanRestaurantWaiter;
-import americanRestaurant.interfaces.Market;
 
 public class AmericanRestaurantCashierRole extends Role implements AmericanRestaurantCashier{
 	//DATA
@@ -73,42 +72,42 @@ public class AmericanRestaurantCashierRole extends Role implements AmericanResta
 
 	enum marketBillState {pending, unpaid};
 	
-	public class MarketBill {
-		private int bill;
-		private Market market1;
-		marketBillState state;
-	
-
-		public MarketBill(Market m1, int bill1) {
-			bill = bill1;
-			market1 = m1;
-			state = marketBillState.pending;
-		}
-
-		public Market getMarket(){
-			return market1;
-		}
-
-		public int getBill() {
-			return bill;
-		}
-	}
+//	public class MarketBill {
+//		private int bill;
+//		private Market market1;
+//		marketBillState state;
+//	
+//
+//		public MarketBill(Market m1, int bill1) {
+//			bill = bill1;
+//			market1 = m1;
+//			state = marketBillState.pending;
+//		}
+//
+//		public Market getMarket(){
+//			return market1;
+//		}
+//
+//		public int getBill() {
+//			return bill;
+//		}
+//	}
 
 	AmericanRestaurantHost myHost;
 	private List<MyCheck> checks;
 	public EventLog log;
-	private List<MarketBill> marketBills;
+//	private List<MarketBill> marketBills;
 	private int cashRegister;			//holds all of the money in the restaurant
 
 	//Constructor
 
-	public AmericanRestaurantCashierRole (AmericanRestaurantHost H1){
-		super();
+	public AmericanRestaurantCashierRole (AmericanRestaurantHost H1, String name){
+		super(name);
 		myHost = H1;
 		checks = Collections.synchronizedList(new ArrayList<MyCheck>());
 		log = new EventLog();
 		setCashRegister(12);
-		marketBills = Collections.synchronizedList(new ArrayList<MarketBill>());
+		//marketBills = Collections.synchronizedList(new ArrayList<MarketBill>());
 	}
 
 	// MESSAGES
@@ -149,12 +148,12 @@ public class AmericanRestaurantCashierRole extends Role implements AmericanResta
 		stateChanged();
 	}
 
-	public void msgPayMarketBill (Market m1, int bill) {
-		//log.add(new LoggedEvent("Received PayMarketBill"));
-		Do("Received bill of $" + bill + " from market.");
-		marketBills.add(new MarketBill(m1,bill));
-		stateChanged();
-	}
+//	public void msgPayMarketBill (Market m1, int bill) {
+//		//log.add(new LoggedEvent("Received PayMarketBill"));
+//		Do("Received bill of $" + bill + " from market.");
+//		marketBills.add(new MarketBill(m1,bill));
+//		stateChanged();
+//	}
 
 	//SCHEDULER
 
@@ -188,15 +187,15 @@ public class AmericanRestaurantCashierRole extends Role implements AmericanResta
 			}
 		}
 		
-		synchronized (marketBills) {
-			if (marketBills.size() > 0) {
-				for (MarketBill mBill: marketBills) {
-					if (mBill.state == marketBillState.pending || getCashRegister() >= mBill.getBill())
-						PayMarketBill(mBill);
-					return false;
-				}
-			}
-		}
+//		synchronized (marketBills) {
+//			if (marketBills.size() > 0) {
+//				for (MarketBill mBill: marketBills) {
+//					if (mBill.state == marketBillState.pending || getCashRegister() >= mBill.getBill())
+//						PayMarketBill(mBill);
+//					return false;
+//				}
+//			}
+//		}
 
 		return false;
 
@@ -213,14 +212,14 @@ public class AmericanRestaurantCashierRole extends Role implements AmericanResta
 	}
 
 	private void ComputeCheck(MyCheck check1) {
-		Do("Computing check");
+		print("Computing check");
 		int check = Menu.GetPrice(check1.choice);
 		check1.wait1.msgHereIsCheck(check1.cust1, check);
 		check1.state = checkState.waitingForCust;
 	}
 
 	private void ComputeChange (MyCheck check1) {
-		Do("Computing change");
+		print("Computing change");
 		setCashRegister(getCashRegister() + check1.check);
 		int change = check1.cash - check1.check;
 		check1.getCust1().msgHereIsChange(change);
@@ -228,7 +227,7 @@ public class AmericanRestaurantCashierRole extends Role implements AmericanResta
 	}
 
 	private void DishonestCustomer (MyCheck check1) {
-		Do(check1.getCust1().getName() + " is in debt. Pay next time...");
+		print(check1.getCust1().getName() + " is in debt. Pay next time...");
 		int debt = check1.cash - check1.getCheck();
 		check1.getCust1().msgYouAreInDebt(debt);
 		myHost.msgWatchThisCust(check1.getCust1());
@@ -236,7 +235,7 @@ public class AmericanRestaurantCashierRole extends Role implements AmericanResta
 	}
 
 	private void RemoveDebt (MyCheck check1) {
-		Do("Debt paid.");
+		print("Debt paid.");
 		setCashRegister(getCashRegister() + check1.getCheck());
 		check1.getCust1().setCash(check1.getCust1().getCash() - check1.getCheck());
 		check1.getCust1().setDebt(0);
@@ -244,24 +243,24 @@ public class AmericanRestaurantCashierRole extends Role implements AmericanResta
 		myHost.msgDebtPaid(check1.getCust1());
 	}
 
-	private void PayMarketBill (MarketBill mBill) {
-		if (getCashRegister() >= mBill.bill) {
-			if (mBill.state == marketBillState.unpaid)
-				Do("Paying debt to market.");
-			else
-				Do("Paid Market Bill");
-			setCashRegister(getCashRegister() - mBill.bill);
-			mBill.market1.msgHereIsPayment(mBill.bill);
-			marketBills.remove(mBill);
-			
-			return;
-		}
-		else if (getCashRegister() < mBill.bill) {
-			Do("Not enough money to pay market bill...must wait for customers to pay their bills and increase cash flow.");
-			mBill.state = marketBillState.unpaid;
-			return;
-		}
-	}
+//	private void PayMarketBill (MarketBill mBill) {
+//		if (getCashRegister() >= mBill.bill) {
+//			if (mBill.state == marketBillState.unpaid)
+//				print("Paying debt to market.");
+//			else
+//				print("Paid Market Bill");
+//			setCashRegister(getCashRegister() - mBill.bill);
+//			mBill.market1.msgHereIsPayment(mBill.bill);
+//			//marketBills.remove(mBill);
+//			
+//			return;
+//		}
+//		else if (getCashRegister() < mBill.bill) {
+//			print("Not enough money to pay market bill...must wait for customers to pay their bills and increase cash flow.");
+//			mBill.state = marketBillState.unpaid;
+//			return;
+//		}
+//	}
 
 	public List<MyCheck> getChecks() {
 		return checks;
@@ -271,9 +270,9 @@ public class AmericanRestaurantCashierRole extends Role implements AmericanResta
 		this.checks = checks;
 	}
 
-	public List<MarketBill> getMarketBills(){
-		return marketBills;
-	}
+//	public List<MarketBill> getMarketBills(){
+//		return marketBills;
+//	}
 
 	public int getCashRegister() {
 		return cashRegister;

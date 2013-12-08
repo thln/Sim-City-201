@@ -1,6 +1,10 @@
 package americanRestaurant.test;
 
+import testing.LoggedEvent;
+import testing.Mock;
 import americanRestaurant.AmericanRestaurantCookRole.Order;
+import americanRestaurant.AmericanRestaurantTable;
+import americanRestaurant.interfaces.AmericanRestaurantCustomer;
 import americanRestaurant.interfaces.AmericanRestaurantWaiter;
 
 public class AmericanRestaurantMockWaiter extends Mock implements AmericanRestaurantWaiter{
@@ -12,24 +16,25 @@ public class AmericanRestaurantMockWaiter extends Mock implements AmericanRestau
 	}
 
 	@Override
-	public void msgAtCook(Customer c1) {
+	public void msgAtCook(AmericanRestaurantCustomer c1) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void msgDoneAndPaying(Customer c1) {
+	public void msgDoneAndPaying(AmericanRestaurantCustomer c1) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void msgHereIsCheck(Customer c1, int check1) {
-		log.add(new LoggedEvent("Received HereIsCheck from americanRestaurantCashier. Check = "+ 20));
+	public void msgHereIsCheck(AmericanRestaurantCustomer c1, int check1) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
-	public void msgReadyForCheck(Customer c1) {
+	public void msgReadyForCheck(AmericanRestaurantCustomer c1) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -41,31 +46,32 @@ public class AmericanRestaurantMockWaiter extends Mock implements AmericanRestau
 	}
 
 	@Override
-	public void msgOrderIsReady(Table tab1, String choice) {
+	public void msgOrderIsReady(AmericanRestaurantTable tab1, String choice) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void msgHereIsMyChoice(Customer c1, String choice1) {
+	public void msgHereIsMyChoice(AmericanRestaurantCustomer c1, String choice1) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void msgReadyToOrder(Customer c) {
+	public void msgReadyToOrder(AmericanRestaurantCustomer c) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void msgSeatAtTable(Customer c1, Table t1) {
+	public void msgSeatAtTable(AmericanRestaurantCustomer c1,
+			AmericanRestaurantTable t1) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void msgFoodHere(Customer c1) {
+	public void msgFoodHere(AmericanRestaurantCustomer c1) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -99,5 +105,4 @@ public class AmericanRestaurantMockWaiter extends Mock implements AmericanRestau
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 }

@@ -49,9 +49,9 @@ public class AmericanRestaurantWaiterRole extends Role implements AmericanRestau
 
 		private List<MyCustomer> customers;	
 		private AmericanRestaurantHostRole myHost;
-		AmericanRestaurantCashier myCashier = RestaurantPanel.CashierHank;
-		public WaiterGui waiterGui;
-		AmericanRestaurantCookRole myCook = RestaurantPanel.CookCharles;
+		AmericanRestaurantCashier myCashier = new AmericanRestaurantCashierRole(myHost, "John");
+//		public WaiterGui waiterGui;
+		AmericanRestaurantCookRole myCook = new AmericanRestaurantCookRole();
 		RestaurantPanel panel1;
 		WaiterState waitState;
 		static List<String> itemsRemoved = Collections.synchronizedList(new ArrayList<String>());
@@ -112,7 +112,7 @@ public class AmericanRestaurantWaiterRole extends Role implements AmericanRestau
 		//constructor
 
 		public AmericanRestaurantWaiterRole(String name, AmericanRestaurantHostRole H1) {
-			super();		
+			super("name");		
 			customers = new ArrayList<MyCustomer>();
 			this.name = name;
 			atTable = new Semaphore(0,true);
@@ -138,7 +138,7 @@ public class AmericanRestaurantWaiterRole extends Role implements AmericanRestau
 
 		@Override
 		public void msgAtDoor (){
-			waiterGui.inProcess = false;
+		//	waiterGui.inProcess = false;
 			atTable.release();			
 		}
 
@@ -160,78 +160,6 @@ public class AmericanRestaurantWaiterRole extends Role implements AmericanRestau
 		}
 
 		//AGENT MESSAGES
-
-		@Override
-		public void msgSeatAtTable (AmericanRestaurantCustomer c1, AmericanRestaurantTable t1){
-			Do("Seat Assigned");
-			customers.add(new MyCustomer(c1, t1, "None"));
-			stateChanged();
-		}
-
-		@Override
-		public void msgReadyToOrder (AmericanRestaurantCustomer c) {		
-			MyCustomer correct = findCustomer(c);
-			correct.state = customerState.ReadyToOrder;
-			stateChanged();
-		}
-
-		@Override
-		public void msgHereIsMyChoice (AmericanRestaurantCustomer c1, String choice1){	
-			MyCustomer correct = findCustomer(c1);
-			correct.choice = choice1;
-			correct.state = customerState.Ordered;
-			stateChanged();
-		}
-
-		@Override
-		public void msgOrderIsReady (AmericanRestaurantTable tab1, String choice){
-			Do ("Order Ready");
-			MyCustomer correct = findCustomer(tab1,choice);
-			correct.state = customerState.FoodReady;
-			stateChanged();
-		}
-
-		@Override
-		public void msgOutOfFood (Order order1) {
-			MyCustomer correct = findCustomer(order1.tab,order1.choice);
-			correct.state = customerState.ReOrder;
-			stateChanged();
-		}
-
-		@Override
-		public void msgCanBreak() {
-			onBreak = true;
-			wantToBreak = false;		
-			stateChanged();
-		}
-
-		@Override
-		public void msgNoBreak() {
-			wantToBreak = false;
-		}
-
-		@Override
-		public void msgReadyForCheck (AmericanRestaurantCustomer c1) {
-			MyCustomer correct = findCustomer(c1);
-			correct.state = customerState.ReadyForBill;
-			stateChanged();
-		}
-
-		@Override
-		public void msgHereIsCheck (AmericanRestaurantCustomer c1, int check1) {
-			MyCustomer correct = findCustomer(c1);
-			Do("Received check");
-			correct.state = customerState.CheckReady;
-			c1.setCheck(check1);
-			stateChanged();
-		}
-
-		@Override
-		public void msgDoneAndPaying(AmericanRestaurantCustomer c1) {
-			MyCustomer correct = findCustomer(c1);
-			correct.state = customerState.Leaving;
-			stateChanged();
-		}
 
 		/**
 		 * Scheduler.  Determine what action is called for, and do it.
@@ -260,7 +188,7 @@ public class AmericanRestaurantWaiterRole extends Role implements AmericanRestau
 						}
 
 						if (c1.state == customerState.ReOrder) {
-							Do("Please Order Again");
+							print("Please Order Again");
 							ReOrder(c1);
 							return false;
 						}
@@ -276,7 +204,7 @@ public class AmericanRestaurantWaiterRole extends Role implements AmericanRestau
 						}
 
 						if (c1.state == customerState.ReadyForBill){
-							Do("Notifying americanRestaurantCashier");
+							print("Notifying americanRestaurantCashier");
 							NotifyCashier(c1);
 							return false;
 						}
@@ -294,7 +222,7 @@ public class AmericanRestaurantWaiterRole extends Role implements AmericanRestau
 				}
 
 				if (customers.size() == 0 && isOnBreak()) {
-					Do("Going on break");
+					print("Going on break");
 					GoBreak();
 					return false;
 				}
@@ -329,16 +257,16 @@ public class AmericanRestaurantWaiterRole extends Role implements AmericanRestau
 
 		private void seatCustomer(MyCustomer c1) {
 			c1.state = customerState.BeingSeated;
-			if (!(waiterGui.getXPos() == waiterGui.entranceX && waiterGui.getXPos() == waiterGui.entranceY)){
-				waiterGui.inProcess = true;
-				waiterGui.DoGoToEntrance();
-				try {
-					atTable.acquire();
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
+//			if (!(waiterGui.getXPos() == waiterGui.entranceX && waiterGui.getXPos() == waiterGui.entranceY)){
+//				waiterGui.inProcess = true;
+//				waiterGui.DoGoToEntrance();
+//				try {
+//					atTable.acquire();
+//				} catch (InterruptedException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//			}
 
 			Menu m = new Menu();
 			if (itemsRemoved.size() != 0){
@@ -353,46 +281,46 @@ public class AmericanRestaurantWaiterRole extends Role implements AmericanRestau
 
 		private void DoSeatCustomer(MyCustomer C1) {
 			print("Seating " + C1.cust + " at " + (C1.tab.getSeatNum()+1));
-			waiterGui.DoBringToTable(C1.tab); 
-			try {
-				atTable.acquire();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			waiterGui.DoLeaveCustomer();	
-		}
+//			waiterGui.DoBringToTable(C1.tab); 
+//			try {
+//				atTable.acquire();
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			waiterGui.DoLeaveCustomer();	
+	}
 
 		private void TakeOrder(MyCustomer c1) {	
 			c1.state = customerState.Ordering;
-			waiterGui.DoBringToTable(c1.tab);
-			try {
-				atTable.acquire();			
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			Do("Taking Order");
+//			waiterGui.DoBringToTable(c1.tab);
+//			try {
+//				atTable.acquire();			
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+			print("Taking Order");
 			c1.cust.msgWhatIsYourChoice();
 		}
 
 		private void ProcessOrder(MyCustomer c1){
-			Do("Contacting Cook");	
+			print("Contacting Cook");	
 			c1.state = customerState.WaitingForFood;
-			waiterGui.WalkToCook(c1.cust);
-			try {
-				atTable.acquire();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}	
+//			waiterGui.WalkToCook(c1.cust);
+//			try {
+//				atTable.acquire();
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}	
 			c1.state = customerState.WaiterAtCook;
 		}
 
 		private void OrderFromCook(MyCustomer c1){
 
 			myCook.msgHereIsAnOrder(new Order(c1.choice, this, c1.tab));	
-			waiterGui.DoLeaveCustomer();
+		//	waiterGui.DoLeaveCustomer();
 			c1.state = customerState.WaitingForFood;
 		}
 
@@ -406,69 +334,69 @@ public class AmericanRestaurantWaiterRole extends Role implements AmericanRestau
 				}	
 			}
 
-			waiterGui.DoBringToTable(c1.tab);		
-			try {
-				atTable.acquire();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+//			waiterGui.DoBringToTable(c1.tab);		
+//			try {
+//				atTable.acquire();
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 			c1.cust.msgReOrder(m);
-			waiterGui.DoLeaveCustomer();
+//			waiterGui.DoLeaveCustomer();
 		}
 
 		private void ServeCustomer(MyCustomer c1) {	
 
-			if (!(waiterGui.getXPos() == waiterGui.cookX && waiterGui.getXPos() == waiterGui.cookY)){	//if not already at cook
-				waiterGui.WalkToCookForFood(c1.cust);
-				try {
-					atTable.acquire();
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}	
+//			if (!(waiterGui.getXPos() == waiterGui.cookX && waiterGui.getXPos() == waiterGui.cookY)){	//if not already at cook
+//				waiterGui.WalkToCookForFood(c1.cust);
+//				try {
+//					atTable.acquire();
+//				} catch (InterruptedException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//			}	
 			c1.state = customerState.Eating;
-			Do("Delivering Order");
-			panel1.addFoodIcon(c1.choice, this);
-			waiterGui.DoBringToTable(c1.tab);		
-			try {
-				atTable.acquire();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			Do("Here is your food");
-			waiterGui.DoLeaveCustomer();
-			panel1.stopFoodIcon(this);
+			print("Delivering Order");
+//			panel1.addFoodIcon(c1.choice, this);
+//			waiterGui.DoBringToTable(c1.tab);		
+//			try {
+//				atTable.acquire();
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+			print("Here is your food");
+//			waiterGui.DoLeaveCustomer();
+//			panel1.stopFoodIcon(this);
 			c1.cust.msgHereIsYourFood(c1.choice);
 		}
 
 		private void NotifyCashier (MyCustomer c1) {
-			if (!(waiterGui.getXPos() == waiterGui.homeX && waiterGui.getXPos() == waiterGui.homeY)){
-				waiterGui.inProcess = true;
-				waiterGui.DoGoToEntrance();
-				try {
-					atTable.acquire();
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
+//			if (!(waiterGui.getXPos() == waiterGui.homeX && waiterGui.getXPos() == waiterGui.homeY)){
+//				waiterGui.inProcess = true;
+//				waiterGui.DoGoToEntrance();
+//				try {
+//					atTable.acquire();
+//				} catch (InterruptedException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//			}
 			myCashier.msgComputeBill(this, c1.cust, c1.choice);
 			c1.state = customerState.WaitingForCheck;
 		}
 
 		private void CustomerPay (MyCustomer c1) {
-			waiterGui.DoBringToTable(c1.tab);
-			try {
-				atTable.acquire();			
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+//			waiterGui.DoBringToTable(c1.tab);
+//			try {
+//				atTable.acquire();			
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 			c1.cust.msgPleasePayBill();
-			waiterGui.DoLeaveCustomer();
+	//		waiterGui.DoLeaveCustomer();
 			c1.state = customerState.Paying;
 		}
 
@@ -481,19 +409,19 @@ public class AmericanRestaurantWaiterRole extends Role implements AmericanRestau
 		private void GoBreak () {
 			setOnBreak(false);
 			final AmericanRestaurantWaiterRole w = this;
-			waiterGui.GoBreak();
+	//		waiterGui.GoBreak();
 		}
 
 
 		//utilities
 
-		public void setGui(WaiterGui gui) {
-			waiterGui = gui;
-		}
-
-		public WaiterGui getGui() {
-			return waiterGui;
-		}
+//		public void setGui(WaiterGui gui) {
+//			waiterGui = gui;
+//		}
+//
+//		public WaiterGui getGui() {
+//			return waiterGui;
+//		}
 
 		public void setPanel (RestaurantPanel p) {
 			panel1 = p;
@@ -542,32 +470,80 @@ public class AmericanRestaurantWaiterRole extends Role implements AmericanRestau
 		}
 
 		@Override
-		public void msgOutOfFood(americanRestaurant.interfaces.Order order1) {
+		public Object getGui() {
 			// TODO Auto-generated method stub
-			
+			return null;
+		}
+		@Override
+		public void msgSeatAtTable (AmericanRestaurantCustomer c1, AmericanRestaurantTable t1){
+			print("Seat Assigned");
+			customers.add(new MyCustomer(c1, t1, "None"));
+			stateChanged();
 		}
 
 		@Override
-		public void msgOrderIsReady(Table tab1, String choice) {
-			// TODO Auto-generated method stub
-			
+		public void msgReadyToOrder (AmericanRestaurantCustomer c) {		
+			MyCustomer correct = findCustomer(c);
+			correct.state = customerState.ReadyToOrder;
+			stateChanged();
 		}
 
 		@Override
-		public void msgSeatAtTable(AmericanRestaurantCustomer c1, Table t1) {
-			// TODO Auto-generated method stub
-			
+		public void msgHereIsMyChoice (AmericanRestaurantCustomer c1, String choice1){	
+			MyCustomer correct = findCustomer(c1);
+			correct.choice = choice1;
+			correct.state = customerState.Ordered;
+			stateChanged();
 		}
 
 		@Override
-		public void msgOutOfFood(americanRestaurant.interfaces.Order order1) {
-			// TODO Auto-generated method stub
-			
+		public void msgOrderIsReady (AmericanRestaurantTable tab1, String choice){
+			print("Order Ready");
+			MyCustomer correct = findCustomer(tab1,choice);
+			correct.state = customerState.FoodReady;
+			stateChanged();
 		}
 
 		@Override
-		public void msgOutOfFood(americanRestaurant.interfaces.Order order1) {
-			// TODO Auto-generated method stub
-			
+		public void msgOutOfFood (Order order1) {
+			MyCustomer correct = findCustomer(order1.tab,order1.choice);
+			correct.state = customerState.ReOrder;
+			stateChanged();
 		}
+
+		@Override
+		public void msgCanBreak() {
+			onBreak = true;
+			wantToBreak = false;		
+			stateChanged();
+		}
+
+		@Override
+		public void msgNoBreak() {
+			wantToBreak = false;
+		}
+
+		@Override
+		public void msgReadyForCheck (AmericanRestaurantCustomer c1) {
+			MyCustomer correct = findCustomer(c1);
+			correct.state = customerState.ReadyForBill;
+			stateChanged();
+		}
+
+		@Override
+		public void msgHereIsCheck (AmericanRestaurantCustomer c1, int check1) {
+			MyCustomer correct = findCustomer(c1);
+			print("Received check");
+			correct.state = customerState.CheckReady;
+			c1.setCheck(check1);
+			stateChanged();
+		}
+
+		@Override
+		public void msgDoneAndPaying(AmericanRestaurantCustomer c1) {
+			MyCustomer correct = findCustomer(c1);
+			correct.state = customerState.Leaving;
+			stateChanged();
+		}
+
 }

@@ -1,6 +1,10 @@
 package americanRestaurant.test;
 
+import testing.LoggedEvent;
+import testing.Mock;
+import americanRestaurant.AmericanRestaurantTable;
 import americanRestaurant.AmericanRestaurantWaiterRole;
+import americanRestaurant.interfaces.AmericanRestaurantCustomer;
 import americanRestaurant.interfaces.AmericanRestaurantHost;
 
 public class AmericanRestaurantMockHost extends Mock implements AmericanRestaurantHost {
@@ -10,7 +14,7 @@ public class AmericanRestaurantMockHost extends Mock implements AmericanRestaura
 	}
 
 	@Override
-	public void msgIWantToEat(CustomerAgent C1) {
+	public void msgIWantToEat(AmericanRestaurantCustomer C1) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -28,30 +32,30 @@ public class AmericanRestaurantMockHost extends Mock implements AmericanRestaura
 	}
 
 	@Override
-	public void msgTableIsClear(Table t1) {
+	public void msgTableIsClear(AmericanRestaurantTable t1) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void msgWillWait(CustomerAgent c1) {
+	public void msgWillWait(AmericanRestaurantCustomer c1) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void msgWontWait(CustomerAgent c1) {
+	public void msgWontWait(AmericanRestaurantCustomer c1) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void msgWatchThisCust(Customer c1) {
-		 log.add(new LoggedEvent("Watch this customer: "+ c1.getName()));
+	public void msgWatchThisCust(AmericanRestaurantCustomer c1) {
+		log.add(new LoggedEvent("Watch this customer: "+ c1.getName()));
 	}
 
 	@Override
-	public void msgDebtPaid(Customer c1) {
+	public void msgDebtPaid(AmericanRestaurantCustomer c1) {
 		// TODO Auto-generated method stub
 		
 	}

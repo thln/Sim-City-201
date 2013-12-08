@@ -58,30 +58,7 @@ public abstract class Role {
 
     protected abstract boolean pickAndExecuteAnAction();
  
-        public String getName() {
-        	return person.getName();
-        }
-        
-        public void setState(RoleState state) 
-        {
-                this.state = state;
-        }
-    
-        public RoleState getState() 
-        {
-                return state;
-        }
-
-        public void setRoleInactive() 
-        {
-                this.state = RoleState.inActive;
-        }
-        
-        public void setRoleActive()
-        {
-                this.state = RoleState.active;
-        }
-        
+      
           /**
      * Print message
      */
@@ -150,5 +127,30 @@ public abstract class Role {
     {
     	return state;
     }
+    
+    public String getName() {
+    	return person.getName();
+    }
+    
+    public void setState(RoleState state) 
+    {
+            this.state = state;
+    }
+
+    public RoleState getState() 
+    {
+            return state;
+    }
+
+    public void setRoleInactive() 
+    {
+            this.state = RoleState.inActive;
+    }
+    
+    public void setRoleActive()
+    {
+            this.state = RoleState.active;
+    }
+    
 
 }
