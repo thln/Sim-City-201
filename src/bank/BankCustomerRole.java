@@ -21,13 +21,13 @@ public class BankCustomerRole extends Role implements BankCustomer{
 
 	public BankTeller myTeller;
 	//private BankCustomerGui custGui = (BankCustomerGui) gui;
-	private BankCustomerGui custGui = null;
+	//private BankCustomerGui custGui = null;
 	public double desiredLoanAmount;
 	public BankCustomerDesire desire;
 	public CustomerState state;
 	protected String RoleName = "Bank Customer";
 	private int waitPlace;
-	private Semaphore atDestination = new Semaphore(0, true);
+	public Semaphore atDestination = new Semaphore(0, true);
 
 	public BankCustomerRole (Person p1, String pName, String rName) {
 		super(p1, pName, rName);
@@ -129,7 +129,8 @@ public class BankCustomerRole extends Role implements BankCustomer{
 	}
 
 	public void msgAtDestination() {
-		this.atDestination.release();
+	//	print("stopped with destination (x,y) = " + gui.getXPos() + ", " + gui.getYPos());
+		atDestination.release();
 	}
 
 	//Scheduler
@@ -203,7 +204,7 @@ public class BankCustomerRole extends Role implements BankCustomer{
 	}
 
 	void waitInLine() {
-		custGui.WaitTellerLine(waitPlace); //positions to be changed later by guard
+		((BankCustomerGui) gui).WaitTellerLine(waitPlace); //positions to be changed later by guard
 		try {
 			this.atDestination.acquire();
 		} catch (InterruptedException e) {
@@ -260,7 +261,7 @@ public class BankCustomerRole extends Role implements BankCustomer{
 			myTeller = null;
 		}
 			//GUI operation
-			custGui.DoExit();
+			gui.DoExit();
 			try {
 				this.atDestination.acquire();
 			} catch (InterruptedException e) {
@@ -274,18 +275,20 @@ public class BankCustomerRole extends Role implements BankCustomer{
 	void robBank() {
 		//GUI operation
 		print("Catch me if you can!");
-		custGui.DoRobBank();
+		((BankCustomerGui) gui).DoRobBank();
 		Phonebook.getPhonebook().getEastBank().getBankGuard(test).msgRobbingBank(this);
 		state = CustomerState.waiting;
 		try {
-			this.atDestination.acquire();
+			atDestination.acquire();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		stateChanged();
+		state = CustomerState.ready;
+		desire = BankCustomerDesire.leaveBank;
 	}
-
+	
 	public void setDesire(String d1){
 		if (d1 == "deposit")
 			desire = BankCustomerDesire.deposit;
@@ -297,8 +300,8 @@ public class BankCustomerRole extends Role implements BankCustomer{
 
 	public void DoGoToTeller() {
 		int window = myTeller.getTellerPosition();
-		if(custGui.getXPos() != 450 || custGui.getYPos() != 20*window+30*(window-1)) {
-			custGui.DoGoToTeller(myTeller.getTellerPosition());
+		if(((BankCustomerGui) gui).getXPos() != 450 || ((BankCustomerGui) gui).getYPos() != 20*window+30*(window-1)) {
+			((BankCustomerGui) gui).DoGoToTeller(myTeller.getTellerPosition());
 			try {
 				this.atDestination.acquire();
 			} catch (InterruptedException e) {
@@ -309,7 +312,7 @@ public class BankCustomerRole extends Role implements BankCustomer{
 	}
 
 	public void setGui(BankCustomerGui gui) {
-		this.custGui = gui;
+		this.gui = gui;
 	}
 
 	public void setWaitPlace(int place) {

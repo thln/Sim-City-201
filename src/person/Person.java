@@ -120,7 +120,7 @@ public abstract class Person extends Agent{
 			gui.walk = gui.decideForBus("East Bank");
 		else
 			gui.walk = gui.decideForBus("West Bank");
-		
+
 		gui.walk = true;
 
 		if (!gui.walk){
@@ -371,7 +371,7 @@ public abstract class Person extends Agent{
 	}
 
 	public void setGui(PersonGui g) {
-	
+
 		this.gui = g;
 		if (home.type.equals("East Apartment")){
 			gui.setxPos(0);
@@ -385,7 +385,7 @@ public abstract class Person extends Agent{
 			gui.setxPos(20);
 			gui.setyPos(100);
 		}
-		
+
 	}
 
 	public void setPanel(AnimationPanel ap) {

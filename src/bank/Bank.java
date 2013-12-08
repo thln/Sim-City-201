@@ -63,7 +63,7 @@ public class Bank {
 	public BankGuardMock bankGuardMock = new BankGuardMock("Bank Guard");
 	public LoanOfficerMock loanOfficerMock = new LoanOfficerMock("Loan Officer");
 	public List <BankTellerMock> mockTellers = new ArrayList<>();
-	private BankPanel bankPanel;
+	private BuildingPanel bankPanel;
 	
 	//Constructor
 	public Bank(String name) {
@@ -212,7 +212,7 @@ public class Bank {
 	}
 
 	public void setBuildingPanel(BuildingPanel myBuildingPanel) {
-		bankPanel = (BankPanel) myBuildingPanel;
+		bankPanel = myBuildingPanel;
 	}
 	
 	public void removeCustomer(BankCustomerRole customerRole) {
