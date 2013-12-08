@@ -125,7 +125,7 @@ public abstract class Person extends Agent{
 
 		gui.walk = true;
 		if (gui.walk)
-			gui.walkToCrossWalk();
+			gui.popToMiddle();
 
 		if (!gui.walk){
 			//What is this supposed to mean?
@@ -248,6 +248,9 @@ public abstract class Person extends Agent{
 	
 	protected void prepareForMarket() {
 		print("Going to market as a customer");
+		gui.walk = true;
+		if (gui.walk)
+			gui.popToMiddle();
 		if (home.type.equals("East Apartment")){
 			getGui().DoGoToMarket("East");
 		}
@@ -299,6 +302,9 @@ public abstract class Person extends Agent{
 	}
 
 	protected void prepareForRestaurant() {
+		gui.walk = true;
+		if (gui.walk)
+			gui.popToMiddle();
 		getGui().DoGoToRestaurant("chinese");
 		try {
 			atDestination.acquire();

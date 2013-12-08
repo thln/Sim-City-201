@@ -94,7 +94,7 @@ public class Market {
 			location = new Point(500, 140);
 		}
 		if (name == "West Market"){
-			location = new Point(75, 100);	
+			location = new Point(90, 120);	
 		}
 		
 		this.name = name;
