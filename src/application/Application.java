@@ -221,29 +221,29 @@ public class Application extends JPanel {
 		bank1a.startThread();
 		bank1b.startThread();	
 		bank1c.startThread();
-		//		market1d.startThread();
-		//		market1e.startThread();
-		//		market1f.startThread();
-		//		rest1g.startThread();
-		//		rest1h.startThread();
-		//		rest1i.startThread();
-		//		rest1j.startThread();
-		//		rest1k.startThread();
-		//		
-		//		//Shift 2
-		//		bank2a.startThread();
-		//		bank2b.startThread();
-		//		bank2c.startThread();
-		//		market2d.startThread();
-		//		market2e.startThread();
-		//		market2f.startThread();
-		//		rest2g.startThread();
-		//		rest2h.startThread();
-		//		rest2i.startThread();
-		//		rest2j.startThread();
-		//		rest2k.startThread();
-		//		
-		//		house1.startThread();
+				market1d.startThread();
+				market1e.startThread();
+				market1f.startThread();
+				rest1g.startThread();
+				rest1h.startThread();
+				rest1i.startThread();
+				rest1j.startThread();
+				rest1k.startThread();
+				
+				//Shift 2
+				bank2a.startThread();
+				bank2b.startThread();
+				bank2c.startThread();
+				market2d.startThread();
+				market2e.startThread();
+				market2f.startThread();
+				rest2g.startThread();
+				rest2h.startThread();
+				rest2i.startThread();
+				rest2j.startThread();
+				rest2k.startThread();
+				
+				house1.startThread();
 
 		//People
 		//		wealthy1.startThread();
