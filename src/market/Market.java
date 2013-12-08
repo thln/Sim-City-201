@@ -156,6 +156,23 @@ public class Market {
 		marketPanel.addGui(MCG);
 	}
 
+	public void goingOffWork(Person person) {
+		Worker worker = (Worker) person;
+
+		if (worker.getWorkerRole().equals(salesPersonRole)) {
+			salesPersonRole.person = null;
+			marketPanel.removeGui(salesPersonGui);
+		}
+		if (worker.getWorkerRole().equals(marketRunnerRole)) {
+			marketRunnerRole.person = null;
+			marketPanel.removeGui(marketRunnerGui);
+		}
+		if (worker.getWorkerRole().equals(UPSmanRole)) {
+			UPSmanRole.person = null;
+			marketPanel.removeGui(UPSmanGui);
+		}
+		worker.workerRole = null;
+	}
 
 	public class Item {
 		public String itemName;
