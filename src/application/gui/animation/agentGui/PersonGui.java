@@ -41,10 +41,15 @@ public class PersonGui extends CityGui {
 	private int xSeafoodLocation = (WINDOWX-100) + 15;
 	private int ySeafoodLocation = 150 + 10; //?
 	
-	private int xMarketLocation = 500 + 25;
-	private int yMarketLocation = 100 + 25;
-	private int xBankLocation = 300 + 30;
-	private int yBankLocation = 230 + 30;
+	private int xEastMarketLoc = (WINDOWX - 100) + 25;
+	private int yEastMarketLoc = 100 + 25;
+	private int xWestMarketLoc = 75 + 25;
+	private int yWestMarketLoc = 100 + 25;
+	
+	private int xEastBankLoc = WINDOWX/2 + 30;
+	private int yEastBankLoc = 230 + 30;
+	private int xWestBankLoc = (WINDOWX/2-75) + 30;
+	private int yWestBankLoc = 0 + 30;
 	
 
 	private int xPos, yPos;//default person position
@@ -124,11 +129,11 @@ public class PersonGui extends CityGui {
 					agent.msgAtDestination();
 					currColor = transColor;
 				}
-				if (command == Command.GoToMarket && getxPos() == xMarketLocation && getyPos() == yMarketLocation) {
+				if (command == Command.GoToMarket) {
 					agent.msgAtDestination();
 					currColor = transColor;
 				}
-				if (command == Command.GoToBank && getxPos() == xBankLocation && getyPos() == yBankLocation) {
+				if (command == Command.GoToBank) {
 					agent.msgAtDestination();
 					currColor = transColor;
 				}
@@ -216,16 +221,40 @@ public class PersonGui extends CityGui {
 		command = Command.GoToRestaurant;
 	}
 
-	public void DoGoToMarket() {//later you will map building to map coordinates.
-		setxDestination(xMarketLocation);
-		setyDestination(yMarketLocation);
+	public void DoGoToMarket(String type) {//later you will map building to map coordinates.
+		switch(type.toLowerCase()) {
+			case "east": {
+				setxDestination(xEastMarketLoc);
+				setyDestination(yEastMarketLoc);
+			}
+			break;
+			case "west": {
+				setxDestination(xWestMarketLoc);
+				setyDestination(yWestMarketLoc);
+			}
+			break;
+			default:
+			break;
+		}
 		setDefaultColor();
 		command = Command.GoToMarket;
 	}
 
-	public void DoGoToBank() {//later you will map building to map coordinates.		
-		setxDestination(xBankLocation);
-		setyDestination(yBankLocation);
+	public void DoGoToBank(String type) {//later you will map building to map coordinates.		
+		switch(type.toLowerCase()) {
+		case "east": {
+			setxDestination(xEastBankLoc);
+			setyDestination(yEastBankLoc);
+		}
+		break;
+		case "west": {
+			setxDestination(xWestBankLoc);
+			setyDestination(yWestBankLoc);
+		}
+		break;
+		default:
+		break;
+	}
 		setDefaultColor();
 		command = Command.GoToBank;
 	}

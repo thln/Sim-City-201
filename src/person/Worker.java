@@ -226,7 +226,7 @@ public class Worker extends Person {
 		print("Preparing for work as " + myJob.title);
 		if (myJob.jobPlace.equals("bank")) 
 		{
-			getGui().DoGoToBank();
+			getGui().DoGoToBank("east");
 			try {	
 				atDestination.acquire();
 			} catch (InterruptedException e) {
@@ -241,7 +241,7 @@ public class Worker extends Person {
 		if (myJob.jobPlace == "market") 
 		{
 			//print("Going to work at market");
-			getGui().DoGoToMarket();
+			getGui().DoGoToMarket("east");
 			try {
 				atDestination.acquire();
 			} catch (InterruptedException e) {
@@ -257,7 +257,7 @@ public class Worker extends Person {
 
 		if (myJob.jobPlace == "restaurant") 
 		{
-			getGui().DoGoToRestaurant("chinese");
+			getGui().DoGoToRestaurant("italian");
 			try {
 				atDestination.acquire();
 			} catch (InterruptedException e) {

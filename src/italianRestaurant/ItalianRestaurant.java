@@ -2,11 +2,11 @@ package italianRestaurant;
 import java.util.*;
 
 import person.*;
-import application.WatchTime;
+import application.*;
 import application.gui.animation.*;
 import application.gui.animation.agentGui.*;
 
-public class ItalianRestaurant {
+public class ItalianRestaurant implements Restaurant{
 
 	//Data
 	String name;

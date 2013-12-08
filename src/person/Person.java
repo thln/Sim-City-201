@@ -122,7 +122,7 @@ public abstract class Person extends Agent{
 			}
 		}
 		
-		getGui().DoGoToBank();
+		getGui().DoGoToBank("east");
 		try {
 			atDestination.acquire();
 		} catch (InterruptedException e) {
@@ -190,7 +190,7 @@ public abstract class Person extends Agent{
 	}
 
 	protected void prepareForMarket() {
-		getGui().DoGoToMarket();
+		getGui().DoGoToMarket("east");
 		try {
 			atDestination.acquire();
 		} catch (InterruptedException e) {
@@ -236,7 +236,7 @@ public abstract class Person extends Agent{
 	}
 
 	protected void prepareForRestaurant() {
-		getGui().DoGoToRestaurant("chinese");
+		getGui().DoGoToRestaurant("italian");
 		try {
 			atDestination.acquire();
 		} catch (InterruptedException e) {
