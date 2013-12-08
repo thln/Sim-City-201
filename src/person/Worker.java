@@ -1,15 +1,12 @@
 package person;
 
 import java.awt.Point;
-import java.util.Timer;
 import java.util.TimerTask;
 
-import bank.BankTellerRole;
 import person.Role.RoleState;
 import application.Phonebook;
 import application.TimeManager;
 import application.TimeManager.Day;
-import application.gui.trace.AlertLog;
 import application.WatchTime;
 
 public class Worker extends Person {
@@ -171,7 +168,7 @@ public class Worker extends Person {
 			prepareForRent();
 			return true;
 		}
-
+		
 		//Hunger Related ( check if you are hungry)
 		if (getHunger() == HungerLevel.hungry) {
 			//If you don't have food in the fridge

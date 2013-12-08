@@ -47,7 +47,7 @@ public abstract class Person extends Agent{
 	public HashMap <String, Integer> Inventory = new HashMap<String, Integer>();                 //Food list
 	public boolean hasFoodInFridge = false;
 	public enum HungerLevel {full, moderate, hungry, starving};
-	private HungerLevel hunger = HungerLevel.full;
+	private HungerLevel hunger = HungerLevel.hungry;
 	int eatTime = 4;
 	protected Semaphore eating = new Semaphore(0, true);
 
@@ -77,7 +77,7 @@ public abstract class Person extends Agent{
 		roles.add(new ChineseRestaurantCustomerRole(this, getName(), "Restaurant Customer"));
 		nextTask = new Timer();
 		atDestination = new Semaphore(0,true);
-		setHunger(HungerLevel.full);
+		setHunger(HungerLevel.hungry);
 		hasFoodInFridge = false;
 	}
 
