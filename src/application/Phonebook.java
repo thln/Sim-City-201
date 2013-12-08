@@ -72,8 +72,7 @@ public class Phonebook{
 	private static Phonebook phonebook;
 
 
-	private Phonebook() 
-	{
+	private Phonebook() {
 
 		//Set bus stops
 		busStops.add(new Point(127, 28));		//Top left bus stop = busStop(0)
