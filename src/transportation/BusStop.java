@@ -1,5 +1,6 @@
 package transportation;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -12,10 +13,12 @@ public class BusStop
 {
 	private int BusStopNumber;
 	List<Person> waitingPassengers = Collections.synchronizedList(new ArrayList<Person>());
+	Point location;
 	
-	BusStop(int number)
+	public BusStop(int number, int xCord, int yCord)
 	{
 		BusStopNumber = number;
+		location = new Point(xCord, yCord);
 	}
 	
 	public void waitingForBus(Person waitingPassenger)
@@ -24,7 +27,7 @@ public class BusStop
 		 AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, "Bus Stop #" + BusStopNumber, "Adding "+ waitingPassenger.getName());
 	}
 	
-	public List<Person> getAllWaitingPassengers(Bus bus) //WorkerRole work)
+	public List<Person> getAllWaitingPassengers(BusAgent bus) //WorkerRole work)
 	{	
 		
 		//There should be a way to check if a bus has called this method 
@@ -44,6 +47,11 @@ public class BusStop
 	public int getBusStopNumber()
 	{
 		return BusStopNumber;
+	}
+	
+	public Point getBusStopLocation()
+	{
+		return location;
 	}
 	
 	public int getNumberOfWaitingPassengers()

@@ -1,8 +1,10 @@
 package italianRestaurant;
 import java.awt.Point;
-import java.util.Vector;
 import java.util.*;
+
 import person.*;
+import transportation.BusStop;
+import application.Phonebook;
 import application.WatchTime;
 import application.gui.animation.*;
 import application.gui.animation.agentGui.*;
@@ -14,6 +16,7 @@ public class ItalianRestaurant {
 	public boolean userClosed = false;
 	public Point location; 
 	private Point closestStop;
+	public int busStopNumber;
 
 	//List of Customers
 	private Vector<ItalianCustomerRole> customers = new Vector<ItalianCustomerRole>();
@@ -240,6 +243,17 @@ public class ItalianRestaurant {
 	public void setClosestStop(Point point) {
 		closestStop = point;
 	}
+	
+	public void setClosestBusStopNumber (int n) 
+	{
+		busStopNumber = n;
+	}
+	
+	public BusStop getClosestBusStop ()
+	{
+		return Phonebook.getPhonebook().getAllBusStops().get(busStopNumber);
+	}
+	
 	public Point getClosestStop() {
 		return closestStop;
 	}

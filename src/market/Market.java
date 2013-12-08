@@ -12,6 +12,8 @@ import market.test.mock.MockUPSman;
 import person.Person;
 import person.Role;
 import person.Worker;
+import transportation.BusStop;
+import application.Phonebook;
 import application.WatchTime;
 import application.gui.animation.BuildingPanel;
 import application.gui.animation.agentGui.MarketCustomerGui;
@@ -26,6 +28,7 @@ public class Market {
 	public boolean userClosed = false;
 	public Point location; 
 	private Point closestStop;
+	public int busStopNumber;
 
 	//Open and closing times
 	public WatchTime openTime = new WatchTime(9);
@@ -246,6 +249,16 @@ public class Market {
 
 	public void setClosestStop(Point point) {
 		closestStop = point;
+	}
+	
+	public void setClosestBusStopNumber (int n) 
+	{
+		busStopNumber = n;
+	}
+	
+	public BusStop getClosestBusStop ()
+	{
+		return Phonebook.getPhonebook().getAllBusStops().get(busStopNumber);
 	}
 	
 	public Point getClosestStop() {

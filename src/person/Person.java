@@ -107,7 +107,6 @@ public abstract class Person extends Agent{
 		try {
 			eating.acquire();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 
 		}
@@ -129,21 +128,22 @@ public abstract class Person extends Agent{
 			gui.walkToCrossWalk();
 
 		if (!gui.walk){
-			if (home.type.equals("East Apartment")){
-				gui.doGoToBus(Phonebook.getPhonebook().getEastBank().getClosestStop().getX(),
-						Phonebook.getPhonebook().getEastBank().getClosestStop().getY());
-			}
-			else {
-				gui.doGoToBus(Phonebook.getPhonebook().getWestBank().getClosestStop().getX(),
-						Phonebook.getPhonebook().getWestBank().getClosestStop().getY());
-			}
-
-			try {
-				atDestination.acquire();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			//What is this supposed to mean?
+			goToBusStop();
+//			if (home.type.equals("East Apartment")){
+//				gui.doGoToBus(Phonebook.getPhonebook().getEastBank().getClosestStop().getX(),
+//						Phonebook.getPhonebook().getEastBank().getClosestStop().getY());
+//			}
+//			else {
+//				gui.doGoToBus(Phonebook.getPhonebook().getWestBank().getClosestStop().getX(),
+//						Phonebook.getPhonebook().getWestBank().getClosestStop().getY());
+//			}
+//
+//			try {
+//				atDestination.acquire();
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
 		}
 
 		if (home.type.equals("East Apartment"))
@@ -154,7 +154,6 @@ public abstract class Person extends Agent{
 		try {
 			atDestination.acquire();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 
 		}
@@ -229,6 +228,24 @@ public abstract class Person extends Agent{
 		}
 	}
 
+	protected void goToBusStop()
+	{
+		if (home.type.equals("East Apartment")){
+			gui.doGoToBus(Phonebook.getPhonebook().getEastBank().getClosestStop().getX(),
+					Phonebook.getPhonebook().getEastBank().getClosestStop().getY());
+		}
+		else {
+			gui.doGoToBus(Phonebook.getPhonebook().getWestBank().getClosestStop().getX(),
+					Phonebook.getPhonebook().getWestBank().getClosestStop().getY());
+		}
+
+		try {
+			atDestination.acquire();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	protected void prepareForMarket() {
 		print("Going to market as a customer");
 		if (home.type.equals("East Apartment")){
@@ -241,7 +258,6 @@ public abstract class Person extends Agent{
 		try {
 			atDestination.acquire();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 
 		}
@@ -287,7 +303,6 @@ public abstract class Person extends Agent{
 		try {
 			atDestination.acquire();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 
 		}
@@ -321,7 +336,6 @@ public abstract class Person extends Agent{
 		try {
 			atDestination.acquire();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			//
 		}
