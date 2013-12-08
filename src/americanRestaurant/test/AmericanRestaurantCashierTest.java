@@ -1,5 +1,6 @@
 package americanRestaurant.test;
 
+import americanRestaurant.AmericanRestaurantCashierRole;
 import junit.framework.TestCase;
 
 /**
@@ -13,7 +14,7 @@ import junit.framework.TestCase;
 public class AmericanRestaurantCashierTest extends TestCase
 {
 	//these are instantiated for each test separately via the setUp() method.
-	CashierAgent cashier;
+	AmericanRestaurantCashierRole cashier;
 	AmericanRestaurantMockWaiter waiter;
 	AmericanRestaurantMockCustomer customer;
 	AmericanRestaurantMockHost host;
@@ -26,7 +27,7 @@ public class AmericanRestaurantCashierTest extends TestCase
 	public void setUp() throws Exception{
 		super.setUp();    
 		host = new AmericanRestaurantMockHost("mockhost");
-		cashier = new CashierAgent(host);                
+		cashier = new AmericanRestaurantCashierRole(host);                
 		customer = new AmericanRestaurantMockCustomer("mockcustomer");                
 		waiter = new AmericanRestaurantMockWaiter("mockwaiter"); 	
 		market = new MockMarket("mockmarket");
@@ -85,7 +86,7 @@ public class AmericanRestaurantCashierTest extends TestCase
 		//preconditions
 
 		assertTrue("CashierBill should contain a bill with state: waitingForCust. Instead, the state is " + cashier.getChecks().get(0).getState(),
-				cashier.getChecks().get(0).getState() == CashierAgent.checkState.waitingForCust);
+				cashier.getChecks().get(0).getState() == AmericanRestaurantCashierRole.checkState.waitingForCust);
 
 		assertEquals("AmericanRestaurantMockCustomer should have an empty event log before the message is called. Instead, the AmericanRestaurantMockCustomer's event log reads: "
 				+ customer.log.toString(), 0, customer.log.size());
@@ -99,7 +100,7 @@ public class AmericanRestaurantCashierTest extends TestCase
 
 
 		assertTrue("CashierBill should contain a bill with state: paying. Instead, the state is " + cashier.getChecks().get(0).getState(),
-				cashier.getChecks().get(0).getState() == CashierAgent.checkState.paying);
+				cashier.getChecks().get(0).getState() == AmericanRestaurantCashierRole.checkState.paying);
 
 
 		assertTrue("AmericanRestaurantCashier should have logged \"Received ReadyToPay\" but didn't. His log reads instead: " 
@@ -182,7 +183,7 @@ public class AmericanRestaurantCashierTest extends TestCase
 		//preconditions
 
 		assertTrue("CashierBill should contain a bill with state: waitingForCust. Instead, the state is " + cashier.getChecks().get(0).getState(),
-				cashier.getChecks().get(0).getState() == CashierAgent.checkState.waitingForCust);
+				cashier.getChecks().get(0).getState() == AmericanRestaurantCashierRole.checkState.waitingForCust);
 
 		assertEquals("AmericanRestaurantMockCustomer should have an empty event log before the message is called. Instead, the AmericanRestaurantMockCustomer's event log reads: "
 				+ customer.log.toString(), 0, customer.log.size());
@@ -196,7 +197,7 @@ public class AmericanRestaurantCashierTest extends TestCase
 
 
 		assertTrue("CashierBill should contain a bill with state: unpaid. Instead, the state is " + cashier.getChecks().get(0).getState(),
-				cashier.getChecks().get(0).getState() == CashierAgent.checkState.unpaid);
+				cashier.getChecks().get(0).getState() == AmericanRestaurantCashierRole.checkState.unpaid);
 
 		assertTrue("AmericanRestaurantCashier should have logged \"Received NotEnoughMoney\" but didn't. His log reads instead: " 
 				+ cashier.log.getLastLoggedEvent().toString(), cashier.log.containsString("Received NotEnoughMoney"));
@@ -323,7 +324,7 @@ public class AmericanRestaurantCashierTest extends TestCase
 		assertTrue("AmericanRestaurantMockWaiter should have logged event: HereIsCheck, after AmericanRestaurantCashier's scheduler is called" , waiter.log.containsString("Received HereIsCheck from americanRestaurantCashier. Check = "+ check));
 
 		assertTrue("CashierBill should contain a bill with state: waitingForCust. Instead, the state is " + cashier.getChecks().get(0).getState(),
-				cashier.getChecks().get(0).getState() == CashierAgent.checkState.waitingForCust);
+				cashier.getChecks().get(0).getState() == AmericanRestaurantCashierRole.checkState.waitingForCust);
 
 		assertEquals("AmericanRestaurantMockCustomer should have an empty event log before the message is called. Instead, the AmericanRestaurantMockCustomer's event log reads: "
 				+ customer.log.toString(), 0, customer.log.size());
@@ -342,7 +343,7 @@ public class AmericanRestaurantCashierTest extends TestCase
 				+ cashier.getChecks().get(0).getCheck(), cashier.getChecks().get(0).getCheck() == 20);
 
 		assertTrue("CashierBill should contain a bill with state: paying. Instead, the state is " + cashier.getChecks().get(0).getState(),
-				cashier.getChecks().get(0).getState() == CashierAgent.checkState.paying);
+				cashier.getChecks().get(0).getState() == AmericanRestaurantCashierRole.checkState.paying);
 
 		assertTrue("AmericanRestaurantCashier should have logged \"Received ReadyToPay\" but didn't. His log reads instead: " 
 				+ cashier.log.getLastLoggedEvent().toString(), cashier.log.containsString("Received ReadyToPay"));
@@ -519,7 +520,7 @@ public class AmericanRestaurantCashierTest extends TestCase
 				waiter.log.containsString("Received HereIsCheck from americanRestaurantCashier. Check = "+ check));	
 		
 		assertTrue("CashierBill should contain a bill with state: waitingForCust. Instead, the state is " + cashier.getChecks().get(0).getState(),
-				cashier.getChecks().get(0).getState() == CashierAgent.checkState.waitingForCust);
+				cashier.getChecks().get(0).getState() == AmericanRestaurantCashierRole.checkState.waitingForCust);
 		
 		//step 4 pre-condition
 		assertEquals("MarketAgent should have an empty event log. Instead, the Market's event log reads: "
@@ -550,7 +551,7 @@ public class AmericanRestaurantCashierTest extends TestCase
 				+ customer.log.getLastLoggedEvent().toString(), customer.log.containsString("Received HereIsYourTotal from waiter. Total = " + check));
 
 		assertTrue("CashierBill should contain a bill with state: paying. Instead, the state is " + cashier.getChecks().get(0).getState(),
-				cashier.getChecks().get(0).getState() == CashierAgent.checkState.paying);
+				cashier.getChecks().get(0).getState() == AmericanRestaurantCashierRole.checkState.paying);
 
 		assertTrue("AmericanRestaurantCashier should have logged \"Received ReadyToPay\" but didn't. His log reads instead: " 
 				+ cashier.log.getLastLoggedEvent().toString(), cashier.log.containsString("Received ReadyToPay"));

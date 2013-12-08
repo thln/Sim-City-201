@@ -1,5 +1,7 @@
 package americanRestaurant.test;
 
+import testing.LoggedEvent;
+import testing.Mock;
 import americanRestaurant.AmericanRestaurantWaiterRole;
 import americanRestaurant.AmericanRestaurantWaiterRole.Menu;
 import americanRestaurant.interfaces.AmericanRestaurantCashier;
