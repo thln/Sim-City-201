@@ -2,6 +2,13 @@ package application.gui.appView.controlPanel;
 
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import javax.swing.text.NumberFormatter;
 
@@ -50,6 +57,9 @@ public class AddPanel extends JPanel implements ActionListener {
 	private boolean raveMode = false;	
 	boolean rave = false;
 
+	
+	//Music testing
+	AudioStream BGM;
 
 	private String[] personType = {" ", /*"Deadbeat", "Crook", */ "Worker", "Wealthy"};
 	private String[] jobLocation = {" ", "Restaurant", "Bank", "Market", "Housing"};
@@ -300,7 +310,15 @@ public class AddPanel extends JPanel implements ActionListener {
 		if (e.getSource() == raveButton) {
 			for (Person p : app.getPopulation()) {
 				p.getGui().setRaveMode();
-				//RaveAudioMode();
+				try {
+					RaveAudioMode();
+				} catch (LineUnavailableException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (UnsupportedAudioFileException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 			if (!rave){
 				rave = true;
@@ -324,27 +342,47 @@ public class AddPanel extends JPanel implements ActionListener {
 	}
 
 	
-	/*
-	public void RaveAudioMode()
+	
+	public void RaveAudioMode() throws LineUnavailableException, UnsupportedAudioFileException
 	{
+
 		AudioPlayer MGP = AudioPlayer.player;
+		//AudioInputStream BGM;
 		AudioStream BGM;
-		AudioData MD;
-		ContinuousAudioDataStream loop = null;
+		//AudioData MD;
+		//ContinuousAudioDataStream loop = null;
 		//try 
 		//{
 			try {
-				BGM = new AudioStream(new FileInputStream("raveAudioMode.wav"));
-				MD = BGM.getData();
-				loop = new ContinuousAudioDataStream(MD);
+				//System.out.println("1");
+				InputStream test = new FileInputStream("res/audio/raveAudioMode.wav");
+				BGM = new AudioStream(test);
+				//AudioPlayer.player.start(BGM);
+		        MGP.start(BGM);
+				//BGM = AudioSystem.getAudioInputStream(new File("res/raveAudioMode.wav"));
+//				System.out.println("2");
+//				MD = BGM.getData();
+//				System.out.println("3");
+//				loop = new ContinuousAudioDataStream(MD);
+//				System.out.println("4");
+				//File f = new File("res/raveAudioMode.wav");
+				
+				/*
+		        BGM = AudioSystem.getAudioInputStream(new File("res/raveAudioMode.wav"));
+				 AudioFormat af = BGM.getFormat();
+			        DataLine.Info info = new DataLine.Info(Clip.class, af);
+			        Clip clip = (Clip)AudioSystem.getLine(info);
 
+			        clip.open(BGM);
+			        clip.start();*/
+			        //clip.setFramePosition(0);
+			        //clip.stop();
+				
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				System.out.println("Won't work1.");
 				return;
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				System.out.println("Won't work.");
 				return;
@@ -356,8 +394,8 @@ public class AddPanel extends JPanel implements ActionListener {
 		//	return;
 		//}
 		
-		MGP.start(loop);
-	}*/
+		//MGP.start(loop);
+	}
 	
 	public void showJobLocationFields(boolean show)
 	{
