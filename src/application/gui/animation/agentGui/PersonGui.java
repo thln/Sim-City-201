@@ -48,6 +48,7 @@ public class PersonGui extends CityGui {
 	private int xHome, yHome;
 	private enum Command {noCommand, GoToRestaurant, GoToMarket, GoToBank, GoToBusStop, GoOnBus, GoHome};
 	private Command command = Command.noCommand;
+	int currentBlock, destinationBlock;
 
 	private enum PersonState {nothing, enroute, walkingToCrosswalk, inCrosswalk1, inCrosswalk2, inCrosswalk3, inCrosswalk4, inCrosswalk5, inCrosswalk6, inCrosswalk7, inCrosswalk8, inCrosswalk9, inCrosswalk10, inCrosswalk11, inCrosswalk12};
 	PersonState state = PersonState.nothing;
@@ -96,19 +97,19 @@ public class PersonGui extends CityGui {
 
 		//if (!inBusyIntersection()) {
 		if (state == PersonState.walkingToCrosswalk) {
-			if (xDestination > xPos){
+			if (destinationBlock - currentBlock == 1) {
 				xPos++;
 				return;
 			}
-			else if (xDestination < xPos){
+			else if (destinationBlock - currentBlock == -1){
 				xPos--;
 				return;
 			}
-			else if (yDestination > yPos){
+			else if (destinationBlock - currentBlock == 3){
 				yPos++;
 				return;
 			}
-			else if (xDestination < xPos){
+			else if (destinationBlock - currentBlock == -3){
 				yPos--;
 				return;
 			}
@@ -280,25 +281,28 @@ public class PersonGui extends CityGui {
 	}
 
 	public boolean decideForBus(String location) {
-		int xDest = 0, yDest = 0;
+
 		if (location.equals("East Bank")) {
-			xDest = (int) Phonebook.getPhonebook().getEastBank().location.getX();
-			yDest = (int) Phonebook.getPhonebook().getEastBank().location.getY();
+			xDestination = (int) Phonebook.getPhonebook().getEastBank().location.getX();
+			yDestination = (int) Phonebook.getPhonebook().getEastBank().location.getY();
 		}
 		if (location.equals("West Bank")) {
-			xDest = (int) Phonebook.getPhonebook().getWestBank().location.getX();
-			yDest = (int) Phonebook.getPhonebook().getWestBank().location. getY();
+			xDestination = (int) Phonebook.getPhonebook().getWestBank().location.getX();
+			yDestination = (int) Phonebook.getPhonebook().getWestBank().location. getY();
 		}
 		if (location.equals("East Market")) {
-			xDest = (int) Phonebook.getPhonebook().getWestBank().location.getX();
-			yDest = (int) Phonebook.getPhonebook().getWestBank().location. getY();
+			xDestination = (int) Phonebook.getPhonebook().getWestBank().location.getX();
+			yDestination = (int) Phonebook.getPhonebook().getWestBank().location. getY();
 		}
 		if (location.equals("Chinese Restaurant")) {
-			xDest = (int) Phonebook.getPhonebook().getWestBank().location.getX();
-			yDest = (int) Phonebook.getPhonebook().getWestBank().location. getY();
+			xDestination = (int) Phonebook.getPhonebook().getWestBank().location.getX();
+			yDestination = (int) Phonebook.getPhonebook().getWestBank().location. getY();
 		}
 
-		if ((xDest - xPos >= 30) || (yDest - yPos >= 30)){
+		destinationBlock = returnCurrentBlock (xDestination, yDestination);
+		System.err.println(agent.getName() + " has Destination block = " + destinationBlock);
+		
+		if ((xDestination - xPos >= 30) || (yDestination - yPos >= 30)){
 			return false;
 		}
 		return true;
@@ -377,8 +381,8 @@ public class PersonGui extends CityGui {
 	}
 
 	public void popToMiddle(){
-		int currentBlock = returnCurrentBlock(xPos, yPos);
-		agent.print("Block = " + currentBlock + "and position = " + xPos + " , " + yPos);
+		currentBlock = returnCurrentBlock(xPos, yPos);
+		System.err.println(agent.getName() + " has Destination block = " + destinationBlock);
 		if (currentBlock == 1)
 		{
 			xPos = (int) Phonebook.getPhonebook().crosswalk3.getCrosswalk().getX();			//Pop to middle of block1
@@ -430,6 +434,11 @@ public class PersonGui extends CityGui {
 		else {
 			//agent.print("No pop");
 		}
+		//xPos -= 10;
+		//yPos = 30;
+	
+		System.err.println("Name is " + agent.getName() + " and Block = " + currentBlock + "and position = " + xPos + " , " + yPos );
+		System.err.println(agent.getName() + " has Destination block = " + destinationBlock);
 	}
 
 	public int returnCurrentBlock (int xPos, int yPos){

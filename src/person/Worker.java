@@ -223,6 +223,7 @@ public class Worker extends Person {
 		gui.walk = gui.decideForBus(myJob.jobPlace);
 		
 		gui.walk = true;
+		
 		if (gui.walk)
 			gui.popToMiddle();
 		
@@ -241,8 +242,6 @@ public class Worker extends Person {
 		if (myJob.jobPlace.equals("East Bank")) 
 		{
 			gui.walk = true;
-			if (gui.walk)
-				gui.popToMiddle();
 			getGui().DoGoToBank("East");
 			try {	
 				atDestination.acquire();
@@ -258,8 +257,6 @@ public class Worker extends Person {
 		if (myJob.jobPlace.equals("West Bank")) 
 		{
 			gui.walk = true;
-			if (gui.walk)
-				gui.popToMiddle();
 			getGui().DoGoToBank("West");
 			try {	
 				atDestination.acquire();
@@ -275,8 +272,6 @@ public class Worker extends Person {
 		if (myJob.jobPlace == "East Market") 
 		{
 			gui.walk = true;
-			if (gui.walk)
-				gui.popToMiddle();
 			print("Going to work at east market");
 			getGui().DoGoToMarket("East");
 			try {
@@ -295,8 +290,6 @@ public class Worker extends Person {
 		if (myJob.jobPlace == "West Market") 
 		{
 			gui.walk = true;
-			if (gui.walk)
-				gui.popToMiddle();
 			print("Going to work at west market");
 			getGui().DoGoToMarket("West");
 			try {
@@ -315,8 +308,6 @@ public class Worker extends Person {
 		if (myJob.jobPlace == "Chinese Restaurant") 
 		{
 			gui.walk = true;
-			if (gui.walk)
-				gui.popToMiddle();
 			print("Going to work at Chinese Restaurant");
 			getGui().DoGoToRestaurant("chinese");
 			try {
