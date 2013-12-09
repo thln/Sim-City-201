@@ -34,7 +34,7 @@ public class ChineseRestaurant implements Restaurant {
 	public WatchTime closeTime = new WatchTime(21);
 
 	//Roles
-	public ChineseRestaurantHostRole chineseRestaurantHostRole = new ChineseRestaurantHostRole("Host");
+	public ChineseRestaurantHostRole chineseRestaurantHostRole = new ChineseRestaurantHostRole("Host", this);
 	public ChineseRestaurantCookRole chineseRestaurantCookRole = new ChineseRestaurantCookRole("Cook", this);
 	public RestaurantCookGui cookGui = new RestaurantCookGui(chineseRestaurantCookRole);
 	
@@ -97,7 +97,7 @@ public class ChineseRestaurant implements Restaurant {
 			return chineseRestaurantCashierRole;
 		}
 		else if (title == "waiter") {	
-			ChineseRestaurantWaiterRole waiter = new ChineseRestaurantWaiterRole(person, person.getName(), title);
+			ChineseRestaurantWaiterRole waiter = new ChineseRestaurantWaiterRole(person, person.getName(), title, this);
 			if (waiters.size() <= 12) {
 				RestaurantWaiterGui g = new RestaurantWaiterGui(waiter);
 				restPanel.addGui(g);
@@ -119,7 +119,7 @@ public class ChineseRestaurant implements Restaurant {
 			return waiter;
 		}
 		else if (title == "altWaiter") {
-			ChineseRestaurantAltWaiterRole altWaiter = new ChineseRestaurantAltWaiterRole(person, person.getName(), title);
+			ChineseRestaurantAltWaiterRole altWaiter = new ChineseRestaurantAltWaiterRole(person, person.getName(), title, this);
 			if (waiters.size() <= 12) {
 				RestaurantWaiterGui g = new RestaurantWaiterGui(altWaiter);
 				restPanel.addGui(g);

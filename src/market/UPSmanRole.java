@@ -55,7 +55,7 @@ public class UPSmanRole extends Role implements UPSman {
 			}
 		}
 		
-		if (leaveRole) {
+		if (leaveRole && orders.isEmpty()) {
 			market.goingOffWork(person);
 			leaveRole = false;
 			return true;

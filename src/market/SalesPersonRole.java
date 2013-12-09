@@ -158,7 +158,7 @@ public class SalesPersonRole extends Role implements SalesPerson {
 			}
 		}
 
-		if (leaveRole) {
+		if (leaveRole && orders.isEmpty()) {
 			market.goingOffWork(person);
 			leaveRole = false;
 			return true;
