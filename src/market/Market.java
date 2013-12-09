@@ -156,6 +156,7 @@ public class Market {
 		MarketCustomerGui MCG = new MarketCustomerGui(mCR);
 		mCR.setGui(MCG);
 		MCG.setHome(marketGuis.size());
+		mCR.setMarket(this);
 		marketGuis.add(MCG);
 		marketPanel.addGui(MCG);
 		//MCG.waitInLine();
