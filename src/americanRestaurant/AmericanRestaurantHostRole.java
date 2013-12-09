@@ -6,7 +6,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Semaphore;
 
+import person.Person;
 import person.Role;
+import testing.EventLog;
+import americanRestaurant.AmericanRestaurantCashierRole.MyCheck;
 import americanRestaurant.interfaces.AmericanRestaurantCustomer;
 import americanRestaurant.interfaces.AmericanRestaurantHost;
 
@@ -15,7 +18,7 @@ import americanRestaurant.interfaces.AmericanRestaurantHost;
  */
 //We only have 2 types of agents in this prototype. A customer and an agent that
 //does all the rest. Rather than calling the other agent a waiter, we called him
-//the americanHost. A AmericanRestaurantHost is the manager of a restaurant who sees that all
+//the AmericanRestaurantCookRole. A AmericanRestaurantHost is the manager of a restaurant who sees that all
 //is proceeded as he wishes.
 
 
@@ -33,8 +36,8 @@ public class AmericanRestaurantHostRole extends Role implements AmericanRestaura
 	String name = "Billy";
 	boolean wantToBreak = false;
 
-	public AmericanRestaurantHostRole (){
-		super("name");
+	public AmericanRestaurantHostRole (String name) {
+		super(name);
 		waitingCustomers = Collections.synchronizedList(new ArrayList<AmericanRestaurantCustomerRole>());
 		leavingCustomers = Collections.synchronizedList(new ArrayList<AmericanRestaurantCustomerRole>());
 		dishonestCustomers = Collections.synchronizedList(new ArrayList<AmericanRestaurantCustomerRole>());
@@ -45,6 +48,22 @@ public class AmericanRestaurantHostRole extends Role implements AmericanRestaura
 		}
 		Waiters = Collections.synchronizedList(new ArrayList<AmericanRestaurantWaiterRole>());
 	}
+	
+	public AmericanRestaurantHostRole(Person p1, String pName, String rName, AmericanRestaurant restaurant) {
+		super(p1, pName, rName);
+		waitingCustomers = Collections.synchronizedList(new ArrayList<AmericanRestaurantCustomerRole>());
+		leavingCustomers = Collections.synchronizedList(new ArrayList<AmericanRestaurantCustomerRole>());
+		dishonestCustomers = Collections.synchronizedList(new ArrayList<AmericanRestaurantCustomerRole>());
+		tableList = new AmericanRestaurantTable[NTABLES];
+		for (int i = 0; i < NTABLES; i++) {
+			tableList[i] = new AmericanRestaurantTable();
+			tableList[i].setSeatNum(i);
+		}
+		Waiters = Collections.synchronizedList(new ArrayList<AmericanRestaurantWaiterRole>());
+		//marketBills = Collections.synchronizedList(new ArrayList<MarketBill>());
+	}
+	
+	
 
 	private Semaphore atTable = new Semaphore(0,true);        //Way to coordinate which agents are doing what
 
@@ -75,7 +94,7 @@ public class AmericanRestaurantHostRole extends Role implements AmericanRestaura
 			}
 		}
 		
-		print("Finding AmericanRestaurantWaiter");
+		print("Finding American Restaurant Waiter");
 		waitingCustomers.add(C1);         
 	//	C1.getGui().setHomePosition(waitingCustomers.size()-1);
 		if (person != null) {

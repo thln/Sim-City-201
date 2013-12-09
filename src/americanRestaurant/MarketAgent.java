@@ -20,7 +20,7 @@
 //	//DATA
 //	private HashMap <String, Food> inventory;
 //	private List <Food> desiredFood;
-//	private americanHost CookCharles;
+//	private AmericanRestaurantCookRole CookCharles;
 //	private AmericanRestaurantCashier myCashier;
 //	final int gatherTime = 10000;
 //	int bankAccount;
@@ -45,7 +45,7 @@
 //
 //	//MESSAGES
 //
-//	public void msgHereIsAnOrder(Food f1, americanHost c1){
+//	public void msgHereIsAnOrder(Food f1, AmericanRestaurantCookRole c1){
 //		this.CookCharles = c1;
 //		desiredFood.add(f1);
 //		stateChanged();

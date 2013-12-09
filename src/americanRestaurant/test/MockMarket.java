@@ -1,8 +1,8 @@
 //package americanRestaurant.test;
 //
 //import testing.Mock;
-//import americanRestaurant.americanHost;
-//import americanRestaurant.americanHost.Food;
+//import americanRestaurant.AmericanRestaurantCookRole;
+//import americanRestaurant.AmericanRestaurantCookRole.Food;
 //import americanRestaurant.interfaces.Market;
 //
 //public class MockMarket extends Mock implements Market {
@@ -12,7 +12,7 @@
 //	}
 //
 //	@Override
-//	public void msgHereIsAnOrder(Food f1, americanHost c1) {
+//	public void msgHereIsAnOrder(Food f1, AmericanRestaurantCookRole c1) {
 //		// TODO Auto-generated method stub
 //		
 //	}

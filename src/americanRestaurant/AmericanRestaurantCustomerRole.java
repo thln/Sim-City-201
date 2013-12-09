@@ -4,11 +4,16 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import chineseRestaurant.ChineseRestaurant;
+import chineseRestaurant.ChineseRestaurantCustomerRole.AgentEvent;
+import chineseRestaurant.ChineseRestaurantCustomerRole.AgentState;
+import person.Person;
 import person.Role;
 import americanRestaurant.AmericanRestaurantWaiterRole.Menu;
 import americanRestaurant.interfaces.AmericanRestaurantCashier;
 import americanRestaurant.interfaces.AmericanRestaurantCustomer;
 import americanRestaurant.interfaces.AmericanRestaurantWaiter;
+import application.Phonebook;
 import application.gui.animation.RestaurantPanel;
 
 /**
@@ -17,13 +22,12 @@ import application.gui.animation.RestaurantPanel;
 public class AmericanRestaurantCustomerRole extends Role implements AmericanRestaurantCustomer {
 
 	//data
-	static AmericanRestaurantHostRole myHost;
-	RestaurantPanel panel1;
-	static AmericanRestaurantCashier myCashier;
+	
+	AmericanRestaurant myRestaurant;
+	AmericanRestaurantWaiter myWaiter;
 	static final int decidingTime = 2000;
 	static final int maxCash = 300;
 	static final int eatingTime = 3000;
-	private AmericanRestaurantWaiter myWaiter;
 	boolean waiting = false;
 	private boolean dishonest = false;
 
@@ -62,20 +66,15 @@ public class AmericanRestaurantCustomerRole extends Role implements AmericanRest
 				super("name");
 			}
 
-			public AmericanRestaurantCustomerRole(String name, AmericanRestaurantHostRole H1, int seatNum, AmericanRestaurantCashierRole C1, RestaurantPanel p1){
-				super("name");
-				panel1 = p1;
-				myHost  = H1;
-				myCashier = C1;
+			public AmericanRestaurantCustomerRole(Person p1, String name, String rName){
+				super(p1, name, rName);
+				cash = (int) p1.money;
 				timer = new Timer ();
 				deciding = new Timer();
 				eating = new Timer();
-				seatNumber = seatNum;
 				debt = 0;	
-			}
-
-			public void setWaiter(AmericanRestaurantWaiterRole waiter) {
-				this.myWaiter = waiter;
+				event = AgentEvent.gotHungry;
+				myRestaurant = Phonebook.getPhonebook().getAmericanRestaurant();
 			}
 
 			public int getSeatNumber(){
@@ -104,13 +103,13 @@ public class AmericanRestaurantCustomerRole extends Role implements AmericanRest
 				decision = new Random().nextInt(2);
 				if (decision == 0) {
 					print("I won't wait.");
-					myHost.msgWontWait(this);
+					myRestaurant.americanHost.msgWontWait(this);
 					//customerGui.DoExitRestaurant();
 				}
 				if (decision == 1) {
 					print("I will wait.");
 					waiting = true;
-					myHost.msgWillWait(this);
+					myRestaurant.americanHost.msgWillWait(this);
 				}
 			}
 
@@ -119,8 +118,7 @@ public class AmericanRestaurantCustomerRole extends Role implements AmericanRest
 				this.myWaiter = w;
 				event = AgentEvent.followHost;
 				myMenu = m;
-				if (person != null)
-					stateChanged();
+				stateChanged();
 			}
 
 			public void msgAnimationFinishedGoToSeat() {
@@ -168,7 +166,7 @@ public class AmericanRestaurantCustomerRole extends Role implements AmericanRest
 			}
 
 			public void msgPayOffDebt (){
-				myCashier.msgPayDebt(this, debt, cash);
+				myRestaurant.americanCashier.msgPayDebt(this, debt, cash);
 				print("Paying my debt.");
 			}
 
@@ -241,7 +239,7 @@ public class AmericanRestaurantCustomerRole extends Role implements AmericanRest
 			private void goToRestaurant() {
 				print("Going to restaurant");	
 				//	customerGui.DoGoToEntrance();
-				myHost.msgIWantToEat(this);//send our instance, so he can respond to us
+				myRestaurant.americanHost.msgIWantToEat(this);//send our instance, so he can respond to us
 			}
 
 			private void SitDown() {
@@ -322,14 +320,14 @@ public class AmericanRestaurantCustomerRole extends Role implements AmericanRest
 				myWaiter.msgDoneAndPaying(this);
 				//	customerGui.DoExitRestaurant();
 				if (isDishonest()) {
-					myCashier.msgNotEnoughMoney(this, check, cash);
+					myRestaurant.americanCashier.msgNotEnoughMoney(this, check, cash);
 					print("Woops...not enough money.");
 					setDishonest(false);
 					state = CustomerState.DoingNothing;
 					return;
 				}
 				if (!isDishonest())
-					myCashier.msgHereIsMyPayment(this, check, cash);
+					myRestaurant.americanCashier.msgHereIsMyPayment(this, check, cash);
 			}
 
 			// Accessors, etc.

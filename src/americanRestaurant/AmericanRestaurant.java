@@ -24,10 +24,9 @@ public class AmericanRestaurant {
 		public WatchTime closeTime = new WatchTime(21);
 
 		//Roles
-		public AmericanRestaurantHostRole americanHost = new AmericanRestaurantHostRole();
-		public americanHost americanCook = new americanHost();
-		
-		public AmericanRestaurantCashierRole AmericanRestaurantCashierRole = new AmericanRestaurantCashierRole(americanHost, name);
+		public AmericanRestaurantHostRole americanHost = new AmericanRestaurantHostRole("American Host");
+		public AmericanRestaurantCookRole americanCook = new AmericanRestaurantCookRole("American Cook");		
+		public AmericanRestaurantCashierRole americanCashier = new AmericanRestaurantCashierRole("American Cashier");
 		//public AmericanRestaurantRevolvingStand theRevolvingStand = new AmericanRestaurantRevolvingStand();
 		private BuildingPanel restPanel;
 
@@ -45,8 +44,8 @@ public class AmericanRestaurant {
 
 			if (title == "host") {
 				//Setting previous bank guard role to inactive
-//				if (americanHost.getPerson() != null) {
-//					Worker worker = (Worker) americanHost.getPerson();
+//				if (AmericanRestaurantCookRole.getPerson() != null) {
+//					Worker worker = (Worker) AmericanRestaurantCookRole.getPerson();
 //					worker.roleFinishedWork();
 //				}
 				//Setting bank guard role to new role
@@ -58,8 +57,8 @@ public class AmericanRestaurant {
 			}
 			else if (title == "cook") {
 //				//Setting previous bank guard role to inactive
-//				if (americanHost.getPerson() != null) {
-//					Worker worker = (Worker) americanHost.getPerson();
+//				if (AmericanRestaurantCookRole.getPerson() != null) {
+//					Worker worker = (Worker) AmericanRestaurantCookRole.getPerson();
 //					worker.roleFinishedWork();
 //				}
 				//Setting cook role to new role
@@ -67,7 +66,7 @@ public class AmericanRestaurant {
 				if (isOpen()) {
 					americanHost.msgRestaurantOpen();
 				}
-		//		americanHost.setGui(cookGui);
+		//		AmericanRestaurantCookRole.setGui(cookGui);
 		//		restPanel.addGui(cookGui);
 				return americanHost;
 			}
@@ -78,11 +77,11 @@ public class AmericanRestaurant {
 //					worker.roleFinishedWork();
 //				}
 				//Setting americanRestaurantCashier role to new role
-				AmericanRestaurantCashierRole.setPerson(person);
+				americanCashier.setPerson(person);
 				if (isOpen()) {
 					americanHost.msgRestaurantOpen();
 				}
-				return AmericanRestaurantCashierRole;
+				return americanCashier;
 			}
 			else if (title == "waiter") {	
 				AmericanRestaurantWaiterRole waiter = new AmericanRestaurantWaiterRole(person, person.getName(), title, this);
@@ -101,7 +100,7 @@ public class AmericanRestaurant {
 
 				americanHost.msgAddWaiter(waiter);
 //				if (isOpen()) {
-//					americanHost.msgRestaurantOpen();
+//					AmericanRestaurantCookRole.msgRestaurantOpen();
 //				}
 				return waiter;
 			}
@@ -122,9 +121,9 @@ public class AmericanRestaurant {
 //				}
 //				
 //				waiters.add(altWaiter);
-//				americanHost.addWaiter(altWaiter);
+//				AmericanRestaurantCookRole.addWaiter(altWaiter);
 //				if (isOpen()) {
-//					americanHost.msgRestaurantOpen();
+//					AmericanRestaurantCookRole.msgRestaurantOpen();
 //				}
 //				return altWaiter;
 //			}
@@ -157,10 +156,10 @@ public class AmericanRestaurant {
 
 			if (worker.getWorkerRole().equals(americanHost)) {
 				americanHost = null;
-				//restPanel.removeGui(americanHost.getGui());
+				//restPanel.removeGui(AmericanRestaurantCookRole.getGui());
 			}
-			if (worker.getWorkerRole().equals(AmericanRestaurantCashierRole)) {
-				AmericanRestaurantCashierRole = null;
+			if (worker.getWorkerRole().equals(americanCashier)) {
+				americanCashier = null;
 			}
 			if (worker.getWorkerRole().equals(americanHost)) {
 				americanHost = null;
@@ -193,7 +192,7 @@ public class AmericanRestaurant {
 //			if (test) {
 //				return AmericanRestaurantMockCook;
 //			}
-//			return americanHost;
+//			return AmericanRestaurantCookRole;
 //		}
 //
 //		public AmericanRestaurantCashier getCashier(boolean test) {
@@ -204,7 +203,7 @@ public class AmericanRestaurant {
 //		}
 //
 		public boolean isOpen() {
-			if (americanHost.getPerson() != null && americanHost.Waiters.size() != 0 && americanHost.getPerson() != null && AmericanRestaurantCashierRole != null && !userClosed)
+			if (americanHost.getPerson() != null && americanHost.Waiters.size() != 0 && americanHost.getPerson() != null && americanCashier.person != null && !userClosed)
 				return true;
 			else 
 				return false;
@@ -226,12 +225,12 @@ public class AmericanRestaurant {
 //		
 //		public void closeBuilding(){
 //			userClosed = true;
-//			americanHost.msgLeaveRole();
+//			AmericanRestaurantCookRole.msgLeaveRole();
 //			for (AmericanRestaurantWaiterRole w1: waiters) {
 //				w1.msgLeaveRole();
 //				restPanel.removeGui(w1.getGui());
 //			}
-//			americanHost.msgLeaveRole();
+//			AmericanRestaurantCookRole.msgLeaveRole();
 //			restPanel.removeGui(cookGui);
 //			
 //			AmericanRestaurantCashierRole.msgLeaveRole();

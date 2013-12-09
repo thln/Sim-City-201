@@ -2,7 +2,7 @@ package americanRestaurant.test;
 
 import testing.LoggedEvent;
 import testing.Mock;
-import americanRestaurant.americanHost.Order;
+import americanRestaurant.AmericanRestaurantCookRole.Order;
 import americanRestaurant.AmericanRestaurantTable;
 import americanRestaurant.interfaces.AmericanRestaurantCustomer;
 import americanRestaurant.interfaces.AmericanRestaurantWaiter;

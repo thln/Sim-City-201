@@ -229,7 +229,7 @@ public class SeafoodRestaurantCookRole extends Role implements Restaurant
 		DoPlate(o);
 		o.w.OrderIsReady(o.food, o.table);
 		print("Message 8 Sent, Food is Ready" + name);
-		/////Why is the print coming from a "americanHost address"
+		/////Why is the print coming from a "AmericanRestaurantCookRole address"
 		o.state = OrderState.Finished;
 	}
 	

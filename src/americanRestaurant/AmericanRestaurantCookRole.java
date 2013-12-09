@@ -8,7 +8,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.Semaphore;
 
+import person.Person;
 import person.Role;
+import testing.EventLog;
+import americanRestaurant.AmericanRestaurantCashierRole.MyCheck;
 import americanRestaurant.interfaces.AmericanRestaurantCashier;
 import chineseRestaurant.ChineseRestaurantCashierRole.Order;
 
@@ -16,7 +19,7 @@ import chineseRestaurant.ChineseRestaurantCashierRole.Order;
  * Restaurant Cook Agent
  */
 
-public class americanHost extends Role {
+public class AmericanRestaurantCookRole extends Role {
 
 	//DATA
 
@@ -88,9 +91,28 @@ public class americanHost extends Role {
 
 
 	//Constructor
+	public AmericanRestaurantCookRole (String name) {
+		super(name);
+		PendingOrders = Collections.synchronizedList(new ArrayList<Order>());
+		FinishedOrders = Collections.synchronizedList(new ArrayList<Order>());	
+		foodList = new HashMap<>();
+		foodList.put("Steak", new Food("Steak", 5000, 1, 3, 5, 5));
+		foodList.put("Chicken", new Food("Chicken", 4000, 3, 3, 5, 4));
+		foodList.put("Salad", new Food("Salad", 3000, 0, 3, 5, 2));
+		foodList.put("Pizza", new Food("Pizza", 3500, 4, 3, 5, 3));
 
-	public americanHost (){
-		super("name");
+		inProcess = new  Semaphore(0, true);
+
+		//Constructing market agents
+		//	markets = Collections.synchronizedList (new ArrayList<MarketAgent>());
+		AddMarket();
+		AddMarket();
+		AddMarket();
+		needToOrder = true;
+	}
+	
+	public AmericanRestaurantCookRole(Person p1, String pName, String rName, AmericanRestaurant restaurant) {
+		super(p1, pName, rName);
 		PendingOrders = Collections.synchronizedList(new ArrayList<Order>());
 		FinishedOrders = Collections.synchronizedList(new ArrayList<Order>());	
 		foodList = new HashMap<>();

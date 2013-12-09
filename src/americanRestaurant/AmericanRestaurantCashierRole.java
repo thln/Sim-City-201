@@ -3,10 +3,16 @@ package americanRestaurant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Timer;
+import java.util.concurrent.Semaphore;
 
+import bank.BankGuardRole.MyTeller;
+import bank.interfaces.BankCustomer;
+import person.Person;
 import person.Role;
 import testing.EventLog;
 import americanRestaurant.AmericanRestaurantWaiterRole.Menu;
+import americanRestaurant.AmericanRestaurantWaiterRole.MyCustomer;
 import americanRestaurant.interfaces.AmericanRestaurantCashier;
 import americanRestaurant.interfaces.AmericanRestaurantCustomer;
 import americanRestaurant.interfaces.AmericanRestaurantHost;
@@ -14,7 +20,8 @@ import americanRestaurant.interfaces.AmericanRestaurantWaiter;
 
 public class AmericanRestaurantCashierRole extends Role implements AmericanRestaurantCashier{
 	//DATA
-
+	AmericanRestaurant myRestaurant;
+	
 	public enum checkState {ready, paying, unpaid, waitingForCust, inDebt, paidDebt};
 
 	public class MyCheck {	
@@ -101,12 +108,19 @@ public class AmericanRestaurantCashierRole extends Role implements AmericanResta
 
 	//Constructor
 
-	public AmericanRestaurantCashierRole (AmericanRestaurantHost H1, String name){
+	public AmericanRestaurantCashierRole (String name) {
 		super(name);
-		myHost = H1;
 		checks = Collections.synchronizedList(new ArrayList<MyCheck>());
 		log = new EventLog();
-		setCashRegister(12);
+		setCashRegister(120);	
+	}
+	
+	public AmericanRestaurantCashierRole(Person p1, String pName, String rName, AmericanRestaurant restaurant) {
+		super(p1, pName, rName);
+		myRestaurant = restaurant;
+		checks = Collections.synchronizedList(new ArrayList<MyCheck>());
+		log = new EventLog();
+		setCashRegister(120);
 		//marketBills = Collections.synchronizedList(new ArrayList<MarketBill>());
 	}
 

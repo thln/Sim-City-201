@@ -84,7 +84,7 @@ public class ChineseRestaurant implements Restaurant {
 			restPanel.addGui(cookGui);
 			return chineseRestaurantCookRole;
 		}
-		else if (title.contains("americanRestaurantCashier")) {
+		else if (title.contains("cashier")) {
 			//Setting previous bank guard role to inactive
 			if (chineseRestaurantCashierRole.getPerson() != null) {
 				Worker worker = (Worker) chineseRestaurantCashierRole.getPerson();

@@ -77,7 +77,7 @@ public abstract class Person extends Agent{
 		roles.add(new BankCustomerRole(this, getName(), "Bank Customer"));
 		roles.add(new MarketCustomerRole(this, getName(), "Market Customer"));
 		roles.add(new ChineseRestaurantCustomerRole(this, getName(), "Restaurant Customer", Phonebook.getPhonebook().getChineseRestaurant()));
-		roles.add(new AmericanRestaurantCustomerRole());
+		roles.add(new AmericanRestaurantCustomerRole(this, getName(), "Restaurant Customer"));
 		nextTask = new Timer();
 		atDestination = new Semaphore(0,true);
 		setHunger(HungerLevel.full);
