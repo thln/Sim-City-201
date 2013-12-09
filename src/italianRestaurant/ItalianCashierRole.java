@@ -7,7 +7,7 @@ import italianRestaurant.interfaces.*;
 import java.util.*;
 import java.lang.*;
 import java.util.concurrent.Semaphore;
-
+import market.interfaces.*;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
@@ -83,6 +83,12 @@ public class ItalianCashierRole extends Role implements ItalianCashier{
 	public void msgRestockingBill(ItalianMarket market, String foodname, Double billtotal) {
 		print("Received bill of " + billtotal + " from " + market + " for " + foodname);
 		BillFoods.add(new Bill(market, billtotal));
+		stateChanged();
+	}
+	
+	public void msgPleasePayForItems(String foodname, String orderAmt, Double billtotal, SalesPerson sp) {
+		print("Received bill of " + billtotal + " from " + sp.toString() + " for " + foodname);
+		BillFoods.add(new Bill(sp, billtotal, foodname, orderAmt));
 		stateChanged();
 	}
 	
@@ -264,6 +270,7 @@ public class ItalianCashierRole extends Role implements ItalianCashier{
 	public enum BillState {pending, computed, done, paying, finished};
 	
 	public class Bill {
+		public SalesPerson salesPerson;
 		public ItalianMarket m;
 		public ItalianWaiter w;
 		public ItalianCustomer c;
@@ -280,6 +287,12 @@ public class ItalianCashierRole extends Role implements ItalianCashier{
 		
 		Bill(ItalianMarket market, Double bill) {
 			m = market;
+			total = bill;
+			s = BillState.pending;
+		}
+		
+		Bill(SalesPerson sp, Double bill, String foodname, String orderAmt) {
+			this.salesPerson = sp;
 			total = bill;
 			s = BillState.pending;
 		}
