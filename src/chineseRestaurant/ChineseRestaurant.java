@@ -144,15 +144,17 @@ public class ChineseRestaurant implements Restaurant {
 		if (customers.size() <= 12) {
 			rCG.setHomePosition((22 * customers.size()), 10);
 			rCR.gotHungry((22 * customers.size()), 10);
+			restPanel.addGui(rCG);
+			customers.add(rCR);
 			return true;
 		}
 		else if (customers.size() <= 24) {
 			rCG.setHomePosition((22 * (customers.size() - 12)), 32);
 			rCR.gotHungry((22 * (customers.size() - 12)), 32);
+			restPanel.addGui(rCG);
+			customers.add(rCR);
 			return true;
 		}
-		restPanel.addGui(rCG);
-		customers.add(rCR);
 		return false;
 	}
 

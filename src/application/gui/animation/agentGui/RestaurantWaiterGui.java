@@ -75,7 +75,7 @@ public class RestaurantWaiterGui extends RestaurantGui {
 		}
 		g.setColor(Color.BLACK);
 		if(agent != null)
-			g.drawString(agent.getName(), xPos, yPos+40);
+			g.drawString(agent.getName(), xPos, yPos+30);
 
 	}
 
