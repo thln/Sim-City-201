@@ -256,7 +256,7 @@ public class BusGuiHorizontal extends CityGui {
 	}
 	
 	
-	public void inAnIntersection() {
+	synchronized public void inAnIntersection() {
 		Rectangle me = new Rectangle(xPos, yPos, 25, 25);
 		
 		if (Phonebook.getPhonebook().intersection1.getIntersection().intersects(me) &&
@@ -281,7 +281,7 @@ public class BusGuiHorizontal extends CityGui {
 		}
 	}
 	
-	public void inACrosswalk() {
+	synchronized public void inACrosswalk() {
 		Rectangle me = new Rectangle(xPos, yPos, 25, 25);
 		
 		if (Phonebook.getPhonebook().crosswalk3.getCrosswalk().intersects(me) &&
@@ -317,7 +317,7 @@ public class BusGuiHorizontal extends CityGui {
 	}
 	
 	
-	public void leftAnIntersection() {
+	synchronized public void leftAnIntersection() {
 		Rectangle me = new Rectangle(xPos, yPos, 25, 25);
 		
 		if (!Phonebook.getPhonebook().intersection1.getIntersection().intersects(me)
@@ -342,7 +342,7 @@ public class BusGuiHorizontal extends CityGui {
 		}
 	}
 	
-	public void leftACrosswalk() {
+	synchronized public void leftACrosswalk() {
 		Rectangle me = new Rectangle(xPos, yPos, 25, 25);
 		
 		if (!Phonebook.getPhonebook().crosswalk3.getCrosswalk().intersects(me)

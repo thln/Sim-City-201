@@ -25,8 +25,8 @@ import application.Phonebook;
 import application.gui.animation.agentGui.BusGuiHorizontal;
 import application.gui.animation.agentGui.BusGuiVertical;
 import application.gui.animation.agentGui.Gui;
-import application.gui.animation.agentGui.VehicleGui;
 import application.gui.animation.agentGui.VehicleHorizontalGui;
+import application.gui.animation.agentGui.VehicleVerticalGui;
 
 public class CityPanel extends JPanel implements ActionListener, MouseListener {
 
@@ -55,6 +55,7 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 	public BusGuiHorizontal busA = new BusGuiHorizontal();
 	public BusGuiVertical busB = new BusGuiVertical();
 	public VehicleHorizontalGui carA = new VehicleHorizontalGui();
+	public VehicleVerticalGui carB = new VehicleVerticalGui();
 
 	public CityPanel(AnimationPanel animationPanel) {
 
@@ -94,6 +95,7 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		addGui(busA);
 		addGui(busB);
 		addGui(carA);
+		addGui(carB);
 
 		Timer timer = new Timer(10, this);
 		timer.start();
@@ -174,9 +176,6 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		g2.drawImage(busStop.getImage(), 127, 230, null);
 		g2.drawImage(busStop.getImage(), 420, 28, null);
 		g2.drawImage(busStop.getImage(), 420, 230, null);
-
-		//Busses
-
 
 		//Drawing all buildings
 		for (int i=0; i<buildings.size(); i++ ) {
