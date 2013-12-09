@@ -1,11 +1,12 @@
 package application.gui.animation.agentGui;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.Semaphore;
+
+import javax.swing.ImageIcon;
 
 import transportation.BusAgent;
 import application.Phonebook;
@@ -14,6 +15,9 @@ public class BusGuiHorizontal extends CityGui {
 
 	private BusAgent agent = null;
 	private boolean isPresent = true;
+	
+	ImageIcon busLeft = new ImageIcon("res/busLeft.png");
+	ImageIcon busRight = new ImageIcon("res/busRight.png");
 	
 	private final int stopLeftX = (int) Phonebook.getPhonebook().getBusStops().get(0).getX();
 	private final int stopRightX = (int) Phonebook.getPhonebook().getBusStops().get(1).getX();
@@ -93,10 +97,12 @@ public class BusGuiHorizontal extends CityGui {
 	}
 
 	public void draw(Graphics2D g) {
-		g.setColor(Color.BLUE);
-		g.fillOval(xPos, yPos, 25, 25);
-		g.setColor(Color.WHITE);
-		g.drawString("A", xPos + 9, yPos + 18);
+		if (yPos == stopTopY) {
+			g.drawImage(busLeft.getImage(), xPos, yPos, null);
+		}
+		else {
+			g.drawImage(busRight.getImage(), xPos, yPos, null);
+		}
 		
 		if(xPos == stopLeftX && yPos == stopTopY) {
 			g.fillRect(xPos+4, yPos-4, 20, 5);
