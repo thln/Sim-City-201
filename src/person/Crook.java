@@ -23,10 +23,11 @@ public class Crook extends Person {
 	}
 
 	public boolean pickAndExecuteAnAction() {
+		//prepareForBank();
 		goToBusStop(4);
-		goToBusStop(1);
-		goToBusStop(2);
-		goToBusStop(3);
+		//goToBusStop(1);
+		//goToBusStop(2);
+		//goToBusStop(3);
 		/*		
 		if (getHunger() == HungerLevel.full) {
 			startHungerTimer();

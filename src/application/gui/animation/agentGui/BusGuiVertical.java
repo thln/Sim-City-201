@@ -13,6 +13,7 @@ public class BusGuiVertical extends CityGui {
 
 	private BusAgent agent = null;
 	private boolean isPresent = true;
+	private boolean checkedStation = false;
 	
 	private final int stopTopY = (int) Phonebook.getPhonebook().getBusStops().get(0).getY()+8;
 	private final int stopBottomY = (int) Phonebook.getPhonebook().getBusStops().get(3).getY()+8;
@@ -38,7 +39,7 @@ public class BusGuiVertical extends CityGui {
 	}
 
 	public void updatePosition() {
-		System.err.println(command + "&" + lastStop);
+		//System.err.println(command + "&" + lastStop);
 		
 		if (inBusyIntersection() || inBusyCrosswalk()) {
 			return;
@@ -64,7 +65,11 @@ public class BusGuiVertical extends CityGui {
 				lastStop = 1;
 				busStop.schedule(new TimerTask() {
 					public void run() {
+						if(!checkedStation)
+						{
 						agent.msgAtBusStop(1);
+						checkedStation = true;
+						}
 					}
 				},
 				waitTime);
@@ -73,7 +78,11 @@ public class BusGuiVertical extends CityGui {
 				lastStop = 2;
 				busStop.schedule(new TimerTask() {
 					public void run() {
+						if(!checkedStation)
+						{
 						agent.msgAtBusStop(2);
+						checkedStation = true;
+						}
 					}
 				},
 				waitTime);
@@ -82,7 +91,11 @@ public class BusGuiVertical extends CityGui {
 				lastStop = 3;
 				busStop.schedule(new TimerTask() {
 					public void run() {
+						if(!checkedStation)
+						{
 						agent.msgAtBusStop(3);	
+						checkedStation = true;
+						}
 					}
 				},
 				waitTime);
@@ -91,11 +104,19 @@ public class BusGuiVertical extends CityGui {
 				lastStop = 4;
 				busStop.schedule(new TimerTask() {
 					public void run() {
+						if(!checkedStation)
+						{
 						agent.msgAtBusStop(4);
+						checkedStation = true;
+						}
 					}
 				},
 				waitTime);
 			}
+		}
+		else
+		{
+			checkedStation = false;
 		}
 	}
 

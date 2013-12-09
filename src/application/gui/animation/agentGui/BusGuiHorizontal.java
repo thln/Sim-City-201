@@ -14,6 +14,7 @@ public class BusGuiHorizontal extends CityGui {
 
 	private BusAgent agent = null;
 	private boolean isPresent = true;
+	private boolean checkedStation = false;
 
 	private final int stopLeftX = (int) Phonebook.getPhonebook().getBusStops().get(0).getX();
 	private final int stopRightX = (int) Phonebook.getPhonebook().getBusStops().get(1).getX();;
@@ -62,8 +63,12 @@ public class BusGuiHorizontal extends CityGui {
 			if (command == Command.stop1) {
 				busStop.schedule(new TimerTask() {
 					public void run() {
+						if(!checkedStation)
+						{
 						agent.msgAtBusStop(1);
 						lastStop = 1;
+						checkedStation = true;
+						}
 					}
 				},
 				waitTime);
@@ -71,8 +76,12 @@ public class BusGuiHorizontal extends CityGui {
 			else if (command == Command.stop2) {
 				busStop.schedule(new TimerTask() {
 					public void run() {
+						if(!checkedStation)
+						{
 						agent.msgAtBusStop(2);
 						lastStop = 2;
+						checkedStation = true;
+						}
 					}
 				},
 				waitTime);
@@ -80,8 +89,12 @@ public class BusGuiHorizontal extends CityGui {
 			else if (command == Command.stop3) {
 				busStop.schedule(new TimerTask() {
 					public void run() {
+						if(!checkedStation)
+						{
 						agent.msgAtBusStop(3);
 						lastStop = 3;
+						checkedStation = true;
+						}
 					}
 				},
 				waitTime);
@@ -89,12 +102,20 @@ public class BusGuiHorizontal extends CityGui {
 			else if (command == Command.stop4) {
 				busStop.schedule(new TimerTask() {
 					public void run() {
+						if(!checkedStation)
+						{
 						agent.msgAtBusStop(4);
 						lastStop = 4;
+						checkedStation = true;
+						}
 					}
 				},
 				waitTime);
 			}
+		}
+		else
+		{
+			checkedStation = false;
 		}
 	}
 
