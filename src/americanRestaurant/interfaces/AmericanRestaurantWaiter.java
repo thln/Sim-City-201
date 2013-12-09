@@ -1,6 +1,6 @@
 package americanRestaurant.interfaces;
 
-import americanRestaurant.AmericanRestaurantCookRole.Order;
+import americanRestaurant.americanHost.Order;
 import americanRestaurant.AmericanRestaurantTable;
 
 public interface AmericanRestaurantWaiter {

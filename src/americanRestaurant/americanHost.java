@@ -16,7 +16,7 @@ import chineseRestaurant.ChineseRestaurantCashierRole.Order;
  * Restaurant Cook Agent
  */
 
-public class AmericanRestaurantCookRole extends Role {
+public class americanHost extends Role {
 
 	//DATA
 
@@ -89,7 +89,7 @@ public class AmericanRestaurantCookRole extends Role {
 
 	//Constructor
 
-	public AmericanRestaurantCookRole (){
+	public americanHost (){
 		super("name");
 		PendingOrders = Collections.synchronizedList(new ArrayList<Order>());
 		FinishedOrders = Collections.synchronizedList(new ArrayList<Order>());	

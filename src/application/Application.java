@@ -97,12 +97,12 @@ public class Application extends JPanel {
 		Worker house1 = new Worker("Parker", 100, "maintenance worker","housing maintenance company", 13, 600, 3 );
 
 		//American Restaurant Workers
-		//SHIFT 1
-		Worker rest3h = new Worker("Holly", 100, "host", "American Restaurant", 1, 1800, 14);
-		Worker rest3g = new Worker("Gerald", 100, "cashier", "American Restaurant", 2, 1800, 15);        
-		Worker rest3i = new Worker("India", 100, "cook", "American Restaurant", 2, 1800, 15);
-		Worker rest3j = new Worker("Jan", 100, "waiter", "American Restaurant", 2, 1800, 15);
-		Worker rest3k = new Worker("Kris", 100, "altWaiter", "American Restaurant", 1, 1800, 14);
+		//SHIFT 1 (make sure to revert work start times)
+		Worker rest3h = new Worker("Holly", 100, "host", "American Restaurant", 0, 1800, 14);
+		Worker rest3g = new Worker("Gerald", 100, "cashier", "American Restaurant", 0, 1800, 15);        
+		Worker rest3i = new Worker("India", 100, "cook", "American Restaurant", 0, 1800, 15);
+		Worker rest3j = new Worker("Jan", 100, "waiter", "American Restaurant", 0, 1800, 15);
+		Worker rest3k = new Worker("Kris", 100, "altWaiter", "American Restaurant", 0, 1800, 14);
 		
 		//!!!!Important -- Need to initialize setters 
 		//ex. waiter.setHost, waiter.setCook, waiter.setHost, 
@@ -302,7 +302,7 @@ public class Application extends JPanel {
 //		rest3k.startThread();
 		
 		//Shift 2
-//		bank2a.startThread();
+		bank2a.startThread();
 //		bank2b.startThread();
 //		bank2c.startThread();
 //		market2d.startThread();

@@ -12,6 +12,7 @@ import bank.BankCustomerRole.CustomerState;
 import market.MarketCustomerRole;
 import person.Role;
 import agent.Agent;
+import americanRestaurant.AmericanRestaurantCustomerRole;
 import application.Phonebook;
 import application.TimeManager;
 import application.gui.trace.AlertLog;
@@ -76,6 +77,7 @@ public abstract class Person extends Agent{
 		roles.add(new BankCustomerRole(this, getName(), "Bank Customer"));
 		roles.add(new MarketCustomerRole(this, getName(), "Market Customer"));
 		roles.add(new ChineseRestaurantCustomerRole(this, getName(), "Restaurant Customer", Phonebook.getPhonebook().getChineseRestaurant()));
+		roles.add(new AmericanRestaurantCustomerRole());
 		nextTask = new Timer();
 		atDestination = new Semaphore(0,true);
 		setHunger(HungerLevel.full);
@@ -121,15 +123,15 @@ public abstract class Person extends Agent{
 		else
 			gui.walk = gui.decideForBus("West Bank");
 
-//		if (gui.walk) {
-//			gui.walkToLocation();
-//			try {
-//				atDestination.acquire();
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//		}
+		//		if (gui.walk) {
+		//			gui.walkToLocation();
+		//			try {
+		//				atDestination.acquire();
+		//			} catch (InterruptedException e) {
+		//				// TODO Auto-generated catch block
+		//				e.printStackTrace();
+		//			}
+		//		}
 
 		//		if (this instanceof Wealthy){
 		//			print("walking state = " + gui.walk + "and my destination = " + gui.getxDestination() + ", " + gui.getyDestination());
@@ -288,7 +290,22 @@ public abstract class Person extends Agent{
 	}
 
 	protected void prepareForRestaurant() {
-
+		if (name.equals("Andy")){
+			for (Role cust1 : roles) {
+				if (cust1 instanceof AmericanRestaurantCustomerRole) {
+					AmericanRestaurantCustomerRole RCR = (AmericanRestaurantCustomerRole) cust1;
+					if (Phonebook.getPhonebook().getAmericanRestaurant().customerArrived(RCR)) {
+						print("Going to american restaurant");
+						currentRoleName = "American Restaurant Customer";
+						cust1.setRoleActive();
+						stateChanged();
+					}
+					return;
+				}
+			}
+		}
+		print ("Going to dif restaurant");
+		
 		gui.walk = gui.decideForBus("Chinese Restaurant");
 
 		if (!gui.walk){
@@ -314,7 +331,7 @@ public abstract class Person extends Agent{
 			if (cust1 instanceof ChineseRestaurantCustomerRole) {
 				ChineseRestaurantCustomerRole RCR = (ChineseRestaurantCustomerRole) cust1;
 				if (Phonebook.getPhonebook().getChineseRestaurant().arrived(RCR)) {
-					currentRoleName = "Chinese Restaurant AmericanRestaurantCustomer";
+					currentRoleName = "Chinese Restaurant Customer";
 					cust1.setRoleActive();
 					stateChanged();
 				}
@@ -323,12 +340,21 @@ public abstract class Person extends Agent{
 			if (cust1 instanceof ItalianCustomerRole) {
 				ItalianCustomerRole RCR = (ItalianCustomerRole) cust1;
 				if (Phonebook.getPhonebook().getItalianRestaurant().arrived(RCR)) {
-					currentRoleName = "Italian Restaurant AmericanRestaurantCustomer";
+					currentRoleName = "Italian Restaurant Customer";
 					cust1.setRoleActive();
 					stateChanged();
 				}
 				return;
 			}
+			//			if (cust1 instanceof AmericanRestaurantCustomerRole) {
+			//				AmericanRestaurantCustomerRole RCR = (AmericanRestaurantCustomerRole) cust1;
+			//				if (Phonebook.getPhonebook().getAmericanRestaurant().customerArrived(RCR)) {
+			//					currentRoleName = "American Restaurant Customer";
+			//					cust1.setRoleActive();
+			//					stateChanged();
+			//				}
+			//				return;
+			//			}
 		}
 
 	}

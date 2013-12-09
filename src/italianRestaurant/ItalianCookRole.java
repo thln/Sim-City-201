@@ -14,7 +14,7 @@ import java.util.concurrent.Semaphore;
  */
 //We only have 2 types of agents in this prototype. A customer and an agent that
 //does all the rest. Rather than calling the other agent a waiter, we called him
-//the AmericanRestaurantCookRole. A Cook is the manager of a restaurant who sees that all
+//the americanHost. A Cook is the manager of a restaurant who sees that all
 //is proceeded as he wishes.
 public class ItalianCookRole extends Role implements ItalianCook{
 	static final int NTABLES = 5;//a global for the number of americanRestaurantTables.

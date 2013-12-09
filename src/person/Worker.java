@@ -101,11 +101,10 @@ public class Worker extends Person {
 			int shiftLength = (((myJob.endTime.hour - myJob.startTime.hour) % 24) + 24) % 24;
 			if (workerRole.getState() == RoleState.active) {
 				//If my current time is more than the shift length since start time
-				//Check to make sure I've started working (fix modulus logic later)
 				if ((((((currentTime - myJob.startTime.hour) % 24) + 24) % 24) >= shiftLength)
 						&& (((((currentTime - myJob.startTime.hour) % 24) + 24) % 24) > 0)
 						&& ((((currentTime - myJob.startTime.hour) % 24) + 24) % 24) < 18){
-					//print("Off work at time = " + currentTime + " and shift length = " + shiftLength + " startTime = " + myJob.startTime.hour);
+					print("Off work at time = " + currentTime + " and shift length = " + shiftLength + " startTime = " + myJob.startTime.hour);
 					workerRole.msgLeaveRole();
 					return workerRole.pickAndExecuteAnAction();
 				}					
@@ -125,6 +124,11 @@ public class Worker extends Person {
 			}
 		}
 
+		if (name == "Andy"){
+			prepareForRestaurant();
+			return true;
+		}
+		
 		int currentTime = TimeManager.getTimeManager().getTime().dayHour;
 
 		//make sure user has not closed your business
@@ -219,14 +223,14 @@ public class Worker extends Person {
 	public void prepareForWork() {
 		currentRoleName = myJob.title;
 		print("Preparing for work as " + myJob.title + " at " + myJob.jobPlace);
-		gui.walk = gui.decideForBus(myJob.jobPlace);
 		
-		if (myJob.jobPlace.equals("American Restaurant")){
-			workerRole = Phonebook.getPhonebook().getAmericanRestaurant().arrivedAtWork(this, myJob.title);
+		if (myJob.jobPlace.equals("American Restaurant")){		
+			workerRole = Phonebook.getPhonebook().getAmericanRestaurant().arrivedAtWork(this, myJob.title);	
 			workerRole.setRoleActive();
 			return;
 		}
 		
+		gui.walk = gui.decideForBus(myJob.jobPlace);		
 		if (gui.walk)
 			gui.popToMiddle();
 		

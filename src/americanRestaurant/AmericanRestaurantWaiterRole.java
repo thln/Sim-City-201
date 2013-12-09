@@ -10,7 +10,7 @@ import java.util.concurrent.Semaphore;
 import chineseRestaurant.ChineseRestaurant;
 import person.Person;
 import person.Role;
-import americanRestaurant.AmericanRestaurantCookRole.Order;
+import americanRestaurant.americanHost.Order;
 import americanRestaurant.interfaces.AmericanRestaurantCashier;
 import americanRestaurant.interfaces.AmericanRestaurantCustomer;
 import americanRestaurant.interfaces.AmericanRestaurantWaiter;
@@ -21,7 +21,7 @@ import application.gui.animation.RestaurantPanel;
  */
 //We only have 2 types of agents in this prototype. A customer and an agent that
 //does all the rest. Rather than calling the other agent a waiter, we called him
-//the AmericanRestaurantCookRole. A AmericanRestaurantHost is the manager of a restaurant who sees that all
+//the americanHost. A AmericanRestaurantHost is the manager of a restaurant who sees that all
 //is proceeded as he wishes.
 public class AmericanRestaurantWaiterRole extends Role implements AmericanRestaurantWaiter{
 
@@ -57,7 +57,7 @@ public class AmericanRestaurantWaiterRole extends Role implements AmericanRestau
 		private AmericanRestaurantHostRole myHost;
 		AmericanRestaurantCashier myCashier = new AmericanRestaurantCashierRole(myHost, "John");
 //		public WaiterGui waiterGui;
-		AmericanRestaurantCookRole myCook = new AmericanRestaurantCookRole();
+		americanHost myCook = new americanHost();
 		RestaurantPanel panel1;
 		WaiterState waitState;
 		static List<String> itemsRemoved = Collections.synchronizedList(new ArrayList<String>());
@@ -125,7 +125,7 @@ public class AmericanRestaurantWaiterRole extends Role implements AmericanRestau
 			myCook.setCashier(myCashier);
 		} 
 
-		public void setCook (AmericanRestaurantCookRole c){
+		public void setCook (americanHost c){
 			myCook = c;
 		}
 
@@ -279,12 +279,12 @@ public class AmericanRestaurantWaiterRole extends Role implements AmericanRestau
 				}
 			}
 			c1.cust.msgSitAtTable(this, m);
-			myHost.SlideCustomers();
+		//	myHost.SlideCustomers();
 			DoSeatCustomer(c1); 		
 		}
 
 		private void DoSeatCustomer(MyCustomer C1) {
-			print("Seating " + C1.cust + " at " + (C1.tab.getSeatNum()+1));
+			print("Seating customer at table " + (C1.tab.getSeatNum()+1));
 //			waiterGui.DoBringToTable(C1.tab); 
 //			try {
 //				atTable.acquire();

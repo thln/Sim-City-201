@@ -15,7 +15,7 @@ import americanRestaurant.interfaces.AmericanRestaurantHost;
  */
 //We only have 2 types of agents in this prototype. A customer and an agent that
 //does all the rest. Rather than calling the other agent a waiter, we called him
-//the AmericanRestaurantCookRole. A AmericanRestaurantHost is the manager of a restaurant who sees that all
+//the americanHost. A AmericanRestaurantHost is the manager of a restaurant who sees that all
 //is proceeded as he wishes.
 
 
@@ -28,7 +28,7 @@ public class AmericanRestaurantHostRole extends Role implements AmericanRestaura
 	public List<AmericanRestaurantCustomerRole> waitingCustomers;
 	private List<AmericanRestaurantCustomerRole> leavingCustomers;
 	private List<AmericanRestaurantCustomerRole> dishonestCustomers;
-	private List<AmericanRestaurantWaiterRole> Waiters;
+	public List<AmericanRestaurantWaiterRole> Waiters;
 	boolean tableAvailable = true;
 	String name = "Billy";
 	boolean wantToBreak = false;
@@ -78,7 +78,9 @@ public class AmericanRestaurantHostRole extends Role implements AmericanRestaura
 		print("Finding AmericanRestaurantWaiter");
 		waitingCustomers.add(C1);         
 	//	C1.getGui().setHomePosition(waitingCustomers.size()-1);
-		stateChanged();
+		if (person != null) {
+			stateChanged();
+		}
 	}
 
 	public void msgWantToBreak(AmericanRestaurantWaiterRole w) {        
@@ -214,7 +216,7 @@ public class AmericanRestaurantHostRole extends Role implements AmericanRestaura
 			if (!table1.isOccupied()){
 				c1.setSeatNumber(seatNumber);                                        //give the customer their seat number
 				AmericanRestaurantWaiterRole w = findAvailableWaiter();                        //find an available waiter
-				print("Seating " +c1 + " with AmericanRestaurantWaiter " + w.getName());
+				print("Seating customer with AmericanRestaurantWaiter " + w.getName());
 				w.msgSeatAtTable(c1, table1);                                //message the waiter to seat the customer
 				table1.setOccupant(c1);                                        //set the table as occupied
 				waitingCustomers.remove(c1);								//remove customer
@@ -275,6 +277,15 @@ public class AmericanRestaurantHostRole extends Role implements AmericanRestaura
 			}
 		}
 	}
+	
+	public void msgRestaurantOpen() {
+		if (waitingCustomers.size() != 0){
+			for (AmericanRestaurantCustomerRole c1: waitingCustomers){
+				c1.msgComeIn();
+			}
+		}
+	}
+	
 	@Override
 	public void msgIWantToEat(AmericanRestaurantCustomer C1) {
 		// TODO Auto-generated method stub

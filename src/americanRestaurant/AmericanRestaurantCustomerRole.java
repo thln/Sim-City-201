@@ -41,13 +41,12 @@ public class AmericanRestaurantCustomerRole extends Role implements AmericanRest
 
 	// agent correspondents
 
-	public enum CustomerState
-	{DoingNothing, WaitingInRestaurant, BeingSeated, Seated, ReadyToOrder, Ordered, WaitingForFood,
+	public enum CustomerState {DoingNothing, WaitingInRestaurant, BeingSeated, Seated, ReadyToOrder, Ordered, WaitingForFood,
 		OrderReady, Eating, PayingBill, DoneEating, Leaving};
+
 		private CustomerState state = CustomerState.DoingNothing;//The start state
 
-		public enum AgentEvent 
-		{none, gotHungry, followHost, seated, ordering, reOrder, eating, readyForCheck, checkReady, 
+		public enum AgentEvent  {none, gotHungry, followHost, seated, ordering, reOrder, eating, readyForCheck, checkReady, 
 			billPaid, doneEating, doneLeaving, noMoney};
 
 			AgentEvent event = AgentEvent.none;
@@ -119,8 +118,9 @@ public class AmericanRestaurantCustomerRole extends Role implements AmericanRest
 				print("Received msgSitAtTable");
 				this.myWaiter = w;
 				event = AgentEvent.followHost;
-				myMenu = m;			
-				stateChanged();
+				myMenu = m;
+				if (person != null)
+					stateChanged();
 			}
 
 			public void msgAnimationFinishedGoToSeat() {
@@ -170,6 +170,10 @@ public class AmericanRestaurantCustomerRole extends Role implements AmericanRest
 			public void msgPayOffDebt (){
 				myCashier.msgPayDebt(this, debt, cash);
 				print("Paying my debt.");
+			}
+
+			public void msgComeIn() {
+				stateChanged();
 			}
 
 			//SCHEDULER
@@ -236,13 +240,13 @@ public class AmericanRestaurantCustomerRole extends Role implements AmericanRest
 
 			private void goToRestaurant() {
 				print("Going to restaurant");	
-			//	customerGui.DoGoToEntrance();
+				//	customerGui.DoGoToEntrance();
 				myHost.msgIWantToEat(this);//send our instance, so he can respond to us
 			}
 
 			private void SitDown() {
 				print("Being seated. Going to table");
-			//	customerGui.DoGoToSeat(seatNumber);
+				//	customerGui.DoGoToSeat(seatNumber);
 			}
 
 			private void DecideFood () {
@@ -265,7 +269,7 @@ public class AmericanRestaurantCustomerRole extends Role implements AmericanRest
 				if (i == size) {
 					print("Not enough money for anything.");
 					myWaiter.msgDoneAndPaying(this);
-				//	customerGui.DoExitRestaurant();
+					//	customerGui.DoExitRestaurant();
 					event = AgentEvent.noMoney;
 					stateChanged();
 					return;
@@ -304,7 +308,7 @@ public class AmericanRestaurantCustomerRole extends Role implements AmericanRest
 					Object cookie = 1;
 					public void run() {
 						print("Done eating " + choice);
-				//		panel1.deleteFoodIcon(myWaiter);
+						//		panel1.deleteFoodIcon(myWaiter);
 						event = AgentEvent.readyForCheck;
 						myWaiter.msgReadyForCheck(me);
 						stateChanged();
@@ -316,7 +320,7 @@ public class AmericanRestaurantCustomerRole extends Role implements AmericanRest
 			private void PayBill() {
 				print("Going to americanRestaurantCashier.");
 				myWaiter.msgDoneAndPaying(this);
-			//	customerGui.DoExitRestaurant();
+				//	customerGui.DoExitRestaurant();
 				if (isDishonest()) {
 					myCashier.msgNotEnoughMoney(this, check, cash);
 					print("Woops...not enough money.");
@@ -344,13 +348,13 @@ public class AmericanRestaurantCustomerRole extends Role implements AmericanRest
 				return "customer " + getName();
 			}
 
-//			public void setGui(CustomerGui g) {
-//				customerGui = g;
-//			}
-//
-//			public CustomerGui getGui() {
-//				return customerGui;
-//			}
+			//			public void setGui(CustomerGui g) {
+			//				customerGui = g;
+			//			}
+			//
+			//			public CustomerGui getGui() {
+			//				return customerGui;
+			//			}
 
 			public CustomerState getCustomerState() {
 				return state;
