@@ -251,13 +251,10 @@ public class Market {
 	public void closeBuilding(){
 		userClosed = true;
 		salesPersonRole.msgLeaveRole();
-		marketPanel.removeGui(salesPersonGui);
 		
 		marketRunnerRole.msgLeaveRole();
-		marketPanel.removeGui(marketRunnerGui);
 		
 		UPSmanRole.msgLeaveRole();
-		marketPanel.removeGui(UPSmanGui);
 	}
 
 
