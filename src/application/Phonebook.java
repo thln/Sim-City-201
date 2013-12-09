@@ -47,58 +47,60 @@ public class Phonebook{
 
 	public class Block {
 		int blockNumber;
-		List <Integer> walkingBlocks;
+		List <Integer> neighborBlocks;
 
-		public boolean doIWalk(int dBlock){
-			for (int i: walkingBlocks){
-				if (dBlock == i)
-					return true;
+		public int doIWalk(int destinationBlock){
+			for (int i: neighborBlocks){
+				if (destinationBlock == i)
+					return i;
 			}
-			return false;
+			for (int n: neighborBlocks) {
+				for (int x: blocks.get(n).neighborBlocks) {
+					{
+						if (destinationBlock == x)
+							return n;
+					}
+				}
+			}
+			return 0;
 		}
 		
 		Block (int blockNum, List<Integer> busBlocks){
 			blockNumber = blockNum;
-			walkingBlocks = busBlocks;
+			neighborBlocks = busBlocks;
 		}
 	}
 
-	//Walking blocks mapping
+	//Add list of neighboring blocks
 	public HashMap <Integer, Block> blocks = new HashMap <Integer, Block>();
 	{
 		List<Integer> block1 = new ArrayList<Integer> ();
 		block1.add(2);
 		block1.add(4);
-		block1.add(5);	
 		blocks.put(1, new Block(1, block1));
 		
 		List<Integer> block2 = new ArrayList<Integer> ();
 		block2.add(1);
 		block2.add(3);
-		block2.add(4);
 		block2.add(5);
-		block2.add(6);
-		block2.add(8);
 		blocks.put(2, new Block(2, block2));
 		
 		List<Integer> block3 = new ArrayList<Integer> ();
 		block3.add(2);
-		block3.add(5);	
 		block3.add(6);
 		blocks.put(3, new Block(3, block3));
 		
 		List<Integer> block4 = new ArrayList<Integer> ();
 		block4.add(1);
-		block4.add(2);
 		block4.add(5);	
-		block4.add(6);	
-		block4.add(8);	
+		block4.add(7);
 		blocks.put(4, new Block(4, block4));
 		
 		List<Integer> block5 = new ArrayList<Integer> ();
-		for (int n = 1; n < 10; n++){
-			block5.add(n);
-		}
+		block5.add(2);
+		block5.add(4);
+		block5.add(6);
+		block5.add(8);
 		blocks.put(5, new Block(5, block5));
 		
 		List<Integer> block6 = new ArrayList<Integer> ();
@@ -111,20 +113,16 @@ public class Phonebook{
 		
 		List<Integer> block7 = new ArrayList<Integer> ();	
 		block7.add(4);
-		block7.add(5);	
 		block7.add(8);
 		blocks.put(7, new Block(7, block7));
 		
 		List<Integer> block8 = new ArrayList<Integer> ();
-		block8.add(2);
-		block8.add(4);
 		block8.add(5);	
-		block8.add(6);
+		block8.add(7);
 		block8.add(9);
 		blocks.put(8, new Block(8, block8));
 		
 		List<Integer> block9 = new ArrayList<Integer> ();	
-		block9.add(5);
 		block9.add(6);
 		block9.add(8);
 		blocks.put(9, new Block(9, block9));
