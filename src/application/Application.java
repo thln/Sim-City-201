@@ -18,6 +18,8 @@ import person.Wealthy;
 import person.Worker;
 import transportation.BusAgent;
 import application.gui.animation.AnimationPanel;
+import application.gui.animation.agentGui.BusGuiHorizontal;
+import application.gui.animation.agentGui.BusGuiVertical;
 import application.gui.animation.agentGui.PersonGui;
 import bank.Bank;
 import chineseRestaurant.ChineseRestaurant;
@@ -302,7 +304,15 @@ public class Application extends JPanel {
 //		wealthy4.startThread();
 		BusAgent horizontal = new BusAgent("Horizontal");
 		BusAgent vertical = new BusAgent("Vertical");
+		BusGuiHorizontal busA = new BusGuiHorizontal(horizontal);
+		BusGuiVertical busB = new BusGuiVertical(vertical);	
+		horizontal.setGui(busA);
+		vertical.setGui(busB);
+		animPanel.cityPanel.addGui(busA);
+		animPanel.cityPanel.addGui(busB);
 		crook1.startThread();
+		horizontal.startThread();
+		vertical.startThread();
 
 		updatePeopleTime();
 

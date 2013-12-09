@@ -252,6 +252,7 @@ public abstract class Person extends Agent{
 //					Phonebook.getPhonebook().getWestBank().getClosestStop().getY());
 //		}
 		
+		print("Going to bus Stop "+ gui.getClosestBusStopNumber());
 		gui.doGoToBusStop();
 		//Finish the GUI version of it
 		try 
@@ -262,6 +263,7 @@ public abstract class Person extends Agent{
 		{
 			e.printStackTrace();
 		}
+		print("At bus Stop "+ gui.getClosestBusStopNumber() + ". Now waiting");
 		Phonebook.getPhonebook().getAllBusStops().get(gui.getClosestBusStopNumber()).waitingForBus(this);
 		try
 		{

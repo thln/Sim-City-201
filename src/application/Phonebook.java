@@ -87,10 +87,11 @@ public class Phonebook{
 		busStops.add(new Point(420, 28));		//Top right bus stop = busStop(1)
 		busStops.add(new Point(127, 230));		//Bottom left bus stop = busStop(2)
 		busStops.add(new Point(420, 230));		//Bottom right bus stop = busStop(3)
-	
+
+		busStopsList.add(new BusStop(0, 0, 0)); //empty busStop
 		busStopsList.add(new BusStop(1, 127, 28));
 		busStopsList.add(new BusStop(2, 420, 28));
-		busStopsList.add(new BusStop(3, 127, 230));
+		busStopsList.add(new BusStop(3, 420, 230));
 		busStopsList.add(new BusStop(4, 127, 230));
 		
 		eastBank = new Bank("East Bank");

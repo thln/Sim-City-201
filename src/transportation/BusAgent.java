@@ -9,9 +9,11 @@ import application.Phonebook;
 import application.TimeManager;
 import application.gui.animation.agentGui.BusGuiHorizontal;
 import application.gui.animation.agentGui.BusGuiVertical;
+import application.gui.trace.AlertLog;
+import application.gui.trace.AlertTag;
 import agent.Agent;
 
-public abstract class BusAgent extends Agent{
+public class BusAgent extends Agent{
 
 	/*********************
 	 ****** DATA *********
@@ -43,7 +45,7 @@ public abstract class BusAgent extends Agent{
 
 	public BusAgent(String name) 
 	{
-
+		this.name = name + " Bus";
 	}
 	
 	/**** 
@@ -63,6 +65,7 @@ public abstract class BusAgent extends Agent{
 	
 	public void msgAtBusStop(int busStopNumber)
 	{
+		//AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, "Bus", "Arrived at Bus Stop " + busStopNumber);
 		currentBusStop = busStopNumber;
 		state = busState.ReachedStop;
 		stateChanged();
@@ -70,6 +73,7 @@ public abstract class BusAgent extends Agent{
 	
 	public void msgGettingOnBus(Person p, int bStop)
 	{
+		AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, "Adding " + p.getName());
 		busPassengers.add(new busPassenger(p, bStop));
 		stateChanged();
 	}
@@ -81,6 +85,7 @@ public abstract class BusAgent extends Agent{
 	{
 		if(state == busState.ReachedStop)
 		{
+	//		System.err.println("Running tell People Get off");
 			tellPeopleGetOff();
 			return true;
 		}
@@ -103,6 +108,7 @@ public abstract class BusAgent extends Agent{
 	
 	private void tellPeopleWaiting()
 	{
+		AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, "Telling people to get on.");
 		state = busState.PickingUpPeople;
 		peopleAtBusStop = Phonebook.getPhonebook().getAllBusStops().get(currentBusStop).getAllWaitingPassengers(this);
 		expectedNumberOfPassengers += peopleAtBusStop.size();
@@ -122,6 +128,7 @@ public abstract class BusAgent extends Agent{
 	
 	private void tellPeopleGetOff()
 	{
+		AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, "Telling people to get off.");
 		state = busState.DroppedOffPeople;
 		for(int i = 0; i < busPassengers.size(); i++)
 		{
@@ -136,8 +143,14 @@ public abstract class BusAgent extends Agent{
 	
 	private void checkNumberOfPassengers()
 	{
+		AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, "Checking if everyone's here.");
 		if(expectedNumberOfPassengers == busPassengers.size())
 		{
+			AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, "Everyone's here, leaving.");
+//			if(ifHorizontal)
+//			{
+//				guiH.wait.release();
+//			}
 			state = busState.Driving;
 			currentBusStop = 0;
 			expectedNumberOfPassengers = 0;

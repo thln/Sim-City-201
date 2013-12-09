@@ -20,7 +20,7 @@ public class BusGuiHorizontal extends CityGui {
 	private final int stopTopY = 75;
 	private final int stopBottomY = 195;
 	
-	private final int waitTime = 1000;
+	private final int waitTime = 5000;
 
 	private int xPos = 0, yPos = stopTopY;//default bus position
 	private int xDestination = stopLeftX;//Stop 1
