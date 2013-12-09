@@ -393,5 +393,4 @@ public abstract class VehicleGui {
 		}
 	}
 
-
 }
