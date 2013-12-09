@@ -416,7 +416,7 @@ public class PersonGui extends CityGui {
 
 	public void popToMiddle(){
 		currentBlock = returnCurrentBlock(xPos, yPos);
-		System.err.println(agent.getName() + " has Destination block = " + destinationBlock);
+		//System.err.println(agent.getName() + " has Destination block = " + destinationBlock);
 		if (currentBlock == 1)
 		{
 			xPos = (int) Phonebook.getPhonebook().crosswalk3.getCrosswalk().getX();			//Pop to middle of block1
@@ -471,8 +471,8 @@ public class PersonGui extends CityGui {
 		//xPos -= 10;
 		//yPos = 30;
 	
-		System.err.println("Name is " + agent.getName() + " and Block = " + currentBlock + "and position = " + xPos + " , " + yPos );
-		System.err.println(agent.getName() + " has Destination block = " + destinationBlock);
+		//System.err.println("Name is " + agent.getName() + " and Block = " + currentBlock + "and position = " + xPos + " , " + yPos );
+		//System.err.println(agent.getName() + " has Destination block = " + destinationBlock);
 	}
 
 	public int returnCurrentBlock (int xPos, int yPos){

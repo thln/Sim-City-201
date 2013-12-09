@@ -31,9 +31,9 @@ public class BusStop
 	public List<Person> getAllWaitingPassengers(BusAgent bus) //WorkerRole work)
 	{	
 		currentBus = bus;
-		List<Person> loadingPassengers = waitingPassengers;
+		//List<Person> loadingPassengers = waitingPassengers;
 		//waitingPassengers.clear();
-		return loadingPassengers;
+		return waitingPassengers; //loadingPassengers;
 	}
 	
 	public void busIsLeaving()
@@ -49,6 +49,11 @@ public class BusStop
 	public Point getBusStopLocation()
 	{
 		return location;
+	}
+	
+	public void clearWaitingPassengers()
+	{
+		waitingPassengers.clear();
 	}
 	
 	public int getNumberOfWaitingPassengers()

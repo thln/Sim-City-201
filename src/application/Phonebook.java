@@ -88,11 +88,11 @@ public class Phonebook{
 		busStops.add(new Point(127, 230));		//Bottom left bus stop = busStop(2)
 		busStops.add(new Point(420, 230));		//Bottom right bus stop = busStop(3)
 
-		busStopsList.add(new BusStop(0, 0, 0)); //empty busStop
-		busStopsList.add(new BusStop(1, 127, 28));
-		busStopsList.add(new BusStop(2, 420, 28));
-		busStopsList.add(new BusStop(3, 420, 230));
-		busStopsList.add(new BusStop(4, 127, 230));
+		busStopsList.add(new BusStop(0, 0, 0)); 			//empty busStop
+		busStopsList.add(new BusStop(1, 127, 28));			//Top left bus Stop
+		busStopsList.add(new BusStop(2, 420, 28));			// Top Right Bus Stop
+		busStopsList.add(new BusStop(3, 420, 230));			// Bottom Right Bus Stop
+		busStopsList.add(new BusStop(4, 127, 230));			// Bottom Left Bus Stop
 		
 		eastBank = new Bank("East Bank");
 		eastBank.setClosestStop(busStops.get(3)); 		//setting building's closest bus stop

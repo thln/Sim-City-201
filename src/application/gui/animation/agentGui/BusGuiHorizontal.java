@@ -64,12 +64,8 @@ public class BusGuiHorizontal extends CityGui {
 				command = Command.wait;
 				busStop.schedule(new TimerTask() {
 					public void run() {
-//						if(!checkedStation)
-//						{
 						agent.msgAtBusStop(1);
 						lastStop = 1;
-//						checkedStation = true;
-//						}
 					}
 				},
 				waitTime);
@@ -78,12 +74,8 @@ public class BusGuiHorizontal extends CityGui {
 				command = Command.wait;
 				busStop.schedule(new TimerTask() {
 					public void run() {
-//						if(!checkedStation)
-//						{
 						agent.msgAtBusStop(2);
 						lastStop = 2;
-//						checkedStation = true;
-//						}
 					}
 				},
 				waitTime);
@@ -92,12 +84,8 @@ public class BusGuiHorizontal extends CityGui {
 				command = Command.wait;
 				busStop.schedule(new TimerTask() {
 					public void run() {
-//						if(!checkedStation)
-//						{
 						agent.msgAtBusStop(3);
 						lastStop = 3;
-//						checkedStation = true;
-//						}
 					}
 				},
 				waitTime);
@@ -106,12 +94,8 @@ public class BusGuiHorizontal extends CityGui {
 				command = Command.wait;
 				busStop.schedule(new TimerTask() {
 					public void run() {
-//						if(!checkedStation)
-//						{
 						agent.msgAtBusStop(4);
 						lastStop = 4;
-//						checkedStation = true;
-//						}
 					}
 				},
 				waitTime);

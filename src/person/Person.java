@@ -134,7 +134,7 @@ public abstract class Person extends Agent{
 
 	protected void prepareForBank () {
 
-		gui.popToMiddle();
+		//gui.popToMiddle();
 		if (!(this instanceof Crook))
 			Do("Becoming Bank Customer");
 
@@ -143,13 +143,16 @@ public abstract class Person extends Agent{
 		else
 			gui.walk = gui.decideForBus("West Bank");
 
-		gui.walk = true;
+		//gui.walk = true;
+		gui.walk = false;
 		if (gui.walk)
 			gui.popToMiddle();
 
 		if (!gui.walk){
-
+			//goToBusStop(2);
+			print("Destination bus Stop: " + Phonebook.getPhonebook().getEastBank().getClosestBusStop().getBusStopNumber());
 			goToBusStop(Phonebook.getPhonebook().getEastBank().getClosestBusStop().getBusStopNumber());
+			//gui.popToMiddle();
 			//goToBusStop(gu)
 			//What is this supposed to mean?
 			//			if (home.type.equals("East Apartment")){
@@ -175,6 +178,10 @@ public abstract class Person extends Agent{
 
 		try {
 			atDestination.acquire();
+			if(!gui.walk)
+			{
+				atDestination.acquire();
+			}
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 
@@ -252,15 +259,7 @@ public abstract class Person extends Agent{
 
 	protected void goToBusStop(int destinationBusStopNumber)
 	{
-//		if (home.type.equals("East Apartment")){
-//			gui.doGoToBus(Phonebook.getPhonebook().getEastBank().getClosestStop().getX(),
-//					Phonebook.getPhonebook().getEastBank().getClosestStop().getY());
-//		}
-//		else {
-//			gui.doGoToBus(Phonebook.getPhonebook().getWestBank().getClosestStop().getX(),
-//					Phonebook.getPhonebook().getWestBank().getClosestStop().getY());
-//		}
-		
+
 		print("Going to bus Stop "+ gui.getClosestBusStopNumber());
 		gui.doGoToBusStop();
 		//Finish the GUI version of it
