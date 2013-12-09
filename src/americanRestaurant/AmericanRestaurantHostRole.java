@@ -138,6 +138,10 @@ public class AmericanRestaurantHostRole extends Role implements AmericanRestaura
 		waitingCustomers.add((AmericanRestaurantCustomerRole) c1);
 		stateChanged();
 	}
+	
+	public void waiterLeavingWork (AmericanRestaurantWaiterRole w1){
+		Waiters.remove(w1);
+	}
 
 	/**
 	 * Scheduler.  Determine what action is called for, and do it.

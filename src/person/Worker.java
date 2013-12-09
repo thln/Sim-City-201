@@ -13,7 +13,7 @@ public class Worker extends Person {
 
 	boolean shift = false;
 	//Data
-	protected Job myJob = null;
+	public Job myJob = null;
 	public Role workerRole = null;
 	public boolean lateWorker;
 

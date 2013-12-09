@@ -155,16 +155,22 @@ public class AmericanRestaurant {
 			Worker worker = (Worker) person;
 
 			if (worker.getWorkerRole().equals(americanHost)) {
-				americanHost = null;
+				worker.roleFinishedWork();
 				//restPanel.removeGui(AmericanRestaurantCookRole.getGui());
 			}
 			if (worker.getWorkerRole().equals(americanCashier)) {
-				americanCashier = null;
+				worker.roleFinishedWork();
 			}
 			if (worker.getWorkerRole().equals(americanHost)) {
-				americanHost = null;
+				worker.roleFinishedWork();
 				//restPanel.removeGui(cookGui);
 			}
+			if (worker.myJob.getTitle() == "waiter"){
+				americanHost.waiterLeavingWork((AmericanRestaurantWaiterRole) worker.workerRole);
+				worker.roleFinishedWork();
+				//restPanel.removeGui(cookGui);
+			}
+				
 			//WAITERS AND ALT WAITERS
 			//finish the "leave work" in Role.java 
 			//make function in host to delete waiter
