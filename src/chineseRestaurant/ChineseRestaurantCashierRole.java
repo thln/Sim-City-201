@@ -20,7 +20,7 @@ import person.Worker;
 public class ChineseRestaurantCashierRole extends Role implements ChineseRestaurantCashier {
 
 	public ChineseRestaurant chineseRestaurant;
-	//private Semaphore atTable = new Semaphore(0,true);
+	
 
 	//Keeps a list of checks
 	public List<Check> Checks = Collections.synchronizedList(new ArrayList<Check>());
@@ -120,9 +120,8 @@ public class ChineseRestaurantCashierRole extends Role implements ChineseRestaur
 			}
 		}
 
-		if (leaveRole)
-		{
-			((Worker) person).roleFinishedWork();
+		if (leaveRole) {
+			chineseRestaurant.goingOffWork(person);
 			leaveRole = false;
 			return true;
 		}

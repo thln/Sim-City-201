@@ -32,6 +32,8 @@ public class ChineseRestaurantWaiterRole extends Role implements ChineseRestaura
 
 	public ChineseRestaurantMenu chineseRestaurantMenu = new ChineseRestaurantMenu();
 
+	public ChineseRestaurant chineseRestaurant;
+
 	Timer breakTimer = new Timer();
 
 	protected boolean isInLobby = true;
@@ -40,8 +42,9 @@ public class ChineseRestaurantWaiterRole extends Role implements ChineseRestaura
 
 	protected boolean PermissionToBreak = false;
 
-	public ChineseRestaurantWaiterRole(Person p1, String pName, String rName) {
+	public ChineseRestaurantWaiterRole(Person p1, String pName, String rName, ChineseRestaurant restaurant) {
 		super(p1, pName, rName);
+		chineseRestaurant = restaurant;
 	}
 
 	public String getMaitreDName() {
@@ -56,7 +59,7 @@ public class ChineseRestaurantWaiterRole extends Role implements ChineseRestaura
 		print(customer.getCustomerName() + " was added to myCustomers list");
 		stateChanged();
 	}
-	
+
 	public void msgPleaseSeatTestCustomer(ChineseRestaurantCustomer customerTest)
 	{
 		if(test)
@@ -89,19 +92,19 @@ public class ChineseRestaurantWaiterRole extends Role implements ChineseRestaura
 	}
 
 	public void msgHeresMyOrder(ChineseRestaurantCustomer customer, String choice) {
-//		if(test)
-//		{
-//			for (myCustomer myCust : myCustomers) 
-//			{
-//				if (myCust.customer == customer) 
-//				{
-//					myCust.setChoice(choice);
-//					myCust.setOrdered();
-//					stateChanged();
-//				}
-//			}
-//		}
-		
+		//		if(test)
+		//		{
+		//			for (myCustomer myCust : myCustomers) 
+		//			{
+		//				if (myCust.customer == customer) 
+		//				{
+		//					myCust.setChoice(choice);
+		//					myCust.setOrdered();
+		//					stateChanged();
+		//				}
+		//			}
+		//		}
+
 		for (ChineseRestaurantMyCustomer myCust : ChineseRestaurantMyCustomers) 
 		{
 			if (myCust.customer == customer || myCust.testCustomer == customer) 
@@ -214,6 +217,12 @@ public class ChineseRestaurantWaiterRole extends Role implements ChineseRestaura
 		if (state == breakStatus.goOffBreak) 
 		{
 			goOffBreak();
+			return true;
+		}
+
+		if (leaveRole) {
+			chineseRestaurant.goingOffWork(person);
+			leaveRole = false;
 			return true;
 		}
 
@@ -366,7 +375,7 @@ public class ChineseRestaurantWaiterRole extends Role implements ChineseRestaura
 		}
 		waiterGui.DoLeaveCustomer();
 
-		Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantCookRole.msgHeresAnOrder(MC.tableNumber, MC.choice, this);
+		chineseRestaurant.chineseRestaurantCookRole.msgHeresAnOrder(MC.tableNumber, MC.choice, this);
 
 	}
 
@@ -400,7 +409,7 @@ public class ChineseRestaurantWaiterRole extends Role implements ChineseRestaura
 		}
 		waiterGui.DoDeliverOrder(readyOrders.get(0).tableNumber, readyOrders.get(0).choice);
 		print("waiter called msgGotOrder");
-		Phonebook.getPhonebook().getChineseRestaurant().cookGui.msgGotOrder(readyOrders.get(0).choice);
+		chineseRestaurant.cookGui.msgGotOrder(readyOrders.get(0).choice);
 		try {
 			atDestination.acquire();
 			atDestination.acquire();
@@ -410,7 +419,7 @@ public class ChineseRestaurantWaiterRole extends Role implements ChineseRestaura
 		}
 		waiterGui.DoLeaveCustomer();
 		readyOrders.get(0).customer.msgHeresYourOrder(readyOrders.get(0).choice);
-		Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantCashierRole.msgComputeBill(readyOrders.get(0).choice, readyOrders.get(0).tableNumber, this);
+		chineseRestaurant.chineseRestaurantCashierRole.msgComputeBill(readyOrders.get(0).choice, readyOrders.get(0).tableNumber, this);
 
 		//Changing customer state to "Got Food"
 		for (ChineseRestaurantMyCustomer MC : ChineseRestaurantMyCustomers) {
@@ -439,8 +448,8 @@ public class ChineseRestaurantWaiterRole extends Role implements ChineseRestaura
 
 	protected void clearTable(ChineseRestaurantMyCustomer MC) {
 		print(MC.customer.getCustomerName() + " is leaving " + MC.tableNumber);
-		Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantHostRole.msgLeavingTable(MC.customer, this);
-		Phonebook.getPhonebook().getChineseRestaurant().removeCustomer(MC.customer);
+		chineseRestaurant.chineseRestaurantHostRole.msgLeavingTable(MC.customer, this);
+		chineseRestaurant.removeCustomer(MC.customer);
 
 		ChineseRestaurantMyCustomers.remove(MC);
 	}
@@ -448,7 +457,7 @@ public class ChineseRestaurantWaiterRole extends Role implements ChineseRestaura
 	protected void askToGoOnBreak() 
 	{
 		print("Asking host for break");
-		Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantHostRole.msgMayIGoOnBreak(this);
+		chineseRestaurant.chineseRestaurantHostRole.msgMayIGoOnBreak(this);
 		state = breakStatus.waitingForReply;
 	}
 
@@ -464,7 +473,7 @@ public class ChineseRestaurantWaiterRole extends Role implements ChineseRestaura
 	protected void goOffBreak() {
 		isInLobby = false;
 		//		waiterGui.DoLeaveCustomer();
-		Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantHostRole.msgOffBreak(this);
+		chineseRestaurant.chineseRestaurantHostRole.msgOffBreak(this);
 		state = breakStatus.working;
 		//		waiterGui.denyBreak();
 		stateChanged();
@@ -479,10 +488,10 @@ public class ChineseRestaurantWaiterRole extends Role implements ChineseRestaura
 	protected void AskHostToLeave()	{
 		if(Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantHostRole != null)
 			Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantHostRole.msgIAmLeavingSoon(this);
-		
+
 		if(ChineseRestaurantMyCustomers.isEmpty())
 		{
-			Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantHostRole.msgIAmLeavingWork(this);
+			chineseRestaurant.chineseRestaurantHostRole.msgIAmLeavingWork(this);
 			((Worker) person).roleFinishedWork();
 			leaveRole = false;
 		}
@@ -497,11 +506,11 @@ public class ChineseRestaurantWaiterRole extends Role implements ChineseRestaura
 			return true;
 		return false;
 	}
-	
+
 	public void setGui(RestaurantWaiterGui waiter) {
 		waiterGui = waiter;
 	}
-	
+
 	public RestaurantWaiterGui getGui() {
 		return waiterGui;
 	}

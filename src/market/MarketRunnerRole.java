@@ -59,7 +59,7 @@ public class MarketRunnerRole extends Role implements MarketRunner {
 			}
 		}
 		
-		if (leaveRole) {
+		if (leaveRole  && orders.isEmpty() && market.salesPersonRole.orders.isEmpty()) {
 			market.goingOffWork(person);
 			leaveRole = false;
 			return true;
