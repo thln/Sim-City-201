@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.Semaphore;
 
 import transportation.BusAgent;
@@ -19,7 +20,7 @@ public class BusGuiHorizontal extends CityGui {
 	private final int stopTopY = 75;
 	private final int stopBottomY = 195;
 
-	private final int waitTime = 5000;
+	private final int waitTime = 1500;
 
 	private int xPos = 0, yPos = stopTopY;//default bus position
 	private int xDestination = stopLeftX;//Stop 1
@@ -59,20 +60,40 @@ public class BusGuiHorizontal extends CityGui {
 
 		if (xPos == xDestination) {
 			if (command == Command.stop1) {
-				agent.msgAtBusStop(1);
-				lastStop = 1;
+				busStop.schedule(new TimerTask() {
+					public void run() {
+						agent.msgAtBusStop(1);
+						lastStop = 1;
+					}
+				},
+				waitTime);
 			}
 			else if (command == Command.stop2) {
-				agent.msgAtBusStop(2);
-				lastStop = 2;
+				busStop.schedule(new TimerTask() {
+					public void run() {
+						agent.msgAtBusStop(2);
+						lastStop = 2;
+					}
+				},
+				waitTime);
 			}
 			else if (command == Command.stop3) {
-				agent.msgAtBusStop(3);
-				lastStop = 3;
+				busStop.schedule(new TimerTask() {
+					public void run() {
+						agent.msgAtBusStop(3);
+						lastStop = 3;
+					}
+				},
+				waitTime);
 			}
 			else if (command == Command.stop4) {
-				agent.msgAtBusStop(4);
-				lastStop = 4;
+				busStop.schedule(new TimerTask() {
+					public void run() {
+						agent.msgAtBusStop(4);
+						lastStop = 4;
+					}
+				},
+				waitTime);
 			}
 		}
 	}

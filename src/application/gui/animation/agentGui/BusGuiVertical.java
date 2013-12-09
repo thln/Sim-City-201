@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.Timer;
+import java.util.TimerTask;
 
 import transportation.BusAgent;
 import application.Phonebook;
@@ -59,20 +60,40 @@ public class BusGuiVertical extends CityGui {
 
 		if (yPos == yDestination) {
 			if (command == Command.stop1) {
-				agent.msgAtBusStop(1);
-				lastStop = 1;
+				busStop.schedule(new TimerTask() {
+					public void run() {
+						agent.msgAtBusStop(1);
+						lastStop = 1;
+					}
+				},
+				waitTime);
 			}
 			else if (command == Command.stop2) {
-				agent.msgAtBusStop(2);
-				lastStop = 2;
+				busStop.schedule(new TimerTask() {
+					public void run() {
+						agent.msgAtBusStop(2);
+						lastStop = 2;
+					}
+				},
+				waitTime);
 			}
 			else if (command == Command.stop3) {
-				agent.msgAtBusStop(3);
-				lastStop = 3;
+				busStop.schedule(new TimerTask() {
+					public void run() {
+						agent.msgAtBusStop(3);
+						lastStop = 3;
+					}
+				},
+				waitTime);
 			}
 			else if (command == Command.stop4) {
-				agent.msgAtBusStop(4);
-				lastStop = 4;
+				busStop.schedule(new TimerTask() {
+					public void run() {
+						agent.msgAtBusStop(4);
+						lastStop = 4;
+					}
+				},
+				waitTime);
 			}
 		}
 	}
