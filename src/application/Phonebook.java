@@ -130,9 +130,9 @@ public class Phonebook{
 		 */
 		housingMaintenanceCompany = new HousingMaintenanceCompany("Housing maintenance company");
 		getBusStops().add(new Point(172, 28));
-		getBusStops().add(new Point(172, 230));
 		getBusStops().add(new Point(420, 28));
 		getBusStops().add(new Point(420, 230));
+		getBusStops().add(new Point(172, 230));
 	}
 
 	public static Phonebook getPhonebook() {

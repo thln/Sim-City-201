@@ -15,18 +15,18 @@ public class BusGuiVertical extends CityGui {
 	private boolean isPresent = true;
 	
 	private final int stopTopY = (int) Phonebook.getPhonebook().getBusStops().get(0).getY()+8;
-	private final int stopBottomY = (int) Phonebook.getPhonebook().getBusStops().get(2).getY()+8;
+	private final int stopBottomY = (int) Phonebook.getPhonebook().getBusStops().get(3).getY()+8;
 	private final int stopLeftX = 168;
 	private final int stopRightX = 386;
 
-	private final int waitTime = 1000;
+	private final int waitTime = 1500;
 	
 	private int xPos = stopLeftX, yPos = 325;//default bus position
 	private int yDestination = stopBottomY;//Stop 4
 
 	private enum Command {noCommand, stop1, stop2, stop3, stop4};
 	private Command command = Command.stop4;
-	private int lastStop = 3;
+	public int lastStop = 3;
 
 	private enum BusState {stopped, enroute, inIntersection1, inIntersection2, inIntersection3, inIntersection4, inCrosswalk1, inCrosswalk2, inCrosswalk6, inCrosswalk7, inCrosswalk11, inCrosswalk12};
 	BusState state = BusState.stopped;
@@ -38,6 +38,7 @@ public class BusGuiVertical extends CityGui {
 	}
 
 	public void updatePosition() {
+		System.err.println(command + "&" + lastStop);
 		
 		if (inBusyIntersection() || inBusyCrosswalk()) {
 			return;
@@ -60,37 +61,37 @@ public class BusGuiVertical extends CityGui {
 
 		if (yPos == yDestination) {
 			if (command == Command.stop1) {
+				lastStop = 1;
 				busStop.schedule(new TimerTask() {
 					public void run() {
 						agent.msgAtBusStop(1);
-						lastStop = 1;
 					}
 				},
 				waitTime);
 			}
 			else if (command == Command.stop2) {
+				lastStop = 2;
 				busStop.schedule(new TimerTask() {
 					public void run() {
 						agent.msgAtBusStop(2);
-						lastStop = 2;
 					}
 				},
 				waitTime);
 			}
 			else if (command == Command.stop3) {
+				lastStop = 3;
 				busStop.schedule(new TimerTask() {
 					public void run() {
-						agent.msgAtBusStop(3);
-						lastStop = 3;
+						agent.msgAtBusStop(3);	
 					}
 				},
 				waitTime);
 			}
 			else if (command == Command.stop4) {
+				lastStop = 4;
 				busStop.schedule(new TimerTask() {
 					public void run() {
 						agent.msgAtBusStop(4);
-						lastStop = 4;
 					}
 				},
 				waitTime);
@@ -122,11 +123,11 @@ public class BusGuiVertical extends CityGui {
 	//Actions
 	public void goToNextBusStop() {
 		if (lastStop == 1) {
-			goToStop2();
+			goToEndOfLeftRoad();
 			return;
 		}
 		if (lastStop == 2) {
-			goToEndOfLeftRoad();
+			goToStop3();
 			return;
 		}
 		if (lastStop == 3) {
@@ -171,11 +172,11 @@ public class BusGuiVertical extends CityGui {
 	public void changeRoads() {
 		if (yDestination == 325) {
 			xPos = stopLeftX;
-			goToStop1();
+			goToStop4();
 		}
 		else {
 			xPos = stopRightX;
-			goToStop3();
+			goToStop2();
 		}
 	}
 	
