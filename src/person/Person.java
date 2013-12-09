@@ -112,7 +112,6 @@ public abstract class Person extends Agent{
 
 	protected void prepareForBank () {
 
-		gui.walk = true;
 		if (!(this instanceof Crook))
 			Do("Becoming Bank Customer");
 
@@ -120,9 +119,6 @@ public abstract class Person extends Agent{
 			gui.walk = gui.decideForBus("East Bank");
 		else
 			gui.walk = gui.decideForBus("West Bank");
-
-		if (gui.walk)
-			gui.popToMiddle();
 
 		if (!gui.walk){
 			if (home.type.equals("East Apartment")){
@@ -133,19 +129,7 @@ public abstract class Person extends Agent{
 				gui.doGoToBus(Phonebook.getPhonebook().getWestBank().getClosestStop().getX(),
 						Phonebook.getPhonebook().getWestBank().getClosestStop().getY());
 			}
-
-			try {
-				atDestination.acquire();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
-
-		if (home.type.equals("East Apartment"))
-			getGui().DoGoToBank("East");
-		else
-			getGui().DoGoToBank("West");
 
 		try {
 			atDestination.acquire();
@@ -227,16 +211,23 @@ public abstract class Person extends Agent{
 
 	protected void prepareForMarket() {
 		print("Going to market as a customer");
-		gui.walk = true;
-		if (gui.walk)
-			gui.popToMiddle();
-		if (home.type.equals("East Apartment")){
-			getGui().DoGoToMarket("East");
+		
+		if (home.type.equals("East Apartment"))
+			gui.walk = gui.decideForBus("East Market");
+		else
+			gui.walk = gui.decideForBus("West Market");
+
+		if (!gui.walk){
+			if (home.type.equals("East Apartment")){
+				gui.doGoToBus(Phonebook.getPhonebook().getEastMarket().getClosestStop().getX(),
+						Phonebook.getPhonebook().getEastMarket().getClosestStop().getY());
+			}
+			else {
+				gui.doGoToBus(Phonebook.getPhonebook().getWestMarket().getClosestStop().getX(),
+						Phonebook.getPhonebook().getWestMarket().getClosestStop().getY());
+			}
 		}
-		else{
-			getGui().DoGoToMarket("West");
-		}
-			
+
 		try {
 			atDestination.acquire();
 		} catch (InterruptedException e) {
@@ -282,10 +273,27 @@ public abstract class Person extends Agent{
 	}
 
 	protected void prepareForRestaurant() {
+
+		gui.walk = gui.decideForBus("Chinese Restaurant");
 	
-		gui.walk = true;
-		if (gui.walk)
-			gui.popToMiddle();
+		if (!gui.walk){
+			if (home.type.equals("East Apartment")){
+				gui.doGoToBus(Phonebook.getPhonebook().getEastBank().getClosestStop().getX(),
+						Phonebook.getPhonebook().getEastBank().getClosestStop().getY());
+			}
+			else {
+				gui.doGoToBus(Phonebook.getPhonebook().getWestBank().getClosestStop().getX(),
+						Phonebook.getPhonebook().getWestBank().getClosestStop().getY());
+			}
+		}
+
+		try {
+			atDestination.acquire();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		}
 		getGui().DoGoToRestaurant("chinese");
 		try {
 			atDestination.acquire();
@@ -328,7 +336,7 @@ public abstract class Person extends Agent{
 			e.printStackTrace();
 			//
 		}
-//			}
+		//			}
 
 		currentRoleName = " ";
 		//After arrives home
