@@ -205,4 +205,11 @@ public class ItalianCustomerGui implements Gui{
 				break;
 		}
 	}
+	
+	public int getXPos() {
+		return xPos;
+	}
+    public int getYPos() {
+    	return yPos;
+    }
 }

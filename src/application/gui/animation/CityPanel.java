@@ -35,7 +35,8 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 	private final int WINDOWY = 325;
 
 	AnimationPanel animationPanel;
-	private List<Gui> guis = Collections.synchronizedList(new ArrayList<Gui>());
+	//private List<Gui> guis = Collections.synchronizedList(new ArrayList<Gui>());
+	private List<CityGui> cGuis = Collections.synchronizedList(new ArrayList<CityGui>());
 	public ArrayList<Building> buildings = new ArrayList<Building>();
 	Dimension Msize = new Dimension(75, 75);
 	Dimension Bsize = new Dimension(75, 75);
@@ -191,23 +192,47 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		g2.drawImage(hollywoodSign.getImage(), 230, 133, null);
 
 		//Drawing all People guis
-		synchronized (guis) {
-			for(Gui gui : guis) {
-				if (gui.isPresent()) {
-					gui.updatePosition();
+		synchronized (cGuis) {
+			for(CityGui gui : cGuis) {
+				if (gui.myGui.isPresent()) {
+					gui.myGui.updatePosition();
 				}
 			}
-			for(Gui gui : guis) {
-				if (gui.isPresent()) {
-					gui.draw(g2);
+			for(CityGui gui : cGuis) {
+				if (gui.myGui.isPresent()) {
+					gui.myGui.draw(g2);
 				}
 			}
 		}
 	}
-
+	
+	public class CityGui {
+		Gui myGui;
+		Gui collidingGui;
+		public CityGui(Gui gui) {
+			myGui = gui;
+		}
+	}
+	
+	public boolean notColliding(CityGui gui1, CityGui gui2) {
+		synchronized (cGuis) {
+			for(CityGui gui : cGuis) {
+				if(gui.myGui.getXPos() == gui2.myGui.getXPos() || gui.myGui.getYPos() == gui2.myGui.getYPos()) {
+					gui.collidingGui = gui2.myGui;
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	public void addGui(Gui gui) {
+		cGuis.add(new CityGui(gui));   
+	}
+	
+	/*
 	public void addGui(Gui gui) {
 		guis.add(gui);   
-	}
+	}*/
 
 	public void addBuilding(String name, int x, int y) {
 		Building building = new Building();
