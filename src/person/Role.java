@@ -10,7 +10,6 @@ import application.gui.animation.agentGui.*;
 public abstract class Role {
 
         public Person person = null;
-        public Gui gui = null;
         
         protected String roleName = null;
         protected String personName = null;
@@ -41,7 +40,7 @@ public abstract class Role {
         }
         
         public Person getPerson() {
-                return person;
+        		return person;
         }
         
         public void setPerson(Person person) {
@@ -89,23 +88,24 @@ public abstract class Role {
     protected void print(String msg) 
     {
             //System.out.println(roleName + " " + getName() + " : " + msg);
-            if (roleName.equals("Bank Customer") || roleName.equals("Bank Guard") 
+           if(person == null)
+           {
+        	   AlertLog.getInstance().logError(AlertTag.GENERAL_CITY, roleName + " null", msg);
+           }
+    		else if (roleName.equals("Bank Customer") || roleName.equals("Bank Guard") 
                             || roleName.equals("Bank Teller") || roleName.equals("Loan Officer")
                             || roleName.contains("bankTeller"))
             {
             AlertLog.getInstance().logInfo(AlertTag.BANK, roleName + " " + getName(), msg);
-
             }
             else if (roleName.equals("Maintenance Worker"))
             {
             AlertLog.getInstance().logInfo(AlertTag.HOUSING, roleName + " " + getName(), msg);
-
             }
             else if (roleName.equals("Market Customer") || roleName.contains("MarketCustomer") || roleName.equals("Market Runner") 
                             || roleName.contains("MarketRunner") || roleName.equals("Sales Person") || roleName.contains("SalesPerson") || roleName.contains("Market") || roleName.equals("UPS Man"))
             {
             AlertLog.getInstance().logInfo(AlertTag.MARKET, roleName + " " + getName(), msg);
-
             }
             //Different Restaurants IMPLEMENT
             else if (roleName.equals("Alternative Waiter") || roleName.equals("Cashier")
@@ -113,12 +113,10 @@ public abstract class Role {
                             || roleName.equals("Restaurant Customer") || roleName.equals("waiter") )
             {
             AlertLog.getInstance().logInfo(AlertTag.RESTAURANT, roleName + " " + getName(), msg);
-
             }
             else
             {
-            AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, roleName + " " + getName(), msg);
-                    
+            AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, roleName + " " + getName(), msg);       
             }
                     
     }
@@ -151,10 +149,6 @@ public abstract class Role {
     public RoleState getRoleState()
     {
     	return state;
-    }
-    
-    public void setGui(Gui gui) {
-    	this.gui = gui;
     }
 
 }

@@ -306,4 +306,8 @@ public class BankTellerRole extends Role implements BankTeller {
 	public void setGui(BankTellerGui gui) {
 		this.gui = gui;
 	}
+	
+	public BankTellerGui getGui() {
+		return gui;
+	}
 }

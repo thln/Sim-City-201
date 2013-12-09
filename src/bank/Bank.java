@@ -1,5 +1,6 @@
 package bank;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -22,9 +23,11 @@ import person.Person;
 import person.Role;
 import person.Worker;
 import application.gui.animation.*;
+import application.gui.animation.agentGui.BankCustomerGui;
 import application.gui.animation.agentGui.BankGuardGui;
 import application.gui.animation.agentGui.BankLoanerGui;
 import application.gui.animation.agentGui.BankTellerGui;
+import application.gui.animation.agentGui.MarketCustomerGui;
 import application.gui.animation.agentGui.MarketSalesPersonGui;
 import application.gui.animation.agentGui.RestaurantWaiterGui;
 import application.gui.trace.AlertLog;
@@ -35,6 +38,8 @@ public class Bank {
 	//Data
 	String name;
 	public boolean userClosed = false;
+	private Point closestStop;
+	public Point location;
 
 	//Open and closing times
 	public WatchTime openTime = new WatchTime(8);
@@ -64,17 +69,17 @@ public class Bank {
 	public Bank(String name) {
 		bankGuardRole  = new BankGuardRole("Bank Guard");
 		loanOfficerRole =  new LoanOfficerRole("Loan Officer");
-		//tellers  = new ArrayList<>();
-		
+			
+		if (name.equals("East Bank"))
+			location = new Point(330, 260);
+		else if (name.equals("West Bank"))
+			location = new Point(255,30);
 		
 		this.name = name;
 		vault = 10000;
 		vaultMinimum = 1000;
 		accounts = Collections.synchronizedList(new ArrayList<Account>());
-		//BankTellerRole t1 = new BankTellerRole ("BankTeller 1");
-		//tellers.add(t1);
-		//bankGuardRole.msgTellerCameToWork(t1);
-			
+
 		BankTellerMock t2 = new BankTellerMock ("BankTellerMock");
 		mockTellers.add(t2);	
 	}
@@ -148,8 +153,16 @@ public class Bank {
 			bankPanel.removeGui(loanOfficerGui);
 		}
 		else if (worker.getWorkerRole() instanceof BankTellerRole){
-			bankPanel.removeGui(worker.getWorkerRole().gui);
+			BankTellerRole BTR = (BankTellerRole) worker.getWorkerRole();
+			bankPanel.removeGui(BTR.getGui());
+			//bankPanel.removeGui(worker.getWorkerRole().gui);
 		}
+	}
+	
+	public void msgCustomerArrived(BankCustomerRole BCR) {
+		BankCustomerGui BCG= new BankCustomerGui(BCR);
+		BCR.setGui(BCG);
+		bankPanel.addGui(BCG);
 	}
 
 	public void setTellerPosition(BankTeller t1, BankTellerGui g) {
@@ -206,7 +219,7 @@ public class Bank {
 	}
 	
 	public void removeCustomer(BankCustomerRole customerRole) {
-		bankPanel.removeGui(customerRole.gui);
+		bankPanel.removeGui(customerRole.getGui());
 	}
 	
 	public void closeBuilding(){
@@ -216,5 +229,14 @@ public class Bank {
 			((Role) t1.tell1).msgLeaveRole();
 		}
 		loanOfficerRole.msgLeaveRole();
+	}
+	
+	public void setClosestStop (Point p) {
+		closestStop = p;
+	}
+
+
+	public Point getClosestStop() {
+		return closestStop;
 	}
 }

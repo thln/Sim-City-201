@@ -1,10 +1,12 @@
 package market;
 
 import java.util.*;
+import java.util.concurrent.Semaphore;
 
 import chineseRestaurant.ChineseRestaurant;
 import application.Phonebook;
 import application.Restaurant;
+import application.gui.animation.agentGui.*;
 import market.MarketOrder.orderState;
 import market.interfaces.MarketCustomer;
 import market.interfaces.SalesPerson;
@@ -23,6 +25,8 @@ public class SalesPersonRole extends Role implements SalesPerson {
 
 	//Data
 	public List<MarketOrder> orders = Collections.synchronizedList(new ArrayList<MarketOrder>());
+	private Semaphore atDestination = new Semaphore(0, true);
+	MarketSalesPersonGui salesPersonGui;
 
 	//Constructors
 	public SalesPersonRole(Person person, String pName, String rName, Market market) {
@@ -82,6 +86,10 @@ public class SalesPersonRole extends Role implements SalesPerson {
 				return;
 			}
 		}
+	}
+	
+	public void msgAtDestination() {
+		atDestination.release();
 	}
 
 
@@ -150,8 +158,8 @@ public class SalesPersonRole extends Role implements SalesPerson {
 			}
 		}
 
-		if (leaveRole){
-			((Worker) person).roleFinishedWork();
+		if (leaveRole && orders.isEmpty()) {
+			market.goingOffWork(person);
 			leaveRole = false;
 			return true;
 		}
@@ -168,6 +176,13 @@ public class SalesPersonRole extends Role implements SalesPerson {
 			orders.remove(o);
 			stateChanged();
 			return;
+		}
+		salesPersonGui.DoGotoRunner();
+		try {
+			this.atDestination.acquire();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 		print("Gave Market Runner an order to find");
@@ -204,6 +219,12 @@ public class SalesPersonRole extends Role implements SalesPerson {
 			}
 		}
 	}
-
-
+	
+	public void setGui(MarketSalesPersonGui gui) {
+		salesPersonGui = gui;
+	}
+	
+	public MarketSalesPersonGui getGui() {
+		return salesPersonGui;
+	}
 }

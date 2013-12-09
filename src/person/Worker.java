@@ -1,15 +1,12 @@
 package person;
 
 import java.awt.Point;
-import java.util.Timer;
 import java.util.TimerTask;
 
-import bank.BankTellerRole;
 import person.Role.RoleState;
 import application.Phonebook;
 import application.TimeManager;
 import application.TimeManager.Day;
-import application.gui.trace.AlertLog;
 import application.WatchTime;
 
 public class Worker extends Person {
@@ -17,7 +14,7 @@ public class Worker extends Person {
 	boolean shift = false;
 	//Data
 	protected Job myJob = null;
-	protected Role workerRole = null;
+	public Role workerRole = null;
 	public boolean lateWorker;
 
 	public Worker (String name, double money, String jobTitle, String jobPlace, int startT, int lunchT, int endT) {
@@ -88,7 +85,7 @@ public class Worker extends Person {
 
 	public synchronized void roleFinishedWork(){                 //from worker role
 		print("Shift is over, time to leave work");
-		//workerRole.setPerson(null);
+		workerRole.setPerson(null);
 		workerRole = null;
 		//	scheduleNextTask(TimeManager.getTimeManager().getTime().dayHour, myJob.startTime.hour);
 		stateChanged();
@@ -145,6 +142,7 @@ public class Worker extends Person {
 			int timePassed = ((((currentTime - myJob.startTime.hour) % 24) + 24) % 24);
 			int maxHoursLate = 4;	//if you are more than 4 hours late, don't bother going to work
 			if ((timePassed >= 0) && (timePassed < maxHoursLate)){
+				print("Late for work, gotta hurry!");
 				prepareForWork();
 				//	scheduleNextTask(currentTime, myJob.endTime.hour);
 				return true;
@@ -170,18 +168,17 @@ public class Worker extends Person {
 			prepareForRent();
 			return true;
 		}
-
+		
 		//Hunger Related ( check if you are hungry)
 		if (getHunger() == HungerLevel.hungry) {
+			hunger = HungerLevel.full;
 			//If you don't have food in the fridge
 			if (!hasFoodInFridge) {
 				//Check if any restaurants are open
 				if (Phonebook.getPhonebook().getChineseRestaurant().isOpen()) {	
 					prepareForRestaurant();
 				}
-				//
 				return true;
-
 			}
 			else //if you do have food in the fridge
 			{
@@ -217,16 +214,35 @@ public class Worker extends Person {
 				stateChanged();                
 			}
 		},
-		//((i % 5) + 5) % 5)
 		((((nextTaskTime - currentTime) % 24) + 24) % 24) * timeConversion);
 	}
 
 	public void prepareForWork() {
 		currentRoleName = myJob.title;
-		print("Preparing for work as " + myJob.title);
-		if (myJob.jobPlace.equals("bank")) 
+		print("Preparing for work as " + myJob.title + " at " + myJob.jobPlace);
+		gui.walk = gui.decideForBus(myJob.jobPlace);
+		
+		gui.walk = true;
+		
+		if (gui.walk)
+			gui.popToMiddle();
+		
+		if (!gui.walk){
+			gui.doGoToBus(Phonebook.getPhonebook().getEastBank().getClosestStop().getX(),
+					Phonebook.getPhonebook().getEastBank().getClosestStop().getY());
+			try {
+				atDestination.acquire();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+			
+
+		if (myJob.jobPlace.equals("East Bank")) 
 		{
-			getGui().DoGoToBank("east");
+			gui.walk = true;
+			getGui().DoGoToBank("East");
 			try {	
 				atDestination.acquire();
 			} catch (InterruptedException e) {
@@ -238,10 +254,26 @@ public class Worker extends Person {
 			return;
 		}
 
-		if (myJob.jobPlace == "market") 
+		if (myJob.jobPlace.equals("West Bank")) 
 		{
-			//print("Going to work at market");
-			getGui().DoGoToMarket("east");
+			gui.walk = true;
+			getGui().DoGoToBank("West");
+			try {	
+				atDestination.acquire();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			workerRole = Phonebook.getPhonebook().getWestBank().arrivedAtWork(this, myJob.title);
+			workerRole.setRoleActive();
+			return;
+		}
+
+		if (myJob.jobPlace == "East Market") 
+		{
+			gui.walk = true;
+			print("Going to work at east market");
+			getGui().DoGoToMarket("East");
 			try {
 				atDestination.acquire();
 			} catch (InterruptedException e) {
@@ -254,10 +286,30 @@ public class Worker extends Person {
 			workerRole.setRoleActive();
 			return;
 		}
-
-		if (myJob.jobPlace == "restaurant") 
+		
+		if (myJob.jobPlace == "West Market") 
 		{
-			getGui().DoGoToRestaurant("italian");
+			gui.walk = true;
+			print("Going to work at west market");
+			getGui().DoGoToMarket("West");
+			try {
+				atDestination.acquire();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+
+			}
+			print("Going to work at market, job time = " + myJob.startTime.hour);
+			workerRole = Phonebook.getPhonebook().getWestMarket().arrivedAtWork(this, myJob.title);
+			workerRole.setRoleActive();
+			return;
+		}
+
+		if (myJob.jobPlace == "Chinese Restaurant") 
+		{
+			gui.walk = true;
+			print("Going to work at Chinese Restaurant");
+			getGui().DoGoToRestaurant("chinese");
 			try {
 				atDestination.acquire();
 			} catch (InterruptedException e) {

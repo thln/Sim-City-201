@@ -2,6 +2,8 @@ package application.gui.animation.agentGui;
 
 import java.awt.*;
 
+import application.Phonebook;
+
 public class CityGui implements Gui {
 	private boolean isPresent = true;
 	CityGui() {

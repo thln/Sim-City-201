@@ -17,6 +17,7 @@ import person.Worker;
 import person.Role.RoleState;
 import application.Phonebook;
 import application.gui.animation.agentGui.RestaurantCookGui;
+import application.gui.animation.agentGui.RestaurantCustomerGui;
 import application.gui.trace.AlertLog;
 
 /**
@@ -27,7 +28,9 @@ import application.gui.trace.AlertLog;
 
 public class ChineseRestaurantCookRole extends Role implements ChineseRestaurantCook {
 
-	RestaurantCookGui cookGui = (RestaurantCookGui) gui;
+	//RestaurantCookGui cookGui = (RestaurantCookGui) gui;
+	private RestaurantCookGui cookGui;
+	ChineseRestaurant chineseRestaurant;
 
 	Timer timer = new Timer();
 	private int cookTime;
@@ -48,9 +51,9 @@ public class ChineseRestaurantCookRole extends Role implements ChineseRestaurant
 		foodMap.put("Salad", new Food("Salad"));
 	}
 
-	public ChineseRestaurantCookRole(Person p1, String pName, String rName, ChineseRestaurant resturant) {
+	public ChineseRestaurantCookRole(Person p1, String pName, String rName, ChineseRestaurant restaurant) {
 		super(p1, pName, rName);
-		//this.restaurant = restaurant;
+		chineseRestaurant = restaurant;
 		//theRevolvingStand = Phonebook.getPhonebook().getRestaurant().getRevolvingStand();
 
 	}
@@ -168,9 +171,8 @@ public class ChineseRestaurantCookRole extends Role implements ChineseRestaurant
 			}
 		}
 
-		if (leaveRole)
-		{
-			((Worker) person).roleFinishedWork();
+		if (leaveRole) {
+			chineseRestaurant.goingOffWork(person);
 			leaveRole = false;
 			return true;
 		}
@@ -194,7 +196,6 @@ public class ChineseRestaurantCookRole extends Role implements ChineseRestaurant
 	}
 	
 	private void cookOrder(final ChineseRestaurantOrder o) {
-		RestaurantCookGui cookGui = (RestaurantCookGui) gui;
 
 		if(!isInStock(o.choice)) {
 			checkInventory(o.choice);
@@ -244,7 +245,6 @@ public class ChineseRestaurantCookRole extends Role implements ChineseRestaurant
 	}
 
 	private void doneCooking(ChineseRestaurantOrder o) {
-		RestaurantCookGui cookGui = (RestaurantCookGui) gui;
 		print("Done cooking order for table " + o.tableNumber);
 
 		cookGui.DoPickUpFood();
@@ -469,5 +469,13 @@ public class ChineseRestaurantCookRole extends Role implements ChineseRestaurant
 			this.market = market;
 		}
 	}*/
+	
+	public void setGui(RestaurantCookGui gui) {
+		cookGui = gui;
+	}
+	
+	public RestaurantCookGui getGui() {
+		return cookGui;
+	}
 }
 

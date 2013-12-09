@@ -1,6 +1,7 @@
 package market;
 
-import java.util.HashMap;
+import java.awt.Point;
+import java.util.*;
 
 import market.interfaces.MarketRunner;
 import market.interfaces.SalesPerson;
@@ -23,6 +24,8 @@ public class Market {
 	//Data
 	String name;
 	public boolean userClosed = false;
+	public Point location; 
+	private Point closestStop;
 
 	//Open and closing times
 	public WatchTime openTime = new WatchTime(9);
@@ -42,6 +45,8 @@ public class Market {
 	public MockSalesPerson mockSalesPerson = new MockSalesPerson("MockSalesPerson");
 	public MockMarketRunner mockMarketRunner = new MockMarketRunner("MockMarketRunner");
 	public MockUPSman mockUPSman = new MockUPSman("MockUPSMan");
+	
+	List <MarketCustomerGui> marketGuis = new ArrayList<MarketCustomerGui>();
 
 	private BuildingPanel marketPanel;
 
@@ -58,7 +63,8 @@ public class Market {
 		marketItemsForSale.put(7, new Product("Car", 1000.00));
 	}
 
-	public HashMap<String, Item> inventory = new HashMap<String, Item>(); {
+	public HashMap<String, Item> inventory = new HashMap<String, Item>();
+	{
 		//For people
 		inventory.put("Car", new Item("Car", 1000.00, 1000));
 		inventory.put("Pasta", new Item("Pasta", 1.99, 1000));
@@ -83,6 +89,13 @@ public class Market {
 
 	//Constructor
 	public Market(String name) 	{
+		if (name == "East Market"){
+			location = new Point(500, 140);
+		}
+		if (name == "West Market"){
+			location = new Point(90, 120);	
+		}
+		
 		this.name = name;
 	}
 
@@ -100,6 +113,7 @@ public class Market {
 			if (isOpen()) {
 				salesPersonRole.msgMarketOpen();
 			}
+			salesPersonRole.setGui(salesPersonGui);
 			marketPanel.addGui(salesPersonGui);
 			return salesPersonRole;
 		}
@@ -114,6 +128,7 @@ public class Market {
 			if (isOpen()) {
 				salesPersonRole.msgMarketOpen();
 			}
+			marketRunnerRole.setGui(marketRunnerGui);
 			marketPanel.addGui(marketRunnerGui);
 			return marketRunnerRole;
 		}
@@ -128,6 +143,7 @@ public class Market {
 			if (isOpen()) {
 				salesPersonRole.msgMarketOpen();
 			}
+			UPSmanRole.setGui(UPSmanGui);
 			marketPanel.addGui(UPSmanGui);
 			return UPSmanRole;
 		}
@@ -136,10 +152,33 @@ public class Market {
 	}
 
 	public void arrived(MarketCustomerRole mCR) {
-		MarketCustomerGui rCG = (MarketCustomerGui) mCR.gui;
-		marketPanel.addGui(rCG);
+		//MarketCustomerGui rCG = (MarketCustomerGui) mCR.gui;
+		MarketCustomerGui MCG = new MarketCustomerGui(mCR);
+		mCR.setGui(MCG);
+		MCG.setHome(marketGuis.size());
+		mCR.setMarket(this);
+		marketGuis.add(MCG);
+		marketPanel.addGui(MCG);
+		//MCG.waitInLine();
 	}
 
+	public void goingOffWork(Person person) {
+		Worker worker = (Worker) person;
+
+		if (worker.getWorkerRole().equals(salesPersonRole)) {
+			salesPersonRole.person = null;
+			marketPanel.removeGui(salesPersonGui);
+		}
+		if (worker.getWorkerRole().equals(marketRunnerRole)) {
+			marketRunnerRole.person = null;
+			marketPanel.removeGui(marketRunnerGui);
+		}
+		if (worker.getWorkerRole().equals(UPSmanRole)) {
+			UPSmanRole.person = null;
+			marketPanel.removeGui(UPSmanGui);
+		}
+		worker.workerRole = null;
+	}
 
 	public class Item {
 		public String itemName;
@@ -212,18 +251,25 @@ public class Market {
 	}
 	
 	public void removeCustomer(MarketCustomerRole customerRole) {
-		marketPanel.removeGui(customerRole.gui);
+		marketPanel.removeGui(customerRole.getGui());
+		marketGuis.remove(customerRole.getGui());
 	}
 	
 	public void closeBuilding(){
 		userClosed = true;
 		salesPersonRole.msgLeaveRole();
-		marketPanel.removeGui(salesPersonGui);
 		
 		marketRunnerRole.msgLeaveRole();
-		marketPanel.removeGui(marketRunnerGui);
 		
 		UPSmanRole.msgLeaveRole();
-		marketPanel.removeGui(UPSmanGui);
+	}
+
+
+	public void setClosestStop(Point point) {
+		closestStop = point;
+	}
+	
+	public Point getClosestStop() {
+		return closestStop;
 	}
 }
