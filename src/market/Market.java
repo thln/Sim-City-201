@@ -252,6 +252,7 @@ public class Market {
 	
 	public void removeCustomer(MarketCustomerRole customerRole) {
 		marketPanel.removeGui(customerRole.getGui());
+		marketGuis.remove(customerRole.getGui());
 	}
 	
 	public void closeBuilding(){
