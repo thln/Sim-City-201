@@ -21,11 +21,11 @@ public class BusGuiVertical extends CityGui {
 	private final int waitTime = 1000;
 	
 	private int xPos = stopLeftX, yPos = 325;//default bus position
-	private int yDestination = stopBottomY;//Stop 1
+	private int yDestination = stopBottomY;//Stop 4
 
 	private enum Command {noCommand, stop1, stop2, stop3, stop4};
-	private Command command = Command.stop1;
-	private int lastStop = 4;
+	private Command command = Command.stop4;
+	private int lastStop = 3;
 
 	private enum BusState {stopped, enroute, inIntersection1, inIntersection2, inIntersection3, inIntersection4, inCrosswalk1, inCrosswalk2, inCrosswalk6, inCrosswalk7, inCrosswalk11, inCrosswalk12};
 	BusState state = BusState.stopped;
@@ -109,31 +109,31 @@ public class BusGuiVertical extends CityGui {
 			return;
 		}
 		if (lastStop == 3) {
-			goToStop4();
-			return;
-		}
-		if (lastStop == 4) {
 			goToEndOfRightRoad();
 			return;
 		}
+		if (lastStop == 4) {
+			goToStop1();
+			return;
+		}
 	}
-	
+
 	public void goToStop1() {
 		command = Command.stop1;
-		yDestination = stopBottomY;
+		yDestination = stopTopY;
+		
 	}
 
 	public void goToStop2() {
 		command = Command.stop2;
 		yDestination = stopTopY;
-		
 	}
 
 	public void goToStop3() {
 		command = Command.stop3;
-		yDestination = stopTopY;
+		yDestination = stopBottomY;
 	}
-
+	
 	public void goToStop4() {
 		command = Command.stop4;
 		yDestination = stopBottomY;
