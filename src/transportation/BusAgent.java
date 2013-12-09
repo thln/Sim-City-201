@@ -26,7 +26,7 @@ public class BusAgent extends Agent{
 	BusGuiVertical guiV;
 	String name;
 	
-	public enum busState {Driving, ReachedStop, DroppedOffPeople, PickingUpPeople};
+	public enum busState {Driving, ReachedStop, DroppedOffPeople, PickingUpPeople, Leaving};
 	busState state = busState.Driving;
 	class busPassenger
 	{
