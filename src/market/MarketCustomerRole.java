@@ -22,6 +22,7 @@ public class MarketCustomerRole extends Role implements MarketCustomer {
 	public enum MarketCustomerState {atMarket, waitingForOrders, recievedOrders, payed, disputingBill, waitingToOpen}
 	public MarketCustomerState state = MarketCustomerState.atMarket;
 	private Semaphore atDestination = new Semaphore(0, true);
+	private Market market;
 
 	public double bill = 0;
 	String item;
@@ -77,6 +78,14 @@ public class MarketCustomerRole extends Role implements MarketCustomer {
 			print("Waiting for the market to open");
 			state = MarketCustomerState.waitingToOpen;
 			return;
+		}
+		
+		marketCustomerGui.waitInLine();
+		try {
+			this.atDestination.acquire();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 		if (item == "Car") {
@@ -149,6 +158,7 @@ public class MarketCustomerRole extends Role implements MarketCustomer {
 		}
 		state = MarketCustomerState.atMarket;
 		person.hasFoodInFridge = true;
+		market.removeCustomer(this);
 		this.setRoleInactive();
 	}
 	
@@ -158,6 +168,10 @@ public class MarketCustomerRole extends Role implements MarketCustomer {
 	
 	public MarketCustomerGui getGui() {
 		return marketCustomerGui;
+	}
+	
+	public void setMarket(Market market) {
+		this.market = market;
 	}
 	
 }

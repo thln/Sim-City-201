@@ -30,6 +30,7 @@ public class ChineseRestaurantCookRole extends Role implements ChineseRestaurant
 
 	//RestaurantCookGui cookGui = (RestaurantCookGui) gui;
 	private RestaurantCookGui cookGui;
+	ChineseRestaurant chineseRestaurant;
 
 	Timer timer = new Timer();
 	private int cookTime;
@@ -50,9 +51,9 @@ public class ChineseRestaurantCookRole extends Role implements ChineseRestaurant
 		foodMap.put("Salad", new Food("Salad"));
 	}
 
-	public ChineseRestaurantCookRole(Person p1, String pName, String rName, ChineseRestaurant resturant) {
+	public ChineseRestaurantCookRole(Person p1, String pName, String rName, ChineseRestaurant restaurant) {
 		super(p1, pName, rName);
-		//this.restaurant = restaurant;
+		chineseRestaurant = restaurant;
 		//theRevolvingStand = Phonebook.getPhonebook().getRestaurant().getRevolvingStand();
 
 	}
@@ -170,9 +171,8 @@ public class ChineseRestaurantCookRole extends Role implements ChineseRestaurant
 			}
 		}
 
-		if (leaveRole)
-		{
-			((Worker) person).roleFinishedWork();
+		if (leaveRole) {
+			chineseRestaurant.goingOffWork(person);
 			leaveRole = false;
 			return true;
 		}
