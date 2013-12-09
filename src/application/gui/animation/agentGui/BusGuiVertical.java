@@ -13,6 +13,7 @@ public class BusGuiVertical extends CityGui {
 
 	private BusAgent agent = null;
 	private boolean isPresent = true;
+	private boolean checkedStation = false;
 	
 	private final int stopTopY = (int) Phonebook.getPhonebook().getBusStops().get(0).getY()+8;
 	private final int stopBottomY = (int) Phonebook.getPhonebook().getBusStops().get(3).getY()+8;
@@ -97,6 +98,13 @@ public class BusGuiVertical extends CityGui {
 					}
 				},
 				waitTime);
+			}
+		}
+		else
+		{
+			if(agent.getCheckedStation())
+			{
+				agent.msgLeavingStation();
 			}
 		}
 	}
