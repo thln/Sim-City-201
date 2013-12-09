@@ -244,6 +244,8 @@ public class AmericanRestaurantCustomerRole extends Role implements AmericanRest
 
 			private void SitDown() {
 				print("Being seated. Going to table");
+				event = AgentEvent.seated;
+				stateChanged();
 				//	customerGui.DoGoToSeat(seatNumber);
 			}
 

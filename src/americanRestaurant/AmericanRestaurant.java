@@ -62,13 +62,13 @@ public class AmericanRestaurant {
 //					worker.roleFinishedWork();
 //				}
 				//Setting cook role to new role
-				americanHost.setPerson(person);
+				americanCook.setPerson(person);
 				if (isOpen()) {
 					americanHost.msgRestaurantOpen();
 				}
 		//		AmericanRestaurantCookRole.setGui(cookGui);
 		//		restPanel.addGui(cookGui);
-				return americanHost;
+				return americanCook;
 			}
 			else if (title.contains("cashier")) {
 				//Setting previous bank guard role to inactive
@@ -203,7 +203,7 @@ public class AmericanRestaurant {
 //		}
 //
 		public boolean isOpen() {
-			if (americanHost.getPerson() != null && americanHost.Waiters.size() != 0 && americanHost.getPerson() != null && americanCashier.person != null && !userClosed)
+			if (americanHost.getPerson() != null && americanHost.Waiters.size() != 0 && americanCook.getPerson() != null && americanCashier.person != null && !userClosed)
 				return true;
 			else 
 				return false;

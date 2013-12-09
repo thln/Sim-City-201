@@ -148,6 +148,7 @@ public class AmericanRestaurantCookRole extends Role {
 	// MESSAGES
 
 	public void msgHereIsAnOrder (Order order1){	
+		print("Received order");
 		PendingOrders.add(order1);
 		stateChanged();
 	}

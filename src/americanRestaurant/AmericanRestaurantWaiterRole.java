@@ -117,6 +117,7 @@ public class AmericanRestaurantWaiterRole extends Role implements AmericanRestau
 		public AmericanRestaurantWaiterRole(Person p1, String pName, String rName, AmericanRestaurant restaurant) {
 			super(p1, pName, rName);
 			myRestaurant = restaurant;
+			myHost = myRestaurant.americanHost;
 			customers = new ArrayList<MyCustomer>();
 			atTable = new Semaphore(0,true);
 			breakTimer = new Timer();
