@@ -25,7 +25,7 @@ public class BusAgent extends Agent{
 	BusGuiHorizontal guiH;
 	BusGuiVertical guiV;
 	String name;
-	
+
 	public enum busState {Driving, ReachedStop, DroppedOffPeople, PickingUpPeople, Leaving};
 	busState state = busState.Driving;
 	class busPassenger
@@ -38,16 +38,16 @@ public class BusAgent extends Agent{
 			busStop = bStop;
 		}
 	}
-	
+
 	List<busPassenger> busPassengers = Collections.synchronizedList(new ArrayList<busPassenger>());
 	List<Person> peopleAtBusStop = Collections.synchronizedList(new ArrayList<Person>());
-	
+
 
 	public BusAgent(String name) 
 	{
 		this.name = name + " Bus";
 	}
-	
+
 	/**** 
 	 * Interactions to go -
 	 * Person messaging bus stop and going to sleep with metaphor
@@ -62,22 +62,23 @@ public class BusAgent extends Agent{
 	/*********************
 	 ***** MESSAGES ******
 	 *********************/
-	
+
 	public void msgAtBusStop(int busStopNumber)
 	{
+		print("Got at stop");
 		//AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, "Bus", "Arrived at Bus Stop " + busStopNumber);
 		currentBusStop = busStopNumber;
 		state = busState.ReachedStop;
 		stateChanged();
 	}
-	
+
 	public void msgGettingOnBus(Person p, int bStop)
 	{
 		AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, "Adding " + p.getName());
 		busPassengers.add(new busPassenger(p, bStop));
 		stateChanged();
 	}
-	
+
 	/*********************
 	 ***** SCHEDULER *****
 	 *********************/
@@ -85,7 +86,7 @@ public class BusAgent extends Agent{
 	{
 		if(state == busState.ReachedStop)
 		{
-	//		System.err.println("Running tell People Get off");
+			//		System.err.println("Running tell People Get off");
 			tellPeopleGetOff();
 			return true;
 		}
@@ -99,13 +100,17 @@ public class BusAgent extends Agent{
 			checkNumberOfPassengers();
 			return true;
 		}
+		if (state == busState.Leaving) {
+			goToNextStop();
+			return true;
+		}
 		return false;
 	}
 
 	/*********************
 	 ****** ACTIONS ******
 	 *********************/
-	
+
 	private void tellPeopleWaiting()
 	{
 		AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, "Telling people to get on.");
@@ -125,11 +130,10 @@ public class BusAgent extends Agent{
 			}
 		}
 	}
-	
+
 	private void tellPeopleGetOff()
 	{
 		AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, "Telling people to get off.");
-		state = busState.DroppedOffPeople;
 		for(int i = 0; i < busPassengers.size(); i++)
 		{
 			if(busPassengers.get(i).busStop == currentBusStop)
@@ -139,32 +143,45 @@ public class BusAgent extends Agent{
 			}
 		}
 		expectedNumberOfPassengers = busPassengers.size();
+		state = busState.DroppedOffPeople;
+		stateChanged();
 	}
-	
-	private void checkNumberOfPassengers()
-	{
+
+	private void checkNumberOfPassengers() {
 		AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, "Checking if everyone's here.");
 		if(expectedNumberOfPassengers == busPassengers.size())
 		{
 			AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, "Everyone's here, leaving.");
-//			if(ifHorizontal)
-//			{
-//				guiH.wait.release();
-//			}
+			//			if(ifHorizontal)
+			//			{
+			//				guiH.wait.release();
+			//			}
 			state = busState.Driving;
 			currentBusStop = 0;
 			expectedNumberOfPassengers = 0;
 		}
-		
+		state = busState.Leaving;
+		stateChanged();
 	}
-	
-	public void setGui(BusGuiHorizontal g)
+
+	private void goToNextStop(){
+		if (ifHorizontal) {
+			guiH.goToNextBusStop();
+		}
+		else {
+			guiV.goToNextBusStop();
+		}
+		state = busState.Driving;
+		stateChanged();
+	}
+
+	public void setHGui(BusGuiHorizontal g)
 	{
 		ifHorizontal = true;
 		guiH = g;
 	}
-	
-	public void setGui(BusGuiVertical g)
+
+	public void setVGui(BusGuiVertical g)
 	{
 		ifHorizontal = false;
 		guiV = g;

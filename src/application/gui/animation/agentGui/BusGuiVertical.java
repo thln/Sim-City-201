@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.Timer;
-import java.util.TimerTask;
 
 import transportation.BusAgent;
 import application.Phonebook;
@@ -26,6 +25,7 @@ public class BusGuiVertical extends CityGui {
 
 	private enum Command {noCommand, stop1, stop2, stop3, stop4};
 	private Command command = Command.stop1;
+	private int lastStop = 4;
 
 	private enum BusState {stopped, enroute, inIntersection1, inIntersection2, inIntersection3, inIntersection4, inCrosswalk1, inCrosswalk2, inCrosswalk6, inCrosswalk7, inCrosswalk11, inCrosswalk12};
 	BusState state = BusState.stopped;
@@ -60,39 +60,19 @@ public class BusGuiVertical extends CityGui {
 		if (yPos == yDestination) {
 			if (command == Command.stop1) {
 				agent.msgAtBusStop(1);
-				busStop.schedule(new TimerTask() {
-					public void run() {
-						goToStop2();
-					}
-				},
-				waitTime);
+				lastStop = 1;
 			}
 			else if (command == Command.stop2) {
 				agent.msgAtBusStop(2);
-				busStop.schedule(new TimerTask() {
-					public void run() {
-						goToEndOfLeftRoad();
-					}
-				},
-				waitTime);
+				lastStop = 2;
 			}
 			else if (command == Command.stop3) {
 				agent.msgAtBusStop(3);
-				busStop.schedule(new TimerTask() {
-					public void run() {
-						goToStop4();
-					}
-				},
-				waitTime);
+				lastStop = 3;
 			}
 			else if (command == Command.stop4) {
 				agent.msgAtBusStop(4);
-				busStop.schedule(new TimerTask() {
-					public void run() {
-						goToEndOfRightRoad();
-					}
-				},
-				waitTime);
+				lastStop = 4;
 			}
 		}
 	}
@@ -119,6 +99,25 @@ public class BusGuiVertical extends CityGui {
 	}
 
 	//Actions
+	public void goToNextBusStop() {
+		if (lastStop == 1) {
+			goToStop2();
+			return;
+		}
+		if (lastStop == 2) {
+			goToEndOfLeftRoad();
+			return;
+		}
+		if (lastStop == 3) {
+			goToStop4();
+			return;
+		}
+		if (lastStop == 4) {
+			goToEndOfRightRoad();
+			return;
+		}
+	}
+	
 	public void goToStop1() {
 		command = Command.stop1;
 		yDestination = stopBottomY;

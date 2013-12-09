@@ -302,15 +302,18 @@ public class Application extends JPanel {
 //
 //		wealthy3.startThread();
 //		wealthy4.startThread();
+		
+		crook1.startThread();
+		
+		//Buses
 		BusAgent horizontal = new BusAgent("Horizontal");
 		BusAgent vertical = new BusAgent("Vertical");
 		BusGuiHorizontal busA = new BusGuiHorizontal(horizontal);
 		BusGuiVertical busB = new BusGuiVertical(vertical);	
-		horizontal.setGui(busA);
-		vertical.setGui(busB);
+		horizontal.setHGui(busA);
+		vertical.setVGui(busB);
 		animPanel.cityPanel.addGui(busA);
 		animPanel.cityPanel.addGui(busB);
-		crook1.startThread();
 		horizontal.startThread();
 		vertical.startThread();
 
