@@ -43,11 +43,16 @@ public class PersonGui extends CityGui {
 	private int endStopX;
 	private int endStopY;
 
+	//Walking
+	private int nextCrosswalkX;
+	private int nextCrosswalkY;
+
 	private int xPos, yPos;//default person position
 	private int xDestination, yDestination;//default start position
 	private int xHome, yHome;
 	private enum Command {noCommand, GoToRestaurant, GoToMarket, GoToBank, GoToBusStop, GoOnBus, GoHome};
 	private Command command = Command.noCommand;
+
 	int currentBlock, destinationBlock;
 
 	private enum PersonState {nothing, enroute, walkingToCrosswalk, inCrosswalk1, inCrosswalk2, inCrosswalk3, inCrosswalk4, inCrosswalk5, inCrosswalk6, inCrosswalk7, inCrosswalk8, inCrosswalk9, inCrosswalk10, inCrosswalk11, inCrosswalk12};
@@ -68,16 +73,16 @@ public class PersonGui extends CityGui {
 	public PersonGui(Person p) {
 		this.agent = p;
 		if(p.home.type.equals("West Apartment")) {
-			xHome = 200;
-			yHome = 200;			
+			xHome = 20;
+			yHome = 30;			
 		}
 		if(p.home.type.equals("East Apartment")) {
 			xHome = 520;
 			yHome = 300;			
 		}
 		if (p.home.type.equals("Mansion")){
-			xHome = 20;
-			yHome = 100;
+			xHome = 30;
+			yHome = 150;
 		}
 
 		setxPos(xHome);
@@ -96,24 +101,32 @@ public class PersonGui extends CityGui {
 		}
 
 		//if (!inBusyIntersection()) {
-		if (state == PersonState.walkingToCrosswalk) {
-			if (destinationBlock - currentBlock == 1) {
-				xPos++;
-				return;
+		if (state == PersonState.walkingToCrosswalk) {		
+			if (xPos == nextCrosswalkX && yPos == nextCrosswalkY) {
+				if (decideForBus("next"))
+					agent.print("In block " + currentBlock + " and going to position " + nextCrosswalkX + " ," + nextCrosswalkY);
+					//agent.print("At croswalk in block" + currentBlock + "going to " + destinationBlock);
 			}
-			else if (destinationBlock - currentBlock == -1){
-				xPos--;
-				return;
-			}
-			else if (destinationBlock - currentBlock == 3){
-				yPos++;
-				return;
-			}
-			else if (destinationBlock - currentBlock == -3){
-				yPos--;
-				return;
+			else{
+				if (destinationBlock - currentBlock == 1) {
+					xPos++;
+					return;
+				}
+				else if (destinationBlock - currentBlock == -1){
+					xPos--;
+					return;
+				}
+				else if (destinationBlock - currentBlock == 3){
+					yPos++;
+					return;
+				}
+				else if (destinationBlock - currentBlock == -3){
+					yPos--;
+					return;
+				}
 			}
 		}
+
 
 
 		if (getxPos() < getxDestination())
@@ -285,80 +298,88 @@ public class PersonGui extends CityGui {
 		if (location.equals("East Bank")) {
 			xDestination = (int) Phonebook.getPhonebook().getEastBank().location.getX();
 			yDestination = (int) Phonebook.getPhonebook().getEastBank().location.getY();
+			command = Command.GoToBank;
 		}
 		if (location.equals("West Bank")) {
 			xDestination = (int) Phonebook.getPhonebook().getWestBank().location.getX();
-			yDestination = (int) Phonebook.getPhonebook().getWestBank().location. getY();
+			yDestination = (int) Phonebook.getPhonebook().getWestBank().location.getY();
+			command = Command.GoToBank;
 		}
 		if (location.equals("East Market")) {
-			xDestination = (int) Phonebook.getPhonebook().getWestBank().location.getX();
-			yDestination = (int) Phonebook.getPhonebook().getWestBank().location. getY();
+			xDestination = (int) Phonebook.getPhonebook().getEastMarket().location.getX();
+			yDestination = (int) Phonebook.getPhonebook().getEastMarket().location.getY();
+			command = Command.GoToMarket;
+		}
+		if (location.equals("West Market")) {
+			xDestination = (int) Phonebook.getPhonebook().getWestMarket().location.getX();
+			yDestination = (int) Phonebook.getPhonebook().getWestMarket().location.getY();
+			command = Command.GoToMarket;
 		}
 		if (location.equals("Chinese Restaurant")) {
-			xDestination = (int) Phonebook.getPhonebook().getWestBank().location.getX();
-			yDestination = (int) Phonebook.getPhonebook().getWestBank().location. getY();
+			xDestination = (int) Phonebook.getPhonebook().getChineseRestaurant().location.getX();
+			yDestination = (int) Phonebook.getPhonebook().getChineseRestaurant().location.getY();
+			command = Command.GoToRestaurant;
 		}
 
+		currentBlock = returnCurrentBlock (xPos, yPos);
 		destinationBlock = returnCurrentBlock (xDestination, yDestination);
-		System.err.println(agent.getName() + " has Destination block = " + destinationBlock);
-		
-		if ((xDestination - xPos >= 30) || (yDestination - yPos >= 30)){
-			return false;
+		if (currentBlock == destinationBlock) {
+			state = PersonState.enroute;
+			return true;
 		}
+
+		//	agent.print("dest = " + destinationBlock + "currentBlock = " + currentBlock + "Block in phonebook is " + Phonebook.getPhonebook().blocks.get(currentBlock));
+		destinationBlock = Phonebook.getPhonebook().blocks.get(currentBlock).doIWalk(destinationBlock);
+		if (destinationBlock == 0){
+			return false;
+		}	
+		else	
+			walkToLocation();
 		return true;
 	}
 
-	public void setHomeLocation(int x, int y) {
-		setxHome(x);
-		yHome = y;
-	}
+	public void walkToLocation(){
+		popToMiddle();	
 
-	public String toString() {
-		return "Person Gui";
-	}
-
-	public int getxDestination() {
-		return xDestination;
-	}
-
-	public void setxDestination(int xDestination) {
-		this.xDestination = xDestination;
-	}
-
-	public int getxHome() {
-		return xHome;
-	}
-
-	public void setxHome(int xHome) {
-		this.xHome = xHome;
-	}
-
-	public int getxPos() {
-		return xPos;
-	}
-
-	public void setxPos(int xPos) {
-		this.xPos = xPos;
-	}
-
-	public int getyPos() {
-		return yPos;
-	}
-
-	public void setyPos(int yPos) {
-		this.yPos = yPos;
-	}
-
-	public int getyHome() {
-		return yHome;
-	}
-
-	public void setRaveMode() {
-		if (raveMode) {
-			raveMode = false;
+		if (destinationBlock == 1)
+		{
+			nextCrosswalkX = (int) Phonebook.getPhonebook().crosswalk3.getCrosswalk().getX();		
+			nextCrosswalkY = (int) Phonebook.getPhonebook().crosswalk1.getCrosswalk().getY();
 		}
-		else
-			raveMode = true;
+		if (destinationBlock == 2){
+			nextCrosswalkX = (int) Phonebook.getPhonebook().crosswalk4.getCrosswalk().getX();			
+			nextCrosswalkY = (int) Phonebook.getPhonebook().crosswalk1.getCrosswalk().getY();
+		}
+		if (destinationBlock == 3){
+			nextCrosswalkX = (int) Phonebook.getPhonebook().crosswalk5.getCrosswalk().getX();		
+			nextCrosswalkY = (int) Phonebook.getPhonebook().crosswalk2.getCrosswalk().getY();
+		}
+
+		if (destinationBlock == 4){
+			nextCrosswalkX = (int) Phonebook.getPhonebook().crosswalk3.getCrosswalk().getX();		
+			nextCrosswalkY = (int) Phonebook.getPhonebook().crosswalk6.getCrosswalk().getY();
+		}
+		if (destinationBlock == 5){
+			nextCrosswalkX = (int) Phonebook.getPhonebook().crosswalk4.getCrosswalk().getX();			
+			nextCrosswalkY = (int) Phonebook.getPhonebook().crosswalk6.getCrosswalk().getY();
+		}
+		if (destinationBlock == 6){
+			nextCrosswalkX = (int) Phonebook.getPhonebook().crosswalk5.getCrosswalk().getX();			
+			nextCrosswalkY = (int) Phonebook.getPhonebook().crosswalk7.getCrosswalk().getY();
+		}
+
+		if (destinationBlock == 7){
+			nextCrosswalkX = (int) Phonebook.getPhonebook().crosswalk8.getCrosswalk().getX();			
+			nextCrosswalkY = (int) Phonebook.getPhonebook().crosswalk11.getCrosswalk().getY();
+		}
+		if (destinationBlock == 8){
+			nextCrosswalkX = (int) Phonebook.getPhonebook().crosswalk9.getCrosswalk().getX();			
+			nextCrosswalkY = (int) Phonebook.getPhonebook().crosswalk11.getCrosswalk().getY();
+		}
+		if (destinationBlock == 9){
+			nextCrosswalkX = (int) Phonebook.getPhonebook().crosswalk10.getCrosswalk().getX();		
+			nextCrosswalkY = (int) Phonebook.getPhonebook().crosswalk12.getCrosswalk().getY();
+		}
 	}
 
 	public void findStartStop() {
@@ -382,7 +403,6 @@ public class PersonGui extends CityGui {
 
 	public void popToMiddle(){
 		currentBlock = returnCurrentBlock(xPos, yPos);
-		System.err.println(agent.getName() + " has Destination block = " + destinationBlock);
 		if (currentBlock == 1)
 		{
 			xPos = (int) Phonebook.getPhonebook().crosswalk3.getCrosswalk().getX();			//Pop to middle of block1
@@ -432,13 +452,13 @@ public class PersonGui extends CityGui {
 			state = PersonState.walkingToCrosswalk;
 		}
 		else {
-			//agent.print("No pop");
+			agent.print("No pop");
 		}
 		//xPos -= 10;
 		//yPos = 30;
-	
-		System.err.println("Name is " + agent.getName() + " and Block = " + currentBlock + "and position = " + xPos + " , " + yPos );
-		System.err.println(agent.getName() + " has Destination block = " + destinationBlock);
+
+		//System.err.println("Name is " + agent.getName() + " and Block = " + currentBlock + "and position = " + xPos + " , " + yPos );
+		//System.err.println(agent.getName() + " has Destination block = " + destinationBlock);
 	}
 
 	public int returnCurrentBlock (int xPos, int yPos){
@@ -488,13 +508,6 @@ public class PersonGui extends CityGui {
 			currColor = myColor;
 	}
 
-	public int getyDestination() {
-		return yDestination;
-	}
-
-	public void setyDestination(int yDestination) {
-		this.yDestination = yDestination;
-	}
 
 	synchronized public boolean inBusyCrosswalk() {
 		//Horizontal Crosswalks
@@ -741,5 +754,67 @@ public class PersonGui extends CityGui {
 			Phonebook.getPhonebook().crosswalk12.setCrosswalkBusy(false);	
 			state = PersonState.enroute;	
 		}
+	}
+
+	public void setHomeLocation(int x, int y) {
+		setxHome(x);
+		yHome = y;
+	}
+
+	public String toString() {
+		return "Person Gui";
+	}
+
+	public int getxDestination() {
+		return xDestination;
+	}
+
+	public void setxDestination(int xDestination) {
+		this.xDestination = xDestination;
+	}
+
+	public int getxHome() {
+		return xHome;
+	}
+
+	public void setxHome(int xHome) {
+		this.xHome = xHome;
+	}
+
+	public int getxPos() {
+		return xPos;
+	}
+
+	public void setxPos(int xPos) {
+		this.xPos = xPos;
+	}
+
+	public int getyPos() {
+		return yPos;
+	}
+
+	public void setyPos(int yPos) {
+		this.yPos = yPos;
+	}
+
+	public int getyHome() {
+		return yHome;
+	}
+
+	public void setRaveMode() {
+		if (raveMode) {
+			raveMode = false;
+		}
+		else
+			raveMode = true;
+	}
+
+
+	public int getyDestination() {
+		return yDestination;
+	}
+
+	public void setyDestination(int yDestination) {
+		this.yDestination = yDestination;
 	}
 }
