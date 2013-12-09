@@ -6,19 +6,19 @@ import java.awt.Rectangle;
 import agent.Agent;
 import application.Phonebook;
 
-public abstract class VehicleGui {
+public abstract class VehicleGui implements Gui {
 
-	private Agent agent = null;
-	private boolean isPresent = true;
+	protected Agent agent = null;
+	protected boolean isPresent = true;
 
-	private int xPos, yPos;//default bus position
-	private int xDestination, yDestination;
+	protected int xPos, yPos;
+	protected int xDestination, yDestination;
 
-	private enum Command {noCommand,
+	protected enum Command {noCommand,
 		block1, block2, block3, block4, block5, block6, block7, block8, block9, block10};
-	private Command command = Command.noCommand;
+	protected Command command = Command.noCommand;
 
-	private enum VehicleState {stopped, enroute,
+	protected enum VehicleState {stopped, enroute,
 		inIntersection1, inIntersection2, inIntersection3, inIntersection4,
 		inCrosswalk1, inCrosswalk2, inCrosswalk3, inCrosswalk4, inCrosswalk5,inCrosswalk6, inCrosswalk7, inCrosswalk8, inCrosswalk9, inCrosswalk10, inCrosswalk11, inCrosswalk12};
 	VehicleState state = VehicleState.stopped;
@@ -391,6 +391,18 @@ public abstract class VehicleGui {
 			Phonebook.getPhonebook().crosswalk12.setCrosswalkBusy(false);	
 			state = VehicleState.enroute;	
 		}
+	}
+	
+	@Override
+	public boolean isPresent() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void DoExit() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

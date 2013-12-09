@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -26,6 +25,8 @@ import application.Phonebook;
 import application.gui.animation.agentGui.BusGuiHorizontal;
 import application.gui.animation.agentGui.BusGuiVertical;
 import application.gui.animation.agentGui.Gui;
+import application.gui.animation.agentGui.VehicleGui;
+import application.gui.animation.agentGui.VehicleHorizontalGui;
 
 public class CityPanel extends JPanel implements ActionListener, MouseListener {
 
@@ -53,6 +54,7 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 	public ImageIcon busStop = new ImageIcon("res/bus_stop.png");	
 	public BusGuiHorizontal busA = new BusGuiHorizontal();
 	public BusGuiVertical busB = new BusGuiVertical();
+	public VehicleHorizontalGui carA = new VehicleHorizontalGui();
 
 	public CityPanel(AnimationPanel animationPanel) {
 
@@ -91,6 +93,7 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 
 		addGui(busA);
 		addGui(busB);
+		addGui(carA);
 
 		Timer timer = new Timer(10, this);
 		timer.start();

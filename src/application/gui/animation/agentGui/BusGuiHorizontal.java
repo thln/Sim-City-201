@@ -16,7 +16,7 @@ public class BusGuiHorizontal extends CityGui {
 	private boolean isPresent = true;
 	
 	private final int stopLeftX = (int) Phonebook.getPhonebook().getBusStops().get(0).getX();
-	private final int stopRightX = (int) Phonebook.getPhonebook().getBusStops().get(1).getX();;
+	private final int stopRightX = (int) Phonebook.getPhonebook().getBusStops().get(1).getX();
 	private final int stopTopY = 75;
 	private final int stopBottomY = 195;
 	
