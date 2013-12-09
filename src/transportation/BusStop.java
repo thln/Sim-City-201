@@ -32,7 +32,7 @@ public class BusStop
 	{	
 		currentBus = bus;
 		List<Person> loadingPassengers = waitingPassengers;
-		waitingPassengers.clear();
+		//waitingPassengers.clear();
 		return loadingPassengers;
 	}
 	

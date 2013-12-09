@@ -86,17 +86,26 @@ public abstract class Person extends Agent{
 
 	public void msgAtDestination() 
 	{
-		getAtDestination().release();
+		if(atDestination.availablePermits() < 1)
+		{
+			getAtDestination().release();
+		}
 	}
 	
 	public void msgBusIsHere()
 	{
-		getWaitingAtBus().release();
+		if(waitingAtBus.availablePermits() < 1)
+		{
+			getWaitingAtBus().release();
+		}
 	}
 	
 	public void msgAtBusStopDestination()
 	{
-		
+		if(beingTransported.availablePermits() < 1)
+		{
+			beingTransported.release();
+		}
 	}
 
 	//Scheduler
@@ -275,6 +284,8 @@ public abstract class Person extends Agent{
 		{
 			e.printStackTrace();
 		}
+		print(" Blah");
+		print("Telling " + Phonebook.getPhonebook().getAllBusStops().get(gui.getClosestBusStopNumber()).getCurrentBus().getName() + " that I'm getting on");
 		Phonebook.getPhonebook().getAllBusStops().get(gui.getClosestBusStopNumber()).getCurrentBus().msgGettingOnBus(this, destinationBusStopNumber);
 		gui.setInvisible();
 		try
@@ -287,6 +298,7 @@ public abstract class Person extends Agent{
 		{
 			e.printStackTrace();
 		}
+		print("Arriving at destination Bus Stop: " + destinationBusStopNumber);
 		gui.getOffBus(destinationBusStopNumber);
 	}
 	
@@ -477,6 +489,11 @@ public abstract class Person extends Agent{
 		return waitingAtBus;
 	}
 
+	public Semaphore getBeingTransported()
+	{
+		return beingTransported;
+	}
+	
 	public void setAtDestination(Semaphore atDestination) {
 		this.atDestination = atDestination;
 	}

@@ -65,8 +65,8 @@ public class BusAgent extends Agent{
 
 	public void msgAtBusStop(int busStopNumber)
 	{
-		print("Got at stop");
-		//AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, "Bus", "Arrived at Bus Stop " + busStopNumber);
+		//print("Got at stop");
+		AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, "Arrived at Bus Stop " + busStopNumber);
 		currentBusStop = busStopNumber;
 		state = busState.ReachedStop;
 		stateChanged();
@@ -113,18 +113,20 @@ public class BusAgent extends Agent{
 
 	private void tellPeopleWaiting()
 	{
-		AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, "Telling people to get on.");
+		AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, "Telling people to get on at " + Phonebook.getPhonebook().getAllBusStops().get(currentBusStop).getBusStopNumber());
 		state = busState.PickingUpPeople;
 		peopleAtBusStop = Phonebook.getPhonebook().getAllBusStops().get(currentBusStop).getAllWaitingPassengers(this);
 		expectedNumberOfPassengers += peopleAtBusStop.size();
 		if(peopleAtBusStop.isEmpty())
 		{
+			AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, "No one's here");
 			return;
 		}
 		else
 		{
 			for(int i = 0; i < peopleAtBusStop.size(); i++)
 			{
+				AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, "Waking up " + peopleAtBusStop.get(i).getName());
 				peopleAtBusStop.get(i).msgBusIsHere();
 				peopleAtBusStop.remove(i);
 			}
@@ -138,6 +140,7 @@ public class BusAgent extends Agent{
 		{
 			if(busPassengers.get(i).busStop == currentBusStop)
 			{
+				AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, busPassengers.get(i).passenger.getName() + " is leaving at " + currentBusStop);				
 				busPassengers.get(i).passenger.msgAtBusStopDestination();
 				busPassengers.remove(i);
 			}

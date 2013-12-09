@@ -307,15 +307,15 @@ public class Application extends JPanel {
 		
 		//Buses
 		BusAgent horizontal = new BusAgent("Horizontal");
-		BusAgent vertical = new BusAgent("Vertical");
+		//BusAgent vertical = new BusAgent("Vertical");
 		BusGuiHorizontal busA = new BusGuiHorizontal(horizontal);
-		BusGuiVertical busB = new BusGuiVertical(vertical);	
+		//BusGuiVertical busB = new BusGuiVertical(vertical);	
 		horizontal.setHGui(busA);
-		vertical.setVGui(busB);
+		//vertical.setVGui(busB);
 		animPanel.cityPanel.addGui(busA);
-		animPanel.cityPanel.addGui(busB);
+		//animPanel.cityPanel.addGui(busB);
 		horizontal.startThread();
-		vertical.startThread();
+		//vertical.startThread();
 
 		updatePeopleTime();
 
