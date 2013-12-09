@@ -58,7 +58,7 @@ public class BusGuiVertical extends CityGui {
 		}
 
 		if (yPos == yDestination) {
-			System.err.println("Msging vertical bus anget)");
+			System.out.println("Msging vertical bus agent");
 			if (command == Command.stop1) {
 				agent.msgAtBusStop(1);
 				lastStop = 1;
@@ -76,7 +76,6 @@ public class BusGuiVertical extends CityGui {
 				lastStop = 4;
 			}
 		}
-		command = Command.noCommand;
 	}
 
 	public void draw(Graphics2D g) {
