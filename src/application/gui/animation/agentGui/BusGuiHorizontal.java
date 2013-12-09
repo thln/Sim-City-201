@@ -63,12 +63,12 @@ public class BusGuiHorizontal extends CityGui {
 			if (command == Command.stop1) {
 				busStop.schedule(new TimerTask() {
 					public void run() {
-						if(!checkedStation)
-						{
+//						if(!checkedStation)
+//						{
 						agent.msgAtBusStop(1);
 						lastStop = 1;
-						checkedStation = true;
-						}
+//						checkedStation = true;
+//						}
 					}
 				},
 				waitTime);
@@ -76,12 +76,12 @@ public class BusGuiHorizontal extends CityGui {
 			else if (command == Command.stop2) {
 				busStop.schedule(new TimerTask() {
 					public void run() {
-						if(!checkedStation)
-						{
+//						if(!checkedStation)
+//						{
 						agent.msgAtBusStop(2);
 						lastStop = 2;
-						checkedStation = true;
-						}
+//						checkedStation = true;
+//						}
 					}
 				},
 				waitTime);
@@ -89,12 +89,12 @@ public class BusGuiHorizontal extends CityGui {
 			else if (command == Command.stop3) {
 				busStop.schedule(new TimerTask() {
 					public void run() {
-						if(!checkedStation)
-						{
+//						if(!checkedStation)
+//						{
 						agent.msgAtBusStop(3);
 						lastStop = 3;
-						checkedStation = true;
-						}
+//						checkedStation = true;
+//						}
 					}
 				},
 				waitTime);
@@ -102,21 +102,21 @@ public class BusGuiHorizontal extends CityGui {
 			else if (command == Command.stop4) {
 				busStop.schedule(new TimerTask() {
 					public void run() {
-						if(!checkedStation)
-						{
+//						if(!checkedStation)
+//						{
 						agent.msgAtBusStop(4);
 						lastStop = 4;
-						checkedStation = true;
-						}
+//						checkedStation = true;
+//						}
 					}
 				},
 				waitTime);
 			}
 		}
-		else
-		{
-			checkedStation = false;
-		}
+//		else
+//		{
+//			checkedStation = false;
+//		}
 	}
 
 	public void draw(Graphics2D g) {

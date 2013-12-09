@@ -20,6 +20,7 @@ public class BusAgent extends Agent{
 	 *********************/
 	boolean needToDeposit;
 	boolean ifHorizontal;
+	boolean checkedStation = false;
 	int currentBusStop;
 	int expectedNumberOfPassengers;
 	BusGuiHorizontal guiH;
@@ -66,10 +67,14 @@ public class BusAgent extends Agent{
 	public void msgAtBusStop(int busStopNumber)
 	{
 		//print("Got at stop");
-		AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, "Arrived at Bus Stop " + busStopNumber);
-		currentBusStop = busStopNumber;
-		state = busState.ReachedStop;
-		stateChanged();
+		if(!checkedStation)
+		{
+			checkedStation = true;
+			AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, "Arrived at Bus Stop " + busStopNumber);
+			currentBusStop = busStopNumber;
+			state = busState.ReachedStop;
+			stateChanged();
+		}
 	}
 
 	public void msgGettingOnBus(Person p, int bStop)
@@ -77,6 +82,11 @@ public class BusAgent extends Agent{
 		AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, "Adding " + p.getName());
 		busPassengers.add(new busPassenger(p, bStop));
 		stateChanged();
+	}
+	
+	public void msgLeavingStation()
+	{
+		checkedStation = false;
 	}
 
 	/*********************

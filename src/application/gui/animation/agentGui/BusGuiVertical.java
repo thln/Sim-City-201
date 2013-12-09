@@ -65,11 +65,11 @@ public class BusGuiVertical extends CityGui {
 				lastStop = 1;
 				busStop.schedule(new TimerTask() {
 					public void run() {
-						if(!checkedStation)
-						{
+//						if(!checkedStation)
+//						{
 						agent.msgAtBusStop(1);
-						checkedStation = true;
-						}
+//						checkedStation = true;
+//						}
 					}
 				},
 				waitTime);
@@ -78,11 +78,11 @@ public class BusGuiVertical extends CityGui {
 				lastStop = 2;
 				busStop.schedule(new TimerTask() {
 					public void run() {
-						if(!checkedStation)
-						{
+//						if(!checkedStation)
+//						{
 						agent.msgAtBusStop(2);
-						checkedStation = true;
-						}
+//						checkedStation = true;
+//						}
 					}
 				},
 				waitTime);
@@ -91,11 +91,11 @@ public class BusGuiVertical extends CityGui {
 				lastStop = 3;
 				busStop.schedule(new TimerTask() {
 					public void run() {
-						if(!checkedStation)
-						{
+//						if(!checkedStation)
+//						{
 						agent.msgAtBusStop(3);	
-						checkedStation = true;
-						}
+//						checkedStation = true;
+//						}
 					}
 				},
 				waitTime);
@@ -104,20 +104,20 @@ public class BusGuiVertical extends CityGui {
 				lastStop = 4;
 				busStop.schedule(new TimerTask() {
 					public void run() {
-						if(!checkedStation)
-						{
+//						if(!checkedStation)
+//						{
 						agent.msgAtBusStop(4);
-						checkedStation = true;
-						}
+//						checkedStation = true;
+//						}
 					}
 				},
 				waitTime);
 			}
 		}
-		else
-		{
-			checkedStation = false;
-		}
+//		else
+//		{
+//			checkedStation = false;
+//		}
 	}
 
 	public void draw(Graphics2D g) {
