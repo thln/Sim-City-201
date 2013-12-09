@@ -120,6 +120,20 @@ public abstract class Person extends Agent{
 		else
 			gui.walk = gui.decideForBus("West Bank");
 
+//		if (gui.walk) {
+//			gui.walkToLocation();
+//			try {
+//				atDestination.acquire();
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}
+
+		//		if (this instanceof Wealthy){
+		//			print("walking state = " + gui.walk + "and my destination = " + gui.getxDestination() + ", " + gui.getyDestination());
+		//		}
+		//		
 		if (!gui.walk){
 			if (home.type.equals("East Apartment")){
 				gui.doGoToBus(Phonebook.getPhonebook().getEastBank().getClosestStop().getX(),
@@ -129,14 +143,14 @@ public abstract class Person extends Agent{
 				gui.doGoToBus(Phonebook.getPhonebook().getWestBank().getClosestStop().getX(),
 						Phonebook.getPhonebook().getWestBank().getClosestStop().getY());
 			}
-		}
 
-		try {
-			atDestination.acquire();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			try {
+				atDestination.acquire();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 
+			}
 		}
 
 		for (Role cust1 : roles) {
@@ -211,7 +225,7 @@ public abstract class Person extends Agent{
 
 	protected void prepareForMarket() {
 		print("Going to market as a customer");
-		
+
 		if (home.type.equals("East Apartment"))
 			gui.walk = gui.decideForBus("East Market");
 		else
@@ -275,7 +289,7 @@ public abstract class Person extends Agent{
 	protected void prepareForRestaurant() {
 
 		gui.walk = gui.decideForBus("Chinese Restaurant");
-	
+
 		if (!gui.walk){
 			if (home.type.equals("East Apartment")){
 				gui.doGoToBus(Phonebook.getPhonebook().getEastBank().getClosestStop().getX(),
@@ -287,14 +301,6 @@ public abstract class Person extends Agent{
 			}
 		}
 
-		try {
-			atDestination.acquire();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-
-		}
-		getGui().DoGoToRestaurant("chinese");
 		try {
 			atDestination.acquire();
 		} catch (InterruptedException e) {

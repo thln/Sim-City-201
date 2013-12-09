@@ -101,29 +101,33 @@ public class PersonGui extends CityGui {
 		}
 
 		//if (!inBusyIntersection()) {
-		if (state == PersonState.walkingToCrosswalk) {
+		if (state == PersonState.walkingToCrosswalk) {		
 			if (xPos == nextCrosswalkX && yPos == nextCrosswalkY) {
-				decideForBus("next");
+				if (decideForBus("next"))
+					agent.print("In block " + currentBlock + " and going to position " + nextCrosswalkX + " ," + nextCrosswalkY);
+					//agent.print("At croswalk in block" + currentBlock + "going to " + destinationBlock);
 			}
-			if (destinationBlock - currentBlock == 1) {
-				xPos++;
-				return;
-			}
-			else if (destinationBlock - currentBlock == -1){
-				xPos--;
-				return;
-			}
-			else if (destinationBlock - currentBlock == 3){
-				yPos++;
-				return;
-			}
-			else if (destinationBlock - currentBlock == -3){
-				yPos--;
-				return;
+			else{
+				if (destinationBlock - currentBlock == 1) {
+					xPos++;
+					return;
+				}
+				else if (destinationBlock - currentBlock == -1){
+					xPos--;
+					return;
+				}
+				else if (destinationBlock - currentBlock == 3){
+					yPos++;
+					return;
+				}
+				else if (destinationBlock - currentBlock == -3){
+					yPos--;
+					return;
+				}
 			}
 		}
 
-	
+
 
 		if (getxPos() < getxDestination())
 			setxPos(getxPos() + 1);
@@ -294,33 +298,43 @@ public class PersonGui extends CityGui {
 		if (location.equals("East Bank")) {
 			xDestination = (int) Phonebook.getPhonebook().getEastBank().location.getX();
 			yDestination = (int) Phonebook.getPhonebook().getEastBank().location.getY();
+			command = Command.GoToBank;
 		}
 		if (location.equals("West Bank")) {
 			xDestination = (int) Phonebook.getPhonebook().getWestBank().location.getX();
-			yDestination = (int) Phonebook.getPhonebook().getWestBank().location. getY();
+			yDestination = (int) Phonebook.getPhonebook().getWestBank().location.getY();
+			command = Command.GoToBank;
 		}
 		if (location.equals("East Market")) {
-			xDestination = (int) Phonebook.getPhonebook().getWestBank().location.getX();
-			yDestination = (int) Phonebook.getPhonebook().getWestBank().location. getY();
+			xDestination = (int) Phonebook.getPhonebook().getEastMarket().location.getX();
+			yDestination = (int) Phonebook.getPhonebook().getEastMarket().location.getY();
+			command = Command.GoToMarket;
+		}
+		if (location.equals("West Market")) {
+			xDestination = (int) Phonebook.getPhonebook().getWestMarket().location.getX();
+			yDestination = (int) Phonebook.getPhonebook().getWestMarket().location.getY();
+			command = Command.GoToMarket;
 		}
 		if (location.equals("Chinese Restaurant")) {
-			xDestination = (int) Phonebook.getPhonebook().getWestBank().location.getX();
-			yDestination = (int) Phonebook.getPhonebook().getWestBank().location. getY();
+			xDestination = (int) Phonebook.getPhonebook().getChineseRestaurant().location.getX();
+			yDestination = (int) Phonebook.getPhonebook().getChineseRestaurant().location.getY();
+			command = Command.GoToRestaurant;
 		}
 
 		currentBlock = returnCurrentBlock (xPos, yPos);
 		destinationBlock = returnCurrentBlock (xDestination, yDestination);
-		if (currentBlock == destinationBlock)
+		if (currentBlock == destinationBlock) {
+			state = PersonState.enroute;
 			return true;
+		}
 
 		//	agent.print("dest = " + destinationBlock + "currentBlock = " + currentBlock + "Block in phonebook is " + Phonebook.getPhonebook().blocks.get(currentBlock));
 		destinationBlock = Phonebook.getPhonebook().blocks.get(currentBlock).doIWalk(destinationBlock);
 		if (destinationBlock == 0){
 			return false;
 		}	
-		else
+		else	
 			walkToLocation();
-
 		return true;
 	}
 
