@@ -24,6 +24,7 @@ import javax.swing.Timer;
 import application.Phonebook;
 import application.gui.animation.agentGui.BusGuiHorizontal;
 import application.gui.animation.agentGui.BusGuiVertical;
+import application.gui.animation.agentGui.CopGui;
 import application.gui.animation.agentGui.Gui;
 import application.gui.animation.agentGui.VehicleHorizontalGui;
 import application.gui.animation.agentGui.VehicleVerticalGui;
@@ -48,6 +49,7 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 	ImageIcon apartment = new ImageIcon("res/apartment.png", "apartment");
 	ImageIcon rave = new ImageIcon("res/rave.jpeg");
 	ImageIcon park = new ImageIcon("res/grass.jpg", "park");
+	ImageIcon hollywoodSign = new ImageIcon("res/hollywoodSign.png");
 
 	public ImageIcon roadHorizontal = new ImageIcon("res/roadsHorizontal.png");
 	public ImageIcon roadVertical = new ImageIcon("res/roadsVertical.png");
@@ -56,7 +58,8 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 	public BusGuiVertical busB = new BusGuiVertical();
 	public VehicleHorizontalGui carA = new VehicleHorizontalGui();
 	public VehicleVerticalGui carB = new VehicleVerticalGui();
-
+	public CopGui copCar = new CopGui();
+	
 	public CityPanel(AnimationPanel animationPanel) {
 
 		this.animationPanel = animationPanel;
@@ -96,6 +99,7 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		addGui(busB);
 		addGui(carA);
 		addGui(carB);
+		addGui(copCar);
 
 		Timer timer = new Timer(10, this);
 		timer.start();
@@ -176,12 +180,15 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		g2.drawImage(busStop.getImage(), 127, 230, null);
 		g2.drawImage(busStop.getImage(), 420, 28, null);
 		g2.drawImage(busStop.getImage(), 420, 230, null);
-
+		
 		//Drawing all buildings
 		for (int i=0; i<buildings.size(); i++ ) {
 			Building b = buildings.get(i);
 			g2.drawImage(b.getMyImage().getImage(), b.getxLocation(), b.getyLocation(), null);
 		}
+		
+		//Hollywood Sign
+		g2.drawImage(hollywoodSign.getImage(), 230, 133, null);
 
 		//Drawing all People guis
 		synchronized (guis) {
