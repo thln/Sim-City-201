@@ -113,10 +113,14 @@ public class BusGuiHorizontal extends CityGui {
 				waitTime);
 			}
 		}
-//		else
-//		{
-//			checkedStation = false;
-//		}
+		else
+		{
+			if(agent.getCheckedStation())
+			{
+				agent.msgLeavingStation();
+			}
+			//checkedStation = false;
+		}
 	}
 
 	public void draw(Graphics2D g) {

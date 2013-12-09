@@ -114,10 +114,14 @@ public class BusGuiVertical extends CityGui {
 				waitTime);
 			}
 		}
-//		else
-//		{
+		else
+		{
+			if(agent.getCheckedStation())
+			{
+				agent.msgLeavingStation();
+			}
 //			checkedStation = false;
-//		}
+		}
 	}
 
 	public void draw(Graphics2D g) {

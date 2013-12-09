@@ -200,4 +200,9 @@ public class BusAgent extends Agent{
 		ifHorizontal = false;
 		guiV = g;
 	}
+	
+	public boolean getCheckedStation()
+	{
+		return checkedStation;
+	}
 }
