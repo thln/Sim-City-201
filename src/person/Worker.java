@@ -222,8 +222,6 @@ public class Worker extends Person {
 		print("Preparing for work as " + myJob.title + " at " + myJob.jobPlace);
 		gui.walk = gui.decideForBus(myJob.jobPlace);
 		
-		gui.walk = true;
-		
 		if (gui.walk)
 			gui.popToMiddle();
 		

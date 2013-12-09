@@ -26,7 +26,8 @@ public class ChineseRestaurantHostRole extends Role {
 	public List<myCustomer> waitingCustomers = Collections.synchronizedList(new ArrayList<myCustomer>());
 	public List<myWaiter> waiters = Collections.synchronizedList(new ArrayList<myWaiter>());
 
-
+	public ChineseRestaurant chineseRestaurant;
+	
 	public Collection<Table> tables;
 	protected String roleName = "AmericanRestaurantHost";
 	//note that americanRestaurantTables is typed with Collection semantics.
@@ -40,7 +41,7 @@ public class ChineseRestaurantHostRole extends Role {
 	//ITALIAN IS TEMP UNTIL CHINESE ONE IS MADE
 	private ItalianHostGui hostGui;
 
-	public ChineseRestaurantHostRole(Person p1, String pName, String rName) 
+	public ChineseRestaurantHostRole(Person p1, String pName, String rName, ChineseRestaurant restaurant) 
 	{
 		super(p1, pName, rName);
 
@@ -49,9 +50,10 @@ public class ChineseRestaurantHostRole extends Role {
 		for (int ix = 1; ix <= NTABLES; ix++) {
 			tables.add(new Table(ix));//how you add to a collections
 		}
+		this.chineseRestaurant = restaurant;
 	}
 
-	public ChineseRestaurantHostRole(String roleName) 
+	public ChineseRestaurantHostRole(String roleName, ChineseRestaurant restaurant) 
 	{
 		super(roleName);
 
@@ -60,6 +62,7 @@ public class ChineseRestaurantHostRole extends Role {
 		for (int ix = 1; ix <= NTABLES; ix++) {
 			tables.add(new Table(ix));//how you add to a collections
 		}
+		this.chineseRestaurant = restaurant;
 	}
 
 	public String getMaitreDName() {
@@ -223,9 +226,8 @@ public class ChineseRestaurantHostRole extends Role {
 			}
 		}
 
-		if (leaveRole)
-		{
-			((Worker) person).roleFinishedWork();
+		if (leaveRole) {
+			chineseRestaurant.goingOffWork(person);
 			leaveRole = false;
 			return true;
 		}
@@ -347,7 +349,8 @@ public class ChineseRestaurantHostRole extends Role {
 	{
 		waiters.add(new myWaiter(chineseRestaurantWaiterRole));
 		print("Hired new waiter, " + chineseRestaurantWaiterRole.getPerson().getName());
-		stateChanged();
+		if (person != null)
+			stateChanged();
 	}
 
 	public void addCustomerToWaiter(ChineseRestaurantWaiterRole chineseRestaurantWaiterRole) 
@@ -413,7 +416,7 @@ public class ChineseRestaurantHostRole extends Role {
 	}
 	
 	public void deleteWaiter(myWaiter MW) {
-		Phonebook.getPhonebook().getChineseRestaurant().removeWaiter(MW.chineseRestaurantWaiterRole);
+		chineseRestaurant.removeWaiter(MW.chineseRestaurantWaiterRole);
 		MW = null;
 		waiters.remove(MW);
 	}

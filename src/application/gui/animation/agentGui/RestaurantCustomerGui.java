@@ -72,7 +72,9 @@ public class RestaurantCustomerGui extends RestaurantGui{
 	public void draw(Graphics2D g) {
 		g.setColor(Color.GREEN);
 		g.fillRect(xPos, yPos, 20, 20);
-
+		g.setColor(Color.BLACK);
+		if(agent != null)
+			g.drawString(agent.getName(), xPos, yPos);
 		if (state == CustomerState.readyToOrder) {
 			g.setColor(Color.RED);
 			g.drawString(" ?", xPos + 3, yPos + 15);

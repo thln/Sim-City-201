@@ -34,7 +34,8 @@ public class ChineseRestaurant implements Restaurant {
 	public WatchTime closeTime = new WatchTime(21);
 
 	//Roles
-	public ChineseRestaurantHostRole chineseRestaurantHostRole = new ChineseRestaurantHostRole("AmericanRestaurantHost");
+
+	public ChineseRestaurantHostRole chineseRestaurantHostRole = new ChineseRestaurantHostRole("Host", this);
 	public ChineseRestaurantCookRole chineseRestaurantCookRole = new ChineseRestaurantCookRole("Cook", this);
 	public RestaurantCookGui cookGui = new RestaurantCookGui(chineseRestaurantCookRole);
 	
@@ -47,7 +48,7 @@ public class ChineseRestaurant implements Restaurant {
 	public ChineseRestaurantMockCashier chineseRestaurantMockCashier = new ChineseRestaurantMockCashier("MockCashier");
 
 	public ChineseRestaurant(String name) {
-		location = new Point(300, 20);
+		location = new Point(335, 20);
 		this.name = name;
 		//chineseRestaurantCookRole.setGui(cookGui);
 	}
@@ -97,17 +98,14 @@ public class ChineseRestaurant implements Restaurant {
 			return chineseRestaurantCashierRole;
 		}
 		else if (title == "waiter") {	
-			ChineseRestaurantWaiterRole waiter = new ChineseRestaurantWaiterRole(person, person.getName(), title);
+			ChineseRestaurantWaiterRole waiter = new ChineseRestaurantWaiterRole(person, person.getName(), title, this);
+			RestaurantWaiterGui g = new RestaurantWaiterGui(waiter);
+			restPanel.addGui(g);
+			waiter.setGui(g);
 			if (waiters.size() <= 12) {
-				RestaurantWaiterGui g = new RestaurantWaiterGui(waiter);
-				restPanel.addGui(g);
-				waiter.setGui(g);
 				g.setHomePosition(5, (55 + (22 * waiters.size())));
 			}
 			else if (waiters.size() <= 24) {
-				RestaurantWaiterGui g = new RestaurantWaiterGui(waiter);
-				restPanel.addGui(g);
-				waiter.setGui(g);
 				g.setHomePosition(27, (55 + (22 * (waiters.size()-12))));
 			}
 			
@@ -119,17 +117,14 @@ public class ChineseRestaurant implements Restaurant {
 			return waiter;
 		}
 		else if (title == "altWaiter") {
-			ChineseRestaurantAltWaiterRole altWaiter = new ChineseRestaurantAltWaiterRole(person, person.getName(), title);
+			ChineseRestaurantAltWaiterRole altWaiter = new ChineseRestaurantAltWaiterRole(person, person.getName(), title, this);
+			RestaurantWaiterGui g = new RestaurantWaiterGui(altWaiter);
+			restPanel.addGui(g);
+			altWaiter.setGui(g);
 			if (waiters.size() <= 12) {
-				RestaurantWaiterGui g = new RestaurantWaiterGui(altWaiter);
-				restPanel.addGui(g);
-				altWaiter.setGui(g);
 				g.setHomePosition(5, (55 + (22 * waiters.size())));
 			}
 			else if (waiters.size() <= 24) {
-				RestaurantWaiterGui g = new RestaurantWaiterGui(altWaiter);
-				restPanel.addGui(g);
-				altWaiter.setGui(g);
 				g.setHomePosition(27, (55 + (22 * (waiters.size()-12))));
 			}
 			
@@ -145,20 +140,20 @@ public class ChineseRestaurant implements Restaurant {
 	}
 
 	public boolean arrived(ChineseRestaurantCustomerRole rCR) {
+		RestaurantCustomerGui rCG = new RestaurantCustomerGui(rCR);
+		rCR.setGui(rCG);
 		if (customers.size() <= 12) {
-			RestaurantCustomerGui rCG = (RestaurantCustomerGui) rCR.getGui();
 			rCG.setHomePosition((22 * customers.size()), 10);
+			rCR.gotHungry((22 * customers.size()), 10);
 			restPanel.addGui(rCG);
 			customers.add(rCR);
-			rCR.gotHungry((22 * customers.size()), 10);
 			return true;
 		}
 		else if (customers.size() <= 24) {
-			RestaurantCustomerGui rCG = (RestaurantCustomerGui) rCR.getGui();
 			rCG.setHomePosition((22 * (customers.size() - 12)), 32);
+			rCR.gotHungry((22 * (customers.size() - 12)), 32);
 			restPanel.addGui(rCG);
 			customers.add(rCR);
-			rCR.gotHungry((22 * (customers.size() - 12)), 32);
 			return true;
 		}
 		return false;
@@ -168,21 +163,16 @@ public class ChineseRestaurant implements Restaurant {
 		Worker worker = (Worker) person;
 
 		if (worker.getWorkerRole().equals(chineseRestaurantHostRole)) {
-			chineseRestaurantHostRole = null;
-			//restPanel.removeGui(ChineseRestaurantHostRole.getGui());
+			chineseRestaurantHostRole.person = null;
 		}
 		if (worker.getWorkerRole().equals(chineseRestaurantCashierRole)) {
-			chineseRestaurantCashierRole = null;
+			chineseRestaurantCashierRole.person = null;
 		}
 		if (worker.getWorkerRole().equals(chineseRestaurantCookRole)) {
-			chineseRestaurantCookRole = null;
+			chineseRestaurantCookRole.person = null;
 			restPanel.removeGui(cookGui);
 		}
-		//WAITERS AND ALT WAITERS
-		//finish the "leave work" in Role.java 
-		//make function in host to delete waiter
-		//waiters have to finish duties before finishing waiter & no assignments
-		//look at onBreak code to follow
+		worker.workerRole = null;
 	}
 
 	public String getName() {

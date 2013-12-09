@@ -1,6 +1,10 @@
 package italianRestaurant.test.mock;
 
-import italianRestaurant.interfaces.*;
+import italianRestaurant.interfaces.ItalianCashier;
+import italianRestaurant.interfaces.ItalianCustomer;
+import italianRestaurant.interfaces.ItalianWaiter;
+import testing.EventLog;
+import testing.Mock;
 
 /**
  * A sample AmericanRestaurantMockWaiter built to unit test a AmericanRestaurantCashierRole.

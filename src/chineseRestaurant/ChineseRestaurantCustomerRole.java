@@ -24,6 +24,8 @@ public class ChineseRestaurantCustomerRole extends Role implements ChineseRestau
 	int xHome, yHome;
 	
 	private ChineseRestaurantMenu chineseRestaurantMenu;
+	
+	public ChineseRestaurant chineseRestaurant;
 
 	private ChineseRestaurantWaiterRole chineseRestaurantWaiterRole;
 	private RestaurantCustomerGui custGui;
@@ -47,8 +49,9 @@ public class ChineseRestaurantCustomerRole extends Role implements ChineseRestau
 	 * Constructor for RestaurantCustomer class
 	 *
 	 */
-	public ChineseRestaurantCustomerRole(Person p1, String pName, String rName) {
+	public ChineseRestaurantCustomerRole(Person p1, String pName, String rName, ChineseRestaurant restaurant) {
 		super(p1, pName, rName);
+		chineseRestaurant = restaurant;
 	/*
 		if (name.equals("Broke 1")) {
 			money = 0;
@@ -227,7 +230,7 @@ public class ChineseRestaurantCustomerRole extends Role implements ChineseRestau
 	private void goToRestaurant() {
 		state = AgentState.WaitingInRestaurant;
 		print("Going to restaurant");
-		Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantHostRole.msgIWantFood(this, xHome, yHome);
+		chineseRestaurant.chineseRestaurantHostRole.msgIWantFood(this, xHome, yHome);
 	}
 	
 	private void DecidingToStay() {
@@ -248,7 +251,7 @@ public class ChineseRestaurantCustomerRole extends Role implements ChineseRestau
 		else {
 			state = AgentState.WaitingInRestaurant;
 			print("Decided to stay and eat in restaurant");
-			Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantHostRole.msgStaying(this, xHome, yHome);
+			chineseRestaurant.chineseRestaurantHostRole.msgStaying(this, xHome, yHome);
 			stateChanged();
 		}
 	}
@@ -356,7 +359,7 @@ public class ChineseRestaurantCustomerRole extends Role implements ChineseRestau
 		print("I have $" + money);
 
 		state = AgentState.PayedCheck;
-		Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantCashierRole.msgPayment(choice, money, this);
+		chineseRestaurant.chineseRestaurantCashierRole.msgPayment(choice, money, this);
 		money = 0;
 	}
 

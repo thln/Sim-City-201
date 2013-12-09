@@ -64,36 +64,42 @@ public abstract class Role {
      */
     protected void print(String msg) 
     {
+    		String Name;
             //System.out.println(roleName + " " + getName() + " : " + msg);
            if(person == null)
            {
-        	   AlertLog.getInstance().logError(AlertTag.GENERAL_CITY, roleName + " null", msg);
+        	   Name = "Null";
+        	   //   AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, roleName + " null", msg);
            }
-    		else if (roleName.equals("Bank AmericanRestaurantCustomer") || roleName.equals("Bank Guard") 
+           else
+           {
+        	   Name = getName();
+           }
+    		if (roleName.equals("Bank Customer") || roleName.equals("Bank Guard") 
                             || roleName.equals("Bank Teller") || roleName.equals("Loan Officer")
                             || roleName.contains("bankTeller"))
             {
-            AlertLog.getInstance().logInfo(AlertTag.BANK, roleName + " " + getName(), msg);
+            AlertLog.getInstance().logInfo(AlertTag.BANK, roleName + " " + Name, msg);
             }
             else if (roleName.equals("Maintenance Worker"))
             {
-            AlertLog.getInstance().logInfo(AlertTag.HOUSING, roleName + " " + getName(), msg);
+            AlertLog.getInstance().logInfo(AlertTag.HOUSING, roleName + " " + Name, msg);
             }
             else if (roleName.equals("Market AmericanRestaurantCustomer") || roleName.contains("MarketCustomer") || roleName.equals("Market Runner") 
                             || roleName.contains("MarketRunner") || roleName.equals("Sales Person") || roleName.contains("SalesPerson") || roleName.contains("Market") || roleName.equals("UPS Man"))
             {
-            AlertLog.getInstance().logInfo(AlertTag.MARKET, roleName + " " + getName(), msg);
+            AlertLog.getInstance().logInfo(AlertTag.MARKET, roleName + " " + Name, msg);
             }
             //Different Restaurants IMPLEMENT
             else if (roleName.equals("Alternative AmericanRestaurantWaiter") || roleName.equals("AmericanRestaurantCashier")
                             || roleName.equals("Cook") || roleName.equals("AmericanRestaurantHost") 
                             || roleName.equals("Restaurant AmericanRestaurantCustomer") || roleName.equals("waiter") )
             {
-            AlertLog.getInstance().logInfo(AlertTag.RESTAURANT, roleName + " " + getName(), msg);
+            AlertLog.getInstance().logInfo(AlertTag.RESTAURANT, roleName + " " + Name, msg);
             }
             else
             {
-            AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, roleName + " " + getName(), msg);       
+            AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, roleName + " " + Name, msg);       
             }
                     
     }

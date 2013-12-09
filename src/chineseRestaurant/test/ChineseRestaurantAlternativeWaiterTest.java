@@ -42,7 +42,7 @@ public class ChineseRestaurantAlternativeWaiterTest extends TestCase
         customer2 = new ChineseRestaurantMockCustomer("mockcustomer2");
         person1 = new Worker("testAlternativeWaiter", 200, "alternative waiter", "restaurant", 800, 1200, 1500);
         person2 = new Worker("testCook", 200, "cook", "restaurant", 800, 1200, 1500);
-		altWaiter = new ChineseRestaurantAltWaiterRole ( person1, person1.getName(), "Alternative AmericanRestaurantWaiter");
+		altWaiter = new ChineseRestaurantAltWaiterRole ( person1, person1.getName(), "Alternative Waiter", Phonebook.getPhonebook().getChineseRestaurant());
 		cook = new ChineseRestaurantCookRole(person2, person2.getName(), "cook", Phonebook.getPhonebook().getChineseRestaurant());
 	//	rs = Phonebook.getPhonebook().getRestaurant().theRevolvingStand;
 		//cook = new MockCook("mockcook");
