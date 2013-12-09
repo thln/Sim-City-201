@@ -326,21 +326,26 @@ public class AddPanel extends JPanel implements ActionListener {
 		if (e.getSource() == raveButton) {
 			for (Person p : app.getPopulation()) {
 				p.getGui().setRaveMode();
-				try {
-					RaveAudioMode();
-				} catch (LineUnavailableException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (UnsupportedAudioFileException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+//				try {
+//					RaveAudioMode();
+//				} catch (LineUnavailableException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				} catch (UnsupportedAudioFileException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
 			}
 			if (!rave){
 				rave = true;
 				try {
 					app.animPanel.cityPanel.background = ImageIO.read(new File("res/rave.jpeg"));
 					MGP.start(BGM);
+					if(MGP.isInterrupted())
+					{
+						MGP.resume();
+					}
+					
 					//app.animPanel.cityPanel.paint
 				} catch (IOException e1) {
 				}
@@ -352,7 +357,6 @@ public class AddPanel extends JPanel implements ActionListener {
 					app.animPanel.cityPanel.background = ImageIO.read(new File("res/concrete.jpg"));
 					MGP.stop(BGM);
 					MGP.interrupt();
-					//app.animPanel.cityPanel.paint
 				} catch (IOException e1) {
 				}
 				return;
@@ -365,8 +369,8 @@ public class AddPanel extends JPanel implements ActionListener {
 	public void RaveAudioMode() throws LineUnavailableException, UnsupportedAudioFileException
 	{
 
-		AudioPlayer MGP = AudioPlayer.player;
-		AudioStream BGM;
+		//AudioPlayer MGP = AudioPlayer.player;
+		//AudioStream BGM;
 		
 		
 		//AudioInputStream BGM;
