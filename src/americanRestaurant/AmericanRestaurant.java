@@ -42,7 +42,7 @@ public class AmericanRestaurant {
 	//	public AmericanRestaurantMockCashier AmericanRestaurantMockCashier = new AmericanRestaurantMockCashier("AmericanMockCashier");
 
 		public AmericanRestaurant(String name) {
-			location = new Point(300, 20);
+			location = new Point(220, 250);
 			this.name = name;
 		}
 
@@ -77,7 +77,7 @@ public class AmericanRestaurant {
 		//		restPanel.addGui(cookGui);
 				return AmericanRestaurantCookRole;
 			}
-			else if (title.contains("americanRestaurantCashier")) {
+			else if (title.contains("cashier")) {
 				//Setting previous bank guard role to inactive
 				if (AmericanRestaurantCashierRole.getPerson() != null) {
 					Worker worker = (Worker) AmericanRestaurantCashierRole.getPerson();
@@ -91,7 +91,7 @@ public class AmericanRestaurant {
 				return AmericanRestaurantCashierRole;
 			}
 			else if (title == "waiter") {	
-			//	AmericanRestaurantWaiterRole waiter = new AmericanRestaurantWaiterRole(person, person.getName(), title);
+				AmericanRestaurantWaiterRole waiter = new AmericanRestaurantWaiterRole(person, person.getName(), title, this);
 				if (waiters.size() <= 12) {
 					//RestaurantWaiterGui g = new RestaurantWaiterGui(waiter);
 					//restPanel.addGui(g);
@@ -105,13 +105,14 @@ public class AmericanRestaurant {
 					//g.setHomePosition(27, (55 + (22 * (waiters.size()-12))));
 				}
 				
-		//		waiters.add(waiter);
-//				AmericanRestaurantHostRole.addWaiter(waiter);
+				waiters.add(waiter);
+				AmericanRestaurantHostRole.msgAddWaiter(waiter);
 //				if (isOpen()) {
 //					AmericanRestaurantHostRole.msgRestaurantOpen();
 //				}
-//				return waiter;
+				return waiter;
 			}
+			
 //			else if (title == "altWaiter") {
 //				AmericanRestaurantAltWaiterRole altWaiter = new AmericanRestaurantAltWaiterRole(person, person.getName(), title);
 //				if (waiters.size() <= 12) {

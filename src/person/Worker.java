@@ -32,7 +32,6 @@ public class Worker extends Person {
 		public Worker myself;
 
 		Job(String title, String jobPlace, int startT, int lunchT, int endT, Worker me) {
-
 			myself = me;
 			startTime = new WatchTime(startT, 0);
 			lunchTime = new WatchTime(lunchT, 0);
@@ -221,6 +220,12 @@ public class Worker extends Person {
 		currentRoleName = myJob.title;
 		print("Preparing for work as " + myJob.title + " at " + myJob.jobPlace);
 		gui.walk = gui.decideForBus(myJob.jobPlace);
+		
+		if (myJob.jobPlace.equals("American Restaurant")){
+			workerRole = Phonebook.getPhonebook().getAmericanRestaurant().arrivedAtWork(this, myJob.title);
+			workerRole.setRoleActive();
+			return;
+		}
 		
 		if (gui.walk)
 			gui.popToMiddle();

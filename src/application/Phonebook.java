@@ -12,6 +12,7 @@ import java.util.List;
 
 import market.Market;
 import seafoodRestaurant.SeafoodRestaurant;
+import americanRestaurant.AmericanRestaurant;
 import bank.Bank;
 import chineseRestaurant.ChineseRestaurant;
 
@@ -31,9 +32,10 @@ public class Phonebook{
 	static private ChineseRestaurant chineseRestaurant;
 	static private SeafoodRestaurant seafoodRestaurant;
 	//ItalianRestaurant italianRestaurant;
+	static private AmericanRestaurant americanRestaurant;
 	static private ItalianRestaurant italianRestaurant;
 	//MexicanRestaurant mexicanRestaurant;
-	//AmericanRestaurant americanRestaurant;
+
 
 
 	private HousingMaintenanceCompany housingMaintenanceCompany;
@@ -164,11 +166,12 @@ public class Phonebook{
 		//Set bus stops
 		busStops.add(new Point(127, 28));		//Top left bus stop = busStop(0)
 		busStops.add(new Point(420, 28));		//Top right bus stop = busStop(1)
-		busStops.add(new Point(127, 230));		//Bottom left bus stop = busStop(2)
-		busStops.add(new Point(420, 230));		//Bottom right bus stop = busStop(3)
+		busStops.add(new Point(420, 230));		//Bottom right bus stop = busStop(2)
+		busStops.add(new Point(127, 230));		//Bottom left bus stop = busStop(3)
+		
 
 		eastBank = new Bank("East Bank");
-		eastBank.setClosestStop(busStops.get(3));		//setting building's closest bus stop
+		eastBank.setClosestStop(busStops.get(2));		//setting building's closest bus stop
 
 		westBank = new Bank("West Bank");
 		westBank.setClosestStop(busStops.get(0));		//setting building's closest bus stop
@@ -177,25 +180,26 @@ public class Phonebook{
 		eastMarket.setClosestStop(busStops.get(1));		//setting building's closest bus stop
 
 		westMarket = new Market("West Market");
-		eastMarket.setClosestStop(busStops.get(0));		//setting building's closest bus stop
+		eastMarket.setClosestStop(busStops.get(3));		//setting building's closest bus stop
 
 		seafoodRestaurant = new SeafoodRestaurant("Seafood Restaurant");
-
+//		seafoodRestaurant.setClosestSop(busStops.get(2));
+		
 		chineseRestaurant = new ChineseRestaurant("Chinese Restaurant");
 		chineseRestaurant.setClosestStop(busStops.get(1));		//setting building's closest bus stop
 
 		italianRestaurant = new ItalianRestaurant("Italian Restaurant");
-
 		italianRestaurant.setClosestStop(busStops.get(1));		//setting building's closest bus stop
+		
+		americanRestaurant = new AmericanRestaurant("American Restaurant");
+		americanRestaurant.setClosestStop(busStops.get(3));
 
 
 		/* For future use after all the restaurants have been integrated
 		 * 
 		mexicanRestaurant = new MexicanRestaurant("Mexican Restaurant");
-		seafoodRestaurant = new SeafoodRestaurant("Seafood Restaurant");
-		americanRestaurant = new AmericanRestaurant("American Restaurant");
-
 		 */
+		
 		housingMaintenanceCompany = new HousingMaintenanceCompany("Housing maintenance company");
 		getBusStops().add(new Point(172, 28));
 		getBusStops().add(new Point(172, 230));
@@ -243,6 +247,11 @@ public class Phonebook{
 	public ItalianRestaurant getItalianRestaurant() 
 	{
 		return italianRestaurant; //temporary stub. make more dynamic later
+	}
+	
+	public AmericanRestaurant getAmericanRestaurant() 
+	{
+		return americanRestaurant; //temporary stub. make more dynamic later
 	}
 
 	public List<Housing> getAllHousing(boolean test)

@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Timer;
 import java.util.concurrent.Semaphore;
 
+import chineseRestaurant.ChineseRestaurant;
+import person.Person;
 import person.Role;
 import americanRestaurant.AmericanRestaurantCookRole.Order;
 import americanRestaurant.interfaces.AmericanRestaurantCashier;
@@ -23,6 +25,10 @@ import application.gui.animation.RestaurantPanel;
 //is proceeded as he wishes.
 public class AmericanRestaurantWaiterRole extends Role implements AmericanRestaurantWaiter{
 
+	//Phonebook data
+	AmericanRestaurant myRestaurant;
+	
+	
 	public enum customerState
 	{WaitingInRestaurant, BeingSeated, Seated, Ordering, ReadyToOrder, WaitingForReOrder, ReOrder, 
 		WaiterAtCook, FoodReady, Ordered, WaitingForFood, FoodCooking, FoodDelivering, CookWalk,
@@ -110,16 +116,14 @@ public class AmericanRestaurantWaiterRole extends Role implements AmericanRestau
 		}
 
 		//constructor
-
-		public AmericanRestaurantWaiterRole(String name, AmericanRestaurantHostRole H1) {
-			super("name");		
+		public AmericanRestaurantWaiterRole(Person p1, String pName, String rName, AmericanRestaurant restaurant) {
+			super(p1, pName, rName);
+			myRestaurant = restaurant;
 			customers = new ArrayList<MyCustomer>();
-			this.name = name;
 			atTable = new Semaphore(0,true);
-			setMyHost(H1);
 			breakTimer = new Timer();
 			myCook.setCashier(myCashier);
-		}
+		} 
 
 		public void setCook (AmericanRestaurantCookRole c){
 			myCook = c;

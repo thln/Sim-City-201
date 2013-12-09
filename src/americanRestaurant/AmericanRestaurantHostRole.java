@@ -58,7 +58,7 @@ public class AmericanRestaurantHostRole extends Role implements AmericanRestaura
 
 	// MESSAGES
 
-	public void msgAddWaiter (AmericanRestaurantWaiterRole W1, String name) {
+	public void msgAddWaiter (AmericanRestaurantWaiterRole W1) {
 		Waiters.add(W1);
 		stateChanged();
 	}

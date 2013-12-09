@@ -80,15 +80,15 @@ public class Application extends JPanel {
 		Worker market2e = new Worker("Elle", 200, "salesPerson", "East Market", 14, 400, 3);
 		Worker market2f = new Worker("Frenchy", 100, "UPSman", "East Market", 15, 400, 4);        
 
-		//Restaurant Workers
+		//Chinese Restaurant Workers
 		//SHIFT 1
 		Worker rest1h = new Worker("Henry", 100, "host", "Chinese Restaurant", 1, 1800, 14);
-		Worker rest1g = new Worker("Greg", 100, "americanRestaurantCashier", "Chinese Restaurant", 2, 1800, 15);        
+		Worker rest1g = new Worker("Greg", 100, "cashier", "Chinese Restaurant", 2, 1800, 15);        
 		Worker rest1i = new Worker("Iris", 100, "cook", "Chinese Restaurant", 2, 1800, 15);
 		Worker rest1j = new Worker("Josh", 100, "waiter", "Chinese Restaurant", 2, 1800, 15);
 		Worker rest1k = new Worker("Kristi", 100, "altWaiter", "Chinese Restaurant", 1, 1800, 14);
 		//SHIFT 2
-		Worker rest2g = new Worker("Gil", 100, "americanRestaurantCashier", "Chinese Restaurant", 13, 600, 2);
+		Worker rest2g = new Worker("Gil", 100, "cashier", "Chinese Restaurant", 13, 600, 2);
 		Worker rest2h = new Worker("Hannah", 100, "host", "Chinese Restaurant", 14, 600, 3);
 		Worker rest2i = new Worker("Isaac", 100, "cook", "Chinese Restaurant", 14, 600, 3);
 		Worker rest2j = new Worker("Jacob", 100, "waiter", "Chinese Restaurant", 13, 600, 2);
@@ -96,6 +96,14 @@ public class Application extends JPanel {
 
 		Worker house1 = new Worker("Parker", 100, "maintenance worker","housing maintenance company", 13, 600, 3 );
 
+		//American Restaurant Workers
+		//SHIFT 1
+		Worker rest3h = new Worker("Holly", 100, "host", "American Restaurant", 1, 1800, 14);
+		Worker rest3g = new Worker("Gerald", 100, "cashier", "American Restaurant", 2, 1800, 15);        
+		Worker rest3i = new Worker("India", 100, "cook", "American Restaurant", 2, 1800, 15);
+		Worker rest3j = new Worker("Jan", 100, "waiter", "American Restaurant", 2, 1800, 15);
+		Worker rest3k = new Worker("Kris", 100, "altWaiter", "American Restaurant", 1, 1800, 14);
+		
 		//!!!!Important -- Need to initialize setters 
 		//ex. waiter.setHost, waiter.setCook, waiter.setHost, 
 		//Do this when person walks in for work***
@@ -144,6 +152,18 @@ public class Application extends JPanel {
 		bank3b.setHome(allHousing.get(allHousing.size() - 1));
 		allHousing.add(new Housing(bank3c, allHousing.size(), "East Apartment"));
 		bank3c.setHome(allHousing.get(allHousing.size() - 1));
+		
+		allHousing.add(new Housing(rest3g, allHousing.size(), "East Apartment"));
+		rest3g.setHome(allHousing.get(allHousing.size() - 1));
+		allHousing.add(new Housing(rest3h, allHousing.size(), "West Apartment"));
+		rest3h.setHome(allHousing.get(allHousing.size() - 1));
+		allHousing.add(new Housing(rest3i, allHousing.size(), "East Apartment"));
+		rest3i.setHome(allHousing.get(allHousing.size() - 1));
+		allHousing.add(new Housing(rest3j, allHousing.size(), "West Apartment"));
+		rest3j.setHome(allHousing.get(allHousing.size() - 1));
+		allHousing.add(new Housing(rest3k, allHousing.size(), "East Apartment"));
+		rest3k.setHome(allHousing.get(allHousing.size() - 1));
+
 
 		//Shift 2
 
@@ -212,6 +232,12 @@ public class Application extends JPanel {
 		getPopulation().add(bank3a);
 		getPopulation().add(bank3b);
 		getPopulation().add(bank3c);
+		
+		getPopulation().add(rest3g);
+		getPopulation().add(rest3h);
+		getPopulation().add(rest3i);
+		getPopulation().add(rest3j);
+		getPopulation().add(rest3k);
 
 		//Shift 2
 		getPopulation().add(bank2a);
@@ -254,45 +280,51 @@ public class Application extends JPanel {
 
 		//Starting Threads
 		//Shift 1
-		bank1a.startThread();
-		bank1b.startThread();	
-		bank1c.startThread();
-		market1d.startThread();
-		market1e.startThread();
-		market1f.startThread();
-		rest1g.startThread();
-		rest1h.startThread();
-		rest1i.startThread();
-		rest1j.startThread();
-		rest1k.startThread();
-		bank3a.startThread();
-		bank3b.startThread();	
-		bank3c.startThread();
+//		bank1a.startThread();
+//		bank1b.startThread();	
+//		bank1c.startThread();
+//		market1d.startThread();
+//		market1e.startThread();
+//		market1f.startThread();
+//		rest1g.startThread();
+//		rest1h.startThread();
+//		rest1i.startThread();
+//		rest1j.startThread();
+//		rest1k.startThread();
+//		bank3a.startThread();
+//		bank3b.startThread();	
+//		bank3c.startThread();
 
+		rest3g.startThread();
+		rest3h.startThread();
+		rest3i.startThread();
+		rest3j.startThread();
+//		rest3k.startThread();
+		
 		//Shift 2
-		bank2a.startThread();
-		bank2b.startThread();
-		bank2c.startThread();
-		market2d.startThread();
-		market2e.startThread();
-		market2f.startThread();
-		rest2g.startThread();
-		rest2h.startThread();
-		rest2i.startThread();
-		rest2j.startThread();
-		rest2k.startThread();
-		house1.startThread();
-		bank4a.startThread();
-		bank4b.startThread();	
-		bank4c.startThread();		
-
-		//People
-		wealthy1.startThread();
-		wealthy2.startThread();
-
-		wealthy3.startThread();
-		wealthy4.startThread();
-		crook1.startThread();
+//		bank2a.startThread();
+//		bank2b.startThread();
+//		bank2c.startThread();
+//		market2d.startThread();
+//		market2e.startThread();
+//		market2f.startThread();
+//		rest2g.startThread();
+//		rest2h.startThread();
+//		rest2i.startThread();
+//		rest2j.startThread();
+//		rest2k.startThread();
+//		house1.startThread();
+//		bank4a.startThread();
+//		bank4b.startThread();	
+//		bank4c.startThread();		
+//
+//		//People
+//		wealthy1.startThread();
+//		wealthy2.startThread();
+//
+//		wealthy3.startThread();
+//		wealthy4.startThread();
+//		crook1.startThread();
 
 		updatePeopleTime();
 
