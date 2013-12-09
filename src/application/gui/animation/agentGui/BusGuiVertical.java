@@ -24,7 +24,7 @@ public class BusGuiVertical extends CityGui {
 	private int xPos = stopLeftX, yPos = 325;//default bus position
 	private int yDestination = stopBottomY;//Stop 4
 
-	private enum Command {noCommand, stop1, stop2, stop3, stop4};
+	private enum Command {noCommand, wait, stop1, stop2, stop3, stop4};
 	private Command command = Command.stop4;
 	public int lastStop = 3;
 
@@ -38,8 +38,6 @@ public class BusGuiVertical extends CityGui {
 	}
 
 	public void updatePosition() {
-		System.err.println(command + "&" + lastStop);
-		
 		if (inBusyIntersection() || inBusyCrosswalk()) {
 			return;
 		}
@@ -62,6 +60,7 @@ public class BusGuiVertical extends CityGui {
 		if (yPos == yDestination) {
 			if (command == Command.stop1) {
 				lastStop = 1;
+				command = Command.wait;
 				busStop.schedule(new TimerTask() {
 					public void run() {
 						agent.msgAtBusStop(1);
@@ -71,6 +70,7 @@ public class BusGuiVertical extends CityGui {
 			}
 			else if (command == Command.stop2) {
 				lastStop = 2;
+				command = Command.wait;
 				busStop.schedule(new TimerTask() {
 					public void run() {
 						agent.msgAtBusStop(2);
@@ -80,6 +80,7 @@ public class BusGuiVertical extends CityGui {
 			}
 			else if (command == Command.stop3) {
 				lastStop = 3;
+				command = Command.wait;
 				busStop.schedule(new TimerTask() {
 					public void run() {
 						agent.msgAtBusStop(3);	
@@ -89,6 +90,7 @@ public class BusGuiVertical extends CityGui {
 			}
 			else if (command == Command.stop4) {
 				lastStop = 4;
+				command = Command.wait;
 				busStop.schedule(new TimerTask() {
 					public void run() {
 						agent.msgAtBusStop(4);

@@ -25,7 +25,7 @@ public class BusGuiHorizontal extends CityGui {
 	private int xPos = 0, yPos = stopTopY;//default bus position
 	private int xDestination = stopLeftX;//Stop 1
 
-	private enum Command {noCommand, stop1, stop2, stop3, stop4};
+	private enum Command {noCommand, wait, stop1, stop2, stop3, stop4};
 	private Command command = Command.stop1;
 	private int lastStop = 4;
 
@@ -60,6 +60,7 @@ public class BusGuiHorizontal extends CityGui {
 
 		if (xPos == xDestination) {
 			if (command == Command.stop1) {
+				command = Command.wait;
 				busStop.schedule(new TimerTask() {
 					public void run() {
 						agent.msgAtBusStop(1);
@@ -69,6 +70,7 @@ public class BusGuiHorizontal extends CityGui {
 				waitTime);
 			}
 			else if (command == Command.stop2) {
+				command = Command.wait;
 				busStop.schedule(new TimerTask() {
 					public void run() {
 						agent.msgAtBusStop(2);
@@ -78,6 +80,7 @@ public class BusGuiHorizontal extends CityGui {
 				waitTime);
 			}
 			else if (command == Command.stop3) {
+				command = Command.wait;
 				busStop.schedule(new TimerTask() {
 					public void run() {
 						agent.msgAtBusStop(3);
@@ -87,6 +90,7 @@ public class BusGuiHorizontal extends CityGui {
 				waitTime);
 			}
 			else if (command == Command.stop4) {
+				command = Command.wait;
 				busStop.schedule(new TimerTask() {
 					public void run() {
 						agent.msgAtBusStop(4);
