@@ -159,11 +159,12 @@ public class BusAgent extends Agent{
 			//			{
 			//				guiH.wait.release();
 			//			}
-			state = busState.Driving;
+			//state = busState.Driving;
+			state = busState.Leaving;
 			currentBusStop = 0;
 			expectedNumberOfPassengers = 0;
 		}
-		state = busState.Leaving;
+		//state = busState.Leaving;
 		stateChanged();
 	}
 
