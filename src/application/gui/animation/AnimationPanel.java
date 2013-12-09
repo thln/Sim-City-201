@@ -25,7 +25,7 @@ public class AnimationPanel extends JPanel implements MouseListener {
 	JButton testbutton2 = new JButton("test2");
 	MarketRunnerGui market = new MarketRunnerGui();
 	BankLoanerGui bank = new BankLoanerGui();
-	HouseMaintenanceGui house = new HouseMaintenanceGui();
+	HousingMaintenanceGui house = new HousingMaintenanceGui();
 	RestaurantCookGui restaurant = new RestaurantCookGui();
 	ItalianCookGui italian = new ItalianCookGui();
 	//BusGui bus = new BusGui();
@@ -141,6 +141,12 @@ public class AnimationPanel extends JPanel implements MouseListener {
 			if(building.getName().toLowerCase().contains("west"))
 				Phonebook.getPhonebook().getWestBank().setBuildingPanel(building.myBuildingPanel);
 		}
+		if (building.getName().toLowerCase().contains("apartment")) {
+			if(building.getName().toLowerCase().contains("east"))
+				Phonebook.getPhonebook().getEastApartment().setBuildingPanel(building.myBuildingPanel);
+			if(building.getName().toLowerCase().contains("west"))
+				Phonebook.getPhonebook().getWestApartment().setBuildingPanel(building.myBuildingPanel);
+		}
 	}
 
 	public void testGuis() {
@@ -161,9 +167,9 @@ public class AnimationPanel extends JPanel implements MouseListener {
 			}
 			if(building.getName().toLowerCase().contains("house")) {
 				//	building.myBuildingPanel.addGui(house);
-				building.myBuildingPanel.addGui(new HouseRenterGui());
-				building.myBuildingPanel.addGui(new HouseMaintenanceGui());
-				building.myBuildingPanel.addGui(new HouseLandlordGui());
+				building.myBuildingPanel.addGui(new HousingResidentGui());
+				building.myBuildingPanel.addGui(new HousingMaintenanceGui());
+				building.myBuildingPanel.addGui(new HousingLandlordGui());
 			}
 			if(building.getName().toLowerCase().contains("restaurant")) {
 				//	building.myBuildingPanel.addGui(restaurant);
@@ -189,9 +195,9 @@ public class AnimationPanel extends JPanel implements MouseListener {
 		guis.add(new BankTellerGui());
 		guis.add(new BankLoanerGui());
 		guis.add(new BankGuardGui());
-		guis.add(new HouseRenterGui());
-		guis.add(new HouseMaintenanceGui());
-		guis.add(new HouseLandlordGui());
+		guis.add(new HousingResidentGui());
+		guis.add(new HousingMaintenanceGui());
+		guis.add(new HousingLandlordGui());
 		guis.add(new RestaurantCustomerGui());
 		guis.add(new RestaurantCookGui());
 		guis.add(new RestaurantWaiterGui());
@@ -228,7 +234,7 @@ public class AnimationPanel extends JPanel implements MouseListener {
 			if(gui instanceof MarketGui) {
 				marketPanel.addGui(gui);
 			}
-			if(gui instanceof HouseGui) {
+			if(gui instanceof HousingGui) {
 				housePanel.addGui(gui);
 			}
 			if(gui instanceof RestaurantGui) {

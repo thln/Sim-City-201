@@ -1,14 +1,14 @@
 package application.gui.animation.agentGui;
 
-//import housing.\*;
+import housing.*;
 
 import java.awt.*;
 
 import javax.swing.*;
 
-public class HouseRenterGui extends HouseGui {
+public class HousingResidentGui extends HousingGui {
 
-    //private MaintenanceWorker agent = null;
+    private HousingResidentRole agent = null;
     private boolean isPresent = true;
     
     //RestaurantGui gui;
@@ -22,8 +22,11 @@ public class HouseRenterGui extends HouseGui {
 	private enum CustomerState {nothing};
 	CustomerState state = CustomerState.nothing;
     
-    public HouseRenterGui(/*MaintenanceWorker agent, RestaurantGui gui*/) {
-        //this.agent = agent;
+	public HousingResidentGui() {
+	}
+	
+    public HousingResidentGui(HousingResidentRole agent) {
+        this.agent = agent;
       //this.gui = gui;
     }
 
@@ -100,6 +103,16 @@ public class HouseRenterGui extends HouseGui {
     public void DoGoToLivingRoom() {
     	xDestination = 100;
     	yDestination = 200;
+    }
+    
+    public void DoDoToUnit(int unit) {
+    	CheckLessThan10();
+    	xDestination = 50;
+    	yDestination = 50;
+    }
+    
+    public void CheckLessThan10() {
+    	
     }
     
     public void DoExit() {

@@ -1,7 +1,6 @@
 package application;
 
-import housing.Housing;
-import housing.HousingMaintenanceCompany;
+import housing.*;
 import italianRestaurant.ItalianRestaurant;
 
 import java.awt.Point;
@@ -26,14 +25,17 @@ public class Phonebook{
 	static private Market eastMarket;
 	static private Market westMarket;
 
-
+	//Apartments
+	static private Apartment eastApartment;
+	static private Apartment westApartment;
+	
 	//Restaurants
 	static private ChineseRestaurant chineseRestaurant;
 	static private SeafoodRestaurant seafoodRestaurant;
-	//ItalianRestaurant italianRestaurant;
+	//static private ItalianRestaurant italianRestaurant;
 	static private ItalianRestaurant italianRestaurant;
-	//MexicanRestaurant mexicanRestaurant;
-	//AmericanRestaurant americanRestaurant;
+	//static private MexicanRestaurant mexicanRestaurant;
+	//static private AmericanRestaurant americanRestaurant;
 
 
 	private HousingMaintenanceCompany housingMaintenanceCompany;
@@ -178,6 +180,9 @@ public class Phonebook{
 
 		westMarket = new Market("West Market");
 		eastMarket.setClosestStop(busStops.get(0));		//setting building's closest bus stop
+		
+		eastApartment = new Apartment("East Apartment");
+		westApartment = new Apartment("West Apartment");
 
 		seafoodRestaurant = new SeafoodRestaurant("Seafood Restaurant");
 
@@ -230,6 +235,14 @@ public class Phonebook{
 	{
 		return westMarket;
 	}
+	
+	public Apartment getEastApartment() {
+		return eastApartment; 
+	}
+
+	public Apartment getWestApartment() {
+		return westApartment; 
+	}
 
 	public ChineseRestaurant getChineseRestaurant() 
 	{
@@ -239,11 +252,22 @@ public class Phonebook{
 	public SeafoodRestaurant getSeafoodRestaurant() {
 		return seafoodRestaurant;
 	}
-
+	
 	public ItalianRestaurant getItalianRestaurant() 
 	{
 		return italianRestaurant; //temporary stub. make more dynamic later
 	}
+	
+	/*
+	public MexicanRestaurant getMexicanRestaurant() 
+	{
+		return chineseRestaurant; //temporary stub. make more dynamic later
+	}
+
+	public AmericanRestaurant getAmericanRestaurant() {
+		return seafoodRestaurant;
+	}
+	*/
 
 	public List<Housing> getAllHousing(boolean test)
 	{

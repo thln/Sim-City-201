@@ -1,6 +1,9 @@
 package housing;
 
+import java.awt.*;
+
 import application.gui.animation.*;
+import application.gui.animation.agentGui.*;
 import person.Person;
 
 public class Housing 
@@ -8,6 +11,7 @@ public class Housing
 	//public enum differentHousingTypes {Apartment, Park, Mansion};
 	//public static differentHousingTypes housingStructure;
 	public String type;
+	public String name;
 	public enum housingState {UrgentWorkOrder, CheckUpNeeded, RecentlyChecked, Checking};
 	public housingState state;
 	public Person occupant;
@@ -16,9 +20,10 @@ public class Housing
 	int yCordinate;
 	private HousingPanel housingPanel;
 	
-	public Housing()
+	public Housing(String name)
 	{
 		state = housingState.CheckUpNeeded;
+		this.name = name;
 	}
 	
 	public Housing(Person newP, int Address, String type)
@@ -49,6 +54,15 @@ public class Housing
 		*/
 		
 	}
+	
+	public boolean arrived(HousingResidentRole HRR) {
+		HousingResidentGui HRG = new HousingResidentGui(HRR);
+		HRR.setGui(HRG);
+		housingPanel.addGui(HRG);
+		return false;
+	}
+	
+	//Utilities 
 	
 	public int getHousingNumber()
 	{

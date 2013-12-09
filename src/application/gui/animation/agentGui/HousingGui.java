@@ -2,9 +2,9 @@ package application.gui.animation.agentGui;
 
 import java.awt.*;
 
-public class HouseGui implements Gui {
+public class HousingGui implements Gui {
 	private boolean isPresent = true;
-	HouseGui() {
+	HousingGui() {
 	}
 	
 	public boolean isPresent() {

@@ -1,6 +1,6 @@
 package person;
 
-import housing.Housing;
+import housing.*;
 
 import java.util.*;
 import java.util.concurrent.Semaphore;
@@ -28,10 +28,6 @@ public abstract class Person extends Agent{
 	private Timer alarmClock = new Timer();
 	private Timer hungerTimer = new Timer();
 	protected PersonGui gui;
-	BuildingPanel marketPanel = null;
-	BuildingPanel bankPanel = null;
-	BuildingPanel housePanel = null;
-	BuildingPanel restPanel = null;
 
 	//Role Related
 	public List<Role> roles = Collections.synchronizedList(new ArrayList<Role>());         //contains all the customer role
@@ -72,6 +68,7 @@ public abstract class Person extends Agent{
 	Person(String name, double moneyz) {
 		this.name = name;
 		this.money = moneyz;
+		roles.add(new HousingResidentRole(this, getName(), "Housing Resident"));
 		roles.add(new BankCustomerRole(this, getName(), "Bank Customer"));
 		roles.add(new MarketCustomerRole(this, getName(), "Market Customer"));
 		roles.add(new ChineseRestaurantCustomerRole(this, getName(), "Restaurant Customer", Phonebook.getPhonebook().getChineseRestaurant()));
@@ -90,7 +87,7 @@ public abstract class Person extends Agent{
 
 	//Actions
 	protected void eatAtHome() {
-		currentRoleName = "";
+		currentRoleName = "Housing Resident";
 		int timeConversion = 60 * TimeManager.getSpeedOfTime();
 		print("Going to eat at home");
 		nextTask.schedule(new TimerTask() {
@@ -343,8 +340,17 @@ public abstract class Person extends Agent{
 			//
 		}
 		//			}
-
-		currentRoleName = " ";
+		for (Role cust1 : roles) {
+			if (cust1 instanceof HousingResidentRole) {
+				HousingResidentRole HRR = (HousingResidentRole) cust1;
+				if (Phonebook.getPhonebook().getEastApartment().arrived(HRR)) {
+					currentRoleName = "Housing Resident";
+					cust1.setRoleActive();
+					stateChanged();
+				}
+				return;
+			}
+		}
 		//After arrives home
 		alarmClock.schedule(new TimerTask() {
 			public void run() {
@@ -401,24 +407,6 @@ public abstract class Person extends Agent{
 
 	public void setGui(PersonGui g) {
 		this.gui = g;
-	}
-
-	public void setPanel(AnimationPanel ap) {
-		ArrayList<Building> buildings = ap.getBuildings();
-		for(Building building : buildings) {
-			if(building.getName().toLowerCase().contains("market")) {
-				marketPanel = building.myBuildingPanel;
-			}
-			if(building.getName().toLowerCase().contains("bank")) {
-				bankPanel = building.myBuildingPanel;
-			}
-			if(building.getName().toLowerCase().contains("house")) {
-				housePanel = building.myBuildingPanel;
-			}
-			if(building.getName().toLowerCase().contains("restaurant")) {
-				restPanel = building.myBuildingPanel;
-			}
-		}
 	}
 
 	public Semaphore getAtDestination() {
