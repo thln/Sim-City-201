@@ -435,7 +435,7 @@ public abstract class Person extends Agent{
 				for (Role cust1 : roles) {
 					if (cust1 instanceof ApartmentResidentRole) {
 							ApartmentResidentRole ARR = (ApartmentResidentRole) cust1;
-							if (Phonebook.getPhonebook().getEastApartment().arrived(ARR)) {
+							if (Phonebook.getPhonebook().getWestApartment().arrived(ARR)) {
 								currentRoleName = "WEST Apartment Resident";
 								cust1.setRoleActive();
 								stateChanged();
