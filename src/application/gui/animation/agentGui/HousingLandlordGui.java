@@ -6,7 +6,7 @@ import java.awt.*;
 
 import javax.swing.*;
 
-public class HouseLandlordGui extends HouseGui{
+public class HousingLandlordGui extends HousingGui{
 
 	//private MaintenanceWorker agent = null;
 	private boolean isPresent = true;
@@ -22,7 +22,7 @@ public class HouseLandlordGui extends HouseGui{
 	private enum CustomerState {nothing};
 	CustomerState state = CustomerState.nothing;
 
-	public HouseLandlordGui(/*MaintenanceWorker c, RestaurantGui gui*/){
+	public HousingLandlordGui(/*MaintenanceWorker c, RestaurantGui gui*/){
 		//agent = c;
 		//this.gui = gui;
 	}

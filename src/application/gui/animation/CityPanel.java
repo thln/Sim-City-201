@@ -35,7 +35,8 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 	private final int WINDOWY = 325;
 
 	AnimationPanel animationPanel;
-	public List<Gui> guis = Collections.synchronizedList(new ArrayList<Gui>());
+	//private List<Gui> guis = Collections.synchronizedList(new ArrayList<Gui>());
+	private List<CityGui> cGuis = Collections.synchronizedList(new ArrayList<CityGui>());
 	public ArrayList<Building> buildings = new ArrayList<Building>();
 	Dimension Msize = new Dimension(75, 75);
 	Dimension Bsize = new Dimension(75, 75);
@@ -45,7 +46,7 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 	ImageIcon bank = new ImageIcon("res/bank.png", "bank");
 	ImageIcon restaurant = new ImageIcon("res/restaurant.png", "restaurant");
 	ImageIcon market = new ImageIcon("res/market.png", "market");
-	ImageIcon house = new ImageIcon("res/mansion.png", "house");
+	ImageIcon house = new ImageIcon("res/mansion.png", "mansion");
 	ImageIcon apartment = new ImageIcon("res/apartment.png", "apartment");
 	ImageIcon rave = new ImageIcon("res/rave.jpeg");
 	ImageIcon park = new ImageIcon("res/grass.jpg", "park");
@@ -100,7 +101,7 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		addBuilding("East Bank", (WINDOWX / 2), 260);
 		addBuilding("West Bank", (WINDOWX / 2)-105, 10);
 
-		addBuilding("House", 25, 115);
+		addBuilding("Mansion", 25, 115);
 		addBuilding("West Apartment", 0, 0);
 		addBuilding("East Apartment", 510, WINDOWY-55);
 		addBuilding("Park",(WINDOWX/2)-80,(WINDOWY/2)-47);
@@ -209,23 +210,47 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 
 
 		//Drawing all People guis
-		synchronized (guis) {
-			for(Gui gui : guis) {
-				if (gui.isPresent()) {
-					gui.updatePosition();
+		synchronized (cGuis) {
+			for(CityGui gui : cGuis) {
+				if (gui.myGui.isPresent()) {
+					gui.myGui.updatePosition();
 				}
 			}
-			for(Gui gui : guis) {
-				if (gui.isPresent()) {
-					gui.draw(g2);
+			for(CityGui gui : cGuis) {
+				if (gui.myGui.isPresent()) {
+					gui.myGui.draw(g2);
 				}
 			}
 		}
 	}
-
+	
+	public class CityGui {
+		Gui myGui;
+		Gui collidingGui;
+		public CityGui(Gui gui) {
+			myGui = gui;
+		}
+	}
+	
+	public boolean notColliding(CityGui gui1, CityGui gui2) {
+		synchronized (cGuis) {
+			for(CityGui gui : cGuis) {
+				if(gui.myGui.getXPos() == gui2.myGui.getXPos() || gui.myGui.getYPos() == gui2.myGui.getYPos()) {
+					gui.collidingGui = gui2.myGui;
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	public void addGui(Gui gui) {
+		cGuis.add(new CityGui(gui));   
+	}
+	
+	/*
 	public void addGui(Gui gui) {
 		guis.add(gui);   
-	}
+	}*/
 
 	public void addBuilding(String name, int x, int y) {
 		Building building = new Building();
@@ -247,7 +272,7 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 
 		}
 		//House building
-		else if (name.toLowerCase().contains("house")) {
+		else if (name.toLowerCase().contains("mansion")) {
 			building.setMyImage(house);
 			building.setLocation(x, y);
 		}

@@ -1,7 +1,6 @@
 package application;
 
-import housing.Housing;
-import housing.HousingMaintenanceCompany;
+import housing.*;
 import italianRestaurant.ItalianRestaurant;
 
 import java.awt.Point;
@@ -28,16 +27,17 @@ public class Phonebook{
 	static private Market eastMarket;
 	static private Market westMarket;
 
-
+	//Apartments
+	static private Apartment eastApartment;
+	static private Apartment westApartment;
+	
 	//Restaurants
 	static private ChineseRestaurant chineseRestaurant;
-	static private SeafoodRestaurant seafoodRestaurant;
-	//ItalianRestaurant italianRestaurant;
-	static private AmericanRestaurant americanRestaurant;
-	static private ItalianRestaurant italianRestaurant;
-	//MexicanRestaurant mexicanRestaurant;
-
-
+    static private SeafoodRestaurant seafoodRestaurant;
+    //ItalianRestaurant italianRestaurant;
+    static private AmericanRestaurant americanRestaurant;
+    static private ItalianRestaurant italianRestaurant;
+    //MexicanRestaurant mexicanRestaurant;
 
 	private HousingMaintenanceCompany housingMaintenanceCompany;
 
@@ -175,6 +175,9 @@ public class Phonebook{
 		busStopsList.add(new BusStop(3, 420, 230));			// Bottom Right Bus Stop
 		busStopsList.add(new BusStop(4, 127, 230));			// Bottom Left Bus Stop
 		
+		eastApartment = new Apartment("East Apartment");
+		westApartment = new Apartment("West Apartment");
+		
 		eastBank = new Bank("East Bank");
 		eastBank.setClosestBusStopNumber(3);			//setting building's closest bus stop
 		
@@ -185,8 +188,7 @@ public class Phonebook{
 		eastMarket.setClosestBusStopNumber(2);			//setting building's closest bus stop
 		
 		westMarket = new Market("West Market");
-		westMarket.setClosestBusStopNumber(4);			//setting building's closest bus stop
-		
+		westMarket.setClosestBusStopNumber(4);
 
 		seafoodRestaurant = new SeafoodRestaurant("Seafood Restaurant");
 //		seafoodRestaurant.setClosestStop(2));
@@ -239,6 +241,14 @@ public class Phonebook{
 	{
 		return westMarket;
 	}
+	
+	public Apartment getEastApartment() {
+		return eastApartment; 
+	}
+
+	public Apartment getWestApartment() {
+		return westApartment; 
+	}
 
 	public ChineseRestaurant getChineseRestaurant() 
 	{
@@ -248,17 +258,27 @@ public class Phonebook{
 	public SeafoodRestaurant getSeafoodRestaurant() {
 		return seafoodRestaurant;
 	}
-
+	
 	public ItalianRestaurant getItalianRestaurant() 
 	{
 		return italianRestaurant; //temporary stub. make more dynamic later
 	}
-	
+
+	/*
+	public MexicanRestaurant getMexicanRestaurant() 
+	{
+		return chineseRestaurant; //temporary stub. make more dynamic later
+	}
+
+	public AmericanRestaurant getAmericanRestaurant() {
+		return seafoodRestaurant;
+	}
+	*/
 	public AmericanRestaurant getAmericanRestaurant() 
 	{
 		return americanRestaurant; //temporary stub. make more dynamic later
 	}
-
+	
 	public List<Housing> getAllHousing(boolean test)
 	{
 		if(test)

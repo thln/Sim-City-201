@@ -21,10 +21,31 @@ public class ApartmentPanel extends BuildingPanel implements MouseListener{
 	private List<Housing> housing = Collections.synchronizedList(new ArrayList<Housing>());
 	private List<Rectangle> aptRects = Collections.synchronizedList(new ArrayList<Rectangle>());
 	
+	BufferedImage doorRight;
+	BufferedImage doorLeft;
+	BufferedImage wall;
+	int xdoorPos = 300;
+	int ydoorPos = 250;
+	
 	public ApartmentPanel(String buildName, AnimationPanel ap) {
 		super(buildName, ap);
 		
 		addMouseListener(this);
+		try {
+            doorRight = ImageIO.read(new File("res/aptdoorR.png"));
+        } 
+		catch (IOException e) {
+        }
+		try {
+            doorLeft = ImageIO.read(new File("res/aptdoorL.png"));
+        } 
+		catch (IOException e) {
+        }
+		try {
+            wall = ImageIO.read(new File("res/brickwall.jpg"));
+        } 
+		catch (IOException e) {
+        }
 	}
 	
 	public void paintComponent(Graphics g) {
@@ -42,9 +63,15 @@ public class ApartmentPanel extends BuildingPanel implements MouseListener{
 		else
 			g.drawString(getName(), WINDOWX/2, 10);
 		
-		g2.setColor(Color.BLACK);
-		//for(int h=0; h<apartments;h++) {
-		//	g2.setColor(Color.BLACK);
+		g2.setColor(new Color(139,69,19));
+		
+		g2.fill3DRect(0, 240, 600, 10, false);
+		
+		for(int w=0; w < 5; w++)
+			g2.drawImage(wall, 0 + wall.getWidth()*w, ydoorPos, null);
+		g2.drawImage(doorRight, xdoorPos, ydoorPos, null);
+		g2.drawImage(doorLeft, xdoorPos-doorLeft.getWidth(), ydoorPos, null);
+		
         int rows = housing.size()/10;
         int cols = 10;
         int xremainder = housing.size() - cols*rows;
@@ -55,20 +82,28 @@ public class ApartmentPanel extends BuildingPanel implements MouseListener{
 		//xloc is x location, yloc is y location of apt
 		for (int iy = 1; iy <= rows; iy++) {
         	for(int ix=1; ix <= cols; ix++) {
-        		g2.setColor(Color.ORANGE);
+        		Housing currHouse = housing.get(counter);
+        		if(currHouse.isOccupied())
+        			g2.setColor(Color.RED);
+        		else
+        			g2.setColor(Color.ORANGE);
         		g2.fill3DRect(50*ix, 80*iy-50, 45, 45, true);
         		if(aptRects.get(counter).getX() == 0 && aptRects.get(counter).getY() == 0)
         			aptRects.get(counter).setLocation(50*ix, 80*iy-50);
         		g2.setColor(Color.BLACK);
         		g2.drawString(counter+"", 50*ix+10, 80*iy-35);
         		g2.setFont(myFont);
-       			g2.drawString(housing.get(counter).getOccupantName(), 50*ix, 80*iy-15);
+       			g2.drawString(currHouse.getOccupantName(), 50*ix, 80*iy-15);
        			counter++;
         	}
         }
 		//creates the remainder apartments
         for(int ix=1; ix<= xremainder; ix++) {
-        	g2.setColor(Color.ORANGE);
+        	Housing currHouse = housing.get(counter);
+    		if(currHouse.isOccupied())
+    			g2.setColor(Color.RED);
+    		else
+    			g2.setColor(Color.ORANGE);
         	//g2.fillRect(50*ix, 80*(rows+1)-50, 45, 45);
     		g2.fill3DRect(50*ix, 80*(rows+1)-50, 45, 45, true);
     		if(aptRects.get(counter).getX() == 0 && aptRects.get(counter).getY() == 0)
@@ -76,9 +111,24 @@ public class ApartmentPanel extends BuildingPanel implements MouseListener{
         	g2.setColor(Color.BLACK);
         	g2.drawString(counter+"", 50*ix+10, 80*(rows+1)-35);
         	g2.setFont(myFont);
-       		g2.drawString(housing.get(counter).getOccupantName(), 50*ix, 80*(rows+1)-15);
+       		g2.drawString(currHouse.getOccupantName(), 50*ix, 80*(rows+1)-15);
        		counter++;
         }
+        
+        synchronized(guis){
+			for(Gui gui : guis) {
+				if (gui.isPresent()) {
+					gui.updatePosition();
+				}
+			}
+
+			for(Gui gui : guis) {
+				if (gui.isPresent()) {
+					gui.draw(g2);
+				}
+			}
+			
+		}
 	}
 	
 	public void displayBuildingPanel() {
@@ -86,7 +136,7 @@ public class ApartmentPanel extends BuildingPanel implements MouseListener{
 	}
 	
 	public void addAptUnit(Housing house) {
-		HousingPanel hp = new HousingPanel("House " + housing.size(), myCity);
+		HousingPanel hp = new HousingPanel(house.getOccupantName() + "'s House", myCity);
 		hp.setType("apartment");
 		hp.setAptBuilding(this);
 		
@@ -104,6 +154,10 @@ public class ApartmentPanel extends BuildingPanel implements MouseListener{
 				housing.get(i).getPanel().displayBuildingPanel();
 			}
 		}
+	}
+	
+	public List<Housing> getAptUnits() {
+		return housing;
 	}
 
 	public void mousePressed(MouseEvent e) { }

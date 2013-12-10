@@ -1,29 +1,32 @@
 package application.gui.animation.agentGui;
 
-//import housing.\*;
+import housing.*;
 
 import java.awt.*;
 
 import javax.swing.*;
 
-public class HouseRenterGui extends HouseGui {
+public class HousingResidentGui extends HousingGui {
 
-    //private MaintenanceWorker agent = null;
+    private HousingResidentRole agent = null;
     private boolean isPresent = true;
     
     //RestaurantGui gui;
 
-    private int xPos = 300, yPos = 300;//default HouseRenter position
+    private int xPos = 300, yPos = 350;//default HouseRenter position
     private int xDestination = 300, yDestination = 260;//default start position
     
-    private enum Command {noCommand};
+    private enum Command {noCommand, inTransit};
 	private Command command = Command.noCommand;
 
 	private enum CustomerState {nothing};
 	CustomerState state = CustomerState.nothing;
     
-    public HouseRenterGui(/*MaintenanceWorker agent, RestaurantGui gui*/) {
-        //this.agent = agent;
+	public HousingResidentGui() {
+	}
+	
+    public HousingResidentGui(HousingResidentRole agent) {
+        this.agent = agent;
       //this.gui = gui;
     }
 
@@ -40,14 +43,22 @@ public class HouseRenterGui extends HouseGui {
     			yPos--;
 
     		if (xPos == xDestination && yPos == yDestination) {
-    			
+    			if(command != Command.noCommand) {
+	    			if(agent != null) {
+	    				agent.msgAtDestination();
+	    			}
+    			}
+    			command = Command.noCommand;
     		}
         //}
     }
 
     public void draw(Graphics2D g) {
-        g.setColor(Color.BLUE);
+        g.setColor(Color.GREEN);
         g.fillRect(xPos, yPos, 20, 20);
+        g.setColor(Color.BLACK);
+        if(agent != null)
+        	g.drawString(agent.getName(), xPos, yPos);
     }
 
 	public boolean isPresent() {
@@ -70,40 +81,48 @@ public class HouseRenterGui extends HouseGui {
     public void DoGoToKitchen() {
     	xDestination = 510;
     	yDestination = 85;
+    	command = Command.inTransit;
     }
     
     public void DoGoToFridge() {
     	xDestination = 450;
     	yDestination = 50;
+    	command = Command.inTransit;
     }
     
     public void DoCooking() {
     	xDestination = 510;
     	yDestination = 75;
+    	command = Command.inTransit;
     }
     
     public void DoGoToBed() {
     	xDestination = 510;
-    	yDestination = 300;
+    	yDestination = 250;
+    	command = Command.inTransit;
     }
     
     public void DoGoToBedRoom() {
     	xDestination = 450;
     	yDestination = 200;
+    	command = Command.inTransit;
     }
     
     public void DoGoToBathroom() {
-    	xDestination = 100;
+    	xDestination = 50;
     	yDestination = 50;
+    	command = Command.inTransit;
     }
     
     public void DoGoToLivingRoom() {
     	xDestination = 100;
-    	yDestination = 200;
+    	yDestination = 250;
+    	command = Command.inTransit;
     }
     
     public void DoExit() {
     	xDestination = 300;
-    	yDestination = 300;
+    	yDestination = 350;
+    	command = Command.inTransit;
     }
 }

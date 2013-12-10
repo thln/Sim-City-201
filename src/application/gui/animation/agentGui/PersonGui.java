@@ -27,16 +27,6 @@ public class PersonGui extends CityGui {
 	Color transColor = new Color(0,0,0,1);
 	Color currColor;
 
-	//This is going to be used for future restaurants
-	private int xItalianLocation = (WINDOWX-100) + 15;
-	private int yItalianLocation = 20+10;
-	private int xMexicanLocation = (WINDOWX/2-75) + 15;
-	private int yMexicanLocation = (WINDOWY - 75) + 10;
-	private int xAmericanLocation = (WINDOWX - 100) + 15;
-	private int yAmericanLocation = (WINDOWY - 75) + 10;
-	private int xSeafoodLocation = (WINDOWX-100) + 15;
-	private int ySeafoodLocation = 150 + 10; //?
-
 	//Bus stops
 	private int startStopX;
 	private int startStopY;
@@ -219,22 +209,22 @@ public class PersonGui extends CityGui {
 		break;
 		case "italian" : {
 			setxDestination((int) Phonebook.getPhonebook().getItalianRestaurant().location.getX());
-			setyDestination((int) Phonebook.getPhonebook().getChineseRestaurant().location.getY());
+			setyDestination((int) Phonebook.getPhonebook().getItalianRestaurant().location.getY());
 		}
 		break;
 		case "mexican" : {
-			setxDestination(xMexicanLocation);
-			setyDestination(xMexicanLocation);
+			//setxDestination((int) Phonebook.getPhonebook().getMexicanRestaurant().location.getX());
+			//setyDestination((int) Phonebook.getPhonebook().getMexicanRestaurant().location.getY());
 		}
 		break;
 		case "american" : {
-			setxDestination(xAmericanLocation);
-			setyDestination(yAmericanLocation);
+			//setxDestination((int) Phonebook.getPhonebook().getAmericanRestaurant().location.getX());
+			//setyDestination((int) Phonebook.getPhonebook().getAmericanRestaurant().location.getY());
 		}
 		break;
 		case "seafood" : {
-			setxDestination(xSeafoodLocation);
-			setyDestination(ySeafoodLocation);
+			//setxDestination((int) Phonebook.getPhonebook().getSeafoodRestaurant().location.getX());
+			//setyDestination((int) Phonebook.getPhonebook().getSeafoodRestaurant().location.getY());
 		}
 		break;
 		default:

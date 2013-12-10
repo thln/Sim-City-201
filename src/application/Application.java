@@ -277,16 +277,13 @@ public class Application extends JPanel {
 		
 		//Setting Gui for everyone
 		for (Person person : getPopulation()) {
-			person.setPanel(animPanel);
 			PersonGui pg = new PersonGui(person);
 			person.setGui(pg);
 			animPanel.addGui(pg);
 		}
 
-		for (Housing house : allHousing) {
-			if(house.type.toLowerCase().contains("apartment")) {
-				animPanel.addAptUnit(house);
-			}
+		for (Housing housing : allHousing) {
+			animPanel.setHousingPanel(housing);
 		}
 
 		//Starting Threads
