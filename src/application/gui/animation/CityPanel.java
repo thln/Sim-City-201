@@ -54,6 +54,8 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 	ImageIcon oneWaySignRight = new ImageIcon("res/OneWayRight.png");
 	ImageIcon oneWaySignUp = new ImageIcon("res/OneWayUp.png");
 	ImageIcon oneWaySignDown = new ImageIcon("res/OneWayDown.png");
+	ImageIcon bench = new ImageIcon("res/bench.png");
+	ImageIcon fountain = new ImageIcon("res/fountain.png");
 
 	public ImageIcon roadHorizontal = new ImageIcon("res/roadsHorizontal.png");
 	public ImageIcon roadVertical = new ImageIcon("res/roadsVertical.png");
@@ -192,6 +194,15 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		g2.drawImage(oneWaySignRight.getImage(), 270, 30, null);
 		g2.drawImage(oneWaySignUp.getImage(), 200, 140, null);
 		g2.drawImage(oneWaySignDown.getImage(), 420, 110, null);
+		
+		//Benches
+		g2.drawImage(bench.getImage(), 5, 285, null);
+		g2.drawImage(bench.getImage(), 530, 40, null);
+		g2.drawImage(bench.getImage(), 440, 110, null);
+		g2.drawImage(bench.getImage(), 530, 230, null);
+		
+		//Fountain
+		g2.drawImage(fountain.getImage(), 215, 275, null);
 		
 		//Drawing all buildings
 		for (int i=0; i<buildings.size(); i++ ) {
