@@ -1,9 +1,9 @@
 package americanRestaurant.test;
 
-import testing.LoggedEvent;
 import testing.Mock;
 import americanRestaurant.AmericanRestaurantCookRole.Order;
 import americanRestaurant.AmericanRestaurantTable;
+import americanRestaurant.AmericanRestaurantWaiterRole.MyCustomer;
 import americanRestaurant.interfaces.AmericanRestaurantCustomer;
 import americanRestaurant.interfaces.AmericanRestaurantWaiter;
 
@@ -104,5 +104,11 @@ public class AmericanRestaurantMockWaiter extends Mock implements AmericanRestau
 	public Object getGui() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void OrderFromCook(MyCustomer c1) {
+		// TODO Auto-generated method stub
+		
 	}
 }

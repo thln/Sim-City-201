@@ -34,7 +34,7 @@ public class AmericanRestaurantWaiterRole extends Role implements AmericanRestau
 		WaiterAtCook, FoodReady, Ordered, WaitingForFood, FoodCooking, FoodDelivering, CookWalk,
 		OrderReady, Eating, DoneEating, ReadyForBill, WaitingForCheck, CheckReady, Paying, Leaving, Left};
 
-		class MyCustomer {
+		public class MyCustomer {
 			AmericanRestaurantCustomer cust;
 			AmericanRestaurantTable tab;
 			String choice;
@@ -306,7 +306,7 @@ public class AmericanRestaurantWaiterRole extends Role implements AmericanRestau
 			c1.state = customerState.WaiterAtCook;
 		}
 
-		private void OrderFromCook(MyCustomer c1){
+		public void OrderFromCook(MyCustomer c1){
 
 			myRestaurant.americanCook.msgHereIsAnOrder(new Order(c1.choice, this, c1.tab));	
 		//	waiterGui.DoLeaveCustomer();

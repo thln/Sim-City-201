@@ -1,6 +1,7 @@
 package americanRestaurant.interfaces;
 
 import americanRestaurant.AmericanRestaurantCookRole.Order;
+import americanRestaurant.AmericanRestaurantWaiterRole.MyCustomer;
 import americanRestaurant.AmericanRestaurantTable;
 
 public interface AmericanRestaurantWaiter {
@@ -32,6 +33,8 @@ public interface AmericanRestaurantWaiter {
 	void msgCanBreak();
 
 	void msgNoBreak();
+	
+	void OrderFromCook(MyCustomer c1);
 
 	Object getGui();
 }

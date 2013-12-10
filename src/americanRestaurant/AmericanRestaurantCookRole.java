@@ -10,10 +10,8 @@ import java.util.concurrent.Semaphore;
 
 import person.Person;
 import person.Role;
-import testing.EventLog;
-import americanRestaurant.AmericanRestaurantCashierRole.MyCheck;
 import americanRestaurant.interfaces.AmericanRestaurantCashier;
-import chineseRestaurant.ChineseRestaurantCashierRole.Order;
+import application.Phonebook;
 
 /**
  * Restaurant Cook Agent
@@ -23,12 +21,16 @@ public class AmericanRestaurantCookRole extends Role {
 
 	//DATA
 
+	//Revolving Stand timer to check stand
+	Timer revolvingStandTimer = new Timer();
+	
 	//CookGui cookGui;
 	List<Order> PendingOrders;
 	List<Order> FinishedOrders;
 	//List<MarketAgent> markets;
 	HashMap<String,Food> foodList;
 	boolean needToOrder;
+	AmericanRestaurant myRestaurant;
 
 	public Semaphore inProcess;
 
@@ -91,11 +93,12 @@ public class AmericanRestaurantCookRole extends Role {
 
 
 	//Constructor
-	public AmericanRestaurantCookRole (String name) {
+	public AmericanRestaurantCookRole (String name, AmericanRestaurant restaurant) {
 		super(name);
 		PendingOrders = Collections.synchronizedList(new ArrayList<Order>());
 		FinishedOrders = Collections.synchronizedList(new ArrayList<Order>());	
 		foodList = new HashMap<>();
+		myRestaurant = restaurant;
 		foodList.put("Steak", new Food("Steak", 5000, 1, 3, 5, 5));
 		foodList.put("Chicken", new Food("Chicken", 4000, 3, 3, 5, 4));
 		foodList.put("Salad", new Food("Salad", 3000, 0, 3, 5, 2));
@@ -109,6 +112,7 @@ public class AmericanRestaurantCookRole extends Role {
 		AddMarket();
 		AddMarket();
 		needToOrder = true;
+		startRevolvingStandTimer();	
 	}
 	
 	public AmericanRestaurantCookRole(Person p1, String pName, String rName, AmericanRestaurant restaurant) {
@@ -120,9 +124,10 @@ public class AmericanRestaurantCookRole extends Role {
 		foodList.put("Chicken", new Food("Chicken", 4000, 3, 3, 5, 4));
 		foodList.put("Salad", new Food("Salad", 3000, 0, 3, 5, 2));
 		foodList.put("Pizza", new Food("Pizza", 3500, 4, 3, 5, 3));
-
+		myRestaurant = restaurant;
 		inProcess = new  Semaphore(0, true);
 
+		startRevolvingStandTimer();
 		//Constructing market agents
 		//	markets = Collections.synchronizedList (new ArrayList<MarketAgent>());
 		AddMarket();
@@ -171,6 +176,11 @@ public class AmericanRestaurantCookRole extends Role {
 
 	protected boolean pickAndExecuteAnAction() {
 
+		if(!myRestaurant.getRevolvingStand().isStandEmpty()) {
+			takeRevolvingStandOrder();
+			return true;
+		}
+		
 		synchronized(FinishedOrders) {
 			for (Order order1: FinishedOrders) {
 				FinishOrder(order1);
@@ -311,9 +321,25 @@ public class AmericanRestaurantCookRole extends Role {
 		//		return;
 	}
 
+	private void takeRevolvingStandOrder()
+	{
+		print("Taking order from Revolving Stand.");
+		PendingOrders.add(myRestaurant.getRevolvingStand().takeOrder());
+	}
+	
 	public void setCashier(AmericanRestaurantCashier myCashier) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public void startRevolvingStandTimer() {
+		revolvingStandTimer.schedule(new TimerTask() {
+			public void run() {
+				stateChanged();
+				startRevolvingStandTimer();
+			}
+		},
+		3000);
 	}
 }
 

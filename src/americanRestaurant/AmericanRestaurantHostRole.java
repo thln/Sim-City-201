@@ -79,7 +79,8 @@ public class AmericanRestaurantHostRole extends Role implements AmericanRestaura
 
 	public void msgAddWaiter (AmericanRestaurantWaiterRole W1) {
 		Waiters.add(W1);
-		stateChanged();
+		if (person != null)
+			stateChanged();
 	}
 
 	public void msgIWantToEat (AmericanRestaurantCustomerRole C1){   

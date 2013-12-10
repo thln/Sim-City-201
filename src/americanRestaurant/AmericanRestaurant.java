@@ -25,9 +25,9 @@ public class AmericanRestaurant {
 
 		//Roles
 		public AmericanRestaurantHostRole americanHost = new AmericanRestaurantHostRole("American Host");
-		public AmericanRestaurantCookRole americanCook = new AmericanRestaurantCookRole("American Cook");		
-		public AmericanRestaurantCashierRole americanCashier = new AmericanRestaurantCashierRole("American Cashier");
-		//public AmericanRestaurantRevolvingStand theRevolvingStand = new AmericanRestaurantRevolvingStand();
+		public AmericanRestaurantCookRole americanCook = new AmericanRestaurantCookRole("American Cook", this);		
+		public AmericanRestaurantCashierRole americanCashier = new AmericanRestaurantCashierRole("American Cashier", this);
+		public static AmericanRestaurantRevolvingStand theRevolvingStand = new AmericanRestaurantRevolvingStand();
 		private BuildingPanel restPanel;
 
 		//Mocks
@@ -105,28 +105,27 @@ public class AmericanRestaurant {
 				return waiter;
 			}
 			
-//			else if (title == "altWaiter") {
-//				AmericanRestaurantAltWaiterRole altWaiter = new AmericanRestaurantAltWaiterRole(person, person.getName(), title);
-//				if (waiters.size() <= 12) {
-//					RestaurantWaiterGui g = new RestaurantWaiterGui(altWaiter);
-//					restPanel.addGui(g);
-//					altWaiter.setGui(g);
-//					g.setHomePosition(5, (55 + (22 * waiters.size())));
-//				}
-//				else if (waiters.size() <= 24) {
-//					RestaurantWaiterGui g = new RestaurantWaiterGui(altWaiter);
-//					restPanel.addGui(g);
-//					altWaiter.setGui(g);
-//					g.setHomePosition(27, (55 + (22 * (waiters.size()-12))));
-//				}
-//				
-//				waiters.add(altWaiter);
-//				AmericanRestaurantCookRole.addWaiter(altWaiter);
-//				if (isOpen()) {
-//					AmericanRestaurantCookRole.msgRestaurantOpen();
-//				}
-//				return altWaiter;
-//			}
+			else if (title == "altWaiter") {
+				AmericanRestaurantAltWaiterRole altWaiter = new AmericanRestaurantAltWaiterRole(person, person.getName(), title, this);
+				if (americanHost.Waiters.size() <= 12) {
+				//	RestaurantWaiterGui g = new RestaurantWaiterGui(altWaiter);
+				//	restPanel.addGui(g);
+				//	altWaiter.setGui(g);
+				//	g.setHomePosition(5, (55 + (22 * waiters.size())));
+				}
+				else if (americanHost.Waiters.size() <= 24) {
+				//	RestaurantWaiterGui g = new RestaurantWaiterGui(altWaiter);
+				//	restPanel.addGui(g);
+				//	altWaiter.setGui(g);
+				//	g.setHomePosition(27, (55 + (22 * (waiters.size()-12))));
+				}
+			
+				americanHost.msgAddWaiter(altWaiter);
+				if (isOpen()) {
+					americanHost.msgRestaurantOpen();
+				}
+				return altWaiter;
+			}
 			//for waiter and alternative waiters, you message the host
 			return null;
 		}
@@ -165,7 +164,7 @@ public class AmericanRestaurant {
 				worker.roleFinishedWork();
 				//restPanel.removeGui(cookGui);
 			}
-			if (worker.myJob.getTitle() == "waiter"){
+			if (worker.myJob.getTitle() == "waiter" || worker.myJob.getTitle() == "altWaiter"){
 				americanHost.waiterLeavingWork((AmericanRestaurantWaiterRole) worker.workerRole);
 				worker.roleFinishedWork();
 				//restPanel.removeGui(cookGui);
@@ -186,9 +185,9 @@ public class AmericanRestaurant {
 			this.name = name;
 		}
 
-//		public AmericanRestaurantRevolvingStand getRevolvingStand() {
-//			return theRevolvingStand;
-//		}
+		public AmericanRestaurantRevolvingStand getRevolvingStand() {
+			return theRevolvingStand;
+		}
 //
 //		public void setPanel(BuildingPanel panel) {
 //			restPanel = panel;
@@ -219,28 +218,21 @@ public class AmericanRestaurant {
 //			restPanel = rp;
 //		}
 //
-//		public void removeWaiter(AmericanRestaurantWaiterRole AmericanRestaurantWaiterRole) {
-//			waiters.remove(AmericanRestaurantWaiterRole);
-//			restPanel.removeGui(AmericanRestaurantWaiterRole.getGui());
-//		}
+
 //		
-//		public void removeCustomer(AmericanRestaurantCustomerRole customerRole) {
-//			customers.remove(customerRole);
-//			restPanel.removeGui(customerRole.getGui());
-//		}
-//		
-//		public void closeBuilding(){
-//			userClosed = true;
-//			AmericanRestaurantCookRole.msgLeaveRole();
-//			for (AmericanRestaurantWaiterRole w1: waiters) {
-//				w1.msgLeaveRole();
-//				restPanel.removeGui(w1.getGui());
-//			}
-//			AmericanRestaurantCookRole.msgLeaveRole();
-//			restPanel.removeGui(cookGui);
-//			
-//			AmericanRestaurantCashierRole.msgLeaveRole();
-//		}
+		public void closeBuilding(){
+			userClosed = true;
+			
+			for (AmericanRestaurantWaiterRole w1: americanHost.Waiters) {
+				w1.msgLeaveRole();
+				//restPanel.removeGui(w1.getGui());
+			}		
+			americanHost.msgLeaveRole();
+			americanCook.msgLeaveRole();
+			//restPanel.removeGui(cookGui);
+			
+			americanCashier.msgLeaveRole();
+		}
 
 		public void setClosestStop(Point point) {
 			closestStop = point;

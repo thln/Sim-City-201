@@ -108,8 +108,9 @@ public class AmericanRestaurantCashierRole extends Role implements AmericanResta
 
 	//Constructor
 
-	public AmericanRestaurantCashierRole (String name) {
+	public AmericanRestaurantCashierRole (String name, AmericanRestaurant restaurant) {
 		super(name);
+		myRestaurant = restaurant;
 		checks = Collections.synchronizedList(new ArrayList<MyCheck>());
 		log = new EventLog();
 		setCashRegister(120);	
