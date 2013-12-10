@@ -58,9 +58,10 @@ public class AddPanel extends JPanel implements ActionListener {
 	boolean rave = false;
 
 	private String[] personType = {" ", /*"Deadbeat", "Crook", */ "Worker", "Wealthy"};
-	private String[] jobLocation = {" ", "Restaurant", "Bank", "Market", "Housing"};
+	private String[] jobLocation = {" ","East Bank", "West Bank", "East Market", "West Market",
+			"Chinese Restaurant", "Seafood Restaurant", "American Restaurant", "Italian Restaurant", "Housing"};
 	private String[] emptyList = {" "};
-	private String[] restaurantJobs = {" ", "AmericanRestaurantHost", "Cook", "AmericanRestaurantCashier", "AmericanRestaurantWaiter", "Alt AmericanRestaurantWaiter"};
+	private String[] restaurantJobs = {" ", "Host", "Cook", "Cashier", "Waiter", "Alt Waiter"};
 	private String[] marketJobs = {" ", "UPS Man", "Sales Person", "Market Runner"};
 	private String[] bankJobs = {" ", "Bank Guard", "Bank Teller", "Loan Officer"};
 	private String[] housingJobs = {" ", "Maintenance Worker"};
@@ -200,7 +201,8 @@ public class AddPanel extends JPanel implements ActionListener {
 
 		if(e.getSource() == jobLocationBox)
 		{
-			if(jobLocationBox.getSelectedItem() == "Restaurant")
+			if(jobLocationBox.getSelectedItem() == "Chinese Restaurant" || jobLocationBox.getSelectedItem() == "American Restaurant" ||
+					jobLocationBox.getSelectedItem() == "Italian Restaurant" || jobLocationBox.getSelectedItem() == "Seafood Restaurant")
 			{
 				jobTypeBox.removeAllItems();
 				showJobInformationFields(true);
@@ -209,7 +211,7 @@ public class AddPanel extends JPanel implements ActionListener {
 					jobTypeBox.addItem(restaurantJobs[i]);
 				}
 			}
-			else if(jobLocationBox.getSelectedItem() == "Bank")
+			else if(jobLocationBox.getSelectedItem() == "East Bank" || jobLocationBox.getSelectedItem() == "West Bank")
 			{
 				jobTypeBox.removeAllItems();
 				showJobInformationFields(true);
@@ -218,7 +220,7 @@ public class AddPanel extends JPanel implements ActionListener {
 					jobTypeBox.addItem(bankJobs[i]);
 				}				
 			} 
-			else if(jobLocationBox.getSelectedItem() == "Market")
+			else if(jobLocationBox.getSelectedItem() == "East Market" || jobLocationBox.getSelectedItem() == "West Market")
 			{
 				jobTypeBox.removeAllItems();
 				showJobInformationFields(true);
