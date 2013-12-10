@@ -23,7 +23,7 @@ public class MarketRunnerRole extends Role implements MarketRunner {
 
 	public List<MarketOrder> orders = Collections.synchronizedList(new ArrayList<MarketOrder>());
 	private Semaphore atDestination = new Semaphore(0, true);
-
+	boolean present = false;
 	public EventLog log = new EventLog();
 
 	public MarketRunnerRole(Person person, String pName, String rName, Market market) {
@@ -115,5 +115,15 @@ public class MarketRunnerRole extends Role implements MarketRunner {
 
 	public void setGui(MarketRunnerGui gui) {
 		marketRunnerGui = gui;
+	}
+	
+	public void setPresent(boolean present) {
+		this.present = present;
+	}
+	
+	public boolean isPresent() {
+		if(present)
+			return true;
+		return false;
 	}
 }

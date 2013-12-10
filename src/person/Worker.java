@@ -271,19 +271,12 @@ public class Worker extends Person {
 			}
 		}
 
-		try {
-			atDestination.acquire();
-			if (!gui.walk){
-				try {
-					atDestination.acquire();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-
-				}
+		if (!gui.walk){
+			try {
+				atDestination.acquire();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-
 		}
 
 		if (myJob.jobPlace == "American Restaurant") 

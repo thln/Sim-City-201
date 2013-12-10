@@ -7,6 +7,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Semaphore;
 
+import javax.swing.Timer;
+
 import market.MarketOrder.orderState;
 import market.interfaces.MarketCustomer;
 import market.interfaces.SalesPerson;
@@ -30,7 +32,7 @@ public class SalesPersonRole extends Role implements SalesPerson {
 	public List<MarketOrder> orders = Collections.synchronizedList(new ArrayList<MarketOrder>());
 	private Semaphore atDestination = new Semaphore(0, true);
 	MarketSalesPersonGui salesPersonGui;
-
+	
 	//Constructors
 	public SalesPersonRole(Person person, String pName, String rName, Market market) {
 		super(person, pName, rName);
@@ -232,8 +234,14 @@ public class SalesPersonRole extends Role implements SalesPerson {
 //		}
 
 		print("Gave Market Runner an order to find");
-		market.getMarketRunner(test).msgHeresAnOrder(o);
-		stateChanged();
+		if(market.getMarketRunner(test).isPresent()) {
+			market.getMarketRunner(test).msgHeresAnOrder(o);
+			stateChanged();
+		}
+		else {
+			print("No market runner available!");
+			stateChanged();
+		}
 	}
 
 	public void giveCustomerItems(MarketOrder o) {

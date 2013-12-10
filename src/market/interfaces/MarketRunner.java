@@ -11,4 +11,6 @@ public interface MarketRunner {
 	public void processOrder(MarketOrder o);
 	
 	public void decreaseInventoryBy(String item, int amount);
+	
+	public boolean isPresent();
 }

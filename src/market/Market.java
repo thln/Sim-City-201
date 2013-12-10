@@ -128,6 +128,7 @@ public class Market {
 			}
 			//Setting bank guard role to new role
 			marketRunnerRole.setPerson(person);
+			marketRunnerRole.setPresent(true);
 			if (isOpen()) {
 				salesPersonRole.msgMarketOpen();
 			}
