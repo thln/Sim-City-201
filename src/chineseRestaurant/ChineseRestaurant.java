@@ -1,8 +1,10 @@
 package chineseRestaurant;
 
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.Vector;
 
+import market.Market;
 import person.Person;
 import person.Role;
 import person.Worker;
@@ -10,8 +12,10 @@ import transportation.BusStop;
 import application.Phonebook;
 import application.Restaurant;
 import application.WatchTime;
-import application.gui.animation.*;
-import application.gui.animation.agentGui.*;
+import application.gui.animation.BuildingPanel;
+import application.gui.animation.agentGui.RestaurantCookGui;
+import application.gui.animation.agentGui.RestaurantCustomerGui;
+import application.gui.animation.agentGui.RestaurantWaiterGui;
 import chineseRestaurant.interfaces.ChineseRestaurantCashier;
 import chineseRestaurant.interfaces.ChineseRestaurantCook;
 import chineseRestaurant.test.mock.ChineseRestaurantMockCashier;
@@ -44,7 +48,7 @@ public class ChineseRestaurant implements Restaurant {
 	public ChineseRestaurantCashierRole chineseRestaurantCashierRole = new ChineseRestaurantCashierRole("Cashier", this);
 	public ChineseRestaurantRevolvingStand theRevolvingStand = new ChineseRestaurantRevolvingStand();
 	private BuildingPanel restPanel;
-
+	
 	//Mocks
 	public ChineseRestaurantMockCook chineseRestaurantMockCook = new ChineseRestaurantMockCook("MockCook");
 	public ChineseRestaurantMockCashier chineseRestaurantMockCashier = new ChineseRestaurantMockCashier("MockCashier");
