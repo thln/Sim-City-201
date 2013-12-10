@@ -8,10 +8,8 @@ import java.util.concurrent.Semaphore;
 import market.interfaces.MarketRunner;
 import person.Person;
 import person.Role;
-import person.Worker;
 import testing.EventLog;
 import testing.LoggedEvent;
-import application.Phonebook;
 import application.gui.animation.agentGui.MarketRunnerGui;
 
 public class MarketRunnerRole extends Role implements MarketRunner {

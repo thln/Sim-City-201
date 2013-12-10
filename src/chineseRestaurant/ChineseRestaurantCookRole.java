@@ -297,12 +297,14 @@ public class ChineseRestaurantCookRole extends Role implements ChineseRestaurant
 		//No stock is fulfilled
 		if (stockFulfillment.get(0).quantity == 0) {
 
-			if (Phonebook.getPhonebook().getEastMarket().equals(stockFulfillment.get(0).market)) 
-			{
-				foodMap.get(stockFulfillment.get(0).choice).amountOrdered -= stockFulfillment.get(0).orderedAmount;
-				//Setting order availability for the choice at market to false
-				//MM.availableChoices.put(stockFulfillment.get(0).choice, false);
-				print(Phonebook.getPhonebook().getEastMarket().getName() + " is out of " + stockFulfillment.get(0).choice);
+			for (myMarket MM: markets) {
+				if (MM.market.equals(stockFulfillment.get(0).market)) {
+					foodMap.get(stockFulfillment.get(0).choice).amountOrdered -= stockFulfillment.get(0).orderedAmount;
+
+					//Setting order availability for the choice at market to false
+					MM.availableChoices.put(stockFulfillment.get(0).choice, false);
+					print(MM.market.getName() + " is out of " + stockFulfillment.get(0).choice);
+				}
 			}
 
 			//Check inventory to re-order
@@ -318,27 +320,27 @@ public class ChineseRestaurantCookRole extends Role implements ChineseRestaurant
 			//If only part of the order was fulfilled
 			if (stockFulfillment.get(0).quantity < stockFulfillment.get(0).orderedAmount) 
 			{
-				//Finding market
-
-				if (Phonebook.getPhonebook().getEastMarket().equals(stockFulfillment.get(0).market)) 
-				{
-					//Setting order availability for the choice at market to false
-					//MM.availableChoices.put(stockFulfillment.get(0).choice, false);
-					print(Phonebook.getPhonebook().getEastMarket().getName() + " is out of " + stockFulfillment.get(0).choice);
+				for (myMarket MM: markets) {
+					if (MM.market.equals(stockFulfillment.get(0).market)) {
+						//Setting order availability for the choice at market to false
+						MM.availableChoices.put(stockFulfillment.get(0).choice, false);
+						print(MM.market.getName() + " is out of " + stockFulfillment.get(0).choice);
+					}
 				}
 
 
 				//Order only partially fulfilled, ordering from a new market
 				print("Order partially fulfilled, re-ordering from different market for " + stockFulfillment.get(0).choice);
 
-				Market myMark = null;
-				if(Phonebook.getPhonebook().getEastMarket().inventory.get(stockFulfillment.get(0).choice).amount > 0) 
-				{
-					myMark = Phonebook.getPhonebook().getEastMarket();
+				myMarket myMark = null;
+				for(myMarket MM: markets) {
+					if (MM.availableChoices.get(stockFulfillment.get(0).choice) == true) {
+						myMark = MM;
+						break;
+					}
 				}
-
-				if (myMark == null) 
-				{
+				
+				if (myMark == null) {
 					print("Out of markets to order from for " + stockFulfillment.get(0).choice);
 					stockFulfillment.remove(0);
 					return;
@@ -347,11 +349,8 @@ public class ChineseRestaurantCookRole extends Role implements ChineseRestaurant
 				int newOrderAmount;
 				newOrderAmount = stockFulfillment.get(0).orderedAmount - stockFulfillment.get(0).quantity;
 				print("Requesting " + Phonebook.getPhonebook().getEastMarket().getName() + " for " + newOrderAmount + " " + stockFulfillment.get(0).choice + "(s)");
-				Phonebook.getPhonebook().getEastMarket().salesPersonRole.msgIWantProducts(Phonebook.getPhonebook().getChineseRestaurant(), stockFulfillment.get(0).choice, newOrderAmount);
-				//Because there is only one restaurant right now
-
+				myMark.market.salesPersonRole.msgIWantProducts(Phonebook.getPhonebook().getChineseRestaurant(), stockFulfillment.get(0).choice, newOrderAmount);
 			}
-
 			stockFulfillment.remove(0);
 		}
 	}
