@@ -54,6 +54,12 @@ public class ApartmentResidentRole extends HousingResidentRole{
 			goToBathroom();
 			return true;
 		}
+		
+		if (leaveRole) {
+			apartment.removeResident(this);
+			leaveRole = false;
+			return true;
+		}
 		return false;
 	}
 		

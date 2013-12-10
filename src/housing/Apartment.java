@@ -4,6 +4,9 @@ import java.awt.*;
 import java.util.List;
 import java.util.*;
 
+import person.Person;
+import person.Worker;
+import bank.BankTellerRole;
 import application.gui.animation.*;
 import application.gui.animation.agentGui.*;
 
@@ -36,6 +39,13 @@ public class Apartment {
 			}
 		}
 		return false;
+	}
+	
+	public void removeResident(ApartmentResidentRole role) {
+		role.setPerson(null);
+		role.getHome().setOccupied(false);
+		role.setRoleInactive();
+		apartmentPanel.removeGui(role.getGui());
 	}
 	
 	public void setBuildingPanel(BuildingPanel myBuildingPanel) {
