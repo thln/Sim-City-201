@@ -1,7 +1,7 @@
 package market;
 
 import java.awt.Point;
-import java.util.HashMap;
+import java.util.*;
 
 import market.interfaces.MarketRunner;
 import market.interfaces.SalesPerson;
@@ -48,6 +48,8 @@ public class Market {
 	public MockSalesPerson mockSalesPerson = new MockSalesPerson("MockSalesPerson");
 	public MockMarketRunner mockMarketRunner = new MockMarketRunner("MockMarketRunner");
 	public MockUPSman mockUPSman = new MockUPSman("MockUPSMan");
+	
+	List <MarketCustomerGui> marketGuis = new ArrayList<MarketCustomerGui>();
 
 	private BuildingPanel marketPanel;
 
@@ -91,10 +93,10 @@ public class Market {
 	//Constructor
 	public Market(String name) 	{
 		if (name == "East Market"){
-			location = new Point(500, 140);
+			location = new Point(530, 123);
 		}
 		if (name == "West Market"){
-			location = new Point(90, 120);	
+			location = new Point(95, 290);	
 		}
 		
 		this.name = name;
@@ -156,9 +158,30 @@ public class Market {
 		//MarketCustomerGui rCG = (MarketCustomerGui) mCR.gui;
 		MarketCustomerGui MCG = new MarketCustomerGui(mCR);
 		mCR.setGui(MCG);
+		MCG.setHome(marketGuis.size());
+		mCR.setMarket(this);
+		marketGuis.add(MCG);
 		marketPanel.addGui(MCG);
+		//MCG.waitInLine();
 	}
 
+	public void goingOffWork(Person person) {
+		Worker worker = (Worker) person;
+
+		if (worker.getWorkerRole().equals(salesPersonRole)) {
+			salesPersonRole.person = null;
+			marketPanel.removeGui(salesPersonGui);
+		}
+		if (worker.getWorkerRole().equals(marketRunnerRole)) {
+			marketRunnerRole.person = null;
+			marketPanel.removeGui(marketRunnerGui);
+		}
+		if (worker.getWorkerRole().equals(UPSmanRole)) {
+			UPSmanRole.person = null;
+			marketPanel.removeGui(UPSmanGui);
+		}
+		worker.workerRole = null;
+	}
 
 	public class Item {
 		public String itemName;
@@ -232,18 +255,16 @@ public class Market {
 	
 	public void removeCustomer(MarketCustomerRole customerRole) {
 		marketPanel.removeGui(customerRole.getGui());
+		marketGuis.remove(customerRole.getGui());
 	}
 	
 	public void closeBuilding(){
 		userClosed = true;
 		salesPersonRole.msgLeaveRole();
-		marketPanel.removeGui(salesPersonGui);
 		
 		marketRunnerRole.msgLeaveRole();
-		marketPanel.removeGui(marketRunnerGui);
 		
 		UPSmanRole.msgLeaveRole();
-		marketPanel.removeGui(UPSmanGui);
 	}
 
 

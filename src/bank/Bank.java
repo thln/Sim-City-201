@@ -73,9 +73,9 @@ public class Bank {
 		loanOfficerRole =  new LoanOfficerRole("Loan Officer");
 			
 		if (name.equals("East Bank"))
-			location = new Point(330, 260);
+			location = new Point(315, 275);
 		else if (name.equals("West Bank"))
-			location = new Point(255,30);
+			location = new Point(210, 25);
 		
 		this.name = name;
 		vault = 10000;

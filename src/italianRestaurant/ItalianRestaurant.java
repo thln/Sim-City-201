@@ -45,7 +45,7 @@ public class ItalianRestaurant {
 	//public ItalianMockCashier italianRestaurantMockCashier = new ItalianMockCashier("MockCashier");
 
 	public ItalianRestaurant(String name) {
-		location = new Point(300, 20);
+		location = new Point(492, 35);
 		this.name = name;
 		italianRestaurantCookRole.setGui(cookGui);
 		italianRestaurantCashierRole.setGui(cashierGui);

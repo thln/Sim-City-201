@@ -1,12 +1,12 @@
 package application.gui.animation.agentGui;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import transportation.BusAgent;
+import javax.swing.ImageIcon;
+
 import application.Phonebook;
 
 public class BusGuiVertical extends CityGui {
@@ -14,7 +14,9 @@ public class BusGuiVertical extends CityGui {
 	private BusAgent agent = null;
 	private boolean isPresent = true;
 	private boolean checkedStation = false;
-	
+	ImageIcon busUp = new ImageIcon("res/busUp.png");
+	ImageIcon busDown = new ImageIcon("res/busDown.png");
+
 	private final int stopTopY = (int) Phonebook.getPhonebook().getBusStops().get(0).getY()+8;
 	private final int stopBottomY = (int) Phonebook.getPhonebook().getBusStops().get(3).getY()+8;
 	private final int stopLeftX = 168;
@@ -110,10 +112,12 @@ public class BusGuiVertical extends CityGui {
 	}
 
 	public void draw(Graphics2D g) {
-		g.setColor(Color.RED);
-		g.fillOval(xPos, yPos, 25, 25);
-		g.setColor(Color.WHITE);
-		g.drawString("B", xPos + 9, yPos + 18);
+		if (xPos == stopLeftX) {
+			g.drawImage(busUp.getImage(), xPos, yPos, null);
+		}
+		else {
+			g.drawImage(busDown.getImage(), xPos, yPos, null);
+		}
 		
 		if(xPos == stopLeftX && yPos == stopTopY) {
 			g.fillRect(xPos-4, yPos+4, 5, 20);
@@ -292,7 +296,7 @@ public class BusGuiVertical extends CityGui {
 		}
 	}
 	
-	public void inAnIntersection() {
+	synchronized public void inAnIntersection() {
 		Rectangle me = new Rectangle(xPos, yPos, 25, 25);
 		
 		if (Phonebook.getPhonebook().intersection1.getIntersection().intersects(me) &&
@@ -317,7 +321,7 @@ public class BusGuiVertical extends CityGui {
 		}
 	}	
 	
-	public void inACrosswalk() {
+	synchronized public void inACrosswalk() {
 		Rectangle me = new Rectangle(xPos, yPos, 25, 25);
 		
 		if (Phonebook.getPhonebook().crosswalk1.getCrosswalk().intersects(me) &&
@@ -352,7 +356,7 @@ public class BusGuiVertical extends CityGui {
 		}
 	}
 	
-	public void leftAnIntersection() {
+	synchronized public void leftAnIntersection() {
 		Rectangle me = new Rectangle(xPos, yPos, 25, 25);
 		
 		if (!Phonebook.getPhonebook().intersection1.getIntersection().intersects(me)
@@ -377,7 +381,7 @@ public class BusGuiVertical extends CityGui {
 		}
 	}
 	
-	public void leftACrosswalk() {
+	synchronized public void leftACrosswalk() {
 		Rectangle me = new Rectangle(xPos, yPos, 25, 25);
 		
 		if (!Phonebook.getPhonebook().crosswalk1.getCrosswalk().intersects(me)

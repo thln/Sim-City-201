@@ -1,11 +1,12 @@
 package application.gui.animation.agentGui;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.Semaphore;
+
+import javax.swing.ImageIcon;
 
 import transportation.BusAgent;
 import application.Phonebook;
@@ -14,10 +15,12 @@ public class BusGuiHorizontal extends CityGui {
 
 	private BusAgent agent = null;
 	private boolean isPresent = true;
-	private boolean checkedStation = false;
+	private boolean checkedStation = false;	
+	ImageIcon busLeft = new ImageIcon("res/busLeft.png");
+	ImageIcon busRight = new ImageIcon("res/busRight.png");
 
 	private final int stopLeftX = (int) Phonebook.getPhonebook().getBusStops().get(0).getX();
-	private final int stopRightX = (int) Phonebook.getPhonebook().getBusStops().get(1).getX();;
+	private final int stopRightX = (int) Phonebook.getPhonebook().getBusStops().get(1).getX();
 	private final int stopTopY = 75;
 	private final int stopBottomY = 195;
 
@@ -112,10 +115,12 @@ public class BusGuiHorizontal extends CityGui {
 	}
 
 	public void draw(Graphics2D g) {
-		g.setColor(Color.BLUE);
-		g.fillOval(xPos, yPos, 25, 25);
-		g.setColor(Color.WHITE);
-		g.drawString("A", xPos + 9, yPos + 18);
+				if (yPos == stopTopY) {
+					g.drawImage(busRight.getImage(), xPos, yPos, null);
+				}
+				else {
+					g.drawImage(busLeft.getImage(), xPos, yPos, null);
+				}
 
 		if(xPos == stopLeftX && yPos == stopTopY) {
 			g.fillRect(xPos+4, yPos-4, 20, 5);
@@ -294,33 +299,36 @@ public class BusGuiHorizontal extends CityGui {
 	}
 
 
-	public void inAnIntersection() {
-		Rectangle me = new Rectangle(xPos, yPos, 25, 25);
 
-		if (Phonebook.getPhonebook().intersection1.getIntersection().intersects(me) &&
-				!(state == BusState.inIntersection1)) {
-			Phonebook.getPhonebook().intersection1.setIntersectionBusy(true);	
-			state = BusState.inIntersection1;
-		}
-		else if (Phonebook.getPhonebook().intersection2.getIntersection().intersects(me) &&
-				!(state == BusState.inIntersection2)) {
-			Phonebook.getPhonebook().intersection2.setIntersectionBusy(true);	
-			state = BusState.inIntersection2;
-		}
-		else if (Phonebook.getPhonebook().intersection3.getIntersection().intersects(me) &&
-				!(state == BusState.inIntersection3)) {
-			Phonebook.getPhonebook().intersection3.setIntersectionBusy(true);	
-			state = BusState.inIntersection3;
-		}
-		else if (Phonebook.getPhonebook().intersection4.getIntersection().intersects(me) &&
-				!(state == BusState.inIntersection4)) {
-			Phonebook.getPhonebook().intersection4.setIntersectionBusy(true);	
-			state = BusState.inIntersection4;			
-		}
+	synchronized public void inAnIntersection() {
+
+			Rectangle me = new Rectangle(xPos, yPos, 25, 25);
+
+	if (Phonebook.getPhonebook().intersection1.getIntersection().intersects(me) &&
+			!(state == BusState.inIntersection1)) {
+		Phonebook.getPhonebook().intersection1.setIntersectionBusy(true);	
+		state = BusState.inIntersection1;
 	}
+	else if (Phonebook.getPhonebook().intersection2.getIntersection().intersects(me) &&
+			!(state == BusState.inIntersection2)) {
+		Phonebook.getPhonebook().intersection2.setIntersectionBusy(true);	
+		state = BusState.inIntersection2;
+	}
+	else if (Phonebook.getPhonebook().intersection3.getIntersection().intersects(me) &&
+			!(state == BusState.inIntersection3)) {
+		Phonebook.getPhonebook().intersection3.setIntersectionBusy(true);	
+		state = BusState.inIntersection3;
+	}
+	else if (Phonebook.getPhonebook().intersection4.getIntersection().intersects(me) &&
+			!(state == BusState.inIntersection4)) {
+		Phonebook.getPhonebook().intersection4.setIntersectionBusy(true);	
+		state = BusState.inIntersection4;			
+	}
+		}
 
-	public void inACrosswalk() {
-		Rectangle me = new Rectangle(xPos, yPos, 25, 25);
+
+	synchronized public void inACrosswalk() {
+				Rectangle me = new Rectangle(xPos, yPos, 25, 25);
 
 		if (Phonebook.getPhonebook().crosswalk3.getCrosswalk().intersects(me) &&
 				!(state == BusState.inCrosswalk3)) {
@@ -352,66 +360,67 @@ public class BusGuiHorizontal extends CityGui {
 			Phonebook.getPhonebook().crosswalk10.setCrosswalkBusy(true);	
 			state = BusState.inCrosswalk10;
 		}
-	}
+			}
 
+	synchronized public void leftAnIntersection() {
 
-	public void leftAnIntersection() {
-		Rectangle me = new Rectangle(xPos, yPos, 25, 25);
+					Rectangle me = new Rectangle(xPos, yPos, 25, 25);
 
-		if (!Phonebook.getPhonebook().intersection1.getIntersection().intersects(me)
-				&& (state == BusState.inIntersection1)) {
-			Phonebook.getPhonebook().intersection1.setIntersectionBusy(false);	
-			state = BusState.enroute;	
-		}
-		else if (!Phonebook.getPhonebook().intersection2.getIntersection().intersects(me)
-				&& (state == BusState.inIntersection2)) {
-			Phonebook.getPhonebook().intersection2.setIntersectionBusy(false);	
-			state = BusState.enroute;	
-		}
-		else if (!Phonebook.getPhonebook().intersection3.getIntersection().intersects(me) 
-				&& (state == BusState.inIntersection3)) {
-			Phonebook.getPhonebook().intersection3.setIntersectionBusy(false);	
-			state = BusState.enroute;	
-		}
-		else if (!Phonebook.getPhonebook().intersection4.getIntersection().intersects(me)
-				&& (state == BusState.inIntersection4)) {
-			Phonebook.getPhonebook().intersection4.setIntersectionBusy(false);	
-			state = BusState.enroute;	
-		}
-	}
+			if (!Phonebook.getPhonebook().intersection1.getIntersection().intersects(me)
+					&& (state == BusState.inIntersection1)) {
+				Phonebook.getPhonebook().intersection1.setIntersectionBusy(false);	
+				state = BusState.enroute;	
+			}
+			else if (!Phonebook.getPhonebook().intersection2.getIntersection().intersects(me)
+					&& (state == BusState.inIntersection2)) {
+				Phonebook.getPhonebook().intersection2.setIntersectionBusy(false);	
+				state = BusState.enroute;	
+			}
+			else if (!Phonebook.getPhonebook().intersection3.getIntersection().intersects(me) 
+					&& (state == BusState.inIntersection3)) {
+				Phonebook.getPhonebook().intersection3.setIntersectionBusy(false);	
+				state = BusState.enroute;	
+			}
+			else if (!Phonebook.getPhonebook().intersection4.getIntersection().intersects(me)
+					&& (state == BusState.inIntersection4)) {
+				Phonebook.getPhonebook().intersection4.setIntersectionBusy(false);	
+				state = BusState.enroute;	
+			}
+				}
 
-	public void leftACrosswalk() {
-		Rectangle me = new Rectangle(xPos, yPos, 25, 25);
+	synchronized public void leftACrosswalk() {
 
-		if (!Phonebook.getPhonebook().crosswalk3.getCrosswalk().intersects(me)
-				&& (state == BusState.inCrosswalk3)) {
-			Phonebook.getPhonebook().crosswalk3.setCrosswalkBusy(false);	
-			state = BusState.enroute;	
-		}
-		else if (!Phonebook.getPhonebook().crosswalk4.getCrosswalk().intersects(me)
-				&& (state == BusState.inCrosswalk4)) {
-			Phonebook.getPhonebook().crosswalk4.setCrosswalkBusy(false);	
-			state = BusState.enroute;	
-		}
-		else if (!Phonebook.getPhonebook().crosswalk5.getCrosswalk().intersects(me)
-				&& (state == BusState.inCrosswalk5)) {
-			Phonebook.getPhonebook().crosswalk5.setCrosswalkBusy(false);	
-			state = BusState.enroute;	
-		}
-		else if (!Phonebook.getPhonebook().crosswalk8.getCrosswalk().intersects(me)
-				&& (state == BusState.inCrosswalk8)) {
-			Phonebook.getPhonebook().crosswalk8.setCrosswalkBusy(false);	
-			state = BusState.enroute;	
-		}
-		else if (!Phonebook.getPhonebook().crosswalk9.getCrosswalk().intersects(me)
-				&& (state == BusState.inCrosswalk9)) {
-			Phonebook.getPhonebook().crosswalk9.setCrosswalkBusy(false);	
-			state = BusState.enroute;	
-		}
-		else if (!Phonebook.getPhonebook().crosswalk10.getCrosswalk().intersects(me)
-				&& (state == BusState.inCrosswalk10)) {
-			Phonebook.getPhonebook().crosswalk10.setCrosswalkBusy(false);	
-			state = BusState.enroute;	
-		}
-	}
-}
+						Rectangle me = new Rectangle(xPos, yPos, 25, 25);
+
+				if (!Phonebook.getPhonebook().crosswalk3.getCrosswalk().intersects(me)
+						&& (state == BusState.inCrosswalk3)) {
+					Phonebook.getPhonebook().crosswalk3.setCrosswalkBusy(false);	
+					state = BusState.enroute;	
+				}
+				else if (!Phonebook.getPhonebook().crosswalk4.getCrosswalk().intersects(me)
+						&& (state == BusState.inCrosswalk4)) {
+					Phonebook.getPhonebook().crosswalk4.setCrosswalkBusy(false);	
+					state = BusState.enroute;	
+				}
+				else if (!Phonebook.getPhonebook().crosswalk5.getCrosswalk().intersects(me)
+						&& (state == BusState.inCrosswalk5)) {
+					Phonebook.getPhonebook().crosswalk5.setCrosswalkBusy(false);	
+					state = BusState.enroute;	
+				}
+				else if (!Phonebook.getPhonebook().crosswalk8.getCrosswalk().intersects(me)
+						&& (state == BusState.inCrosswalk8)) {
+					Phonebook.getPhonebook().crosswalk8.setCrosswalkBusy(false);	
+					state = BusState.enroute;	
+				}
+				else if (!Phonebook.getPhonebook().crosswalk9.getCrosswalk().intersects(me)
+						&& (state == BusState.inCrosswalk9)) {
+					Phonebook.getPhonebook().crosswalk9.setCrosswalkBusy(false);	
+					state = BusState.enroute;	
+				}
+				else if (!Phonebook.getPhonebook().crosswalk10.getCrosswalk().intersects(me)
+						&& (state == BusState.inCrosswalk10)) {
+					Phonebook.getPhonebook().crosswalk10.setCrosswalkBusy(false);	
+					state = BusState.enroute;	
+				}
+					}
+				}

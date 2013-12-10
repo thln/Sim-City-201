@@ -39,7 +39,7 @@ public class SeafoodRestaurant implements Restaurant {
 
 	public SeafoodRestaurant(String name) {
 		this.name = name;
-		location = new Point(200, 20);
+		location = new Point(440, 132);
 		//seafoodRestaurantCookRole.setGui(cookGui);
 	}
 
@@ -47,12 +47,12 @@ public class SeafoodRestaurant implements Restaurant {
 	public Role arrivedAtWork(Person person, String title)  {
 
 		if (title == "host") {
-			//Setting previous bank guard role to inactive
+			//Setting previous host role to inactive
 			if (seafoodRestaurantHostRole.getPerson() != null) {
 				Worker worker = (Worker) seafoodRestaurantHostRole.getPerson();
 				worker.roleFinishedWork();
 			}
-			//Setting bank guard role to new role
+			//Setting host role to new role
 			seafoodRestaurantHostRole.setPerson(person);
 			if (isOpen()) {
 				seafoodRestaurantHostRole.msgRestaurantOpen();
@@ -158,21 +158,17 @@ public class SeafoodRestaurant implements Restaurant {
 		Worker worker = (Worker) person;
 
 		if (worker.getWorkerRole().equals(seafoodRestaurantHostRole)) {
-			seafoodRestaurantHostRole = null;
+			seafoodRestaurantHostRole.person = null;
 			//restPanel.removeGui(worker.getWorkerRole().gui);
 		}
 		if (worker.getWorkerRole().equals(seafoodRestaurantCashierRole)) {
-			seafoodRestaurantCashierRole = null;
+			seafoodRestaurantCashierRole.person = null;
 		}
 		if (worker.getWorkerRole().equals(seafoodRestaurantCookRole)) {
-			seafoodRestaurantCookRole = null;
+			seafoodRestaurantCookRole.person = null;
 			//restPanel.removeGui(cookGui);
 		}
-		//WAITERS AND ALT WAITERS
-		//finish the "leave work" in Role.java 
-		//make function in host to delete waiter
-		//waiters have to finish duties before finishing waiter & no assignments
-		//look at onBreak code to follow
+		worker.workerRole = null;
 	}
 
 	public String getName() {
