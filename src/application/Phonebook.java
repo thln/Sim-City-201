@@ -188,19 +188,16 @@ public class Phonebook{
 		
 
 		seafoodRestaurant = new SeafoodRestaurant("Seafood Restaurant");
-//		seafoodRestaurant.setClosestSop(busStops.get(2));
+//		seafoodRestaurant.setClosestStop(2));
 		
 		chineseRestaurant = new ChineseRestaurant("Chinese Restaurant");
-		chineseRestaurant.setClosestStop(busStops.get(2));		//setting building's closest bus stop
 		chineseRestaurant.setClosestBusStopNumber(2);			//setting building's closest bus stop
 		
 		italianRestaurant = new ItalianRestaurant("Italian Restaurant");
-		italianRestaurant.setClosestStop(busStops.get(1));		//setting building's closest bus stop
+		italianRestaurant.setClosestBusStopNumber(2);		//setting building's closest bus stop
 		
 		americanRestaurant = new AmericanRestaurant("American Restaurant");
-		
-		italianRestaurant.setClosestStop(busStops.get(2));		//setting building's closest bus stop
-		chineseRestaurant.setClosestBusStopNumber(2);			//setting building's closest bus stop
+		//americanRestaurant.setClosestStop(2);
 
 		/* For future use after all the restaurants have been integrated
 		 * 
