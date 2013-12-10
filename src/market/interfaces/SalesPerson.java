@@ -13,7 +13,7 @@ public interface SalesPerson {
 	public void msgIWantProducts(MarketCustomer customer, String item,
 			int numWanted);
 
-	public void msgIWantProducts(Restaurant restaurant, String item, int numWanted);
+	public void msgIWantProducts(ChineseRestaurant chineseRestaurant, String item, int numWanted);
 
 	public void msgOrderFulfilled(MarketOrder o);
 
@@ -21,7 +21,9 @@ public interface SalesPerson {
 
 	public void msgPayment(MarketCustomer customer, double payment);
 
-	public void msgPayment(Restaurant restaurant, double payment);
+	public void msgPayment(SeafoodRestaurant seafoodRestaurant, double payment);
+		
+	public void msgPayment(ChineseRestaurant restaurant, double payment);
 
 	//Actions
 	public void findItems(MarketOrder o);

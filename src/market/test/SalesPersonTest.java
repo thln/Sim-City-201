@@ -116,7 +116,7 @@ public class SalesPersonTest extends TestCase {
 				+ salesPerson.log.toString(), 0, salesPerson.log.size());
 
 		//Step 1
-		salesPerson.msgIWantProducts((Restaurant) chineseRestaurant, "Steak", 1);
+		salesPerson.msgIWantProducts(chineseRestaurant, "Steak", 1);
 
 		//Checking post conditions for step 1
 		assertEquals("Sales Person should have 1 order in it", salesPerson.orders.size(), 1);

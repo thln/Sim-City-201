@@ -66,10 +66,36 @@ public class UPSmanRole extends Role implements UPSman {
 
 	//Actions
 	public void deliverOrder(MarketOrder o) {
-		print("Delivered order ot restaurant");
-//		o.restaurant.getCook(test).msgOrderFulfillment(o.item, o.itemAmountFulfilled, o.itemAmountOrdered);
-		market.getSalesPerson(test).msgOrderDelivered(o);
-		orders.remove(o);
+
+		print("Delivered an order to a restaurant");
+		if (o.chineseRestaurant != null) {
+			o.chineseRestaurant.getCook(test).msgOrderFulfillment(o.item, o.itemAmountFulfilled, o.itemAmountOrdered);
+			market.getSalesPerson(test).msgOrderDelivered(o);
+			orders.remove(o);
+			return;
+		}
+		
+		if (o.seafoodRestaurant != null) {
+			//Must send then order back
+			market.getSalesPerson(test).msgOrderDelivered(o);
+			orders.remove(o);
+			return;
+		}
+
+		if (o.italianRestaurant != null) {
+			//Must sent the order back
+			market.getSalesPerson(test).msgOrderDelivered(o);
+			orders.remove(o);
+			return;
+		}
+		
+		if (o.americanRestaurant != null) {
+			o.americanRestaurant.americanCook.msgHereIsYourOrder(o.item);
+			market.getSalesPerson(test).msgOrderDelivered(o);
+			orders.remove(o);
+			return;
+		}
+		return;
 	}
 	
 	public void setGui(MarketUPSmanGui gui) {

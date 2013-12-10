@@ -1,11 +1,12 @@
 package market.test;
 
-import application.Phonebook;
-import person.Wealthy;
+import junit.framework.TestCase;
+import market.Market;
 import market.MarketCustomerRole;
 import market.MarketCustomerRole.MarketCustomerState;
 import market.test.mock.MockSalesPerson;
-import junit.framework.*;
+import person.Wealthy;
+import application.Phonebook;
 
 
 public class MarketCustomerTest extends TestCase {
@@ -13,6 +14,7 @@ public class MarketCustomerTest extends TestCase {
 	Wealthy wealthy;
 	MarketCustomerRole marketCustomer;
 	MockSalesPerson marketSalesPerson;
+	Market market;
 
 	/**
 	 * This method is run before each test. You can use it to instantiate the class variables
@@ -21,10 +23,12 @@ public class MarketCustomerTest extends TestCase {
 
 	public void setUp() throws Exception {
 		super.setUp();
+		market = Phonebook.getPhonebook().getEastMarket();
 		wealthy = new Wealthy("Wealthy Person", 10);
 		marketCustomer = new MarketCustomerRole(wealthy, "AmericanRestaurantCustomer", "Market AmericanRestaurantCustomer");
 		marketSalesPerson = (MockSalesPerson) Phonebook.getPhonebook().getEastMarket().getSalesPerson(true);
 		marketCustomer.test = true;
+		marketCustomer.setMarket(market);
 	}
 
 	public void testOneMarketCustomerPaymentNormativeScenerio() {
