@@ -14,6 +14,7 @@ import person.Role;
 import agent.Agent;
 import americanRestaurant.AmericanRestaurantCustomerRole;
 import application.Phonebook;
+import application.Restaurant;
 import application.TimeManager;
 import application.gui.trace.AlertLog;
 import application.gui.trace.AlertTag;
@@ -49,6 +50,7 @@ public abstract class Person extends Agent{
 	public boolean hasFoodInFridge = false;
 	public enum HungerLevel {full, moderate, hungry};
 	protected HungerLevel hunger;
+	protected List<String> restaurantQueue;
 	int eatTime = 4;
 	protected Semaphore eating = new Semaphore(0, true);
 
@@ -82,6 +84,13 @@ public abstract class Person extends Agent{
 		atDestination = new Semaphore(0,true);
 		setHunger(HungerLevel.full);
 		hasFoodInFridge = false;
+
+		//add restaurants to queue 
+		restaurantQueue.add("American Restaurant");
+		restaurantQueue.add("Chinese Restaurant");
+		restaurantQueue.add("Italian Restaurant");
+		//	restaurantQueue.add("Chinese Restaurant");
+		restaurantQueue.add("Seafood Restaurant");
 	}
 
 	public void msgAtDestination() {
@@ -290,33 +299,30 @@ public abstract class Person extends Agent{
 	}
 
 	protected void prepareForRestaurant() {
-		Worker me = (Worker)  this;
-		if (me.myJob.jobPlace == "East Bank"){
-			for (Role cust1 : roles) {
-				if (cust1 instanceof AmericanRestaurantCustomerRole) {
-					AmericanRestaurantCustomerRole RCR = (AmericanRestaurantCustomerRole) cust1;
-					if (Phonebook.getPhonebook().getAmericanRestaurant().customerArrived(RCR)) {
-						print("Going to american restaurant");
-						currentRoleName = "American Restaurant Customer";
-						cust1.setRoleActive();
-						stateChanged();
-					}
-					return;
-				}
-			}
-		}
-		print ("Going to dif restaurant");
-		
-		gui.walk = gui.decideForBus("Chinese Restaurant");
+
+		String choice = restaurantQueue.get(0);
+		//Moving this choice to back of queue
+		restaurantQueue.remove(choice);
+		restaurantQueue.add(choice);
+
+		gui.walk = gui.decideForBus(choice);
 
 		if (!gui.walk){
-			if (home.type.equals("East Apartment")){
-				gui.doGoToBus(Phonebook.getPhonebook().getEastBank().getClosestStop().getX(),
-						Phonebook.getPhonebook().getEastBank().getClosestStop().getY());
+			if (choice.contains("American")){
+				gui.doGoToBus(Phonebook.getPhonebook().getAmericanRestaurant().getClosestStop().getX(),
+						Phonebook.getPhonebook().getAmericanRestaurant().getClosestStop().getY());
 			}
-			else {
-				gui.doGoToBus(Phonebook.getPhonebook().getWestBank().getClosestStop().getX(),
-						Phonebook.getPhonebook().getWestBank().getClosestStop().getY());
+			if (choice.contains("Chinese")){
+				gui.doGoToBus(Phonebook.getPhonebook().getChineseRestaurant().getClosestStop().getX(),
+						Phonebook.getPhonebook().getChineseRestaurant().getClosestStop().getY());
+			}
+			if (choice.contains("Italian")){
+				gui.doGoToBus(Phonebook.getPhonebook().getItalianRestaurant().getClosestStop().getX(),
+						Phonebook.getPhonebook().getAmericanRestaurant().getClosestStop().getY());
+			}
+			if (choice.contains("Seafood")){
+				gui.doGoToBus(Phonebook.getPhonebook().getSeafoodRestaurant().getClosestStop().getX(),
+						Phonebook.getPhonebook().getAmericanRestaurant().getClosestStop().getY());
 			}
 		}
 

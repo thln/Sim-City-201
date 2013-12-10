@@ -2,6 +2,8 @@ package seafoodRestaurant;
 import java.awt.Point;
 import java.util.Vector;
 
+import javax.swing.JComponent;
+
 import person.Person;
 import person.Role;
 import person.Worker;
@@ -233,5 +235,10 @@ public class SeafoodRestaurant implements Restaurant {
 		//restPanel.removeGui(cookGui);
 
 		seafoodRestaurantCashierRole.msgLeaveRole();
+	}
+
+	public int getClosestStop() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

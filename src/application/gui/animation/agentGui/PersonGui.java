@@ -320,6 +320,11 @@ public class PersonGui extends CityGui {
 			yDestination = (int) Phonebook.getPhonebook().getChineseRestaurant().location.getY();
 			command = Command.GoToRestaurant;
 		}
+		if (location.equals("American Restaurant")) {
+			xDestination = (int) Phonebook.getPhonebook().getAmericanRestaurant().location.getX();
+			yDestination = (int) Phonebook.getPhonebook().getAmericanRestaurant().location.getY();
+			command = Command.GoToRestaurant;
+		}
 
 		currentBlock = returnCurrentBlock (xPos, yPos);
 		destinationBlock = returnCurrentBlock (xDestination, yDestination);

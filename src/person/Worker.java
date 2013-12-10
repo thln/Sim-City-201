@@ -123,15 +123,6 @@ public class Worker extends Person {
 				}
 			}
 		}
-
-		if (myJob.jobPlace == "East Market"){
-			prepareForWork();
-		}
-		
-		if (myJob.jobPlace == "East Bank"){
-			prepareForRestaurant();
-			return true;
-		}
 		
 		int currentTime = TimeManager.getTimeManager().getTime().dayHour;
 
@@ -227,18 +218,7 @@ public class Worker extends Person {
 	public void prepareForWork() {
 		currentRoleName = myJob.title;
 		print("Preparing for work as " + myJob.title + " at " + myJob.jobPlace);
-		
-		if (myJob.jobPlace.equals("West Market")){
-			workerRole = Phonebook.getPhonebook().getWestMarket().arrivedAtWork(this, myJob.title);
-			workerRole.setRoleActive();
-			return;
-		}
-		if (myJob.jobPlace.equals("American Restaurant")){		
-			workerRole = Phonebook.getPhonebook().getAmericanRestaurant().arrivedAtWork(this, myJob.title);	
-			workerRole.setRoleActive();
-			return;
-		}
-		
+
 		gui.walk = gui.decideForBus(myJob.jobPlace);		
 		if (gui.walk)
 			gui.popToMiddle();
