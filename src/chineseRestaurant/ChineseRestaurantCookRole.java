@@ -78,7 +78,9 @@ public class ChineseRestaurantCookRole extends Role implements ChineseRestaurant
 			print("Order received for table " + table);
 			ChineseRestaurantOrder chineseRestaurantOrder = new ChineseRestaurantOrder(table, choice, chineseRestaurantWaiterRole);
 			myOrders.add(chineseRestaurantOrder);
-			stateChanged();
+			if (person != null){
+				stateChanged();
+			}
 		}
 	}
 
