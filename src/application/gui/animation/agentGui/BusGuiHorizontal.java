@@ -19,8 +19,8 @@ public class BusGuiHorizontal extends CityGui {
 	ImageIcon busLeft = new ImageIcon("res/busLeft.png");
 	ImageIcon busRight = new ImageIcon("res/busRight.png");
 
-	private final int stopLeftX = (int) Phonebook.getPhonebook().getBusStops().get(0).getX();
-	private final int stopRightX = (int) Phonebook.getPhonebook().getBusStops().get(1).getX();
+	private final int stopLeftX = (int) Phonebook.getPhonebook().getAllBusStops().get(1).getBusStopLocation().getX();
+	private final int stopRightX = (int) Phonebook.getPhonebook().getAllBusStops().get(2).getBusStopLocation().getX();
 	private final int stopTopY = 75;
 	private final int stopBottomY = 195;
 

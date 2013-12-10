@@ -124,44 +124,13 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		g2.fillRect(0, 0, WINDOWX, WINDOWY );
 		g2.drawImage(background, 0, 0, null);
 
-		//Horizontal Roads 1
-//		g2.drawImage(roadHorizontal.getImage(), 0, 70, null);
-//		g2.drawImage(roadHorizontal.getImage(), 73, 70, null);
-//		g2.drawImage(roadHorizontal.getImage(), 146, 70, null);
-//		g2.drawImage(roadHorizontal.getImage(), 219, 70, null);
-//		g2.drawImage(roadHorizontal.getImage(), 292, 70, null);
-//		g2.drawImage(roadHorizontal.getImage(), 365, 70, null);
-//		g2.drawImage(roadHorizontal.getImage(), 438, 70, null);
-//		g2.drawImage(roadHorizontal.getImage(), 511, 70, null);
+		//Horizontal Roads
 		g2.setColor(Color.BLACK);
 		g2.fillRect(0, 70, 600, 39);
-
-		//Horizontal Roads 2
-//		g2.drawImage(roadHorizontal.getImage(), 0, 190, null);
-//		g2.drawImage(roadHorizontal.getImage(), 73, 190, null);
-//		g2.drawImage(roadHorizontal.getImage(), 146, 190, null);
-//		g2.drawImage(roadHorizontal.getImage(), 219, 190, null);
-//		g2.drawImage(roadHorizontal.getImage(), 292, 190, null);
-//		g2.drawImage(roadHorizontal.getImage(), 365, 190, null);
-//		g2.drawImage(roadHorizontal.getImage(), 438, 190, null);
-//		g2.drawImage(roadHorizontal.getImage(), 511, 190, null);
 		g2.fillRect(0, 190, 600, 39);
 
-		//Vertical Roads 1
-//		g2.drawImage(roadVertical.getImage(), 160, 0, null);
-//		g2.drawImage(roadVertical.getImage(), 160, 73, null);
-//		g2.drawImage(roadVertical.getImage(), 160, 146, null);
-//		g2.drawImage(roadVertical.getImage(), 160, 219, null);
-//		g2.drawImage(roadVertical.getImage(), 160, 292, null);
-		
+		//Vertical Roads
 		g2.fillRect(160, 0, 39, 325);
-
-		//Vertical Roads 2
-//		g2.drawImage(roadVertical.getImage(), 380, 0, null);
-//		g2.drawImage(roadVertical.getImage(), 380, 73, null);
-//		g2.drawImage(roadVertical.getImage(), 380, 146, null);
-//		g2.drawImage(roadVertical.getImage(), 380, 219, null);
-//		g2.drawImage(roadVertical.getImage(), 380, 292, null);
 		g2.fillRect(380, 0, 39, 325);
 
 		//Intersections
@@ -191,28 +160,28 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		g2.drawImage(busStop.getImage(), 127, 230, null);
 		g2.drawImage(busStop.getImage(), 420, 28, null);
 		g2.drawImage(busStop.getImage(), 420, 230, null);
-		
+
 		//One Way Signs
 		g2.drawImage(oneWaySignLeft.getImage(), 330, 220, null);
 		g2.drawImage(oneWaySignRight.getImage(), 270, 30, null);
 		g2.drawImage(oneWaySignUp.getImage(), 200, 140, null);
 		g2.drawImage(oneWaySignDown.getImage(), 420, 110, null);
-		
+
 		//Benches
 		g2.drawImage(bench.getImage(), 5, 285, null);
 		g2.drawImage(bench.getImage(), 530, 40, null);
 		g2.drawImage(bench.getImage(), 440, 110, null);
 		g2.drawImage(bench.getImage(), 530, 230, null);
-		
+
 		//Fountain
 		g2.drawImage(fountain.getImage(), 215, 275, null);
-		
+
 		//Drawing all buildings
 		for (int i=0; i<buildings.size(); i++ ) {
 			Building b = buildings.get(i);
 			g2.drawImage(b.getMyImage().getImage(), b.getxLocation(), b.getyLocation(), null);
 		}
-		
+
 		//Park
 		g2.drawImage(hollywoodSign.getImage(), 230, 138, null);
 		g2.drawImage(bush.getImage(), 214, 105, null);
@@ -220,15 +189,15 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		g2.drawImage(bush.getImage(), 274, 105, null);
 		g2.drawImage(bush.getImage(), 304, 105, null);
 		g2.drawImage(bush.getImage(), 334, 105, null);
-		
+
 		g2.drawImage(bush.getImage(), 214, 165, null);
 		g2.drawImage(bush.getImage(), 244, 165, null);
 		g2.drawImage(bush.getImage(), 274, 165, null);
 		g2.drawImage(bush.getImage(), 304, 165, null);
 		g2.drawImage(bush.getImage(), 334, 165, null);
 
-		
-		
+
+
 		//Mansion trees
 		g2.drawImage(tree.getImage(), 0, 100, null);
 		g2.drawImage(tree.getImage(), 0, 125, null);

@@ -10,7 +10,7 @@ import application.Phonebook;
 import housing.*;
 import application.gui.animation.agentGui.*;
 
-public class AnimationPanel extends JPanel implements MouseListener {
+public class AnimationPanel extends JPanel implements MouseListener, ActionListener {
 
 	final static int WINDOWX = 600;
 	final static int WINDOWY = 325;
@@ -81,15 +81,17 @@ public class AnimationPanel extends JPanel implements MouseListener {
 			else if(name.toLowerCase().contains("park")){
 				panel = new ParkPanel(name, this);
 			}
-			
+
 			b.setMyBuildingPanel(panel);
 			setBuildingInPhonebook(b);
 			buildingPanels.add(panel, name);
 			add(BorderLayout.NORTH, cityPanel);
 			add(BorderLayout.SOUTH, buildingPanels);
+			Timer paintTimer = new Timer(10, this);
+			paintTimer.start();
 		}
 
-		
+
 		//UNCOMMENT THE FOLLOWING FOR TESTING ONLY!! re-comment to display final product
 		//testGuis();
 		/*
@@ -100,7 +102,7 @@ public class AnimationPanel extends JPanel implements MouseListener {
     	testbutton2.addMouseListener(this);
     	testbutton2.setBounds(100, 0, 100, 50);
     	cityPanel.add(testbutton2);
-		*/ 
+		 */ 
 		//testGuisTwo();
 		//testGuisThree();
 	}
@@ -115,7 +117,7 @@ public class AnimationPanel extends JPanel implements MouseListener {
 
 	public void setBuildingInPhonebook(Building building) {
 		//Phonebook.getPhonebook().getBusinessFromGui(building);
-		
+
 		/* This only allows for ONE of each type of building. In v2,
 		 * it is required to have multiple instances of each, so we
 		 * must code for that eventuality.
@@ -179,9 +181,9 @@ public class AnimationPanel extends JPanel implements MouseListener {
 			}
 		}
 
-//		cityPanel.addGui(car);
-//		cityPanel.addGui(bus);
-//		cityPanel.addGui(person);
+		//		cityPanel.addGui(car);
+		//		cityPanel.addGui(bus);
+		//		cityPanel.addGui(person);
 
 	}
 
@@ -242,7 +244,7 @@ public class AnimationPanel extends JPanel implements MouseListener {
 			}
 		}
 	}
-	
+
 	public void testGuisThree() {
 		for(Building building : buildings) {
 			if(building.getName().toLowerCase().contains("italian")) {
@@ -299,11 +301,11 @@ public class AnimationPanel extends JPanel implements MouseListener {
 			cityPanel.addGui(gui);
 		}
 	}
-	
+
 	public void addBuildingPanel(BuildingPanel panel) {
 		buildingPanels.add(panel, panel.name);
 	}
-	
+
 	public int getWindowX(){
 		return WINDOWX;
 	}
@@ -339,6 +341,23 @@ public class AnimationPanel extends JPanel implements MouseListener {
 				if(name.toLowerCase().contains("mansion")) {
 					HousingPanel hp = (HousingPanel) building.myBuildingPanel;
 					housing.setBuildingPanel(hp);
+				}
+			}
+		}
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		synchronized(buildings) {
+			if(!buildings.isEmpty()) {
+				for(Building building: buildings) {
+					if (building.myBuildingPanel != null) {
+						if(!building.myBuildingPanel.isVisible()) {
+							for(Gui gui : building.myBuildingPanel.guis) {
+								gui.updatePosition();
+							}
+						}
+					}
 				}
 			}
 		}
