@@ -273,4 +273,9 @@ public class ChineseRestaurant implements Restaurant {
 	public Point getClosestStop() {
 		return closestStop;
 	}
+	
+	public Vector<ChineseRestaurantCustomerRole> getCustomers()
+	{
+		return customers;
+	}
 }
