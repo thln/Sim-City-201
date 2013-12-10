@@ -150,4 +150,11 @@ public class SeafoodRestaurantCustomerGui implements Gui{
 		//yDestination = yCordOffscreen;
 		command = Command.LeaveRestaurant;
 	}
+	
+    public int getXPos() {
+    	return xCordCurrent;
+    }
+    public int getYPos() {
+    	return yCordCurrent;
+    }
 }

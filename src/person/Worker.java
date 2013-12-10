@@ -15,7 +15,7 @@ public class Worker extends Person {
 	//Data
 	public Job myJob = null;
 	public Role workerRole = null;
-	public boolean lateWorker;
+	public boolean leavingWork = false;
 
 	public Worker (String name, double money, String jobTitle, String jobPlace, int startT, int lunchT, int endT) {
 		super(name, money);
@@ -84,7 +84,9 @@ public class Worker extends Person {
 
 	public synchronized void roleFinishedWork(){                 //from worker role
 		print("Shift is over, time to leave work");
-		workerRole.setPerson(null);
+		workerRole.leaveRole = false;
+		leavingWork = false;
+		workerRole.setPerson(null);	
 		workerRole = null;
 		//	scheduleNextTask(TimeManager.getTimeManager().getTime().dayHour, myJob.startTime.hour);
 		stateChanged();
@@ -101,15 +103,20 @@ public class Worker extends Person {
 			int shiftLength = (((myJob.endTime.hour - myJob.startTime.hour) % 24) + 24) % 24;
 			if (workerRole.getState() == RoleState.active) {
 				//If my current time is more than the shift length since start time
-				if ((((((currentTime - myJob.startTime.hour) % 24) + 24) % 24) >= shiftLength)
-						&& (((((currentTime - myJob.startTime.hour) % 24) + 24) % 24) > 0)
-						&& ((((currentTime - myJob.startTime.hour) % 24) + 24) % 24) < 18){
+					if (!((((((currentTime - myJob.startTime.hour) % 24) + 24) % 24) >= shiftLength)
+							&& (((((currentTime - myJob.startTime.hour) % 24) + 24) % 24) > 0)
+							&& ((((currentTime - myJob.startTime.hour) % 24) + 24) % 24) < 18)){
+						return workerRole.pickAndExecuteAnAction();   
+				}
+				else if (!leavingWork){
+					leavingWork = true;
 					print("Off work at time = " + currentTime + " and shift length = " + shiftLength + " startTime = " + myJob.startTime.hour);
 					workerRole.msgLeaveRole();
 					return workerRole.pickAndExecuteAnAction();
-				}					
-				else
-					return workerRole.pickAndExecuteAnAction();                      
+				}	
+				else {
+					return workerRole.pickAndExecuteAnAction();
+				}
 			}
 		}
 
@@ -123,7 +130,7 @@ public class Worker extends Person {
 				}
 			}
 		}
-		
+
 		int currentTime = TimeManager.getTimeManager().getTime().dayHour;
 
 		//make sure user has not closed your business
@@ -166,7 +173,7 @@ public class Worker extends Person {
 			prepareForRent();
 			return true;
 		}
-		
+
 		//Hunger Related ( check if you are hungry)
 		if (getHunger() == HungerLevel.hungry) {
 			hunger = HungerLevel.full;
@@ -203,17 +210,17 @@ public class Worker extends Person {
 
 
 	//Actions
-//	private void scheduleNextTask(int currentTime, int nextTaskTime) {
-//		int timeConversion = 60 * TimeManager.getSpeedOfTime();
-//		//print("Next task time = " + nextTaskTime + " Current time = " + currentTime);
-//		print("Timer length = ms" + ((((nextTaskTime - currentTime) % 24) + 24) % 24) * timeConversion);
-//		nextTask.schedule(new TimerTask() {
-//			public void run() {        
-//				stateChanged();                
-//			}
-//		},
-//		((((nextTaskTime - currentTime) % 24) + 24) % 24) * timeConversion);
-//	}
+	//	private void scheduleNextTask(int currentTime, int nextTaskTime) {
+	//		int timeConversion = 60 * TimeManager.getSpeedOfTime();
+	//		//print("Next task time = " + nextTaskTime + " Current time = " + currentTime);
+	//		print("Timer length = ms" + ((((nextTaskTime - currentTime) % 24) + 24) % 24) * timeConversion);
+	//		nextTask.schedule(new TimerTask() {
+	//			public void run() {        
+	//				stateChanged();                
+	//			}
+	//		},
+	//		((((nextTaskTime - currentTime) % 24) + 24) % 24) * timeConversion);
+	//	}
 
 	public void prepareForWork() {
 		currentRoleName = myJob.title;
@@ -230,16 +237,16 @@ public class Worker extends Person {
 				print("Destination bus Stop: " + Phonebook.getPhonebook().getChineseRestaurant().getClosestBusStop().getBusStopNumber());
 				goToBusStop(Phonebook.getPhonebook().getChineseRestaurant().getClosestBusStop().getBusStopNumber());
 			}
-//			if (myJob.jobPlace.contains("Seafood")){
-//				print("Destination bus Stop: " + Phonebook.getPhonebook().getSeafoodRestaurant().getClosestBusStop().getBusStopNumber());
-//				goToBusStop(Phonebook.getPhonebook().getSeafoodRestaurant().getClosestBusStop().getBusStopNumber());
-//			}
+			//			if (myJob.jobPlace.contains("Seafood")){
+			//				print("Destination bus Stop: " + Phonebook.getPhonebook().getSeafoodRestaurant().getClosestBusStop().getBusStopNumber());
+			//				goToBusStop(Phonebook.getPhonebook().getSeafoodRestaurant().getClosestBusStop().getBusStopNumber());
+			//			}
 			if (myJob.jobPlace.contains("Italian")){
 				print("Destination bus Stop: " + Phonebook.getPhonebook().getItalianRestaurant().getClosestBusStop().getBusStopNumber());
 				goToBusStop(Phonebook.getPhonebook().getItalianRestaurant().getClosestBusStop().getBusStopNumber());
 			}
 		}
-		
+
 		try {
 			atDestination.acquire();
 			if (!gui.walk){
@@ -254,15 +261,15 @@ public class Worker extends Person {
 			e.printStackTrace();
 
 		}
-		
-			
+
+
 		if (myJob.jobPlace == "American Restaurant") 
 		{
 			workerRole = Phonebook.getPhonebook().getAmericanRestaurant().arrivedAtWork(this, myJob.title);
 			workerRole.setRoleActive();
 			return;
 		}
-		
+
 		if (myJob.jobPlace == "Chinese Restaurant") 
 		{
 			workerRole = Phonebook.getPhonebook().getChineseRestaurant().arrivedAtWork(this, myJob.title);
@@ -290,7 +297,7 @@ public class Worker extends Person {
 			workerRole.setRoleActive();
 			return;
 		}
-		
+
 		if (myJob.jobPlace == "West Market") 
 		{
 			workerRole = Phonebook.getPhonebook().getWestMarket().arrivedAtWork(this, myJob.title);
@@ -315,7 +322,7 @@ public class Worker extends Person {
 			else
 				return false;
 		}
-		
+
 		if (myJob.jobPlace.equals("West Bank")) {
 			if (!Phonebook.getPhonebook().getWestBank().userClosed)
 				return true;
@@ -329,7 +336,7 @@ public class Worker extends Person {
 			else
 				return false;
 		}
-		
+
 		if (myJob.jobPlace == "West Market") {
 			if (!Phonebook.getPhonebook().getWestMarket().userClosed)
 				return true;
@@ -343,7 +350,7 @@ public class Worker extends Person {
 			else
 				return false;
 		}
-		
+
 		if (myJob.jobPlace == "American Restaurant") 
 		{
 			if (!Phonebook.getPhonebook().getAmericanRestaurant().userClosed)

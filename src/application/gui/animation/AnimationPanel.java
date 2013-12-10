@@ -1,10 +1,12 @@
 package application.gui.animation;
 
 import javax.swing.*;
+import javax.swing.Timer;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
+import java.util.List;
+import java.util.*;
 
 import application.Phonebook;
 import housing.*;
@@ -19,13 +21,14 @@ public class AnimationPanel extends JPanel implements MouseListener, ActionListe
 	JPanel buildingPanels;
 	CardLayout cardLayout;
 	ArrayList<Building> buildings;
+	List<BuildingPanel> buildingPanelsList = Collections.synchronizedList(new ArrayList<BuildingPanel>());
 
 	//begin list of mechanisms for testing agent guis
 	JButton testbutton = new JButton("test");
 	JButton testbutton2 = new JButton("test2");
 	MarketRunnerGui market = new MarketRunnerGui();
 	BankLoanerGui bank = new BankLoanerGui();
-	HouseMaintenanceGui house = new HouseMaintenanceGui();
+	HousingMaintenanceGui house = new HousingMaintenanceGui();
 	RestaurantCookGui restaurant = new RestaurantCookGui();
 	ItalianCookGui italian = new ItalianCookGui();
 	//BusGui bus = new BusGui();
@@ -69,7 +72,7 @@ public class AnimationPanel extends JPanel implements MouseListener, ActionListe
 			else if(name.toLowerCase().contains("market")) {
 				panel = new MarketPanel(name, this );
 			}
-			else if(name.toLowerCase().contains("house")) {
+			else if(name.toLowerCase().contains("mansion")) {
 				panel = new HousingPanel(name, this );
 			}
 			else if(name.toLowerCase().contains("apartment")) {
@@ -85,6 +88,7 @@ public class AnimationPanel extends JPanel implements MouseListener, ActionListe
 			b.setMyBuildingPanel(panel);
 			setBuildingInPhonebook(b);
 			buildingPanels.add(panel, name);
+			buildingPanelsList.add(panel);
 			add(BorderLayout.NORTH, cityPanel);
 			add(BorderLayout.SOUTH, buildingPanels);
 			Timer paintTimer = new Timer(10, this);
@@ -143,6 +147,12 @@ public class AnimationPanel extends JPanel implements MouseListener, ActionListe
 			if(building.getName().toLowerCase().contains("west"))
 				Phonebook.getPhonebook().getWestBank().setBuildingPanel(building.myBuildingPanel);
 		}
+		if (building.getName().toLowerCase().contains("apartment")) {
+			if(building.getName().toLowerCase().contains("east"))
+				Phonebook.getPhonebook().getEastApartment().setBuildingPanel(building.myBuildingPanel);
+			if(building.getName().toLowerCase().contains("west"))
+				Phonebook.getPhonebook().getWestApartment().setBuildingPanel(building.myBuildingPanel);
+		}
 	}
 
 	public void testGuis() {
@@ -163,9 +173,9 @@ public class AnimationPanel extends JPanel implements MouseListener, ActionListe
 			}
 			if(building.getName().toLowerCase().contains("house")) {
 				//	building.myBuildingPanel.addGui(house);
-				building.myBuildingPanel.addGui(new HouseRenterGui());
-				building.myBuildingPanel.addGui(new HouseMaintenanceGui());
-				building.myBuildingPanel.addGui(new HouseLandlordGui());
+				building.myBuildingPanel.addGui(new HousingResidentGui());
+				building.myBuildingPanel.addGui(new HousingMaintenanceGui());
+				building.myBuildingPanel.addGui(new HousingLandlordGui());
 			}
 			if(building.getName().toLowerCase().contains("restaurant")) {
 				//	building.myBuildingPanel.addGui(restaurant);
@@ -191,9 +201,9 @@ public class AnimationPanel extends JPanel implements MouseListener, ActionListe
 		guis.add(new BankTellerGui());
 		guis.add(new BankLoanerGui());
 		guis.add(new BankGuardGui());
-		guis.add(new HouseRenterGui());
-		guis.add(new HouseMaintenanceGui());
-		guis.add(new HouseLandlordGui());
+		guis.add(new HousingResidentGui());
+		guis.add(new HousingMaintenanceGui());
+		guis.add(new HousingLandlordGui());
 		guis.add(new RestaurantCustomerGui());
 		guis.add(new RestaurantCookGui());
 		guis.add(new RestaurantWaiterGui());
@@ -230,7 +240,7 @@ public class AnimationPanel extends JPanel implements MouseListener, ActionListe
 			if(gui instanceof MarketGui) {
 				marketPanel.addGui(gui);
 			}
-			if(gui instanceof HouseGui) {
+			if(gui instanceof HousingGui) {
 				housePanel.addGui(gui);
 			}
 			if(gui instanceof RestaurantGui) {
@@ -298,6 +308,7 @@ public class AnimationPanel extends JPanel implements MouseListener, ActionListe
 
 	public void addBuildingPanel(BuildingPanel panel) {
 		buildingPanels.add(panel, panel.name);
+		buildingPanelsList.add(panel);
 	}
 
 	public int getWindowX(){
@@ -306,23 +317,35 @@ public class AnimationPanel extends JPanel implements MouseListener, ActionListe
 	public int getWindowY(){
 		return WINDOWY;
 	}
-
-	public void addAptUnit(Housing unit) {
-		//assigning apartment unit to either east or west apartment
-		for(Building building : buildings) {
-			String name = building.getName();
-			if(name.toLowerCase().contains("apartment")) {
-				if(name.toLowerCase().contains("east")) {
-					if(unit.type.toLowerCase().contains("east")) {
-						ApartmentPanel Apt = (ApartmentPanel) building.myBuildingPanel;
-						Apt.addAptUnit(unit);
+	
+	public void setHousingPanel(Housing housing) {
+		if(housing.type.toLowerCase().contains("apartment")) {
+			
+			//assigning apartment unit to either east or west apartment
+			for(Building building : buildings) {
+				String name = building.getName();
+				if(name.toLowerCase().contains("apartment")) {
+					if(name.toLowerCase().contains("east")) {
+						if(housing.type.toLowerCase().contains("east")) {
+							ApartmentPanel Apt = (ApartmentPanel) building.myBuildingPanel;
+							Apt.addAptUnit(housing);
+						}
+					}
+					else if(name.toLowerCase().contains("west")) {
+						if(housing.type.toLowerCase().contains("west")) {
+							ApartmentPanel Apt = (ApartmentPanel) building.myBuildingPanel;
+							Apt.addAptUnit(housing);
+						}
 					}
 				}
-				else if(name.toLowerCase().contains("west")) {
-					if(unit.type.toLowerCase().contains("west")) {
-						ApartmentPanel Apt = (ApartmentPanel) building.myBuildingPanel;
-						Apt.addAptUnit(unit);
-					}
+			} //for
+		}//end if
+		else if(housing.type.toLowerCase().contains("mansion")) {
+			for(Building building : buildings) {
+				String name = building.getName();
+				if(name.toLowerCase().contains("mansion")) {
+					HousingPanel hp = (HousingPanel) building.myBuildingPanel;
+					housing.setBuildingPanel(hp);
 				}
 			}
 		}
@@ -330,12 +353,12 @@ public class AnimationPanel extends JPanel implements MouseListener, ActionListe
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		synchronized(buildings) {
-			if(!buildings.isEmpty()) {
-				for(Building building: buildings) {
-					if (building.myBuildingPanel != null) {
-						if(!building.myBuildingPanel.isVisible()) {
-							for(Gui gui : building.myBuildingPanel.guis) {
+		synchronized(buildingPanelsList) {
+			if(!buildingPanelsList.isEmpty()) {
+				for(BuildingPanel building: buildingPanelsList) {
+					if (building != null) {
+						if(!building.isVisible()) {
+							for(Gui gui : building.guis) {
 								gui.updatePosition();
 							}
 						}

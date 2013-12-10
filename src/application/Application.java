@@ -51,62 +51,62 @@ public class Application extends JPanel {
 
 		//East Bank Workers
 		//SHIFT 1
-		Worker bank1a = new Worker("Alex", 100, "bankTeller", "East Bank", 1, 6, 14);
-		Worker bank1b = new Worker("Ben", 100, "loanOfficer", "East Bank", 1, 6, 14);
-		Worker bank1c = new Worker("Caitlyn", 100, "bankGuard", "East Bank", 0, 6, 13);
+		Worker bank1a = new Worker("Alex", 100, "bankTeller", "East Bank", 1, 6, 13);
+		Worker bank1b = new Worker("Ben", 100, "loanOfficer", "East Bank", 1, 6, 13);
+		Worker bank1c = new Worker("Caitlyn", 100, "bankGuard", "East Bank", 0, 6, 12);
 
 		//SHIFT 2
-		Worker bank2a = new Worker("Andy", 100, "bankTeller", "East Bank", 12, 18, 1);
-		Worker bank2b = new Worker("Billy", 100, "loanOfficer", "East Bank", 13, 18, 2);
-		Worker bank2c = new Worker("Courtney", 100, "bankGuard", "East Bank", 12, 18, 1);
+		Worker bank2a = new Worker("Andy", 100, "bankTeller", "East Bank", 13, 18, 1);
+		Worker bank2b = new Worker("Billy", 100, "loanOfficer", "East Bank", 13, 18, 1);
+		Worker bank2c = new Worker("Courtney", 100, "bankGuard", "East Bank", 12, 18, 0);
 
 		//West Bank Workers
 		//SHIFT 1
-		Worker bank3a = new Worker("Albert", 100, "bankTeller", "West Bank", 1, 6, 14);
-		Worker bank3b = new Worker("Bailey", 100, "loanOfficer", "West Bank", 1, 6, 14);
-		Worker bank3c = new Worker("Corey", 100, "bankGuard", "West Bank", 0, 6, 13);
+		Worker bank3a = new Worker("Albert", 100, "bankTeller", "West Bank", 1, 6, 13);
+		Worker bank3b = new Worker("Bailey", 100, "loanOfficer", "West Bank", 1, 6, 13);
+		Worker bank3c = new Worker("Corey", 100, "bankGuard", "West Bank", 0, 6, 12);
 
 		//SHIFT 2
-		Worker bank4a = new Worker("Ashley", 100, "bankTeller", "West Bank", 12, 18, 1);
-		Worker bank4b = new Worker("Brenna", 100, "loanOfficer", "West Bank", 13, 18, 2);
-		Worker bank4c = new Worker("Catherine", 100, "bankGuard", "West Bank", 12, 18, 1);
+		Worker bank4a = new Worker("Ashley", 100, "bankTeller", "West Bank", 13, 18, 1);
+		Worker bank4b = new Worker("Brenna", 100, "loanOfficer", "West Bank", 13, 18, 1);
+		Worker bank4c = new Worker("Catherine", 100, "bankGuard", "West Bank", 12, 18, 0);
 
 
 
 		//Market Workers
 		//SHIFT 1
-		Worker market1d = new Worker("Derrick", 10, "marketRunner", "East Market", 0, 600, 15);
-		Worker market1e = new Worker("Erin", 1000, "salesPerson", "East Market", 0, 600, 16);
-		Worker market1f = new Worker("Fred", 10, "UPSman", "East Market", 0, 600, 17);        
+		Worker market1d = new Worker("Derrick", 10, "marketRunner", "East Market", 0, 600, 12);
+		Worker market1e = new Worker("Erin", 1000, "salesPerson", "East Market", 0, 600, 12);
+		Worker market1f = new Worker("Fred", 10, "UPSman", "East Market", 0, 600, 12);        
 
 		//SHIFT 2
-		Worker market2d = new Worker("Daniel", 100, "marketRunner", "East Market", 13, 400, 3);
-		Worker market2e = new Worker("Elle", 200, "salesPerson", "East Market", 14, 400, 3);
-		Worker market2f = new Worker("Frenchy", 100, "UPSman", "East Market", 15, 400, 4);        
+		Worker market2d = new Worker("Daniel", 100, "marketRunner", "East Market", 12, 400, 0);
+		Worker market2e = new Worker("Elle", 200, "salesPerson", "East Market", 12, 400, 0);
+		Worker market2f = new Worker("Frenchy", 100, "UPSman", "East Market", 12, 400, 0);        
 
 		//Chinese Restaurant Workers
 		//SHIFT 1
-		Worker rest1h = new Worker("Henry", 100, "host", "Chinese Restaurant", 1, 1800, 14);
-		Worker rest1g = new Worker("Greg", 100, "cashier", "Chinese Restaurant", 2, 1800, 15);        
-		Worker rest1i = new Worker("Iris", 100, "cook", "Chinese Restaurant", 2, 1800, 15);
-		Worker rest1j = new Worker("Josh", 100, "waiter", "Chinese Restaurant", 2, 1800, 15);
-		Worker rest1k = new Worker("Kristi", 100, "altWaiter", "Chinese Restaurant", 1, 1800, 14);
+		Worker rest1h = new Worker("Henry", 100, "host", "Chinese Restaurant", 1, 1800, 13);
+		Worker rest1g = new Worker("Greg", 100, "cashier", "Chinese Restaurant", 2, 1800, 14);        
+		Worker rest1i = new Worker("Iris", 100, "cook", "Chinese Restaurant", 2, 1800, 14);
+		Worker rest1j = new Worker("Josh", 100, "waiter", "Chinese Restaurant", 2, 1800, 14);
+		Worker rest1k = new Worker("Kristi", 100, "altWaiter", "Chinese Restaurant", 1, 1800, 13);
 		//SHIFT 2
-		Worker rest2g = new Worker("Gil", 100, "cashier", "Chinese Restaurant", 13, 600, 2);
-		Worker rest2h = new Worker("Hannah", 100, "host", "Chinese Restaurant", 14, 600, 3);
-		Worker rest2i = new Worker("Isaac", 100, "cook", "Chinese Restaurant", 14, 600, 3);
-		Worker rest2j = new Worker("Jacob", 100, "waiter", "Chinese Restaurant", 13, 600, 2);
-		Worker rest2k = new Worker("Ken", 100, "altWaiter", "Chinese Restaurant", 14, 600, 3);
+		Worker rest2g = new Worker("Gil", 100, "cashier", "Chinese Restaurant", 13, 600, 1);
+		Worker rest2h = new Worker("Hannah", 100, "host", "Chinese Restaurant", 14, 600, 2);
+		Worker rest2i = new Worker("Isaac", 100, "cook", "Chinese Restaurant", 14, 600, 2);
+		Worker rest2j = new Worker("Jacob", 100, "waiter", "Chinese Restaurant", 13, 600, 1);
+		Worker rest2k = new Worker("Ken", 100, "altWaiter", "Chinese Restaurant", 14, 600, 2);
 
-		Worker house1 = new Worker("Parker", 100, "maintenance worker","housing maintenance company", 13, 600, 3 );
+		Worker house1 = new Worker("Parker", 100, "maintenance worker","housing maintenance company", 13, 600, 1);
 
 		//American Restaurant Workers
 		//SHIFT 1 (make sure to revert work start times)
-		Worker rest3h = new Worker("Holly", 100, "host", "American Restaurant", 0, 1800, 14);
-		Worker rest3g = new Worker("Gerald", 100, "cashier", "American Restaurant", 0, 1800, 15);        
-		Worker rest3i = new Worker("India", 100, "cook", "American Restaurant", 0, 1800, 15);
-		Worker rest3j = new Worker("Jan", 100, "waiter", "American Restaurant", 0, 1800, 15);
-		Worker rest3k = new Worker("Kris", 100, "altWaiter", "American Restaurant", 0, 1800, 14);
+		Worker rest3h = new Worker("Holly", 100, "host", "American Restaurant", 0, 1800, 12);
+		Worker rest3g = new Worker("Gerald", 100, "cashier", "American Restaurant", 0, 1800, 12);        
+		Worker rest3i = new Worker("India", 100, "cook", "American Restaurant", 0, 1800, 12);
+		Worker rest3j = new Worker("Jan", 100, "waiter", "American Restaurant", 0, 1800, 12);
+		Worker rest3k = new Worker("Kris", 100, "altWaiter", "American Restaurant", 0, 1800, 12);
 		
 		//!!!!Important -- Need to initialize setters 
 		//ex. waiter.setHost, waiter.setCook, waiter.setHost, 
@@ -261,11 +261,11 @@ public class Application extends JPanel {
 		getPopulation().add(bank4c);
 
 		//People
-		getPopulation().add(wealthy1);
-		getPopulation().add(wealthy2);
-
-		getPopulation().add(wealthy3);
-		getPopulation().add(wealthy4);
+//		getPopulation().add(wealthy1);
+//		getPopulation().add(wealthy2);
+//
+//		getPopulation().add(wealthy3);
+//		getPopulation().add(wealthy4);
 		getPopulation().add(crook1);
 
 //		Crook crook1 = new Crook("Vinny", 250);
@@ -277,16 +277,13 @@ public class Application extends JPanel {
 		
 		//Setting Gui for everyone
 		for (Person person : getPopulation()) {
-			person.setPanel(animPanel);
 			PersonGui pg = new PersonGui(person);
 			person.setGui(pg);
 			animPanel.addGui(pg);
 		}
 
-		for (Housing house : allHousing) {
-			if(house.type.toLowerCase().contains("apartment")) {
-				animPanel.addAptUnit(house);
-			}
+		for (Housing housing : allHousing) {
+			animPanel.setHousingPanel(housing);
 		}
 
 		//Starting Threads
@@ -330,11 +327,11 @@ public class Application extends JPanel {
 		bank4c.startThread();		
 
 		//People
-		wealthy1.startThread();
-		wealthy2.startThread();
-
-		wealthy3.startThread();
-		wealthy4.startThread();
+//		wealthy1.startThread();
+//		wealthy2.startThread();
+//
+//		wealthy3.startThread();
+//		wealthy4.startThread();
 		
 		crook1.startThread();
 		

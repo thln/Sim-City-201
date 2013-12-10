@@ -26,4 +26,11 @@ public class BankGui implements Gui {
 	public void DoExit() {
 		
 	}
+	
+	public int getXPos() {
+		return 0;
+	}
+    public int getYPos() {
+    	return 0;
+    }
 }

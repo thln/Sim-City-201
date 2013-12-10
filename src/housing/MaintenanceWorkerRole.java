@@ -7,6 +7,7 @@ import java.util.concurrent.Semaphore;
 
 import housing.Housing.housingState;
 import housing.interfaces.MaintenanceWorker;
+import application.gui.animation.agentGui.*;
 import application.Phonebook;
 import person.Person;
 import person.Role;
@@ -29,6 +30,7 @@ public class MaintenanceWorkerRole extends Role  implements MaintenanceWorker
 	public enum maintenanceState {Working, CheckingHouse, RefreshList};
 	public maintenanceState state = maintenanceState.Working;
 	//private Semaphore workingOnResidence = new Semaphore(0, true);
+	private HousingMaintenanceGui gui;
 
 	/* Shit isn't really necessary
 	class WorkOrder 
@@ -63,6 +65,7 @@ public class MaintenanceWorkerRole extends Role  implements MaintenanceWorker
 				if (h == houseNeedMain) 
 				{
 					h.state = housingState.UrgentWorkOrder;
+					stateChanged();
 				}
 			}
 		}
@@ -73,6 +76,7 @@ public class MaintenanceWorkerRole extends Role  implements MaintenanceWorker
 		if(!Phonebook.getPhonebook().getAllHousing(test).isEmpty())
 		{
 			state = maintenanceState.RefreshList;
+			stateChanged();
 		}
 	}
 	

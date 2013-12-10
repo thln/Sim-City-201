@@ -27,16 +27,6 @@ public class PersonGui extends CityGui {
 	Color transColor = new Color(0,0,0,1);
 	Color currColor;
 
-	//This is going to be used for future restaurants
-	private int xItalianLocation = (WINDOWX-100) + 15;
-	private int yItalianLocation = 20+10;
-	private int xMexicanLocation = (WINDOWX/2-75) + 15;
-	private int yMexicanLocation = (WINDOWY - 75) + 10;
-	private int xAmericanLocation = (WINDOWX - 100) + 15;
-	private int yAmericanLocation = (WINDOWY - 75) + 10;
-	private int xSeafoodLocation = (WINDOWX-100) + 15;
-	private int ySeafoodLocation = 150 + 10; //?
-
 	//Bus stops
 	private int startStopX;
 	private int startStopY;

@@ -1,6 +1,6 @@
 package person;
 
-import housing.Housing;
+import housing.*;
 
 import java.util.*;
 import java.util.concurrent.Semaphore;
@@ -30,10 +30,6 @@ public abstract class Person extends Agent{
 	private Timer alarmClock = new Timer();
 	private Timer hungerTimer = new Timer();
 	protected PersonGui gui;
-	BuildingPanel marketPanel = null;
-	BuildingPanel bankPanel = null;
-	BuildingPanel housePanel = null;
-	BuildingPanel restPanel = null;
 
 	//Role Related
 	public List<Role> roles = Collections.synchronizedList(new ArrayList<Role>());         //contains all the customer role
@@ -78,7 +74,8 @@ public abstract class Person extends Agent{
 	Person(String name, double moneyz) {
 		this.name = name;
 		this.money = moneyz;
-
+		roles.add(new ApartmentResidentRole(this, getName(), "Apartment Resident"));
+		roles.add(new HousingResidentRole(this, getName(), "Housing Resident"));
 		roles.add(new BankCustomerRole(this, getName(), "Bank Customer"));
 		roles.add(new MarketCustomerRole(this, getName(), "Market Customer"));
 		roles.add(new ChineseRestaurantCustomerRole(this, getName(), "Restaurant Customer", Phonebook.getPhonebook().getChineseRestaurant()));
@@ -126,7 +123,7 @@ public abstract class Person extends Agent{
 
 	//Actions
 	protected void eatAtHome() {
-		currentRoleName = "";
+		currentRoleName = "Housing Resident";
 		int timeConversion = 60 * TimeManager.getSpeedOfTime();
 		print("Going to eat at home");
 		nextTask.schedule(new TimerTask() {
@@ -368,10 +365,24 @@ public abstract class Person extends Agent{
 	protected void prepareForRestaurant() {
 
 		String choice = restaurantQueue.get(0);
-		//Moving this choice to back of queue
+		for (int i = 0; i < restaurantQueue.size(); i++){
+			choice = restaurantQueue.get(i);
+			if (choice.contains("American") && Phonebook.getPhonebook().getAmericanRestaurant().isOpen()){
+				break;
+			}
+			if (choice.contains("Chinese") && Phonebook.getPhonebook().getChineseRestaurant().isOpen()){
+				break;
+			}
+			if (choice.contains("Italian") && Phonebook.getPhonebook().getItalianRestaurant().isOpen()){
+				break;
+			}
+		}
+		
 		restaurantQueue.remove(choice);
 		restaurantQueue.add(choice);
 
+		//Moving this choice to back of queue
+		
 		gui.walk = gui.decideForBus(choice);
 
 		if (!gui.walk){
@@ -437,11 +448,11 @@ public abstract class Person extends Agent{
 			//				return;
 			//			}
 		}
-
 	}
 
 	protected void goToSleep() {
 		gui.walk = true;
+		
 		getGui().DoGoHome();
 		try {
 			atDestination.acquire();
@@ -449,9 +460,50 @@ public abstract class Person extends Agent{
 			e.printStackTrace();
 			//
 		}
-		//			}
-
-		currentRoleName = " ";
+		
+		//person is part of an apartment
+		if(getHousing().type.toLowerCase().contains("apartment")) {
+			if(getHousing().type.toLowerCase().contains("east")) {
+				for (Role cust1 : roles) {
+					if (cust1 instanceof ApartmentResidentRole) {
+							ApartmentResidentRole ARR = (ApartmentResidentRole) cust1;
+							if (Phonebook.getPhonebook().getEastApartment().arrived(ARR)) {
+								currentRoleName = "EAST Apartment Resident";
+								ARR.setRoleActive();
+								stateChanged();
+							}
+							return;
+					}
+				}
+			} else if (getHousing().type.toLowerCase().contains("west")) {
+				for (Role cust1 : roles) {
+					if (cust1 instanceof ApartmentResidentRole) {
+							ApartmentResidentRole ARR = (ApartmentResidentRole) cust1;
+							if (Phonebook.getPhonebook().getWestApartment().arrived(ARR)) {
+								currentRoleName = "WEST Apartment Resident";
+								cust1.setRoleActive();
+								stateChanged();
+							}
+							return;
+					}
+				}
+			}		
+		
+		//person is NOT part of an apartment
+		} else if(getHousing().type.toLowerCase().contains("Mansion")){  //CHANGE BACK TO MANSION
+			for (Role cust1 : roles) { 
+				if (cust1 instanceof HousingResidentRole) {
+					HousingResidentRole HRR = (HousingResidentRole) cust1;
+					if (getHousing().arrived(HRR)) {
+						currentRoleName = "Housing Resident";
+						cust1.setRoleActive();
+						stateChanged();
+					}
+					return;
+				}
+			}
+		}
+		
 		//After arrives home
 		alarmClock.schedule(new TimerTask() {
 			public void run() {
@@ -508,24 +560,6 @@ public abstract class Person extends Agent{
 
 	public void setGui(PersonGui g) {
 		this.gui = g;
-	}
-
-	public void setPanel(AnimationPanel ap) {
-		ArrayList<Building> buildings = ap.getBuildings();
-		for(Building building : buildings) {
-			if(building.getName().toLowerCase().contains("market")) {
-				marketPanel = building.myBuildingPanel;
-			}
-			if(building.getName().toLowerCase().contains("bank")) {
-				bankPanel = building.myBuildingPanel;
-			}
-			if(building.getName().toLowerCase().contains("house")) {
-				housePanel = building.myBuildingPanel;
-			}
-			if(building.getName().toLowerCase().contains("restaurant")) {
-				restPanel = building.myBuildingPanel;
-			}
-		}
 	}
 
 	public Semaphore getAtDestination() {

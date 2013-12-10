@@ -93,7 +93,7 @@ public class HousingPanel extends BuildingPanel implements MouseListener{
 		if(type.toLowerCase().contains("apartment")) {
 			g2.drawImage(arrow, 0, WINDOWY/2-50, null);
 		}
-
+		
 		synchronized(guis){
 			for(Gui gui : guis) {
 				if (gui.isPresent()) {
@@ -105,11 +105,10 @@ public class HousingPanel extends BuildingPanel implements MouseListener{
 				if (gui.isPresent()) {
 					gui.draw(g2);
 				}
-			}
-			
+			}	
 		}
 	}
-
+	
 	public void displayBuildingPanel() {
 		myCity.displayBuildingPanel(this);
 	}
@@ -131,6 +130,10 @@ public class HousingPanel extends BuildingPanel implements MouseListener{
 		if(arrowRect.contains(e.getX(), e.getY())) {
 			apartment.displayBuildingPanel();
 		}
+	}
+	
+	public void addGui(Gui gui) {
+		guis.add(gui);
 	}
 
 	public void mousePressed(MouseEvent e) { }
