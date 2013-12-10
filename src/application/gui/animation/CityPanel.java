@@ -22,8 +22,8 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import application.Phonebook;
-import application.gui.animation.agentGui.BusGuiHorizontal;
-import application.gui.animation.agentGui.BusGuiVertical;
+//import application.gui.animation.agentGui.BusGuiHorizontal;
+//import application.gui.animation.agentGui.BusGuiVertical;
 import application.gui.animation.agentGui.CopGui;
 import application.gui.animation.agentGui.Gui;
 import application.gui.animation.agentGui.VehicleHorizontalGui;

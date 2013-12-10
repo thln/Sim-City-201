@@ -45,7 +45,8 @@ public class Phonebook{
 	private List<Housing> publicAllHousing; //= Collections.synchronizedList(new ArrayList<Housing>());
 	private List<Housing> testHousing;// = Collections.synchronizedList(new ArrayList<Housing>());
 
-
+	private RadioStation cityDJ;
+	
 	//the following 4 lists are for dynamic building and business making in v2
 
 	public class Block {
@@ -196,6 +197,7 @@ public class Phonebook{
 		italianRestaurant = new ItalianRestaurant("Italian Restaurant");
 		italianRestaurant.setClosestBusStopNumber(2);		//setting building's closest bus stop
 		
+		cityDJ = new RadioStation();
 		americanRestaurant = new AmericanRestaurant("American Restaurant");
 		//americanRestaurant.setClosestStop(2);
 
@@ -220,7 +222,6 @@ public class Phonebook{
 			return phonebook;
 		}
 	}
-
 
 	public Bank getEastBank() {
 		return eastBank; 
@@ -288,6 +289,11 @@ public class Phonebook{
 	public void setHousingMaintenanceCompany(HousingMaintenanceCompany HMC)
 	{
 		this.housingMaintenanceCompany = HMC;
+	}
+	
+	public RadioStation getRadioStation()
+	{
+		return cityDJ;
 	}
 
 	public List<Point> getBusStops() {
