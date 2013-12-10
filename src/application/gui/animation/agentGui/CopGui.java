@@ -23,7 +23,7 @@ public class CopGui extends VehicleHorizontalGui {
 	}
 
 	public void updatePosition() {
-		if (inBusyIntersection() || inBusyCrosswalk()) {
+		if (inBusyIntersection() || inBusyCrosswalk() || inBusyBusParking()) {
 			return;
 		}
 
@@ -34,8 +34,10 @@ public class CopGui extends VehicleHorizontalGui {
 
 		inAnIntersection();
 		inACrosswalk();
+		inBusParking();
 		leftAnIntersection();
 		leftACrosswalk();
+		leftBusParking();
 
 		if (xPos == 600 || xPos == -25) {
 			changeRoads();

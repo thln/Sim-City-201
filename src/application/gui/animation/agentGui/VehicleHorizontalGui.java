@@ -22,7 +22,7 @@ public class VehicleHorizontalGui extends VehicleGui {
 	}
 
 	public void updatePosition() {
-		if (inBusyIntersection() || inBusyCrosswalk()) {
+		if (inBusyIntersection() || inBusyCrosswalk() || inBusyBusParking()) {
 			return;
 		}
 
@@ -33,8 +33,10 @@ public class VehicleHorizontalGui extends VehicleGui {
 
 		inAnIntersection();
 		inACrosswalk();
+		inBusParking();
 		leftAnIntersection();
 		leftACrosswalk();
+		leftBusParking();
 
 		if (xPos == 600 || xPos == -25) {
 			changeRoads();
@@ -161,6 +163,48 @@ public class VehicleHorizontalGui extends VehicleGui {
 			if (Phonebook.getPhonebook().crosswalk10.isCrosswalkBusy() == true &&
 					!(state == VehicleState.inCrosswalk10)) {
 				return true;
+			}
+			return false;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	synchronized public boolean inBusyBusParking() {
+		Rectangle me = new Rectangle(xPos+1, yPos, 25, 25);
+		
+		if (Phonebook.getPhonebook().busParking1H.getBusParking().intersects(me)) {
+			if (Phonebook.getPhonebook().busParking1H.isBusParkingBusy() == true &&
+					!(state == VehicleState.inBusParking1H)) {
+				return true;
+			}
+			return false;
+		}
+		
+		me.setLocation(xPos+1, yPos);
+		if (Phonebook.getPhonebook().busParking2H.getBusParking().intersects(me)) {
+			if (Phonebook.getPhonebook().busParking2H.isBusParkingBusy() == true &&
+					!(state == VehicleState.inBusParking2H)) {
+				return  true;
+			}
+			return false;
+		}
+		
+		me.setLocation(xPos-1, yPos);
+		if (Phonebook.getPhonebook().busParking3H.getBusParking().intersects(me)) {
+			if (Phonebook.getPhonebook().busParking3H.isBusParkingBusy() == true &&
+					!(state == VehicleState.inBusParking3H)) {
+				return  true;
+			}
+			return false;
+		}
+		
+		me.setLocation(xPos-1, yPos);
+		if (Phonebook.getPhonebook().busParking4H.getBusParking().intersects(me)) {
+			if (Phonebook.getPhonebook().busParking4H.isBusParkingBusy() == true &&
+					!(state == VehicleState.inBusParking4H)) {
+				return  true;
 			}
 			return false;
 		}

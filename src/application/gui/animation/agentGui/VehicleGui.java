@@ -19,7 +19,8 @@ public abstract class VehicleGui extends CityGui {
 
 	protected enum VehicleState {stopped, enroute,
 		inIntersection1, inIntersection2, inIntersection3, inIntersection4,
-		inCrosswalk1, inCrosswalk2, inCrosswalk3, inCrosswalk4, inCrosswalk5,inCrosswalk6, inCrosswalk7, inCrosswalk8, inCrosswalk9, inCrosswalk10, inCrosswalk11, inCrosswalk12};
+		inCrosswalk1, inCrosswalk2, inCrosswalk3, inCrosswalk4, inCrosswalk5,inCrosswalk6, inCrosswalk7, inCrosswalk8, inCrosswalk9, inCrosswalk10, inCrosswalk11, inCrosswalk12,
+		inBusParking1H,inBusParking2H,inBusParking3H,inBusParking4H,inBusParking1V,inBusParking2V,inBusParking3V, inBusParking4V};
 	VehicleState state = VehicleState.stopped;
 
 
@@ -225,6 +226,99 @@ public abstract class VehicleGui extends CityGui {
 		else if (!Phonebook.getPhonebook().crosswalk12.getCrosswalk().intersects(me)
 				&& (state == VehicleState.inCrosswalk12)) {
 			Phonebook.getPhonebook().crosswalk12.setCrosswalkBusy(false);	
+			state = VehicleState.enroute;	
+		}
+	}
+	
+	
+	public void inBusParking() {
+		System.err.println(this+"I'm in bus parking");
+		Rectangle me = new Rectangle(xPos, yPos, 25, 25);
+
+		if (Phonebook.getPhonebook().busParking1H.getBusParking().intersects(me) &&
+				!(state == VehicleState.inBusParking1H)) {
+			Phonebook.getPhonebook().busParking1H.setBusParkingBusy(true);	
+			state = VehicleState.inBusParking1H;
+		}
+		else if (Phonebook.getPhonebook().busParking2H.getBusParking().intersects(me) &&
+				!(state == VehicleState.inBusParking2H)) {
+			Phonebook.getPhonebook().busParking2H.setBusParkingBusy(true);	
+			state = VehicleState.inBusParking2H;
+		}	
+		else if (Phonebook.getPhonebook().busParking3H.getBusParking().intersects(me) &&
+				!(state == VehicleState.inBusParking3H)) {
+			Phonebook.getPhonebook().busParking3H.setBusParkingBusy(true);	
+			state = VehicleState.inBusParking3H;
+		}
+		else if (Phonebook.getPhonebook().busParking4H.getBusParking().intersects(me) &&
+				!(state == VehicleState.inBusParking4H)) {
+			Phonebook.getPhonebook().busParking4H.setBusParkingBusy(true);	
+			state = VehicleState.inBusParking4H;
+		}
+		else if (Phonebook.getPhonebook().busParking1V.getBusParking().intersects(me) &&
+				!(state == VehicleState.inBusParking1V)) {
+			Phonebook.getPhonebook().busParking1V.setBusParkingBusy(true);	
+			state = VehicleState.inBusParking1V;
+		}
+		else if (Phonebook.getPhonebook().busParking2V.getBusParking().intersects(me) &&
+				!(state == VehicleState.inBusParking2V)) {
+			Phonebook.getPhonebook().busParking2V.setBusParkingBusy(true);	
+			state = VehicleState.inBusParking2V;
+		}	
+		else if (Phonebook.getPhonebook().busParking3V.getBusParking().intersects(me) &&
+				!(state == VehicleState.inBusParking3V)) {
+			Phonebook.getPhonebook().busParking3V.setBusParkingBusy(true);	
+			state = VehicleState.inBusParking3V;
+		}
+		else if (Phonebook.getPhonebook().busParking4V.getBusParking().intersects(me) &&
+				!(state == VehicleState.inBusParking4V)) {
+			Phonebook.getPhonebook().busParking4V.setBusParkingBusy(true);	
+			state = VehicleState.inBusParking4V;
+		}
+	}
+
+	public void leftBusParking() {
+		System.err.println(this+ "I'm leaving bus parking");
+		Rectangle me = new Rectangle(xPos, yPos, 25, 25);
+
+		if (!Phonebook.getPhonebook().busParking1H.getBusParking().intersects(me)
+				&& (state == VehicleState.inBusParking1H)) {
+			Phonebook.getPhonebook().busParking1H.setBusParkingBusy(false);	
+			state = VehicleState.enroute;	
+		}
+		else if (!Phonebook.getPhonebook().busParking2H.getBusParking().intersects(me)
+				&& (state == VehicleState.inBusParking2H)) {
+			Phonebook.getPhonebook().busParking2H.setBusParkingBusy(false);	
+			state = VehicleState.enroute;	
+		}
+		else if (!Phonebook.getPhonebook().busParking3H.getBusParking().intersects(me)
+				&& (state == VehicleState.inBusParking3H)) {
+			Phonebook.getPhonebook().busParking3H.setBusParkingBusy(false);	
+			state = VehicleState.enroute;
+		}
+		else if (!Phonebook.getPhonebook().busParking4H.getBusParking().intersects(me)
+				&& (state == VehicleState.inBusParking4H)) {
+			Phonebook.getPhonebook().busParking4H.setBusParkingBusy(false);	
+			state = VehicleState.enroute;	
+		}
+		else if (!Phonebook.getPhonebook().busParking1V.getBusParking().intersects(me)
+				&& (state == VehicleState.inBusParking1V)) {
+			Phonebook.getPhonebook().busParking1V.setBusParkingBusy(false);	
+			state = VehicleState.enroute;	
+		}
+		else if (!Phonebook.getPhonebook().busParking2V.getBusParking().intersects(me)
+				&& (state == VehicleState.inBusParking2V)) {
+			Phonebook.getPhonebook().busParking2V.setBusParkingBusy(false);	
+			state = VehicleState.enroute;	
+		}
+		else if (!Phonebook.getPhonebook().busParking3V.getBusParking().intersects(me)
+				&& (state == VehicleState.inBusParking3V)) {
+			Phonebook.getPhonebook().busParking3V.setBusParkingBusy(false);	
+			state = VehicleState.enroute;
+		}
+		else if (!Phonebook.getPhonebook().busParking4V.getBusParking().intersects(me)
+				&& (state == VehicleState.inBusParking4V)) {
+			Phonebook.getPhonebook().busParking4H.setBusParkingBusy(false);	
 			state = VehicleState.enroute;	
 		}
 	}
