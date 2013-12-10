@@ -91,7 +91,7 @@ public class BankGuardRole extends Role implements BankGuard {
 
 	public void msgCustomerLeavingBank (BankTeller t1) {
 		customersInBank--;
-		print("AmericanRestaurantCustomer leaving, teller became available");
+		print("Customer leaving, teller became available");
 		MyTeller correct = findTeller(t1);
 		correct.state = TellerState.available;
 		if (person != null) {
@@ -188,12 +188,14 @@ public class BankGuardRole extends Role implements BankGuard {
 					if (teller1.tell1 instanceof Role)
 						print("Assigning " + ((Role) cust1).getPerson().getName() + " to teller " + teller1.tell1.getName());
 					cust1.msgGoToTeller(teller1.tell1);
-					gui.GoToTellers();
-					try {
-						this.atDestination.acquire();
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					if (!test){
+						gui.GoToTellers();
+						try {
+							this.atDestination.acquire();
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 					teller1.state = TellerState.busy;
 					customers.remove(cust1);

@@ -56,9 +56,9 @@ public class BusAgent extends Agent{
 	 * Bus arrives at bus stops and gets all waiting customers
 	 * Messages all sleeping customers to wake up
 	 * Customers responds by messaging bus I am getting on
-	 * AmericanRestaurantCustomer goes to sleep, Gui disappears
+	 * Customer goes to sleep, Gui disappears
 	 * Bus arrives at next bus stop, messages all customers with that destination
-	 * AmericanRestaurantCustomer wakes up, GUI reappears at that spot
+	 * Customer wakes up, GUI reappears at that spot
 	 * ***/
 
 	/*********************

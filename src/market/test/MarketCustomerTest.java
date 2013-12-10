@@ -25,7 +25,7 @@ public class MarketCustomerTest extends TestCase {
 		super.setUp();
 		market = Phonebook.getPhonebook().getEastMarket();
 		wealthy = new Wealthy("Wealthy Person", 10);
-		marketCustomer = new MarketCustomerRole(wealthy, "AmericanRestaurantCustomer", "Market AmericanRestaurantCustomer");
+		marketCustomer = new MarketCustomerRole(wealthy, "Market Customer", "Market Customer");
 		marketSalesPerson = (MockSalesPerson) Phonebook.getPhonebook().getEastMarket().getSalesPerson(true);
 		marketCustomer.test = true;
 		marketCustomer.setMarket(market);
