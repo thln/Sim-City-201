@@ -55,11 +55,11 @@ public class ChineseRestaurantCookRole extends Role implements ChineseRestaurant
 
 	}
 
-	public ChineseRestaurantCookRole(String roleName, ChineseRestaurant chineseRestaurant) {
+	public ChineseRestaurantCookRole(String roleName, ChineseRestaurant restaurant) {
 		super(roleName);
+		chineseRestaurant = restaurant;
 		//Starts revolving stand timer to check revolving stand
 		//startRevolvingStandTimer();
-		//this.restaurant = restaurant;
 		//theRevolvingStand = Phonebook.getPhonebook().getRestaurant().getRevolvingStand();
 	}
 
@@ -156,9 +156,9 @@ public class ChineseRestaurantCookRole extends Role implements ChineseRestaurant
 			}
 		}
 
-		if (leaveRole) {
-			chineseRestaurant.goingOffWork(person);
+		if (leaveRole && (person != null)) {
 			leaveRole = false;
+			chineseRestaurant.goingOffWork(person);		
 			return true;
 		}
 
