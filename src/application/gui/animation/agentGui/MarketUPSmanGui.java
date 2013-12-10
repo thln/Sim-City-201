@@ -13,10 +13,10 @@ public class MarketUPSmanGui extends MarketGui{
 
 	//RestaurantGui gui;
 
-    private int xPos = 500, yPos = 200;//default MarketRunner position
-    private int xDestination = 480, yDestination = 200;//default start position
+    private int xPos = WINDOWX, yPos = 200;//default MarketRunner position
+    private int xDestination = WINDOWX-100, yDestination = 200;//default start position
 	
-	private enum Command {noCommand};
+	private enum Command {noCommand, inTransit};
 	private Command command = Command.noCommand;
 
 	private enum CustomerState {nothing};
@@ -42,8 +42,11 @@ public class MarketUPSmanGui extends MarketGui{
 			yPos--;
 
 		if (xPos == xDestination && yPos == yDestination) {
+			if(command == Command.inTransit) {
 			if(agent != null)
 				agent.msgAtDestination();
+				//DoExit();
+			}
 			command = Command.noCommand;
 		}
 	}
@@ -78,8 +81,9 @@ public class MarketUPSmanGui extends MarketGui{
 	
 	public void DoGoToSalesPerson() { 
 		//goes to salesperson to pick up deliveries
-    	xDestination = 200;
-    	yDestination = 150;
+    	xDestination = 300;
+    	yDestination = 200;
+    	command = Command.inTransit;
 	}
 	
 	public void DoExit() { 
