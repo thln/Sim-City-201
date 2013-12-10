@@ -57,11 +57,6 @@ public class AddPanel extends JPanel implements ActionListener {
 	private boolean raveMode = false;	
 	boolean rave = false;
 
-	
-	//Music testing
-	AudioStream BGM;
-	AudioPlayer MGP = AudioPlayer.player;
-
 	private String[] personType = {" ", /*"Deadbeat", "Crook", */ "Worker", "Wealthy"};
 	private String[] jobLocation = {" ", "Restaurant", "Bank", "Market", "Housing"};
 	private String[] emptyList = {" "};
@@ -72,21 +67,6 @@ public class AddPanel extends JPanel implements ActionListener {
 
 	public AddPanel(ControlPanel cp, Application app)
 	{
-		try {
-			//InputStream test = new FileInputStream("res/audio/FurElise.wav");
-			InputStream test = new FileInputStream("res/audio/raveAudioMode.wav");
-			BGM = new AudioStream(test);
-	        //MGP.start(BGM);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			System.out.println("Won't work1.");
-			return;
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.out.println("Won't work.");
-			return;
-		}
-		
 		
 		//initialization
 		this.cp = cp;
@@ -327,28 +307,12 @@ public class AddPanel extends JPanel implements ActionListener {
 		if (e.getSource() == raveButton) {
 			for (Person p : app.getPopulation()) {
 				p.getGui().setRaveMode();
-//				try {
-//					RaveAudioMode();
-//				} catch (LineUnavailableException e1) {
-//					// TODO Auto-generated catch block
-//					e1.printStackTrace();
-//				} catch (UnsupportedAudioFileException e1) {
-//					// TODO Auto-generated catch block
-//					e1.printStackTrace();
-//				}
 			}
 			if (!rave){
 				rave = true;
 				try {
 					app.animPanel.cityPanel.background = ImageIO.read(new File("res/rave.jpeg"));
 					Phonebook.getPhonebook().getRadioStation().startRaveMusic();
-//					MGP.start(BGM);
-//					if(MGP.isInterrupted())
-//					{
-//						MGP.resume();
-//					}
-					
-					//app.animPanel.cityPanel.paint
 				} catch (IOException e1) {
 				}
 				return;
@@ -358,71 +322,11 @@ public class AddPanel extends JPanel implements ActionListener {
 				try {
 					app.animPanel.cityPanel.background = ImageIO.read(new File("res/concrete.jpg"));
 					Phonebook.getPhonebook().getRadioStation().startBGMusic();
-//					MGP.stop(BGM);
-//					MGP.interrupt();
 				} catch (IOException e1) {
 				}
 				return;
 			}
 		}
-	}
-
-	
-	
-	public void RaveAudioMode() throws LineUnavailableException, UnsupportedAudioFileException
-	{
-
-		//AudioPlayer MGP = AudioPlayer.player;
-		//AudioStream BGM;
-		
-		
-		//AudioInputStream BGM;
-		//AudioData MD;
-		//ContinuousAudioDataStream loop = null;
-		//try 
-		//{
-			try {
-				//System.out.println("1");
-				InputStream test = new FileInputStream("res/audio/raveAudioMode.wav");
-				BGM = new AudioStream(test);
-				//AudioPlayer.player.start(BGM);
-		        MGP.start(BGM);
-				//BGM = AudioSystem.getAudioInputStream(new File("res/raveAudioMode.wav"));
-//				System.out.println("2");
-//				MD = BGM.getData();
-//				System.out.println("3");
-//				loop = new ContinuousAudioDataStream(MD);
-//				System.out.println("4");
-				//File f = new File("res/raveAudioMode.wav");
-				
-				/*
-		        BGM = AudioSystem.getAudioInputStream(new File("res/raveAudioMode.wav"));
-				 AudioFormat af = BGM.getFormat();
-			        DataLine.Info info = new DataLine.Info(Clip.class, af);
-			        Clip clip = (Clip)AudioSystem.getLine(info);
-
-			        clip.open(BGM);
-			        clip.start();*/
-			        //clip.setFramePosition(0);
-			        //clip.stop();
-				
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-				System.out.println("Won't work1.");
-				return;
-			} catch (IOException e) {
-				e.printStackTrace();
-				System.out.println("Won't work.");
-				return;
-			}
-		//}
-		//catch(IOException error)
-		//{
-		//	System.out.println("Won't work.");
-		//	return;
-		//}
-		
-		//MGP.start(loop);
 	}
 	
 	public void showJobLocationFields(boolean show)
