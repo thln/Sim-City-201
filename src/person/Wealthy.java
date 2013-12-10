@@ -1,6 +1,7 @@
 package person;
 
 import application.Phonebook;
+import application.Restaurant;
 import application.TimeManager;
 import application.TimeManager.Day;
 import application.gui.trace.AlertLog;
@@ -16,7 +17,7 @@ public class Wealthy extends Person {
 		super(name, money);
 		this.name = name;
 		hasFoodInFridge = false;
-		setHunger(HungerLevel.hungry);
+		setHunger(HungerLevel.full);
 		//roles.add(new LandlordRole());
 	}
 
@@ -41,7 +42,7 @@ public class Wealthy extends Person {
 		//If no role is active
 
 		//Bank Related
-		if (money <= moneyMinThreshold || money >= moneyMaxThreshold) {
+		if (money <= moneyMinThreshold || money >= moneyMaxThreshold && Phonebook.getPhonebook().getWestBank().isOpen()) {
 			prepareForBank();
 			return true;
 		}
@@ -61,34 +62,29 @@ public class Wealthy extends Person {
 		if (getHunger() == HungerLevel.hungry) {
 			//If you don't have food in the fridge
 			if (!hasFoodInFridge) {
-				if (Phonebook.getPhonebook().getChineseRestaurant().isOpen()) {	
-					prepareForRestaurant();
-					return true;
-				}
+				for (Restaurant r: Phonebook.getPhonebook().restaurants){
+					if (r.isOpen())
+					{
+						prepareForRestaurant();
+						return true;
+					}
+				}			
 			}
 			else //if you do have food in the fridge
 			{
 				eatAtHome(); //empty method for now...
 				return true;
 			}
+		}
 
 			//Market Related
 			if (!hasFoodInFridge || carStatus == CarState.wantsCar) {
-				if (money <= moneyMinThreshold && !hasFoodInFridge) {
-					if (Phonebook.getPhonebook().getEastBank().isOpen()){ // || Phonebook.getPhonebook().getEastBank().isOpen()){	
-						prepareForBank();
-						return true;
-					}
-				}
-				else {
-					if (Phonebook.getPhonebook().getEastMarket().isOpen()){
+					if (Phonebook.getPhonebook().getWestMarket().isOpen()){
 						prepareForMarket();
 						return true;
-					}
 				}
 			}
-		}
-
+	
 		goToSleep();
 		return false;
 	}

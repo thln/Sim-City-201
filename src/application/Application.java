@@ -113,10 +113,10 @@ public class Application extends JPanel {
 		//Do this when person walks in for work***
 
 		//Standard Wealthy Person
-		Wealthy wealthy1 = new Wealthy("Tam Henry", 700);
-		Wealthy wealthy2 = new Wealthy("Kristi Hupka", 10000);
-		Wealthy wealthy3 = new Wealthy("Josh Greenburger", 700);
-		Wealthy wealthy4 = new Wealthy("Keith DeRuiter", 700);
+		Wealthy wealthy1 = new Wealthy("Tam Henry", 100);
+		Wealthy wealthy2 = new Wealthy("Kristi Hupka", 100);
+		Wealthy wealthy3 = new Wealthy("Josh Greenburger", 100);
+		Wealthy wealthy4 = new Wealthy("Keith DeRuiter", 100);
 
 		//Standard Crook
 		Crook crook1 = new Crook("Vinny", 250);
@@ -327,8 +327,8 @@ public class Application extends JPanel {
 		bank4c.startThread();		
 
 		//People
-//		wealthy1.startThread();
-//		wealthy2.startThread();
+		wealthy1.startThread();
+		wealthy2.startThread();
 //
 //		wealthy3.startThread();
 //		wealthy4.startThread();

@@ -7,6 +7,7 @@ import person.Person.HungerLevel;
 import person.Role.RoleState;
 import bank.BankCustomerRole;
 import application.Phonebook;
+import application.Restaurant;
 import application.TimeManager;
 import application.TimeManager.Day;
 
@@ -17,9 +18,10 @@ public class Crook extends Person {
 	enum RobState {robbedToday, waitingToRob, readyToRob};
 	RobState robState = RobState.readyToRob;
 	Timer robTimer = new Timer();
-	
+
 	public Crook(String name, double money) {
 		super(name, money);
+		hunger = HungerLevel.hungry;
 	}
 
 	public boolean pickAndExecuteAnAction() {
@@ -28,12 +30,12 @@ public class Crook extends Person {
 		//goToBusStop(1);
 		//goToBusStop(2);
 		//goToBusStop(3);
-				
+
 		if (getHunger() == HungerLevel.full) {
 			startHungerTimer();
 			return true;
 		}
-		
+
 		if (robState == RobState.robbedToday){
 			robState = RobState.waitingToRob;
 			startRobTimer();
@@ -73,16 +75,23 @@ public class Crook extends Person {
 		}
 
 		//Hunger Related
+		
 		if (getHunger() == HungerLevel.hungry) {
-			if (Phonebook.getPhonebook().getChineseRestaurant().isOpen()) {	
-				prepareForRestaurant();
+			//If you don't have food in the fridge
+			if (!hasFoodInFridge) {
+				for (Restaurant r: Phonebook.getPhonebook().restaurants){
+					if (r.isOpen())
+					{
+						prepareForRestaurant();
+						return true;
+					}
+				}			
+			}
+			else //if you do have food in the fridge
+			{
+				eatAtHome(); //empty method for now...
 				return true;
 			}
-		}
-		else //if you do have food in the fridge
-		{
-		//	eatAtHome(); 
-			return true;
 		}
 
 		//Market Related
@@ -102,9 +111,9 @@ public class Crook extends Person {
 		goToSleep(); 
 		return false;
 	}
-	
+
 	//actions
-	
+
 	protected void startRobTimer() {
 		robTimer.schedule(new TimerTask() {
 			public void run() {

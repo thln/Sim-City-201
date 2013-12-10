@@ -95,8 +95,8 @@ public class PersonGui extends CityGui {
 		//if (!inBusyIntersection()) {
 		if (state == PersonState.walkingToCrosswalk) {		
 			if (xPos == nextCrosswalkX && yPos == nextCrosswalkY) {
-				if (decideForBus("next"))
-					agent.print("In block " + currentBlock + " and going to position " + nextCrosswalkX + " ," + nextCrosswalkY);
+				 decideForBus("next");
+					//agent.print("In block " + currentBlock + " and going to position " + nextCrosswalkX + " ," + nextCrosswalkY);
 					//agent.print("At croswalk in block" + currentBlock + "going to " + destinationBlock);
 			}
 			else{

@@ -318,4 +318,10 @@ public class SeafoodRestaurantCookRole extends Role implements Restaurant
 		FoodInventory.get("Clam Chowder Sourdough Bowl").isLow = true;
 		OrderFood("Clam Chowder Sourdough Bowl");
 	}
+
+	@Override
+	public boolean isOpen() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

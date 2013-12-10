@@ -5,6 +5,7 @@ import java.util.TimerTask;
 
 import person.Role.RoleState;
 import application.Phonebook;
+import application.Restaurant;
 import application.TimeManager;
 import application.TimeManager.Day;
 import application.WatchTime;
@@ -156,11 +157,22 @@ public class Worker extends Person {
 
 		//Bank Related (check if you need to go to the bank)
 		//Check if there is a bank open before you go
-		if (Phonebook.getPhonebook().getEastBank().isOpen()){ // || Phonebook.getPhonebook().getEastBank().isOpen()){	
-			if (money <= moneyMinThreshold || money >= moneyMaxThreshold) 
-			{
-				prepareForBank();
-				return true;
+		if (home.type == "East Apartment"){
+			if (Phonebook.getPhonebook().getEastBank().isOpen()){ // || Phonebook.getPhonebook().getEastBank().isOpen()){	
+				if (money <= moneyMinThreshold || money >= moneyMaxThreshold) 
+				{
+					prepareForBank();
+					return true;
+				}
+			}
+		}
+		if (home.type == "West Apartment"){
+			if (Phonebook.getPhonebook().getWestBank().isOpen()){ // || Phonebook.getPhonebook().getEastBank().isOpen()){	
+				if (money <= moneyMinThreshold || money >= moneyMaxThreshold) 
+				{
+					prepareForBank();
+					return true;
+				}
 			}
 		}
 
@@ -179,11 +191,13 @@ public class Worker extends Person {
 			hunger = HungerLevel.full;
 			//If you don't have food in the fridge
 			if (!hasFoodInFridge) {
-				//Check if any restaurants are open
-				if (Phonebook.getPhonebook().getChineseRestaurant().isOpen()) {	
-					prepareForRestaurant();
-				}
-				return true;
+				for (Restaurant r: Phonebook.getPhonebook().restaurants){
+					if (r.isOpen())
+					{
+						prepareForRestaurant();
+						return true;
+					}
+				}			
 			}
 			else //if you do have food in the fridge
 			{
@@ -196,11 +210,21 @@ public class Worker extends Person {
 		//Market Related (check if you need to go to the market)
 		if (!hasFoodInFridge || carStatus == CarState.wantsCar) 
 		{ 
-			if (Phonebook.getPhonebook().getEastMarket().isOpen()) // || Phonebook.getPhonebook().getEastMarket().isOpen())
-			{
-				print("Going to market");
-				prepareForMarket();
-				return true;
+			if (home.type == "East Apartment") {
+				if (Phonebook.getPhonebook().getEastMarket().isOpen()) // || Phonebook.getPhonebook().getEastMarket().isOpen())
+				{
+					print("Going to market");
+					prepareForMarket();
+					return true;
+				}
+			}
+			if (home.type == "West Apartment") {
+				if (Phonebook.getPhonebook().getWestMarket().isOpen()) // || Phonebook.getPhonebook().getEastMarket().isOpen())
+				{
+					print("Going to market");
+					prepareForMarket();
+					return true;
+				}
 			}
 		}
 

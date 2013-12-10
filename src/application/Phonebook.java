@@ -6,6 +6,7 @@ import italianRestaurant.ItalianRestaurant;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -15,7 +16,6 @@ import transportation.BusStop;
 import americanRestaurant.AmericanRestaurant;
 import bank.Bank;
 import chineseRestaurant.ChineseRestaurant;
-
 
 public class Phonebook{
 
@@ -37,6 +37,8 @@ public class Phonebook{
     //ItalianRestaurant italianRestaurant;
     static private AmericanRestaurant americanRestaurant;
     static private ItalianRestaurant italianRestaurant;
+    public List<Restaurant> restaurants;
+
     //MexicanRestaurant mexicanRestaurant;
 
 	private HousingMaintenanceCompany housingMaintenanceCompany;
@@ -199,14 +201,23 @@ public class Phonebook{
 		italianRestaurant = new ItalianRestaurant("Italian Restaurant");
 		italianRestaurant.setClosestBusStopNumber(2);		//setting building's closest bus stop
 		
+	
+		
 		cityDJ = new RadioStation();
 		americanRestaurant = new AmericanRestaurant("American Restaurant");
 		//americanRestaurant.setClosestStop(2);
 
 		/* For future use after all the restaurants have been integrated
 		 * 
+		 * 
 		mexicanRestaurant = new MexicanRestaurant("Mexican Restaurant");
 		 */
+		
+		restaurants = Collections.synchronizedList(new ArrayList<Restaurant>());
+		restaurants.add(italianRestaurant);
+		restaurants.add(chineseRestaurant);
+		restaurants.add(seafoodRestaurant);
+		restaurants.add(americanRestaurant);
 		
 		housingMaintenanceCompany = new HousingMaintenanceCompany("Housing maintenance company");
 		getBusStops().add(new Point(172, 28));
