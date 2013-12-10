@@ -60,15 +60,18 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 
 	public ImageIcon roadHorizontal = new ImageIcon("res/roadsHorizontal.png");
 	public ImageIcon roadVertical = new ImageIcon("res/roadsVertical.png");
-	public ImageIcon busStop = new ImageIcon("res/bus_stop.png");
+	public ImageIcon busStop = new ImageIcon("res/bus_stop.png");	
+	//public BusGuiHorizontal busA = new BusGuiHorizontal();
+	//public BusGuiVertical busB = new BusGuiVertical();
+
 	public ImageIcon tree = new ImageIcon("res/tree.png");
 	public ImageIcon bush = new ImageIcon("res/bush.png");
-	public BusGuiHorizontal busA = new BusGuiHorizontal();
-	public BusGuiVertical busB = new BusGuiVertical();
+	//public BusGuiHorizontal busA = new BusGuiHorizontal();
+	//public BusGuiVertical busB = new BusGuiVertical();
 	public VehicleHorizontalGui carA = new VehicleHorizontalGui();
 	public VehicleVerticalGui carB = new VehicleVerticalGui();
 	public CopGui copCar = new CopGui();
-	
+
 	public CityPanel(AnimationPanel animationPanel) {
 
 		this.animationPanel = animationPanel;
@@ -104,8 +107,7 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		addBuilding("Park",(WINDOWX/2)-80,(WINDOWY/2)-47);
 
 
-		addGui(busA);
-		addGui(busB);
+
 		addGui(carA);
 		addGui(carB);
 		addGui(copCar);

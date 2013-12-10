@@ -22,6 +22,7 @@ import application.WatchTime;
 import person.Person;
 import person.Role;
 import person.Worker;
+import transportation.BusStop;
 import application.gui.animation.*;
 import application.gui.animation.agentGui.BankCustomerGui;
 import application.gui.animation.agentGui.BankGuardGui;
@@ -40,6 +41,7 @@ public class Bank {
 	public boolean userClosed = false;
 	private Point closestStop;
 	public Point location;
+	public int busStopNumber;
 
 	//Open and closing times
 	public WatchTime openTime = new WatchTime(8);
@@ -233,6 +235,16 @@ public class Bank {
 	
 	public void setClosestStop (Point p) {
 		closestStop = p;
+	}
+	
+	public void setClosestBusStopNumber (int n) 
+	{
+		busStopNumber = n;
+	}
+	
+	public BusStop getClosestBusStop ()
+	{
+		return Phonebook.getPhonebook().getAllBusStops().get(busStopNumber);
 	}
 
 

@@ -8,6 +8,7 @@ import market.Market;
 import person.Person;
 import person.Role;
 import person.Worker;
+import transportation.BusStop;
 import application.Phonebook;
 import application.Restaurant;
 import application.WatchTime;
@@ -27,6 +28,7 @@ public class ChineseRestaurant implements Restaurant {
 	public boolean userClosed = false;
 	public Point location; 
 	private Point closestStop;
+	public int busStopNumber;
 
 	//List of Customers
 	private Vector<ChineseRestaurantCustomerRole> customers = new Vector<ChineseRestaurantCustomerRole>();
@@ -245,6 +247,16 @@ public class ChineseRestaurant implements Restaurant {
 
 	public void setClosestStop(Point point) {
 		closestStop = point;
+	}
+	
+	public void setClosestBusStopNumber (int n) 
+	{
+		busStopNumber = n;
+	}
+	
+	public BusStop getClosestBusStop ()
+	{
+		return Phonebook.getPhonebook().getAllBusStops().get(busStopNumber);
 	}
 	
 	public Point getClosestStop() {

@@ -4,40 +4,43 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.Timer;
 import java.util.TimerTask;
-
+import transportation.BusAgent;
 import javax.swing.ImageIcon;
 
 import application.Phonebook;
 
 public class BusGuiVertical extends CityGui {
 
-	//	private Bus agent = null;
+	private BusAgent agent = null;
 	private boolean isPresent = true;
+	private boolean checkedStation = false;
 	ImageIcon busUp = new ImageIcon("res/busUp.png");
 	ImageIcon busDown = new ImageIcon("res/busDown.png");
+
 	private final int stopTopY = (int) Phonebook.getPhonebook().getBusStops().get(0).getY()+8;
-	private final int stopBottomY = (int) Phonebook.getPhonebook().getBusStops().get(2).getY()+8;
+	private final int stopBottomY = (int) Phonebook.getPhonebook().getBusStops().get(3).getY()+8;
 	private final int stopLeftX = 168;
 	private final int stopRightX = 386;
 
-	private final int waitTime = 1000;
+	private final int waitTime = 1500;
 	
 	private int xPos = stopLeftX, yPos = 325;//default bus position
-	private int yDestination = stopBottomY;//Stop 1
+	private int yDestination = stopBottomY;//Stop 4
 
-	private enum Command {noCommand, stop1, stop2, stop3, stop4};
-	private Command command = Command.stop1;
+	private enum Command {noCommand, wait, stop1, stop2, stop3, stop4};
+	private Command command = Command.stop4;
+	public int lastStop = 3;
 
 	private enum BusState {stopped, enroute, inIntersection1, inIntersection2, inIntersection3, inIntersection4, inCrosswalk1, inCrosswalk2, inCrosswalk6, inCrosswalk7, inCrosswalk11, inCrosswalk12};
 	BusState state = BusState.stopped;
 
 	private Timer busStop = new Timer();
 
-	public BusGuiVertical(){
+	public BusGuiVertical(BusAgent bus){
+		agent = bus;
 	}
 
 	public void updatePosition() {
-		
 		if (inBusyIntersection() || inBusyCrosswalk()) {
 			return;
 		}
@@ -59,36 +62,51 @@ public class BusGuiVertical extends CityGui {
 
 		if (yPos == yDestination) {
 			if (command == Command.stop1) {
+				command = Command.wait;
 				busStop.schedule(new TimerTask() {
 					public void run() {
-						goToStop2();
+						agent.msgAtBusStop(1);
+						lastStop = 1;
 					}
 				},
 				waitTime);
 			}
 			else if (command == Command.stop2) {
+				command = Command.wait;
 				busStop.schedule(new TimerTask() {
 					public void run() {
-						goToEndOfLeftRoad();
+						agent.msgAtBusStop(2);
+						lastStop = 2;
 					}
 				},
 				waitTime);
 			}
 			else if (command == Command.stop3) {
+				command = Command.wait;
 				busStop.schedule(new TimerTask() {
 					public void run() {
-						goToStop4();
+						agent.msgAtBusStop(3);	
+						lastStop = 3;
 					}
 				},
 				waitTime);
 			}
 			else if (command == Command.stop4) {
+				command = Command.wait;
 				busStop.schedule(new TimerTask() {
 					public void run() {
-						goToEndOfRightRoad();
+						agent.msgAtBusStop(4);
+						lastStop = 4;
 					}
 				},
 				waitTime);
+			}
+		}
+		else
+		{
+			if(agent.getCheckedStation())
+			{
+				agent.msgLeavingStation();
 			}
 		}
 	}
@@ -117,22 +135,41 @@ public class BusGuiVertical extends CityGui {
 	}
 
 	//Actions
+	public void goToNextBusStop() {
+		if (lastStop == 1) {
+			goToEndOfLeftRoad();
+			return;
+		}
+		if (lastStop == 2) {
+			goToStop3();
+			return;
+		}
+		if (lastStop == 3) {
+			goToEndOfRightRoad();
+			return;
+		}
+		if (lastStop == 4) {
+			goToStop1();
+			return;
+		}
+	}
+
 	public void goToStop1() {
 		command = Command.stop1;
-		yDestination = stopBottomY;
+		yDestination = stopTopY;
+		
 	}
 
 	public void goToStop2() {
 		command = Command.stop2;
 		yDestination = stopTopY;
-		
 	}
 
 	public void goToStop3() {
 		command = Command.stop3;
-		yDestination = stopTopY;
+		yDestination = stopBottomY;
 	}
-
+	
 	public void goToStop4() {
 		command = Command.stop4;
 		yDestination = stopBottomY;
@@ -149,11 +186,11 @@ public class BusGuiVertical extends CityGui {
 	public void changeRoads() {
 		if (yDestination == 325) {
 			xPos = stopLeftX;
-			goToStop1();
+			goToStop4();
 		}
 		else {
 			xPos = stopRightX;
-			goToStop3();
+			goToStop2();
 		}
 	}
 	

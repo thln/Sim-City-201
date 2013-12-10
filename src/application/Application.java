@@ -16,7 +16,10 @@ import person.Deadbeat;
 import person.Person;
 import person.Wealthy;
 import person.Worker;
+import transportation.BusAgent;
 import application.gui.animation.AnimationPanel;
+import application.gui.animation.agentGui.BusGuiHorizontal;
+import application.gui.animation.agentGui.BusGuiVertical;
 import application.gui.animation.agentGui.PersonGui;
 import bank.Bank;
 import chineseRestaurant.ChineseRestaurant;
@@ -237,6 +240,13 @@ public class Application extends JPanel {
 		getPopulation().add(wealthy4);
 		getPopulation().add(crook1);
 
+//		Crook crook1 = new Crook("Vinny", 250);
+//		allHousing.add(new Housing(crook1, allHousing.size(), "East Apartment"));
+//		crook1.setHome(allHousing.get(allHousing.size() - 1));
+//		Phonebook.getPhonebook().setHousingList(allHousing);
+//		getPopulation().add(crook1);
+
+		
 		//Setting Gui for everyone
 		for (Person person : getPopulation()) {
 			PersonGui pg = new PersonGui(person);
@@ -290,7 +300,20 @@ public class Application extends JPanel {
 
 		wealthy3.startThread();
 		wealthy4.startThread();
+		
 		crook1.startThread();
+		
+		//Buses
+		BusAgent horizontal = new BusAgent("Horizontal");
+		BusAgent vertical = new BusAgent("Vertical");
+		BusGuiHorizontal busA = new BusGuiHorizontal(horizontal);
+		BusGuiVertical busB = new BusGuiVertical(vertical);	
+		horizontal.setHGui(busA);
+		vertical.setVGui(busB);
+		animPanel.cityPanel.addGui(busA);
+		animPanel.cityPanel.addGui(busB);
+		horizontal.startThread();
+		vertical.startThread();
 
 		updatePeopleTime();
 
