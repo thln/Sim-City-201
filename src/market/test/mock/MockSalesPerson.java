@@ -1,15 +1,13 @@
 package market.test.mock;
 
-import application.Restaurant;
-import chineseRestaurant.ChineseRestaurant;
+import market.MarketOrder;
+import market.interfaces.MarketCustomer;
+import market.interfaces.SalesPerson;
 import seafoodRestaurant.SeafoodRestaurant;
 import testing.EventLog;
 import testing.LoggedEvent;
 import testing.Mock;
-import market.MarketCustomerRole;
-import market.MarketOrder;
-import market.interfaces.MarketCustomer;
-import market.interfaces.SalesPerson;
+import chineseRestaurant.ChineseRestaurant;
 
 public class MockSalesPerson extends Mock implements SalesPerson {
 
@@ -23,7 +21,7 @@ public class MockSalesPerson extends Mock implements SalesPerson {
 	public void msgIWantProducts(MarketCustomer customer, String item, int numWanted) {
 	}
 
-	public void msgIWantProducts(Restaurant restaurant, String item, int numWanted) {
+	public void msgIWantProducts(ChineseRestaurant chineseRestaurant, String item, int numWanted) {
 	}
 
 	public void msgOrderFulfilled(MarketOrder o) {

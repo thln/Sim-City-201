@@ -1,21 +1,23 @@
 package market;
 
-import java.util.*;
+import italianRestaurant.ItalianRestaurant;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.Semaphore;
 
-import chineseRestaurant.ChineseRestaurant;
-import application.Phonebook;
-import application.Restaurant;
-import application.gui.animation.agentGui.*;
 import market.MarketOrder.orderState;
 import market.interfaces.MarketCustomer;
 import market.interfaces.SalesPerson;
 import person.Person;
 import person.Role;
-import person.Worker;
 import seafoodRestaurant.SeafoodRestaurant;
 import testing.EventLog;
 import testing.LoggedEvent;
+import application.Restaurant;
+import application.gui.animation.agentGui.MarketSalesPersonGui;
+import chineseRestaurant.ChineseRestaurant;
 
 public class SalesPersonRole extends Role implements SalesPerson {
 
@@ -53,12 +55,33 @@ public class SalesPersonRole extends Role implements SalesPerson {
 
 
 	
-	public void msgIWantProducts(Restaurant restaurant, String item, int numWanted) {
+	public void msgIWantProducts(ChineseRestaurant restaurant, String item, int numWanted) {
 		print("Restaurant asked for " + numWanted + " " + item + "(s)");
 		log.add(new LoggedEvent("Recieved msgIWantProducts"));
 		orders.add(new MarketOrder(restaurant, item, numWanted));
 		stateChanged();
 	}
+	
+	public void msgIWantProducts(SeafoodRestaurant restaurant, String item, int numWanted) {
+		print("Restaurant asked for " + numWanted + " " + item + "(s)");
+		log.add(new LoggedEvent("Recieved msgIWantProducts"));
+		orders.add(new MarketOrder(restaurant, item, numWanted));
+		stateChanged();
+	}
+	
+	public void msgIWantProducts(ItalianRestaurant restaurant, String item, int numWanted) {
+		print("Restaurant asked for " + numWanted + " " + item + "(s)");
+		log.add(new LoggedEvent("Recieved msgIWantProducts"));
+		orders.add(new MarketOrder(restaurant, item, numWanted));
+		stateChanged();
+	}
+	
+//	public void msgIWantProducts(AmericanRestaurant restaurant, String item, int numWanted) {
+//		print("Restaurant asked for " + numWanted + " " + item + "(s)");
+//		log.add(new LoggedEvent("Recieved msgIWantProducts"));
+//		orders.add(new MarketOrder(restaurant, item, numWanted));
+//		stateChanged();
+//	}
 
 	public void msgOrderFulfilled(MarketOrder o) {
 		if (o.customer instanceof MarketCustomerRole) {
@@ -110,32 +133,48 @@ public class SalesPersonRole extends Role implements SalesPerson {
 
 
 	public void msgPayment(ChineseRestaurant chineseRestaurant, double payment) {
-
-		print("Recieved payment of $" + payment + " from restaurant");
-
+		print("Recieved payment of $" + payment + " from restaurant " + chineseRestaurant.getName());
 		market.money += payment;
 		for (MarketOrder o : orders) {
-			if (o.restaurant.equals(chineseRestaurant)) {
+			if (o.chineseRestaurant.equals(chineseRestaurant)) {
 				orders.remove(o);
 				return;
 			}
 		}
 	}
 
-	public void msgPayment(SeafoodRestaurant seafoodRestaurant, double payment) 
-	{
-		print("Recieved payment of $" + payment + " from restaurant");
-
+	public void msgPayment(SeafoodRestaurant seafoodRestaurant, double payment) {
+		print("Recieved payment of $" + payment + " from restaurant " + seafoodRestaurant.getName());
 		market.money += payment;
-		for (MarketOrder o : orders) 
-		{
-			if (o.restaurant.equals(seafoodRestaurant)) 
-			{
+		for (MarketOrder o : orders) {
+			if (o.seafoodRestaurant.equals(seafoodRestaurant)) {
 				orders.remove(o);
 				return;
 			}
 		}
 	}
+	
+	public void msgPayment(ItalianRestaurant italianRestaurant, double payment) {
+		print("Recieved payment of $" + payment + " from restaurant " + italianRestaurant.getName());
+		market.money += payment;
+		for (MarketOrder o : orders) {
+			if (o.seafoodRestaurant.equals(italianRestaurant)) {
+				orders.remove(o);
+				return;
+			}
+		}
+	}
+	
+//	public void msgPayment(AmericanRestaurant americanRestaurant, double payment) {
+//		print("Recieved payment of $" + payment + " from restaurant " + americanRestaurant.getName());
+//		market.money += payment;
+//		for (MarketOrder o : orders) {
+//			if (o.seafoodRestaurant.equals(americanRestaurant)) {
+//				orders.remove(o);
+//				return;
+//			}
+//		}
+//	}
 	
 	//Scheduler
 	public boolean pickAndExecuteAnAction() {
@@ -172,10 +211,12 @@ public class SalesPersonRole extends Role implements SalesPerson {
 		o.state = orderState.processing;
 
 		if (market.inventory.get(o.item).amount == 0) {
-			((ChineseRestaurant) o.restaurant).getCook(test).msgCantFulfill(o.item, 0, o.itemAmountOrdered);
-			orders.remove(o);
-			stateChanged();
-			return;
+			if (o.chineseRestaurant !=  null) {
+				o.chineseRestaurant.getCook(test).msgCantFulfill(o.item, 0, o.itemAmountOrdered);
+				orders.remove(o);
+				stateChanged();
+				return;
+			}
 		}
 		
 //CARMEN IF YOU UNCOMMENT THIS, MAKE SURE IT DOESN'T STOP THE WHOLE FREAKING INTERACTION
@@ -208,8 +249,10 @@ public class SalesPersonRole extends Role implements SalesPerson {
 	public void askForPayment(MarketOrder o) {
 		o.state = orderState.gaveToCustomer;
 		print("Asking for payment from the restaurant");
-		((ChineseRestaurant) o.restaurant).getCashier(true).msgPleasePayForItems(o.item, o.itemAmountFulfilled, o.orderCost, this);
-		stateChanged();
+		if (o.chineseRestaurant != null) {
+			o.chineseRestaurant.getCashier(true).msgPleasePayForItems(o.item, o.itemAmountFulfilled, o.orderCost, this);
+			stateChanged();
+		}
 	}
 
 	public void msgMarketOpen() {

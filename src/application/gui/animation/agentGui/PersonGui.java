@@ -75,6 +75,7 @@ public class PersonGui extends CityGui {
 		if(p.home.type.equals("West Apartment")) {
 			xHome = 20;
 			yHome = 30;			
+
 		}
 		if(p.home.type.equals("East Apartment")) {
 			xHome = 520;
@@ -83,6 +84,7 @@ public class PersonGui extends CityGui {
 		if (p.home.type.equals("Mansion")){
 			xHome = 30;
 			yHome = 150;
+
 		}
 
 		setxPos(xHome);
@@ -166,7 +168,7 @@ public class PersonGui extends CityGui {
 				if (command == Command.GoToBusStop) {
 					agent.msgAtDestination();
 					System.out.println("Reached bus stop");
-					currColor = transColor;
+					//currColor = transColor;
 				}
 				command = Command.noCommand;
 			}
@@ -292,6 +294,18 @@ public class PersonGui extends CityGui {
 		setDefaultColor();
 		command = Command.GoToBusStop;
 	}
+	
+	public void doGoToBusStop()
+	{
+		xDestination = Phonebook.getPhonebook().getAllBusStops().get(getClosestBusStopNumber()).getBusStopLocation().x;
+		yDestination = Phonebook.getPhonebook().getAllBusStops().get(getClosestBusStopNumber()).getBusStopLocation().y;
+		System.out.println("Going to bus stop");
+		setDefaultColor();
+		command = Command.GoToBusStop;
+		//Phonebook.getPhonebook().getAllBusStops().get(index);
+		//getClosestBusStop, use Phonebook to get point
+		//set XDestination and yDestination
+	}
 
 	public boolean decideForBus(String location) {
 
@@ -327,8 +341,6 @@ public class PersonGui extends CityGui {
 			state = PersonState.enroute;
 			return true;
 		}
-
-		//	agent.print("dest = " + destinationBlock + "currentBlock = " + currentBlock + "Block in phonebook is " + Phonebook.getPhonebook().blocks.get(currentBlock));
 		destinationBlock = Phonebook.getPhonebook().blocks.get(currentBlock).doIWalk(destinationBlock);
 		if (destinationBlock == 0){
 			return false;
@@ -337,6 +349,29 @@ public class PersonGui extends CityGui {
 			walkToLocation();
 		return true;
 	}
+
+	public int getClosestBusStopNumber()
+	{
+		if(returnCurrentBlock(xPos, yPos) == 1 || returnCurrentBlock(xPos, yPos) == 2 || returnCurrentBlock(xPos, yPos) == 4 ||
+				returnCurrentBlock(xPos, yPos) == 5 )
+		{
+			return 1;
+		}
+		else if(returnCurrentBlock(xPos, yPos) == 3 || returnCurrentBlock(xPos, yPos) == 6)
+		{
+			return 2;
+			
+		}
+		else if(returnCurrentBlock(xPos, yPos) == 7 || returnCurrentBlock(xPos, yPos) == 8 )
+		{
+			return 4;
+		}
+		else
+		{//forth bus stop
+			System.out.println("X: " + xPos + " Y: " + yPos);
+			return 3;
+		}
+	}		
 
 	public void walkToLocation(){
 		popToMiddle();	
@@ -452,18 +487,18 @@ public class PersonGui extends CityGui {
 			state = PersonState.walkingToCrosswalk;
 		}
 		else {
-			agent.print("No pop");
+			//agent.print("No pop");
 		}
 		//xPos -= 10;
 		//yPos = 30;
-
 		//System.err.println("Name is " + agent.getName() + " and Block = " + currentBlock + "and position = " + xPos + " , " + yPos );
 		//System.err.println(agent.getName() + " has Destination block = " + destinationBlock);
 	}
 
 	public int returnCurrentBlock (int xPos, int yPos){
-		if (xPos < 160 && yPos < 70)
+		if (xPos < 160 && yPos < 70){
 			return 1;
+		}
 		if ((xPos > 199 && xPos < 380) && yPos < 70){
 			return 2;
 		}
@@ -755,6 +790,18 @@ public class PersonGui extends CityGui {
 			state = PersonState.enroute;	
 		}
 	}
+	
+	public void setInvisible()
+	{
+		currColor = transColor;
+	}
+	
+	public void getOffBus(int busStopNumber)
+	{
+		xPos = Phonebook.getPhonebook().getAllBusStops().get(busStopNumber).getBusStopLocation().x;
+		yPos = Phonebook.getPhonebook().getAllBusStops().get(busStopNumber).getBusStopLocation().y;
+		currColor = myColor;
+	}
 
 	public void setHomeLocation(int x, int y) {
 		setxHome(x);
@@ -816,5 +863,6 @@ public class PersonGui extends CityGui {
 
 	public void setyDestination(int yDestination) {
 		this.yDestination = yDestination;
+
 	}
 }

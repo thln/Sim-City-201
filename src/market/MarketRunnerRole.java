@@ -8,10 +8,8 @@ import java.util.concurrent.Semaphore;
 import market.interfaces.MarketRunner;
 import person.Person;
 import person.Role;
-import person.Worker;
 import testing.EventLog;
 import testing.LoggedEvent;
-import application.Phonebook;
 import application.gui.animation.agentGui.MarketRunnerGui;
 
 public class MarketRunnerRole extends Role implements MarketRunner {
@@ -90,13 +88,13 @@ public class MarketRunnerRole extends Role implements MarketRunner {
 				print("Fulfilled order for customer: " + ((MarketCustomerRole) o.customer).getName());
 			}
 
-			marketRunnerGui.DoGoToSalesPerson();
-			try {
-				this.atDestination.acquire();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+//			marketRunnerGui.DoGoToSalesPerson();
+//			try {
+//				this.atDestination.acquire();
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 			market.getSalesPerson(test).msgOrderFulfilled(o);
 			orders.remove(o);
 		}
