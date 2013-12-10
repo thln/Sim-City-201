@@ -93,6 +93,7 @@ public class Bank {
 		if (title == "bankGuard") {
 			//Setting previous bank guard role to inactive
 			if (bankGuardRole.getPerson() != null) {
+				System.err.println(person.getName() + " kicking off" + bankGuardRole.getName() + "from work");
 				((Worker) bankGuardRole.getPerson()).roleFinishedWork();
 			}
 			//Setting bank guard role to new role

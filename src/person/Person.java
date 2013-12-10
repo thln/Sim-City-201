@@ -373,10 +373,24 @@ public abstract class Person extends Agent{
 	protected void prepareForRestaurant() {
 
 		String choice = restaurantQueue.get(0);
-		//Moving this choice to back of queue
+		for (int i = 0; i < restaurantQueue.size(); i++){
+			choice = restaurantQueue.get(i);
+			if (choice.contains("American") && Phonebook.getPhonebook().getAmericanRestaurant().isOpen()){
+				break;
+			}
+			if (choice.contains("Chinese") && Phonebook.getPhonebook().getChineseRestaurant().isOpen()){
+				break;
+			}
+			if (choice.contains("Italian") && Phonebook.getPhonebook().getItalianRestaurant().isOpen()){
+				break;
+			}
+		}
+		
 		restaurantQueue.remove(choice);
 		restaurantQueue.add(choice);
 
+		//Moving this choice to back of queue
+		
 		gui.walk = gui.decideForBus(choice);
 
 		if (!gui.walk){
@@ -442,7 +456,6 @@ public abstract class Person extends Agent{
 			//				return;
 			//			}
 		}
-
 	}
 
 	protected void goToSleep() {

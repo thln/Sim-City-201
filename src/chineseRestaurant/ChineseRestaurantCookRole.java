@@ -120,12 +120,12 @@ public class ChineseRestaurantCookRole extends Role implements ChineseRestaurant
             If so seat him at the table.
 		 */
 
-		inventoryChecker++;
-
-		if (inventoryChecker == 500) {
-			checkInventory();
-			return true;
-		}
+//		inventoryChecker++;
+//
+//		if (inventoryChecker == 500) {
+//			checkInventory();
+//			return true;
+//		}
 
 
 		if (!Phonebook.getPhonebook().getChineseRestaurant().getRevolvingStand().isStandEmpty()) {
