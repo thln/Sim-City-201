@@ -7,7 +7,7 @@ import italianRestaurant.interfaces.*;
 import java.util.*;
 import java.lang.*;
 import java.util.concurrent.Semaphore;
-
+import market.interfaces.*;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
@@ -38,6 +38,7 @@ public class ItalianCashierRole extends Role implements ItalianCashier{
 	//private Semaphore atTable = new Semaphore(0,true);
 	
 	public ItalianCashierGui cashierGui = null;
+	protected String RoleName = "Cashier";
 
 	public ItalianCashierRole(String name, ItalianRestaurant restaurant) {
 		super(name);
@@ -85,6 +86,12 @@ public class ItalianCashierRole extends Role implements ItalianCashier{
 		stateChanged();
 	}
 	
+	public void msgPleasePayForItems(String foodname, String orderAmt, Double billtotal, SalesPerson sp) {
+		print("Received bill of " + billtotal + " from " + sp.toString() + " for " + foodname);
+		BillFoods.add(new Bill(sp, billtotal, foodname, orderAmt));
+		stateChanged();
+	}
+	
 	public void BillDone(Bill o) {
 		//o.f.inventory--;
 		o.s = BillState.done;
@@ -129,30 +136,37 @@ public class ItalianCashierRole extends Role implements ItalianCashier{
 		
 		if(BillOrders != null) {
 			synchronized(BillOrders){
-			for(int i=0; i<BillOrders.size();i++){
-				if(BillOrders.get(i).s == BillState.done) {
-					ChecktoWaiter(BillOrders.get(i));
-					return true;
+				for(int i=0; i<BillOrders.size();i++){
+					if(BillOrders.get(i).s == BillState.done) {
+						ChecktoWaiter(BillOrders.get(i));
+						return true;
+					}
+					else if(BillOrders.get(i).s == BillState.pending) {
+						Compute(BillOrders.get(i));
+						return true;				
+					}
+					else if(BillOrders.get(i).s == BillState.paying) {
+						MoneyExchange(BillOrders.get(i));
+					}
 				}
-				else if(BillOrders.get(i).s == BillState.pending) {
-					Compute(BillOrders.get(i));
-					return true;				
-				}
-				else if(BillOrders.get(i).s == BillState.paying) {
-					MoneyExchange(BillOrders.get(i));
-				}
-			}
 			}
 		}
 		
 		if(BillFoods != null) {
 			synchronized(BillFoods){
-			for(int i=0; i<BillFoods.size();i++){
-				if(BillFoods.get(i).s == BillState.pending) {
-					PayBill(BillFoods.get(i));
+				for(int i=0; i<BillFoods.size();i++){
+					if(BillFoods.get(i).s == BillState.pending) {
+						PayBill(BillFoods.get(i));
+					}
 				}
 			}
-			}
+		}
+		
+		if (leaveRole)
+		{
+			((Worker) person).roleFinishedWork();
+			leaveRole = false;
+			return true;
 		}
 
 		return false;
@@ -256,6 +270,7 @@ public class ItalianCashierRole extends Role implements ItalianCashier{
 	public enum BillState {pending, computed, done, paying, finished};
 	
 	public class Bill {
+		public SalesPerson salesPerson;
 		public ItalianMarket m;
 		public ItalianWaiter w;
 		public ItalianCustomer c;
@@ -272,6 +287,12 @@ public class ItalianCashierRole extends Role implements ItalianCashier{
 		
 		Bill(ItalianMarket market, Double bill) {
 			m = market;
+			total = bill;
+			s = BillState.pending;
+		}
+		
+		Bill(SalesPerson sp, Double bill, String foodname, String orderAmt) {
+			this.salesPerson = sp;
 			total = bill;
 			s = BillState.pending;
 		}

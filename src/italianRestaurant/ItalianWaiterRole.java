@@ -4,6 +4,7 @@ import person.*;
 import application.gui.animation.agentGui.*;
 import italianRestaurant.interfaces.*;
 import italianRestaurant.ItalianMyCustomer.MyCustState;
+
 import java.util.*;
 import java.util.concurrent.Semaphore;
 
@@ -37,6 +38,8 @@ public class ItalianWaiterRole extends Role implements ItalianWaiter{
 	private ItalianHostRole host;
 	private ItalianCashierRole cashier;
 	public ItalianWaiterGui waiterGui = null;
+	
+	protected String RoleName = "waiter";
 
 	public ItalianWaiterRole(Person person, String name, String title) {
 		super(name);
@@ -232,16 +235,14 @@ public class ItalianWaiterRole extends Role implements ItalianWaiter{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		/************
-		for (Table table : tables) {
-			if (!table.isOccupied()) {
-				if (!Customers.isEmpty()) {
-					seatCustomer(Customers.get(0), table);//the action
-					return true;//return true to the abstract agent to reinvoke the scheduler.
-				}
-			}
+		
+		if (leaveRole)
+		{
+			((Worker) person).roleFinishedWork();
+			leaveRole = false;
+			return true;
 		}
-*******************/
+		
 		return false;
 		//we have tried all our rules and found
 		//nothing to do. So return false to main loop of abstract agent

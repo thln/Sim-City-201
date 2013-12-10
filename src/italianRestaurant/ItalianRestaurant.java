@@ -3,13 +3,13 @@ import java.awt.Point;
 import java.util.*;
 
 import person.*;
+import application.*;
 import transportation.BusStop;
-import application.Phonebook;
-import application.WatchTime;
+import application.*;
 import application.gui.animation.*;
 import application.gui.animation.agentGui.*;
 
-public class ItalianRestaurant {
+public class ItalianRestaurant implements Restaurant{
 
 	//Data
 	String name;
@@ -81,7 +81,7 @@ public class ItalianRestaurant {
 			if (isOpen()) {
 				italianRestaurantHostRole.msgRestaurantOpen();
 			}
-			//restPanel.addGui(cookGui);
+			restPanel.addGui(cookGui);
 			return italianRestaurantCookRole;
 		}
 		else if (title.contains("cashier")) {
@@ -95,6 +95,7 @@ public class ItalianRestaurant {
 			if (isOpen()) {
 				italianRestaurantHostRole.msgRestaurantOpen();
 			}
+			restPanel.addGui(cashierGui);
 			return italianRestaurantCashierRole;
 		}
 		else if (title == "waiter") {	
