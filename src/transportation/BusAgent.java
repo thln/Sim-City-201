@@ -3,6 +3,7 @@ package transportation;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.Semaphore;
 
 import person.Person;
 import application.Phonebook;
@@ -26,6 +27,7 @@ public class BusAgent extends Agent{
 	BusGuiHorizontal guiH;
 	BusGuiVertical guiV;
 	String name;
+	private Semaphore pickingUpPeople = new Semaphore(0, true);
 
 	public enum busState {Driving, ReachedStop, DroppedOffPeople, PickingUpPeople, Waiting, Leaving};
 	busState state = busState.Driving;
@@ -79,6 +81,12 @@ public class BusAgent extends Agent{
 
 	public void msgGettingOnBus(Person p, int bStop)
 	{
+//		try {
+//			pickingUpPeople.acquire();
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, "Adding " + p.getName());
 		busPassengers.add(new busPassenger(p, bStop));
 		state = busState.PickingUpPeople;
@@ -97,7 +105,7 @@ public class BusAgent extends Agent{
 	{
 		if(state == busState.ReachedStop)
 		{
-			//		System.err.println("Running tell People Get off");
+			//System.err.println("Running tell People Get off");
 			tellPeopleGetOff();
 			return true;
 		}
@@ -134,25 +142,40 @@ public class BusAgent extends Agent{
 			if(Phonebook.getPhonebook().getAllBusStops().get(currentBusStop).getAllWaitingPassengers(this).isEmpty())
 			{
 				AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, "No one's here. Leaving.");
-				state = busState.Leaving;
+				state = busState.PickingUpPeople;
 				return;
 			}
 			else
 			{
-				AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, "Telling people at bus stop.");
+				AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, "Telling"+ Phonebook.getPhonebook().getAllBusStops().get(currentBusStop).getNumberOfWaitingPassengers()+ " people at bus stop.");
 				synchronized(Phonebook.getPhonebook().getAllBusStops().get(currentBusStop).getAllWaitingPassengers(this))
 				{
-					for(int i = 0; i < Phonebook.getPhonebook().getAllBusStops().get(currentBusStop).getNumberOfWaitingPassengers(); i++)
+					int tempSize = Phonebook.getPhonebook().getAllBusStops().get(currentBusStop).getNumberOfWaitingPassengers();
+//					try {
+//						pickingUpPeople.acquire();
+//					} catch (InterruptedException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+					for(int i = 0; i < tempSize; i++)
 					{
 						AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, "Waking up " 
-					+ Phonebook.getPhonebook().getAllBusStops().get(currentBusStop).getAllWaitingPassengers(this).get(i).getName());
-						Phonebook.getPhonebook().getAllBusStops().get(currentBusStop).getAllWaitingPassengers(this).get(i).msgBusIsHere();
-						Phonebook.getPhonebook().getAllBusStops().get(currentBusStop).getAllWaitingPassengers(this).remove(i);
+					+ Phonebook.getPhonebook().getAllBusStops().get(currentBusStop).getAllWaitingPassengers(this).get(0).getName());
+						Phonebook.getPhonebook().getAllBusStops().get(currentBusStop).getAllWaitingPassengers(this).get(0).msgBusIsHere();
+						Phonebook.getPhonebook().getAllBusStops().get(currentBusStop).getAllWaitingPassengers(this).remove(0);
+						AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, " # " + Phonebook.getPhonebook().getAllBusStops().get(currentBusStop).getNumberOfWaitingPassengers());
+//						if(Phonebook.getPhonebook().getAllBusStops().get(currentBusStop).getNumberOfWaitingPassengers() == 0)
+//						{
+//							AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, "SDFDSf " );
+//							pickingUpPeople.release();
+//						}
 					}
+					//pickingUpPeople.release();
 				}
 				//Phonebook.getPhonebook().getAllBusStops().get(currentBusStop).clearWaitingPassengers();
 			}
 		}
+		return;
 	}
 
 	private void tellPeopleGetOff()
@@ -166,6 +189,14 @@ public class BusAgent extends Agent{
 				{
 					AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, busPassengers.get(i).passenger.getName() + " is leaving at " + currentBusStop);				
 					busPassengers.get(i).passenger.msgAtBusStopDestination();
+					busPassengers.get(i).busStop = 5;
+					//busPassengers.remove(i);
+				}
+			}
+			for(int i = 0; i < busPassengers.size(); i++)
+			{
+				if(busPassengers.get(i).busStop == 5)
+				{
 					busPassengers.remove(i);
 				}
 			}

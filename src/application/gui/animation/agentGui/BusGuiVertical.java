@@ -60,41 +60,41 @@ public class BusGuiVertical extends CityGui {
 
 		if (yPos == yDestination) {
 			if (command == Command.stop1) {
-				lastStop = 1;
 				command = Command.wait;
 				busStop.schedule(new TimerTask() {
 					public void run() {
 						agent.msgAtBusStop(1);
+						lastStop = 1;
 					}
 				},
 				waitTime);
 			}
 			else if (command == Command.stop2) {
-				lastStop = 2;
 				command = Command.wait;
 				busStop.schedule(new TimerTask() {
 					public void run() {
 						agent.msgAtBusStop(2);
+						lastStop = 2;
 					}
 				},
 				waitTime);
 			}
 			else if (command == Command.stop3) {
-				lastStop = 3;
 				command = Command.wait;
 				busStop.schedule(new TimerTask() {
 					public void run() {
 						agent.msgAtBusStop(3);	
+						lastStop = 3;
 					}
 				},
 				waitTime);
 			}
 			else if (command == Command.stop4) {
-				lastStop = 4;
 				command = Command.wait;
 				busStop.schedule(new TimerTask() {
 					public void run() {
 						agent.msgAtBusStop(4);
+						lastStop = 4;
 					}
 				},
 				waitTime);
