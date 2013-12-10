@@ -28,9 +28,6 @@ public class Application extends JPanel {
 	private static List<Housing> allHousing = Collections.synchronizedList(new ArrayList<Housing>());
 
 	public AnimationPanel animPanel;
-	public Bank bank;
-	public Market market;
-	public ChineseRestaurant chineseRestaurant;
 	public Timer updateTimer = new Timer();
 
 	//public static Phonebook phonebook = new Phonebook(bank, market, restaurant, allHousing);
@@ -39,8 +36,10 @@ public class Application extends JPanel {
 	public Application(AnimationPanel ap) {
 
 		animPanel = ap;
-		//the following line is for dynamic building and business making in v2
-		//Phonebook.getPhonebook().getBusinessFromGui(animPanel);
+		//Adding markets to the cook in Chinese Restaurant
+		Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantCookRole.addMarket(Phonebook.getPhonebook().getEastMarket());
+		Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantCookRole.addMarket(Phonebook.getPhonebook().getWestMarket());
+	
 
 		//String name, int money, String jobTitle, String jobPlace, int startT, int lunchT, int endT
 
