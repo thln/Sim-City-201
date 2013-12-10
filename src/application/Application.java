@@ -261,11 +261,11 @@ public class Application extends JPanel {
 		getPopulation().add(bank4c);
 
 		//People
-//		getPopulation().add(wealthy1);
-//		getPopulation().add(wealthy2);
-//
-//		getPopulation().add(wealthy3);
-//		getPopulation().add(wealthy4);
+		getPopulation().add(wealthy1);
+		getPopulation().add(wealthy2);
+
+		getPopulation().add(wealthy3);
+		getPopulation().add(wealthy4);
 		getPopulation().add(crook1);
 
 //		Crook crook1 = new Crook("Vinny", 250);

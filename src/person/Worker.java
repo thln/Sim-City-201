@@ -103,10 +103,10 @@ public class Worker extends Person {
 			int shiftLength = (((myJob.endTime.hour - myJob.startTime.hour) % 24) + 24) % 24;
 			if (workerRole.getState() == RoleState.active) {
 				//If my current time is more than the shift length since start time
-					if (!((((((currentTime - myJob.startTime.hour) % 24) + 24) % 24) >= shiftLength)
-							&& (((((currentTime - myJob.startTime.hour) % 24) + 24) % 24) > 0)
-							&& ((((currentTime - myJob.startTime.hour) % 24) + 24) % 24) < 18)){
-						return workerRole.pickAndExecuteAnAction();   
+				if (!((((((currentTime - myJob.startTime.hour) % 24) + 24) % 24) >= shiftLength)
+						&& (((((currentTime - myJob.startTime.hour) % 24) + 24) % 24) > 0)
+						&& ((((currentTime - myJob.startTime.hour) % 24) + 24) % 24) < 18)){
+					return workerRole.pickAndExecuteAnAction();   
 				}
 				else if (!leavingWork){
 					leavingWork = true;
@@ -227,7 +227,7 @@ public class Worker extends Person {
 		print("Preparing for work as " + myJob.title + " at " + myJob.jobPlace);
 
 		gui.walk = gui.decideForBus(myJob.jobPlace);
-
+/*
 		if (!gui.walk){
 			if (myJob.jobPlace.contains("American")){
 				print("Destination bus Stop: " + Phonebook.getPhonebook().getAmericanRestaurant().getClosestBusStop().getBusStopNumber());
@@ -262,7 +262,7 @@ public class Worker extends Person {
 
 		}
 
-
+*/
 		if (myJob.jobPlace == "American Restaurant") 
 		{
 			workerRole = Phonebook.getPhonebook().getAmericanRestaurant().arrivedAtWork(this, myJob.title);
