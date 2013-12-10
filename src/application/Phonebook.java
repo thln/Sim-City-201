@@ -45,7 +45,8 @@ public class Phonebook{
 	private List<Housing> publicAllHousing; //= Collections.synchronizedList(new ArrayList<Housing>());
 	private List<Housing> testHousing;// = Collections.synchronizedList(new ArrayList<Housing>());
 
-
+	private RadioStation cityDJ;
+	
 	//the following 4 lists are for dynamic building and business making in v2
 
 	public class Block {
@@ -187,19 +188,17 @@ public class Phonebook{
 		westMarket.setClosestBusStopNumber(4);
 
 		seafoodRestaurant = new SeafoodRestaurant("Seafood Restaurant");
-//		seafoodRestaurant.setClosestSop(busStops.get(2));
+//		seafoodRestaurant.setClosestStop(2));
 		
 		chineseRestaurant = new ChineseRestaurant("Chinese Restaurant");
-		chineseRestaurant.setClosestStop(busStops.get(2));		//setting building's closest bus stop
 		chineseRestaurant.setClosestBusStopNumber(2);			//setting building's closest bus stop
 		
 		italianRestaurant = new ItalianRestaurant("Italian Restaurant");
-		italianRestaurant.setClosestStop(busStops.get(1));		//setting building's closest bus stop
+		italianRestaurant.setClosestBusStopNumber(2);		//setting building's closest bus stop
 		
+		cityDJ = new RadioStation();
 		americanRestaurant = new AmericanRestaurant("American Restaurant");
-		
-		italianRestaurant.setClosestStop(busStops.get(2));		//setting building's closest bus stop
-		chineseRestaurant.setClosestBusStopNumber(2);			//setting building's closest bus stop
+		//americanRestaurant.setClosestStop(2);
 
 		/* For future use after all the restaurants have been integrated
 		 * 
@@ -222,7 +221,6 @@ public class Phonebook{
 			return phonebook;
 		}
 	}
-
 
 	public Bank getEastBank() {
 		return eastBank; 
@@ -308,6 +306,11 @@ public class Phonebook{
 	public void setHousingMaintenanceCompany(HousingMaintenanceCompany HMC)
 	{
 		this.housingMaintenanceCompany = HMC;
+	}
+	
+	public RadioStation getRadioStation()
+	{
+		return cityDJ;
 	}
 
 	public List<Point> getBusStops() {

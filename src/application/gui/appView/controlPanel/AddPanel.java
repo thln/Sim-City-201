@@ -2,6 +2,13 @@ package application.gui.appView.controlPanel;
 
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import javax.swing.text.NumberFormatter;
 
@@ -50,7 +57,6 @@ public class AddPanel extends JPanel implements ActionListener {
 	private boolean raveMode = false;	
 	boolean rave = false;
 
-
 	private String[] personType = {" ", /*"Deadbeat", "Crook", */ "Worker", "Wealthy"};
 	private String[] jobLocation = {" ", "Restaurant", "Bank", "Market", "Housing"};
 	private String[] emptyList = {" "};
@@ -61,6 +67,7 @@ public class AddPanel extends JPanel implements ActionListener {
 
 	public AddPanel(ControlPanel cp, Application app)
 	{
+		
 		//initialization
 		this.cp = cp;
 		this.app = app;
@@ -300,13 +307,12 @@ public class AddPanel extends JPanel implements ActionListener {
 		if (e.getSource() == raveButton) {
 			for (Person p : app.getPopulation()) {
 				p.getGui().setRaveMode();
-				//RaveAudioMode();
 			}
 			if (!rave){
 				rave = true;
 				try {
 					app.animPanel.cityPanel.background = ImageIO.read(new File("res/rave.jpeg"));
-					//app.animPanel.cityPanel.paint
+					Phonebook.getPhonebook().getRadioStation().startRaveMusic();
 				} catch (IOException e1) {
 				}
 				return;
@@ -315,49 +321,13 @@ public class AddPanel extends JPanel implements ActionListener {
 				rave = false;
 				try {
 					app.animPanel.cityPanel.background = ImageIO.read(new File("res/concrete.jpg"));
-					//app.animPanel.cityPanel.paint
+					Phonebook.getPhonebook().getRadioStation().startBGMusic();
 				} catch (IOException e1) {
 				}
 				return;
 			}
 		}
 	}
-
-	
-	/*
-	public void RaveAudioMode()
-	{
-		AudioPlayer MGP = AudioPlayer.player;
-		AudioStream BGM;
-		AudioData MD;
-		ContinuousAudioDataStream loop = null;
-		//try 
-		//{
-			try {
-				BGM = new AudioStream(new FileInputStream("raveAudioMode.wav"));
-				MD = BGM.getData();
-				loop = new ContinuousAudioDataStream(MD);
-
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				System.out.println("Won't work1.");
-				return;
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				System.out.println("Won't work.");
-				return;
-			}
-		//}
-		//catch(IOException error)
-		//{
-		//	System.out.println("Won't work.");
-		//	return;
-		//}
-		
-		MGP.start(loop);
-	}*/
 	
 	public void showJobLocationFields(boolean show)
 	{
