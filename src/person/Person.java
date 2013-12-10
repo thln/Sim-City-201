@@ -378,39 +378,39 @@ public abstract class Person extends Agent{
 
 		gui.walk = gui.decideForBus(choice);
 
-				if (!gui.walk){
-					if (choice.equals("American Restaurant")){
-						print("Destination bus Stop: " + Phonebook.getPhonebook().getAmericanRestaurant().getClosestBusStop().getBusStopNumber());
-						goToBusStop(Phonebook.getPhonebook().getAmericanRestaurant().getClosestBusStop().getBusStopNumber());
-					}
-					if (choice.equals("Chinese Restaurant")){
-						print("Destination bus Stop: " + Phonebook.getPhonebook().getChineseRestaurant().getClosestBusStop().getBusStopNumber());
-						goToBusStop(Phonebook.getPhonebook().getChineseRestaurant().getClosestBusStop().getBusStopNumber());
-					}
-		//			if (choice.contains("Seafood")){
-		//				print("Destination bus Stop: " + Phonebook.getPhonebook().getSeafoodRestaurant().getClosestBusStop().getBusStopNumber());
-		//				goToBusStop(Phonebook.getPhonebook().getSeafoodRestaurant().getClosestBusStop().getBusStopNumber());
-		//			}
-					if (choice.equals("Italian Restaurant")){
-						print("Destination bus Stop: " + Phonebook.getPhonebook().getItalianRestaurant().getClosestBusStop().getBusStopNumber());
-						goToBusStop(Phonebook.getPhonebook().getItalianRestaurant().getClosestBusStop().getBusStopNumber());
-					}
-				}
-				
-				try {
-					atDestination.acquire();
-//					if (!gui.walk){
-//						try {
-//							atDestination.acquire();
-//						} catch (InterruptedException e) {
-//							e.printStackTrace();
-//		
-//						}
-	//				}
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-		
-				}
+		if (!gui.walk){
+			if (choice.equals("American Restaurant")){
+				print("Destination bus Stop: " + Phonebook.getPhonebook().getAmericanRestaurant().getClosestBusStop().getBusStopNumber());
+				goToBusStop(Phonebook.getPhonebook().getAmericanRestaurant().getClosestBusStop().getBusStopNumber());
+			}
+			if (choice.equals("Chinese Restaurant")){
+				print("Destination bus Stop: " + Phonebook.getPhonebook().getChineseRestaurant().getClosestBusStop().getBusStopNumber());
+				goToBusStop(Phonebook.getPhonebook().getChineseRestaurant().getClosestBusStop().getBusStopNumber());
+			}
+			//			if (choice.contains("Seafood")){
+			//				print("Destination bus Stop: " + Phonebook.getPhonebook().getSeafoodRestaurant().getClosestBusStop().getBusStopNumber());
+			//				goToBusStop(Phonebook.getPhonebook().getSeafoodRestaurant().getClosestBusStop().getBusStopNumber());
+			//			}
+			if (choice.equals("Italian Restaurant")){
+				print("Destination bus Stop: " + Phonebook.getPhonebook().getItalianRestaurant().getClosestBusStop().getBusStopNumber());
+				goToBusStop(Phonebook.getPhonebook().getItalianRestaurant().getClosestBusStop().getBusStopNumber());
+			}
+		}
+
+		try {
+			atDestination.acquire();
+			//					if (!gui.walk){
+			//						try {
+			//							atDestination.acquire();
+			//						} catch (InterruptedException e) {
+			//							e.printStackTrace();
+			//		
+			//						}
+			//				}
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+
+		}
 
 		for (Role cust1 : roles) {
 			if (cust1 instanceof ChineseRestaurantCustomerRole) {
@@ -444,16 +444,26 @@ public abstract class Person extends Agent{
 	}
 
 	protected void goToSleep() {
+
+		gui.walk = gui.decideForBus("Home");
 		gui.walk = true;
-		print("Going home");
-		getGui().DoGoHome();
+		if (!gui.walk){
+			if (home.type.equals("East Apartment")){
+				gui.doGoToBus(Phonebook.getPhonebook().getEastMarket().getClosestStop().getX(),
+						Phonebook.getPhonebook().getEastMarket().getClosestStop().getY());
+			}
+			else {
+				gui.doGoToBus(Phonebook.getPhonebook().getWestMarket().getClosestStop().getX(),
+						Phonebook.getPhonebook().getWestMarket().getClosestStop().getY());
+			}
+		}
+
 		try {
 			atDestination.acquire();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
-			//
 		}
-
+		
 		//person is part of an apartment
 		if(getHousing().type.toLowerCase().contains("apartment")) {
 			if(getHousing().type.toLowerCase().contains("east")) {
@@ -512,11 +522,12 @@ public abstract class Person extends Agent{
 		//After arrives home
 		hungerTimer.schedule(new TimerTask() {
 			public void run() {
+				print("I'm hungry...time to eat!");
 				setHunger(HungerLevel.hungry);
 				stateChanged();
 			}
 		},
-		(10000)); //Check this math please?
+		(9000)); //Check this math please?
 	}
 
 	@Override

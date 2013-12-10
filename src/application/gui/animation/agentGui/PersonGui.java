@@ -329,6 +329,11 @@ public class PersonGui extends CityGui {
 			yDestination = (int) Phonebook.getPhonebook().getAmericanRestaurant().location.getY();
 			command = Command.GoToRestaurant;
 		}
+		if (location.equals("Home")) {
+			xDestination = xHome;
+			yDestination = yHome;
+			command = Command.GoToRestaurant;
+		}
 		currentBlock = returnCurrentBlock (xPos, yPos);
 		destinationBlock = returnCurrentBlock (xDestination, yDestination);
 		
@@ -340,7 +345,6 @@ public class PersonGui extends CityGui {
 		if (agent.getName() == "Tam Henry")
 			agent.print("Location =" + xPos + " , " + yPos + " and current block =" + currentBlock + "and destination = " + destinationBlock);
 		if (destinationBlock == 0){
-			System.err.println("Person " + agent.getName() + "has destination block = 0, this is bad. Their command = " + command);
 			return false;
 		}	
 		else	
@@ -497,31 +501,31 @@ public class PersonGui extends CityGui {
 		if (xPos < 160 && yPos < 70){
 			return 1;
 		}
-		if ((xPos > 199 && xPos < 380) && yPos < 70){
+		else if ((xPos > 199 && xPos < 380) && yPos < 70){
 			return 2;
 		}
-		if (xPos > 419 && yPos < 70){
+		else if (xPos > 419 && yPos < 70){
 			return 3;
 		}
 
-		if (xPos < 160 && (yPos > 109 && yPos < 190)){
+		else if (xPos < 160 && (yPos > 109 && yPos < 190)){
 			return 4;
 		}
-		if ((xPos > 199 && xPos < 380) && (yPos > 109 && yPos < 190)){
+		else if ((xPos > 199 && xPos < 380) && (yPos > 109 && yPos < 190)){
 			return 5;
 		}
-		if (xPos > 419 && (yPos > 109 && yPos < 190)){
+		else if (xPos > 419 && (yPos > 109 && yPos < 190)){
 			return 6;
 		}
 
 
-		if (xPos < 160 && yPos > 229){
+		else if (xPos < 160 && yPos > 229){
 			return 7;
 		}
-		if ((xPos > 199 && xPos < 380) && yPos > 229){
+		else if ((xPos > 199 && xPos < 380) && yPos > 229){
 			return 8;
 		}
-		if (xPos > 419 && yPos > 229){
+		else if (xPos > 419 && yPos > 229){
 			return 9;
 		}
 

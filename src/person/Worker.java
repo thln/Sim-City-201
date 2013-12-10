@@ -251,7 +251,8 @@ public class Worker extends Person {
 		print("Preparing for work as " + myJob.title + " at " + myJob.jobPlace);
 
 		gui.walk = gui.decideForBus(myJob.jobPlace);
-
+		gui.walk = true;
+	
 		if (!gui.walk){
 			if (myJob.jobPlace.contains("American")){
 				print("Destination bus Stop: " + Phonebook.getPhonebook().getAmericanRestaurant().getClosestBusStop().getBusStopNumber());

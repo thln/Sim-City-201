@@ -503,7 +503,7 @@ Roads should have appropriate complexity [e.g. intersections with stop signs and
 		//Do this when person walks in for work***
 
 		//Standard Wealthy Person
-		Wealthy wealthy1 = new Wealthy("Tam Henry", 100);
+		Wealthy wealthy1 = new Wealthy("Tam Henry", 300);
 	
 		//Adding housing
 
