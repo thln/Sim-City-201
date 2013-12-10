@@ -251,7 +251,6 @@ public class Worker extends Person {
 		print("Preparing for work as " + myJob.title + " at " + myJob.jobPlace);
 
 		gui.walk = gui.decideForBus(myJob.jobPlace);
-
 		if (!gui.walk){
 			if (myJob.jobPlace.contains("American")){
 				print("Destination bus Stop: " + Phonebook.getPhonebook().getAmericanRestaurant().getClosestBusStop().getBusStopNumber());
@@ -269,11 +268,28 @@ public class Worker extends Person {
 				print("Destination bus Stop: " + Phonebook.getPhonebook().getItalianRestaurant().getClosestBusStop().getBusStopNumber());
 				goToBusStop(Phonebook.getPhonebook().getItalianRestaurant().getClosestBusStop().getBusStopNumber());
 			}
+			if (myJob.jobPlace.contains("West Bank")){
+				print("Destination bus Stop: " + Phonebook.getPhonebook().getWestBank().getClosestBusStop().getBusStopNumber());
+				goToBusStop(Phonebook.getPhonebook().getWestBank().getClosestBusStop().getBusStopNumber());
+			}
+			if (myJob.jobPlace.contains("East Bank")){
+				print("Destination bus Stop: " + Phonebook.getPhonebook().getEastBank().getClosestBusStop().getBusStopNumber());
+				goToBusStop(Phonebook.getPhonebook().getEastBank().getClosestBusStop().getBusStopNumber());
+			}
+			if (myJob.jobPlace.contains("West Market")){
+				print("Destination bus Stop: " + Phonebook.getPhonebook().getWestMarket().getClosestBusStop().getBusStopNumber());
+				goToBusStop(Phonebook.getPhonebook().getWestMarket().getClosestBusStop().getBusStopNumber());
+			}
+			if (myJob.jobPlace.contains("East Market")){
+				print("Destination bus Stop: " + Phonebook.getPhonebook().getEastMarket().getClosestBusStop().getBusStopNumber());
+				goToBusStop(Phonebook.getPhonebook().getEastMarket().getClosestBusStop().getBusStopNumber());
+			}
+			
 		}
 
 		if (!gui.walk){
 			try {
-				atDestination.acquire();
+				atCityDestination.acquire();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -302,6 +318,7 @@ public class Worker extends Person {
 
 		if (myJob.jobPlace.equals("West Bank")) 
 		{
+			print("test working");
 			workerRole = Phonebook.getPhonebook().getWestBank().arrivedAtWork(this, myJob.title);
 			workerRole.setRoleActive();
 			return;
