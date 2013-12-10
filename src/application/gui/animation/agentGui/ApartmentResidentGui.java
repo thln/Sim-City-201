@@ -48,8 +48,11 @@ public class ApartmentResidentGui extends HousingResidentGui{
     			yPos--;
 
     		if (xPos == xDestination && yPos == yDestination) {
-    			if(command != Command.noCommand)
+    			if(command != Command.noCommand) {
     				currColor = transColor;
+    				if(agent != null)
+    					agent.msgAtDestination();
+    			}
     			command = Command.noCommand;
     		}
         //}

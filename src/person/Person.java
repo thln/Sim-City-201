@@ -350,7 +350,7 @@ public abstract class Person extends Agent{
 							ApartmentResidentRole ARR = (ApartmentResidentRole) cust1;
 							if (Phonebook.getPhonebook().getEastApartment().arrived(ARR)) {
 								currentRoleName = "EAST Apartment Resident";
-								cust1.setRoleActive();
+								ARR.setRoleActive();
 								stateChanged();
 							}
 							return;

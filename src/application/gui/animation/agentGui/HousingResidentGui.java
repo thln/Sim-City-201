@@ -13,8 +13,8 @@ public class HousingResidentGui extends HousingGui {
     
     //RestaurantGui gui;
 
-    private int xPos = 300, yPos = 300;//default HouseRenter position
-    private int xDestination = 300, yDestination = 260;//default start position
+    private int xPos = 300, yPos = 200;//default HouseRenter position
+    private int xDestination = 300, yDestination = 200;//default start position
     
     private enum Command {noCommand};
 	private Command command = Command.noCommand;

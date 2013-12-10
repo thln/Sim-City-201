@@ -22,15 +22,19 @@ public class Apartment {
 		if(ARR instanceof ApartmentResidentRole) {
 			ARR.setApartment(this);
 			aptUnits = apartmentPanel.getAptUnits();
+			Housing house;
 			for(int i=0;i<aptUnits.size();i++) {
 				if(aptUnits.get(i).getOccupantName().equals(ARR.getName())) {
-					ARR.setUnit(i, aptUnits.get(i));
+					house = aptUnits.get(i);
+					ARR.setUnit(i, house);
+					ApartmentResidentGui ARG = new ApartmentResidentGui(ARR);
+					ARR.setGui(ARG);
+					apartmentPanel.addGui(ARG);
+					//System.out.println(ARR.getName() + ": "+ house.getOccupantName());
+					ARR.msgMoveToUnit();
+					return true;
 				}
 			}
-			ApartmentResidentGui ARG = new ApartmentResidentGui(ARR);
-			ARR.setGui(ARG);
-			apartmentPanel.addGui(ARG);
-			return true;
 		}
 		return false;
 	}

@@ -11,18 +11,22 @@ public class ApartmentResidentRole extends HousingResidentRole{
 	private Apartment apartment;
 	private ApartmentResidentGui gui;
 	public enum ResidentState {moving, none};
-	public ResidentState state;
+	public ResidentState state = ResidentState.none;
 	private Semaphore atDestination = new Semaphore(0, true);
 	private Housing myHome;
 	int aptUnit;
 
 	public ApartmentResidentRole (Person p1, String pName, String rName) {
 		super(p1, pName, rName);
-		state = ResidentState.moving;
 	}
 	
 	//Messages
-	public void atDestination() {
+	public void msgMoveToUnit() {
+		state = ResidentState.moving;
+		stateChanged();
+	}
+	
+	public void msgAtDestination() {
 		atDestination.release();
 	}
 	
@@ -46,6 +50,8 @@ public class ApartmentResidentRole extends HousingResidentRole{
 			e.printStackTrace();
 		}
 		HousingResidentGui HRR = new HousingResidentGui(this);
+		//System.out.println(getName() + ": "+ myHome.getOccupantName());
+		//System.out.println(getName() + ": "+ myHome.getPanel().name);
 		myHome.getPanel().addGui(HRR);
 		//apartment.enterHouse(this);
 		
@@ -61,9 +67,13 @@ public class ApartmentResidentRole extends HousingResidentRole{
 		return gui;
 	}
 	
-	public void setUnit(int aptUnit, Housing myHome) {
+	public void setUnit(int aptUnit, Housing home) {
 		this.aptUnit = aptUnit;
-		this.myHome = myHome;
+		this.myHome = home;
+	}
+	
+	public Housing getHome() {
+		return this.myHome;
 	}
 	
 	public void setApartment(Apartment apt) {
