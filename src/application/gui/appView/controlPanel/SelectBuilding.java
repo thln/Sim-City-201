@@ -2,6 +2,8 @@ package application.gui.appView.controlPanel;
 
 import javax.swing.*;
 
+import bank.BankCustomerRole;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -28,12 +30,15 @@ public class SelectBuilding extends JPanel implements ActionListener
 	JButton openCloseBuildingButton = new JButton("Close Building");
 	JLabel selectBuildingLabel = new JLabel("Select a Building");
 	private String[] allBuildings = {" ", "East Bank", "West Bank", "East Market", "West Market", 
-			"Chinese Restaurant", "Housing Maintenance Company"};
+			"Chinese Restaurant", "Seafood Restaurant", "American Restaurant", "Italian Restaurant", "Housing Maintenance Company"};
 	private boolean eastBankIsOpen = true;
 	private boolean westBankIsOpen = true;
 	private boolean eastMarketIsOpen = true;
 	private boolean westMarketIsOpen = true;
 	private boolean chineseRestaurantIsOpen = true;
+	private boolean seafoodRestaurantIsOpen = true;
+	private boolean americanRestaurantIsOpen = true;
+	private boolean italianRestaurantIsOpen = true;
 	private boolean housingMaintenanceCompanyIsOpen = true;
 	
 	private JPanel restaurantInfoPanel;
@@ -159,6 +164,39 @@ public class SelectBuilding extends JPanel implements ActionListener
 					{
 						openCloseBuildingButton.setText("Open Building");
 					}
+				}	
+				if(selectBuildingBox.getSelectedItem() == "Seafood Restaurant")
+				{
+					if(seafoodRestaurantIsOpen)
+					{
+						openCloseBuildingButton.setText("Close Building");
+					}
+					else
+					{
+						openCloseBuildingButton.setText("Open Building");
+					}
+				}
+				if(selectBuildingBox.getSelectedItem() == "American Restaurant")
+				{
+					if(americanRestaurantIsOpen)
+					{
+						openCloseBuildingButton.setText("Close Building");
+					}
+					else
+					{
+						openCloseBuildingButton.setText("Open Building");
+					}
+				}
+				if(selectBuildingBox.getSelectedItem() == "Italian Restaurant")
+				{
+					if(italianRestaurantIsOpen)
+					{
+						openCloseBuildingButton.setText("Close Building");
+					}
+					else
+					{
+						openCloseBuildingButton.setText("Open Building");
+					}
 				}
 				if(selectBuildingBox.getSelectedItem() == "Housing Maintenance Company")
 				{
@@ -267,6 +305,57 @@ public class SelectBuilding extends JPanel implements ActionListener
 					AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY,selectBuildingBox.getSelectedItem().toString(), "is now open.");
 				}
 			}
+			if(selectBuildingBox.getSelectedItem() == "Seafood Restaurant")
+			{
+				if(seafoodRestaurantIsOpen)
+				{
+					seafoodRestaurantIsOpen = false;
+					//Phonebook.getPhonebook().closeBuilding("seafoodRestaurant");
+					openCloseBuildingButton.setText("Open Building");
+					AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY,selectBuildingBox.getSelectedItem().toString(), "is now closed.");
+				}
+				else
+				{
+					seafoodRestaurantIsOpen = true;
+					//Phonebook.getPhonebook().openBuilding("seafoodRestaurant");
+					openCloseBuildingButton.setText("Close Building");
+					AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY,selectBuildingBox.getSelectedItem().toString(), "is now open.");
+				}
+			}
+			if(selectBuildingBox.getSelectedItem() == "American Restaurant")
+			{
+				if(americanRestaurantIsOpen)
+				{
+					americanRestaurantIsOpen = false;
+					//Phonebook.getPhonebook().closeBuilding("americanRestaurant");
+					openCloseBuildingButton.setText("Open Building");
+					AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY,selectBuildingBox.getSelectedItem().toString(), "is now closed.");
+				}
+				else
+				{
+					americanRestaurantIsOpen = true;
+					//Phonebook.getPhonebook().openBuilding("americanRestaurant");
+					openCloseBuildingButton.setText("Close Building");
+					AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY,selectBuildingBox.getSelectedItem().toString(), "is now open.");
+				}
+			}
+			if(selectBuildingBox.getSelectedItem() == "Italian Restaurant")
+			{
+				if(italianRestaurantIsOpen)
+				{
+					italianRestaurantIsOpen = false;
+					//Phonebook.getPhonebook().closeBuilding("italianRestaurant");
+					openCloseBuildingButton.setText("Open Building");
+					AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY,selectBuildingBox.getSelectedItem().toString(), "is now closed.");
+				}
+				else
+				{
+					italianRestaurantIsOpen = true;
+					//Phonebook.getPhonebook().openBuilding("italianRestaurant");
+					openCloseBuildingButton.setText("Close Building");
+					AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY,selectBuildingBox.getSelectedItem().toString(), "is now open.");
+				}
+			}
 			if(selectBuildingBox.getSelectedItem() == "Housing Maintenance Company")
 			{
 				if(housingMaintenanceCompanyIsOpen)
@@ -292,42 +381,325 @@ public class SelectBuilding extends JPanel implements ActionListener
 	{
 		workerButtons.clear();
 		restaurantInfoPanel.removeAll();
+		validate();
 		if(selectBuildingBox.getSelectedItem() == " ")
 		{
+			//validate();
+			//restaurantInfoPanel.setVisible(false);
 			return;
 		}
 		else
 		{
+			restaurantInfoPanel.setVisible(true);
 			if(selectBuildingBox.getSelectedItem() == "East Bank")
 			{
-				JButton button = new JButton(Phonebook.getPhonebook().getEastBank().bankGuardRole.getRoleName() + " " + Phonebook.getPhonebook().getEastBank().bankGuardRole.getName());
-				button.setMaximumSize(new Dimension(250, 25));
-				workerButtons.add(button);
-				restaurantInfoPanel.add(button);
+				String pName;
+				//Bank Guard
+				if(Phonebook.getPhonebook().getEastBank().bankGuardRole.person == null)
+				{
+				 	pName = "null";
+				}
+				else
+				{
+					pName = Phonebook.getPhonebook().getEastBank().bankGuardRole.getName();
+				}
+				JButton button1 = new JButton(Phonebook.getPhonebook().getEastBank().bankGuardRole.getRoleName() + " " + pName);
+				button1.setMaximumSize(new Dimension(250, 25));
+				workerButtons.add(button1);
+				restaurantInfoPanel.add(button1);
+				validate();
+
+				//Loan Officer
+				if(Phonebook.getPhonebook().getEastBank().loanOfficerRole.person == null)
+				{
+				 	pName = "null";
+				}
+				else
+				{
+					pName = Phonebook.getPhonebook().getEastBank().loanOfficerRole.getName();
+				}
+				JButton button2 = new JButton(Phonebook.getPhonebook().getEastBank().loanOfficerRole.getRoleName() + " " + pName);
+				button2.setMaximumSize(new Dimension(250, 25));
+				workerButtons.add(button2);
+				restaurantInfoPanel.add(button2);
+				validate();			
+
+				//Bank Tellers
+				for(int i = 0; i < Phonebook.getPhonebook().getEastBank().bankGuardRole.getTellers().size(); i++)
+				{
+					JButton tempbutton1 = new JButton(/*Phonebook.getPhonebook().getEastBank().bankGuardRole.getTellers().get(i).tell1.getRoleName()*/ 
+							"Bank Teller #" + (i+1) + " " + Phonebook.getPhonebook().getEastBank().bankGuardRole.getTellers().get(i).tell1.getName());
+					tempbutton1.setMaximumSize(new Dimension(250, 25));
+					workerButtons.add(tempbutton1);
+					restaurantInfoPanel.add(tempbutton1);
+					validate();
+				}
+				
+				//Bank Customers, no to name, they are interfaces right now
+//				for(int i = 0; i < Phonebook.getPhonebook().getEastBank().bankGuardRole.getCustomers().size(); i++)
+//				{
+//					JButton tempbutton1 = new JButton(/*Phonebook.getPhonebook().getEastBank().bankGuardRole.getTellers().get(i).tell1.getRoleName()*/ 
+//							"Bank Customer" + " " + (BankCustomerRole) Phonebook.getPhonebook().getEastBank().bankGuardRole.getCustomers().get(i));
+//					tempbutton1.setMaximumSize(new Dimension(250, 25));
+//					workerButtons.add(tempbutton1);
+//					restaurantInfoPanel.add(tempbutton1);
+//					validate();
+//				}
 			}
 			if(selectBuildingBox.getSelectedItem() == "West Bank")
 			{
+				String pName;
+				//Bank Guard
+				if(Phonebook.getPhonebook().getWestBank().bankGuardRole.person == null)
+				{
+				 	pName = "null";
+				}
+				else
+				{
+					pName = Phonebook.getPhonebook().getWestBank().bankGuardRole.getName();
+				}
+				JButton button1 = new JButton(Phonebook.getPhonebook().getWestBank().bankGuardRole.getRoleName() + " " + pName);
+				button1.setMaximumSize(new Dimension(250, 25));
+				workerButtons.add(button1);
+				restaurantInfoPanel.add(button1);
+				validate();
+
+				//Loan Officer
+				if(Phonebook.getPhonebook().getWestBank().loanOfficerRole.person == null)
+				{
+				 	pName = "null";
+				}
+				else
+				{
+					pName = Phonebook.getPhonebook().getWestBank().loanOfficerRole.getName();
+				}
+				JButton button2 = new JButton(Phonebook.getPhonebook().getWestBank().loanOfficerRole.getRoleName() + " " + pName);
+				button2.setMaximumSize(new Dimension(250, 25));
+				workerButtons.add(button2);
+				restaurantInfoPanel.add(button2);
+				validate();			
+
+				//Bank Tellers
+				for(int i = 0; i < Phonebook.getPhonebook().getWestBank().bankGuardRole.getTellers().size(); i++)
+				{
+					JButton tempbutton1 = new JButton(/*Phonebook.getPhonebook().getEastBank().bankGuardRole.getTellers().get(i).tell1.getRoleName()*/ 
+							"Bank Teller #" + (i+1) + " " + Phonebook.getPhonebook().getWestBank().bankGuardRole.getTellers().get(i).tell1.getName());
+					tempbutton1.setMaximumSize(new Dimension(250, 25));
+					workerButtons.add(tempbutton1);
+					restaurantInfoPanel.add(tempbutton1);
+					validate();
+				}
 				
+				//Bank Customers, no to name, they are interfaces right now
+//				for(int i = 0; i < Phonebook.getPhonebook().getWestBank().bankGuardRole.getCustomers().size(); i++)
+//				{
+//					JButton tempbutton1 = new JButton(/*Phonebook.getPhonebook().getWestBank().bankGuardRole.getTellers().get(i).tell1.getRoleName()*/ 
+//							"Bank Customer" + " " + (BankCustomerRole) Phonebook.getPhonebook().getWestBank().bankGuardRole.getCustomers().get(i));
+//					tempbutton1.setMaximumSize(new Dimension(250, 25));
+//					workerButtons.add(tempbutton1);
+//					restaurantInfoPanel.add(tempbutton1);
+//					validate();
+//				}
+				//List of robbers?
 			}
 			if(selectBuildingBox.getSelectedItem() == "East Market")
 			{
+				String pName;
+				//Sales Person
+				if(Phonebook.getPhonebook().getEastMarket().salesPersonRole.person == null)
+				{
+				 	pName = "null";
+				}
+				else
+				{
+					pName = Phonebook.getPhonebook().getEastMarket().salesPersonRole.getName();
+				}
+				JButton button1 = new JButton(Phonebook.getPhonebook().getEastMarket().salesPersonRole.getRoleName() + " " + pName);
+				button1.setMaximumSize(new Dimension(250, 25));
+				workerButtons.add(button1);
+				restaurantInfoPanel.add(button1);
+				validate();
 				
+				//MarketRunner
+				if(Phonebook.getPhonebook().getEastMarket().marketRunnerRole.person == null)
+				{
+				 	pName = "null";
+				}
+				else
+				{
+					pName = Phonebook.getPhonebook().getEastMarket().marketRunnerRole.getName();
+				}
+				JButton button2 = new JButton(Phonebook.getPhonebook().getEastMarket().marketRunnerRole.getRoleName() + " " + pName);
+				button2.setMaximumSize(new Dimension(250, 25));
+				workerButtons.add(button2);
+				restaurantInfoPanel.add(button2);
+				validate();
+				
+				//UPS Man
+				if(Phonebook.getPhonebook().getEastMarket().UPSmanRole.person == null)
+				{
+				 	pName = "null";
+				}
+				else
+				{
+					pName = Phonebook.getPhonebook().getEastMarket().UPSmanRole.getName();
+				}
+				JButton button3 = new JButton(Phonebook.getPhonebook().getEastMarket().UPSmanRole.getRoleName() + " " + pName);
+				button3.setMaximumSize(new Dimension(250, 25));
+				workerButtons.add(button3);
+				restaurantInfoPanel.add(button3);
+				validate();
+				
+				//Market CUstoemrs
+				for(int i = 0; i < Phonebook.getPhonebook().getEastMarket().marketCustomerGuis.size(); i++)
+				{
+					JButton tempbutton1 = new JButton(/*Phonebook.getPhonebook().getEastBank().bankGuardRole.getTellers().get(i).tell1.getRoleName()*/ 
+							"Market Customer " + Phonebook.getPhonebook().getEastMarket().marketCustomerGuis.get(i).getAgent().getName());
+					tempbutton1.setMaximumSize(new Dimension(250, 25));
+					workerButtons.add(tempbutton1);
+					restaurantInfoPanel.add(tempbutton1);
+					validate();
+				}
 			}
 			if(selectBuildingBox.getSelectedItem() == "West Market")
 			{
-			 	
+				String pName;
+				//Sales Person
+				if(Phonebook.getPhonebook().getWestMarket().salesPersonRole.person == null)
+				{
+				 	pName = "null";
+				}
+				else
+				{
+					pName = Phonebook.getPhonebook().getWestMarket().salesPersonRole.getName();
+				}
+				JButton button1 = new JButton(Phonebook.getPhonebook().getWestMarket().salesPersonRole.getRoleName() + " " + pName);
+				button1.setMaximumSize(new Dimension(250, 25));
+				workerButtons.add(button1);
+				restaurantInfoPanel.add(button1);
+				validate();
+				
+				//MarketRunner
+				if(Phonebook.getPhonebook().getWestMarket().marketRunnerRole.person == null)
+				{
+				 	pName = "null";
+				}
+				else
+				{
+					pName = Phonebook.getPhonebook().getWestMarket().marketRunnerRole.getName();
+				}
+				JButton button2 = new JButton(Phonebook.getPhonebook().getWestMarket().marketRunnerRole.getRoleName() + " " + pName);
+				button2.setMaximumSize(new Dimension(250, 25));
+				workerButtons.add(button2);
+				restaurantInfoPanel.add(button2);
+				validate();
+				
+				//UPS Man
+				if(Phonebook.getPhonebook().getWestMarket().UPSmanRole.person == null)
+				{
+				 	pName = "null";
+				}
+				else
+				{
+					pName = Phonebook.getPhonebook().getWestMarket().UPSmanRole.getName();
+				}
+				JButton button3 = new JButton(Phonebook.getPhonebook().getWestMarket().UPSmanRole.getRoleName() + " " + pName);
+				button3.setMaximumSize(new Dimension(250, 25));
+				workerButtons.add(button3);
+				restaurantInfoPanel.add(button3);
+				validate();
+				
+				//Market CUstoemrs
+				for(int i = 0; i < Phonebook.getPhonebook().getWestMarket().marketCustomerGuis.size(); i++)
+				{
+					JButton tempbutton1 = new JButton(/*Phonebook.getPhonebook().getEastBank().bankGuardRole.getTellers().get(i).tell1.getRoleName()*/ 
+							"Market Customer " + Phonebook.getPhonebook().getWestMarket().marketCustomerGuis.get(i).getAgent().getName());
+					tempbutton1.setMaximumSize(new Dimension(250, 25));
+					workerButtons.add(tempbutton1);
+					restaurantInfoPanel.add(tempbutton1);
+					validate();
+				}
 			}
 			if(selectBuildingBox.getSelectedItem() == "Chinese Restaurant")
 			{
+				String pName;
+				//Host
+				if(Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantHostRole.person == null)
+				{
+				 	pName = "null";
+				}
+				else
+				{
+					pName = Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantHostRole.getName();
+				}
+				JButton button1 = new JButton(Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantHostRole.getRoleName() + " " + pName);
+				button1.setMaximumSize(new Dimension(250, 25));
+				workerButtons.add(button1);
+				restaurantInfoPanel.add(button1);
+				validate();
 				
+				//Cook
+				if(Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantCookRole.person == null)
+				{
+				 	pName = "null";
+				}
+				else
+				{
+					pName = Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantCookRole.getName();
+				}
+				JButton button2 = new JButton(Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantCookRole.getRoleName() + " " + pName);
+				button2.setMaximumSize(new Dimension(250, 25));
+				workerButtons.add(button2);
+				restaurantInfoPanel.add(button2);
+				validate();
+				
+				//Cashier
+				if(Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantCashierRole.person == null)
+				{
+				 	pName = "null";
+				}
+				else
+				{
+					pName = Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantCashierRole.getName();
+				}
+				JButton button3 = new JButton(Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantCashierRole.getRoleName() + " " + pName);
+				button3.setMaximumSize(new Dimension(250, 25));
+				workerButtons.add(button3);
+				restaurantInfoPanel.add(button3);
+				validate();
+				
+				//Waiters
+				for(int i = 0; i < Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantHostRole.waiters.size(); i++)
+				{
+					JButton tempbutton1 = new JButton(Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantHostRole.waiters.get(i).chineseRestaurantWaiterRole.getRoleName() 
+							+ " " + Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantHostRole.waiters.get(i).chineseRestaurantWaiterRole.getName());
+					tempbutton1.setMaximumSize(new Dimension(250, 25));
+					workerButtons.add(tempbutton1);
+					restaurantInfoPanel.add(tempbutton1);
+					validate();
+				}
+
+				//Customers
+				for(int i = 0; i < Phonebook.getPhonebook().getChineseRestaurant().getCustomers().size(); i++)
+				{
+					JButton tempbutton1 = new JButton(/*Phonebook.getPhonebook().getEastBank().bankGuardRole.getTellers().get(i).tell1.getRoleName()*/ 
+							"Restaurant Customer " + Phonebook.getPhonebook().getChineseRestaurant().getCustomers().get(i).getCustomerName());
+					tempbutton1.setMaximumSize(new Dimension(250, 25));
+					workerButtons.add(tempbutton1);
+					restaurantInfoPanel.add(tempbutton1);
+					validate();
+				}
 			}
 			if(selectBuildingBox.getSelectedItem() == "Housing Maintenance Company")
 			{
-				
+				JButton button = new JButton(Phonebook.getPhonebook().getHousingMaintenanceCompany().maintenanceWorkerRole.getRoleName() + " " + Phonebook.getPhonebook().getHousingMaintenanceCompany().maintenanceWorkerRole.getName());
+				button.setMaximumSize(new Dimension(250, 25));
+				workerButtons.add(button);
+				restaurantInfoPanel.add(button);
+				validate();
 			}
 			
 		}
-		validate();
 	}
 }
 

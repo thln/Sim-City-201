@@ -31,7 +31,7 @@ public class BankGuardRole extends Role implements BankGuard {
 
 	public class MyTeller {
 		public TellerState state;
-		BankTeller tell1;
+		public BankTeller tell1;
 
 		MyTeller (BankTeller t1) {
 			tell1 = t1;
