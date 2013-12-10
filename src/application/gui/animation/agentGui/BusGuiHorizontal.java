@@ -98,10 +98,10 @@ public class BusGuiHorizontal extends CityGui {
 
 	public void draw(Graphics2D g) {
 		if (yPos == stopTopY) {
-			g.drawImage(busLeft.getImage(), xPos, yPos, null);
+			g.drawImage(busRight.getImage(), xPos, yPos, null);
 		}
 		else {
-			g.drawImage(busRight.getImage(), xPos, yPos, null);
+			g.drawImage(busLeft.getImage(), xPos, yPos, null);
 		}
 		
 		if(xPos == stopLeftX && yPos == stopTopY) {

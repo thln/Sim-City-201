@@ -15,17 +15,17 @@ import application.Phonebook;
 import application.gui.animation.agentGui.MarketRunnerGui;
 
 public class MarketRunnerRole extends Role implements MarketRunner {
-	
+
 	//MarketRunnerGui marketRunnerGui = (MarketRunnerGui) gui;
 	MarketRunnerGui marketRunnerGui;
 
 	//Data
 	String name;
 	Market market;
-	
+
 	public List<MarketOrder> orders = Collections.synchronizedList(new ArrayList<MarketOrder>());
 	private Semaphore atDestination = new Semaphore(0, true);
-	
+
 	public EventLog log = new EventLog();
 
 	public MarketRunnerRole(Person person, String pName, String rName, Market market) {
@@ -45,7 +45,7 @@ public class MarketRunnerRole extends Role implements MarketRunner {
 		orders.add(o);
 		stateChanged();
 	}
-	
+
 	public void msgAtDestination() {
 		atDestination.release();
 	}
@@ -58,13 +58,13 @@ public class MarketRunnerRole extends Role implements MarketRunner {
 				return true;
 			}
 		}
-		
+
 		if (leaveRole  && orders.isEmpty() && market.salesPersonRole.orders.isEmpty()) {
 			market.goingOffWork(person);
 			leaveRole = false;
 			return true;
 		}
-		
+
 		return false;
 	}
 
@@ -72,22 +72,24 @@ public class MarketRunnerRole extends Role implements MarketRunner {
 	public void processOrder(MarketOrder o) {
 		print("getting order from inventory");
 		//if(!marketRunnerGui.atInventory()) {
-			marketRunnerGui.DoGoToInventory();
-			try {
-				this.atDestination.acquire();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		//CARMEN IF YOU UNCOMMENT THIS, MAKE SURE IT DOESN'T STOP THE WHOLE FREAKING INTERACTION
+		//BECUASE THE SEMAPHORE WAS NEVER RELEASED SO THE MARKET WASN'T WORKING
+		//			marketRunnerGui.DoGoToInventory();
+		//			try {
+		//				this.atDestination.acquire();
+		//			} catch (InterruptedException e) {
+		//				// TODO Auto-generated catch block
+		//				e.printStackTrace();
+		//			}
 		//}
-		
+
 		if (o.customer != null) {
 			decreaseInventoryBy(o.item, o.itemAmountOrdered);
 			o.itemAmountFulfilled = o.itemAmountOrdered;
 			if (o.customer instanceof MarketCustomerRole) {
 				print("Fulfilled order for customer: " + ((MarketCustomerRole) o.customer).getName());
 			}
-			
+
 			marketRunnerGui.DoGoToSalesPerson();
 			try {
 				this.atDestination.acquire();
@@ -111,7 +113,7 @@ public class MarketRunnerRole extends Role implements MarketRunner {
 		int newAmount = market.inventory.get(item).amount - amount;
 		market.inventory.get(item).setInventory(newAmount);
 	}
-	
+
 	public void setGui(MarketRunnerGui gui) {
 		marketRunnerGui = gui;
 	}
