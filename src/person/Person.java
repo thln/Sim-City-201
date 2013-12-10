@@ -86,9 +86,9 @@ public abstract class Person extends Agent{
 		hasFoodInFridge = false;
 
 		//add restaurants to queue 
-		restaurantQueue = new ArrayList<String>();
-		restaurantQueue.add("American Restaurant");
+		restaurantQueue = new ArrayList<String>();	
 		restaurantQueue.add("Chinese Restaurant");
+		restaurantQueue.add("American Restaurant");
 		restaurantQueue.add("Italian Restaurant");
 		//	restaurantQueue.add("Chinese Restaurant");
 		restaurantQueue.add("Seafood Restaurant");
@@ -378,39 +378,39 @@ public abstract class Person extends Agent{
 
 		gui.walk = gui.decideForBus(choice);
 
-		//		if (!gui.walk){
-		//			if (choice.equals("American Restaurant")){
-		//				print("Destination bus Stop: " + Phonebook.getPhonebook().getAmericanRestaurant().getClosestBusStop().getBusStopNumber());
-		//				goToBusStop(Phonebook.getPhonebook().getAmericanRestaurant().getClosestBusStop().getBusStopNumber());
+				if (!gui.walk){
+					if (choice.equals("American Restaurant")){
+						print("Destination bus Stop: " + Phonebook.getPhonebook().getAmericanRestaurant().getClosestBusStop().getBusStopNumber());
+						goToBusStop(Phonebook.getPhonebook().getAmericanRestaurant().getClosestBusStop().getBusStopNumber());
+					}
+					if (choice.equals("Chinese Restaurant")){
+						print("Destination bus Stop: " + Phonebook.getPhonebook().getChineseRestaurant().getClosestBusStop().getBusStopNumber());
+						goToBusStop(Phonebook.getPhonebook().getChineseRestaurant().getClosestBusStop().getBusStopNumber());
+					}
+		//			if (choice.contains("Seafood")){
+		//				print("Destination bus Stop: " + Phonebook.getPhonebook().getSeafoodRestaurant().getClosestBusStop().getBusStopNumber());
+		//				goToBusStop(Phonebook.getPhonebook().getSeafoodRestaurant().getClosestBusStop().getBusStopNumber());
 		//			}
-		//			if (choice.equals("Chinese Restaurant")){
-		//				print("Destination bus Stop: " + Phonebook.getPhonebook().getChineseRestaurant().getClosestBusStop().getBusStopNumber());
-		//				goToBusStop(Phonebook.getPhonebook().getChineseRestaurant().getClosestBusStop().getBusStopNumber());
-		//			}
-		////			if (choice.contains("Seafood")){
-		////				print("Destination bus Stop: " + Phonebook.getPhonebook().getSeafoodRestaurant().getClosestBusStop().getBusStopNumber());
-		////				goToBusStop(Phonebook.getPhonebook().getSeafoodRestaurant().getClosestBusStop().getBusStopNumber());
-		////			}
-		//			if (choice.equals("Italian Restaurant")){
-		//				print("Destination bus Stop: " + Phonebook.getPhonebook().getItalianRestaurant().getClosestBusStop().getBusStopNumber());
-		//				goToBusStop(Phonebook.getPhonebook().getItalianRestaurant().getClosestBusStop().getBusStopNumber());
-		//			}
-		//		}
-		//		
-		//		try {
-		//			atDestination.acquire();
-		//			if (!gui.walk){
-		//				try {
-		//					atDestination.acquire();
-		//				} catch (InterruptedException e) {
-		//					e.printStackTrace();
-		//
-		//				}
-		//			}
-		//		} catch (InterruptedException e) {
-		//			e.printStackTrace();
-		//
-		//		}
+					if (choice.equals("Italian Restaurant")){
+						print("Destination bus Stop: " + Phonebook.getPhonebook().getItalianRestaurant().getClosestBusStop().getBusStopNumber());
+						goToBusStop(Phonebook.getPhonebook().getItalianRestaurant().getClosestBusStop().getBusStopNumber());
+					}
+				}
+				
+				try {
+					atDestination.acquire();
+//					if (!gui.walk){
+//						try {
+//							atDestination.acquire();
+//						} catch (InterruptedException e) {
+//							e.printStackTrace();
+//		
+//						}
+	//				}
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+		
+				}
 
 		for (Role cust1 : roles) {
 			if (cust1 instanceof ChineseRestaurantCustomerRole) {
@@ -445,7 +445,7 @@ public abstract class Person extends Agent{
 
 	protected void goToSleep() {
 		gui.walk = true;
-
+		print("Going home");
 		getGui().DoGoHome();
 		try {
 			atDestination.acquire();
