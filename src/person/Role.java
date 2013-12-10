@@ -136,7 +136,11 @@ public abstract class Role {
     }
     
     public String getName() {
-    	return person.getName();
+    	if(person != null) {
+    		return person.getName();
+    	}
+    	else
+    		return " ";
     }
     
     public void setState(RoleState state) 
