@@ -36,8 +36,8 @@ public class ChineseRestaurantCookRole extends Role implements ChineseRestaurant
 	int inventoryChecker = 0;
 
 	public List<ChineseRestaurantOrder> myOrders = Collections.synchronizedList(new ArrayList<ChineseRestaurantOrder>());
-	private List<myMarket> markets = Collections.synchronizedList(new ArrayList<myMarket>());
-	private List<Stock> stockFulfillment = Collections.synchronizedList(new ArrayList<Stock>());
+	public List<myMarket> markets = Collections.synchronizedList(new ArrayList<myMarket>());
+	public List<Stock> stockFulfillment = Collections.synchronizedList(new ArrayList<Stock>());
 
 	private Map<String, Food> foodMap = new HashMap<String, Food>(); {
 		foodMap.put("Chicken", new Food("Chicken"));

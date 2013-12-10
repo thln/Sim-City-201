@@ -166,7 +166,7 @@ public class ChineseRestaurantCustomerRole extends Role implements ChineseRestau
 	/**
 	 * Scheduler
 	 */
-	protected boolean pickAndExecuteAnAction() {
+	public boolean pickAndExecuteAnAction() {
 		//	AmericanRestaurantCustomerRole is a finite state machine
 
 		if (state == AgentState.DoingNothing && event == AgentEvent.gotHungry ) {

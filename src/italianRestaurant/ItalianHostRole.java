@@ -93,7 +93,7 @@ public class ItalianHostRole extends Role {
 	 * Scheduler.  Determine what action is called for, and do it.
 	 */
 
-	protected boolean pickAndExecuteAnAction() {
+	public boolean pickAndExecuteAnAction() {
 		/* Think of this next rule as:
             Does there exist a table and customer,
             so that table is unoccupied and customer is waiting.

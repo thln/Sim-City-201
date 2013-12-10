@@ -27,6 +27,9 @@ public class MockItalianWaiter extends Mock implements ItalianWaiter {
 		this.name = name;
 
 	}
+	public void msgHereIsOrder(ItalianCustomer c, String choice) {
+		
+	}
 	
 	public void msgHereIsCheck(ItalianCustomer c, Double total) {
 		

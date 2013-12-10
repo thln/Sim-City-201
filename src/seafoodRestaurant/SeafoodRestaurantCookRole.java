@@ -147,7 +147,7 @@ public class SeafoodRestaurantCookRole extends Role implements Restaurant
 	
 	/***** SCHEDULER *****/
 	
-	protected boolean pickAndExecuteAnAction() {
+	public boolean pickAndExecuteAnAction() {
 		//////FILL IN HERE
 		
 		if(S == cookState.Ordering)

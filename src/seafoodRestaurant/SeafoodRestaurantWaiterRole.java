@@ -337,7 +337,7 @@ public class SeafoodRestaurantWaiterRole extends Role implements SeafoodRestaura
 	/**
 	 * Scheduler.  Determine what action is called for, and do it.
 	 */
-	protected boolean pickAndExecuteAnAction() 
+	public boolean pickAndExecuteAnAction() 
 	{
 		/* Think of this next rule as:
             Does there exist a table and customer,
