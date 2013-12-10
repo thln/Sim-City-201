@@ -210,66 +210,66 @@ public class PersonGui extends CityGui {
 	}
 
 	//Actions
-	public void DoGoToRestaurant(String restaurantType) {
-		switch(restaurantType.toLowerCase()) {
-		case "chinese" : {
-			setxDestination((int) Phonebook.getPhonebook().getChineseRestaurant().location.getX());
-			yDestination = (int) Phonebook.getPhonebook().getChineseRestaurant().location.getY();
-		}
-		break;
-		case "italian" : {
-			setxDestination((int) Phonebook.getPhonebook().getItalianRestaurant().location.getX());
-			setyDestination((int) Phonebook.getPhonebook().getChineseRestaurant().location.getY());
-		}
-		break;
-		case "mexican" : {
-			setxDestination(xMexicanLocation);
-			setyDestination(xMexicanLocation);
-		}
-		break;
-		case "american" : {
-			setxDestination(xAmericanLocation);
-			setyDestination(yAmericanLocation);
-		}
-		break;
-		case "seafood" : {
-			setxDestination(xSeafoodLocation);
-			setyDestination(ySeafoodLocation);
-		}
-		break;
-		default:
-			break;
-		}
-		setDefaultColor();
-		command = Command.GoToRestaurant;
-	}
-
-	public void DoGoToMarket(String location) {
-		if (location.equals("East")){
-			setxDestination((int) Phonebook.getPhonebook().getEastMarket().location.getX());
-			setyDestination((int) Phonebook.getPhonebook().getEastMarket().location.getY());
-		}
-		else {
-			setxDestination((int) Phonebook.getPhonebook().getWestMarket().location.getX());
-			setyDestination((int) Phonebook.getPhonebook().getWestMarket().location.getY());
-		}
-		setDefaultColor();
-		command = Command.GoToMarket;
-	}
-
-	public void DoGoToBank(String location) {
-
-		if (location.equals("East")){
-			setxDestination((int) Phonebook.getPhonebook().getEastBank().location.getX());
-			setyDestination((int) Phonebook.getPhonebook().getEastBank().location.getY());
-		}
-		else {
-			setxDestination((int) Phonebook.getPhonebook().getWestBank().location.getX());
-			setyDestination((int) Phonebook.getPhonebook().getWestBank().location.getY());
-		}
-		setDefaultColor();
-		command = Command.GoToBank;
-	}
+//	public void DoGoToRestaurant(String restaurantType) {
+//		switch(restaurantType.toLowerCase()) {
+//		case "chinese" : {
+//			setxDestination((int) Phonebook.getPhonebook().getChineseRestaurant().location.getX());
+//			yDestination = (int) Phonebook.getPhonebook().getChineseRestaurant().location.getY();
+//		}
+//		break;
+//		case "italian" : {
+//			setxDestination((int) Phonebook.getPhonebook().getItalianRestaurant().location.getX());
+//			setyDestination((int) Phonebook.getPhonebook().getChineseRestaurant().location.getY());
+//		}
+//		break;
+//		case "mexican" : {
+//			setxDestination(xMexicanLocation);
+//			setyDestination(xMexicanLocation);
+//		}
+//		break;
+//		case "american" : {
+//			setxDestination(xAmericanLocation);
+//			setyDestination(yAmericanLocation);
+//		}
+//		break;
+//		case "seafood" : {
+//			setxDestination(xSeafoodLocation);
+//			setyDestination(ySeafoodLocation);
+//		}
+//		break;
+//		default:
+//			break;
+//		}
+//		setDefaultColor();
+//		command = Command.GoToRestaurant;
+//	}
+//
+//	public void DoGoToMarket(String location) {
+//		if (location.equals("East")){
+//			setxDestination((int) Phonebook.getPhonebook().getEastMarket().location.getX());
+//			setyDestination((int) Phonebook.getPhonebook().getEastMarket().location.getY());
+//		}
+//		else {
+//			setxDestination((int) Phonebook.getPhonebook().getWestMarket().location.getX());
+//			setyDestination((int) Phonebook.getPhonebook().getWestMarket().location.getY());
+//		}
+//		setDefaultColor();
+//		command = Command.GoToMarket;
+//	}
+//
+//	public void DoGoToBank(String location) {
+//
+//		if (location.equals("East")){
+//			setxDestination((int) Phonebook.getPhonebook().getEastBank().location.getX());
+//			setyDestination((int) Phonebook.getPhonebook().getEastBank().location.getY());
+//		}
+//		else {
+//			setxDestination((int) Phonebook.getPhonebook().getWestBank().location.getX());
+//			setyDestination((int) Phonebook.getPhonebook().getWestBank().location.getY());
+//		}
+//		setDefaultColor();
+//		command = Command.GoToBank;
+//	}
 
 	public void DoGoToBusStop(int stopNum) {//later you will map stop number to map coordinates.
 		setxDestination(100);

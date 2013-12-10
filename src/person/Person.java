@@ -177,12 +177,7 @@ public abstract class Person extends Agent{
 				goToBusStop(Phonebook.getPhonebook().getWestBank().getClosestBusStop().getBusStopNumber());
 			}
 		}
-
-		if (home.type.equals("East Apartment"))
-			getGui().DoGoToBank("East");
-		else
-			getGui().DoGoToBank("West");
-
+		
 		try {
 			atDestination.acquire();
 			if(!gui.walk)

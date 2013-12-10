@@ -286,7 +286,6 @@ public class Worker extends Person {
 
 		if (myJob.jobPlace == "East Market") 
 		{
-			print("Going to work at market, job time = " + myJob.startTime.hour);
 			workerRole = Phonebook.getPhonebook().getEastMarket().arrivedAtWork(this, myJob.title);
 			workerRole.setRoleActive();
 			return;
@@ -294,7 +293,6 @@ public class Worker extends Person {
 		
 		if (myJob.jobPlace == "West Market") 
 		{
-			print("Going to work at market, job time = " + myJob.startTime.hour);
 			workerRole = Phonebook.getPhonebook().getWestMarket().arrivedAtWork(this, myJob.title);
 			workerRole.setRoleActive();
 			return;
