@@ -23,8 +23,8 @@ public class PersonGui extends CityGui {
 	int red = rand.nextInt(255);
 	int blue  = rand.nextInt(255);
 	int green  = rand.nextInt(255);
-	Color myColor = new Color(red, blue, green);
-	Color transColor = new Color(0,0,0,1);
+	Color myColor;
+	Color transColor;
 	Color currColor;
 
 	//Bus stops
@@ -80,20 +80,17 @@ public class PersonGui extends CityGui {
 		setyPos(yHome);
 		setxDestination(xHome);
 		setyDestination(yHome);
-
+		
+		myColor = new Color(red, blue, green);
+		transColor = new Color(0,0,0,1);
 		setDefaultColor();
-		//this.gui = gui;
 	}
 
 	public void updatePosition() {
 
 		if (inBusyCrosswalk()) {
 			return;
-		}
-
-		if (agent.getName() == "Tam Henry")
-			System.err.println("X = " + xPos + "Y = " + yPos);
-		
+		}	
 		//if (!inBusyIntersection()) {
 		if (state == PersonState.walkingToCrosswalk) {		
 			if (xPos == nextCrosswalkX && yPos == nextCrosswalkY) {
@@ -169,6 +166,10 @@ public class PersonGui extends CityGui {
 
 public void draw(Graphics2D g) {
 
+	if(command != Command.noCommand) {
+		currColor = myColor;
+	}
+	
 	if (raveMode){
 		Random rand = new Random();
 		int red = rand.nextInt(255);

@@ -607,8 +607,8 @@ Roads should have appropriate complexity [e.g. intersections with stop signs and
 		rest3i.startThread();
 		rest3j.startThread();
 		rest3k.startThread();
-
-		//People
+//
+//		//People
 		wealthy1.startThread();
 	}
 
