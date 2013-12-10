@@ -49,7 +49,7 @@ public class Market {
 	public MockMarketRunner mockMarketRunner = new MockMarketRunner("MockMarketRunner");
 	public MockUPSman mockUPSman = new MockUPSman("MockUPSMan");
 	
-	List <MarketCustomerGui> marketGuis = new ArrayList<MarketCustomerGui>();
+	public List <MarketCustomerGui> marketCustomerGuis = new ArrayList<MarketCustomerGui>();
 
 	private BuildingPanel marketPanel;
 
@@ -159,9 +159,9 @@ public class Market {
 		//MarketCustomerGui rCG = (MarketCustomerGui) mCR.gui;
 		MarketCustomerGui MCG = new MarketCustomerGui(mCR);
 		mCR.setGui(MCG);
-		MCG.setHome(marketGuis.size());
+		MCG.setHome(marketCustomerGuis.size());
 		mCR.setMarket(this);
-		marketGuis.add(MCG);
+		marketCustomerGuis.add(MCG);
 		marketPanel.addGui(MCG);
 		//MCG.waitInLine();
 	}
@@ -256,7 +256,7 @@ public class Market {
 	
 	public void removeCustomer(MarketCustomerRole customerRole) {
 		marketPanel.removeGui(customerRole.getGui());
-		marketGuis.remove(customerRole.getGui());
+		marketCustomerGuis.remove(customerRole.getGui());
 	}
 	
 	public void closeBuilding(){

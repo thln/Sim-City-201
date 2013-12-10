@@ -58,7 +58,7 @@ public class GuardTest extends TestCase
 				guard.pickAndExecuteAnAction());
 	
 		//Step 3 post-conditions
-		assertTrue("AmericanRestaurantMockCustomer should have logged an event for being assigned to teller, but his last event logged reads instead: " 
+		assertTrue("MockCustomer should have logged an event for being assigned to teller, but his last event logged reads instead: " 
 				+ customer.log.getLastLoggedEvent().toString(), 
 				customer.log.containsString("Assigned to bank teller " + teller.getName()));
 
@@ -132,11 +132,11 @@ public class GuardTest extends TestCase
 				guard.pickAndExecuteAnAction());
 
 		//Step 3 post-conditions
-		assertTrue("AmericanRestaurantMockCustomer should have logged an event for being assigned to teller, but his last event logged reads instead: " 
+		assertTrue("MockCustomer should have logged an event for being assigned to teller, but his last event logged reads instead: " 
 				+ customer.log.getLastLoggedEvent().toString(), 
 				customer.log.containsString("Assigned to bank teller " + teller.getName()));
 
-		assertTrue("MockTeller shoudl have the state 'busy'",
+		assertTrue("MockTeller shoudl have the state 'busy' but instead his state is " + guard.getTellers().get(0).state,
 				guard.getTellers().get(0).state == BankGuardRole.TellerState.busy);
 
 		assertEquals("Guard should have 0 customers in list. It doesn't.", guard.getCustomers().size(), 0);

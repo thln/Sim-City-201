@@ -128,7 +128,7 @@ public class BankCustomerRole extends Role implements BankCustomer{
 	}
 
 	public void msgAtDestination() {
-	//	print("stopped with destination (x,y) = " + gui.getXPos() + ", " + gui.getYPos());
+		//	print("stopped with destination (x,y) = " + gui.getXPos() + ", " + gui.getYPos());
 		atDestination.release();
 	}
 
@@ -251,7 +251,7 @@ public class BankCustomerRole extends Role implements BankCustomer{
 	}
 
 	void leaveBank () {	
-	
+
 		if (!(this.person instanceof Crook)){
 			print("Leaving bank");
 			myTeller.msgLeavingBank(person.accountNum);
@@ -259,7 +259,8 @@ public class BankCustomerRole extends Role implements BankCustomer{
 			state = CustomerState.waiting;				
 			myTeller = null;
 		}
-			//GUI operation
+		//GUI operation
+		if (!test){
 			custGui.DoExit();
 			try {
 				this.atDestination.acquire();
@@ -267,27 +268,30 @@ public class BankCustomerRole extends Role implements BankCustomer{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			this.setRoleInactive();
-			stateChanged();
+		}
+		this.setRoleInactive();
+		stateChanged();
 	}
 
 	void robBank() {
 		//GUI operation
 		print("Catch me if you can!");
-		custGui.DoRobBank();
-		Phonebook.getPhonebook().getEastBank().getBankGuard(test).msgRobbingBank(this);
-		state = CustomerState.waiting;
-		try {
-			atDestination.acquire();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if (!test){
+			custGui.DoRobBank();
+			Phonebook.getPhonebook().getEastBank().getBankGuard(test).msgRobbingBank(this);
+			state = CustomerState.waiting;
+			try {
+				atDestination.acquire();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		stateChanged();
 		state = CustomerState.ready;
 		desire = BankCustomerDesire.leaveBank;
 	}
-	
+
 	public void setDesire(String d1){
 		if (d1 == "deposit")
 			desire = BankCustomerDesire.deposit;
@@ -299,13 +303,15 @@ public class BankCustomerRole extends Role implements BankCustomer{
 
 	public void DoGoToTeller() {
 		int window = myTeller.getTellerPosition();
-		if(custGui.getXPos() != 450 || custGui.getYPos() != 20*window+30*(window-1)) {
-			custGui.DoGoToTeller(myTeller.getTellerPosition());
-			try {
-				this.atDestination.acquire();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		if (!test){
+			if(custGui.getXPos() != 450 || custGui.getYPos() != 20*window+30*(window-1)) {
+				custGui.DoGoToTeller(myTeller.getTellerPosition());
+				try {
+					this.atDestination.acquire();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 	}
@@ -313,7 +319,7 @@ public class BankCustomerRole extends Role implements BankCustomer{
 	public void setGui(BankCustomerGui gui) {
 		custGui = gui;
 	}
-	
+
 	public BankCustomerGui getGui() {
 		return custGui;
 	}

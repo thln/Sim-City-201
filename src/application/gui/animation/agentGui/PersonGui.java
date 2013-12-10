@@ -329,15 +329,18 @@ public class PersonGui extends CityGui {
 			yDestination = (int) Phonebook.getPhonebook().getAmericanRestaurant().location.getY();
 			command = Command.GoToRestaurant;
 		}
-
 		currentBlock = returnCurrentBlock (xPos, yPos);
 		destinationBlock = returnCurrentBlock (xDestination, yDestination);
+		
 		if (currentBlock == destinationBlock) {
 			state = PersonState.enroute;
 			return true;
 		}
 		destinationBlock = Phonebook.getPhonebook().blocks.get(currentBlock).doIWalk(destinationBlock);
+		if (agent.getName() == "Tam Henry")
+			agent.print("Location =" + xPos + " , " + yPos + " and current block =" + currentBlock + "and destination = " + destinationBlock);
 		if (destinationBlock == 0){
+			System.err.println("Person " + agent.getName() + "has destination block = 0, this is bad. Their command = " + command);
 			return false;
 		}	
 		else	
