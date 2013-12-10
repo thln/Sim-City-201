@@ -16,7 +16,7 @@ import application.Phonebook;
 import application.gui.animation.agentGui.RestaurantWaiterGui;
 
 /**
- * Restaurant Waiter Role
+ * Restaurant AmericanRestaurantWaiter Role
  */
 
 public class ChineseRestaurantWaiterRole extends Role implements ChineseRestaurantWaiter {
@@ -26,7 +26,7 @@ public class ChineseRestaurantWaiterRole extends Role implements ChineseRestaura
 	public List<ChineseRestaurantOrder> readyOrders = Collections.synchronizedList(new ArrayList<ChineseRestaurantOrder>());
 
 	protected String name;
-	protected String RoleName = "Waiter";
+	protected String RoleName = "AmericanRestaurantWaiter";
 	//RestaurantWaiterGui waiterGui = (RestaurantWaiterGui) gui;
 	RestaurantWaiterGui waiterGui;
 
@@ -65,7 +65,7 @@ public class ChineseRestaurantWaiterRole extends Role implements ChineseRestaura
 		if(test)
 		{
 			ChineseRestaurantMyCustomers.add(new ChineseRestaurantMyCustomer(customerTest));
-			print("Test Customer was added.");
+			print("Test AmericanRestaurantCustomer was added.");
 			stateChanged();
 		}
 	}

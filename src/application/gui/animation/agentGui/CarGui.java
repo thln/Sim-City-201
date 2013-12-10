@@ -27,7 +27,7 @@ public class CarGui extends CityGui{
 	public CarGui() {
 	}
 	
-	public CarGui(Car c/*, RestaurantGui gui*/){ //HostAgent m) {
+	public CarGui(Car c/*, RestaurantGui gui*/){ //AmericanRestaurantHostRole m) {
 		agent = c;
 		//this.gui = gui;
 	}

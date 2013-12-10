@@ -45,8 +45,8 @@ public class SeafoodRestaurantCustomerRole extends Role implements SeafoodRestau
 	// agent correspondents
 	private SeafoodRestaurantWaiterRole waiter;
 	//private SeafoodRestaurantHostRole host;
-	//private SeafoodRestaurantCashierRole cashier;
-	//CashierAgent
+	//private SeafoodRestaurantCashierRole americanRestaurantCashier;
+	//AmericanRestaurantCashierRole
 	
 	//    private boolean isHungry = false; //hack for gui
 	public enum AgentState
@@ -58,12 +58,12 @@ public class SeafoodRestaurantCustomerRole extends Role implements SeafoodRestau
 	AgentEvent event = AgentEvent.none;
 
 	/**
-	 * Constructor for CustomerAgent class
+	 * Constructor for AmericanRestaurantCustomerRole class
 	 *
 	 * @param name name of the customer
 	 * @param gui  reference to the customergui so the customer can send it messages
 	 */
-	public SeafoodRestaurantCustomerRole(String name, SeafoodRestaurantHostRole h, SeafoodRestaurantCashierRole cas, int n) //CashierAgent
+	public SeafoodRestaurantCustomerRole(String name, SeafoodRestaurantHostRole h, SeafoodRestaurantCashierRole cas, int n) //AmericanRestaurantCashierRole
 	{
 		super(name);
 		
@@ -82,7 +82,7 @@ public class SeafoodRestaurantCustomerRole extends Role implements SeafoodRestau
 	}
 	
 	/**
-	 * hack to establish connection to Waiter agent.
+	 * hack to establish connection to AmericanRestaurantWaiter agent.
 	 */
 	public void setWaiter(SeafoodRestaurantWaiterRole waiter) 
 	{
@@ -114,7 +114,7 @@ public class SeafoodRestaurantCustomerRole extends Role implements SeafoodRestau
 	public void followMe(SeafoodRestaurantMenu m, SeafoodRestaurantWaiterRole w, int t) 
 	{
 		WaitingToBeSeated = false;
-		print("Message 3 Sent - Following Waiter");
+		print("Message 3 Sent - Following AmericanRestaurantWaiter");
 		myMenu = m;
 		waiter = w;
 		currentTable = t;
@@ -152,7 +152,7 @@ public class SeafoodRestaurantCustomerRole extends Role implements SeafoodRestau
 		stateChanged();
 	}
 	
-	//Cashier Stuff
+	//AmericanRestaurantCashier Stuff
 	public void HereIsYourCheck(SeafoodRestaurantCheck ch)
 	{
 		myCheck = ch;
@@ -161,7 +161,7 @@ public class SeafoodRestaurantCustomerRole extends Role implements SeafoodRestau
 		stateChanged();
 	}
 	
-	//Cashier stuff, Getting Change
+	//AmericanRestaurantCashier stuff, Getting Change
 	public void HereIsYourChange(double c, double d)
 	{
 		Cash = c;
@@ -210,7 +210,7 @@ public class SeafoodRestaurantCustomerRole extends Role implements SeafoodRestau
 	 */
 	protected boolean pickAndExecuteAnAction() 
 	{
-		//	CustomerAgent is a finite state machine
+		//	AmericanRestaurantCustomerRole is a finite state machine
 		if (state == AgentState.DoingNothing && event == AgentEvent.gotHungry )
 		{
 			state = AgentState.WaitingInRestaurant;
@@ -470,7 +470,7 @@ public class SeafoodRestaurantCustomerRole extends Role implements SeafoodRestau
 			myCheck.cost += Debt;
 			print("I have a debt. I will add it to the bill.");
 		}
-		print("I am giving the cashier $" + Cash);
+		print("I am giving the americanRestaurantCashier $" + Cash);
 		Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantCashierRole.HereIsPayment(myCheck, Cash);
 		Cash = 0;
 	}

@@ -6,7 +6,7 @@ import testing.LoggedEvent;
 import testing.Mock;
 
 /**
- * A sample MockCustomer built to unit test a CashierAgent.
+ * A sample AmericanRestaurantMockCustomer built to unit test a AmericanRestaurantCashierRole.
  *
  * @author Kristi Hupka
  *
@@ -25,6 +25,6 @@ public class ChineseRestaurantMockMarket extends Mock implements ChineseRestaura
 	}
 
 	public void msgPayment(double payment, ChineseRestaurantCashierRole cashier) {
-		log.add(new LoggedEvent("Received msgPayment from cashier. Payment: " + payment));
+		log.add(new LoggedEvent("Received msgPayment from americanRestaurantCashier. Payment: " + payment));
 	}
 }

@@ -7,7 +7,7 @@ package testing;
  *
  */
 public class Mock {
-	private String name;
+	protected String name;
 	public EventLog log = new EventLog();
 
 	public Mock(String name) {

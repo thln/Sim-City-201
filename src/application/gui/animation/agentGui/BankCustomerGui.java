@@ -13,7 +13,7 @@ public class BankCustomerGui extends BankGui {
     
     //RestaurantGui gui;
 
-    private int xPos = 300, yPos = 300;//default Customer position
+    private int xPos = 300, yPos = 300;//default AmericanRestaurantCustomer position
     private int xDestination, yDestination;//default start position
     
     private enum Command {inTransit, noCommand};

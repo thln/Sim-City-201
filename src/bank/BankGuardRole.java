@@ -67,7 +67,9 @@ public class BankGuardRole extends Role implements BankGuard {
 			print("Teller role removed " + ((Role) t1).getPerson().getName());
 		tellers.remove(findTeller(t1));
 		print("tellers = " + tellers.size());
-		stateChanged();
+		if (person != null) {
+			stateChanged();
+		}
 	}
 
 
@@ -89,7 +91,7 @@ public class BankGuardRole extends Role implements BankGuard {
 
 	public void msgCustomerLeavingBank (BankTeller t1) {
 		customersInBank--;
-		print("Customer leaving, teller became available");
+		print("AmericanRestaurantCustomer leaving, teller became available");
 		MyTeller correct = findTeller(t1);
 		correct.state = TellerState.available;
 		stateChanged();

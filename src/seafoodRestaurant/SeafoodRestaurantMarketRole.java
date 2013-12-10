@@ -29,7 +29,7 @@
 //	private Map<String, Food> FoodInventory = new HashMap<String, Food>();
 //	private Timer DeliveringTimer = new Timer();
 //	private SeafoodRestaurantCookRole Cook;
-//	private SeafoodRestaurantCashierRole Cashier;
+//	private SeafoodRestaurantCashierRole AmericanRestaurantCashier;
 //	private String name;
 //	private enum DeliveryState
 //	{RequestReceived, Processing, ReadyToDeliver, Delivered};
@@ -81,7 +81,7 @@
 //		this.name = name;
 //		
 //		Cook = c;
-//		Cashier = ca;
+//		AmericanRestaurantCashier = ca;
 //		
 //		//add in food
 //
@@ -194,8 +194,8 @@
 //	{
 //		Deliver = false;
 //		print("Delivered: " + D.PossibleAmount + " " + D.food);
-//		print(Cashier + ", can you pay me?");
-//		Cashier.MarketCost(D.food, (D.PossibleAmount * FoodInventory.get(D.food).wholesaleCost), this);
+//		print(AmericanRestaurantCashier + ", can you pay me?");
+//		AmericanRestaurantCashier.MarketCost(D.food, (D.PossibleAmount * FoodInventory.get(D.food).wholesaleCost), this);
 //		Cook.deliverFood(D.food, D.PossibleAmount);
 //	}
 //}

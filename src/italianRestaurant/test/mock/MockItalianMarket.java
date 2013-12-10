@@ -7,7 +7,7 @@ import testing.EventLog;
 import testing.Mock;
 
 /**
- * A sample MockMarket built to unit test a CashierAgent.
+ * A sample MockMarket built to unit test a AmericanRestaurantCashierRole.
  *
  * @author Carmen Tan
  *
@@ -15,7 +15,7 @@ import testing.Mock;
 public class MockItalianMarket extends Mock implements ItalianMarket {
 	
 	/**
-	 * Reference to the Cashier under test that can be set by the unit test.
+	 * Reference to the AmericanRestaurantCashier under test that can be set by the unit test.
 	 */
 	public ItalianCashier cashier;
 	private String name; 

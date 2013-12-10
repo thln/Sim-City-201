@@ -12,7 +12,9 @@ import bank.BankCustomerRole.CustomerState;
 import market.MarketCustomerRole;
 import person.Role;
 import agent.Agent;
+import americanRestaurant.AmericanRestaurantCustomerRole;
 import application.Phonebook;
+import application.Restaurant;
 import application.TimeManager;
 import application.gui.trace.AlertLog;
 import application.gui.trace.AlertTag;
@@ -44,6 +46,7 @@ public abstract class Person extends Agent{
 	public boolean hasFoodInFridge = false;
 	public enum HungerLevel {full, moderate, hungry};
 	protected HungerLevel hunger;
+	protected List<String> restaurantQueue;
 	int eatTime = 4;
 	protected Semaphore eating = new Semaphore(0, true);
 	//IMPORTANT ADD TO MESSAGES
@@ -76,10 +79,19 @@ public abstract class Person extends Agent{
 		roles.add(new BankCustomerRole(this, getName(), "Bank Customer"));
 		roles.add(new MarketCustomerRole(this, getName(), "Market Customer"));
 		roles.add(new ChineseRestaurantCustomerRole(this, getName(), "Restaurant Customer", Phonebook.getPhonebook().getChineseRestaurant()));
+		roles.add(new AmericanRestaurantCustomerRole(this, getName(), "Restaurant Customer"));
 		nextTask = new Timer();
 		atDestination = new Semaphore(0,true);
 		setHunger(HungerLevel.full);
 		hasFoodInFridge = false;
+
+		//add restaurants to queue 
+		restaurantQueue = new ArrayList<String>();
+		restaurantQueue.add("American Restaurant");
+		restaurantQueue.add("Chinese Restaurant");
+		restaurantQueue.add("Italian Restaurant");
+		//	restaurantQueue.add("Chinese Restaurant");
+		restaurantQueue.add("Seafood Restaurant");
 	}
 
 	public void msgAtDestination() 
@@ -134,29 +146,23 @@ public abstract class Person extends Agent{
 
 
 		if (!(this instanceof Crook))
-			Do("Becoming Bank Customer");
+			Do("Becoming Bank AmericanRestaurantCustomer");
 
 		if (home.type.equals("East Apartment"))
 			gui.walk = gui.decideForBus("East Bank");
 		else
 			gui.walk = gui.decideForBus("West Bank");
 
-
-//		if (gui.walk) {
-//			gui.walkToLocation();
-//			try {
-//				atDestination.acquire();
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//		}
-
-
-		//		if (this instanceof Wealthy){
-		//			print("walking state = " + gui.walk + "and my destination = " + gui.getxDestination() + ", " + gui.getyDestination());
+		//		if (gui.walk) {
+		//			gui.walkToLocation();
+		//			try {
+		//				atDestination.acquire();
+		//			} catch (InterruptedException e) {
+		//				// TODO Auto-generated catch block
+		//				e.printStackTrace();
+		//			}
 		//		}
-		//		
+	
 		if (!gui.walk){
 			print("Destination bus Stop: " + Phonebook.getPhonebook().getEastBank().getClosestBusStop().getBusStopNumber());
 			if (home.type.equals("East Apartment"))
@@ -199,7 +205,7 @@ public abstract class Person extends Agent{
 					BCR.state = CustomerState.ready;
 				}
 				else {
-					currentRoleName = "Bank Customer";
+					currentRoleName = "Bank AmericanRestaurantCustomer";
 
 					if (money <= moneyMinThreshold)
 						desiredCash = 100;
@@ -340,7 +346,7 @@ public abstract class Person extends Agent{
 					MCR.setItem("");
 					cust1.setRoleActive();
 					Phonebook.getPhonebook().getEastMarket().arrived(MCR);
-					currentRoleName = "Market Customer";
+					currentRoleName = "Market AmericanRestaurantCustomer";
 					stateChanged();
 					return;
 				}
@@ -353,7 +359,7 @@ public abstract class Person extends Agent{
 					MCR.setItem("Car");
 					cust1.setRoleActive();
 					Phonebook.getPhonebook().getEastMarket().arrived(MCR);
-					currentRoleName = "Market Customer";
+					currentRoleName = "Market AmericanRestaurantCustomer";
 					stateChanged();
 					return;
 				}
@@ -363,21 +369,42 @@ public abstract class Person extends Agent{
 
 	protected void prepareForRestaurant() {
 
-		gui.walk = gui.decideForBus("Chinese Restaurant");
+		String choice = restaurantQueue.get(0);
+		//Moving this choice to back of queue
+		restaurantQueue.remove(choice);
+		restaurantQueue.add(choice);
+
+		gui.walk = gui.decideForBus(choice);
 
 		if (!gui.walk){
-			if (home.type.equals("East Apartment")){
-				gui.doGoToBus(Phonebook.getPhonebook().getEastBank().getClosestStop().getX(),
-						Phonebook.getPhonebook().getEastBank().getClosestStop().getY());
+			if (choice.contains("American")){
+				print("Destination bus Stop: " + Phonebook.getPhonebook().getAmericanRestaurant().getClosestBusStop().getBusStopNumber());
+				goToBusStop(Phonebook.getPhonebook().getAmericanRestaurant().getClosestBusStop().getBusStopNumber());
 			}
-			else {
-				gui.doGoToBus(Phonebook.getPhonebook().getWestBank().getClosestStop().getX(),
-						Phonebook.getPhonebook().getWestBank().getClosestStop().getY());
+			if (choice.contains("Chinese")){
+				print("Destination bus Stop: " + Phonebook.getPhonebook().getChineseRestaurant().getClosestBusStop().getBusStopNumber());
+				goToBusStop(Phonebook.getPhonebook().getChineseRestaurant().getClosestBusStop().getBusStopNumber());
+			}
+//			if (choice.contains("Seafood")){
+//				print("Destination bus Stop: " + Phonebook.getPhonebook().getSeafoodRestaurant().getClosestBusStop().getBusStopNumber());
+//				goToBusStop(Phonebook.getPhonebook().getSeafoodRestaurant().getClosestBusStop().getBusStopNumber());
+//			}
+			if (choice.contains("Italian")){
+				print("Destination bus Stop: " + Phonebook.getPhonebook().getItalianRestaurant().getClosestBusStop().getBusStopNumber());
+				goToBusStop(Phonebook.getPhonebook().getItalianRestaurant().getClosestBusStop().getBusStopNumber());
 			}
 		}
-
+		
 		try {
 			atDestination.acquire();
+			if (!gui.walk){
+				try {
+					atDestination.acquire();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+
+				}
+			}
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 
@@ -402,6 +429,15 @@ public abstract class Person extends Agent{
 				}
 				return;
 			}
+			//			if (cust1 instanceof AmericanRestaurantCustomerRole) {
+			//				AmericanRestaurantCustomerRole RCR = (AmericanRestaurantCustomerRole) cust1;
+			//				if (Phonebook.getPhonebook().getAmericanRestaurant().customerArrived(RCR)) {
+			//					currentRoleName = "American Restaurant Customer";
+			//					cust1.setRoleActive();
+			//					stateChanged();
+			//				}
+			//				return;
+			//			}
 		}
 
 	}

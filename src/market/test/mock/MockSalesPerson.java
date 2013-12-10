@@ -36,11 +36,7 @@ public class MockSalesPerson extends Mock implements SalesPerson {
 		log.add(new LoggedEvent("Recieved msgPayment"));
 	}
 
-	public void msgPayment(ChineseRestaurant chineseRestaurant, double payment) {
-	}
-
-	public void msgPayment(SeafoodRestaurant seafoodRestaurant, double payment) {
-		
+	public void msgPayment(ChineseRestaurant restaurant, double payment) {
 	}
 	
 	//Actions
@@ -53,6 +49,12 @@ public class MockSalesPerson extends Mock implements SalesPerson {
 
 	public void askForPayment(MarketOrder o){
 
+	}
+
+	@Override
+	public void msgPayment(SeafoodRestaurant seafoodRestaurant, double payment) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

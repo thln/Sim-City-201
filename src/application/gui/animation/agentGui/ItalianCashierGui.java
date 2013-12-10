@@ -11,7 +11,7 @@ public class ItalianCashierGui implements Gui {
     private ItalianCashierRole agent = null;
     BufferedImage img = null;
 
-    private int xPos = 0, yPos = 240;//default Cashier position
+    private int xPos = 0, yPos = 240;//default AmericanRestaurantCashier position
     private int xDestination = 20, yDestination = 240;//default start position
     
     static final int NTABLES = 5;
@@ -52,7 +52,7 @@ public class ItalianCashierGui implements Gui {
         //g.drawImage(img, xPos, yPos, null);
         g.fillRect(xPos, yPos, 20, 20);
         g.setColor(Color.BLACK);
-        g.drawString("Cashier", xPos, yPos+40);
+        g.drawString("AmericanRestaurantCashier", xPos, yPos+40);
     }
 
     public boolean isPresent() {

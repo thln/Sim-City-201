@@ -31,7 +31,7 @@ public class RestaurantCustomerGui extends RestaurantGui{
 	public RestaurantCustomerGui() {
 	}
 	
-	public RestaurantCustomerGui(ChineseRestaurantCustomerRole c/*, RestaurantGui gui*/){ //HostAgent m) {
+	public RestaurantCustomerGui(ChineseRestaurantCustomerRole c/*, RestaurantGui gui*/){ //AmericanRestaurantHostRole m) {
 		agent = c;
 		xPos = -20;
 		yPos = -20;

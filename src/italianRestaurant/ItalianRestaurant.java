@@ -29,13 +29,13 @@ public class ItalianRestaurant implements Restaurant{
 	public WatchTime closeTime = new WatchTime(21);
 
 	//Roles
-	public ItalianHostRole italianRestaurantHostRole = new ItalianHostRole("Host");
+	public ItalianHostRole italianRestaurantHostRole = new ItalianHostRole("AmericanRestaurantHost");
 	public ItalianHostGui hostGui = new ItalianHostGui(italianRestaurantHostRole);
 	
 	public ItalianCookRole italianRestaurantCookRole = new ItalianCookRole("Cook", this);
 	public ItalianCookGui cookGui = new ItalianCookGui(italianRestaurantCookRole);
 
-	public ItalianCashierRole italianRestaurantCashierRole = new ItalianCashierRole("Cashier", this);
+	public ItalianCashierRole italianRestaurantCashierRole = new ItalianCashierRole("AmericanRestaurantCashier", this);
 	public ItalianCashierGui cashierGui = new ItalianCashierGui(italianRestaurantCashierRole);
 	public ItalianRevolvingStand theRevolvingStand = new ItalianRevolvingStand();
 	private BuildingPanel restPanel;
@@ -84,13 +84,13 @@ public class ItalianRestaurant implements Restaurant{
 			restPanel.addGui(cookGui);
 			return italianRestaurantCookRole;
 		}
-		else if (title.contains("cashier")) {
+		else if (title.contains("americanRestaurantCashier")) {
 			//Setting previous bank guard role to inactive
 			if (italianRestaurantCashierRole.getPerson() != null) {
 				Worker worker = (Worker) italianRestaurantCashierRole.getPerson();
 				worker.roleFinishedWork();
 			}
-			//Setting cashier role to new role
+			//Setting americanRestaurantCashier role to new role
 			italianRestaurantCashierRole.setPerson(person);
 			if (isOpen()) {
 				italianRestaurantHostRole.msgRestaurantOpen();
@@ -160,14 +160,16 @@ public class ItalianRestaurant implements Restaurant{
 		Worker worker = (Worker) person;
 
 		if (worker.getWorkerRole().equals(italianRestaurantHostRole)) {
-			italianRestaurantHostRole = null;
-			//restPanel.removeGui(worker.getWorkerRole().gui);
+			worker.roleFinishedWork();
+			return;
 		}
-		if (worker.getWorkerRole().equals(italianRestaurantCashierRole)) {
-			italianRestaurantCashierRole = null;
+		else if (worker.getWorkerRole().equals(italianRestaurantCashierRole)) {
+			worker.roleFinishedWork();
+			return;
 		}
-		if (worker.getWorkerRole().equals(italianRestaurantCookRole)) {
-			italianRestaurantCookRole = null;
+		else if (worker.getWorkerRole().equals(italianRestaurantCookRole)) {
+			worker.roleFinishedWork();
+			return;
 			//restPanel.removeGui(cookGui);
 		}
 		//WAITERS AND ALT WAITERS

@@ -79,19 +79,19 @@ public class RestaurantPanel extends BuildingPanel implements ActionListener{
 			int LobbyWidth = 300;
 			int LobbyHeight = 50;
 
-			//Table 1
+			//AmericanRestaurantTable 1
 			g2.setColor(Color.PINK);
 			g2.fillRect(xTableLocation - 150, yTableLocation, TableWidth, TableHeight);
 
-			//Table 2
+			//AmericanRestaurantTable 2
 			g2.setColor(Color.PINK);
 			g2.fillRect(xTableLocation, yTableLocation, TableWidth, TableHeight);//200 and 250 need to be table params
 
-			//Table 3
+			//AmericanRestaurantTable 3
 			g2.setColor(Color.PINK);
 			g2.fillRect(xTableLocation + 150, yTableLocation, TableWidth, TableHeight);
 
-			//Table 4
+			//AmericanRestaurantTable 4
 			g2.setColor(Color.PINK);
 			g2.fillRect(xTableLocation, yTableLocation-175, TableWidth, TableHeight);//200 and 250 need to be table params
 
@@ -139,7 +139,7 @@ public class RestaurantPanel extends BuildingPanel implements ActionListener{
 			g2.setColor(Color.BLACK);
 			g2.drawString("Break Room", xBreakRoomLocation, yBreakRoomLocation + 35);
 
-			//Cashier
+			//AmericanRestaurantCashier
 			g2.setColor(Color.BLACK);
 			g2.fillRect(xCashierLocation, yCashierLocation, CashierWidth, CashierHeight);
 			g2.setColor(Color.GREEN);

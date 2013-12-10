@@ -31,17 +31,17 @@ import chineseRestaurant.ChineseRestaurantCashierRole.Check;
 //import restaurant.interfaces.Waiter;
 
 /**
- * Restaurant Waiter Agent
+ * Restaurant AmericanRestaurantWaiter Agent
  */
 //We only have 2 types of agents in this prototype. A customer and an agent that
 //does all the rest. Rather than calling the other agent a waiter, we called him
-//the HostAgent. A Host is the manager of a restaurant who sees that all
+//the AmericanRestaurantHostRole. A AmericanRestaurantHost is the manager of a restaurant who sees that all
 //is proceeded as he wishes.
 
-//This is now a Waiter Agent. We are implementing the Host separately. 9/18/13
+//This is now a AmericanRestaurantWaiter Agent. We are implementing the AmericanRestaurantHost separately. 9/18/13
 public class SeafoodRestaurantWaiterRole extends Role implements SeafoodRestaurantWaiter
 {
-	//static final int NTABLES = 3;//a global for the number of tables.
+	//static final int NTABLES = 3;//a global for the number of americanRestaurantTables.
 	//protected int NTABLES = 1;
 	protected int xCordFrontDesk = 25;
 	protected int yCordFrontDesk = 25;
@@ -51,13 +51,13 @@ public class SeafoodRestaurantWaiterRole extends Role implements SeafoodRestaura
 	public List<MyCustomer> MyCustomers = new ArrayList<MyCustomer>();
 	public boolean AtHomeboolean = true;
 	//public boolean OnBreak = false;
-	//note that tables is typed with Collection semantics.
+	//note that americanRestaurantTables is typed with Collection semantics.
 	//Later we will see how it is implemented
 
 	//Agent Correspondents
 	//protected SeafoodRestaurantHostRole host;
 	//protected SeafoodRestaurantCookRole cook;
-	//protected SeafoodRestaurantCashierRole cashier;
+	//protected SeafoodRestaurantCashierRole americanRestaurantCashier;
 	
 	Timer relaxTimer = new Timer();
 	
@@ -259,7 +259,7 @@ public class SeafoodRestaurantWaiterRole extends Role implements SeafoodRestaura
 		}
 	}
 
-	//Cashier Messages
+	//AmericanRestaurantCashier Messages
 	public void ThisIsTheCheck(SeafoodRestaurantCustomer cust, SeafoodRestaurantCheck ch)
 	{
 		//print("Tried giving check.");
@@ -355,7 +355,7 @@ public class SeafoodRestaurantWaiterRole extends Role implements SeafoodRestaura
 		for(MyCustomer mc : MyCustomers)
 		{
 			
-				//print("On Customer: "+ mc.c);
+				//print("On AmericanRestaurantCustomer: "+ mc.c);
 				//WAITER ON BREAK STUFF ******************************
 				if(mc.state == myCustomerState.Waiting && state == WaiterState.Working)
 				{
@@ -413,7 +413,7 @@ public class SeafoodRestaurantWaiterRole extends Role implements SeafoodRestaura
 			}
 		
 		//WAITER ON BREAK STUFF ******************************
-		//Asking Host
+		//Asking AmericanRestaurantHost
 		if(state == WaiterState.WantToGoOnBreak && MyCustomers.isEmpty())
 		{
 			AskHost();
@@ -559,7 +559,7 @@ public class SeafoodRestaurantWaiterRole extends Role implements SeafoodRestaura
 	{
 		//REMEMBER TO DO THIS
 		//AFFECTS GUI!!!!!!!!!
-		print("Going to Table" + cust.getCurrentTable() + " Customer " + cust);
+		print("Going to AmericanRestaurantTable" + cust.getCurrentTable() + " AmericanRestaurantCustomer " + cust);
 		atCustomerLobby.tryAcquire();
 		waiterGui.GoToTable(cust);
 		
@@ -669,7 +669,7 @@ public class SeafoodRestaurantWaiterRole extends Role implements SeafoodRestaura
 			e.printStackTrace();
 		}
 		//Line originally here
-		print("At Cashier");
+		print("At AmericanRestaurantCashier");
 		waiterGui.DoDeliver("Check");
 		mc.state = myCustomerState.GettingCheck;
 		Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantCashierRole.GiveMeCheck(mc.choice, mc.c, this);
@@ -687,7 +687,7 @@ public class SeafoodRestaurantWaiterRole extends Role implements SeafoodRestaura
 	{
 		//REMEMBER TO DO THIS
 		//AFFECTS GUI!!!!!!
-		print("Going to Cashier");
+		print("Going to AmericanRestaurantCashier");
 		atCustomerLobby.tryAcquire();
 		waiterGui.GoToCashier();
 	}
@@ -713,8 +713,8 @@ public class SeafoodRestaurantWaiterRole extends Role implements SeafoodRestaura
 	
 	public void clearTable(MyCustomer mc)
 	{
-		//No longer using tables in Waiter Agent
-		//for (Table table : tables) 
+		//No longer using americanRestaurantTables in AmericanRestaurantWaiter Agent
+		//for (AmericanRestaurantTable table : americanRestaurantTables) 
 		//{
 			//if (table.getOccupant() == mc.c) 
 			//{

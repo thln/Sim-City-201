@@ -10,19 +10,17 @@ import java.util.TimerTask;
 
 import javax.swing.JPanel;
 
-import market.Market;
 import person.Crook;
 import person.Deadbeat;
 import person.Person;
 import person.Wealthy;
 import person.Worker;
+import americanRestaurant.AmericanRestaurantCookRole;
 import transportation.BusAgent;
 import application.gui.animation.AnimationPanel;
 import application.gui.animation.agentGui.BusGuiHorizontal;
 import application.gui.animation.agentGui.BusGuiVertical;
 import application.gui.animation.agentGui.PersonGui;
-import bank.Bank;
-import chineseRestaurant.ChineseRestaurant;
 
 
 public class Application extends JPanel {
@@ -39,11 +37,15 @@ public class Application extends JPanel {
 	public Application(AnimationPanel ap) {
 
 		animPanel = ap;
+		//Initialize the building reference's to one another
+		AmericanRestaurantCookRole cook = Phonebook.getPhonebook().getAmericanRestaurant().americanCook;
+		cook.getMarkets().add(Phonebook.getPhonebook().getEastMarket());
+		cook.getMarkets().add(Phonebook.getPhonebook().getWestMarket());
+		
 		//Adding markets to the cook in Chinese Restaurant
 		Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantCookRole.addMarket(Phonebook.getPhonebook().getEastMarket());
 		Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantCookRole.addMarket(Phonebook.getPhonebook().getWestMarket());
 	
-
 		//String name, int money, String jobTitle, String jobPlace, int startT, int lunchT, int endT
 
 
@@ -73,16 +75,16 @@ public class Application extends JPanel {
 
 		//Market Workers
 		//SHIFT 1
-		Worker market1d = new Worker("Derrick", 10, "marketRunner", "East Market", 1, 600, 15);
-		Worker market1e = new Worker("Erin", 1000, "salesPerson", "East Market", 1, 600, 16);
-		Worker market1f = new Worker("Fred", 10, "UPSman", "East Market", 2, 600, 17);        
+		Worker market1d = new Worker("Derrick", 10, "marketRunner", "East Market", 0, 600, 15);
+		Worker market1e = new Worker("Erin", 1000, "salesPerson", "East Market", 0, 600, 16);
+		Worker market1f = new Worker("Fred", 10, "UPSman", "East Market", 0, 600, 17);        
 
 		//SHIFT 2
 		Worker market2d = new Worker("Daniel", 100, "marketRunner", "East Market", 13, 400, 3);
 		Worker market2e = new Worker("Elle", 200, "salesPerson", "East Market", 14, 400, 3);
 		Worker market2f = new Worker("Frenchy", 100, "UPSman", "East Market", 15, 400, 4);        
 
-		//Restaurant Workers
+		//Chinese Restaurant Workers
 		//SHIFT 1
 		Worker rest1h = new Worker("Henry", 100, "host", "Chinese Restaurant", 1, 1800, 14);
 		Worker rest1g = new Worker("Greg", 100, "cashier", "Chinese Restaurant", 2, 1800, 15);        
@@ -98,6 +100,14 @@ public class Application extends JPanel {
 
 		Worker house1 = new Worker("Parker", 100, "maintenance worker","housing maintenance company", 13, 600, 3 );
 
+		//American Restaurant Workers
+		//SHIFT 1 (make sure to revert work start times)
+		Worker rest3h = new Worker("Holly", 100, "host", "American Restaurant", 0, 1800, 14);
+		Worker rest3g = new Worker("Gerald", 100, "cashier", "American Restaurant", 0, 1800, 15);        
+		Worker rest3i = new Worker("India", 100, "cook", "American Restaurant", 0, 1800, 15);
+		Worker rest3j = new Worker("Jan", 100, "waiter", "American Restaurant", 0, 1800, 15);
+		Worker rest3k = new Worker("Kris", 100, "altWaiter", "American Restaurant", 0, 1800, 14);
+		
 		//!!!!Important -- Need to initialize setters 
 		//ex. waiter.setHost, waiter.setCook, waiter.setHost, 
 		//Do this when person walks in for work***
@@ -146,6 +156,18 @@ public class Application extends JPanel {
 		bank3b.setHome(allHousing.get(allHousing.size() - 1));
 		allHousing.add(new Housing(bank3c, allHousing.size(), "East Apartment"));
 		bank3c.setHome(allHousing.get(allHousing.size() - 1));
+		
+		allHousing.add(new Housing(rest3g, allHousing.size(), "East Apartment"));
+		rest3g.setHome(allHousing.get(allHousing.size() - 1));
+		allHousing.add(new Housing(rest3h, allHousing.size(), "West Apartment"));
+		rest3h.setHome(allHousing.get(allHousing.size() - 1));
+		allHousing.add(new Housing(rest3i, allHousing.size(), "East Apartment"));
+		rest3i.setHome(allHousing.get(allHousing.size() - 1));
+		allHousing.add(new Housing(rest3j, allHousing.size(), "West Apartment"));
+		rest3j.setHome(allHousing.get(allHousing.size() - 1));
+		allHousing.add(new Housing(rest3k, allHousing.size(), "East Apartment"));
+		rest3k.setHome(allHousing.get(allHousing.size() - 1));
+
 
 		//Shift 2
 
@@ -214,6 +236,12 @@ public class Application extends JPanel {
 		getPopulation().add(bank3a);
 		getPopulation().add(bank3b);
 		getPopulation().add(bank3c);
+		
+		getPopulation().add(rest3g);
+		getPopulation().add(rest3h);
+		getPopulation().add(rest3i);
+		getPopulation().add(rest3j);
+		getPopulation().add(rest3k);
 
 		//Shift 2
 		getPopulation().add(bank2a);
@@ -262,21 +290,27 @@ public class Application extends JPanel {
 
 		//Starting Threads
 		//Shift 1
-		bank1a.startThread();
-		bank1b.startThread();	
-		bank1c.startThread();
+//		bank1a.startThread();
+//		bank1b.startThread();	
+//		bank1c.startThread();
 		market1d.startThread();
 		market1e.startThread();
 		market1f.startThread();
-		rest1g.startThread();
-		rest1h.startThread();
-		rest1i.startThread();
-		rest1j.startThread();
-		rest1k.startThread();
+//		rest1g.startThread();
+//		rest1h.startThread();
+//		rest1i.startThread();
+//		rest1j.startThread();
+//		rest1k.startThread();
 		bank3a.startThread();
 		bank3b.startThread();	
 		bank3c.startThread();
 
+		rest3g.startThread();
+		rest3h.startThread();
+		rest3i.startThread();
+		rest3j.startThread();
+		rest3k.startThread();
+		
 		//Shift 2
 		bank2a.startThread();
 		bank2b.startThread();
@@ -314,7 +348,6 @@ public class Application extends JPanel {
 		animPanel.cityPanel.addGui(busB);
 		horizontal.startThread();
 		vertical.startThread();
-
 		updatePeopleTime();
 
 	}

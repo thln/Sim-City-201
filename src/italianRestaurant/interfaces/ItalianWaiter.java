@@ -2,7 +2,7 @@ package italianRestaurant.interfaces;
 
 
 /**
- * A sample Waiter interface built to unit test a CashierAgent.
+ * A sample AmericanRestaurantWaiter interface built to unit test a AmericanRestaurantCashierRole.
  *
  * @author Carmen Tan
  *

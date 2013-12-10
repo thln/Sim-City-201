@@ -12,7 +12,7 @@ public class SeafoodRestaurantCustomerGui implements Gui{
 	private boolean isPresent = false;
 	private boolean isHungry = false;
 
-	//private HostAgent host;
+	//private AmericanRestaurantHostRole host;
 	RestaurantGui gui;
 
 	private int xCordCurrent, yCordCurrent;
@@ -34,7 +34,7 @@ public class SeafoodRestaurantCustomerGui implements Gui{
     public static final int yTable[] = {0, 250, 250, 250, 350, 350, 350, 450, 450, 450};
 
 	public SeafoodRestaurantCustomerGui(SeafoodRestaurantCustomerRole c, RestaurantGui gui, int n)
-	{ //WaiterAgent m) {
+	{ //AmericanRestaurantWaiterRole m) {
 		role = c;
 		//xCordOffScreen, yCordOffScreen
 		xCordCurrent = xCordOffScreen;

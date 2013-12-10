@@ -29,7 +29,7 @@ public class SeafoodRestaurantMockWaiter extends Mock implements SeafoodRestaura
 	
 	public void ThisIsTheCheck(SeafoodRestaurantCustomer cust, SeafoodRestaurantCheck ch)
 	{
-		log.add(new LoggedEvent("Received Check from cashier. Customer = "+ cust + " and check cost is : " + ch.cost));
+		log.add(new LoggedEvent("Received Check from americanRestaurantCashier. AmericanRestaurantCustomer = "+ cust + " and check cost is : " + ch.cost));
 	}
 
 	@Override

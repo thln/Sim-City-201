@@ -6,7 +6,7 @@ import person.Person;
 
 public class ChineseRestaurantAltWaiterRole extends ChineseRestaurantWaiterRole implements ChineseRestaurantWaiter {
 	//private RevolvingStand theRevolvingStand;
-	protected String RoleName = "Alternative Waiter";
+	protected String RoleName = "Alternative AmericanRestaurantWaiter";
 
 	public ChineseRestaurantAltWaiterRole(Person p1, String pName, String rName, ChineseRestaurant restaurant) {
 		super(p1, pName, rName, restaurant);
@@ -16,7 +16,7 @@ public class ChineseRestaurantAltWaiterRole extends ChineseRestaurantWaiterRole 
 		isInLobby = false;
 		if(test)
 		{
-			print("Test Customer");
+			print("Test AmericanRestaurantCustomer");
 		}
 		else
 		{

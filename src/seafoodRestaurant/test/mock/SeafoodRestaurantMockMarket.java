@@ -22,6 +22,6 @@
 //	
 //	public void Paid(double cash)
 //	{
-//		log.add(new LoggedEvent("Received payment from cashier. It is "+ cash));
+//		log.add(new LoggedEvent("Received payment from americanRestaurantCashier. It is "+ cash));
 //	}
 //}
