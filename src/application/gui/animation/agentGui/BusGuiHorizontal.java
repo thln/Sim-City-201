@@ -21,8 +21,8 @@ public class BusGuiHorizontal extends CityGui {
 
 	private final int stopLeftX = (int) Phonebook.getPhonebook().getAllBusStops().get(1).getBusStopLocation().getX();
 	private final int stopRightX = (int) Phonebook.getPhonebook().getAllBusStops().get(2).getBusStopLocation().getX();
-	private final int stopTopY = 75;
-	private final int stopBottomY = 195;
+	private final int stopTopY = WINDOWY/3-busLeft.getIconHeight()/2;
+	private final int stopBottomY = WINDOWY*2/3-busRight.getIconHeight()/2;;
 
 	private final int waitTime = 1500;
 
@@ -44,7 +44,7 @@ public class BusGuiHorizontal extends CityGui {
 	}
 
 	public void updatePosition() {
-		if (inBusyIntersection() || inBusyCrosswalk()) {
+		if (/*inBusyIntersection() ||*/ inBusyCrosswalk()) {
 			return;
 		}
 
@@ -58,7 +58,7 @@ public class BusGuiHorizontal extends CityGui {
 		leftAnIntersection();
 		leftACrosswalk();
 
-		if (xPos == 600 || xPos == -25) {
+		if (xPos == WINDOWX || xPos == -25) {
 			changeRoads();
 		}
 
@@ -178,7 +178,7 @@ public class BusGuiHorizontal extends CityGui {
 	}
 
 	public void goToEndOfTopRoad() {
-		xDestination = 600;
+		xDestination = WINDOWX;
 	}
 
 	public void goToEndOfBottomRoad() {
@@ -186,7 +186,7 @@ public class BusGuiHorizontal extends CityGui {
 	}
 
 	public void changeRoads() {
-		if (xDestination == 600) {
+		if (xDestination == WINDOWX) {
 			yPos = stopBottomY;
 			goToStop3();
 		}
@@ -360,7 +360,7 @@ public class BusGuiHorizontal extends CityGui {
 			Phonebook.getPhonebook().crosswalk10.setCrosswalkBusy(true);	
 			state = BusState.inCrosswalk10;
 		}
-			}
+	}
 
 	synchronized public void leftAnIntersection() {
 
@@ -422,5 +422,5 @@ public class BusGuiHorizontal extends CityGui {
 					Phonebook.getPhonebook().crosswalk10.setCrosswalkBusy(false);	
 					state = BusState.enroute;	
 				}
-					}
-				}
+			}
+		}

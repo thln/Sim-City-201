@@ -12,8 +12,8 @@ public class VehicleVerticalGui extends VehicleGui {
 	ImageIcon carUp = new ImageIcon("res/CarUp.png");
 	ImageIcon carDown = new ImageIcon("res/CarDown.png");
 
-	private final int leftRoadX = 168;
-	private final int rightRoadX = 386;
+	private final int leftRoadX = WINDOWX/3-carUp.getIconWidth()/2;
+	private final int rightRoadX = WINDOWX*2/3-carDown.getIconWidth()/2;
 
 	public VehicleVerticalGui() {
 		xPos = leftRoadX;
@@ -23,7 +23,7 @@ public class VehicleVerticalGui extends VehicleGui {
 
 	public void updatePosition() {
 
-		if (inBusyIntersection() || inBusyCrosswalk()) {
+		if (/*inBusyIntersection() ||*/ inBusyCrosswalk()) {
 			return;
 		}
 

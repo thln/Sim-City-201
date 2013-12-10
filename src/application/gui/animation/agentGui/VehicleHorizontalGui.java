@@ -12,17 +12,17 @@ public class VehicleHorizontalGui extends VehicleGui {
 	ImageIcon carLeft = new ImageIcon("res/CarLeft.png");
 	ImageIcon carRight = new ImageIcon("res/CarRight.png");
 
-	private final int TopRoadY = 75;
-	private final int BottomRoadY = 195;
+	private final int TopRoadY = WINDOWY/3-carLeft.getIconHeight()/2;;
+	private final int BottomRoadY = WINDOWY*2/3-carRight.getIconHeight()/2;
 
 	public VehicleHorizontalGui() {
 		xPos = 0;
 		yPos = TopRoadY;
-		xDestination = 600;
+		xDestination = WINDOWX;
 	}
 
 	public void updatePosition() {
-		if (inBusyIntersection() || inBusyCrosswalk()) {
+		if (/*inBusyIntersection() ||*/ inBusyCrosswalk()) {
 			return;
 		}
 
@@ -36,7 +36,7 @@ public class VehicleHorizontalGui extends VehicleGui {
 		leftAnIntersection();
 		leftACrosswalk();
 
-		if (xPos == 600 || xPos == -25) {
+		if (xPos == WINDOWX || xPos == -25) {
 			changeRoads();
 		}
 
@@ -57,13 +57,13 @@ public class VehicleHorizontalGui extends VehicleGui {
 	}
 
 	public void changeRoads() {
-		if (xDestination == 600) {
+		if (xDestination == WINDOWX) {
 			yPos = BottomRoadY;
 			xDestination = -25;
 		}
 		else {
 			yPos = TopRoadY;
-			xDestination = 600;
+			xDestination = WINDOWX;
 		}
 	}
 	

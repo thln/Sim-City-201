@@ -84,7 +84,7 @@ public class MarketUPSmanGui extends MarketGui{
 	
 	public void DoExit() { 
 		//going outside of market to deliver order
-		xDestination = 600;
+		xDestination = WINDOWX;
 		yDestination = 200;
 	}
 }

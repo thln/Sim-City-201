@@ -19,12 +19,12 @@ public class BusGuiVertical extends CityGui {
 
 	private final int stopTopY = (int) Phonebook.getPhonebook().getAllBusStops().get(1).getBusStopLocation().getY()+8;
 	private final int stopBottomY = (int) Phonebook.getPhonebook().getAllBusStops().get(4).getBusStopLocation().getY()+8;
-	private final int stopLeftX = 168;
-	private final int stopRightX = 386;
+	private final int stopLeftX = WINDOWX/3-busUp.getIconWidth()/2;
+	private final int stopRightX = WINDOWX*2/3-busDown.getIconWidth()/2;
 
-	private final int waitTime = 1500;
+	private final int waitTime = 3000;
 	
-	private int xPos = stopLeftX, yPos = 325;//default bus position
+	private int xPos = stopLeftX, yPos = WINDOWY;//default bus position
 	private int yDestination = stopBottomY;//Stop 4
 
 	private enum Command {noCommand, wait, stop1, stop2, stop3, stop4};
@@ -41,10 +41,9 @@ public class BusGuiVertical extends CityGui {
 	}
 
 	public void updatePosition() {
-		if (inBusyIntersection() || inBusyCrosswalk()) {
+		if (/*inBusyIntersection() ||*/ inBusyCrosswalk()) {
 			return;
 		}
-
 		if (yPos < yDestination)
 			yPos++;
 		else if (yPos > yDestination)
@@ -56,7 +55,7 @@ public class BusGuiVertical extends CityGui {
 		leftACrosswalk();
 		
 		
-		if (yPos == 325 || yPos == -25) {
+		if (yPos == WINDOWY || yPos == -25) {
 			changeRoads();
 		}
 
@@ -176,7 +175,7 @@ public class BusGuiVertical extends CityGui {
 	}
 
 	public void goToEndOfRightRoad() {
-		yDestination = 325;
+		yDestination = WINDOWY;
 	}
 
 	public void goToEndOfLeftRoad() {
@@ -184,7 +183,7 @@ public class BusGuiVertical extends CityGui {
 	}
 
 	public void changeRoads() {
-		if (yDestination == 325) {
+		if (yDestination == WINDOWY) {
 			xPos = stopLeftX;
 			goToStop4();
 		}
@@ -415,4 +414,5 @@ public class BusGuiVertical extends CityGui {
 			state = BusState.enroute;	
 		}
 	}
+	
 }

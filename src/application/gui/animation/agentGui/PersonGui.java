@@ -3,6 +3,7 @@ package application.gui.animation.agentGui;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.util.Random;
 
 import person.Person;
@@ -10,8 +11,9 @@ import application.Phonebook;
 
 public class PersonGui extends CityGui {
 
-	private final int WINDOWX = 600;
-	private final int WINDOWY = 325;
+	Toolkit tk = Toolkit.getDefaultToolkit();
+	int WINDOWX = ((int) tk.getScreenSize().getWidth())/2; 
+	int WINDOWY = ((int) tk.getScreenSize().getHeight())/2; 
 
 	private Person agent = null;
 	private boolean isHungry = false;
@@ -63,22 +65,22 @@ public class PersonGui extends CityGui {
 	public PersonGui(Person p) {
 		this.agent = p;
 		if(p.home.type.equals("West Apartment")) {
-			xHome = 20;
-			yHome = 30;			
+			xHome = WINDOWX/6-WINDOWX/12;
+			yHome = WINDOWY/6-WINDOWY/20;			
 
 		}
 		if(p.home.type.equals("East Apartment")) {
-			xHome = 520;
-			yHome = 300;			
+			xHome = WINDOWX*5/6;
+			yHome = WINDOWY*5/6;			
 		}
 		if (p.home.type.equals("Mansion")){
-			xHome = 30;
-			yHome = 150;
+			xHome = WINDOWX/6-WINDOWX/12;
+			yHome = WINDOWX/2;
 
 		}
 
-		setxPos(xHome);
-		setyPos(yHome);
+		setxPos(xHome-20);
+		setyPos(yHome-20);
 		setxDestination(xHome);
 		setyDestination(yHome);
 
