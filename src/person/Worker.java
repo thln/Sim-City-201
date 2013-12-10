@@ -218,7 +218,7 @@ public class Worker extends Person {
 	public void prepareForWork() {
 		currentRoleName = myJob.title;
 		print("Preparing for work as " + myJob.title + " at " + myJob.jobPlace);
-/*
+
 		gui.walk = gui.decideForBus(myJob.jobPlace);
 
 		if (!gui.walk){
@@ -254,7 +254,7 @@ public class Worker extends Person {
 			e.printStackTrace();
 
 		}
-		*/
+		
 			
 		if (myJob.jobPlace == "American Restaurant") 
 		{

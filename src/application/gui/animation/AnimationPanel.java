@@ -81,7 +81,7 @@ public class AnimationPanel extends JPanel implements MouseListener, ActionListe
 			else if(name.toLowerCase().contains("park")){
 				panel = new ParkPanel(name, this);
 			}
-			
+
 			b.setMyBuildingPanel(panel);
 			setBuildingInPhonebook(b);
 			buildingPanels.add(panel, name);
@@ -91,7 +91,7 @@ public class AnimationPanel extends JPanel implements MouseListener, ActionListe
 			paintTimer.start();
 		}
 
-		
+
 		//UNCOMMENT THE FOLLOWING FOR TESTING ONLY!! re-comment to display final product
 		//testGuis();
 		/*
@@ -102,7 +102,7 @@ public class AnimationPanel extends JPanel implements MouseListener, ActionListe
     	testbutton2.addMouseListener(this);
     	testbutton2.setBounds(100, 0, 100, 50);
     	cityPanel.add(testbutton2);
-		*/ 
+		 */ 
 		//testGuisTwo();
 		//testGuisThree();
 	}
@@ -117,7 +117,7 @@ public class AnimationPanel extends JPanel implements MouseListener, ActionListe
 
 	public void setBuildingInPhonebook(Building building) {
 		//Phonebook.getPhonebook().getBusinessFromGui(building);
-		
+
 		/* This only allows for ONE of each type of building. In v2,
 		 * it is required to have multiple instances of each, so we
 		 * must code for that eventuality.
@@ -175,9 +175,9 @@ public class AnimationPanel extends JPanel implements MouseListener, ActionListe
 			}
 		}
 
-//		cityPanel.addGui(car);
-//		cityPanel.addGui(bus);
-//		cityPanel.addGui(person);
+		//		cityPanel.addGui(car);
+		//		cityPanel.addGui(bus);
+		//		cityPanel.addGui(person);
 
 	}
 
@@ -238,7 +238,7 @@ public class AnimationPanel extends JPanel implements MouseListener, ActionListe
 			}
 		}
 	}
-	
+
 	public void testGuisThree() {
 		for(Building building : buildings) {
 			if(building.getName().toLowerCase().contains("italian")) {
@@ -295,18 +295,18 @@ public class AnimationPanel extends JPanel implements MouseListener, ActionListe
 			cityPanel.addGui(gui);
 		}
 	}
-	
+
 	public void addBuildingPanel(BuildingPanel panel) {
 		buildingPanels.add(panel, panel.name);
 	}
-	
+
 	public int getWindowX(){
 		return WINDOWX;
 	}
 	public int getWindowY(){
 		return WINDOWY;
 	}
-	
+
 	public void addAptUnit(Housing unit) {
 		//assigning apartment unit to either east or west apartment
 		for(Building building : buildings) {
@@ -331,10 +331,14 @@ public class AnimationPanel extends JPanel implements MouseListener, ActionListe
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		synchronized(buildings) {
-			for(Building building: buildings) {
-				if(!building.myBuildingPanel.isVisible()) {
-					for(Gui gui : building.myBuildingPanel.guis) {
-						gui.updatePosition();
+			if(!buildings.isEmpty()) {
+				for(Building building: buildings) {
+					if (building.myBuildingPanel != null) {
+						if(!building.myBuildingPanel.isVisible()) {
+							for(Gui gui : building.myBuildingPanel.guis) {
+								gui.updatePosition();
+							}
+						}
 					}
 				}
 			}
