@@ -51,6 +51,7 @@ public class ApartmentResidentRole extends HousingResidentRole{
 		}
 		HousingResidentGui HRR = new HousingResidentGui(this);
 		myHome.getPanel().addGui(HRR);
+		myHome.setOccupied(true);
 		state = ResidentState.none;
 	}
 	

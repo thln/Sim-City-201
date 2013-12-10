@@ -18,6 +18,7 @@ public class Housing
 	int housingNumber;
 	int xCordinate;
 	int yCordinate;
+	boolean occupied = false;
 	private HousingPanel housingPanel;
 	
 	public Housing(String name)
@@ -90,5 +91,15 @@ public class Housing
 	
 	public HousingPanel getPanel() {
 		return housingPanel;
+	}
+	
+	public void setOccupied(boolean occupy) {
+		occupied = occupy;
+	}
+	
+	public boolean isOccupied() {
+		if(occupied)
+			return true;
+		return false;
 	}
 }
