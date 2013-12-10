@@ -34,7 +34,8 @@ public class ItalianHostRole extends Role {
 	private Semaphore atTable = new Semaphore(0,true);
 
 	public ItalianHostGui hostGui = null;
-
+	protected String RoleName = "Host";
+	
 	public ItalianHostRole(String name) {
 		super(name);
 		// make some tables
@@ -98,18 +99,25 @@ public class ItalianHostRole extends Role {
             so that table is unoccupied and customer is waiting.
             If so seat him at the table.
 		 */
-	synchronized(tables){	
-		for (Table table : tables) {
-			if (!table.isOccupied()) {
-				if (!waitingCustomers.isEmpty()) {
-					setWaiter(waitingCustomers.get(0));
-					WaiterseatCustomer(waitingCustomers.get(0), table, startPoses.get(0));
-					return true;//return true to the abstract agent to reinvoke the scheduler.
+		synchronized(tables){	
+			for (Table table : tables) {
+				if (!table.isOccupied()) {
+					if (!waitingCustomers.isEmpty()) {
+						setWaiter(waitingCustomers.get(0));
+						WaiterseatCustomer(waitingCustomers.get(0), table, startPoses.get(0));
+						return true;//return true to the abstract agent to reinvoke the scheduler.
+					}
 				}
 			}
+			
 		}
 		
-	}
+		if (leaveRole)
+		{
+			((Worker) person).roleFinishedWork();
+			leaveRole = false;
+			return true;
+		}
 
 		return false;
 		//we have tried all our rules and found
