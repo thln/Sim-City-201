@@ -25,7 +25,7 @@ public abstract class Person extends Agent{
 
 	//Data
 	String name;
-	protected Semaphore atDestination;
+	protected Semaphore atCityDestination;
 	public Housing home;
 	private Timer alarmClock = new Timer();
 	private Timer hungerTimer = new Timer();
@@ -81,7 +81,7 @@ public abstract class Person extends Agent{
 		roles.add(new ChineseRestaurantCustomerRole(this, getName(), "Restaurant Customer", Phonebook.getPhonebook().getChineseRestaurant()));
 		roles.add(new AmericanRestaurantCustomerRole(this, getName(), "Restaurant Customer"));
 		nextTask = new Timer();
-		atDestination = new Semaphore(0,true);
+		atCityDestination = new Semaphore(0,true);
 		setHunger(HungerLevel.full);
 		hasFoodInFridge = false;
 
@@ -96,7 +96,7 @@ public abstract class Person extends Agent{
 
 	public void msgAtDestination() 
 	{
-		if(atDestination.availablePermits() < 1)
+		if(atCityDestination.availablePermits() < 1)
 		{
 			getAtDestination().release();
 		}
@@ -153,28 +153,28 @@ public abstract class Person extends Agent{
 		else
 			gui.walk = gui.decideForBus("West Bank");
 
-		//		if (!gui.walk){
-		//			print("Destination bus Stop: " + Phonebook.getPhonebook().getEastBank().getClosestBusStop().getBusStopNumber());
-		//			if (home.type.equals("East Apartment"))
-		//			{
-		//				goToBusStop(Phonebook.getPhonebook().getEastBank().getClosestBusStop().getBusStopNumber());
-		//			}
-		//			else 
-		//			{
-		//				goToBusStop(Phonebook.getPhonebook().getWestBank().getClosestBusStop().getBusStopNumber());
-		//			}
-		//		}
-		//		
-		//		try {
-		//			atDestination.acquire();
-		//			if(!gui.walk)
-		//			{
-		//				atDestination.acquire();
-		//			}
-		//		} catch (InterruptedException e) {
-		//			e.printStackTrace();
-		//
-		//		}
+		if (!gui.walk){
+			print("Destination bus Stop: " + Phonebook.getPhonebook().getEastBank().getClosestBusStop().getBusStopNumber());
+			if (home.type.equals("East Apartment"))
+			{
+				goToBusStop(Phonebook.getPhonebook().getEastBank().getClosestBusStop().getBusStopNumber());
+			}
+			else 
+			{
+				goToBusStop(Phonebook.getPhonebook().getWestBank().getClosestBusStop().getBusStopNumber());
+			}
+		}
+
+		try {
+			atCityDestination.acquire();
+			if(!gui.walk)
+			{
+				atCityDestination.acquire();
+			}
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+
+		}
 
 		for (Role cust1 : roles) {
 			if (cust1 instanceof BankCustomerRole) 
@@ -254,7 +254,7 @@ public abstract class Person extends Agent{
 		//Finish the GUI version of it
 		try 
 		{
-			atDestination.acquire();
+			atCityDestination.acquire();
 		} 
 		catch (InterruptedException e) 
 		{
@@ -309,7 +309,7 @@ public abstract class Person extends Agent{
 		}
 
 		try {
-			atDestination.acquire();
+			atCityDestination.acquire();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 
@@ -398,10 +398,10 @@ public abstract class Person extends Agent{
 		}
 
 		try {
-			atDestination.acquire();
+			atCityDestination.acquire();
 			//					if (!gui.walk){
 			//						try {
-			//							atDestination.acquire();
+			//							atCityDestination.acquire();
 			//						} catch (InterruptedException e) {
 			//							e.printStackTrace();
 			//		
@@ -446,7 +446,6 @@ public abstract class Person extends Agent{
 	protected void goToSleep() {
 
 		gui.walk = gui.decideForBus("Home");
-		gui.walk = true;
 		if (!gui.walk){
 			if (home.type.equals("East Apartment")){
 				gui.doGoToBus(Phonebook.getPhonebook().getEastMarket().getClosestStop().getX(),
@@ -459,11 +458,11 @@ public abstract class Person extends Agent{
 		}
 
 		try {
-			atDestination.acquire();
+			atCityDestination.acquire();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		
+
 		//person is part of an apartment
 		if(getHousing().type.toLowerCase().contains("apartment")) {
 			if(getHousing().type.toLowerCase().contains("east")) {
@@ -567,7 +566,7 @@ public abstract class Person extends Agent{
 	}
 
 	public Semaphore getAtDestination() {
-		return atDestination;
+		return atCityDestination;
 	}
 
 	public Semaphore getWaitingAtBus()
@@ -581,7 +580,7 @@ public abstract class Person extends Agent{
 	}
 
 	public void setAtDestination(Semaphore atDestination) {
-		this.atDestination = atDestination;
+		this.atCityDestination = atDestination;
 	}
 
 	public PersonGui getGui() {

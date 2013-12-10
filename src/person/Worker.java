@@ -274,7 +274,7 @@ public class Worker extends Person {
 
 		if (!gui.walk){
 			try {
-				atDestination.acquire();
+				atCityDestination.acquire();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
