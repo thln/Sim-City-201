@@ -50,11 +50,7 @@ public class ApartmentResidentRole extends HousingResidentRole{
 			e.printStackTrace();
 		}
 		HousingResidentGui HRR = new HousingResidentGui(this);
-		//System.out.println(getName() + ": "+ myHome.getOccupantName());
-		//System.out.println(getName() + ": "+ myHome.getPanel().name);
 		myHome.getPanel().addGui(HRR);
-		//apartment.enterHouse(this);
-		
 		state = ResidentState.none;
 	}
 	

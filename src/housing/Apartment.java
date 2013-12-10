@@ -30,18 +30,12 @@ public class Apartment {
 					ApartmentResidentGui ARG = new ApartmentResidentGui(ARR);
 					ARR.setGui(ARG);
 					apartmentPanel.addGui(ARG);
-					//System.out.println(ARR.getName() + ": "+ house.getOccupantName());
 					ARR.msgMoveToUnit();
 					return true;
 				}
 			}
 		}
 		return false;
-	}
-	
-	
-	public void enterHouse(ApartmentResidentRole ARR) {
-		
 	}
 	
 	public void setBuildingPanel(BuildingPanel myBuildingPanel) {

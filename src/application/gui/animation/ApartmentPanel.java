@@ -128,7 +128,7 @@ public class ApartmentPanel extends BuildingPanel implements MouseListener{
 	}
 	
 	public void addAptUnit(Housing house) {
-		HousingPanel hp = new HousingPanel("House " + housing.size(), myCity);
+		HousingPanel hp = new HousingPanel(house.getOccupantName() + "'s House", myCity);
 		hp.setType("apartment");
 		hp.setAptBuilding(this);
 		

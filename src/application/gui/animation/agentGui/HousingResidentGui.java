@@ -27,7 +27,6 @@ public class HousingResidentGui extends HousingGui {
 	
     public HousingResidentGui(HousingResidentRole agent) {
         this.agent = agent;
-        System.out.println(agent.getName() + "'s housing gui is made!!!!!");
       //this.gui = gui;
     }
 
@@ -50,7 +49,7 @@ public class HousingResidentGui extends HousingGui {
     }
 
     public void draw(Graphics2D g) {
-        g.setColor(Color.BLUE);
+        g.setColor(Color.GREEN);
         g.fillRect(xPos, yPos, 20, 20);
         g.setColor(Color.BLACK);
         if(agent != null)

@@ -131,6 +131,10 @@ public class HousingPanel extends BuildingPanel implements MouseListener{
 			apartment.displayBuildingPanel();
 		}
 	}
+	
+	public void addGui(Gui gui) {
+		guis.add(gui);
+	}
 
 	public void mousePressed(MouseEvent e) { }
 

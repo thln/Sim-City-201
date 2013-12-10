@@ -19,9 +19,14 @@ public class HousingResidentRole extends Role{
 	}
 	
 	//Messages
-		public void atDestination() {
-			atDestination.release();
-		}
+	public void msgImSleepy() {
+		state = ResidentState.sleepy;
+		stateChanged();
+	}
+	
+	public void atDestination() {
+		atDestination.release();
+	}
 	
 	//Scheduler
 
