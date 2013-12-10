@@ -203,48 +203,75 @@ public class Worker extends Person {
 
 
 	//Actions
-	private void scheduleNextTask(int currentTime, int nextTaskTime) {
-		int timeConversion = 60 * TimeManager.getSpeedOfTime();
-		//print("Next task time = " + nextTaskTime + " Current time = " + currentTime);
-		print("Timer length = ms" + ((((nextTaskTime - currentTime) % 24) + 24) % 24) * timeConversion);
-		nextTask.schedule(new TimerTask() {
-			public void run() {        
-				stateChanged();                
-			}
-		},
-		((((nextTaskTime - currentTime) % 24) + 24) % 24) * timeConversion);
-	}
+//	private void scheduleNextTask(int currentTime, int nextTaskTime) {
+//		int timeConversion = 60 * TimeManager.getSpeedOfTime();
+//		//print("Next task time = " + nextTaskTime + " Current time = " + currentTime);
+//		print("Timer length = ms" + ((((nextTaskTime - currentTime) % 24) + 24) % 24) * timeConversion);
+//		nextTask.schedule(new TimerTask() {
+//			public void run() {        
+//				stateChanged();                
+//			}
+//		},
+//		((((nextTaskTime - currentTime) % 24) + 24) % 24) * timeConversion);
+//	}
 
 	public void prepareForWork() {
 		currentRoleName = myJob.title;
 		print("Preparing for work as " + myJob.title + " at " + myJob.jobPlace);
+/*
+		gui.walk = gui.decideForBus(myJob.jobPlace);
 
-		gui.walk = gui.decideForBus(myJob.jobPlace);		
-		if (gui.walk)
-			gui.popToMiddle();
-		
 		if (!gui.walk){
-			gui.doGoToBus(Phonebook.getPhonebook().getEastBank().getClosestStop().getX(),
-					Phonebook.getPhonebook().getEastBank().getClosestStop().getY());
-			try {
-				atDestination.acquire();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if (myJob.jobPlace.contains("American")){
+				print("Destination bus Stop: " + Phonebook.getPhonebook().getAmericanRestaurant().getClosestBusStop().getBusStopNumber());
+				goToBusStop(Phonebook.getPhonebook().getAmericanRestaurant().getClosestBusStop().getBusStopNumber());
+			}
+			if (myJob.jobPlace.contains("Chinese")){
+				print("Destination bus Stop: " + Phonebook.getPhonebook().getChineseRestaurant().getClosestBusStop().getBusStopNumber());
+				goToBusStop(Phonebook.getPhonebook().getChineseRestaurant().getClosestBusStop().getBusStopNumber());
+			}
+//			if (myJob.jobPlace.contains("Seafood")){
+//				print("Destination bus Stop: " + Phonebook.getPhonebook().getSeafoodRestaurant().getClosestBusStop().getBusStopNumber());
+//				goToBusStop(Phonebook.getPhonebook().getSeafoodRestaurant().getClosestBusStop().getBusStopNumber());
+//			}
+			if (myJob.jobPlace.contains("Italian")){
+				print("Destination bus Stop: " + Phonebook.getPhonebook().getItalianRestaurant().getClosestBusStop().getBusStopNumber());
+				goToBusStop(Phonebook.getPhonebook().getItalianRestaurant().getClosestBusStop().getBusStopNumber());
 			}
 		}
+		
+		try {
+			atDestination.acquire();
+			if (!gui.walk){
+				try {
+					atDestination.acquire();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+
+				}
+			}
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+
+		}
+		*/
 			
+		if (myJob.jobPlace == "American Restaurant") 
+		{
+			workerRole = Phonebook.getPhonebook().getAmericanRestaurant().arrivedAtWork(this, myJob.title);
+			workerRole.setRoleActive();
+			return;
+		}
+		
+		if (myJob.jobPlace == "Chinese Restaurant") 
+		{
+			workerRole = Phonebook.getPhonebook().getChineseRestaurant().arrivedAtWork(this, myJob.title);
+			workerRole.setRoleActive();
+			return;
+		}
 
 		if (myJob.jobPlace.equals("East Bank")) 
 		{
-			gui.walk = true;
-			getGui().DoGoToBank("East");
-			try {	
-				atDestination.acquire();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 			workerRole = Phonebook.getPhonebook().getEastBank().arrivedAtWork(this, myJob.title);
 			workerRole.setRoleActive();
 			return;
@@ -252,14 +279,6 @@ public class Worker extends Person {
 
 		if (myJob.jobPlace.equals("West Bank")) 
 		{
-			gui.walk = true;
-			getGui().DoGoToBank("West");
-			try {	
-				atDestination.acquire();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 			workerRole = Phonebook.getPhonebook().getWestBank().arrivedAtWork(this, myJob.title);
 			workerRole.setRoleActive();
 			return;
@@ -267,16 +286,6 @@ public class Worker extends Person {
 
 		if (myJob.jobPlace == "East Market") 
 		{
-			gui.walk = true;
-			print("Going to work at east market");
-			getGui().DoGoToMarket("East");
-			try {
-				atDestination.acquire();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-
-			}
 			print("Going to work at market, job time = " + myJob.startTime.hour);
 			workerRole = Phonebook.getPhonebook().getEastMarket().arrivedAtWork(this, myJob.title);
 			workerRole.setRoleActive();
@@ -285,66 +294,75 @@ public class Worker extends Person {
 		
 		if (myJob.jobPlace == "West Market") 
 		{
-			gui.walk = true;
-			print("Going to work at west market");
-			getGui().DoGoToMarket("West");
-			try {
-				atDestination.acquire();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-
-			}
 			print("Going to work at market, job time = " + myJob.startTime.hour);
 			workerRole = Phonebook.getPhonebook().getWestMarket().arrivedAtWork(this, myJob.title);
 			workerRole.setRoleActive();
 			return;
 		}
 
-		if (myJob.jobPlace == "Chinese Restaurant") 
-		{
-			gui.walk = true;
-			print("Going to work at Chinese Restaurant");
-			getGui().DoGoToRestaurant("chinese");
-			try {
-				atDestination.acquire();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-
-			}
-			workerRole = Phonebook.getPhonebook().getChineseRestaurant().arrivedAtWork(this, myJob.title);
-			workerRole.setRoleActive();
-			return;
-		}
 		if (myJob.jobPlace == "housing maintenance company")
 		{
 			workerRole = Phonebook.getPhonebook().getHousingMaintenanceCompany().arrivedAtWork(this, myJob.title);
 			workerRole.setRoleActive();
 			return;
 		}
-		//need to put in maintenance role
 
 		return;
 	}
 
 	public boolean workIsOpen() {
-		if (myJob.jobPlace.equals("bank")) {
+		if (myJob.jobPlace.equals("East Bank")) {
 			if (!Phonebook.getPhonebook().getEastBank().userClosed)
 				return true;
 			else
 				return false;
 		}
-
-		if (myJob.jobPlace == "market") {
-			if (!Phonebook.getPhonebook().getEastMarket().userClosed)
+		
+		if (myJob.jobPlace.equals("West Bank")) {
+			if (!Phonebook.getPhonebook().getWestBank().userClosed)
 				return true;
 			else
 				return false;
 		}
 
-		if (myJob.jobPlace == "restaurant") {
+		if (myJob.jobPlace == "East Market") {
+			if (!Phonebook.getPhonebook().getEastMarket().userClosed)
+				return true;
+			else
+				return false;
+		}
+		
+		if (myJob.jobPlace == "West Market") {
+			if (!Phonebook.getPhonebook().getWestMarket().userClosed)
+				return true;
+			else
+				return false;
+		}
+
+		if (myJob.jobPlace == "Chinese Restaurant") {
 			if (!Phonebook.getPhonebook().getChineseRestaurant().userClosed)
+				return true;
+			else
+				return false;
+		}
+		
+		if (myJob.jobPlace == "American Restaurant") 
+		{
+			if (!Phonebook.getPhonebook().getAmericanRestaurant().userClosed)
+				return true;
+			else
+				return false;
+		}
+		if (myJob.jobPlace == "Italian Restaurant") 
+		{
+			if (!Phonebook.getPhonebook().getItalianRestaurant().userClosed)
+				return true;
+			else
+				return false;
+		}
+		if (myJob.jobPlace == "Seafood Restaurant") 
+		{
+			if (!Phonebook.getPhonebook().getSeafoodRestaurant().userClosed)
 				return true;
 			else
 				return false;

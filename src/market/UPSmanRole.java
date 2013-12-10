@@ -39,6 +39,7 @@ public class UPSmanRole extends Role implements UPSman {
 		print("Recieved an order to deliver");
 		log.add(new LoggedEvent("Recieved msgDeliverOrder"));
 		orders.add(o);
+		if (person != null)
 		stateChanged();
 	}
 	

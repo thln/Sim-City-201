@@ -237,8 +237,8 @@ public class SeafoodRestaurant implements Restaurant {
 		seafoodRestaurantCashierRole.msgLeaveRole();
 	}
 
-	public int getClosestStop() {
+	public int  getClosestStop() {
 		// TODO Auto-generated method stub
-		return null;
+		return 3;
 	}
 }

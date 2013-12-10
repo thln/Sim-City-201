@@ -16,7 +16,10 @@ import person.Person;
 import person.Wealthy;
 import person.Worker;
 import americanRestaurant.AmericanRestaurantCookRole;
+import transportation.BusAgent;
 import application.gui.animation.AnimationPanel;
+import application.gui.animation.agentGui.BusGuiHorizontal;
+import application.gui.animation.agentGui.BusGuiVertical;
 import application.gui.animation.agentGui.PersonGui;
 
 
@@ -72,9 +75,9 @@ public class Application extends JPanel {
 
 		//Market Workers
 		//SHIFT 1
-		Worker market1d = new Worker("Derrick", 10, "marketRunner", "East Market", 1, 600, 15);
-		Worker market1e = new Worker("Erin", 1000, "salesPerson", "East Market", 1, 600, 16);
-		Worker market1f = new Worker("Fred", 10, "UPSman", "East Market", 2, 600, 17);        
+		Worker market1d = new Worker("Derrick", 10, "marketRunner", "East Market", 0, 600, 15);
+		Worker market1e = new Worker("Erin", 1000, "salesPerson", "East Market", 0, 600, 16);
+		Worker market1f = new Worker("Fred", 10, "UPSman", "East Market", 0, 600, 17);        
 
 		//SHIFT 2
 		Worker market2d = new Worker("Daniel", 100, "marketRunner", "East Market", 13, 400, 3);
@@ -265,6 +268,13 @@ public class Application extends JPanel {
 		getPopulation().add(wealthy4);
 		getPopulation().add(crook1);
 
+//		Crook crook1 = new Crook("Vinny", 250);
+//		allHousing.add(new Housing(crook1, allHousing.size(), "East Apartment"));
+//		crook1.setHome(allHousing.get(allHousing.size() - 1));
+//		Phonebook.getPhonebook().setHousingList(allHousing);
+//		getPopulation().add(crook1);
+
+		
 		//Setting Gui for everyone
 		for (Person person : getPopulation()) {
 			person.setPanel(animPanel);
@@ -306,27 +316,39 @@ public class Application extends JPanel {
 		bank2a.startThread();
 		bank2b.startThread();
 		bank2c.startThread();
-//		market2d.startThread();
-//		market2e.startThread();
-//		market2f.startThread();
-//		rest2g.startThread();
-//		rest2h.startThread();
-//		rest2i.startThread();
-//		rest2j.startThread();
-//		rest2k.startThread();
-//		house1.startThread();
-//		bank4a.startThread();
-//		bank4b.startThread();	
-//		bank4c.startThread();		
-//
-//		//People
-//		wealthy1.startThread();
-//		wealthy2.startThread();
-//
-//		wealthy3.startThread();
-//		wealthy4.startThread();
-//		crook1.startThread();
+		market2d.startThread();
+		market2e.startThread();
+		market2f.startThread();
+		rest2g.startThread();
+		rest2h.startThread();
+		rest2i.startThread();
+		rest2j.startThread();
+		rest2k.startThread();
+		house1.startThread();
+		bank4a.startThread();
+		bank4b.startThread();	
+		bank4c.startThread();		
 
+		//People
+		wealthy1.startThread();
+		wealthy2.startThread();
+
+		wealthy3.startThread();
+		wealthy4.startThread();
+		
+		crook1.startThread();
+		
+		//Buses
+		BusAgent horizontal = new BusAgent("Horizontal");
+		BusAgent vertical = new BusAgent("Vertical");
+		BusGuiHorizontal busA = new BusGuiHorizontal(horizontal);
+		BusGuiVertical busB = new BusGuiVertical(vertical);	
+		horizontal.setHGui(busA);
+		vertical.setVGui(busB);
+		animPanel.cityPanel.addGui(busA);
+		animPanel.cityPanel.addGui(busB);
+		horizontal.startThread();
+		vertical.startThread();
 		updatePeopleTime();
 
 	}

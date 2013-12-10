@@ -53,6 +53,9 @@ public abstract class Person extends Agent{
 	protected List<String> restaurantQueue;
 	int eatTime = 4;
 	protected Semaphore eating = new Semaphore(0, true);
+	//IMPORTANT ADD TO MESSAGES
+	protected Semaphore waitingAtBus = new Semaphore(0, true);
+	protected Semaphore beingTransported = new Semaphore(0, true);
 
 	//Bank Related
 	public double money;
@@ -86,6 +89,7 @@ public abstract class Person extends Agent{
 		hasFoodInFridge = false;
 
 		//add restaurants to queue 
+		restaurantQueue = new ArrayList<String>();
 		restaurantQueue.add("American Restaurant");
 		restaurantQueue.add("Chinese Restaurant");
 		restaurantQueue.add("Italian Restaurant");
@@ -93,8 +97,28 @@ public abstract class Person extends Agent{
 		restaurantQueue.add("Seafood Restaurant");
 	}
 
-	public void msgAtDestination() {
-		getAtDestination().release();
+	public void msgAtDestination() 
+	{
+		if(atDestination.availablePermits() < 1)
+		{
+			getAtDestination().release();
+		}
+	}
+	
+	public void msgBusIsHere()
+	{
+		if(waitingAtBus.availablePermits() < 1)
+		{
+			getWaitingAtBus().release();
+		}
+	}
+	
+	public void msgAtBusStopDestination()
+	{
+		if(beingTransported.availablePermits() < 1)
+		{
+			beingTransported.release();
+		}
 	}
 
 	//Scheduler
@@ -116,13 +140,13 @@ public abstract class Person extends Agent{
 		try {
 			eating.acquire();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 
 		}
 	}
 
 	protected void prepareForBank () {
+
 
 		if (!(this instanceof Crook))
 			Do("Becoming Bank AmericanRestaurantCustomer");
@@ -141,28 +165,33 @@ public abstract class Person extends Agent{
 		//				e.printStackTrace();
 		//			}
 		//		}
-
-		//		if (this instanceof Wealthy){
-		//			print("walking state = " + gui.walk + "and my destination = " + gui.getxDestination() + ", " + gui.getyDestination());
-		//		}
-		//		
+	
 		if (!gui.walk){
-			if (home.type.equals("East Apartment")){
-				gui.doGoToBus(Phonebook.getPhonebook().getEastBank().getClosestStop().getX(),
-						Phonebook.getPhonebook().getEastBank().getClosestStop().getY());
+			print("Destination bus Stop: " + Phonebook.getPhonebook().getEastBank().getClosestBusStop().getBusStopNumber());
+			if (home.type.equals("East Apartment"))
+			{
+				goToBusStop(Phonebook.getPhonebook().getEastBank().getClosestBusStop().getBusStopNumber());
 			}
-			else {
-				gui.doGoToBus(Phonebook.getPhonebook().getWestBank().getClosestStop().getX(),
-						Phonebook.getPhonebook().getWestBank().getClosestStop().getY());
+			else 
+			{
+				goToBusStop(Phonebook.getPhonebook().getWestBank().getClosestBusStop().getBusStopNumber());
 			}
+		}
 
-			try {
+		if (home.type.equals("East Apartment"))
+			getGui().DoGoToBank("East");
+		else
+			getGui().DoGoToBank("West");
+
+		try {
+			atDestination.acquire();
+			if(!gui.walk)
+			{
 				atDestination.acquire();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-
 			}
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+
 		}
 
 		for (Role cust1 : roles) {
@@ -235,6 +264,50 @@ public abstract class Person extends Agent{
 		}
 	}
 
+	protected void goToBusStop(int destinationBusStopNumber)
+	{
+
+		print("Going to bus Stop "+ gui.getClosestBusStopNumber());
+		gui.doGoToBusStop();
+		//Finish the GUI version of it
+		try 
+		{
+			atDestination.acquire();
+		} 
+		catch (InterruptedException e) 
+		{
+			e.printStackTrace();
+		}
+		print("At bus Stop "+ gui.getClosestBusStopNumber() + ". Now waiting");
+		Phonebook.getPhonebook().getAllBusStops().get(gui.getClosestBusStopNumber()).waitingForBus(this);
+		try
+		{
+			waitingAtBus.acquire();
+			//waitingAtBus.acquire();
+			//maybe have to do double acquires?
+		}
+		catch (InterruptedException e)
+		{
+			e.printStackTrace();
+		}
+		print(" Blah");
+		print("Telling " + Phonebook.getPhonebook().getAllBusStops().get(gui.getClosestBusStopNumber()).getCurrentBus().getName() + " that I'm getting on to go to bus stop # " + destinationBusStopNumber);
+		Phonebook.getPhonebook().getAllBusStops().get(gui.getClosestBusStopNumber()).getCurrentBus().msgGettingOnBus(this, destinationBusStopNumber);
+		gui.setInvisible();
+		try
+		{
+			beingTransported.acquire();
+			//beingTransported.acquire();
+			//maybe have to do double acquires?
+		}
+		catch (InterruptedException e)
+		{
+			e.printStackTrace();
+		}
+		print("Arriving at destination Bus Stop: " + destinationBusStopNumber);
+		gui.getOffBus(destinationBusStopNumber);
+	}
+	
 	protected void prepareForMarket() {
 		print("Going to market as a customer");
 
@@ -257,7 +330,6 @@ public abstract class Person extends Agent{
 		try {
 			atDestination.acquire();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 
 		}
@@ -309,27 +381,34 @@ public abstract class Person extends Agent{
 
 		if (!gui.walk){
 			if (choice.contains("American")){
-				gui.doGoToBus(Phonebook.getPhonebook().getAmericanRestaurant().getClosestStop().getX(),
-						Phonebook.getPhonebook().getAmericanRestaurant().getClosestStop().getY());
+				print("Destination bus Stop: " + Phonebook.getPhonebook().getAmericanRestaurant().getClosestBusStop().getBusStopNumber());
+				goToBusStop(Phonebook.getPhonebook().getAmericanRestaurant().getClosestBusStop().getBusStopNumber());
 			}
 			if (choice.contains("Chinese")){
-				gui.doGoToBus(Phonebook.getPhonebook().getChineseRestaurant().getClosestStop().getX(),
-						Phonebook.getPhonebook().getChineseRestaurant().getClosestStop().getY());
+				print("Destination bus Stop: " + Phonebook.getPhonebook().getChineseRestaurant().getClosestBusStop().getBusStopNumber());
+				goToBusStop(Phonebook.getPhonebook().getChineseRestaurant().getClosestBusStop().getBusStopNumber());
 			}
+//			if (choice.contains("Seafood")){
+//				print("Destination bus Stop: " + Phonebook.getPhonebook().getSeafoodRestaurant().getClosestBusStop().getBusStopNumber());
+//				goToBusStop(Phonebook.getPhonebook().getSeafoodRestaurant().getClosestBusStop().getBusStopNumber());
+//			}
 			if (choice.contains("Italian")){
-				gui.doGoToBus(Phonebook.getPhonebook().getItalianRestaurant().getClosestStop().getX(),
-						Phonebook.getPhonebook().getAmericanRestaurant().getClosestStop().getY());
-			}
-			if (choice.contains("Seafood")){
-				gui.doGoToBus(Phonebook.getPhonebook().getSeafoodRestaurant().getClosestStop().getX(),
-						Phonebook.getPhonebook().getAmericanRestaurant().getClosestStop().getY());
+				print("Destination bus Stop: " + Phonebook.getPhonebook().getItalianRestaurant().getClosestBusStop().getBusStopNumber());
+				goToBusStop(Phonebook.getPhonebook().getItalianRestaurant().getClosestBusStop().getBusStopNumber());
 			}
 		}
-
+		
 		try {
 			atDestination.acquire();
+			if (!gui.walk){
+				try {
+					atDestination.acquire();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+
+				}
+			}
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 
 		}
@@ -372,7 +451,6 @@ public abstract class Person extends Agent{
 		try {
 			atDestination.acquire();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			//
 		}
@@ -458,7 +536,17 @@ public abstract class Person extends Agent{
 	public Semaphore getAtDestination() {
 		return atDestination;
 	}
+	
+	public Semaphore getWaitingAtBus()
+	{
+		return waitingAtBus;
+	}
 
+	public Semaphore getBeingTransported()
+	{
+		return beingTransported;
+	}
+	
 	public void setAtDestination(Semaphore atDestination) {
 		this.atDestination = atDestination;
 	}
