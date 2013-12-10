@@ -282,10 +282,8 @@ public class Application extends JPanel {
 			animPanel.addGui(pg);
 		}
 
-		for (Housing house : allHousing) {
-			if(house.type.toLowerCase().contains("apartment")) {
-				animPanel.addAptUnit(house);
-			}
+		for (Housing housing : allHousing) {
+			animPanel.setHousingPanel(housing);
 		}
 
 		//Starting Threads

@@ -69,7 +69,7 @@ public class AnimationPanel extends JPanel implements MouseListener {
 			else if(name.toLowerCase().contains("market")) {
 				panel = new MarketPanel(name, this );
 			}
-			else if(name.toLowerCase().contains("house")) {
+			else if(name.toLowerCase().contains("mansion")) {
 				panel = new HousingPanel(name, this );
 			}
 			else if(name.toLowerCase().contains("apartment")) {
@@ -311,22 +311,34 @@ public class AnimationPanel extends JPanel implements MouseListener {
 		return WINDOWY;
 	}
 	
-	public void addAptUnit(Housing unit) {
-		//assigning apartment unit to either east or west apartment
-		for(Building building : buildings) {
-			String name = building.getName();
-			if(name.toLowerCase().contains("apartment")) {
-				if(name.toLowerCase().contains("east")) {
-					if(unit.type.toLowerCase().contains("east")) {
-						ApartmentPanel Apt = (ApartmentPanel) building.myBuildingPanel;
-						Apt.addAptUnit(unit);
+	public void setHousingPanel(Housing housing) {
+		if(housing.type.toLowerCase().contains("apartment")) {
+			
+			//assigning apartment unit to either east or west apartment
+			for(Building building : buildings) {
+				String name = building.getName();
+				if(name.toLowerCase().contains("apartment")) {
+					if(name.toLowerCase().contains("east")) {
+						if(housing.type.toLowerCase().contains("east")) {
+							ApartmentPanel Apt = (ApartmentPanel) building.myBuildingPanel;
+							Apt.addAptUnit(housing);
+						}
+					}
+					else if(name.toLowerCase().contains("west")) {
+						if(housing.type.toLowerCase().contains("west")) {
+							ApartmentPanel Apt = (ApartmentPanel) building.myBuildingPanel;
+							Apt.addAptUnit(housing);
+						}
 					}
 				}
-				else if(name.toLowerCase().contains("west")) {
-					if(unit.type.toLowerCase().contains("west")) {
-						ApartmentPanel Apt = (ApartmentPanel) building.myBuildingPanel;
-						Apt.addAptUnit(unit);
-					}
+			} //for
+		}//end if
+		else if(housing.type.toLowerCase().contains("mansion")) {
+			for(Building building : buildings) {
+				String name = building.getName();
+				if(name.toLowerCase().contains("mansion")) {
+					HousingPanel hp = (HousingPanel) building.myBuildingPanel;
+					housing.setBuildingPanel(hp);
 				}
 			}
 		}

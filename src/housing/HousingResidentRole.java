@@ -50,16 +50,48 @@ public class HousingResidentRole extends Role{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		/*************TEMP STATE for testing guis***********/
+		state = ResidentState.hungry;
+		/*************END TEMP STATE*********************/
 	}
 	
 	public void goToKitchen() {
-		gui.DoGoToBed();
+		gui.DoGoToKitchen();
 		try {
 			this.atDestination.acquire();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+			/*************TEMP STATE for testing guis***********/
+			state = ResidentState.watchingTV;
+			/*************END TEMP STATE*********************/
+	}
+	
+	public void goToLivingRoom() {
+		gui.DoGoToLivingRoom();
+		try {
+			this.atDestination.acquire();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+			/*************TEMP STATE for testing guis***********/
+			state = ResidentState.peeing;
+			/*************END TEMP STATE*********************/
+	}
+	
+	public void goToBathroom() {
+		gui.DoGoToBathroom();
+		try {
+			this.atDestination.acquire();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+			/*************TEMP STATE for testing guis***********/
+			state = ResidentState.sleepy;
+			/*************END TEMP STATE*********************/
 	}
 	
 	//utilities
