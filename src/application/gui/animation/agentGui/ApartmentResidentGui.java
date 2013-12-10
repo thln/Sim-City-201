@@ -66,7 +66,7 @@ public class ApartmentResidentGui extends HousingGui{
 	public void DoDoToUnit(int unit) {
 		currColor = myColor;
     	CheckLessThan10(unit);
-    	xDestination = 10 + 50*this.unit;
+    	xDestination = 60 + 50*this.unit;
     	yDestination = 50 + 80*yIncrement;
     	command = Command.inTransit;
     }
@@ -80,7 +80,7 @@ public class ApartmentResidentGui extends HousingGui{
     }
     
     public void CheckLessThan10(int unit) {
-    	if(unit > 10) {
+    	if(unit > 9) {
     		this.unit = unit - 10;
     		yIncrement++;
     		CheckLessThan10(this.unit);

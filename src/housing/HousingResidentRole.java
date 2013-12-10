@@ -1,5 +1,7 @@
 package housing;
 
+import java.util.concurrent.Semaphore;
+
 import person.*;
 import application.gui.animation.agentGui.*;
 
@@ -7,18 +9,54 @@ public class HousingResidentRole extends Role{
 	
 	//DATA
 	private HousingResidentGui gui;
+	public enum ResidentState {hungry, watchingTV, peeing, sleepy, none};
+	public ResidentState state;
+	private Semaphore atDestination = new Semaphore(0, true);
 
 	public HousingResidentRole (Person p1, String pName, String rName) {
 		super(p1, pName, rName);
+		state = ResidentState.sleepy;
 	}
+	
+	//Messages
+		public void atDestination() {
+			atDestination.release();
+		}
 	
 	//Scheduler
 
 	public boolean pickAndExecuteAnAction () {
+		if(state == ResidentState.sleepy) {
+			goToSleep();
+			return true;
+		}
+		if(state == ResidentState.hungry) {
+			goToKitchen();
+			return true;
+		}
 		return false;
 	}
 		
 	//ACTIONS
+	public void goToSleep() {
+		gui.DoGoToBed();
+		try {
+			this.atDestination.acquire();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void goToKitchen() {
+		gui.DoGoToBed();
+		try {
+			this.atDestination.acquire();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	//utilities
 	public void setGui (HousingResidentGui gui) {

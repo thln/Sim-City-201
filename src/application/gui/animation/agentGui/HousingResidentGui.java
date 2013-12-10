@@ -90,7 +90,7 @@ public class HousingResidentGui extends HousingGui {
     
     public void DoGoToBed() {
     	xDestination = 510;
-    	yDestination = 300;
+    	yDestination = 200;
     }
     
     public void DoGoToBedRoom() {
@@ -110,6 +110,6 @@ public class HousingResidentGui extends HousingGui {
     
     public void DoExit() {
     	xDestination = 300;
-    	yDestination = 300;
+    	yDestination = 350;
     }
 }
