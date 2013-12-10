@@ -201,68 +201,6 @@ public boolean isHungry() {
 	return isHungry;
 }
 
-//Actions
-//	public void DoGoToRestaurant(String restaurantType) {
-//		switch(restaurantType.toLowerCase()) {
-//		case "chinese" : {
-//			setxDestination((int) Phonebook.getPhonebook().getChineseRestaurant().location.getX());
-//			yDestination = (int) Phonebook.getPhonebook().getChineseRestaurant().location.getY();
-//		}
-//		break;
-//		case "italian" : {
-//			setxDestination((int) Phonebook.getPhonebook().getItalianRestaurant().location.getX());
-//			setyDestination((int) Phonebook.getPhonebook().getChineseRestaurant().location.getY());
-//		}
-//		break;
-//		case "mexican" : {
-//			setxDestination(xMexicanLocation);
-//			setyDestination(xMexicanLocation);
-//		}
-//		break;
-//		case "american" : {
-//			setxDestination(xAmericanLocation);
-//			setyDestination(yAmericanLocation);
-//		}
-//		break;
-//		case "seafood" : {
-//			setxDestination(xSeafoodLocation);
-//			setyDestination(ySeafoodLocation);
-//		}
-//		break;
-//		default:
-//			break;
-//		}
-//		setDefaultColor();
-//		command = Command.GoToRestaurant;
-//	}
-//
-//	public void DoGoToMarket(String location) {
-//		if (location.equals("East")){
-//			setxDestination((int) Phonebook.getPhonebook().getEastMarket().location.getX());
-//			setyDestination((int) Phonebook.getPhonebook().getEastMarket().location.getY());
-//		}
-//		else {
-//			setxDestination((int) Phonebook.getPhonebook().getWestMarket().location.getX());
-//			setyDestination((int) Phonebook.getPhonebook().getWestMarket().location.getY());
-//		}
-//		setDefaultColor();
-//		command = Command.GoToMarket;
-//	}
-//
-//	public void DoGoToBank(String location) {
-//
-//		if (location.equals("East")){
-//			setxDestination((int) Phonebook.getPhonebook().getEastBank().location.getX());
-//			setyDestination((int) Phonebook.getPhonebook().getEastBank().location.getY());
-//		}
-//		else {
-//			setxDestination((int) Phonebook.getPhonebook().getWestBank().location.getX());
-//			setyDestination((int) Phonebook.getPhonebook().getWestBank().location.getY());
-//		}
-//		setDefaultColor();
-//		command = Command.GoToBank;
-//	}
-
 public void DoGoToBusStop(int stopNum) {//later you will map stop number to map coordinates.
 	setxDestination(100);
 	setyDestination(100);
@@ -335,20 +273,13 @@ public boolean decideForBus(String location) {
 		yDestination = yHome;
 		command = Command.GoToRestaurant;
 	}
-	agent.print("Destination =" + xDestination + " , " + yDestination);
 	currentBlock = returnCurrentBlock (xPos, yPos);
 	destinationBlock = returnCurrentBlock (xDestination, yDestination);
 	if (currentBlock == destinationBlock) {
-		if (agent.getName() == "Tam Henry")
-			agent.print("At destination with Location =" + xPos + " , " + yPos + " and current block =" + currentBlock + "and destination = " + destinationBlock);
 		state = PersonState.enroute;
 		return true;
 	}
 	destinationBlock = Phonebook.getPhonebook().blocks.get(currentBlock).doIWalk(destinationBlock);
-	if (agent.getName() == "Tam Henry"){
-		agent.print("Destination =" + xDestination + " , " + yDestination);
-		agent.print("Enroute with Location =" + xPos + " , " + yPos + " and current block =" + currentBlock + "and destination = " + destinationBlock);
-	}
 	if (destinationBlock == 0){
 		return false;
 	}	
@@ -499,8 +430,8 @@ public void popToMiddle(){
 	}
 	//xPos -= 10;
 	//yPos = 30;
-	System.err.println("Name is " + agent.getName() + " and Block = " + currentBlock + "and position = " + xPos + " , " + yPos );
-	System.err.println(agent.getName() + " has Destination block = " + destinationBlock);
+	//System.err.println("Name is " + agent.getName() + " and Block = " + currentBlock + "and position = " + xPos + " , " + yPos );
+	//System.err.println(agent.getName() + " has Destination block = " + destinationBlock);
 }
 
 public int returnCurrentBlock (int xPos, int yPos){
