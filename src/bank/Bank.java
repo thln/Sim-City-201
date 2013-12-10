@@ -75,7 +75,7 @@ public class Bank {
 		if (name.equals("East Bank"))
 			location = new Point(315, 275);
 		else if (name.equals("West Bank"))
-			location = new Point(210, 25);
+			location = new Point(215, 25);
 		
 		this.name = name;
 		vault = 10000;
