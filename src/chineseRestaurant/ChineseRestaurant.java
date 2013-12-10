@@ -196,7 +196,7 @@ public class ChineseRestaurant implements Restaurant {
 		restPanel = panel;
 	}
 
-	public Role getCook(boolean test) {
+	public ChineseRestaurantCook getCook(boolean test) {
 		if (test) {
 			return chineseRestaurantMockCook;
 		}

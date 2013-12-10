@@ -145,15 +145,9 @@ public class AmericanRestaurantCookRole extends Role {
 		stateChanged();
 	}
 
-	public void msgHereIsYourOrder(Food f1) {
-		String choice = f1.choice;
-		foodList.put(choice, f1);
-		AmericanRestaurantWaiterRole.AddItem(f1.choice);
-		print("Bought more " + f1.choice);
-	}
-
-	public void msgHereIsPartOfYourOrder(Food f1) {
-		String choice = f1.choice;
+	public void msgHereIsYourOrder(String food) {
+		Food f1 = foodList.get(food);
+		String choice = food;
 		foodList.put(choice, f1);
 		AmericanRestaurantWaiterRole.AddItem(f1.choice);
 		print("Bought more " + f1.choice);

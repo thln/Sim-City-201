@@ -16,9 +16,6 @@ import americanRestaurant.interfaces.AmericanRestaurantCustomer;
 import americanRestaurant.interfaces.AmericanRestaurantWaiter;
 import application.gui.animation.RestaurantPanel;
 
-/**
- * Restaurant AmericanRestaurantHost Agent
- */
 //We only have 2 types of agents in this prototype. A customer and an agent that
 //does all the rest. Rather than calling the other agent a waiter, we called him
 //the AmericanRestaurantCookRole. A AmericanRestaurantHost is the manager of a restaurant who sees that all
