@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.concurrent.Semaphore;
 
+import market.Market;
 import bank.BankGuardRole.MyTeller;
 import bank.interfaces.BankCustomer;
 import person.Person;
@@ -79,31 +80,31 @@ public class AmericanRestaurantCashierRole extends Role implements AmericanResta
 
 	enum marketBillState {pending, unpaid};
 	
-//	public class MarketBill {
-//		private int bill;
-//		private Market market1;
-//		marketBillState state;
-//	
-//
-//		public MarketBill(Market m1, int bill1) {
-//			bill = bill1;
-//			market1 = m1;
-//			state = marketBillState.pending;
-//		}
-//
-//		public Market getMarket(){
-//			return market1;
-//		}
-//
-//		public int getBill() {
-//			return bill;
-//		}
-//	}
+	public class MarketBill {
+		private int bill;
+		private Market market1;
+		marketBillState state;
+	
+
+		public MarketBill(Market m1, int bill1) {
+			bill = bill1;
+			market1 = m1;
+			state = marketBillState.pending;
+		}
+
+		public Market getMarket(){
+			return market1;
+		}
+
+		public int getBill() {
+			return bill;
+		}
+	}
 
 	AmericanRestaurantHost myHost;
 	private List<MyCheck> checks;
 	public EventLog log;
-//	private List<MarketBill> marketBills;
+	private List<MarketBill> marketBills;
 	private int cashRegister;			//holds all of the money in the restaurant
 
 	//Constructor
@@ -114,6 +115,7 @@ public class AmericanRestaurantCashierRole extends Role implements AmericanResta
 		checks = Collections.synchronizedList(new ArrayList<MyCheck>());
 		log = new EventLog();
 		setCashRegister(120);	
+		marketBills = Collections.synchronizedList(new ArrayList<MarketBill>());
 	}
 	
 	public AmericanRestaurantCashierRole(Person p1, String pName, String rName, AmericanRestaurant restaurant) {
@@ -122,7 +124,7 @@ public class AmericanRestaurantCashierRole extends Role implements AmericanResta
 		checks = Collections.synchronizedList(new ArrayList<MyCheck>());
 		log = new EventLog();
 		setCashRegister(120);
-		//marketBills = Collections.synchronizedList(new ArrayList<MarketBill>());
+		marketBills = Collections.synchronizedList(new ArrayList<MarketBill>());
 	}
 
 	// MESSAGES
@@ -163,12 +165,12 @@ public class AmericanRestaurantCashierRole extends Role implements AmericanResta
 		stateChanged();
 	}
 
-//	public void msgPayMarketBill (Market m1, int bill) {
-//		//log.add(new LoggedEvent("Received PayMarketBill"));
-//		Do("Received bill of $" + bill + " from market.");
-//		marketBills.add(new MarketBill(m1,bill));
-//		stateChanged();
-//	}
+	public void msgPayMarketBill (Market m1, int bill) {
+		//log.add(new LoggedEvent("Received PayMarketBill"));
+		print("Received bill of $" + bill + " from market.");
+		marketBills.add(new MarketBill(m1,bill));
+		stateChanged();
+	}
 
 	//SCHEDULER
 
@@ -202,15 +204,15 @@ public class AmericanRestaurantCashierRole extends Role implements AmericanResta
 			}
 		}
 		
-//		synchronized (marketBills) {
-//			if (marketBills.size() > 0) {
-//				for (MarketBill mBill: marketBills) {
-//					if (mBill.state == marketBillState.pending || getCashRegister() >= mBill.getBill())
-//						PayMarketBill(mBill);
-//					return false;
-//				}
-//			}
-//		}
+		synchronized (marketBills) {
+			if (marketBills.size() > 0) {
+				for (MarketBill mBill: marketBills) {
+					if (mBill.state == marketBillState.pending || getCashRegister() >= mBill.getBill())
+						PayMarketBill(mBill);
+					return false;
+				}
+			}
+		}
 
 		return false;
 
@@ -258,24 +260,24 @@ public class AmericanRestaurantCashierRole extends Role implements AmericanResta
 		myHost.msgDebtPaid(check1.getCust1());
 	}
 
-//	private void PayMarketBill (MarketBill mBill) {
-//		if (getCashRegister() >= mBill.bill) {
-//			if (mBill.state == marketBillState.unpaid)
-//				print("Paying debt to market.");
-//			else
-//				print("Paid Market Bill");
-//			setCashRegister(getCashRegister() - mBill.bill);
-//			mBill.market1.msgHereIsPayment(mBill.bill);
-//			//marketBills.remove(mBill);
-//			
-//			return;
-//		}
-//		else if (getCashRegister() < mBill.bill) {
-//			print("Not enough money to pay market bill...must wait for customers to pay their bills and increase cash flow.");
-//			mBill.state = marketBillState.unpaid;
-//			return;
-//		}
-//	}
+	private void PayMarketBill (MarketBill mBill) {
+		if (getCashRegister() >= mBill.bill) {
+			if (mBill.state == marketBillState.unpaid)
+				print("Paying debt to market.");
+			else
+				print("Paid Market Bill");
+			setCashRegister(getCashRegister() - mBill.bill);
+			mBill.market1.salesPersonRole.msgPayment(myRestaurant, mBill.bill);
+			marketBills.remove(mBill);
+			
+			return;
+		}
+		else if (getCashRegister() < mBill.bill) {
+			print("Not enough money to pay market bill...must wait for customers to pay their bills and increase cash flow.");
+			mBill.state = marketBillState.unpaid;
+			return;
+		}
+	}
 
 	public List<MyCheck> getChecks() {
 		return checks;

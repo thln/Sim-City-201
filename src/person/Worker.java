@@ -124,6 +124,10 @@ public class Worker extends Person {
 			}
 		}
 
+		if (name == "Erin"){
+			prepareForWork();
+		}
+		
 		if (myJob.jobPlace == "East Bank"){
 			prepareForRestaurant();
 			return true;
@@ -224,6 +228,11 @@ public class Worker extends Person {
 		currentRoleName = myJob.title;
 		print("Preparing for work as " + myJob.title + " at " + myJob.jobPlace);
 		
+		if (myJob.jobPlace.equals("West Market")){
+			workerRole = Phonebook.getPhonebook().getWestMarket().arrivedAtWork(this, myJob.title);
+			workerRole.setRoleActive();
+			return;
+		}
 		if (myJob.jobPlace.equals("American Restaurant")){		
 			workerRole = Phonebook.getPhonebook().getAmericanRestaurant().arrivedAtWork(this, myJob.title);	
 			workerRole.setRoleActive();

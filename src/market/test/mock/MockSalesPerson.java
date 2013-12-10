@@ -38,11 +38,7 @@ public class MockSalesPerson extends Mock implements SalesPerson {
 		log.add(new LoggedEvent("Recieved msgPayment"));
 	}
 
-	public void msgPayment(ChineseRestaurant chineseRestaurant, double payment) {
-	}
-
-	public void msgPayment(SeafoodRestaurant seafoodRestaurant, double payment) {
-		
+	public void msgPayment(Restaurant restaurant, double payment) {
 	}
 	
 	//Actions

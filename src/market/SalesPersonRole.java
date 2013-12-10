@@ -110,28 +110,13 @@ public class SalesPersonRole extends Role implements SalesPerson {
 	}
 
 
-	public void msgPayment(ChineseRestaurant chineseRestaurant, double payment) {
+	public void msgPayment(Restaurant restaurant, double payment) {
 
 		print("Recieved payment of $" + payment + " from restaurant");
 
 		market.money += payment;
 		for (MarketOrder o : orders) {
-			if (o.restaurant.equals(chineseRestaurant)) {
-				orders.remove(o);
-				return;
-			}
-		}
-	}
-
-	public void msgPayment(SeafoodRestaurant seafoodRestaurant, double payment) 
-	{
-		print("Recieved payment of $" + payment + " from restaurant");
-
-		market.money += payment;
-		for (MarketOrder o : orders) 
-		{
-			if (o.restaurant.equals(seafoodRestaurant)) 
-			{
+			if (o.restaurant.equals(restaurant)) {
 				orders.remove(o);
 				return;
 			}
