@@ -262,8 +262,7 @@ public class Phonebook{
 	{
 		return italianRestaurant; //temporary stub. make more dynamic later
 	}
-	
-<<<<<<< HEAD
+
 	/*
 	public MexicanRestaurant getMexicanRestaurant() 
 	{
@@ -274,13 +273,11 @@ public class Phonebook{
 		return seafoodRestaurant;
 	}
 	*/
-=======
 	public AmericanRestaurant getAmericanRestaurant() 
 	{
 		return americanRestaurant; //temporary stub. make more dynamic later
 	}
->>>>>>> master
-
+	
 	public List<Housing> getAllHousing(boolean test)
 	{
 		if(test)
