@@ -168,15 +168,6 @@ public class Phonebook{
 	private Phonebook() {
 
 		//Set bus stops
-		busStops.add(new Point(127, 28));		//Top left bus stop = busStop(0)
-		busStops.add(new Point(420, 28));		//Top right bus stop = busStop(1)
-		busStops.add(new Point(420, 230));		//Bottom right bus stop = busStop(2)
-		busStops.add(new Point(127, 230));		//Bottom left bus stop = busStop(3)
-		
-
-		eastBank = new Bank("East Bank");
-		eastBank.setClosestStop(busStops.get(2));		//setting building's closest bus stop
-
 		busStopsList.add(new BusStop(0, 0, 0)); 			//empty busStop
 		busStopsList.add(new BusStop(1, 127, 28));			//Top left bus Stop
 		busStopsList.add(new BusStop(2, 420, 28));			// Top Right Bus Stop
@@ -184,22 +175,16 @@ public class Phonebook{
 		busStopsList.add(new BusStop(4, 127, 230));			// Bottom Left Bus Stop
 		
 		eastBank = new Bank("East Bank");
-		eastBank.setClosestStop(busStops.get(3)); 		//setting building's closest bus stop
 		eastBank.setClosestBusStopNumber(3);			//setting building's closest bus stop
 		
 		westBank = new Bank("West Bank");
-		westBank.setClosestStop(busStops.get(1));		//setting building's closest bus stop
 		westBank.setClosestBusStopNumber(1);			//setting building's closest bus stop
 		
 		eastMarket = new Market("East Market");
-		eastMarket.setClosestStop(busStops.get(2));		//setting building's closest bus stop
 		eastMarket.setClosestBusStopNumber(2);			//setting building's closest bus stop
 		
 		westMarket = new Market("West Market");
-		eastMarket.setClosestStop(busStops.get(3));		//setting building's closest bus stop
-
-		westMarket.setClosestStop(busStops.get(1));		//setting building's closest bus stop
-		westMarket.setClosestBusStopNumber(1);			//setting building's closest bus stop
+		westMarket.setClosestBusStopNumber(4);			//setting building's closest bus stop
 		
 
 		seafoodRestaurant = new SeafoodRestaurant("Seafood Restaurant");
