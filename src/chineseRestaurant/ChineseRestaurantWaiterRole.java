@@ -16,7 +16,7 @@ import application.Phonebook;
 import application.gui.animation.agentGui.RestaurantWaiterGui;
 
 /**
- * Restaurant Waiter Role
+ * Restaurant AmericanRestaurantWaiter Role
  */
 
 public class ChineseRestaurantWaiterRole extends Role implements ChineseRestaurantWaiter {
@@ -26,10 +26,13 @@ public class ChineseRestaurantWaiterRole extends Role implements ChineseRestaura
 	public List<ChineseRestaurantOrder> readyOrders = Collections.synchronizedList(new ArrayList<ChineseRestaurantOrder>());
 
 	protected String name;
-	protected String RoleName = "Waiter";
-	RestaurantWaiterGui waiterGui = (RestaurantWaiterGui) gui;
+	protected String RoleName = "AmericanRestaurantWaiter";
+	//RestaurantWaiterGui waiterGui = (RestaurantWaiterGui) gui;
+	RestaurantWaiterGui waiterGui;
 
 	public ChineseRestaurantMenu chineseRestaurantMenu = new ChineseRestaurantMenu();
+
+	public ChineseRestaurant chineseRestaurant;
 
 	Timer breakTimer = new Timer();
 
@@ -39,8 +42,9 @@ public class ChineseRestaurantWaiterRole extends Role implements ChineseRestaura
 
 	protected boolean PermissionToBreak = false;
 
-	public ChineseRestaurantWaiterRole(Person p1, String pName, String rName) {
+	public ChineseRestaurantWaiterRole(Person p1, String pName, String rName, ChineseRestaurant restaurant) {
 		super(p1, pName, rName);
+		chineseRestaurant = restaurant;
 	}
 
 	public String getMaitreDName() {
@@ -55,13 +59,13 @@ public class ChineseRestaurantWaiterRole extends Role implements ChineseRestaura
 		print(customer.getCustomerName() + " was added to myCustomers list");
 		stateChanged();
 	}
-	
+
 	public void msgPleaseSeatTestCustomer(ChineseRestaurantCustomer customerTest)
 	{
 		if(test)
 		{
 			ChineseRestaurantMyCustomers.add(new ChineseRestaurantMyCustomer(customerTest));
-			print("Test Customer was added.");
+			print("Test AmericanRestaurantCustomer was added.");
 			stateChanged();
 		}
 	}
@@ -88,19 +92,19 @@ public class ChineseRestaurantWaiterRole extends Role implements ChineseRestaura
 	}
 
 	public void msgHeresMyOrder(ChineseRestaurantCustomer customer, String choice) {
-//		if(test)
-//		{
-//			for (myCustomer myCust : myCustomers) 
-//			{
-//				if (myCust.customer == customer) 
-//				{
-//					myCust.setChoice(choice);
-//					myCust.setOrdered();
-//					stateChanged();
-//				}
-//			}
-//		}
-		
+		//		if(test)
+		//		{
+		//			for (myCustomer myCust : myCustomers) 
+		//			{
+		//				if (myCust.customer == customer) 
+		//				{
+		//					myCust.setChoice(choice);
+		//					myCust.setOrdered();
+		//					stateChanged();
+		//				}
+		//			}
+		//		}
+
 		for (ChineseRestaurantMyCustomer myCust : ChineseRestaurantMyCustomers) 
 		{
 			if (myCust.customer == customer || myCust.testCustomer == customer) 
@@ -216,6 +220,12 @@ public class ChineseRestaurantWaiterRole extends Role implements ChineseRestaura
 			return true;
 		}
 
+		if (leaveRole) {
+			chineseRestaurant.goingOffWork(person);
+			leaveRole = false;
+			return true;
+		}
+
 		synchronized(readyOrders) 
 		{
 			while (!readyOrders.isEmpty()) 
@@ -291,7 +301,6 @@ public class ChineseRestaurantWaiterRole extends Role implements ChineseRestaura
 	 * Actions
 	 */
 	protected void seatCustomer(ChineseRestaurantMyCustomer MC) {
-		RestaurantWaiterGui waiterGui = (RestaurantWaiterGui) gui;
 		waiterGui.DoPickUpCustomer(MC.xHome, MC.yHome);
 		try {
 			atDestination.acquire();
@@ -318,14 +327,12 @@ public class ChineseRestaurantWaiterRole extends Role implements ChineseRestaura
 
 	// The animation DoXYZ() routines
 	protected void DoSeatCustomer(ChineseRestaurantCustomerRole customer, int table) {
-		RestaurantWaiterGui waiterGui = (RestaurantWaiterGui) gui;
 		isInLobby = false;
 		print("Seating " + customer + " at " + table);
 		waiterGui.DoBringToTable(customer, table);
 	}
 
 	protected void takeOrder(ChineseRestaurantMyCustomer MC) {
-		RestaurantWaiterGui waiterGui = (RestaurantWaiterGui) gui;
 		isInLobby = false;
 		print(MC.customer.getCustomerName() + " wants to order");
 
@@ -350,7 +357,6 @@ public class ChineseRestaurantWaiterRole extends Role implements ChineseRestaura
 	}
 
 	protected void placeOrder(ChineseRestaurantMyCustomer MC) {
-		RestaurantWaiterGui waiterGui = (RestaurantWaiterGui) gui;
 		isInLobby = false;
 		print("Placing " + MC.customer.getCustomerName() + "'s order");
 
@@ -369,12 +375,11 @@ public class ChineseRestaurantWaiterRole extends Role implements ChineseRestaura
 		}
 		waiterGui.DoLeaveCustomer();
 
-		Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantCookRole.msgHeresAnOrder(MC.tableNumber, MC.choice, this);
+		chineseRestaurant.chineseRestaurantCookRole.msgHeresAnOrder(MC.tableNumber, MC.choice, this);
 
 	}
 
 	protected void retakeOrder(ChineseRestaurantMyCustomer MC) {
-		RestaurantWaiterGui waiterGui = (RestaurantWaiterGui) gui;
 		isInLobby = false;
 
 		waiterGui.DoTakeOrder(MC.tableNumber);
@@ -393,7 +398,6 @@ public class ChineseRestaurantWaiterRole extends Role implements ChineseRestaura
 	}
 
 	protected void deliverOrder() {
-		RestaurantWaiterGui waiterGui = (RestaurantWaiterGui) gui;
 		isInLobby = false;
 		waiterGui.DoGoToPlatingArea();
 
@@ -405,7 +409,7 @@ public class ChineseRestaurantWaiterRole extends Role implements ChineseRestaura
 		}
 		waiterGui.DoDeliverOrder(readyOrders.get(0).tableNumber, readyOrders.get(0).choice);
 		print("waiter called msgGotOrder");
-		Phonebook.getPhonebook().getChineseRestaurant().cookGui.msgGotOrder(readyOrders.get(0).choice);
+		chineseRestaurant.cookGui.msgGotOrder(readyOrders.get(0).choice);
 		try {
 			atDestination.acquire();
 			atDestination.acquire();
@@ -415,7 +419,7 @@ public class ChineseRestaurantWaiterRole extends Role implements ChineseRestaura
 		}
 		waiterGui.DoLeaveCustomer();
 		readyOrders.get(0).customer.msgHeresYourOrder(readyOrders.get(0).choice);
-		Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantCashierRole.msgComputeBill(readyOrders.get(0).choice, readyOrders.get(0).tableNumber, this);
+		chineseRestaurant.chineseRestaurantCashierRole.msgComputeBill(readyOrders.get(0).choice, readyOrders.get(0).tableNumber, this);
 
 		//Changing customer state to "Got Food"
 		for (ChineseRestaurantMyCustomer MC : ChineseRestaurantMyCustomers) {
@@ -427,7 +431,6 @@ public class ChineseRestaurantWaiterRole extends Role implements ChineseRestaura
 	}
 
 	protected void giveCheck(ChineseRestaurantMyCustomer MC) {
-		RestaurantWaiterGui waiterGui = (RestaurantWaiterGui) gui;
 		isInLobby = false;
 
 		waiterGui.DoTakeOrder(MC.tableNumber); //Is going to table
@@ -445,8 +448,8 @@ public class ChineseRestaurantWaiterRole extends Role implements ChineseRestaura
 
 	protected void clearTable(ChineseRestaurantMyCustomer MC) {
 		print(MC.customer.getCustomerName() + " is leaving " + MC.tableNumber);
-		Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantHostRole.msgLeavingTable(MC.customer, this);
-		Phonebook.getPhonebook().getChineseRestaurant().removeCustomer(MC.customer);
+		chineseRestaurant.chineseRestaurantHostRole.msgLeavingTable(MC.customer, this);
+		chineseRestaurant.removeCustomer(MC.customer);
 
 		ChineseRestaurantMyCustomers.remove(MC);
 	}
@@ -454,7 +457,7 @@ public class ChineseRestaurantWaiterRole extends Role implements ChineseRestaura
 	protected void askToGoOnBreak() 
 	{
 		print("Asking host for break");
-		Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantHostRole.msgMayIGoOnBreak(this);
+		chineseRestaurant.chineseRestaurantHostRole.msgMayIGoOnBreak(this);
 		state = breakStatus.waitingForReply;
 	}
 
@@ -470,7 +473,7 @@ public class ChineseRestaurantWaiterRole extends Role implements ChineseRestaura
 	protected void goOffBreak() {
 		isInLobby = false;
 		//		waiterGui.DoLeaveCustomer();
-		Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantHostRole.msgOffBreak(this);
+		chineseRestaurant.chineseRestaurantHostRole.msgOffBreak(this);
 		state = breakStatus.working;
 		//		waiterGui.denyBreak();
 		stateChanged();
@@ -483,10 +486,12 @@ public class ChineseRestaurantWaiterRole extends Role implements ChineseRestaura
 	}
 
 	protected void AskHostToLeave()	{
-		Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantHostRole.msgIAmLeavingSoon(this);
+		if(Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantHostRole != null)
+			Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantHostRole.msgIAmLeavingSoon(this);
+
 		if(ChineseRestaurantMyCustomers.isEmpty())
 		{
-			Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantHostRole.msgIAmLeavingWork(this);
+			chineseRestaurant.chineseRestaurantHostRole.msgIAmLeavingWork(this);
 			((Worker) person).roleFinishedWork();
 			leaveRole = false;
 		}
@@ -500,6 +505,14 @@ public class ChineseRestaurantWaiterRole extends Role implements ChineseRestaura
 		if (state == breakStatus.onBreak)
 			return true;
 		return false;
+	}
+
+	public void setGui(RestaurantWaiterGui waiter) {
+		waiterGui = waiter;
+	}
+
+	public RestaurantWaiterGui getGui() {
+		return waiterGui;
 	}
 }
 

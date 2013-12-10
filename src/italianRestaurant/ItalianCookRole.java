@@ -6,6 +6,7 @@ import application.gui.animation.agentGui.*;
 import italianRestaurant.interfaces.*;
 import italianRestaurant.ItalianRestaurantOrder.OrderState;
 import italianRestaurant.ItalianFood.FoodState;
+import market.*;
 import java.util.*;
 import java.util.concurrent.Semaphore;
 
@@ -14,10 +15,10 @@ import java.util.concurrent.Semaphore;
  */
 //We only have 2 types of agents in this prototype. A customer and an agent that
 //does all the rest. Rather than calling the other agent a waiter, we called him
-//the CookAgent. A Cook is the manager of a restaurant who sees that all
+//the AmericanRestaurantCookRole. A Cook is the manager of a restaurant who sees that all
 //is proceeded as he wishes.
 public class ItalianCookRole extends Role implements ItalianCook{
-	static final int NTABLES = 5;//a global for the number of tables.
+	static final int NTABLES = 5;//a global for the number of americanRestaurantTables.
 	//Notice that we implement waitingCustomers using ArrayList, but type it
 	//with List semantics.
 	Random rn = new Random();
@@ -28,16 +29,19 @@ public class ItalianCookRole extends Role implements ItalianCook{
 	private Semaphore atMarket = new Semaphore(0, true);
 	private Semaphore atFridge = new Semaphore(0, true);
 	private List<ItalianRestaurantOrder> Orders = Collections.synchronizedList(new ArrayList<ItalianRestaurantOrder>());
-	public List<ItalianMarket> Markets = Collections.synchronizedList(new ArrayList<ItalianMarket>());
-	public List<ItalianMarket> visitedMarkets = Collections.synchronizedList(new ArrayList<ItalianMarket>());
+	//public List<ItalianMarket> Markets = Collections.synchronizedList(new ArrayList<ItalianMarket>());
+	//public List<ItalianMarket> visitedMarkets = Collections.synchronizedList(new ArrayList<ItalianMarket>());
+	public List<Market> Markets = Collections.synchronizedList(new ArrayList<Market>());
+	public List<Market> visitedMarkets = Collections.synchronizedList(new ArrayList<Market>()); 
+	
 	private List<ItalianFood> Foods = Collections.synchronizedList(new ArrayList<ItalianFood>());
 	
 	private ItalianRestaurant restaurant = null;
-	//note that tables is typed with Collection semantics.
+	//note that americanRestaurantTables is typed with Collection semantics.
 	//Later we will see how it is implemented
 	 
 	//private Semaphore atTable = new Semaphore(0,true);
-	
+	protected String RoleName = "Cook";
 	public ItalianCookGui cookGui = null;
 
 	public ItalianCookRole(String name, ItalianRestaurant restaurant) {
@@ -172,7 +176,7 @@ public class ItalianCookRole extends Role implements ItalianCook{
 			}
 		}
 		
-		//checks whether cook is allowed to order (determined by cashier)
+		//checks whether cook is allowed to order (determined by americanRestaurantCashier)
 		if(AllowedtoOrder == true) {
 			
 			//goes to market to restock as soon as inventory levels have hit a low level
@@ -187,6 +191,13 @@ public class ItalianCookRole extends Role implements ItalianCook{
 		}
 		
 		startRevolvingStandTimer();
+		
+		if (leaveRole)
+		{
+			((Worker) person).roleFinishedWork();
+			leaveRole = false;
+			return true;
+		}
 
 		return false;
 		//we have tried all our rules and found
@@ -257,8 +268,9 @@ public class ItalianCookRole extends Role implements ItalianCook{
 	
 	private void OrderFoodThatLow(ItalianFood f){
 		if(Markets.size()>0) {
-			if(f.fs == FoodState.inStock)
-				print("Ordering " + f + " that is low");
+			if(f.fs == FoodState.inStock) {
+				//print("Ordering " + f + " that is low");
+			}
 			else if(f.fs == FoodState.isLow) {
 				//print("Ordering " + f + " that is low");
 			}
@@ -270,8 +282,12 @@ public class ItalianCookRole extends Role implements ItalianCook{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		int orderAmount = f.capacity-f.inventory;
+		String choice = f.type;
+		print("Requesting " + Markets.get(0).getName() + " for " + orderAmount + " " + choice + "(s)");
+		Markets.get(0).salesPersonRole.msgIWantProducts(Phonebook.getPhonebook().getItalianRestaurant(), choice, orderAmount);
 		
-		Markets.get(0).msgOrderforMarket(this, f.type, f.capacity-f.inventory);
+		//Markets.get(0).msgOrderforMarket(this, f.type, f.capacity-f.inventory);
 		visitedMarkets.add(Markets.get(0));
 		f.fs = FoodState.ordered;
 		}
@@ -296,13 +312,18 @@ public class ItalianCookRole extends Role implements ItalianCook{
 	}
 	
 	public void addMarket(ItalianCashier cashier) {
+		/*
 		int i = rn.nextInt(100);
 		String randName = Integer.toString(i);
 		ItalianMarketRole market = new ItalianMarketRole(randName);
-		market.setCashier(cashier);
+		*/
+		Market market = Phonebook.getPhonebook().getEastMarket();
+		if(visitedMarkets.get(0).equals(Phonebook.getPhonebook().getEastMarket()))
+			market = Phonebook.getPhonebook().getWestMarket();
+		//market.setCashier(cashier);
 		Markets.add(market);
 		//market.startThread();
-		print("added ItalianMarket \"" + randName + "\"");
+		print("added " + market.getName() + "to list of Markets to request from");
 	}
 
 }

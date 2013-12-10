@@ -46,7 +46,7 @@ public class TellerTest extends TestCase
 		assertEquals("Account hash key should be at base number 3000. It isn't.", 
 				Phonebook.getPhonebook().getEastBank().accountNumKeyList, 1000);
 
-		//Step 1: Customer arrives and wants to open new account
+		//Step 1: AmericanRestaurantCustomer arrives and wants to open new account
 		teller.msgWantNewAccount(customer);
 
 		//Step 1 post-conditions
@@ -67,13 +67,13 @@ public class TellerTest extends TestCase
 		assertEquals("New Account's 'accountNum' should be set to this new hashKey",
 				teller.getAccounts().get(0).getAccountNum(), Phonebook.getPhonebook().getEastBank().accountNumKeyList);	
 
-		assertTrue("MockCustomer should have logged an event for new account, but his last event logged reads instead: " 
+		assertTrue("AmericanRestaurantMockCustomer should have logged an event for new account, but his last event logged reads instead: " 
 				+ customer.log.getLastLoggedEvent().toString(), customer.log.containsString("New Account created"));
 
 		assertTrue("New account should have the state 'neutral' ", 
 				teller.getAccounts().get(0).getState() == AccountState.neutral);
 
-		//Step 3: Customer wants to deposit money into new account
+		//Step 3: AmericanRestaurantCustomer wants to deposit money into new account
 		teller.msgHereIsMyDeposit(depositAmt, teller.getAccounts().get(0).accountNum);
 
 		//Step 3 post-conditions
@@ -99,7 +99,7 @@ public class TellerTest extends TestCase
 		assertEquals("Account credit score should have increased by 1/10 of the deposit amount",
 				teller.getAccounts().get(0).creditScore, credit + (depositAmt/10));
 
-		assertTrue("MockCustomer should have logged an event for deposit received, but his last event logged reads instead: " 
+		assertTrue("AmericanRestaurantMockCustomer should have logged an event for deposit received, but his last event logged reads instead: " 
 				+ customer.log.getLastLoggedEvent().toString(), 
 				customer.log.containsString("Your deposit of $" + depositAmt + " was received."));
 
@@ -137,7 +137,7 @@ public class TellerTest extends TestCase
 		//Preconditions
 		assertEquals("Teller should have 0 accounts in list. It doesn't.", teller.getAccounts().size(), 0);
 
-		//Step 1: Customer arrives and wants to withdraw
+		//Step 1: AmericanRestaurantCustomer arrives and wants to withdraw
 		teller.msgINeedMoney(withdrawAmt, a.accountNum);
 
 		//Step 1 post-conditions
@@ -158,7 +158,7 @@ public class TellerTest extends TestCase
 		assertTrue("Account should have the state 'neutral' ", 
 				teller.getAccounts().get(0).getState() == AccountState.neutral);
 
-		assertTrue("MockCustomer should have logged an event for withdrawal success, but his last event logged reads instead: " 
+		assertTrue("AmericanRestaurantMockCustomer should have logged an event for withdrawal success, but his last event logged reads instead: " 
 				+ customer.log.getLastLoggedEvent().toString(), customer.log.containsString("Withdrawal succeeded"));
 
 
@@ -194,7 +194,7 @@ public class TellerTest extends TestCase
 		//check preconditions in teller's personal list of accounts
 		assertEquals("Teller should have 0 accounts in list. It doesn't.", teller.getAccounts().size(), 0);
 
-		//Step 1: Customer arrives and wants to withdraw
+		//Step 1: AmericanRestaurantCustomer arrives and wants to withdraw
 		teller.msgINeedMoney(withdrawAmt, a.accountNum);
 
 		//Step 1 post-conditions
@@ -209,7 +209,7 @@ public class TellerTest extends TestCase
 				teller.pickAndExecuteAnAction());
 
 		//Step 2 post-conditions	
-		assertTrue("MockCustomer should have logged an event for lack of account funds, but his last event logged reads instead: " 
+		assertTrue("AmericanRestaurantMockCustomer should have logged an event for lack of account funds, but his last event logged reads instead: " 
 				+ customer.log.getLastLoggedEvent().toString(),
 				customer.log.containsString("Account balance is too low for a withdrawal. Must open loan."));
 
@@ -254,11 +254,11 @@ public class TellerTest extends TestCase
 		assertEquals("Account's balance should have increased by desired loan amount",
 				teller.getAccounts().get(0).balance, balance+desiredLoan);	
 
-		assertTrue("MockCustomer should have logged an event for lack of account funds, but his last event logged reads instead: " 
+		assertTrue("AmericanRestaurantMockCustomer should have logged an event for lack of account funds, but his last event logged reads instead: " 
 				+ customer.log.getLastLoggedEvent().toString(),
 				customer.log.containsString("Loan approved. Try withdrawal again."));
 
-		//Step 7: Customer tries to withdraw again
+		//Step 7: AmericanRestaurantCustomer tries to withdraw again
 
 		teller.msgINeedMoney(withdrawAmt, a.accountNum);
 
@@ -280,7 +280,7 @@ public class TellerTest extends TestCase
 		assertTrue("New account should have the state 'neutral' ", 
 				teller.getAccounts().get(0).getState() == AccountState.neutral);
 
-		assertTrue("MockCustomer should have logged an event for withdrawal success, but his last event logged reads instead: " 
+		assertTrue("AmericanRestaurantMockCustomer should have logged an event for withdrawal success, but his last event logged reads instead: " 
 				+ customer.log.getLastLoggedEvent().toString(), customer.log.containsString("Withdrawal succeeded"));
 
 		//Step 9: customer leaves bank
@@ -315,7 +315,7 @@ public class TellerTest extends TestCase
 		//check preconditions in teller's personal list of accounts
 		assertEquals("Teller should have 0 accounts in list. It doesn't.", teller.getAccounts().size(), 0);
 
-		//Step 1: Customer arrives and wants to withdraw
+		//Step 1: AmericanRestaurantCustomer arrives and wants to withdraw
 		teller.msgINeedMoney(withdrawAmt, a.accountNum);
 
 		//Step 1 post-conditions
@@ -330,7 +330,7 @@ public class TellerTest extends TestCase
 				teller.pickAndExecuteAnAction());
 
 		//Step 2 post-conditions	
-		assertTrue("MockCustomer should have logged an event for lack of account funds, but his last event logged reads instead: " 
+		assertTrue("AmericanRestaurantMockCustomer should have logged an event for lack of account funds, but his last event logged reads instead: " 
 				+ customer.log.getLastLoggedEvent().toString(),
 				customer.log.containsString("Account balance is too low for a withdrawal. Must open loan."));
 
@@ -372,7 +372,7 @@ public class TellerTest extends TestCase
 		assertTrue("New account should have the state 'neutral' ", 
 				teller.getAccounts().get(0).getState() == AccountState.neutral);
 
-		assertTrue("MockCustomer should have logged an event for poor credit score, but his last event logged reads instead: " 
+		assertTrue("AmericanRestaurantMockCustomer should have logged an event for poor credit score, but his last event logged reads instead: " 
 				+ customer.log.getLastLoggedEvent().toString(),
 				customer.log.containsString("Your credit score is too low for the requested loan."));
 
@@ -409,7 +409,7 @@ public class TellerTest extends TestCase
 		//check preconditions in teller's personal list of accounts
 		assertEquals("Teller should have 0 accounts in list. It doesn't.", teller.getAccounts().size(), 0);
 
-		//Step 1: Customer arrives and wants to pay off loan
+		//Step 1: AmericanRestaurantCustomer arrives and wants to pay off loan
 		teller.msgPayingOffLoan(a.loan, a.accountNum);
 
 
@@ -432,7 +432,7 @@ public class TellerTest extends TestCase
 		assertTrue("New account should have the state 'neutral' ", 
 				teller.getAccounts().get(0).getState() == AccountState.neutral);
 
-		assertTrue("MockCustomer should have logged an event for lack of account funds, but his last event logged reads instead: " 
+		assertTrue("AmericanRestaurantMockCustomer should have logged an event for lack of account funds, but his last event logged reads instead: " 
 				+ customer.log.getLastLoggedEvent().toString(),
 				customer.log.containsString("Loan payed for and closed"));
 

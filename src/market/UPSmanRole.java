@@ -3,6 +3,7 @@ package market;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.Semaphore;
 
 import chineseRestaurant.ChineseRestaurant;
 import market.interfaces.UPSman;
@@ -11,12 +12,15 @@ import person.Role;
 import person.Worker;
 import testing.EventLog;
 import testing.LoggedEvent;
+import application.gui.animation.agentGui.*;
 
 public class UPSmanRole extends Role implements UPSman {
 
 	//Data
 	public List<MarketOrder> orders = Collections.synchronizedList(new ArrayList<MarketOrder>());
+	private Semaphore atDestination = new Semaphore(0, true);
 	Market market;
+	private MarketUPSmanGui UPSmanGui;
 
 	public EventLog log = new EventLog();
 	
@@ -35,7 +39,12 @@ public class UPSmanRole extends Role implements UPSman {
 		print("Recieved an order to deliver");
 		log.add(new LoggedEvent("Recieved msgDeliverOrder"));
 		orders.add(o);
+		if (person != null)
 		stateChanged();
+	}
+	
+	public void msgAtDestination() {
+		atDestination.release();
 	}
 
 	//Scheduler
@@ -47,8 +56,8 @@ public class UPSmanRole extends Role implements UPSman {
 			}
 		}
 		
-		if (leaveRole){
-			((Worker) person).roleFinishedWork();
+		if (leaveRole && orders.isEmpty()) {
+			market.goingOffWork(person);
 			leaveRole = false;
 			return true;
 		}
@@ -58,10 +67,43 @@ public class UPSmanRole extends Role implements UPSman {
 
 	//Actions
 	public void deliverOrder(MarketOrder o) {
-		print("Delivered order ot restaurant");
-		((ChineseRestaurant) o.restaurant).getCook(test).msgOrderFulfillment(o.item, o.itemAmountFulfilled, o.itemAmountOrdered);
-		market.getSalesPerson(test).msgOrderDelivered(o);
-		orders.remove(o);
-	}
 
+		print("Delivered an order to a restaurant");
+		if (o.chineseRestaurant != null) {
+			o.chineseRestaurant.getCook(test).msgOrderFulfillment(o.item, o.itemAmountFulfilled, o.itemAmountOrdered);
+			market.getSalesPerson(test).msgOrderDelivered(o);
+			orders.remove(o);
+			return;
+		}
+		
+		if (o.seafoodRestaurant != null) {
+			//Must send then order back
+			market.getSalesPerson(test).msgOrderDelivered(o);
+			orders.remove(o);
+			return;
+		}
+
+		if (o.italianRestaurant != null) {
+			//Must sent the order back
+			market.getSalesPerson(test).msgOrderDelivered(o);
+			orders.remove(o);
+			return;
+		}
+		
+		if (o.americanRestaurant != null) {
+			o.americanRestaurant.americanCook.msgHereIsYourOrder(o.item);
+			market.getSalesPerson(test).msgOrderDelivered(o);
+			orders.remove(o);
+			return;
+		}
+		return;
+	}
+	
+	public void setGui(MarketUPSmanGui gui) {
+		UPSmanGui = gui;
+	}
+	
+	public MarketUPSmanGui getGui() {
+		return UPSmanGui;
+	}
 }

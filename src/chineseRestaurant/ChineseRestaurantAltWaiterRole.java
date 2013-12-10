@@ -6,17 +6,17 @@ import person.Person;
 
 public class ChineseRestaurantAltWaiterRole extends ChineseRestaurantWaiterRole implements ChineseRestaurantWaiter {
 	//private RevolvingStand theRevolvingStand;
-	protected String RoleName = "Alternative Waiter";
+	protected String RoleName = "Alternative AmericanRestaurantWaiter";
 
-	public ChineseRestaurantAltWaiterRole(Person p1, String pName, String rName) {
-		super(p1, pName, rName);
+	public ChineseRestaurantAltWaiterRole(Person p1, String pName, String rName, ChineseRestaurant restaurant) {
+		super(p1, pName, rName, restaurant);
 	}
 
 	protected void placeOrder(ChineseRestaurantMyCustomer MC) {
 		isInLobby = false;
 		if(test)
 		{
-			print("Test Customer");
+			print("Test AmericanRestaurantCustomer");
 		}
 		else
 		{
@@ -44,7 +44,7 @@ public class ChineseRestaurantAltWaiterRole extends ChineseRestaurantWaiterRole 
 
 		//cook.msgHeresAnOrder(MC.tableNumber, MC.choice, this);
 		print("Placing order on Revolving Stand.");
-		Phonebook.getPhonebook().getChineseRestaurant().getRevolvingStand().newOrder(new ChineseRestaurantOrder(MC.tableNumber, MC.choice, this));
+		chineseRestaurant.getRevolvingStand().newOrder(new ChineseRestaurantOrder(MC.tableNumber, MC.choice, this));
 	}
 
 }

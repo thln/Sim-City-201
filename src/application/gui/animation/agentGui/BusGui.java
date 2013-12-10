@@ -6,9 +6,11 @@ import java.awt.*;
 
 import javax.swing.JLabel;
 
+import application.Phonebook;
+
 public class BusGui extends CityGui{
 
-	private Bus agent = null;
+	private BusAgent agent = null;
 	private boolean isPresent = true;
 
 	//RestaurantGui gui;
@@ -26,7 +28,7 @@ public class BusGui extends CityGui{
 	
 	public BusGui(){
 	}
-	public BusGui(Bus b/*, RestaurantGui gui*/){ //HostAgent m) {
+	public BusGui(BusAgent b/*, RestaurantGui gui*/){ //AmericanRestaurantHostRole m) {
 		agent = b;
 		//this.gui = gui;
 	}
@@ -70,7 +72,6 @@ public class BusGui extends CityGui{
 
 	public void draw(Graphics2D g) {
 		g.setColor(Color.YELLOW);
-		//g.fillOval(xPos, yPos, currWidth, currHeight); //for rounding corners, fancy animation later?
 		g.fillOval(xPos, yPos, 20, 20); //keeping it uniform for now
 	}
 

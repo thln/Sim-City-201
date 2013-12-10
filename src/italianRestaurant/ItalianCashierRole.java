@@ -7,7 +7,7 @@ import italianRestaurant.interfaces.*;
 import java.util.*;
 import java.lang.*;
 import java.util.concurrent.Semaphore;
-
+import market.interfaces.*;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
@@ -16,10 +16,10 @@ import javax.swing.JLabel;
  */
 //We only have 2 types of agents in this prototype. A customer and an agent that
 //does all the rest. Rather than calling the other agent a waiter, we called him
-//the CashierAgent. A Cashier is the manager of a restaurant who sees that all
+//the AmericanRestaurantCashierRole. A AmericanRestaurantCashier is the manager of a restaurant who sees that all
 //is proceeded as he wishes.
 public class ItalianCashierRole extends Role implements ItalianCashier{
-	static final int NTABLES = 5;//a global for the number of tables.
+	static final int NTABLES = 5;//a global for the number of americanRestaurantTables.
 	//Notice that we implement waitingCustomers using ArrayList, but type it
 	//with List semantics.
 	private Timer exchangetimer = new Timer();
@@ -27,7 +27,7 @@ public class ItalianCashierRole extends Role implements ItalianCashier{
 	public List<Bill> BillOrders = Collections.synchronizedList(new ArrayList<Bill>());
 	public List<Bill> BillFoods = Collections.synchronizedList(new ArrayList<Bill>());
 	private List<Food> Foods = Collections.synchronizedList(new ArrayList<Food>());
-	//note that tables is typed with Collection semantics.
+	//note that americanRestaurantTables is typed with Collection semantics.
 	//Later we will see how it is implemented
 	private ItalianCook cook;
 	private ItalianRestaurant restaurant = null;
@@ -38,6 +38,7 @@ public class ItalianCashierRole extends Role implements ItalianCashier{
 	//private Semaphore atTable = new Semaphore(0,true);
 	
 	public ItalianCashierGui cashierGui = null;
+	protected String RoleName = "Cashier";
 
 	public ItalianCashierRole(String name, ItalianRestaurant restaurant) {
 		super(name);
@@ -78,10 +79,16 @@ public class ItalianCashierRole extends Role implements ItalianCashier{
 		}
 	}
 	
-	//message from ItalianMarket to cashier to give payment for bill for restocking
+	//message from ItalianMarket to americanRestaurantCashier to give payment for bill for restocking
 	public void msgRestockingBill(ItalianMarket market, String foodname, Double billtotal) {
 		print("Received bill of " + billtotal + " from " + market + " for " + foodname);
 		BillFoods.add(new Bill(market, billtotal));
+		stateChanged();
+	}
+	
+	public void msgPleasePayForItems(String foodname, String orderAmt, Double billtotal, SalesPerson sp) {
+		print("Received bill of " + billtotal + " from " + sp.toString() + " for " + foodname);
+		BillFoods.add(new Bill(sp, billtotal, foodname, orderAmt));
 		stateChanged();
 	}
 	
@@ -129,30 +136,37 @@ public class ItalianCashierRole extends Role implements ItalianCashier{
 		
 		if(BillOrders != null) {
 			synchronized(BillOrders){
-			for(int i=0; i<BillOrders.size();i++){
-				if(BillOrders.get(i).s == BillState.done) {
-					ChecktoWaiter(BillOrders.get(i));
-					return true;
+				for(int i=0; i<BillOrders.size();i++){
+					if(BillOrders.get(i).s == BillState.done) {
+						ChecktoWaiter(BillOrders.get(i));
+						return true;
+					}
+					else if(BillOrders.get(i).s == BillState.pending) {
+						Compute(BillOrders.get(i));
+						return true;				
+					}
+					else if(BillOrders.get(i).s == BillState.paying) {
+						MoneyExchange(BillOrders.get(i));
+					}
 				}
-				else if(BillOrders.get(i).s == BillState.pending) {
-					Compute(BillOrders.get(i));
-					return true;				
-				}
-				else if(BillOrders.get(i).s == BillState.paying) {
-					MoneyExchange(BillOrders.get(i));
-				}
-			}
 			}
 		}
 		
 		if(BillFoods != null) {
 			synchronized(BillFoods){
-			for(int i=0; i<BillFoods.size();i++){
-				if(BillFoods.get(i).s == BillState.pending) {
-					PayBill(BillFoods.get(i));
+				for(int i=0; i<BillFoods.size();i++){
+					if(BillFoods.get(i).s == BillState.pending) {
+						PayBill(BillFoods.get(i));
+					}
 				}
 			}
-			}
+		}
+		
+		if (leaveRole)
+		{
+			((Worker) person).roleFinishedWork();
+			leaveRole = false;
+			return true;
 		}
 
 		return false;
@@ -205,7 +219,7 @@ public class ItalianCashierRole extends Role implements ItalianCashier{
 	
 	private void PayBill(final Bill o) {
 		
-		/*if cashier does NOT have enough money in the cash register, 
+		/*if americanRestaurantCashier does NOT have enough money in the cash register, 
 		 * it will tell the Cook to stop restocking food until it 
 		 * gets enough money from customers to pay the bill
 		 */
@@ -233,7 +247,7 @@ public class ItalianCashierRole extends Role implements ItalianCashier{
 
 	//utilities
 	public String toString() {
-		return "Cashier " + getName();
+		return "AmericanRestaurantCashier " + getName();
 	}
 	
 	public void setGui(ItalianCashierGui gui) {
@@ -249,13 +263,14 @@ public class ItalianCashierRole extends Role implements ItalianCashier{
 	}
 	
 	/*Order class stores the different customer orders
-	 * the waiter gives to the cashier, and its state
-	 * of cashiering on the cashier's "grill".
+	 * the waiter gives to the americanRestaurantCashier, and its state
+	 * of cashiering on the americanRestaurantCashier's "grill".
 	 */
 	
 	public enum BillState {pending, computed, done, paying, finished};
 	
 	public class Bill {
+		public SalesPerson salesPerson;
 		public ItalianMarket m;
 		public ItalianWaiter w;
 		public ItalianCustomer c;
@@ -272,6 +287,12 @@ public class ItalianCashierRole extends Role implements ItalianCashier{
 		
 		Bill(ItalianMarket market, Double bill) {
 			m = market;
+			total = bill;
+			s = BillState.pending;
+		}
+		
+		Bill(SalesPerson sp, Double bill, String foodname, String orderAmt) {
+			this.salesPerson = sp;
 			total = bill;
 			s = BillState.pending;
 		}

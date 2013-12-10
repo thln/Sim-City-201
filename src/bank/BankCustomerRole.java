@@ -7,6 +7,7 @@ import bank.interfaces.BankTeller;
 import application.Phonebook;
 import application.gui.animation.agentGui.BankCustomerGui;
 import application.gui.animation.agentGui.RestaurantCustomerGui;
+import person.Crook;
 import person.Person;
 import person.Role;
 import person.Worker;
@@ -17,22 +18,21 @@ public class BankCustomerRole extends Role implements BankCustomer{
 
 	public enum BankCustomerDesire {none, withdraw, deposit, wantLoan, closeLoan, openAccount, closeAccount, robBank, leaveBank}
 	public enum CustomerState {atBank, none, waiting, ready};
-	
+
 	public BankTeller myTeller;
 	//private BankCustomerGui custGui = (BankCustomerGui) gui;
 	private BankCustomerGui custGui = null;
 	public double desiredLoanAmount;
 	public BankCustomerDesire desire;
 	public CustomerState state;
-	protected String RoleName = "Bank Customer";
+	protected String RoleName = "Bank AmericanRestaurantCustomer";
 	private int waitPlace;
-	private Semaphore atDestination = new Semaphore(0, true);
-	
+	public Semaphore atDestination = new Semaphore(0, true);
+
 	public BankCustomerRole (Person p1, String pName, String rName) {
 		super(p1, pName, rName);
 		desire = BankCustomerDesire.openAccount;
 		state = CustomerState.atBank;
-		gui = new BankCustomerGui(this);
 	}
 
 	//Messages
@@ -113,15 +113,23 @@ public class BankCustomerRole extends Role implements BankCustomer{
 	}	
 
 	public void msgCaughtYou() {
+		print("I've been caught! I'll be back...");
 		state = CustomerState.ready;
+		desire = BankCustomerDesire.leaveBank;
+		stateChanged();
 	}
 
-	public void msgGotAway() {
+	public void msgGotAway(double spoils) {
+		person.money += spoils;
+		print("I got away! The spoils are all mine!");
 		state = CustomerState.ready;
+		desire = BankCustomerDesire.leaveBank;
+		stateChanged();
 	}
-	
+
 	public void msgAtDestination() {
-		this.atDestination.release();
+	//	print("stopped with destination (x,y) = " + gui.getXPos() + ", " + gui.getYPos());
+		atDestination.release();
 	}
 
 	//Scheduler
@@ -193,7 +201,7 @@ public class BankCustomerRole extends Role implements BankCustomer{
 		Phonebook.getPhonebook().getEastBank().getBankGuard(test).msgArrivedAtBank(this);
 		state = CustomerState.waiting;
 	}
-	
+
 	void waitInLine() {
 		custGui.WaitTellerLine(waitPlace); //positions to be changed later by guard
 		try {
@@ -236,7 +244,6 @@ public class BankCustomerRole extends Role implements BankCustomer{
 	}
 
 	void openAccount () {
-		print("Want to open account");
 		//GUI operation
 		DoGoToTeller();
 		myTeller.msgWantNewAccount(this);
@@ -244,32 +251,43 @@ public class BankCustomerRole extends Role implements BankCustomer{
 	}
 
 	void leaveBank () {	
-		print("Leaving bank");
-		//GUI operation
-		custGui.DoExit();
-		desire = BankCustomerDesire.none;
-		state = CustomerState.waiting;	
-		myTeller.msgLeavingBank(person.accountNum);
-		Phonebook.getPhonebook().getEastBank().getBankGuard(test).msgCustomerLeavingBank(myTeller);
-		myTeller = null;
-		this.setRoleInactive();
-		stateChanged();
+	
+		if (!(this.person instanceof Crook)){
+			print("Leaving bank");
+			myTeller.msgLeavingBank(person.accountNum);
+			desire = BankCustomerDesire.none;
+			state = CustomerState.waiting;				
+			myTeller = null;
+		}
+			//GUI operation
+			custGui.DoExit();
+			try {
+				this.atDestination.acquire();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			this.setRoleInactive();
+			stateChanged();
 	}
 
 	void robBank() {
 		//GUI operation
+		print("Catch me if you can!");
 		custGui.DoRobBank();
+		Phonebook.getPhonebook().getEastBank().getBankGuard(test).msgRobbingBank(this);
+		state = CustomerState.waiting;
 		try {
-			this.atDestination.acquire();
+			atDestination.acquire();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		Phonebook.getPhonebook().getEastBank().getBankGuard(test).msgRobbingBank(this);
-		state = CustomerState.waiting;
+		stateChanged();
+		state = CustomerState.ready;
+		desire = BankCustomerDesire.leaveBank;
 	}
-
+	
 	public void setDesire(String d1){
 		if (d1 == "deposit")
 			desire = BankCustomerDesire.deposit;
@@ -278,7 +296,7 @@ public class BankCustomerRole extends Role implements BankCustomer{
 		if (d1 == "robBank")
 			desire = BankCustomerDesire.robBank;
 	}
-	
+
 	public void DoGoToTeller() {
 		int window = myTeller.getTellerPosition();
 		if(custGui.getXPos() != 450 || custGui.getYPos() != 20*window+30*(window-1)) {
@@ -291,11 +309,15 @@ public class BankCustomerRole extends Role implements BankCustomer{
 			}
 		}
 	}
-	
+
 	public void setGui(BankCustomerGui gui) {
-		this.custGui = gui;
+		custGui = gui;
 	}
 	
+	public BankCustomerGui getGui() {
+		return custGui;
+	}
+
 	public void setWaitPlace(int place) {
 		waitPlace = place;
 	}

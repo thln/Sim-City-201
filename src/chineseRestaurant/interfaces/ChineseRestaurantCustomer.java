@@ -5,7 +5,7 @@ import chineseRestaurant.interfaces.ChineseRestaurantHost;
 import chineseRestaurant.interfaces.ChineseRestaurantWaiter;
 
 /**
- * A sample Customer interface built to unit test a CashierAgent.
+ * A sample AmericanRestaurantCustomer interface built to unit test a AmericanRestaurantCashierRole.
  *
  * @author Kristi Hupka
  *

@@ -14,13 +14,13 @@ import person.Worker;
 
 
 /**
- * Restaurant Cashier Role
+ * Restaurant AmericanRestaurantCashier Role
  */
 
 public class ChineseRestaurantCashierRole extends Role implements ChineseRestaurantCashier {
 
 	public ChineseRestaurant chineseRestaurant;
-	//private Semaphore atTable = new Semaphore(0,true);
+	
 
 	//Keeps a list of checks
 	public List<Check> Checks = Collections.synchronizedList(new ArrayList<Check>());
@@ -120,9 +120,8 @@ public class ChineseRestaurantCashierRole extends Role implements ChineseRestaur
 			}
 		}
 
-		if (leaveRole)
-		{
-			((Worker) person).roleFinishedWork();
+		if (leaveRole) {
+			chineseRestaurant.goingOffWork(person);
 			leaveRole = false;
 			return true;
 		}
@@ -204,7 +203,7 @@ public class ChineseRestaurantCashierRole extends Role implements ChineseRestaur
 
 	//Order Class
 	public class Order {
-		String choice;
+		public String choice;
 		int amountOrdered;
 		double bill;
 		SalesPerson market; //The market

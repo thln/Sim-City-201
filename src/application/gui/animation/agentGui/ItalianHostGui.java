@@ -38,7 +38,7 @@ public class ItalianHostGui implements Gui {
         g.fillRect(xPos, yPos, 20, 20);
         
         g.setColor(Color.BLACK);
-        g.drawString("Host", xPos, yPos);
+        g.drawString("AmericanRestaurantHost", xPos, yPos);
     }
 
     public boolean isPresent() {

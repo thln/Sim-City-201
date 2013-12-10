@@ -35,18 +35,18 @@ public class BankCustomerTest extends TestCase{
 		}
 
 		//Preconditions
-		assertTrue("Customer should have the state 'atBank' ", 
+		assertTrue("AmericanRestaurantCustomer should have the state 'atBank' ", 
 				customer.state == CustomerState.atBank);
 
-		assertTrue("Customer should not have a teller yet ", 
+		assertTrue("AmericanRestaurantCustomer should not have a teller yet ", 
 				customer.myTeller == null);
 
 		//Step 1: Call scheduler, should execute method "messageGuard"
-		assertFalse("Customer's scheduler should have returned false, but didn't.", 
+		assertFalse("AmericanRestaurantCustomer's scheduler should have returned false, but didn't.", 
 				customer.pickAndExecuteAnAction());
 
 		//Step 1: post-conditions
-		assertTrue("Customer should have the state 'waiting', instead state is: " + customer.state, 
+		assertTrue("AmericanRestaurantCustomer should have the state 'waiting', instead state is: " + customer.state, 
 				customer.state == CustomerState.waiting);	
 
 		assertTrue("Guard should logged event, customer arrives at bank, but instead says" + guard.log.getLastLoggedEvent().toString(),
@@ -56,10 +56,10 @@ public class BankCustomerTest extends TestCase{
 		customer.msgGoToTeller(teller);
 
 		//Step 2 post-conditions
-		assertTrue("Customer should have the state 'ready' ", 
+		assertTrue("AmericanRestaurantCustomer should have the state 'ready' ", 
 				customer.state == CustomerState.ready);
 
-		assertTrue("Customer should have been assigned proper teller ", 
+		assertTrue("AmericanRestaurantCustomer should have been assigned proper teller ", 
 				customer.myTeller == teller);
 	}
 
@@ -79,45 +79,45 @@ public class BankCustomerTest extends TestCase{
 		customer.person.depositAmount = depositAmt;
 
 		//Preconditions
-		assertTrue("Customer should have the state 'ready' ", 
+		assertTrue("AmericanRestaurantCustomer should have the state 'ready' ", 
 				customer.state == CustomerState.ready);
 
-		assertTrue("Customer should have the proper teller", 
+		assertTrue("AmericanRestaurantCustomer should have the proper teller", 
 				customer.myTeller == teller);
 
-		assertTrue("Customer should have desire 'openAccount'",
+		assertTrue("AmericanRestaurantCustomer should have desire 'openAccount'",
 				customer.desire == BankCustomerDesire.openAccount);
 
 
 		//Step 1: Call scheduler, should execute method "openAccount"
-		assertFalse("Customer's scheduler should have returned false, but didn't.", 
+		assertFalse("AmericanRestaurantCustomer's scheduler should have returned false, but didn't.", 
 				customer.pickAndExecuteAnAction());
 
 		//Step 1: post-conditions
-		assertTrue("Customer should have the state 'waiting' ", 
+		assertTrue("AmericanRestaurantCustomer should have the state 'waiting' ", 
 				customer.state == CustomerState.waiting);
 
 		assertTrue("MockTeller should have logged an event for new account, but his last event logged reads instead: " 
-				+ teller.log.getLastLoggedEvent().toString(), teller.log.containsString("Customer wants new account."));
+				+ teller.log.getLastLoggedEvent().toString(), teller.log.containsString("AmericanRestaurantCustomer wants new account."));
 
 		//Step 2: teller messages customer with new account
 		customer.msgHereIsNewAccount(accountNum);
 
 		//Step 2 post-conditions
-		assertTrue("Customer should have updated account number in Person", person.accountNum == accountNum);
+		assertTrue("AmericanRestaurantCustomer should have updated account number in Person", person.accountNum == accountNum);
 
-		assertTrue("Customer should have desire 'deposit'",
+		assertTrue("AmericanRestaurantCustomer should have desire 'deposit'",
 				customer.desire == BankCustomerDesire.deposit);
 
-		assertTrue("Customer should have the state 'ready' ", 
+		assertTrue("AmericanRestaurantCustomer should have the state 'ready' ", 
 				customer.state == CustomerState.ready);
 
 		//Step 3: Call scheduler, should execute method "depositCash"
-		assertFalse("Customer's scheduler should have returned false, but didn't.", 
+		assertFalse("AmericanRestaurantCustomer's scheduler should have returned false, but didn't.", 
 				customer.pickAndExecuteAnAction());
 
 		//Step 3 post-conditions
-		assertTrue("Customer should have the state 'waiting' ", 
+		assertTrue("AmericanRestaurantCustomer should have the state 'waiting' ", 
 				customer.state == CustomerState.waiting);
 
 		assertTrue("MockTeller should have logged an event for new account, but his last event logged reads instead: " 
@@ -128,29 +128,29 @@ public class BankCustomerTest extends TestCase{
 
 		//Step 4 post-condition
 
-		assertTrue("Customer should have desire 'leaveBank'",
+		assertTrue("AmericanRestaurantCustomer should have desire 'leaveBank'",
 				customer.desire == BankCustomerDesire.leaveBank);
 
-		assertTrue("Customer should have the state 'ready' ", 
+		assertTrue("AmericanRestaurantCustomer should have the state 'ready' ", 
 				customer.state == CustomerState.ready);
 
 
 		//Step 5: Call scheduler, should execute method "leaveBank"
-		assertFalse("Customer's scheduler should have returned false, but didn't.", 
+		assertFalse("AmericanRestaurantCustomer's scheduler should have returned false, but didn't.", 
 				customer.pickAndExecuteAnAction());
 
 		//step 5 post-conditions
 
-		assertTrue("Customer should have desire 'none'",
+		assertTrue("AmericanRestaurantCustomer should have desire 'none'",
 				customer.desire == BankCustomerDesire.none);
 
-		assertTrue("Customer should have the state 'waiting' ", 
+		assertTrue("AmericanRestaurantCustomer should have the state 'waiting' ", 
 				customer.state == CustomerState.waiting);
 
 		assertTrue("MockTeller should have logged an event for customer leaving bank, but his last event logged reads instead: " 
-				+ teller.log.getLastLoggedEvent().toString(), teller.log.containsString("Customer left bank."));
+				+ teller.log.getLastLoggedEvent().toString(), teller.log.containsString("AmericanRestaurantCustomer left bank."));
 
-		assertTrue("Customer should removed reference to teller", 
+		assertTrue("AmericanRestaurantCustomer should removed reference to teller", 
 				customer.myTeller == null);
 	}
 
@@ -171,26 +171,26 @@ public class BankCustomerTest extends TestCase{
 		double baseMoney = customer.person.money = 10;
 
 		//Preconditions
-		assertTrue("Customer should have the state 'ready' ", 
+		assertTrue("AmericanRestaurantCustomer should have the state 'ready' ", 
 				customer.state == CustomerState.ready);
 
-		assertTrue("Customer should have the proper teller", 
+		assertTrue("AmericanRestaurantCustomer should have the proper teller", 
 				customer.myTeller == teller);
 
-		assertTrue("Customer should have desire 'withdraw'",
+		assertTrue("AmericanRestaurantCustomer should have desire 'withdraw'",
 				customer.desire == BankCustomerDesire.withdraw);
 
 
 		//Step 1: Call scheduler, should execute method "withdrawCash"
-		assertFalse("Customer's scheduler should have returned false, but didn't.", 
+		assertFalse("AmericanRestaurantCustomer's scheduler should have returned false, but didn't.", 
 				customer.pickAndExecuteAnAction());
 
 		//Step 1 post-conditions
-		assertTrue("Customer should have the state 'waiting' ", 
+		assertTrue("AmericanRestaurantCustomer should have the state 'waiting' ", 
 				customer.state == CustomerState.waiting);
 
 		assertTrue("MockTeller should have logged an event for new account, but his last event logged reads instead: " 
-				+ teller.log.getLastLoggedEvent().toString(), teller.log.containsString("Customer wants to withdraw from account."));
+				+ teller.log.getLastLoggedEvent().toString(), teller.log.containsString("AmericanRestaurantCustomer wants to withdraw from account."));
 
 		//Step 2: teller messages customer with money
 		customer.msgHereIsYourMoney(withdrawAmt);
@@ -200,29 +200,29 @@ public class BankCustomerTest extends TestCase{
 
 		//Step 3 post-condition
 
-		assertTrue("Customer should have desire 'leaveBank'",
+		assertTrue("AmericanRestaurantCustomer should have desire 'leaveBank'",
 				customer.desire == BankCustomerDesire.leaveBank);
 
-		assertTrue("Customer should have the state 'ready' ", 
+		assertTrue("AmericanRestaurantCustomer should have the state 'ready' ", 
 				customer.state == CustomerState.ready);
 
 
 		//Step 4: Call scheduler, should execute method "leaveBank"
-		assertFalse("Customer's scheduler should have returned false, but didn't.", 
+		assertFalse("AmericanRestaurantCustomer's scheduler should have returned false, but didn't.", 
 				customer.pickAndExecuteAnAction());
 
 		//step 4 post-conditions
 
-		assertTrue("Customer should have desire 'none'",
+		assertTrue("AmericanRestaurantCustomer should have desire 'none'",
 				customer.desire == BankCustomerDesire.none);
 
-		assertTrue("Customer should have the state 'waiting' ", 
+		assertTrue("AmericanRestaurantCustomer should have the state 'waiting' ", 
 				customer.state == CustomerState.waiting);
 
 		assertTrue("MockTeller should have logged an event for customer leaving bank, but his last event logged reads instead: " 
-				+ teller.log.getLastLoggedEvent().toString(), teller.log.containsString("Customer left bank."));
+				+ teller.log.getLastLoggedEvent().toString(), teller.log.containsString("AmericanRestaurantCustomer left bank."));
 
-		assertTrue("Customer should removed reference to teller", 
+		assertTrue("AmericanRestaurantCustomer should removed reference to teller", 
 				customer.myTeller == null);
 	}
 
@@ -243,73 +243,73 @@ public class BankCustomerTest extends TestCase{
 		double baseMoney = customer.person.money = 10;
 
 		//Preconditions
-		assertTrue("Customer should have the state 'ready' ", 
+		assertTrue("AmericanRestaurantCustomer should have the state 'ready' ", 
 				customer.state == CustomerState.ready);
 
-		assertTrue("Customer should have the proper teller", 
+		assertTrue("AmericanRestaurantCustomer should have the proper teller", 
 				customer.myTeller == teller);
 
-		assertTrue("Customer should have desire 'withdraw'",
+		assertTrue("AmericanRestaurantCustomer should have desire 'withdraw'",
 				customer.desire == BankCustomerDesire.withdraw);
 
 
 		//Step 1: Call scheduler, should execute method "withdrawCash"
-		assertFalse("Customer's scheduler should have returned false, but didn't.", 
+		assertFalse("AmericanRestaurantCustomer's scheduler should have returned false, but didn't.", 
 				customer.pickAndExecuteAnAction());
 
 		//Step 1 post-conditions
-		assertTrue("Customer should have the state 'waiting' ", 
+		assertTrue("AmericanRestaurantCustomer should have the state 'waiting' ", 
 				customer.state == CustomerState.waiting);
 
 		assertTrue("MockTeller should have logged an event for new account, but his last event logged reads instead: " 
-				+ teller.log.getLastLoggedEvent().toString(), teller.log.containsString("Customer wants to withdraw from account."));
+				+ teller.log.getLastLoggedEvent().toString(), teller.log.containsString("AmericanRestaurantCustomer wants to withdraw from account."));
 
 		//Step 2: teller messages customer that they lack necessary funds to withdraw
 		customer.msgInsufficientFunds();
 		
 		//Step 2 post-conditions
-		assertTrue("Customer should have desire 'wantLoan'",
+		assertTrue("AmericanRestaurantCustomer should have desire 'wantLoan'",
 				customer.desire == BankCustomerDesire.wantLoan);
 
-		assertTrue("Customer should have the state 'ready' ", 
+		assertTrue("AmericanRestaurantCustomer should have the state 'ready' ", 
 				customer.state == CustomerState.ready);
 		
 		
 
 		//Step 3: Call scheduler, should execute method "requestLoan"
-		assertFalse("Customer's scheduler should have returned false, but didn't.", 
+		assertFalse("AmericanRestaurantCustomer's scheduler should have returned false, but didn't.", 
 				customer.pickAndExecuteAnAction());
 
 		//Step 3 post-conditions
-		assertTrue("Customer should have the state 'waiting' ", 
+		assertTrue("AmericanRestaurantCustomer should have the state 'waiting' ", 
 				customer.state == CustomerState.waiting);
 
-		assertEquals("Customer should have desired loan amount * withdraw amount", customer.desiredLoanAmount, withdrawAmt * 10);
+		assertEquals("AmericanRestaurantCustomer should have desired loan amount * withdraw amount", customer.desiredLoanAmount, withdrawAmt * 10);
 
 		assertTrue("MockTeller should have logged an event for new account, but his last event logged reads instead: " 
-				+ teller.log.getLastLoggedEvent().toString(), teller.log.containsString("Customer requested loan."));
+				+ teller.log.getLastLoggedEvent().toString(), teller.log.containsString("AmericanRestaurantCustomer requested loan."));
 
 		
 		//Step 4: teller messeges customer with loan approval
 		customer.msgYourLoanWasApproved();
 		
 		//Step 4 post-conditions
-		assertTrue("Customer should have the state 'ready' ", 
+		assertTrue("AmericanRestaurantCustomer should have the state 'ready' ", 
 				customer.state == CustomerState.ready);
 
-		assertTrue("Customer should have desire 'withdraw'",
+		assertTrue("AmericanRestaurantCustomer should have desire 'withdraw'",
 				customer.desire == BankCustomerDesire.withdraw);
 		 
 		//Step 5:  Call scheduler, should execute method "withdrawCash"
-		assertFalse("Customer's scheduler should have returned false, but didn't.", 
+		assertFalse("AmericanRestaurantCustomer's scheduler should have returned false, but didn't.", 
 				customer.pickAndExecuteAnAction());
 
 		//Step 5 post-conditions
-		assertTrue("Customer should have the state 'waiting' ", 
+		assertTrue("AmericanRestaurantCustomer should have the state 'waiting' ", 
 				customer.state == CustomerState.waiting);
 
 		assertTrue("MockTeller should have logged an event for new account, but his last event logged reads instead: " 
-				+ teller.log.getLastLoggedEvent().toString(), teller.log.containsString("Customer wants to withdraw from account."));
+				+ teller.log.getLastLoggedEvent().toString(), teller.log.containsString("AmericanRestaurantCustomer wants to withdraw from account."));
 	
 		//Step 6: teller messages customer with money
 		customer.msgHereIsYourMoney(withdrawAmt);
@@ -317,29 +317,29 @@ public class BankCustomerTest extends TestCase{
 		//Step 6 post-conditions
 		assertEquals("Person's money should have increased by the withdrawal amount",customer.person.money, baseMoney + withdrawAmt);
 
-		assertTrue("Customer should have desire 'leaveBank'",
+		assertTrue("AmericanRestaurantCustomer should have desire 'leaveBank'",
 				customer.desire == BankCustomerDesire.leaveBank);
 
-		assertTrue("Customer should have the state 'ready' ", 
+		assertTrue("AmericanRestaurantCustomer should have the state 'ready' ", 
 				customer.state == CustomerState.ready);
 
 
 		//Step 7: Call scheduler, should execute method "leaveBank"
-		assertFalse("Customer's scheduler should have returned false, but didn't.", 
+		assertFalse("AmericanRestaurantCustomer's scheduler should have returned false, but didn't.", 
 				customer.pickAndExecuteAnAction());
 
 		//step 7 post-conditions
 
-		assertTrue("Customer should have desire 'none'",
+		assertTrue("AmericanRestaurantCustomer should have desire 'none'",
 				customer.desire == BankCustomerDesire.none);
 
-		assertTrue("Customer should have the state 'waiting' ", 
+		assertTrue("AmericanRestaurantCustomer should have the state 'waiting' ", 
 				customer.state == CustomerState.waiting);
 
 		assertTrue("MockTeller should have logged an event for customer leaving bank, but his last event logged reads instead: " 
-				+ teller.log.getLastLoggedEvent().toString(), teller.log.containsString("Customer left bank."));
+				+ teller.log.getLastLoggedEvent().toString(), teller.log.containsString("AmericanRestaurantCustomer left bank."));
 
-		assertTrue("Customer should removed reference to teller", 
+		assertTrue("AmericanRestaurantCustomer should removed reference to teller", 
 				customer.myTeller == null);
 	}
 
@@ -361,78 +361,78 @@ public class BankCustomerTest extends TestCase{
 		double creditScore = 150;
 
 		//Preconditions
-		assertTrue("Customer should have the state 'ready' ", 
+		assertTrue("AmericanRestaurantCustomer should have the state 'ready' ", 
 				customer.state == CustomerState.ready);
 
-		assertTrue("Customer should have the proper teller", 
+		assertTrue("AmericanRestaurantCustomer should have the proper teller", 
 				customer.myTeller == teller);
 
-		assertTrue("Customer should have desire 'withdraw'",
+		assertTrue("AmericanRestaurantCustomer should have desire 'withdraw'",
 				customer.desire == BankCustomerDesire.withdraw);
 
 
 		//Step 1: Call scheduler, should execute method "withdrawCash"
-		assertFalse("Customer's scheduler should have returned false, but didn't.", 
+		assertFalse("AmericanRestaurantCustomer's scheduler should have returned false, but didn't.", 
 				customer.pickAndExecuteAnAction());
 
 		//Step 1 post-conditions
-		assertTrue("Customer should have the state 'waiting' ", 
+		assertTrue("AmericanRestaurantCustomer should have the state 'waiting' ", 
 				customer.state == CustomerState.waiting);
 
 		assertTrue("MockTeller should have logged an event for new account, but his last event logged reads instead: " 
-				+ teller.log.getLastLoggedEvent().toString(), teller.log.containsString("Customer wants to withdraw from account."));
+				+ teller.log.getLastLoggedEvent().toString(), teller.log.containsString("AmericanRestaurantCustomer wants to withdraw from account."));
 
 		//Step 2: teller messages customer that they lack necessary funds to withdraw
 		customer.msgInsufficientFunds();
 		
 		//Step 2 post-conditions
-		assertTrue("Customer should have desire 'wantLoan'",
+		assertTrue("AmericanRestaurantCustomer should have desire 'wantLoan'",
 				customer.desire == BankCustomerDesire.wantLoan);
 
-		assertTrue("Customer should have the state 'ready' ", 
+		assertTrue("AmericanRestaurantCustomer should have the state 'ready' ", 
 				customer.state == CustomerState.ready);
 			
 
 		//Step 3: Call scheduler, should execute method "requestLoan"
-		assertFalse("Customer's scheduler should have returned false, but didn't.", 
+		assertFalse("AmericanRestaurantCustomer's scheduler should have returned false, but didn't.", 
 				customer.pickAndExecuteAnAction());
 
 		//Step 3 post-conditions
-		assertTrue("Customer should have the state 'waiting' ", 
+		assertTrue("AmericanRestaurantCustomer should have the state 'waiting' ", 
 				customer.state == CustomerState.waiting);
 
-		assertEquals("Customer should have desired loan amount * withdraw amount", customer.desiredLoanAmount, withdrawAmt * 10);
+		assertEquals("AmericanRestaurantCustomer should have desired loan amount * withdraw amount", customer.desiredLoanAmount, withdrawAmt * 10);
 
 		assertTrue("MockTeller should have logged an event for new account, but his last event logged reads instead: " 
-				+ teller.log.getLastLoggedEvent().toString(), teller.log.containsString("Customer requested loan."));
+				+ teller.log.getLastLoggedEvent().toString(), teller.log.containsString("AmericanRestaurantCustomer requested loan."));
 
 		
 		//Step 4: teller messeges customer with loan denial
 		customer.msgYourLoanWasDenied(creditScore * 10);
 		
 		//Step 4 post-conditions
-		assertTrue("Customer should have the state 'ready' ", 
+		assertTrue("AmericanRestaurantCustomer should have the state 'ready' ", 
 				customer.state == CustomerState.ready);
 
-		assertTrue("Customer should have desire 'leaveBank'",
+		assertTrue("AmericanRestaurantCustomer should have desire 'leaveBank'",
 				customer.desire == BankCustomerDesire.leaveBank);
 
 		//Step 5: Call scheduler, should execute method "leaveBank"
-		assertFalse("Customer's scheduler should have returned false, but didn't.", 
+		assertFalse("AmericanRestaurantCustomer's scheduler should have returned false, but didn't.", 
 				customer.pickAndExecuteAnAction());
 
 		//step 5 post-conditions
 
-		assertTrue("Customer should have desire 'none'",
+		assertTrue("AmericanRestaurantCustomer should have desire 'none'",
 				customer.desire == BankCustomerDesire.none);
 
-		assertTrue("Customer should have the state 'waiting' ", 
+		assertTrue("AmericanRestaurantCustomer should have the state 'waiting' ", 
 				customer.state == CustomerState.waiting);
 
 		assertTrue("MockTeller should have logged an event for customer leaving bank, but his last event logged reads instead: " 
-				+ teller.log.getLastLoggedEvent().toString(), teller.log.containsString("Customer left bank."));
+				+ teller.log.getLastLoggedEvent().toString(), teller.log.containsString("AmericanRestaurantCustomer left bank."));
 
-		assertTrue("Customer should removed reference to teller", 
+		assertTrue("AmericanRestaurantCustomer should removed reference to teller", 
 				customer.myTeller == null);
 	}
 
@@ -452,57 +452,57 @@ public class BankCustomerTest extends TestCase{
 		customer.person.money = baseMoney;
 		
 		//Preconditions
-		assertTrue("Customer should have the state 'ready' ", 
+		assertTrue("AmericanRestaurantCustomer should have the state 'ready' ", 
 				customer.state == CustomerState.ready);
 
-		assertTrue("Customer should have the proper teller", 
+		assertTrue("AmericanRestaurantCustomer should have the proper teller", 
 				customer.myTeller == teller);
 
-		assertTrue("Customer should have desire 'closeLoan",
+		assertTrue("AmericanRestaurantCustomer should have desire 'closeLoan",
 				customer.desire == BankCustomerDesire.closeLoan);
 
 
 		//Step 1: Call scheduler, should execute method "payOffLoan"
-		assertFalse("Customer's scheduler should have returned false, but didn't.", 
+		assertFalse("AmericanRestaurantCustomer's scheduler should have returned false, but didn't.", 
 				customer.pickAndExecuteAnAction());
 
 		//Step 1 post-conditions
-		assertTrue("Customer should have the state 'waiting' ", 
+		assertTrue("AmericanRestaurantCustomer should have the state 'waiting' ", 
 				customer.state == CustomerState.waiting);
 		
-		assertEquals("Customer's person should decreased money by the loan amount", customer.person.money, baseMoney-loan);
+		assertEquals("AmericanRestaurantCustomer's person should decreased money by the loan amount", customer.person.money, baseMoney-loan);
 
 		assertTrue("MockTeller should have logged an event for new account, but his last event logged reads instead: " 
-				+ teller.log.getLastLoggedEvent().toString(), teller.log.containsString("Customer paid off loan."));
+				+ teller.log.getLastLoggedEvent().toString(), teller.log.containsString("AmericanRestaurantCustomer paid off loan."));
 
 		//Step 2: teller messages customer that loan is closed
 		customer.msgLoanClosed();
 		
 		//Step 2 post-conditions
 		
-		assertTrue("Customer should have desire 'leaveBank'",
+		assertTrue("AmericanRestaurantCustomer should have desire 'leaveBank'",
 				customer.desire == BankCustomerDesire.leaveBank);
 
-		assertTrue("Customer should have the state 'ready' ", 
+		assertTrue("AmericanRestaurantCustomer should have the state 'ready' ", 
 				customer.state == CustomerState.ready);
 
 
 		//Step 3: Call scheduler, should execute method "leaveBank"
-		assertFalse("Customer's scheduler should have returned false, but didn't.", 
+		assertFalse("AmericanRestaurantCustomer's scheduler should have returned false, but didn't.", 
 				customer.pickAndExecuteAnAction());
 
 		//step 3 post-conditions
 
-		assertTrue("Customer should have desire 'none'",
+		assertTrue("AmericanRestaurantCustomer should have desire 'none'",
 				customer.desire == BankCustomerDesire.none);
 
-		assertTrue("Customer should have the state 'waiting' ", 
+		assertTrue("AmericanRestaurantCustomer should have the state 'waiting' ", 
 				customer.state == CustomerState.waiting);
 
 		assertTrue("MockTeller should have logged an event for customer leaving bank, but his last event logged reads instead: " 
-				+ teller.log.getLastLoggedEvent().toString(), teller.log.containsString("Customer left bank."));
+				+ teller.log.getLastLoggedEvent().toString(), teller.log.containsString("AmericanRestaurantCustomer left bank."));
 
-		assertTrue("Customer should removed reference to teller", 
+		assertTrue("AmericanRestaurantCustomer should removed reference to teller", 
 				customer.myTeller == null);
 		
 	}

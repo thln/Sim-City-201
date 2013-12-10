@@ -8,10 +8,13 @@ import java.util.concurrent.Semaphore;
 import chineseRestaurant.ChineseRestaurantCustomerRole;
 import italianRestaurant.*;
 import bank.BankCustomerRole;
+import bank.BankCustomerRole.CustomerState;
 import market.MarketCustomerRole;
 import person.Role;
 import agent.Agent;
+import americanRestaurant.AmericanRestaurantCustomerRole;
 import application.Phonebook;
+import application.Restaurant;
 import application.TimeManager;
 import application.gui.trace.AlertLog;
 import application.gui.trace.AlertTag;
@@ -23,10 +26,10 @@ public abstract class Person extends Agent{
 	//Data
 	String name;
 	protected Semaphore atDestination;
-	private Housing home;
+	public Housing home;
 	private Timer alarmClock = new Timer();
 	private Timer hungerTimer = new Timer();
-	private PersonGui gui;
+	protected PersonGui gui;
 	BuildingPanel marketPanel = null;
 	BuildingPanel bankPanel = null;
 	BuildingPanel housePanel = null;
@@ -45,14 +48,18 @@ public abstract class Person extends Agent{
 	//Hunger Related
 	public HashMap <String, Integer> Inventory = new HashMap<String, Integer>();                 //Food list
 	public boolean hasFoodInFridge = false;
-	public enum HungerLevel {full, moderate, hungry, starving};
-	private HungerLevel hunger = HungerLevel.full;
+	public enum HungerLevel {full, moderate, hungry};
+	protected HungerLevel hunger;
+	protected List<String> restaurantQueue;
 	int eatTime = 4;
 	protected Semaphore eating = new Semaphore(0, true);
+	//IMPORTANT ADD TO MESSAGES
+	protected Semaphore waitingAtBus = new Semaphore(0, true);
+	protected Semaphore beingTransported = new Semaphore(0, true);
 
 	//Bank Related
 	public double money;
-
+	public String myBank;
 	public int accountNum;
 	public double accountBalance;
 	public double desiredCash;
@@ -71,17 +78,47 @@ public abstract class Person extends Agent{
 	Person(String name, double moneyz) {
 		this.name = name;
 		this.money = moneyz;
+
 		roles.add(new BankCustomerRole(this, getName(), "Bank Customer"));
 		roles.add(new MarketCustomerRole(this, getName(), "Market Customer"));
-		roles.add(new ChineseRestaurantCustomerRole(this, getName(), "Restaurant Customer"));
+		roles.add(new ChineseRestaurantCustomerRole(this, getName(), "Restaurant Customer", Phonebook.getPhonebook().getChineseRestaurant()));
+		roles.add(new AmericanRestaurantCustomerRole(this, getName(), "Restaurant Customer"));
 		nextTask = new Timer();
 		atDestination = new Semaphore(0,true);
 		setHunger(HungerLevel.full);
 		hasFoodInFridge = false;
+
+		//add restaurants to queue 
+		restaurantQueue = new ArrayList<String>();
+		restaurantQueue.add("American Restaurant");
+		restaurantQueue.add("Chinese Restaurant");
+		restaurantQueue.add("Italian Restaurant");
+		//	restaurantQueue.add("Chinese Restaurant");
+		restaurantQueue.add("Seafood Restaurant");
 	}
 
-	public void msgAtDestination() {
-		getAtDestination().release();
+	public void msgAtDestination() 
+	{
+		if(atDestination.availablePermits() < 1)
+		{
+			getAtDestination().release();
+		}
+	}
+	
+	public void msgBusIsHere()
+	{
+		if(waitingAtBus.availablePermits() < 1)
+		{
+			getWaitingAtBus().release();
+		}
+	}
+	
+	public void msgAtBusStopDestination()
+	{
+		if(beingTransported.availablePermits() < 1)
+		{
+			beingTransported.release();
+		}
 	}
 
 	//Scheduler
@@ -103,30 +140,56 @@ public abstract class Person extends Agent{
 		try {
 			eating.acquire();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 
 		}
 	}
 
 	protected void prepareForBank () {
-		Do("Becoming Bank Customer");
-		//gui.walk = gui.decideForBus(gui.getxDestination(), gui.getyDestination());
+
+
+		if (!(this instanceof Crook))
+			Do("Becoming Bank AmericanRestaurantCustomer");
+
+		if (home.type.equals("East Apartment"))
+			gui.walk = gui.decideForBus("East Bank");
+		else
+			gui.walk = gui.decideForBus("West Bank");
+
+		//		if (gui.walk) {
+		//			gui.walkToLocation();
+		//			try {
+		//				atDestination.acquire();
+		//			} catch (InterruptedException e) {
+		//				// TODO Auto-generated catch block
+		//				e.printStackTrace();
+		//			}
+		//		}
+	
 		if (!gui.walk){
-			gui.doGoToBus();
-			try {
-				atDestination.acquire();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			print("Destination bus Stop: " + Phonebook.getPhonebook().getEastBank().getClosestBusStop().getBusStopNumber());
+			if (home.type.equals("East Apartment"))
+			{
+				goToBusStop(Phonebook.getPhonebook().getEastBank().getClosestBusStop().getBusStopNumber());
+			}
+			else 
+			{
+				goToBusStop(Phonebook.getPhonebook().getWestBank().getClosestBusStop().getBusStopNumber());
 			}
 		}
-		
-		getGui().DoGoToBank();
+
+		if (home.type.equals("East Apartment"))
+			getGui().DoGoToBank("East");
+		else
+			getGui().DoGoToBank("West");
+
 		try {
 			atDestination.acquire();
+			if(!gui.walk)
+			{
+				atDestination.acquire();
+			}
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 
 		}
@@ -137,23 +200,35 @@ public abstract class Person extends Agent{
 				BankCustomerRole BCR = (BankCustomerRole) cust1;
 				BankCustomerGui bg = new BankCustomerGui(BCR);
 				BCR.setGui(bg);
-				currentRoleName = "Bank Customer";
 
-				if (money <= moneyMinThreshold)
-					desiredCash = 100;
-				else if (money >= moneyMaxThreshold)
-					depositAmount = money-moneyMaxThreshold+100;
+				if (this instanceof Crook){
+					print("Time to rob da bank fools!");
+					currentRoleName = "Bank Robber";
+					BCR.setDesire("robBank");
+					BCR.state = CustomerState.ready;
+				}
+				else {
+					currentRoleName = "Bank AmericanRestaurantCustomer";
 
-				if (accountNum != 0) {
-					if (money <= moneyMinThreshold){
-						BCR.setDesire("withdraw");
-					}
-					if (money >= moneyMaxThreshold){
-						BCR.setDesire("deposit");
+					if (money <= moneyMinThreshold)
+						desiredCash = 100;
+					else if (money >= moneyMaxThreshold)
+						depositAmount = money-moneyMaxThreshold+100;
+
+					if (accountNum != 0) {
+						if (money <= moneyMinThreshold){
+							BCR.setDesire("withdraw");
+						}
+						if (money >= moneyMaxThreshold){
+							BCR.setDesire("deposit");
+						}
 					}
 				}
 				cust1.setRoleActive();
-				bankPanel.addGui(bg);
+				if (home.type.equals("East Apartment"))
+					Phonebook.getPhonebook().getEastBank().msgCustomerArrived(BCR);
+				else
+					Phonebook.getPhonebook().getWestBank().msgCustomerArrived(BCR);
 				stateChanged();
 				return;
 			}
@@ -189,12 +264,72 @@ public abstract class Person extends Agent{
 		}
 	}
 
+	protected void goToBusStop(int destinationBusStopNumber)
+	{
+
+		print("Going to bus Stop "+ gui.getClosestBusStopNumber());
+		gui.doGoToBusStop();
+		//Finish the GUI version of it
+		try 
+		{
+			atDestination.acquire();
+		} 
+		catch (InterruptedException e) 
+		{
+			e.printStackTrace();
+		}
+		print("At bus Stop "+ gui.getClosestBusStopNumber() + ". Now waiting");
+		Phonebook.getPhonebook().getAllBusStops().get(gui.getClosestBusStopNumber()).waitingForBus(this);
+		try
+		{
+			waitingAtBus.acquire();
+			//waitingAtBus.acquire();
+			//maybe have to do double acquires?
+		}
+		catch (InterruptedException e)
+		{
+			e.printStackTrace();
+		}
+		print(" Blah");
+		print("Telling " + Phonebook.getPhonebook().getAllBusStops().get(gui.getClosestBusStopNumber()).getCurrentBus().getName() + " that I'm getting on to go to bus stop # " + destinationBusStopNumber);
+		Phonebook.getPhonebook().getAllBusStops().get(gui.getClosestBusStopNumber()).getCurrentBus().msgGettingOnBus(this, destinationBusStopNumber);
+		gui.setInvisible();
+		try
+		{
+			beingTransported.acquire();
+			//beingTransported.acquire();
+			//maybe have to do double acquires?
+		}
+		catch (InterruptedException e)
+		{
+			e.printStackTrace();
+		}
+		print("Arriving at destination Bus Stop: " + destinationBusStopNumber);
+		gui.getOffBus(destinationBusStopNumber);
+	}
+	
 	protected void prepareForMarket() {
-		getGui().DoGoToMarket();
+		print("Going to market as a customer");
+
+		if (home.type.equals("East Apartment"))
+			gui.walk = gui.decideForBus("East Market");
+		else
+			gui.walk = gui.decideForBus("West Market");
+
+		if (!gui.walk){
+			if (home.type.equals("East Apartment")){
+				gui.doGoToBus(Phonebook.getPhonebook().getEastMarket().getClosestStop().getX(),
+						Phonebook.getPhonebook().getEastMarket().getClosestStop().getY());
+			}
+			else {
+				gui.doGoToBus(Phonebook.getPhonebook().getWestMarket().getClosestStop().getX(),
+						Phonebook.getPhonebook().getWestMarket().getClosestStop().getY());
+			}
+		}
+
 		try {
 			atDestination.acquire();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 
 		}
@@ -214,7 +349,7 @@ public abstract class Person extends Agent{
 					MCR.setItem("");
 					cust1.setRoleActive();
 					Phonebook.getPhonebook().getEastMarket().arrived(MCR);
-					currentRoleName = "Market Customer";
+					currentRoleName = "Market AmericanRestaurantCustomer";
 					stateChanged();
 					return;
 				}
@@ -227,7 +362,7 @@ public abstract class Person extends Agent{
 					MCR.setItem("Car");
 					cust1.setRoleActive();
 					Phonebook.getPhonebook().getEastMarket().arrived(MCR);
-					currentRoleName = "Market Customer";
+					currentRoleName = "Market AmericanRestaurantCustomer";
 					stateChanged();
 					return;
 				}
@@ -236,11 +371,44 @@ public abstract class Person extends Agent{
 	}
 
 	protected void prepareForRestaurant() {
-		getGui().DoGoToRestaurant("chinese");
+
+		String choice = restaurantQueue.get(0);
+		//Moving this choice to back of queue
+		restaurantQueue.remove(choice);
+		restaurantQueue.add(choice);
+
+		gui.walk = gui.decideForBus(choice);
+
+		if (!gui.walk){
+			if (choice.contains("American")){
+				print("Destination bus Stop: " + Phonebook.getPhonebook().getAmericanRestaurant().getClosestBusStop().getBusStopNumber());
+				goToBusStop(Phonebook.getPhonebook().getAmericanRestaurant().getClosestBusStop().getBusStopNumber());
+			}
+			if (choice.contains("Chinese")){
+				print("Destination bus Stop: " + Phonebook.getPhonebook().getChineseRestaurant().getClosestBusStop().getBusStopNumber());
+				goToBusStop(Phonebook.getPhonebook().getChineseRestaurant().getClosestBusStop().getBusStopNumber());
+			}
+//			if (choice.contains("Seafood")){
+//				print("Destination bus Stop: " + Phonebook.getPhonebook().getSeafoodRestaurant().getClosestBusStop().getBusStopNumber());
+//				goToBusStop(Phonebook.getPhonebook().getSeafoodRestaurant().getClosestBusStop().getBusStopNumber());
+//			}
+			if (choice.contains("Italian")){
+				print("Destination bus Stop: " + Phonebook.getPhonebook().getItalianRestaurant().getClosestBusStop().getBusStopNumber());
+				goToBusStop(Phonebook.getPhonebook().getItalianRestaurant().getClosestBusStop().getBusStopNumber());
+			}
+		}
+		
 		try {
 			atDestination.acquire();
+			if (!gui.walk){
+				try {
+					atDestination.acquire();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+
+				}
+			}
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 
 		}
@@ -264,21 +432,29 @@ public abstract class Person extends Agent{
 				}
 				return;
 			}
+			//			if (cust1 instanceof AmericanRestaurantCustomerRole) {
+			//				AmericanRestaurantCustomerRole RCR = (AmericanRestaurantCustomerRole) cust1;
+			//				if (Phonebook.getPhonebook().getAmericanRestaurant().customerArrived(RCR)) {
+			//					currentRoleName = "American Restaurant Customer";
+			//					cust1.setRoleActive();
+			//					stateChanged();
+			//				}
+			//				return;
+			//			}
 		}
 
 	}
 
 	protected void goToSleep() {
-	//	if (gui.getxPos() != gui.getxHome() && gui.getyPos() != gui.getyHome()){
-			getGui().DoGoHome();
-			try {
-				atDestination.acquire();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				//
-			}
-//		}
+		gui.walk = true;
+		getGui().DoGoHome();
+		try {
+			atDestination.acquire();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+			//
+		}
+		//			}
 
 		currentRoleName = " ";
 		//After arrives home
@@ -335,8 +511,8 @@ public abstract class Person extends Agent{
 		return home;
 	}
 
-	public void setGui(PersonGui gui) {
-		this.gui = gui;
+	public void setGui(PersonGui g) {
+		this.gui = g;
 	}
 
 	public void setPanel(AnimationPanel ap) {
@@ -360,7 +536,17 @@ public abstract class Person extends Agent{
 	public Semaphore getAtDestination() {
 		return atDestination;
 	}
+	
+	public Semaphore getWaitingAtBus()
+	{
+		return waitingAtBus;
+	}
 
+	public Semaphore getBeingTransported()
+	{
+		return beingTransported;
+	}
+	
 	public void setAtDestination(Semaphore atDestination) {
 		this.atDestination = atDestination;
 	}

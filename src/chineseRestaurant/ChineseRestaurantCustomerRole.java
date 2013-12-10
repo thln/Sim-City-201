@@ -19,13 +19,16 @@ import application.gui.animation.agentGui.RestaurantCustomerGui;
 public class ChineseRestaurantCustomerRole extends Role implements ChineseRestaurantCustomer {
 	private int hungerLevel = 5;        // determines length of meal
 	Timer timer = new Timer();
-	protected String RoleName = "Restaurant Customer";
+	protected String RoleName = "Restaurant AmericanRestaurantCustomer";
 
 	int xHome, yHome;
 	
 	private ChineseRestaurantMenu chineseRestaurantMenu;
+	
+	public ChineseRestaurant chineseRestaurant;
 
 	private ChineseRestaurantWaiterRole chineseRestaurantWaiterRole;
+	private RestaurantCustomerGui custGui;
 
 
 	// private boolean isHungry = false; //hack for gui
@@ -46,8 +49,9 @@ public class ChineseRestaurantCustomerRole extends Role implements ChineseRestau
 	 * Constructor for RestaurantCustomer class
 	 *
 	 */
-	public ChineseRestaurantCustomerRole(Person p1, String pName, String rName) {
+	public ChineseRestaurantCustomerRole(Person p1, String pName, String rName, ChineseRestaurant restaurant) {
 		super(p1, pName, rName);
+		chineseRestaurant = restaurant;
 	/*
 		if (name.equals("Broke 1")) {
 			money = 0;
@@ -67,7 +71,7 @@ public class ChineseRestaurantCustomerRole extends Role implements ChineseRestau
 		state = AgentState.DoingNothing; 
 		event = AgentEvent.gotHungry;
 		this.money = p1.money;
-		gui = new RestaurantCustomerGui(this);
+		//gui = new RestaurantCustomerGui(this);
 	}
 
 	public String getCustomerName() {
@@ -92,7 +96,7 @@ public class ChineseRestaurantCustomerRole extends Role implements ChineseRestau
 	}
 
 	public void msgTablesAreFull() {
-		print("Got message that all tables are full");
+		print("Got message that all americanRestaurantTables are full");
 		state = AgentState.TablesFull;
 		stateChanged();
 	}
@@ -163,7 +167,7 @@ public class ChineseRestaurantCustomerRole extends Role implements ChineseRestau
 	 * Scheduler
 	 */
 	protected boolean pickAndExecuteAnAction() {
-		//	CustomerAgent is a finite state machine
+		//	AmericanRestaurantCustomerRole is a finite state machine
 
 		if (state == AgentState.DoingNothing && event == AgentEvent.gotHungry ) {
 			goToRestaurant();
@@ -226,11 +230,10 @@ public class ChineseRestaurantCustomerRole extends Role implements ChineseRestau
 	private void goToRestaurant() {
 		state = AgentState.WaitingInRestaurant;
 		print("Going to restaurant");
-		Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantHostRole.msgIWantFood(this, xHome, yHome);
+		chineseRestaurant.chineseRestaurantHostRole.msgIWantFood(this, xHome, yHome);
 	}
 	
 	private void DecidingToStay() {
-		RestaurantCustomerGui customerGui = (RestaurantCustomerGui) gui;
 		state = AgentState.DecidingToStayInRestaurant;
 
 		Random rand = new Random();
@@ -242,34 +245,31 @@ public class ChineseRestaurantCustomerRole extends Role implements ChineseRestau
 		if (myRandomChoice == 0) {
 			state = AgentState.Leaving;
 			print("I don't want to wait, bailing from this stupid restaurant");
-			customerGui.DoExitRestaurant();
+			custGui.DoExitRestaurant();
 			stateChanged();
 		}
 		else {
 			state = AgentState.WaitingInRestaurant;
 			print("Decided to stay and eat in restaurant");
-			Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantHostRole.msgStaying(this, xHome, yHome);
+			chineseRestaurant.chineseRestaurantHostRole.msgStaying(this, xHome, yHome);
 			stateChanged();
 		}
 	}
 
 	private void SitDown() {
-		RestaurantCustomerGui customerGui = (RestaurantCustomerGui) gui;
 		state = AgentState.BeingSeated;
 		print("Being seated. Going to table");
-		customerGui.DoGoToSeat(tableNumber);
+		custGui.DoGoToSeat(tableNumber);
 		event = AgentEvent.seated;			//to delete
 	}
 
 	private void MakeChoice() {
-		RestaurantCustomerGui customerGui = (RestaurantCustomerGui) gui;
 		state = AgentState.DecidingChoice;
 		
 		print("Deciding what I want...");
 		timer.schedule(new TimerTask() {
 			public void run() 
 			{
-				RestaurantCustomerGui customerGui = (RestaurantCustomerGui) gui;
 				
 				if (money < chineseRestaurantMenu.lowestPricedItem) {
 					print("I can't afford anything on the menu");
@@ -290,7 +290,7 @@ public class ChineseRestaurantCustomerRole extends Role implements ChineseRestau
 				
 				state = AgentState.DoneDeciding;
 				AskToOrder();
-				customerGui.DoReadyToOrder();
+				custGui.DoReadyToOrder();
 				stateChanged();
 			}
 		},
@@ -302,16 +302,14 @@ public class ChineseRestaurantCustomerRole extends Role implements ChineseRestau
 	}
 
 	private void PlaceOrder() {
-		RestaurantCustomerGui customerGui = (RestaurantCustomerGui) gui;
-		customerGui.DoPlaceOrder(choice); //GUI call
+		custGui.DoPlaceOrder(choice); //GUI call
 		state = AgentState.Ordered;
 		chineseRestaurantWaiterRole.msgHeresMyOrder(this, choice);
 	}
 
 	private void EatFood() {
-		RestaurantCustomerGui customerGui = (RestaurantCustomerGui) gui;
 		state = AgentState.Eating;
-		customerGui.DoEatFood(choice);
+		custGui.DoEatFood(choice);
 		print("Eating Food");
 		//This next complicated line creates and starts a timer thread.
 		//We schedule a deadline of getHungerLevel()*1000 milliseconds.
@@ -334,22 +332,20 @@ public class ChineseRestaurantCustomerRole extends Role implements ChineseRestau
 	}
 
 	private void AskForCheck() {
-		RestaurantCustomerGui customerGui = (RestaurantCustomerGui) gui;
-		customerGui.DoAskForCheck();
+		custGui.DoAskForCheck();
 		state = AgentState.AskedForCheck;
 		print("Asking for my check");
 		chineseRestaurantWaiterRole.msgIWantMyCheck(this);
 	}
 
 	private void PayingCheck() {
-		RestaurantCustomerGui customerGui = (RestaurantCustomerGui) gui;
 		state = AgentState.PayingCheck;
-		print("Going to the cashier");
+		print("Going to the americanRestaurantCashier");
 		
 		//This stateChanged() needs to be deleted because gui isn't working
 		event = AgentEvent.atCashier;
 		stateChanged();
-		customerGui.DoGoToCashier();
+		custGui.DoGoToCashier();
 	}
 
 	private void PayCheck() {
@@ -363,12 +359,11 @@ public class ChineseRestaurantCustomerRole extends Role implements ChineseRestau
 		print("I have $" + money);
 
 		state = AgentState.PayedCheck;
-		Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantCashierRole.msgPayment(choice, money, this);
+		chineseRestaurant.chineseRestaurantCashierRole.msgPayment(choice, money, this);
 		money = 0;
 	}
 
 	private void LeaveRestaurant() {
-		RestaurantCustomerGui customerGui = (RestaurantCustomerGui) gui;
 		state = AgentState.Leaving;
 
 		print("Leaving.");
@@ -377,14 +372,13 @@ public class ChineseRestaurantCustomerRole extends Role implements ChineseRestau
 		//This event and state changed should be removed when gui is working
 		event = AgentEvent.doneLeaving;
 		stateChanged();
-		customerGui.DoExitRestaurant();
+		custGui.DoExitRestaurant();
 	}
 	
 	private void GoToJail() {
-		RestaurantCustomerGui customerGui = (RestaurantCustomerGui) gui;
 		state = AgentState.inJail;
 		chineseRestaurantWaiterRole.msgLeavingTable(this);
-		customerGui.DoGoToJail();
+		custGui.DoGoToJail();
 		
 		timer.schedule(new TimerTask() {
 			public void run() {
@@ -395,9 +389,8 @@ public class ChineseRestaurantCustomerRole extends Role implements ChineseRestau
 	}
 	
 	private void walkOfShame() {
-		RestaurantCustomerGui customerGui = (RestaurantCustomerGui) gui;
 		state = AgentState.Leaving;
-		customerGui.DoExitRestaurant();
+		custGui.DoExitRestaurant();
 		stateChanged();
 	}
 
@@ -439,6 +432,14 @@ public class ChineseRestaurantCustomerRole extends Role implements ChineseRestau
 	public void msgPleaseFollowMe(int tableNumber, ChineseRestaurantMenu chineseRestaurantMenu, ChineseRestaurantWaiter chineseRestaurantWaiter) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public void setGui(RestaurantCustomerGui gui) {
+		custGui = gui;
+	}
+	
+	public RestaurantCustomerGui getGui() {
+		return custGui;
 	}
 }
 

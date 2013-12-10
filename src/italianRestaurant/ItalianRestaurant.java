@@ -1,17 +1,23 @@
 package italianRestaurant;
+import java.awt.Point;
 import java.util.*;
 
 import person.*;
-import application.WatchTime;
+import application.*;
+import transportation.BusStop;
+import application.*;
 import application.gui.animation.*;
 import application.gui.animation.agentGui.*;
 
-public class ItalianRestaurant {
+public class ItalianRestaurant implements Restaurant{
 
 	//Data
 	String name;
 	public boolean userClosed = false;
-	
+	public Point location; 
+	private Point closestStop;
+	public int busStopNumber;
+
 	//List of Customers
 	private Vector<ItalianCustomerRole> customers = new Vector<ItalianCustomerRole>();
 		
@@ -23,13 +29,13 @@ public class ItalianRestaurant {
 	public WatchTime closeTime = new WatchTime(21);
 
 	//Roles
-	public ItalianHostRole italianRestaurantHostRole = new ItalianHostRole("Host");
+	public ItalianHostRole italianRestaurantHostRole = new ItalianHostRole("AmericanRestaurantHost");
 	public ItalianHostGui hostGui = new ItalianHostGui(italianRestaurantHostRole);
 	
 	public ItalianCookRole italianRestaurantCookRole = new ItalianCookRole("Cook", this);
 	public ItalianCookGui cookGui = new ItalianCookGui(italianRestaurantCookRole);
 
-	public ItalianCashierRole italianRestaurantCashierRole = new ItalianCashierRole("Cashier", this);
+	public ItalianCashierRole italianRestaurantCashierRole = new ItalianCashierRole("AmericanRestaurantCashier", this);
 	public ItalianCashierGui cashierGui = new ItalianCashierGui(italianRestaurantCashierRole);
 	public ItalianRevolvingStand theRevolvingStand = new ItalianRevolvingStand();
 	private BuildingPanel restPanel;
@@ -39,6 +45,7 @@ public class ItalianRestaurant {
 	//public ItalianMockCashier italianRestaurantMockCashier = new ItalianMockCashier("MockCashier");
 
 	public ItalianRestaurant(String name) {
+		location = new Point(492, 35);
 		this.name = name;
 		italianRestaurantCookRole.setGui(cookGui);
 		italianRestaurantCashierRole.setGui(cashierGui);
@@ -74,20 +81,21 @@ public class ItalianRestaurant {
 			if (isOpen()) {
 				italianRestaurantHostRole.msgRestaurantOpen();
 			}
-			//restPanel.addGui(cookGui);
+			restPanel.addGui(cookGui);
 			return italianRestaurantCookRole;
 		}
-		else if (title.contains("cashier")) {
+		else if (title.contains("americanRestaurantCashier")) {
 			//Setting previous bank guard role to inactive
 			if (italianRestaurantCashierRole.getPerson() != null) {
 				Worker worker = (Worker) italianRestaurantCashierRole.getPerson();
 				worker.roleFinishedWork();
 			}
-			//Setting cashier role to new role
+			//Setting americanRestaurantCashier role to new role
 			italianRestaurantCashierRole.setPerson(person);
 			if (isOpen()) {
 				italianRestaurantHostRole.msgRestaurantOpen();
 			}
+			restPanel.addGui(cashierGui);
 			return italianRestaurantCashierRole;
 		}
 		else if (title == "waiter") {	
@@ -135,8 +143,10 @@ public class ItalianRestaurant {
 	
 	public boolean arrived(ItalianCustomerRole rCR) {
 		
-			ItalianCustomerGui rCG = (ItalianCustomerGui) rCR.gui;
+			//ItalianCustomerGui rCG = (ItalianCustomerGui) rCR.gui;
+			ItalianCustomerGui rCG = new ItalianCustomerGui(rCR);
 			rCG.SetHome(customers.size());
+			rCR.setGui(rCG);
 			restPanel.addGui(rCG);
 			customers.add(rCR);
 			rCR.gotHungry();
@@ -150,14 +160,16 @@ public class ItalianRestaurant {
 		Worker worker = (Worker) person;
 
 		if (worker.getWorkerRole().equals(italianRestaurantHostRole)) {
-			italianRestaurantHostRole = null;
-			//restPanel.removeGui(worker.getWorkerRole().gui);
+			worker.roleFinishedWork();
+			return;
 		}
-		if (worker.getWorkerRole().equals(italianRestaurantCashierRole)) {
-			italianRestaurantCashierRole = null;
+		else if (worker.getWorkerRole().equals(italianRestaurantCashierRole)) {
+			worker.roleFinishedWork();
+			return;
 		}
-		if (worker.getWorkerRole().equals(italianRestaurantCookRole)) {
-			italianRestaurantCookRole = null;
+		else if (worker.getWorkerRole().equals(italianRestaurantCookRole)) {
+			worker.roleFinishedWork();
+			return;
 			//restPanel.removeGui(cookGui);
 		}
 		//WAITERS AND ALT WAITERS
@@ -210,12 +222,12 @@ public class ItalianRestaurant {
 
 	public void removeWaiter(ItalianWaiterRole italianItalianWaiterRole) {
 		waiters.remove(italianItalianWaiterRole);
-		restPanel.removeGui(italianItalianWaiterRole.gui);
+		restPanel.removeGui(italianItalianWaiterRole.getGui());
 	}
 
 	public void removeCustomer(ItalianCustomerRole customerRole) {
 		customers.remove(customerRole);
-		restPanel.removeGui(customerRole.gui);
+		restPanel.removeGui(customerRole.getGui());
 	}
 
 	public void closeBuilding(){
@@ -223,12 +235,30 @@ public class ItalianRestaurant {
 		italianRestaurantHostRole.msgLeaveRole();
 		for (ItalianWaiterRole w1: waiters) {
 			w1.msgLeaveRole();
-			restPanel.removeGui(w1.gui);
+			restPanel.removeGui(w1.getGui());
 		}
 		italianRestaurantCookRole.msgLeaveRole();
 		restPanel.removeGui(cookGui);
 
 		italianRestaurantCashierRole.msgLeaveRole();
+	}
+
+	public void setClosestStop(Point point) {
+		closestStop = point;
+	}
+	
+	public void setClosestBusStopNumber (int n) 
+	{
+		busStopNumber = n;
+	}
+	
+	public BusStop getClosestBusStop ()
+	{
+		return Phonebook.getPhonebook().getAllBusStops().get(busStopNumber);
+	}
+	
+	public Point getClosestStop() {
+		return closestStop;
 	}
 }
 

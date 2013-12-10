@@ -10,7 +10,7 @@ import chineseRestaurant.interfaces.ChineseRestaurantWaiter;
 
 public class SeafoodRestaurantAltWaiterRole extends SeafoodRestaurantWaiterRole implements SeafoodRestaurantWaiter 
 {
-	protected String RoleName = "Alternative Waiter";
+	protected String RoleName = "Alternative AmericanRestaurantWaiter";
 	
 	public SeafoodRestaurantAltWaiterRole(Person person, String name, String title) 
 	{

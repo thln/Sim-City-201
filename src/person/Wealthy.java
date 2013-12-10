@@ -100,13 +100,5 @@ public class Wealthy extends Person {
 		//print("I am picking up all the rent money.");
 		AlertLog.getInstance().logInfo(AlertTag.HOUSING, name, "I am picking up all the rent money.");
 		money += Phonebook.getPhonebook().getHousingMaintenanceCompany().mailbox.pickUpRentMoney(this);
-
-		//		for (Role landlord: roles) {
-		//			//			if (landlord instanceof LandlordRole) {
-		//			//				landlord.setRoleActive();
-		//			//				stateChanged();
-		//			//				return;
-		//			//			}
-		//		}
 	}
 }

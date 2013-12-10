@@ -7,7 +7,7 @@ import person.Person;
 
 public class ItalianAltWaiterRole extends ItalianWaiterRole implements ItalianWaiter{
 	//private RevolvingStand theRevolvingStand;
-	protected String RoleName = "Alternative Waiter";
+	protected String RoleName = "Alternative AmericanRestaurantWaiter";
 
 	public ItalianAltWaiterRole(Person person, String name, String title) {
 		super(person, name, title);
@@ -16,7 +16,7 @@ public class ItalianAltWaiterRole extends ItalianWaiterRole implements ItalianWa
 	protected void PlaceOrder(ItalianMyCustomer customer) {
 		if(test)
 		{
-			print("Test Customer");
+			print("Test AmericanRestaurantCustomer");
 		}
 		else
 		{

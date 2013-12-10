@@ -14,9 +14,9 @@ import person.Worker;
 //import restaurant.WaiterAgent.myCustomerState;
 
 /** 
- * Restaurant HostAgent
+ * Restaurant AmericanRestaurantHostRole
   */
-//This is the Host Agent
+//This is the AmericanRestaurantHost Agent
 
 public class SeafoodRestaurantHostRole extends Role
 {
@@ -90,7 +90,7 @@ public class SeafoodRestaurantHostRole extends Role
 	public List<MyCustomer> MyCustomers = Collections.synchronizedList(new ArrayList<MyCustomer>());
 	public List<MyWaiter> MyWaiters = Collections.synchronizedList(new ArrayList<MyWaiter>());
 	public Collection<Table> tables;
-	private int NTABLES = 1; //Number of tables!! Check, possible race conditions here?
+	private int NTABLES = 1; //Number of americanRestaurantTables!! Check, possible race conditions here?
 	private int MAXTABLES = 9;
 	private int currentWaiter = 0;
 	private int currentNumberOfCustomers = 0;
@@ -102,7 +102,7 @@ public class SeafoodRestaurantHostRole extends Role
 		super(name);
 
 		//this.name = name;
-		// make some tables
+		// make some americanRestaurantTables
 		tables = new ArrayList<Table>(NTABLES);
 		for (int ix = 1; ix <= NTABLES; ix++) 
 		{
@@ -140,7 +140,7 @@ public class SeafoodRestaurantHostRole extends Role
 		{
 			NTABLES++;
 			tables.add(new Table(NTABLES));
-			print("Number of tables " + NTABLES);
+			print("Number of americanRestaurantTables " + NTABLES);
 			stateChanged();
 		}
 	}
@@ -295,7 +295,7 @@ public class SeafoodRestaurantHostRole extends Role
 				{
 					for(Table table : tables)
 					{
-						//Checking all Tables in list for any empty tables
+						//Checking all Tables in list for any empty americanRestaurantTables
 						if(!(table.isOccupied()))
 						{
 							//if there is an empty table and waiting customer, seat customer

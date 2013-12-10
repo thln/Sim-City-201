@@ -1,15 +1,13 @@
 package market.test.mock;
 
-import application.Restaurant;
-import chineseRestaurant.ChineseRestaurant;
+import market.MarketOrder;
+import market.interfaces.MarketCustomer;
+import market.interfaces.SalesPerson;
 import seafoodRestaurant.SeafoodRestaurant;
 import testing.EventLog;
 import testing.LoggedEvent;
 import testing.Mock;
-import market.MarketCustomerRole;
-import market.MarketOrder;
-import market.interfaces.MarketCustomer;
-import market.interfaces.SalesPerson;
+import chineseRestaurant.ChineseRestaurant;
 
 public class MockSalesPerson extends Mock implements SalesPerson {
 
@@ -23,7 +21,7 @@ public class MockSalesPerson extends Mock implements SalesPerson {
 	public void msgIWantProducts(MarketCustomer customer, String item, int numWanted) {
 	}
 
-	public void msgIWantProducts(Restaurant restaurant, String item, int numWanted) {
+	public void msgIWantProducts(ChineseRestaurant chineseRestaurant, String item, int numWanted) {
 	}
 
 	public void msgOrderFulfilled(MarketOrder o) {
@@ -38,11 +36,7 @@ public class MockSalesPerson extends Mock implements SalesPerson {
 		log.add(new LoggedEvent("Recieved msgPayment"));
 	}
 
-	public void msgPayment(ChineseRestaurant chineseRestaurant, double payment) {
-	}
-
-	public void msgPayment(SeafoodRestaurant seafoodRestaurant, double payment) {
-		
+	public void msgPayment(ChineseRestaurant restaurant, double payment) {
 	}
 	
 	//Actions
@@ -55,6 +49,12 @@ public class MockSalesPerson extends Mock implements SalesPerson {
 
 	public void askForPayment(MarketOrder o){
 
+	}
+
+	@Override
+	public void msgPayment(SeafoodRestaurant seafoodRestaurant, double payment) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -2,6 +2,8 @@ package application.gui.animation.agentGui;
 
 import java.awt.*;
 
+import application.Phonebook;
+
 public interface Gui {
 
     public void updatePosition();

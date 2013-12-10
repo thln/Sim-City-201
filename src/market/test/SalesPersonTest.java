@@ -30,7 +30,7 @@ public class SalesPersonTest extends TestCase {
 		chineseRestaurant = Phonebook.getPhonebook().getChineseRestaurant();
 		worker = new Worker("Worker", 50, "SalesPerson", "Market", 8, 12, 24);
 		salesPerson = new SalesPersonRole(worker, "SalesPerson", "MarketSalesPerson", market);
-		marketCustomer = new MockMarketCustomer("Mock Customer");
+		marketCustomer = new MockMarketCustomer("Mock AmericanRestaurantCustomer");
 		marketRunner = (MockMarketRunner) Phonebook.getPhonebook().getEastMarket().getMarketRunner(true);
 		UPSman = (MockUPSman) Phonebook.getPhonebook().getEastMarket().getUPSman(true);
 		cashier = (ChineseRestaurantMockCashier) Phonebook.getPhonebook().getChineseRestaurant().getCashier(true);
@@ -62,7 +62,7 @@ public class SalesPersonTest extends TestCase {
 				+ salesPerson.log.toString(), 1, salesPerson.log.size());
 
 		//Step 2
-		assertTrue("Sales Person's scheduler should have returned true (has an action to do on an Order from a Customer), but didn't.", salesPerson.pickAndExecuteAnAction());
+		assertTrue("Sales Person's scheduler should have returned true (has an action to do on an Order from a AmericanRestaurantCustomer), but didn't.", salesPerson.pickAndExecuteAnAction());
 
 		//Checking post condition for step 2
 		assertEquals("Mock Market Runner should have 1 event in the log after Sales Person scheduler is called. Instead, the SalesPerson's event log reads: "
@@ -82,7 +82,7 @@ public class SalesPersonTest extends TestCase {
 		assertTrue("Sales Person's scheduler should have returned true (has an action to do on an Order from a Market Runner) , but didn't.", salesPerson.pickAndExecuteAnAction());
 
 		//Checking post conditions step 4
-		assertEquals("MockMarketCustomer should have 1 event in the log after the scheduler is called. Instead, the MockCustomer's event log reads: "
+		assertEquals("MockMarketCustomer should have 1 event in the log after the scheduler is called. Instead, the AmericanRestaurantMockCustomer's event log reads: "
 				+ salesPerson.log.toString(), 1, salesPerson.log.size());
 
 		assertEquals("Sales Person's orders list should still only have 1 order ", salesPerson.orders.size(), 1);
@@ -116,7 +116,7 @@ public class SalesPersonTest extends TestCase {
 				+ salesPerson.log.toString(), 0, salesPerson.log.size());
 
 		//Step 1
-		salesPerson.msgIWantProducts((Restaurant) chineseRestaurant, "Steak", 1);
+		salesPerson.msgIWantProducts(chineseRestaurant, "Steak", 1);
 
 		//Checking post conditions for step 1
 		assertEquals("Sales Person should have 1 order in it", salesPerson.orders.size(), 1);
@@ -146,7 +146,7 @@ public class SalesPersonTest extends TestCase {
 		assertTrue("Sales Person's scheduler should have returned true (has an action to do on an Order from a Market Runner) , but didn't.", salesPerson.pickAndExecuteAnAction());
 
 		//Checking post conditions step 4
-		assertEquals("MockCashier should have 1 event in the log after the scheduler is called. Instead, the MockCustomer's event log reads: "
+		assertEquals("MockCashier should have 1 event in the log after the scheduler is called. Instead, the AmericanRestaurantMockCustomer's event log reads: "
 				+ cashier.log.toString(), 1, cashier.log.size());
 
 		assertEquals("Sales Person's orders list should still only have 1 order ", salesPerson.orders.size(), 1);

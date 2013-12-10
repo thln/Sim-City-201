@@ -47,7 +47,7 @@ public class GuardTest extends TestCase
 		assertTrue("1st MockTeller should have the state 'available' ", 
 				guard.getTellers().get(0).state == BankGuardRole.TellerState.available);
 
-		//Step 2: Customer arrives at bank
+		//Step 2: AmericanRestaurantCustomer arrives at bank
 		guard.msgArrivedAtBank(customer);
 
 		//Step 2 post-conditions
@@ -58,7 +58,7 @@ public class GuardTest extends TestCase
 				guard.pickAndExecuteAnAction());
 	
 		//Step 3 post-conditions
-		assertTrue("MockCustomer should have logged an event for being assigned to teller, but his last event logged reads instead: " 
+		assertTrue("AmericanRestaurantMockCustomer should have logged an event for being assigned to teller, but his last event logged reads instead: " 
 				+ customer.log.getLastLoggedEvent().toString(), 
 				customer.log.containsString("Assigned to bank teller " + teller.getName()));
 
@@ -121,7 +121,7 @@ public class GuardTest extends TestCase
 		assertTrue("1st MockTeller should have the state 'available' ", 
 				guard.getTellers().get(0).state == BankGuardRole.TellerState.available);
 
-		//Step 2: Customer 1 arrives at bank
+		//Step 2: AmericanRestaurantCustomer 1 arrives at bank
 		guard.msgArrivedAtBank(customer);
 
 		//Step 2 post-conditions
@@ -132,7 +132,7 @@ public class GuardTest extends TestCase
 				guard.pickAndExecuteAnAction());
 
 		//Step 3 post-conditions
-		assertTrue("MockCustomer should have logged an event for being assigned to teller, but his last event logged reads instead: " 
+		assertTrue("AmericanRestaurantMockCustomer should have logged an event for being assigned to teller, but his last event logged reads instead: " 
 				+ customer.log.getLastLoggedEvent().toString(), 
 				customer.log.containsString("Assigned to bank teller " + teller.getName()));
 
@@ -155,7 +155,7 @@ public class GuardTest extends TestCase
 		guard.pickAndExecuteAnAction();
 
 		//Step 5 post-conditions, second customer should have to wait
-		assertTrue("MockCustomer should have logged an event for no teller available, but his last event logged reads instead: " 
+		assertTrue("AmericanRestaurantMockCustomer should have logged an event for no teller available, but his last event logged reads instead: " 
 				+ customer2.log.getLastLoggedEvent().toString(), customer2.log.containsString("No teller available, must wait"));
 
 		assertFalse("Guard's scheduler should have returned false, but didn't.", 
@@ -174,7 +174,7 @@ public class GuardTest extends TestCase
 				guard.pickAndExecuteAnAction());
 
 		//step 7: assigning customer 2 to the teller
-		assertTrue("MockCustomer should have logged an event for being assigned to teller, but his last event logged reads instead: " 
+		assertTrue("AmericanRestaurantMockCustomer should have logged an event for being assigned to teller, but his last event logged reads instead: " 
 				+ customer.log.getLastLoggedEvent().toString(), 
 				customer.log.containsString("Assigned to bank teller " + teller.getName()));
 
@@ -198,7 +198,7 @@ public class GuardTest extends TestCase
 		assertEquals("Guard should have 0 tellers in list. It doesn't.", guard.getTellers().size(), 0); 
 
 
-		//Step 1: Customer arrives at bank
+		//Step 1: AmericanRestaurantCustomer arrives at bank
 		guard.msgArrivedAtBank(customer);
 
 		//Step 1 post-conditions
@@ -209,7 +209,7 @@ public class GuardTest extends TestCase
 				guard.pickAndExecuteAnAction());
 
 		//Step 2 post-conditions
-		assertTrue("MockCustomer should have logged an event for no teller available, but his last event logged reads instead: " 
+		assertTrue("AmericanRestaurantMockCustomer should have logged an event for no teller available, but his last event logged reads instead: " 
 				+ customer.log.getLastLoggedEvent().toString(), customer.log.containsString("No teller available, must wait"));
 
 		//Step 3: Teller arrives at work
@@ -224,7 +224,7 @@ public class GuardTest extends TestCase
 				guard.pickAndExecuteAnAction());
 		
 		//Step 4 post-conditions
-		assertTrue("MockCustomer should have logged an event for being assigned to teller, but his last event logged reads instead: " 
+		assertTrue("AmericanRestaurantMockCustomer should have logged an event for being assigned to teller, but his last event logged reads instead: " 
 				+ customer.log.getLastLoggedEvent().toString(), 
 				customer.log.containsString("Assigned to bank teller " + teller.getName()));
 
@@ -260,7 +260,7 @@ public class GuardTest extends TestCase
 		assertEquals("Guard should have 0 tellers in list. It doesn't.", guard.getTellers().size(), 0); 
 
 
-		//Step 1: Customer arrives at bank
+		//Step 1: AmericanRestaurantCustomer arrives at bank
 		guard.msgArrivedAtBank(customer);
 
 		//Step 1 post-conditions
@@ -271,7 +271,7 @@ public class GuardTest extends TestCase
 				guard.pickAndExecuteAnAction());
 
 		//Step 2 post-conditions
-		assertTrue("MockCustomer should have logged an event for no teller available, but his last event logged reads instead: " 
+		assertTrue("AmericanRestaurantMockCustomer should have logged an event for no teller available, but his last event logged reads instead: " 
 				+ customer.log.getLastLoggedEvent().toString(), customer.log.containsString("No teller available, must wait"));
 
 		//Step 3: Teller arrives at work
@@ -288,7 +288,7 @@ public class GuardTest extends TestCase
 				guard.pickAndExecuteAnAction());
 		
 		//Step 4 post-conditions
-		assertTrue("MockCustomer should have logged an event for being assigned to teller, but his last event logged reads instead: " 
+		assertTrue("AmericanRestaurantMockCustomer should have logged an event for being assigned to teller, but his last event logged reads instead: " 
 				+ customer.log.getLastLoggedEvent().toString(), 
 				customer.log.containsString("Assigned to bank teller " + teller.getName()));
 
