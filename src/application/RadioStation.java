@@ -1,19 +1,13 @@
 package application;
 
-//import java.io.FileInputStream;
-//import java.io.FileNotFoundException;
-//import java.io.IOException;
-//import java.io.InputStream;
+
+import java.io.FileInputStream;
 import java.net.URL;
-
-
-
 import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
-//import javax.print.DocFlavor.URL;
 import javax.sound.sampled.Clip;
 
 //import sun.audio.AudioPlayer;
@@ -35,14 +29,20 @@ public class RadioStation
 	
 	private void initMusic() 
 	{
+		//URL testURL = this.getClass().getClassLoader().getResource("res/audio/raveAudioMode.wav");
+		//URL standardCityURL = this.getClass().getClassLoader().getResource("res/audio/FurElise.wav");
+		//URL raveCityURL = this.getClass().getClassLoader().getResource("res/audio/ScaryMonstersAndNiceSprites.wav");
+		URL testURL = this.getClass().getClassLoader().getResource("src/res/audio/raveAudioMode.wav");
 		URL standardCityURL = this.getClass().getClassLoader().getResource("res/audio/FurElise.wav");
 		URL raveCityURL = this.getClass().getClassLoader().getResource("res/audio/ScaryMonstersAndNiceSprites.wav");
-		
+		//System.out.println(standardCityURL.getFile() + " " + raveCityURL.getFile() + " " + testURL.getFile());
+		//testURL.
 		try 
 		{
-			//AudioInputStream standardCityIn = AudioSystem.getAudioInputStream(standardCityURL);
+			//AudioInputStream standardCityIn = new AudioInputStream(new FileInputStream("res/audio/FurElise.wav"));
+			AudioInputStream standardCityIn = AudioSystem.getAudioInputStream(testURL);
 			System.out.println("1");
-			AudioInputStream standardCityIn = AudioSystem.getAudioInputStream(getClass().getResourceAsStream("res/audio/FurElise.wav"));
+			//AudioInputStream standardCityIn = AudioSystem.getAudioInputStream(getClass().getResourceAsStream("res/audio/FurElise.wav"));
 			System.out.println("2");
 			standardCityClip = AudioSystem.getClip();
 			System.out.println("3");
@@ -56,8 +56,8 @@ public class RadioStation
  
 		try 
 		{
-			//AudioInputStream raveCityIn = AudioSystem.getAudioInputStream(raveCityURL);
-			AudioInputStream raveCityIn = AudioSystem.getAudioInputStream(getClass().getResourceAsStream("res/audio/ScaryMonstersAndNiceSprites.wav"));
+			AudioInputStream raveCityIn = AudioSystem.getAudioInputStream(raveCityURL);
+			//AudioInputStream raveCityIn = AudioSystem.getAudioInputStream(getClass().getResourceAsStream("res/audio/ScaryMonstersAndNiceSprites.wav"));
 			raveCityClip = AudioSystem.getClip();
 			raveCityClip.open(raveCityIn);
 		} 

@@ -73,6 +73,7 @@ public class AddPanel extends JPanel implements ActionListener {
 	public AddPanel(ControlPanel cp, Application app)
 	{
 		try {
+			//InputStream test = new FileInputStream("res/audio/FurElise.wav");
 			InputStream test = new FileInputStream("res/audio/raveAudioMode.wav");
 			BGM = new AudioStream(test);
 	        //MGP.start(BGM);
