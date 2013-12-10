@@ -124,7 +124,7 @@ public class Worker extends Person {
 			}
 		}
 
-		if (name == "Erin"){
+		if (myJob.jobPlace == "East Market"){
 			prepareForWork();
 		}
 		

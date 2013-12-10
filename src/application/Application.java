@@ -10,7 +10,6 @@ import java.util.TimerTask;
 
 import javax.swing.JPanel;
 
-import market.Market;
 import person.Crook;
 import person.Deadbeat;
 import person.Person;
@@ -19,8 +18,6 @@ import person.Worker;
 import americanRestaurant.AmericanRestaurantCookRole;
 import application.gui.animation.AnimationPanel;
 import application.gui.animation.agentGui.PersonGui;
-import bank.Bank;
-import chineseRestaurant.ChineseRestaurant;
 
 
 public class Application extends JPanel {
@@ -287,9 +284,9 @@ public class Application extends JPanel {
 //		bank1a.startThread();
 //		bank1b.startThread();	
 //		bank1c.startThread();
-//		market1d.startThread();
+		market1d.startThread();
 		market1e.startThread();
-//		market1f.startThread();
+		market1f.startThread();
 //		rest1g.startThread();
 //		rest1h.startThread();
 //		rest1i.startThread();
