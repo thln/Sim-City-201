@@ -51,6 +51,9 @@ public class HousingResidentGui extends HousingGui {
     public void draw(Graphics2D g) {
         g.setColor(Color.BLUE);
         g.fillRect(xPos, yPos, 20, 20);
+        g.setColor(Color.BLACK);
+        if(agent != null)
+        	g.drawString(agent.getName(), xPos, yPos);
     }
 
 	public boolean isPresent() {

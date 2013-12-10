@@ -28,6 +28,7 @@ public class ApartmentResidentRole extends Role{
 	//ACTIONS
 	public void GoToUnit(int unit) {
 		gui.DoDoToUnit(unit);
+		state = ResidentState.none;
 	}
 	
 	//utilities

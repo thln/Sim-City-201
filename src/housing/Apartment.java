@@ -23,8 +23,7 @@ public class Apartment {
 			aptUnits = apartmentPanel.getAptUnits();
 			for(int i=0;i<aptUnits.size();i++) {
 				if(aptUnits.get(i).getOccupantName().equals(ARR.getName())) {
-					ARR.setUnit(i);
-					//System.out.println(ARR.getName() + " is going home to apartment " + i);
+					ARR.setUnit(i+1);
 				}
 			}
 			ApartmentResidentGui ARG = new ApartmentResidentGui(ARR);

@@ -332,7 +332,7 @@ public abstract class Person extends Agent{
 
 	protected void goToSleep() {
 		gui.walk = true;
-		/*
+		
 		getGui().DoGoHome();
 		try {
 			atDestination.acquire();
@@ -340,7 +340,7 @@ public abstract class Person extends Agent{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			//
-		}*/
+		}
 		
 		//person is part of an apartment
 		if(getHousing().type.toLowerCase().contains("apartment")) {
@@ -350,7 +350,6 @@ public abstract class Person extends Agent{
 						ApartmentResidentRole HRR = (ApartmentResidentRole) cust1;
 						if (Phonebook.getPhonebook().getEastApartment().arrived(HRR)) {
 							currentRoleName = "EAST Apartment Resident";
-							//System.out.println(currentRoleName);
 							cust1.setRoleActive();
 							stateChanged();
 						}
@@ -363,7 +362,6 @@ public abstract class Person extends Agent{
 						ApartmentResidentRole HRR = (ApartmentResidentRole) cust1;
 						if (Phonebook.getPhonebook().getWestApartment().arrived(HRR)) {
 							currentRoleName = "WEST Apartment Resident";
-							//System.out.println(currentRoleName);
 							cust1.setRoleActive();
 							stateChanged();
 						}
@@ -373,13 +371,12 @@ public abstract class Person extends Agent{
 			}		
 		
 		//person is NOT part of an apartment
-		} else if(getHousing().type.toLowerCase().contains("NANANANAN")){  //CHANGE BACK TO MANSION
+		} else if(getHousing().type.toLowerCase().contains("Mansion")){  //CHANGE BACK TO MANSION
 			for (Role cust1 : roles) { 
 				if (cust1 instanceof HousingResidentRole) {
 					HousingResidentRole HRR = (HousingResidentRole) cust1;
 					if (getHousing().arrived(HRR)) {
 						currentRoleName = "Housing Resident";
-						System.out.println(currentRoleName);
 						cust1.setRoleActive();
 						stateChanged();
 					}
