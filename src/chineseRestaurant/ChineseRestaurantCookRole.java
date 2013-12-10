@@ -7,18 +7,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.Semaphore;
 
-import chineseRestaurant.interfaces.ChineseRestaurantCook;
 import market.Market;
 import person.Person;
 import person.Role;
-import person.Worker;
-import person.Role.RoleState;
 import application.Phonebook;
 import application.gui.animation.agentGui.RestaurantCookGui;
-import application.gui.animation.agentGui.RestaurantCustomerGui;
-import application.gui.trace.AlertLog;
+import chineseRestaurant.interfaces.ChineseRestaurantCook;
 
 /**
  * Restaurant Cook Role
@@ -41,7 +36,7 @@ public class ChineseRestaurantCookRole extends Role implements ChineseRestaurant
 	int inventoryChecker = 0;
 
 	public List<ChineseRestaurantOrder> myOrders = Collections.synchronizedList(new ArrayList<ChineseRestaurantOrder>());
-	//private List<myMarket> markets = Collections.synchronizedList(new ArrayList<myMarket>());
+	private List<myMarket> markets = Collections.synchronizedList(new ArrayList<myMarket>());
 	private List<Stock> stockFulfillment = Collections.synchronizedList(new ArrayList<Stock>());
 
 	private Map<String, Food> foodMap = new HashMap<String, Food>(); {
@@ -55,7 +50,7 @@ public class ChineseRestaurantCookRole extends Role implements ChineseRestaurant
 		super(p1, pName, rName);
 		chineseRestaurant = restaurant;
 		//Starts revolving stand timer to check revolving stand
-		startRevolvingStandTimer();
+		//startRevolvingStandTimer();
 		//theRevolvingStand = Phonebook.getPhonebook().getRestaurant().getRevolvingStand();
 
 	}
@@ -63,7 +58,7 @@ public class ChineseRestaurantCookRole extends Role implements ChineseRestaurant
 	public ChineseRestaurantCookRole(String roleName, ChineseRestaurant chineseRestaurant) {
 		super(roleName);
 		//Starts revolving stand timer to check revolving stand
-		startRevolvingStandTimer();
+		//startRevolvingStandTimer();
 		//this.restaurant = restaurant;
 		//theRevolvingStand = Phonebook.getPhonebook().getRestaurant().getRevolvingStand();
 	}
@@ -87,25 +82,21 @@ public class ChineseRestaurantCookRole extends Role implements ChineseRestaurant
 		}
 	}
 
-	public void msgOrderDone(ChineseRestaurantOrder chineseRestaurantOrder) 
-	{
+	public void msgOrderDone(ChineseRestaurantOrder chineseRestaurantOrder) {
 		chineseRestaurantOrder.setDone();
 		stateChanged();
 	}
 
-	public void msgCantFulfill(String choice, int amount, int orderedAmount) 
-	{
-		synchronized(stockFulfillment){
+	public void msgCantFulfill(String choice, int amount, int orderedAmount) {
+		synchronized(stockFulfillment) {
 			print("Market cannot fulfill order for " + choice + "-- Amount: " + amount + " Ordered: " + orderedAmount);
 			stockFulfillment.add(new Stock(choice, amount, orderedAmount, Phonebook.getPhonebook().getEastMarket()));
 			stateChanged();
 		}
 	}
 
-	public void msgOrderFulfillment(String choice, int amount, int orderedAmount) 
-	{
-		synchronized(stockFulfillment)
-		{
+	public void msgOrderFulfillment(String choice, int amount, int orderedAmount) {
+		synchronized(stockFulfillment) {
 			print("Got fullfillment for " + choice + "-- Amount: " + amount + " Ordered: " + orderedAmount);
 			stockFulfillment.add(new Stock(choice, amount, orderedAmount, Phonebook.getPhonebook().getEastMarket()));
 			stateChanged();
@@ -122,8 +113,7 @@ public class ChineseRestaurantCookRole extends Role implements ChineseRestaurant
 	/**
 	 * Scheduler
 	 */
-	public boolean pickAndExecuteAnAction() 
-	{
+	public boolean pickAndExecuteAnAction() {
 		/* Think of this next rule as:
             Does there exist a table and customer,
             so that table is unoccupied and customer is waiting.
@@ -132,31 +122,26 @@ public class ChineseRestaurantCookRole extends Role implements ChineseRestaurant
 
 		inventoryChecker++;
 
-		if (inventoryChecker == 500) 
-		{
+		if (inventoryChecker == 500) {
 			checkInventory();
 			return true;
 		}
 
 
-		if(!Phonebook.getPhonebook().getChineseRestaurant().getRevolvingStand().isStandEmpty()) {
+		if (!Phonebook.getPhonebook().getChineseRestaurant().getRevolvingStand().isStandEmpty()) {
 			takeRevolvingStandOrder();
 			return true;
 		}
 
 		synchronized(myOrders) {
-			if (!myOrders.isEmpty()) 
-			{
-				for (ChineseRestaurantOrder chineseRestaurantOrder : myOrders) 
-				{
-					if (chineseRestaurantOrder.isOpen()) 
-					{
+			if (!myOrders.isEmpty()) {
+				for (ChineseRestaurantOrder chineseRestaurantOrder : myOrders) {
+					if (chineseRestaurantOrder.isOpen()) {
 						cookOrder(chineseRestaurantOrder);
 						return true;//return true to the abstract agent to re-invoke the scheduler.
 					}
 
-					if (chineseRestaurantOrder.isDone()) 
-					{
+					if (chineseRestaurantOrder.isDone()) {
 						doneCooking(chineseRestaurantOrder);
 						return true;
 					}
@@ -164,10 +149,8 @@ public class ChineseRestaurantCookRole extends Role implements ChineseRestaurant
 			}
 		}
 
-		synchronized(stockFulfillment)
-		{
-			if (!stockFulfillment.isEmpty()) 
-			{
+		synchronized(stockFulfillment) {
+			if (!stockFulfillment.isEmpty()) {
 				updateStock();
 				return true;
 			}
@@ -191,8 +174,7 @@ public class ChineseRestaurantCookRole extends Role implements ChineseRestaurant
 	/**
 	 * Actions
 	 */
-	private void takeRevolvingStandOrder()
-	{
+	private void takeRevolvingStandOrder() {
 		print("Taking order from Revolving Stand.");
 		myOrders.add(Phonebook.getPhonebook().getChineseRestaurant().getRevolvingStand().takeOrder());
 	}
@@ -281,16 +263,16 @@ public class ChineseRestaurantCookRole extends Role implements ChineseRestaurant
 	private void checkInventory(String choice) {
 		if (foodMap.get(choice).quantity < foodMap.get(choice).threshold) {
 
-			Market myMark = null;
+			myMarket myMark = null;
 
-			if(Phonebook.getPhonebook().getEastMarket().inventory.get(choice).amount != 0)
-				//if (MM.availableChoices.get(choice) == true) 
-			{
-				myMark = Phonebook.getPhonebook().getEastMarket();
+			for (myMarket MM: markets) {
+				if (MM.availableChoices.get(choice) == true) {
+					myMark = MM;
+					break;
+				}
 			}
 
-			if (myMark == null) 
-			{
+			if (myMark == null) {
 				print("Out of markets to order from for " + choice);
 				return;
 			}
@@ -305,8 +287,8 @@ public class ChineseRestaurantCookRole extends Role implements ChineseRestaurant
 				orderAmount = foodMap.get(choice).capacity - stockOnHand;
 				foodMap.get(choice).amountOrdered = orderAmount;
 
-				print("Requesting " + Phonebook.getPhonebook().getEastMarket().getName() + " for " + orderAmount + " " + choice + "(s)");
-				myMark.salesPersonRole.msgIWantProducts(Phonebook.getPhonebook().getChineseRestaurant(), choice, orderAmount);
+				print("Requesting " + myMark.market.getName() + " for " + orderAmount + " " + choice + "(s)");
+				myMark.market.salesPersonRole.msgIWantProducts(Phonebook.getPhonebook().getChineseRestaurant(), choice, orderAmount);
 			}
 		}
 	}
@@ -395,11 +377,9 @@ public class ChineseRestaurantCookRole extends Role implements ChineseRestaurant
 			return false;
 	}
 
-	/*
-	public void addMarket(Market market) 
-	{
+	public void addMarket(Market market) {
 		markets.add(new myMarket(market));
-	}*/
+	}
 
 	public void deleteInventory() {
 		foodMap.get("Chicken").quantity = 0;
@@ -408,6 +388,7 @@ public class ChineseRestaurantCookRole extends Role implements ChineseRestaurant
 		foodMap.get("Pizza").quantity = 0;
 		print("Deleted all food inventory");
 	}
+	
 	/*
 	public void setRevolvingStand(RevolvingStand rs) {
 		theRevolvingStand = rs;
@@ -457,7 +438,7 @@ public class ChineseRestaurantCookRole extends Role implements ChineseRestaurant
 		startRevolvingStandTimer();
 	}
 
-	/*
+
 	public class myMarket 
 	{
 		Market market;
@@ -473,7 +454,7 @@ public class ChineseRestaurantCookRole extends Role implements ChineseRestaurant
 		{
 			this.market = market;
 		}
-	}*/
+	}
 
 	public void setGui(RestaurantCookGui gui) {
 		cookGui = gui;
