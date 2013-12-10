@@ -400,19 +400,19 @@ public class Phonebook{
 			number = n;
 		}
 
-		public Rectangle getIntersection() {
+		synchronized public Rectangle getIntersection() {
 			return intersection;
 		}
 
-		public void setIntersection(Rectangle intersection) {
+		synchronized  public void setIntersection(Rectangle intersection) {
 			this.intersection = intersection;
 		}
 
-		public boolean isIntersectionBusy() {
+		synchronized public boolean isIntersectionBusy() {
 			return intersectionBusy;
 		}
 
-		public void setIntersectionBusy(boolean intersectionBusy) {
+		synchronized public void setIntersectionBusy(boolean intersectionBusy) {
 			this.intersectionBusy = intersectionBusy;
 		}
 	}
@@ -429,19 +429,19 @@ public class Phonebook{
 			number = n;
 		}
 
-		public Rectangle getCrosswalk() {
+		synchronized public Rectangle getCrosswalk() {
 			return crosswalk;
 		}
 
-		public void setCrosswalk(Rectangle crosswalk) {
+		synchronized public void setCrosswalk(Rectangle crosswalk) {
 			this.crosswalk = crosswalk;
 		}
 
-		public boolean isCrosswalkBusy() {
+		synchronized public boolean isCrosswalkBusy() {
 			return crosswalkBusy;
 		}
 
-		public void setCrosswalkBusy(boolean crosswalkBusy) {
+		synchronized public void setCrosswalkBusy(boolean crosswalkBusy) {
 			this.crosswalkBusy = crosswalkBusy;
 		}
 	}
@@ -458,19 +458,19 @@ public class Phonebook{
 			number = n;
 		}
 
-		public Rectangle getBusParking() {
+		synchronized public Rectangle getBusParking() {
 			return busParking;
 		}
 
-		public void setBusParking(Rectangle busParking) {
+		synchronized public void setBusParking(Rectangle busParking) {
 			this.busParking = busParking;
 		}
 
-		public boolean isBusParkingBusy() {
+		synchronized public boolean isBusParkingBusy() {
 			return busParkingBusy;
 		}
 
-		public void setBusParkingBusy(boolean busParkingBusy) {
+		synchronized public void setBusParkingBusy(boolean busParkingBusy) {
 			this.busParkingBusy = busParkingBusy;
 		}
 	}

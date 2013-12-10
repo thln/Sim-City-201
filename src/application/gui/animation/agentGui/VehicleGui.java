@@ -98,7 +98,7 @@ public abstract class VehicleGui extends CityGui {
 	}
 
 
-	public void inACrosswalk() {
+	synchronized public void inACrosswalk() {
 		me.setLocation(xPos, yPos);
 		if (Phonebook.getPhonebook().crosswalk1.getCrosswalk().intersects(me) &&
 				!(crosswalkState == VehicleState.inCrosswalk1)) {
@@ -163,7 +163,7 @@ public abstract class VehicleGui extends CityGui {
 		}
 	}
 
-	public void leftACrosswalk() {
+	synchronized public void leftACrosswalk() {
 		me.setLocation(xPos, yPos);
 		if ((this instanceof BusGuiVertical) && crosswalkState == VehicleState.inCrosswalk1)
 		System.err.println(this + "crosswalk intersect state = " + Phonebook.getPhonebook().crosswalk1.getCrosswalk().intersects(me));
@@ -232,7 +232,7 @@ public abstract class VehicleGui extends CityGui {
 	}
 
 
-	public void inBusParking() {
+	synchronized public void inBusParking() {
 		me.setLocation(xPos, yPos);
 		if (Phonebook.getPhonebook().busParking1H.getBusParking().intersects(me) &&
 				!(busParkingState == VehicleState.inBusParking1H)) {
@@ -284,7 +284,7 @@ public abstract class VehicleGui extends CityGui {
 		}
 	}
 
-	public void leftBusParking() {
+	synchronized public void leftBusParking() {
 		me.setLocation(xPos, yPos);
 		if (!Phonebook.getPhonebook().busParking1H.getBusParking().intersects(me)
 				&& (busParkingState == VehicleState.inBusParking1H)) {
