@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -25,7 +24,10 @@ import javax.swing.Timer;
 import application.Phonebook;
 import application.gui.animation.agentGui.BusGuiHorizontal;
 import application.gui.animation.agentGui.BusGuiVertical;
+import application.gui.animation.agentGui.CopGui;
 import application.gui.animation.agentGui.Gui;
+import application.gui.animation.agentGui.VehicleHorizontalGui;
+import application.gui.animation.agentGui.VehicleVerticalGui;
 
 public class CityPanel extends JPanel implements ActionListener, MouseListener {
 
@@ -43,17 +45,29 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 	ImageIcon bank = new ImageIcon("res/bank.png", "bank");
 	ImageIcon restaurant = new ImageIcon("res/restaurant.png", "restaurant");
 	ImageIcon market = new ImageIcon("res/market.png", "market");
-	ImageIcon house = new ImageIcon("res/house.png", "house");
+	ImageIcon house = new ImageIcon("res/mansion.png", "house");
 	ImageIcon apartment = new ImageIcon("res/apartment.png", "apartment");
 	ImageIcon rave = new ImageIcon("res/rave.jpeg");
 	ImageIcon park = new ImageIcon("res/grass.jpg", "park");
+	ImageIcon hollywoodSign = new ImageIcon("res/hollywoodSign.png");
+	ImageIcon oneWaySignLeft = new ImageIcon("res/OneWayLeft.png");
+	ImageIcon oneWaySignRight = new ImageIcon("res/OneWayRight.png");
+	ImageIcon oneWaySignUp = new ImageIcon("res/OneWayUp.png");
+	ImageIcon oneWaySignDown = new ImageIcon("res/OneWayDown.png");
+	ImageIcon bench = new ImageIcon("res/bench.png");
+	ImageIcon fountain = new ImageIcon("res/fountain.png");
 
 	public ImageIcon roadHorizontal = new ImageIcon("res/roadsHorizontal.png");
 	public ImageIcon roadVertical = new ImageIcon("res/roadsVertical.png");
-	public ImageIcon busStop = new ImageIcon("res/bus_stop.png");	
+	public ImageIcon busStop = new ImageIcon("res/bus_stop.png");
+	public ImageIcon tree = new ImageIcon("res/tree.png");
+	public ImageIcon bush = new ImageIcon("res/bush.png");
 	public BusGuiHorizontal busA = new BusGuiHorizontal();
 	public BusGuiVertical busB = new BusGuiVertical();
-
+	public VehicleHorizontalGui carA = new VehicleHorizontalGui();
+	public VehicleVerticalGui carB = new VehicleVerticalGui();
+	public CopGui copCar = new CopGui();
+	
 	public CityPanel(AnimationPanel animationPanel) {
 
 		this.animationPanel = animationPanel;
@@ -67,7 +81,7 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		setLayout(null);
 
 		try {
-			background = ImageIO.read(new File("res/concrete.jpg"));
+			background = ImageIO.read(new File("res/tiles.png"));
 		} catch (IOException e) {
 		}
 
@@ -83,7 +97,7 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		addBuilding("East Bank", (WINDOWX / 2), 260);
 		addBuilding("West Bank", (WINDOWX / 2)-105, 10);
 
-		addBuilding("House", 50, 115);
+		addBuilding("House", 25, 115);
 		addBuilding("West Apartment", 0, 0);
 		addBuilding("East Apartment", 510, WINDOWY-55);
 		addBuilding("Park",(WINDOWX/2)-80,(WINDOWY/2)-47);
@@ -91,6 +105,9 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 
 		addGui(busA);
 		addGui(busB);
+		addGui(carA);
+		addGui(carB);
+		addGui(copCar);
 
 		Timer timer = new Timer(10, this);
 		timer.start();
@@ -171,15 +188,54 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		g2.drawImage(busStop.getImage(), 127, 230, null);
 		g2.drawImage(busStop.getImage(), 420, 28, null);
 		g2.drawImage(busStop.getImage(), 420, 230, null);
-
-		//Busses
-
-
+		
+		//One Way Signs
+		g2.drawImage(oneWaySignLeft.getImage(), 330, 220, null);
+		g2.drawImage(oneWaySignRight.getImage(), 270, 30, null);
+		g2.drawImage(oneWaySignUp.getImage(), 200, 140, null);
+		g2.drawImage(oneWaySignDown.getImage(), 420, 110, null);
+		
+		//Benches
+		g2.drawImage(bench.getImage(), 5, 285, null);
+		g2.drawImage(bench.getImage(), 530, 40, null);
+		g2.drawImage(bench.getImage(), 440, 110, null);
+		g2.drawImage(bench.getImage(), 530, 230, null);
+		
+		//Fountain
+		g2.drawImage(fountain.getImage(), 215, 275, null);
+		
 		//Drawing all buildings
 		for (int i=0; i<buildings.size(); i++ ) {
 			Building b = buildings.get(i);
 			g2.drawImage(b.getMyImage().getImage(), b.getxLocation(), b.getyLocation(), null);
 		}
+		
+		//Park
+		g2.drawImage(hollywoodSign.getImage(), 230, 138, null);
+		g2.drawImage(bush.getImage(), 214, 105, null);
+		g2.drawImage(bush.getImage(), 244, 105, null);
+		g2.drawImage(bush.getImage(), 274, 105, null);
+		g2.drawImage(bush.getImage(), 304, 105, null);
+		g2.drawImage(bush.getImage(), 334, 105, null);
+		
+		g2.drawImage(bush.getImage(), 214, 165, null);
+		g2.drawImage(bush.getImage(), 244, 165, null);
+		g2.drawImage(bush.getImage(), 274, 165, null);
+		g2.drawImage(bush.getImage(), 304, 165, null);
+		g2.drawImage(bush.getImage(), 334, 165, null);
+
+		
+		
+		//Mansion trees
+		g2.drawImage(tree.getImage(), 0, 100, null);
+		g2.drawImage(tree.getImage(), 0, 125, null);
+		g2.drawImage(tree.getImage(), 0, 150, null);
+		g2.drawImage(tree.getImage(), 125, 100, null);
+		g2.drawImage(tree.getImage(), 125, 125, null);
+		g2.drawImage(tree.getImage(), 125, 150, null);
+
+
+
 
 		//Drawing all People guis
 		synchronized (guis) {
