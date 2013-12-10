@@ -291,17 +291,17 @@ public class Application extends JPanel {
 
 		//Starting Threads
 		//Shift 1
-//		bank1a.startThread();
-//		bank1b.startThread();	
-//		bank1c.startThread();
+		bank1a.startThread();
+		bank1b.startThread();	
+		bank1c.startThread();
 		market1d.startThread();
 		market1e.startThread();
 		market1f.startThread();
-//		rest1g.startThread();
-//		rest1h.startThread();
-//		rest1i.startThread();
-//		rest1j.startThread();
-//		rest1k.startThread();
+		rest1g.startThread();
+		rest1h.startThread();
+		rest1i.startThread();
+		rest1j.startThread();
+		rest1k.startThread();
 		bank3a.startThread();
 		bank3b.startThread();	
 		bank3c.startThread();

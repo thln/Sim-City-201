@@ -94,7 +94,9 @@ public class BankGuardRole extends Role implements BankGuard {
 		print("AmericanRestaurantCustomer leaving, teller became available");
 		MyTeller correct = findTeller(t1);
 		correct.state = TellerState.available;
-		stateChanged();
+		if (person != null) {
+			stateChanged();
+		}
 	}
 
 	public void msgAtDestination() {

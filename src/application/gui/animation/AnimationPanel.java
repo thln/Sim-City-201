@@ -10,7 +10,7 @@ import application.Phonebook;
 import housing.*;
 import application.gui.animation.agentGui.*;
 
-public class AnimationPanel extends JPanel implements MouseListener {
+public class AnimationPanel extends JPanel implements MouseListener, ActionListener {
 
 	final static int WINDOWX = 600;
 	final static int WINDOWY = 325;
@@ -87,6 +87,8 @@ public class AnimationPanel extends JPanel implements MouseListener {
 			buildingPanels.add(panel, name);
 			add(BorderLayout.NORTH, cityPanel);
 			add(BorderLayout.SOUTH, buildingPanels);
+			Timer paintTimer = new Timer(10, this);
+			paintTimer.start();
 		}
 
 		
@@ -320,6 +322,19 @@ public class AnimationPanel extends JPanel implements MouseListener {
 					if(unit.type.toLowerCase().contains("west")) {
 						ApartmentPanel Apt = (ApartmentPanel) building.myBuildingPanel;
 						Apt.addAptUnit(unit);
+					}
+				}
+			}
+		}
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		synchronized(buildings) {
+			for(Building building: buildings) {
+				if(!building.myBuildingPanel.isVisible()) {
+					for(Gui gui : building.myBuildingPanel.guis) {
+						gui.updatePosition();
 					}
 				}
 			}
