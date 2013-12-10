@@ -58,7 +58,7 @@ public class UPSmanTest extends TestCase {
 				+ UPSman.log.toString(), 0, UPSman.log.size());
 
 		//Step 1
-		UPSman.msgDeliverOrder(new MarketOrder((Restaurant) chineseRestaurant, "Steak", 1));
+		UPSman.msgDeliverOrder(new MarketOrder(chineseRestaurant, "Steak", 1));
 
 		//Checking post conditions for step 1
 		assertEquals("UPSman should have 1 order in it", UPSman.orders.size(), 1);

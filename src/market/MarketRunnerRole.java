@@ -88,13 +88,13 @@ public class MarketRunnerRole extends Role implements MarketRunner {
 				print("Fulfilled order for customer: " + ((MarketCustomerRole) o.customer).getName());
 			}
 
-			marketRunnerGui.DoGoToSalesPerson();
-			try {
-				this.atDestination.acquire();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+//			marketRunnerGui.DoGoToSalesPerson();
+//			try {
+//				this.atDestination.acquire();
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 			market.getSalesPerson(test).msgOrderFulfilled(o);
 			orders.remove(o);
 		}
