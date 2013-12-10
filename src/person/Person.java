@@ -144,18 +144,28 @@ public abstract class Person extends Agent{
 			gui.walk = gui.decideForBus("West Bank");
 
 		//gui.walk = true;
-		gui.walk = false;
+		//gui.walk = false;
 		if (gui.walk)
 			gui.popToMiddle();
 
 		if (!gui.walk){
 			//goToBusStop(2);
 			print("Destination bus Stop: " + Phonebook.getPhonebook().getEastBank().getClosestBusStop().getBusStopNumber());
-			goToBusStop(Phonebook.getPhonebook().getEastBank().getClosestBusStop().getBusStopNumber());
-			//gui.popToMiddle();
-			//goToBusStop(gu)
-			//What is this supposed to mean?
-			//			if (home.type.equals("East Apartment")){
+			//goToBusStop(Phonebook.getPhonebook().getEastBank().getClosestBusStop().getBusStopNumber());
+			if (home.type.equals("East Apartment"))
+			{
+				goToBusStop(Phonebook.getPhonebook().getEastBank().getClosestBusStop().getBusStopNumber());
+			//gui.doGoToBus(Phonebook.getPhonebook().getEastBank().getClosestStop().getX(),
+			//		Phonebook.getPhonebook().getEastBank().getClosestStop().getY());
+			}
+			else 
+			{
+				goToBusStop(Phonebook.getPhonebook().getWestBank().getClosestBusStop().getBusStopNumber());
+			//gui.doGoToBus(Phonebook.getPhonebook().getWestBank().getClosestStop().getX(),
+			//		Phonebook.getPhonebook().getWestBank().getClosestStop().getY());
+			}
+			
+//			if (home.type.equals("East Apartment")){
 //				gui.doGoToBus(Phonebook.getPhonebook().getEastBank().getClosestStop().getX(),
 //						Phonebook.getPhonebook().getEastBank().getClosestStop().getY());
 //			}

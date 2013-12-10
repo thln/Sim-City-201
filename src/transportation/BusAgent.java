@@ -27,7 +27,6 @@ public class BusAgent extends Agent{
 	BusGuiHorizontal guiH;
 	BusGuiVertical guiV;
 	String name;
-	private Semaphore pickingUpPeople = new Semaphore(0, true);
 
 	public enum busState {Driving, ReachedStop, DroppedOffPeople, PickingUpPeople, Waiting, Leaving};
 	busState state = busState.Driving;

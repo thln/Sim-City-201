@@ -68,8 +68,8 @@ public class PersonGui extends CityGui {
 	public PersonGui(Person p) {
 		this.agent = p;
 		if(p.home.type.equals("West Apartment")) {
-			xHome = 200;
-			yHome = 200;			
+			xHome = 20;
+			yHome = 20;			
 		}
 		if(p.home.type.equals("East Apartment")) {
 			xHome = 520;
@@ -77,7 +77,7 @@ public class PersonGui extends CityGui {
 		}
 		if (p.home.type.equals("Mansion")){
 			xHome = 20;
-			yHome = 100;
+			yHome = 110;
 		}
 
 		setxPos(xHome);
@@ -338,6 +338,7 @@ public class PersonGui extends CityGui {
 		}
 		else
 		{//forth bus stop
+			System.out.println("X: " + xPos + " Y: " + yPos);
 			return 3;
 		}
 	}

@@ -96,30 +96,30 @@ public class Phonebook{
 		
 		eastBank = new Bank("East Bank");
 		eastBank.setClosestStop(busStops.get(3)); 		//setting building's closest bus stop
-		eastBank.setClosestBusStopNumber(3);
+		eastBank.setClosestBusStopNumber(3);			//setting building's closest bus stop
 		
 		westBank = new Bank("West Bank");
-		westBank.setClosestStop(busStops.get(0));		//setting building's closest bus stop
-		westBank.setClosestBusStopNumber(0);
+		westBank.setClosestStop(busStops.get(1));		//setting building's closest bus stop
+		westBank.setClosestBusStopNumber(1);			//setting building's closest bus stop
 		
 		eastMarket = new Market("East Market");
-		eastMarket.setClosestStop(busStops.get(1));		//setting building's closest bus stop
-		eastMarket.setClosestBusStopNumber(1);
+		eastMarket.setClosestStop(busStops.get(2));		//setting building's closest bus stop
+		eastMarket.setClosestBusStopNumber(2);			//setting building's closest bus stop
 		
 		westMarket = new Market("West Market");
-		westMarket.setClosestStop(busStops.get(0));		//setting building's closest bus stop
-		westMarket.setClosestBusStopNumber(0);
+		westMarket.setClosestStop(busStops.get(1));		//setting building's closest bus stop
+		westMarket.setClosestBusStopNumber(1);			//setting building's closest bus stop
 		
 		seafoodRestaurant = new SeafoodRestaurant("Seafood Restaurant");
 
 		chineseRestaurant = new ChineseRestaurant("Chinese Restaurant");
-		chineseRestaurant.setClosestStop(busStops.get(1));		//setting building's closest bus stop
-		chineseRestaurant.setClosestBusStopNumber(1);
+		chineseRestaurant.setClosestStop(busStops.get(2));		//setting building's closest bus stop
+		chineseRestaurant.setClosestBusStopNumber(2);			//setting building's closest bus stop
 		
 		italianRestaurant = new ItalianRestaurant("Italian Restaurant");
 		
-		italianRestaurant.setClosestStop(busStops.get(1));		//setting building's closest bus stop
-		
+		italianRestaurant.setClosestStop(busStops.get(2));		//setting building's closest bus stop
+		chineseRestaurant.setClosestBusStopNumber(2);			//setting building's closest bus stop
 
 		/* For future use after all the restaurants have been integrated
 		 * 
