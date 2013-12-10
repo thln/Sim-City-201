@@ -347,35 +347,25 @@ public abstract class Person extends Agent{
 			if(getHousing().type.toLowerCase().contains("east")) {
 				for (Role cust1 : roles) {
 					if (cust1 instanceof ApartmentResidentRole) {
-						for (Role cust2 : roles) {
-							if(cust2 instanceof HousingResidentRole) {
-								ApartmentResidentRole ARR = (ApartmentResidentRole) cust1;
-								HousingResidentRole HRR = (HousingResidentRole) cust2;
-								if (Phonebook.getPhonebook().getEastApartment().arrived(ARR, HRR)) {
-									currentRoleName = "EAST Apartment Resident";
-									cust1.setRoleActive();
-									stateChanged();
-								}
-								return;
+							ApartmentResidentRole ARR = (ApartmentResidentRole) cust1;
+							if (Phonebook.getPhonebook().getEastApartment().arrived(ARR)) {
+								currentRoleName = "EAST Apartment Resident";
+								cust1.setRoleActive();
+								stateChanged();
 							}
-						}
+							return;
 					}
 				}
 			} else if (getHousing().type.toLowerCase().contains("west")) {
 				for (Role cust1 : roles) {
 					if (cust1 instanceof ApartmentResidentRole) {
-						for (Role cust2 : roles) {
-							if(cust2 instanceof HousingResidentRole) {
-								ApartmentResidentRole ARR = (ApartmentResidentRole) cust1;
-								HousingResidentRole HRR = (HousingResidentRole) cust2;
-								if (Phonebook.getPhonebook().getEastApartment().arrived(ARR, HRR)) {
-									currentRoleName = "WEST Apartment Resident";
-									cust1.setRoleActive();
-									stateChanged();
-								}
-								return;
+							ApartmentResidentRole ARR = (ApartmentResidentRole) cust1;
+							if (Phonebook.getPhonebook().getEastApartment().arrived(ARR)) {
+								currentRoleName = "WEST Apartment Resident";
+								cust1.setRoleActive();
+								stateChanged();
 							}
-						}
+							return;
 					}
 				}
 			}		

@@ -18,7 +18,7 @@ public class Apartment {
 		this.name = name;
 	}
 	
-	public boolean arrived(ApartmentResidentRole ARR, HousingResidentRole HRR) {
+	public boolean arrived(ApartmentResidentRole ARR) {
 		if(ARR instanceof ApartmentResidentRole) {
 			ARR.setApartment(this);
 			aptUnits = apartmentPanel.getAptUnits();
@@ -37,18 +37,7 @@ public class Apartment {
 	
 	
 	public void enterHouse(ApartmentResidentRole ARR) {
-		HousingResidentRole HRR = ARR.getHouseResident();
-		HousingResidentGui HRG = new HousingResidentGui(HRR);
 		
-		aptUnits = apartmentPanel.getAptUnits();
-		for(Housing house : aptUnits) {
-			if(house.getOccupantName().equals(HRR.getName())) {
-				house.getPanel().addGui(HRG);
-			}
-		}
-		ARR.setRoleInactive();
-		HRR.setRoleActive();
-		HRR.person.stateChanged();
 	}
 	
 	public void setBuildingPanel(BuildingPanel myBuildingPanel) {

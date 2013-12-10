@@ -27,6 +27,7 @@ public class HousingResidentGui extends HousingGui {
 	
     public HousingResidentGui(HousingResidentRole agent) {
         this.agent = agent;
+        System.out.println(agent.getName() + "'s housing gui is made!!!!!");
       //this.gui = gui;
     }
 

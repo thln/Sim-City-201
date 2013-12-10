@@ -5,12 +5,11 @@ import java.util.concurrent.Semaphore;
 import person.*;
 import application.gui.animation.agentGui.*;
 
-public class ApartmentResidentRole extends Role{
+public class ApartmentResidentRole extends HousingResidentRole{
 	
 	//DATA
 	private Apartment apartment;
 	private ApartmentResidentGui gui;
-	private HousingResidentRole houseResidentRole;
 	public enum ResidentState {moving, none};
 	public ResidentState state;
 	private Semaphore atDestination = new Semaphore(0, true);
@@ -46,7 +45,10 @@ public class ApartmentResidentRole extends Role{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		apartment.enterHouse(this);
+		HousingResidentGui HRR = new HousingResidentGui(this);
+		myHome.getPanel().addGui(HRR);
+		//apartment.enterHouse(this);
+		
 		state = ResidentState.none;
 	}
 	
@@ -62,14 +64,6 @@ public class ApartmentResidentRole extends Role{
 	public void setUnit(int aptUnit, Housing myHome) {
 		this.aptUnit = aptUnit;
 		this.myHome = myHome;
-	}
-	
-	public void setHousingResidentRole(HousingResidentRole HRR) {
-		houseResidentRole = HRR;
-	}
-	
-	public HousingResidentRole getHouseResident() {
-		return houseResidentRole;
 	}
 	
 	public void setApartment(Apartment apt) {

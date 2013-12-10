@@ -5,7 +5,7 @@ import housing.*;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-public class ApartmentResidentGui extends HousingGui{
+public class ApartmentResidentGui extends HousingResidentGui{
     
     private ApartmentResidentRole agent = null;
     private boolean isPresent = true;
