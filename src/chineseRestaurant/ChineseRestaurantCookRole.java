@@ -54,14 +54,16 @@ public class ChineseRestaurantCookRole extends Role implements ChineseRestaurant
 	public ChineseRestaurantCookRole(Person p1, String pName, String rName, ChineseRestaurant restaurant) {
 		super(p1, pName, rName);
 		chineseRestaurant = restaurant;
+		//Starts revolving stand timer to check revolving stand
+		startRevolvingStandTimer();
 		//theRevolvingStand = Phonebook.getPhonebook().getRestaurant().getRevolvingStand();
 
 	}
 
 	public ChineseRestaurantCookRole(String roleName, ChineseRestaurant chineseRestaurant) {
 		super(roleName);
-
 		//Starts revolving stand timer to check revolving stand
+		startRevolvingStandTimer();
 		//this.restaurant = restaurant;
 		//theRevolvingStand = Phonebook.getPhonebook().getRestaurant().getRevolvingStand();
 	}
