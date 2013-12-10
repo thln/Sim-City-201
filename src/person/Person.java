@@ -2,6 +2,7 @@ package person;
 
 import housing.*;
 
+import java.awt.Point;
 import java.util.*;
 import java.util.concurrent.Semaphore;
 
@@ -157,11 +158,11 @@ public abstract class Person extends Agent{
 			print("Destination bus Stop: " + Phonebook.getPhonebook().getEastBank().getClosestBusStop().getBusStopNumber());
 			if (home.type.equals("East Apartment"))
 			{
-				goToBusStop(Phonebook.getPhonebook().getEastBank().getClosestBusStop().getBusStopNumber());
+				goToBusStop(Phonebook.getPhonebook().getEastBank().getClosestBusStop().getBusStopNumber(), Phonebook.getPhonebook().getEastBank().location);
 			}
 			else 
 			{
-				goToBusStop(Phonebook.getPhonebook().getWestBank().getClosestBusStop().getBusStopNumber());
+				goToBusStop(Phonebook.getPhonebook().getWestBank().getClosestBusStop().getBusStopNumber(), Phonebook.getPhonebook().getWestBank().location);
 			}
 		}
 
@@ -246,7 +247,7 @@ public abstract class Person extends Agent{
 		}
 	}
 
-	protected void goToBusStop(int destinationBusStopNumber)
+	protected void goToBusStop(int destinationBusStopNumber, Point location)
 	{
 
 		print("Going to bus Stop "+ gui.getClosestBusStopNumber());
@@ -287,6 +288,8 @@ public abstract class Person extends Agent{
 		}
 		print("Arriving at destination Bus Stop: " + destinationBusStopNumber);
 		gui.getOffBus(destinationBusStopNumber);
+		gui.setxDestination(location.x);
+		gui.setyDestination(location.y);
 	}
 
 	protected void prepareForMarket() {
@@ -381,11 +384,11 @@ public abstract class Person extends Agent{
 		if (!gui.walk){
 			if (choice.equals("American Restaurant")){
 				print("Destination bus Stop: " + Phonebook.getPhonebook().getAmericanRestaurant().getClosestBusStop().getBusStopNumber());
-				goToBusStop(Phonebook.getPhonebook().getAmericanRestaurant().getClosestBusStop().getBusStopNumber());
+				goToBusStop(Phonebook.getPhonebook().getAmericanRestaurant().getClosestBusStop().getBusStopNumber(), Phonebook.getPhonebook().getAmericanRestaurant().location);
 			}
 			if (choice.equals("Chinese Restaurant")){
 				print("Destination bus Stop: " + Phonebook.getPhonebook().getChineseRestaurant().getClosestBusStop().getBusStopNumber());
-				goToBusStop(Phonebook.getPhonebook().getChineseRestaurant().getClosestBusStop().getBusStopNumber());
+				goToBusStop(Phonebook.getPhonebook().getChineseRestaurant().getClosestBusStop().getBusStopNumber(), Phonebook.getPhonebook().getChineseRestaurant().location);
 			}
 			//			if (choice.contains("Seafood")){
 			//				print("Destination bus Stop: " + Phonebook.getPhonebook().getSeafoodRestaurant().getClosestBusStop().getBusStopNumber());
@@ -393,7 +396,7 @@ public abstract class Person extends Agent{
 			//			}
 			if (choice.equals("Italian Restaurant")){
 				print("Destination bus Stop: " + Phonebook.getPhonebook().getItalianRestaurant().getClosestBusStop().getBusStopNumber());
-				goToBusStop(Phonebook.getPhonebook().getItalianRestaurant().getClosestBusStop().getBusStopNumber());
+				goToBusStop(Phonebook.getPhonebook().getItalianRestaurant().getClosestBusStop().getBusStopNumber(), Phonebook.getPhonebook().getItalianRestaurant().location);
 			}
 		}
 
