@@ -28,6 +28,7 @@ public class SelectBuilding extends JPanel implements ActionListener
 	JPanel mainPanel = new JPanel();
 	JComboBox selectBuildingBox;
 	JButton openCloseBuildingButton = new JButton("Close Building");
+	JButton clearRestaurantInventoryButton = new JButton("Clear Food Inventory");
 	JLabel selectBuildingLabel = new JLabel("Select a Building");
 	private String[] allBuildings = {" ", "East Bank", "West Bank", "East Market", "West Market", 
 			"Chinese Restaurant", "Seafood Restaurant", "American Restaurant", "Italian Restaurant", "Housing Maintenance Company"};
@@ -95,6 +96,11 @@ public class SelectBuilding extends JPanel implements ActionListener
 		//openCloseBuildingButton.setSize(paneDim);
 		mainPanel.add(openCloseBuildingButton, gbcConstraints);
 		
+		gbcConstraints.gridx = 1;
+		gbcConstraints.gridy = 1;
+		clearRestaurantInventoryButton.setVisible(false);
+		mainPanel.add(clearRestaurantInventoryButton, gbcConstraints);		
+		
 		add(mainPanel);
 	}
 
@@ -106,10 +112,14 @@ public class SelectBuilding extends JPanel implements ActionListener
 			System.out.print("Test");
 			if(selectBuildingBox.getSelectedItem() == " ")
 			{
+				clearRestaurantInventoryButton.setVisible(false);
+				clearRestaurantInventoryButton.setEnabled(false);
 				openCloseBuildingButton.setEnabled(false);
 			}
 			else
 			{
+				clearRestaurantInventoryButton.setVisible(false);
+				clearRestaurantInventoryButton.setEnabled(false);
 				if(selectBuildingBox.getSelectedItem() == "East Bank")
 				{
 					if(eastBankIsOpen)
@@ -156,6 +166,8 @@ public class SelectBuilding extends JPanel implements ActionListener
 				}
 				if(selectBuildingBox.getSelectedItem() == "Chinese Restaurant")
 				{
+					clearRestaurantInventoryButton.setVisible(true);
+					clearRestaurantInventoryButton.setEnabled(true);
 					if(chineseRestaurantIsOpen)
 					{
 						openCloseBuildingButton.setText("Close Building");
@@ -167,6 +179,8 @@ public class SelectBuilding extends JPanel implements ActionListener
 				}	
 				if(selectBuildingBox.getSelectedItem() == "Seafood Restaurant")
 				{
+					clearRestaurantInventoryButton.setVisible(true);
+					clearRestaurantInventoryButton.setEnabled(true);
 					if(seafoodRestaurantIsOpen)
 					{
 						openCloseBuildingButton.setText("Close Building");
@@ -178,6 +192,7 @@ public class SelectBuilding extends JPanel implements ActionListener
 				}
 				if(selectBuildingBox.getSelectedItem() == "American Restaurant")
 				{
+					clearRestaurantInventoryButton.setVisible(true);
 					if(americanRestaurantIsOpen)
 					{
 						openCloseBuildingButton.setText("Close Building");
@@ -189,6 +204,7 @@ public class SelectBuilding extends JPanel implements ActionListener
 				}
 				if(selectBuildingBox.getSelectedItem() == "Italian Restaurant")
 				{
+					clearRestaurantInventoryButton.setVisible(true);
 					if(italianRestaurantIsOpen)
 					{
 						openCloseBuildingButton.setText("Close Building");
@@ -211,6 +227,25 @@ public class SelectBuilding extends JPanel implements ActionListener
 				}
 				updateWorkerList();
 				openCloseBuildingButton.setEnabled(true);
+			}
+		}
+		if( e.getSource() == clearRestaurantInventoryButton)
+		{
+			if(selectBuildingBox.getSelectedItem() == "Chinese Restaurant")
+			{
+				Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantCookRole.deleteInventory();
+			}
+			if(selectBuildingBox.getSelectedItem() == "American Restaurant")
+			{
+				
+			}
+			if(selectBuildingBox.getSelectedItem() == "Seafood Restaurant")
+			{
+				Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantCookRole.setEmpty();
+			}
+			if(selectBuildingBox.getSelectedItem() == "Italian Restaurant")
+			{
+				
 			}
 		}
 		if (e.getSource() == openCloseBuildingButton)
