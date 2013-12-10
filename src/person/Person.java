@@ -290,7 +290,8 @@ public abstract class Person extends Agent{
 	}
 
 	protected void prepareForRestaurant() {
-		if (name.equals("Andy")){
+		Worker me = (Worker)  this;
+		if (me.myJob.jobPlace == "East Bank"){
 			for (Role cust1 : roles) {
 				if (cust1 instanceof AmericanRestaurantCustomerRole) {
 					AmericanRestaurantCustomerRole RCR = (AmericanRestaurantCustomerRole) cust1;

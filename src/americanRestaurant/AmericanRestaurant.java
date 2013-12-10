@@ -1,18 +1,16 @@
 package americanRestaurant;
 
 import java.awt.Point;
-import java.util.Vector;
 
 import person.Person;
 import person.Role;
 import person.Worker;
-import americanRestaurant.interfaces.AmericanRestaurantCashier;
+import application.Phonebook;
+import application.Restaurant;
 import application.WatchTime;
 import application.gui.animation.BuildingPanel;
-import application.gui.animation.agentGui.RestaurantCustomerGui;
-import application.gui.animation.agentGui.RestaurantWaiterGui;
 
-public class AmericanRestaurant {
+public class AmericanRestaurant implements Restaurant {
 	//Data
 		String name;
 		public boolean userClosed = false;
@@ -24,10 +22,10 @@ public class AmericanRestaurant {
 		public WatchTime closeTime = new WatchTime(21);
 
 		//Roles
-		public AmericanRestaurantHostRole americanHost = new AmericanRestaurantHostRole("American Host");
-		public AmericanRestaurantCookRole americanCook = new AmericanRestaurantCookRole("American Cook", this);		
-		public AmericanRestaurantCashierRole americanCashier = new AmericanRestaurantCashierRole("American Cashier", this);
-		public static AmericanRestaurantRevolvingStand theRevolvingStand = new AmericanRestaurantRevolvingStand();
+		public AmericanRestaurantHostRole americanHost;
+		public AmericanRestaurantCookRole americanCook;		
+		public AmericanRestaurantCashierRole americanCashier;
+		public static AmericanRestaurantRevolvingStand theRevolvingStand;
 		private BuildingPanel restPanel;
 
 		//Mocks
@@ -35,6 +33,10 @@ public class AmericanRestaurant {
 	//	public AmericanRestaurantMockCashier AmericanRestaurantMockCashier = new AmericanRestaurantMockCashier("AmericanMockCashier");
 
 		public AmericanRestaurant(String name) {
+		americanHost = new AmericanRestaurantHostRole("American Host");
+		americanCook = new AmericanRestaurantCookRole("American Cook", this);	
+		americanCashier = new AmericanRestaurantCashierRole("American Cashier", this);
+		theRevolvingStand = new AmericanRestaurantRevolvingStand();
 			location = new Point(220, 250);
 			this.name = name;
 		}

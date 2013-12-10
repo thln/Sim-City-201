@@ -57,7 +57,8 @@ public class SalesPersonRole extends Role implements SalesPerson {
 		print("Restaurant asked for " + numWanted + " " + item + "(s)");
 		log.add(new LoggedEvent("Recieved msgIWantProducts"));
 		orders.add(new MarketOrder(restaurant, item, numWanted));
-		stateChanged();
+		if (person != null)
+			stateChanged();
 	}
 
 	public void msgOrderFulfilled(MarketOrder o) {

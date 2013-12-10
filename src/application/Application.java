@@ -16,6 +16,7 @@ import person.Deadbeat;
 import person.Person;
 import person.Wealthy;
 import person.Worker;
+import americanRestaurant.AmericanRestaurantCookRole;
 import application.gui.animation.AnimationPanel;
 import application.gui.animation.agentGui.PersonGui;
 import bank.Bank;
@@ -39,9 +40,12 @@ public class Application extends JPanel {
 	public Application(AnimationPanel ap) {
 
 		animPanel = ap;
-		//the following line is for dynamic building and business making in v2
-		//Phonebook.getPhonebook().getBusinessFromGui(animPanel);
-
+		//Initialize the building reference's to one another
+		AmericanRestaurantCookRole cook = Phonebook.getPhonebook().getAmericanRestaurant().americanCook;
+		cook.getMarkets().add(Phonebook.getPhonebook().getEastMarket());
+		cook.getMarkets().add(Phonebook.getPhonebook().getWestMarket());
+		
+		
 		//String name, int money, String jobTitle, String jobPlace, int startT, int lunchT, int endT
 
 
@@ -303,8 +307,8 @@ public class Application extends JPanel {
 		
 		//Shift 2
 		bank2a.startThread();
-//		bank2b.startThread();
-//		bank2c.startThread();
+		bank2b.startThread();
+		bank2c.startThread();
 //		market2d.startThread();
 //		market2e.startThread();
 //		market2f.startThread();

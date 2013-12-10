@@ -196,7 +196,7 @@ public class ChineseRestaurantCookRole extends Role implements ChineseRestaurant
 		print("Taking order from Revolving Stand.");
 		myOrders.add(Phonebook.getPhonebook().getChineseRestaurant().getRevolvingStand().takeOrder());
 	}
-	
+
 	private void cookOrder(final ChineseRestaurantOrder o) {
 
 		if(!isInStock(o.choice)) {
@@ -377,10 +377,13 @@ public class ChineseRestaurantCookRole extends Role implements ChineseRestaurant
 	public void startRevolvingStandTimer() {
 		revolvingStandTimer.schedule(new TimerTask() {
 			public void run() {
-				stateChanged();
+				if (person != null){
+					stateChanged();
+					startRevolvingStandTimer();
+				}
 			}
 		},
-		300);
+		3000);
 	}
 
 
@@ -471,11 +474,11 @@ public class ChineseRestaurantCookRole extends Role implements ChineseRestaurant
 			this.market = market;
 		}
 	}*/
-	
+
 	public void setGui(RestaurantCookGui gui) {
 		cookGui = gui;
 	}
-	
+
 	public RestaurantCookGui getGui() {
 		return cookGui;
 	}

@@ -8,6 +8,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.Semaphore;
 
+import market.Market;
 import person.Person;
 import person.Role;
 import americanRestaurant.interfaces.AmericanRestaurantCashier;
@@ -23,13 +24,15 @@ public class AmericanRestaurantCookRole extends Role {
 
 	//Revolving Stand timer to check stand
 	Timer revolvingStandTimer = new Timer();
-	
+
 	//CookGui cookGui;
 	List<Order> PendingOrders;
 	List<Order> FinishedOrders;
-	//List<MarketAgent> markets;
+	private List<Market> markets;
 	HashMap<String,Food> foodList;
 	boolean needToOrder;
+
+
 	AmericanRestaurant myRestaurant;
 
 	public Semaphore inProcess;
@@ -103,18 +106,12 @@ public class AmericanRestaurantCookRole extends Role {
 		foodList.put("Chicken", new Food("Chicken", 4000, 3, 3, 5, 4));
 		foodList.put("Salad", new Food("Salad", 3000, 0, 3, 5, 2));
 		foodList.put("Pizza", new Food("Pizza", 3500, 4, 3, 5, 3));
-
+		markets = Collections.synchronizedList(new ArrayList<Market>());
+		startRevolvingStandTimer();
 		inProcess = new  Semaphore(0, true);
-
-		//Constructing market agents
-		//	markets = Collections.synchronizedList (new ArrayList<MarketAgent>());
-		AddMarket();
-		AddMarket();
-		AddMarket();
 		needToOrder = true;
-		startRevolvingStandTimer();	
 	}
-	
+
 	public AmericanRestaurantCookRole(Person p1, String pName, String rName, AmericanRestaurant restaurant) {
 		super(p1, pName, rName);
 		PendingOrders = Collections.synchronizedList(new ArrayList<Order>());
@@ -126,19 +123,9 @@ public class AmericanRestaurantCookRole extends Role {
 		foodList.put("Pizza", new Food("Pizza", 3500, 4, 3, 5, 3));
 		myRestaurant = restaurant;
 		inProcess = new  Semaphore(0, true);
-
 		startRevolvingStandTimer();
-		//Constructing market agents
-		//	markets = Collections.synchronizedList (new ArrayList<MarketAgent>());
-		AddMarket();
-		AddMarket();
-		AddMarket();
-		needToOrder = true;
+		markets = Collections.synchronizedList(new ArrayList<Market>());
 	}
-
-	//		for (MarketAgent m1: markets)
-	//			m1.startThread();
-	//	}
 
 	// GUI MESSAGES
 
@@ -180,7 +167,7 @@ public class AmericanRestaurantCookRole extends Role {
 			takeRevolvingStandOrder();
 			return true;
 		}
-		
+
 		synchronized(FinishedOrders) {
 			for (Order order1: FinishedOrders) {
 				FinishOrder(order1);
@@ -195,16 +182,16 @@ public class AmericanRestaurantCookRole extends Role {
 			}
 		}
 
-		//		synchronized(markets) {
-		//			if (needToOrder) {
-		//				for (String key: foodList.keySet()) {
-		//					if (foodList.get(key).amount <= 1) {
-		//						ContactMarket(foodList.get(key));
-		//					}	
-		//				}
-		//				needToOrder = false;
-		//			}
-		//		}
+		synchronized(markets) {
+			if (needToOrder) {
+				for (String key: foodList.keySet()) {
+					if (foodList.get(key).amount <= 1) {
+						ContactMarket(foodList.get(key));
+					}	
+				}
+				needToOrder = false;
+			}
+		}
 		return false;
 	}
 
@@ -261,64 +248,33 @@ public class AmericanRestaurantCookRole extends Role {
 		FinishedOrders.remove(order1);
 	}
 
-	void AddMarket () {
-		//		markets.add(new MarketAgent());
-		//		int i = markets.size()-1;
-		//		//set inventory of market agent
-		//		if (i == 0) {
-		//			markets.get(i).setInventory("Steak", 1);
-		//			markets.get(i).setInventory("Chicken", 1);
-		//			markets.get(i).setInventory("Salad", 5);
-		//			markets.get(i).setInventory("Pizza", 0);
-		//		}
-		//
-		//		if (i == 1) {
-		//			markets.add(new MarketAgent());
-		//			markets.get(i).setInventory("Steak", 2);
-		//			markets.get(i).setInventory("Chicken", 3);
-		//			markets.get(i).setInventory("Salad", 0);
-		//			markets.get(i).setInventory("Pizza", 4);
-		//		}
-		//
-		//		if (i == 2){
-		//			markets.add(new MarketAgent());
-		//			markets.get(i).setInventory("Steak", 5);
-		//			markets.get(i).setInventory("Chicken", 0);
-		//			markets.get(i).setInventory("Salad", 6);
-		//			markets.get(i).setInventory("Pizza", 2);
-		//		}
-		//	}
-		//
-		//	void ContactMarket(Food f1) {
-		//		for (MarketAgent m1: markets) {
-		//			int marketAmount = m1.getInventory().get(f1.choice).amount;
-		//			if (marketAmount >= f1.amountOrdered) {
-		//				Do("Ordering " + f1.choice + " from market.");
-		//				m1.msgHereIsAnOrder(f1, this);					//Order food and move on
-		//				break;
-		//			}
-		//			else if (marketAmount > 0) {	//If this market has more than one of the desired item
-		//				Do("Ordering partial " + f1.choice + "  from market.");
-		//				f1.amountOrdered -= marketAmount;
-		//				m1.msgHereIsAnOrder(f1, this);					//Order food and ask another market 
-		//			}
-		//			else {
-		//				Do("Market empty, trying another");					//Otherwise, continue looping
-		//			}
-		//		}
-		//
-		//		return;
-		//	}
-		//
-		//	public void setGui(CookGui g) {
-		//		cookGui = g;
-		//	}
-		//
-		//	public void setCashier(AmericanRestaurantCashier myCashier) {
-		//		for (MarketAgent m1: markets) {
-		//			m1.setCashier(myCashier);
-		//		}
-		//		return;
+	void ContactMarket(Food f1) {
+		for (Market m1: getMarkets()) {
+			int marketAmount = m1.inventory.get(f1.choice).amount;
+			if (marketAmount >= f1.amountOrdered) {
+				print("Ordering " + f1.choice + " from market " + m1.getName());
+				m1.salesPersonRole.msgIWantProducts(myRestaurant, f1.choice, f1.amountOrdered);					//Order food and move on
+				break;
+			}
+			else if (marketAmount > 0) {	//If this market has more than one of the desired item
+				print("Ordering partial " + f1.choice + "  from market.");
+				f1.amountOrdered -= marketAmount;
+				m1.salesPersonRole.msgIWantProducts(myRestaurant, f1.choice, f1.amountOrdered);					//Order food and move on
+				//Order food and ask another market 
+			}
+			else {
+				print("Market empty, trying another");					//Otherwise, continue looping
+			}
+		}
+
+		return;
+	}
+
+	//	public void setGui(CookGui g) {
+	//		cookGui = g;
+	//	}
+
+	public void setCashier(AmericanRestaurantCashier myCashier) {
 	}
 
 	private void takeRevolvingStandOrder()
@@ -326,20 +282,25 @@ public class AmericanRestaurantCookRole extends Role {
 		print("Taking order from Revolving Stand.");
 		PendingOrders.add(myRestaurant.getRevolvingStand().takeOrder());
 	}
-	
-	public void setCashier(AmericanRestaurantCashier myCashier) {
-		// TODO Auto-generated method stub
-		
-	}
-	
+
 	public void startRevolvingStandTimer() {
 		revolvingStandTimer.schedule(new TimerTask() {
 			public void run() {
-				stateChanged();
-				startRevolvingStandTimer();
+				if (person != null){
+					stateChanged();
+					startRevolvingStandTimer();
+				}
 			}
 		},
 		3000);
+	}
+
+	public List<Market> getMarkets() {
+		return markets;
+	}
+
+	public void setMarkets(List<Market> markets) {
+		this.markets = markets;
 	}
 }
 
