@@ -25,7 +25,7 @@ public class BankCustomerRole extends Role implements BankCustomer{
 	public double desiredLoanAmount;
 	public BankCustomerDesire desire;
 	public CustomerState state;
-	protected String RoleName = "Bank Customer";
+	protected String RoleName = "Bank AmericanRestaurantCustomer";
 	private int waitPlace;
 	public Semaphore atDestination = new Semaphore(0, true);
 

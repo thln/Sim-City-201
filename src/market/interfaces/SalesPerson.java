@@ -21,9 +21,9 @@ public interface SalesPerson {
 
 	public void msgPayment(MarketCustomer customer, double payment);
 
-	public void msgPayment(ChineseRestaurant chineseRestaurant, double payment);
-	
 	public void msgPayment(SeafoodRestaurant seafoodRestaurant, double payment);
+		
+	public void msgPayment(ChineseRestaurant restaurant, double payment);
 
 	//Actions
 	public void findItems(MarketOrder o);

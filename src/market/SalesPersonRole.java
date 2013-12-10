@@ -15,6 +15,7 @@ import person.Role;
 import seafoodRestaurant.SeafoodRestaurant;
 import testing.EventLog;
 import testing.LoggedEvent;
+import americanRestaurant.AmericanRestaurant;
 import application.Restaurant;
 import application.gui.animation.agentGui.MarketSalesPersonGui;
 import chineseRestaurant.ChineseRestaurant;
@@ -73,15 +74,17 @@ public class SalesPersonRole extends Role implements SalesPerson {
 		print("Restaurant asked for " + numWanted + " " + item + "(s)");
 		log.add(new LoggedEvent("Recieved msgIWantProducts"));
 		orders.add(new MarketOrder(restaurant, item, numWanted));
-		stateChanged();
+		if (person != null)
+			stateChanged();
 	}
 	
-//	public void msgIWantProducts(AmericanRestaurant restaurant, String item, int numWanted) {
-//		print("Restaurant asked for " + numWanted + " " + item + "(s)");
-//		log.add(new LoggedEvent("Recieved msgIWantProducts"));
-//		orders.add(new MarketOrder(restaurant, item, numWanted));
-//		stateChanged();
-//	}
+	public void msgIWantProducts(AmericanRestaurant restaurant, String item, int numWanted) {
+		print("Restaurant asked for " + numWanted + " " + item + "(s)");
+		log.add(new LoggedEvent("Recieved msgIWantProducts"));
+		orders.add(new MarketOrder(restaurant, item, numWanted));
+		if (person != null)
+		stateChanged();
+	}
 
 	public void msgOrderFulfilled(MarketOrder o) {
 		if (o.customer instanceof MarketCustomerRole) {
@@ -131,7 +134,6 @@ public class SalesPersonRole extends Role implements SalesPerson {
 		}
 	}
 
-
 	public void msgPayment(ChineseRestaurant chineseRestaurant, double payment) {
 		print("Recieved payment of $" + payment + " from restaurant " + chineseRestaurant.getName());
 		market.money += payment;
@@ -158,23 +160,23 @@ public class SalesPersonRole extends Role implements SalesPerson {
 		print("Recieved payment of $" + payment + " from restaurant " + italianRestaurant.getName());
 		market.money += payment;
 		for (MarketOrder o : orders) {
-			if (o.seafoodRestaurant.equals(italianRestaurant)) {
+			if (o.italianRestaurant.equals(italianRestaurant)) {
 				orders.remove(o);
 				return;
 			}
 		}
 	}
 	
-//	public void msgPayment(AmericanRestaurant americanRestaurant, double payment) {
-//		print("Recieved payment of $" + payment + " from restaurant " + americanRestaurant.getName());
-//		market.money += payment;
-//		for (MarketOrder o : orders) {
-//			if (o.seafoodRestaurant.equals(americanRestaurant)) {
-//				orders.remove(o);
-//				return;
-//			}
-//		}
-//	}
+	public void msgPayment(AmericanRestaurant americanRestaurant, double payment) {
+		print("Recieved payment of $" + payment + " from restaurant " + americanRestaurant.getName());
+		market.money += payment;
+		for (MarketOrder o : orders) {
+			if (o.americanRestaurant.equals(americanRestaurant)) {
+				orders.remove(o);
+				return;
+			}
+		}
+	}
 	
 	//Scheduler
 	public boolean pickAndExecuteAnAction() {

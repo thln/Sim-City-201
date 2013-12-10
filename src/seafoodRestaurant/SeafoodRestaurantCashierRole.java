@@ -55,10 +55,10 @@ public class SeafoodRestaurantCashierRole extends Role implements SeafoodRestaur
 		String foodItem;
 		double cost;
 		double cash;
-		CustomerAgent c;
-		WaiterAgent w;
+		AmericanRestaurantCustomerRole c;
+		AmericanRestaurantWaiterRole w;
 		CheckState s = CheckState.Created;
-		public Check(String choice, CustomerAgent cust, WaiterAgent wait)
+		public Check(String choice, AmericanRestaurantCustomerRole cust, AmericanRestaurantWaiterRole wait)
 		{
 			//STUB
 			foodItem = choice;
@@ -89,7 +89,7 @@ public class SeafoodRestaurantCashierRole extends Role implements SeafoodRestaur
 	
 	
 	/***** MESSAGES *****/
-	public void GiveMeCheck(String choice, SeafoodRestaurantCustomer cust, SeafoodRestaurantWaiter wait) //CustomerAgent, WaiterAgent
+	public void GiveMeCheck(String choice, SeafoodRestaurantCustomer cust, SeafoodRestaurantWaiter wait) //AmericanRestaurantCustomerRole, AmericanRestaurantWaiterRole
 	{
 		//STUB
 		AllChecks.add(new SeafoodRestaurantCheck(choice, cust, wait));

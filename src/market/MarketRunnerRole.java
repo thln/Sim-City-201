@@ -41,6 +41,7 @@ public class MarketRunnerRole extends Role implements MarketRunner {
 		print("Recieved an order to fulfill");
 		log.add(new LoggedEvent("Recieved msgHeresAnOrder"));
 		orders.add(o);
+		if (person != null)
 		stateChanged();
 	}
 

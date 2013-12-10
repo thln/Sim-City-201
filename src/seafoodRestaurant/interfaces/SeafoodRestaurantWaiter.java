@@ -13,11 +13,11 @@ public interface SeafoodRestaurantWaiter
 	//public abstract void WantToGoOffBreak();
 	//public abstract void AllowedToGoOnBreak(boolean answer);
 	public abstract void CanIGetMyCheck(SeafoodRestaurantCustomer cust);
-	//public abstract void pleaseSeatCustomer(Customer cust, int table);
-	//public abstract void ReadyToOrder(Customer c);
-	//public abstract void myChoiceIs(String TheOrder, Customer cust);
+	//public abstract void pleaseSeatCustomer(AmericanRestaurantCustomer cust, int table);
+	//public abstract void ReadyToOrder(AmericanRestaurantCustomer c);
+	//public abstract void myChoiceIs(String TheOrder, AmericanRestaurantCustomer cust);
 	//public abstract void OrderIsReady(String food, int table);
-	//public abstract void iAmLeavingTable(Customer cust);
+	//public abstract void iAmLeavingTable(AmericanRestaurantCustomer cust);
 	//public abstract void OutOfFood(int table, String food);
 	public abstract void ThisIsTheCheck(SeafoodRestaurantCustomer cust, SeafoodRestaurantCheck ch);
 	//public abstract void msgAtTable();

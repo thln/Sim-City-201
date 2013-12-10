@@ -23,11 +23,11 @@ public class SeafoodRestaurantMockCustomer extends Mock implements SeafoodRestau
 
 	public void HereIsYourCheck(SeafoodRestaurantCheck ch)
 	{
-		log.add(new LoggedEvent("Received HereIsYourTotal from cashier. Total = "+ ch.cost));
+		log.add(new LoggedEvent("Received HereIsYourTotal from americanRestaurantCashier. Total = "+ ch.cost));
         if(this.getName().toLowerCase().contains("thief"))
         {
             //test the non-normative scenario where the customer has no money if their name contains the string "theif"
-            //cashier.IAmShort(this, 0);
+            //americanRestaurantCashier.IAmShort(this, 0);
         	cashier.HereIsPayment(ch, 0);
 
         }
@@ -46,44 +46,44 @@ public class SeafoodRestaurantMockCustomer extends Mock implements SeafoodRestau
 	}
 	public void HereIsYourChange(double c, double d)
 	{
-		log.add(new LoggedEvent("Received HereIsYourChange from cashier."));
+		log.add(new LoggedEvent("Received HereIsYourChange from americanRestaurantCashier."));
 		if(d>0)
 		{
-	        log.add(new LoggedEvent("Received YouOweUs from cashier. Debt = "+ d));
+	        log.add(new LoggedEvent("Received YouOweUs from americanRestaurantCashier. Debt = "+ d));
 		}
 		else
 		{
-			log.add(new LoggedEvent("Received HereIsYourChange from cashier. Change = "+ c));
+			log.add(new LoggedEvent("Received HereIsYourChange from americanRestaurantCashier. Change = "+ c));
 		}
 	}
 	
     /*
     @Override
     public void HereIsYourTotal(double total) {
-            log.add(new LoggedEvent("Received HereIsYourTotal from cashier. Total = "+ total));
+            log.add(new LoggedEvent("Received HereIsYourTotal from americanRestaurantCashier. Total = "+ total));
 
             if(this.name.toLowerCase().contains("thief")){
                     //test the non-normative scenario where the customer has no money if their name contains the string "theif"
-                    cashier.IAmShort(this, 0);
+                    americanRestaurantCashier.IAmShort(this, 0);
 
             }else if (this.name.toLowerCase().contains("rich")){
                     //test the non-normative scenario where the customer overpays if their name contains the string "rich"
-                    cashier.HereIsMyPayment(this, Math.ceil(total));
+                    americanRestaurantCashier.HereIsMyPayment(this, Math.ceil(total));
 
             }else{
                     //test the normative scenario
-                    cashier.HereIsMyPayment(this, total);
+                    americanRestaurantCashier.HereIsMyPayment(this, total);
             }
     }
 
     @Override
     public void HereIsYourChange(double total) {
-            log.add(new LoggedEvent("Received HereIsYourChange from cashier. Change = "+ total));
+            log.add(new LoggedEvent("Received HereIsYourChange from americanRestaurantCashier. Change = "+ total));
     }
 
     @Override
     public void YouOweUs(double remaining_cost) {
-            log.add(new LoggedEvent("Received YouOweUs from cashier. Debt = "+ remaining_cost));
+            log.add(new LoggedEvent("Received YouOweUs from americanRestaurantCashier. Debt = "+ remaining_cost));
     }
     */
 }

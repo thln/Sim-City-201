@@ -2,6 +2,8 @@ package seafoodRestaurant;
 import java.awt.Point;
 import java.util.Vector;
 
+import javax.swing.JComponent;
+
 import person.Person;
 import person.Role;
 import person.Worker;
@@ -25,11 +27,11 @@ public class SeafoodRestaurant implements Restaurant {
 	public WatchTime closeTime = new WatchTime(21);
 
 	//Roles
-	public SeafoodRestaurantHostRole seafoodRestaurantHostRole = new SeafoodRestaurantHostRole("Host");
+	public SeafoodRestaurantHostRole seafoodRestaurantHostRole = new SeafoodRestaurantHostRole("AmericanRestaurantHost");
 	public SeafoodRestaurantCookRole seafoodRestaurantCookRole = new SeafoodRestaurantCookRole("Cook", this);
 	//public RestaurantCookGui cookGui = new RestaurantCookGui(seafoodRestaurantCookRole);
 
-	public SeafoodRestaurantCashierRole seafoodRestaurantCashierRole = new SeafoodRestaurantCashierRole("Cashier", this);
+	public SeafoodRestaurantCashierRole seafoodRestaurantCashierRole = new SeafoodRestaurantCashierRole("AmericanRestaurantCashier", this);
 	public SeafoodRestaurantRevolvingStand theRevolvingStand = new SeafoodRestaurantRevolvingStand();
 	private BuildingPanel restPanel;
 
@@ -73,13 +75,13 @@ public class SeafoodRestaurant implements Restaurant {
 			//restPanel.addGui(cookGui);
 			return seafoodRestaurantCookRole;
 		}
-		else if (title.contains("cashier")) {
+		else if (title.contains("americanRestaurantCashier")) {
 			//Setting previous bank guard role to inactive
 			if (seafoodRestaurantCashierRole.getPerson() != null) {
 				Worker worker = (Worker) seafoodRestaurantCashierRole.getPerson();
 				worker.roleFinishedWork();
 			}
-			//Setting cashier role to new role
+			//Setting americanRestaurantCashier role to new role
 			seafoodRestaurantCashierRole.setPerson(person);
 			if (isOpen()) {
 				seafoodRestaurantHostRole.msgRestaurantOpen();
@@ -233,5 +235,10 @@ public class SeafoodRestaurant implements Restaurant {
 		//restPanel.removeGui(cookGui);
 
 		seafoodRestaurantCashierRole.msgLeaveRole();
+	}
+
+	public int  getClosestStop() {
+		// TODO Auto-generated method stub
+		return 3;
 	}
 }

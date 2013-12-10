@@ -11,7 +11,7 @@ import testing.Mock;
 public class ChineseRestaurantMockCashier extends Mock implements ChineseRestaurantCashier {
 
 	/**
-	 * This is a Mock Cashier to serve for testing purposes. 
+	 * This is a Mock AmericanRestaurantCashier to serve for testing purposes. 
 	 * @author Kristi Hupka
 	 *
 	 */

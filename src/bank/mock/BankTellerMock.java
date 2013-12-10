@@ -17,7 +17,7 @@ public class BankTellerMock extends Mock implements BankTeller {
 
 	@Override
 	public void msgINeedMoney(double desiredCash, int accountNum) {
-		log.add(new LoggedEvent("Customer wants to withdraw from account."));
+		log.add(new LoggedEvent("AmericanRestaurantCustomer wants to withdraw from account."));
 	}
 
 	@Override
@@ -27,17 +27,17 @@ public class BankTellerMock extends Mock implements BankTeller {
 
 	@Override
 	public void msgINeedALoan(double desiredLoanAmount, int accountNum) {
-		log.add(new LoggedEvent("Customer requested loan."));
+		log.add(new LoggedEvent("AmericanRestaurantCustomer requested loan."));
 	}
 
 	@Override
 	public void msgPayingOffLoan(double loan, int accountNum) {
-		log.add(new LoggedEvent("Customer paid off loan."));
+		log.add(new LoggedEvent("AmericanRestaurantCustomer paid off loan."));
 	}
 
 	@Override
 	public void msgWantNewAccount(BankCustomer bankCustomer) {
-		log.add(new LoggedEvent("Customer wants new account."));
+		log.add(new LoggedEvent("AmericanRestaurantCustomer wants new account."));
 	}
 
 	@Override
@@ -52,7 +52,7 @@ public class BankTellerMock extends Mock implements BankTeller {
 
 	@Override
 	public void msgLeavingBank(int accountNum) {
-		log.add(new LoggedEvent("Customer left bank."));
+		log.add(new LoggedEvent("AmericanRestaurantCustomer left bank."));
 	}
 	
 	public void setTellerWindow(int window) {

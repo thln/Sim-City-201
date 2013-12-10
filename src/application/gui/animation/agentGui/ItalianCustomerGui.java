@@ -55,7 +55,7 @@ public class ItalianCustomerGui implements Gui{
         	}
     }
     
-	public ItalianCustomerGui(ItalianCustomerRole c/*, RestaurantGui gui*/){ //HostAgent m) {
+	public ItalianCustomerGui(ItalianCustomerRole c/*, RestaurantGui gui*/){ //AmericanRestaurantHostRole m) {
 		agent = c;
 		
 		//this.gui = gui;

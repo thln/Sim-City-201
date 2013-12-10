@@ -14,7 +14,7 @@ import person.Worker;
 
 
 /**
- * Restaurant Cashier Role
+ * Restaurant AmericanRestaurantCashier Role
  */
 
 public class ChineseRestaurantCashierRole extends Role implements ChineseRestaurantCashier {
@@ -203,7 +203,7 @@ public class ChineseRestaurantCashierRole extends Role implements ChineseRestaur
 
 	//Order Class
 	public class Order {
-		String choice;
+		public String choice;
 		int amountOrdered;
 		double bill;
 		SalesPerson market; //The market

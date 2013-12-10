@@ -82,7 +82,7 @@ public class BankTellerRole extends Role implements BankTeller {
 	//MESSAGES
 
 	public void msgWantNewAccount (BankCustomer cust1) {	
-		print("Customer wants new account");
+		print("AmericanRestaurantCustomer wants new account");
 		Account a1 = new Account(cust1);
 		Phonebook.getPhonebook().getEastBank().accounts.add(a1);
 		a1.setState(AccountState.newAccount);
@@ -91,7 +91,7 @@ public class BankTellerRole extends Role implements BankTeller {
 	}
 
 	public void msgINeedMoney(double desiredAmount, int accountNum) {
-		print("Customer needs money");
+		print("AmericanRestaurantCustomer needs money");
 		Account correct = findMyAccount (accountNum);
 		correct.processingMoney = desiredAmount;
 		correct.state = AccountState.withdrawing;
@@ -99,7 +99,7 @@ public class BankTellerRole extends Role implements BankTeller {
 	}
 
 	public void msgHereIsMyDeposit(double amount, int accountNum) {
-		print("Customer wants to deposit");
+		print("AmericanRestaurantCustomer wants to deposit");
 		Account correct = findMyAccount (accountNum);
 		correct.processingMoney = amount;
 		correct.state = AccountState.depositing;
@@ -110,7 +110,7 @@ public class BankTellerRole extends Role implements BankTeller {
 		Account correct = findMyAccount (accountNum);
 		correct.processingMoney = desiredLoan;
 		correct.state = AccountState.requestingLoan;
-		print("Customer requesting loan of $" + correct.processingMoney);
+		print("AmericanRestaurantCustomer requesting loan of $" + correct.processingMoney);
 		stateChanged();
 	}
 

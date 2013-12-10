@@ -9,7 +9,7 @@ import testing.LoggedEvent;
 import testing.Mock;
 
 /**
- * A sample MockWaiter built to unit test a CashierAgent.
+ * A sample AmericanRestaurantMockWaiter built to unit test a AmericanRestaurantCashierRole.
  *
  * @author Kristi Hupka
  *
@@ -90,7 +90,7 @@ public class ChineseRestaurantMockWaiter extends Mock implements ChineseRestaura
 	
 	public void msgHereIsCheck(int tableNumber, double checkAmount) {
 		// TODO Auto-generated method stub
-		log.add(new LoggedEvent("Received HereIsCheck from cashier. Total = " + checkAmount));
+		log.add(new LoggedEvent("Received HereIsCheck from americanRestaurantCashier. Total = " + checkAmount));
 	}
 
 

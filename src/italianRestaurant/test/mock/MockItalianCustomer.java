@@ -7,7 +7,7 @@ import testing.LoggedEvent;
 import testing.Mock;
 
 /**
- * A sample MockCustomer built to unit test a CashierAgent.
+ * A sample AmericanRestaurantMockCustomer built to unit test a AmericanRestaurantCashierRole.
  *
  * @author Carmen Tan
  *
@@ -36,7 +36,7 @@ public class MockItalianCustomer extends Mock implements ItalianCustomer {
 		
 	}
 	/**
-	 * Reference to the Cashier under test that can be set by the unit test.
+	 * Reference to the AmericanRestaurantCashier under test that can be set by the unit test.
 	 */
 	public ItalianCashier cashier;
 	 
@@ -51,15 +51,15 @@ public class MockItalianCustomer extends Mock implements ItalianCustomer {
 
 	@Override
 	public void msgHereIsBill(Double total) {
-		log.add(new LoggedEvent("Received HereIsYourTotal from cashier. Total = "+ total));
+		log.add(new LoggedEvent("Received HereIsYourTotal from americanRestaurantCashier. Total = "+ total));
 
 		if(this.name.toLowerCase().contains("thief")){
 			//test the non-normative scenario where the customer has no money if their name contains the string "theif"
-	//		cashier.IAmShort(this, 0);
+	//		americanRestaurantCashier.IAmShort(this, 0);
 
 		}else if (this.name.toLowerCase().contains("rich")){
 			//test the non-normative scenario where the customer overpays if their name contains the string "rich"
-	//		cashier.HereIsMyPayment(this, Math.ceil(total));
+	//		americanRestaurantCashier.HereIsMyPayment(this, Math.ceil(total));
 
 		}else{
 			//test the normative scenario
@@ -69,12 +69,12 @@ public class MockItalianCustomer extends Mock implements ItalianCustomer {
 
 	@Override
 	public void msgChangeAndReceipt(String receipt, Double change) {
-		log.add(new LoggedEvent("Received HereIsYourChange from cashier. Change = "+ change));
+		log.add(new LoggedEvent("Received HereIsYourChange from americanRestaurantCashier. Change = "+ change));
 	}
 
 	@Override
 	public void YouOweUs(Double remaining_cost) {
-		log.add(new LoggedEvent("Received YouOweUs from cashier. Debt = "+ remaining_cost));
+		log.add(new LoggedEvent("Received YouOweUs from americanRestaurantCashier. Debt = "+ remaining_cost));
 	}
 	
 	public String toString() {

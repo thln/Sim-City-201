@@ -15,10 +15,10 @@ import java.util.concurrent.Semaphore;
  */
 //We only have 2 types of agents in this prototype. A customer and an agent that
 //does all the rest. Rather than calling the other agent a waiter, we called him
-//the CookAgent. A Cook is the manager of a restaurant who sees that all
+//the AmericanRestaurantCookRole. A Cook is the manager of a restaurant who sees that all
 //is proceeded as he wishes.
 public class ItalianCookRole extends Role implements ItalianCook{
-	static final int NTABLES = 5;//a global for the number of tables.
+	static final int NTABLES = 5;//a global for the number of americanRestaurantTables.
 	//Notice that we implement waitingCustomers using ArrayList, but type it
 	//with List semantics.
 	Random rn = new Random();
@@ -37,7 +37,7 @@ public class ItalianCookRole extends Role implements ItalianCook{
 	private List<ItalianFood> Foods = Collections.synchronizedList(new ArrayList<ItalianFood>());
 	
 	private ItalianRestaurant restaurant = null;
-	//note that tables is typed with Collection semantics.
+	//note that americanRestaurantTables is typed with Collection semantics.
 	//Later we will see how it is implemented
 	 
 	//private Semaphore atTable = new Semaphore(0,true);
@@ -176,7 +176,7 @@ public class ItalianCookRole extends Role implements ItalianCook{
 			}
 		}
 		
-		//checks whether cook is allowed to order (determined by cashier)
+		//checks whether cook is allowed to order (determined by americanRestaurantCashier)
 		if(AllowedtoOrder == true) {
 			
 			//goes to market to restock as soon as inventory levels have hit a low level

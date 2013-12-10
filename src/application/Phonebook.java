@@ -13,6 +13,7 @@ import java.util.List;
 import market.Market;
 import seafoodRestaurant.SeafoodRestaurant;
 import transportation.BusStop;
+import americanRestaurant.AmericanRestaurant;
 import bank.Bank;
 import chineseRestaurant.ChineseRestaurant;
 
@@ -32,9 +33,10 @@ public class Phonebook{
 	static private ChineseRestaurant chineseRestaurant;
 	static private SeafoodRestaurant seafoodRestaurant;
 	//ItalianRestaurant italianRestaurant;
+	static private AmericanRestaurant americanRestaurant;
 	static private ItalianRestaurant italianRestaurant;
 	//MexicanRestaurant mexicanRestaurant;
-	//AmericanRestaurant americanRestaurant;
+
 
 
 	private HousingMaintenanceCompany housingMaintenanceCompany;
@@ -166,12 +168,6 @@ public class Phonebook{
 	private Phonebook() {
 
 		//Set bus stops
-		busStops.add(new Point(127, 28));		//Top left bus stop = busStop(0)
-		busStops.add(new Point(420, 28));		//Top right bus stop = busStop(1)
-		busStops.add(new Point(127, 230));		//Bottom left bus stop = busStop(2)
-		busStops.add(new Point(420, 230));		//Bottom right bus stop = busStop(3)
-
-
 		busStopsList.add(new BusStop(0, 0, 0)); 			//empty busStop
 		busStopsList.add(new BusStop(1, 127, 28));			//Top left bus Stop
 		busStopsList.add(new BusStop(2, 420, 28));			// Top Right Bus Stop
@@ -179,28 +175,29 @@ public class Phonebook{
 		busStopsList.add(new BusStop(4, 127, 230));			// Bottom Left Bus Stop
 		
 		eastBank = new Bank("East Bank");
-		eastBank.setClosestStop(busStops.get(3)); 		//setting building's closest bus stop
 		eastBank.setClosestBusStopNumber(3);			//setting building's closest bus stop
 		
 		westBank = new Bank("West Bank");
-		westBank.setClosestStop(busStops.get(1));		//setting building's closest bus stop
 		westBank.setClosestBusStopNumber(1);			//setting building's closest bus stop
 		
 		eastMarket = new Market("East Market");
-		eastMarket.setClosestStop(busStops.get(2));		//setting building's closest bus stop
 		eastMarket.setClosestBusStopNumber(2);			//setting building's closest bus stop
 		
 		westMarket = new Market("West Market");
-		westMarket.setClosestStop(busStops.get(1));		//setting building's closest bus stop
-		westMarket.setClosestBusStopNumber(1);			//setting building's closest bus stop
+		westMarket.setClosestBusStopNumber(4);			//setting building's closest bus stop
 		
-		seafoodRestaurant = new SeafoodRestaurant("Seafood Restaurant");
 
+		seafoodRestaurant = new SeafoodRestaurant("Seafood Restaurant");
+//		seafoodRestaurant.setClosestSop(busStops.get(2));
+		
 		chineseRestaurant = new ChineseRestaurant("Chinese Restaurant");
 		chineseRestaurant.setClosestStop(busStops.get(2));		//setting building's closest bus stop
 		chineseRestaurant.setClosestBusStopNumber(2);			//setting building's closest bus stop
 		
 		italianRestaurant = new ItalianRestaurant("Italian Restaurant");
+		italianRestaurant.setClosestStop(busStops.get(1));		//setting building's closest bus stop
+		
+		americanRestaurant = new AmericanRestaurant("American Restaurant");
 		
 		italianRestaurant.setClosestStop(busStops.get(2));		//setting building's closest bus stop
 		chineseRestaurant.setClosestBusStopNumber(2);			//setting building's closest bus stop
@@ -208,10 +205,8 @@ public class Phonebook{
 		/* For future use after all the restaurants have been integrated
 		 * 
 		mexicanRestaurant = new MexicanRestaurant("Mexican Restaurant");
-		seafoodRestaurant = new SeafoodRestaurant("Seafood Restaurant");
-		americanRestaurant = new AmericanRestaurant("American Restaurant");
-
 		 */
+		
 		housingMaintenanceCompany = new HousingMaintenanceCompany("Housing maintenance company");
 		getBusStops().add(new Point(172, 28));
 		getBusStops().add(new Point(420, 28));
@@ -259,6 +254,11 @@ public class Phonebook{
 	public ItalianRestaurant getItalianRestaurant() 
 	{
 		return italianRestaurant; //temporary stub. make more dynamic later
+	}
+	
+	public AmericanRestaurant getAmericanRestaurant() 
+	{
+		return americanRestaurant; //temporary stub. make more dynamic later
 	}
 
 	public List<Housing> getAllHousing(boolean test)

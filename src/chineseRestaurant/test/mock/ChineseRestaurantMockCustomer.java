@@ -10,7 +10,7 @@ import testing.LoggedEvent;
 import testing.Mock;
 
 /**
- * A sample MockCustomer built to unit test a CashierAgent.
+ * A sample AmericanRestaurantMockCustomer built to unit test a AmericanRestaurantCashierRole.
  *
  * @author Kristi Hupka
  *
@@ -20,9 +20,9 @@ public class ChineseRestaurantMockCustomer extends Mock implements ChineseRestau
 	public ChineseRestaurantCashier chineseRestaurantCashier;
 
 	/**
-	 * Reference to the Cashier under test that can be set by the unit test.
+	 * Reference to the AmericanRestaurantCashier under test that can be set by the unit test.
 	 */
-	//public Cashier cashier;
+	//public AmericanRestaurantCashier americanRestaurantCashier;
 
 	public ChineseRestaurantMockCustomer(String name) {
 		super(name);
@@ -37,7 +37,7 @@ public class ChineseRestaurantMockCustomer extends Mock implements ChineseRestau
 	@Override
 	public String getCustomerName() {
 		// TODO Auto-generated method stub
-		return "MockCustomer";
+		return "AmericanRestaurantMockCustomer";
 	}
 
 	@Override
@@ -91,13 +91,13 @@ public class ChineseRestaurantMockCustomer extends Mock implements ChineseRestau
 	@Override
 	public void msgHeresYourChange(double change) {
 		// TODO Auto-generated method stub
-		log.add(new LoggedEvent("Received msgHeresYourChange from cashier. Change: " + change));	
+		log.add(new LoggedEvent("Received msgHeresYourChange from americanRestaurantCashier. Change: " + change));	
 	}
 	
 	@Override
 	public void msgGoToJail() {
 		// TODO Auto-generated method stub
-		log.add(new LoggedEvent("Received msgGoToJail from cashier."));	
+		log.add(new LoggedEvent("Received msgGoToJail from americanRestaurantCashier."));	
 	}
 
 	@Override

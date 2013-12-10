@@ -3,6 +3,7 @@ package market;
 import italianRestaurant.ItalianRestaurant;
 import market.interfaces.MarketCustomer;
 import seafoodRestaurant.SeafoodRestaurant;
+import americanRestaurant.AmericanRestaurant;
 import chineseRestaurant.ChineseRestaurant;
 
 public class MarketOrder {
@@ -13,7 +14,7 @@ public class MarketOrder {
 	ChineseRestaurant chineseRestaurant = null;
 	ItalianRestaurant italianRestaurant = null;
 	SeafoodRestaurant seafoodRestaurant = null;
-	//AmericanRestaurant americanRestaurant = null;
+	AmericanRestaurant americanRestaurant = null;
 	
 	String item;
 	int itemAmountOrdered;
@@ -48,11 +49,11 @@ public class MarketOrder {
 		this.itemAmountOrdered = itemAmountOrdered;
 	}
 	
-//	public MarketOrder(AmericanRestaurant restaurant1, String item, int itemAmountOrdered) {
-//		this.americanRestaurant = restaurant1;
-//		restaurant = true;
-//		this.item = item;
-//		this.itemAmountOrdered = itemAmountOrdered;
-//	}
+	public MarketOrder(AmericanRestaurant restaurant1, String item, int itemAmountOrdered) {
+		this.americanRestaurant = restaurant1;
+		restaurant = true;
+		this.item = item;
+		this.itemAmountOrdered = itemAmountOrdered;
+	}
 
 }

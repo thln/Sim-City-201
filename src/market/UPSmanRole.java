@@ -39,6 +39,7 @@ public class UPSmanRole extends Role implements UPSman {
 		print("Recieved an order to deliver");
 		log.add(new LoggedEvent("Recieved msgDeliverOrder"));
 		orders.add(o);
+		if (person != null)
 		stateChanged();
 	}
 	
@@ -66,6 +67,7 @@ public class UPSmanRole extends Role implements UPSman {
 
 	//Actions
 	public void deliverOrder(MarketOrder o) {
+
 		print("Delivered an order to a restaurant");
 		if (o.chineseRestaurant != null) {
 			o.chineseRestaurant.getCook(test).msgOrderFulfillment(o.item, o.itemAmountFulfilled, o.itemAmountOrdered);
@@ -88,12 +90,13 @@ public class UPSmanRole extends Role implements UPSman {
 			return;
 		}
 		
-//		if (o.americanRestaurant != null) {
-//			americanRestaurant.americanCook.msgHereIsYourOrder(o.item);
-//			market.getSalesPerson(test).msgOrderDelivered(o);
-//			orders.remove(o);
-//			return;
-//		}
+		if (o.americanRestaurant != null) {
+			o.americanRestaurant.americanCook.msgHereIsYourOrder(o.item);
+			market.getSalesPerson(test).msgOrderDelivered(o);
+			orders.remove(o);
+			return;
+		}
+		return;
 	}
 	
 	public void setGui(MarketUPSmanGui gui) {
