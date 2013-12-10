@@ -68,6 +68,7 @@ public abstract class Person extends Agent{
 	Person(String name, double moneyz) {
 		this.name = name;
 		this.money = moneyz;
+		roles.add(new ApartmentResidentRole(this, getName(), "Apartment Resident"));
 		roles.add(new HousingResidentRole(this, getName(), "Housing Resident"));
 		roles.add(new BankCustomerRole(this, getName(), "Bank Customer"));
 		roles.add(new MarketCustomerRole(this, getName(), "Market Customer"));
@@ -331,6 +332,7 @@ public abstract class Person extends Agent{
 
 	protected void goToSleep() {
 		gui.walk = true;
+		/*
 		getGui().DoGoHome();
 		try {
 			atDestination.acquire();
@@ -338,19 +340,54 @@ public abstract class Person extends Agent{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			//
-		}
-		//			}
-		for (Role cust1 : roles) {
-			if (cust1 instanceof HousingResidentRole) {
-				HousingResidentRole HRR = (HousingResidentRole) cust1;
-				if (Phonebook.getPhonebook().getEastApartment().arrived(HRR)) {
-					currentRoleName = "Housing Resident";
-					cust1.setRoleActive();
-					stateChanged();
+		}*/
+		
+		//person is part of an apartment
+		if(getHousing().type.toLowerCase().contains("apartment")) {
+			if(getHousing().type.toLowerCase().contains("east")) {
+				for (Role cust1 : roles) {
+					if (cust1 instanceof ApartmentResidentRole) {
+						ApartmentResidentRole HRR = (ApartmentResidentRole) cust1;
+						if (Phonebook.getPhonebook().getEastApartment().arrived(HRR)) {
+							currentRoleName = "EAST Apartment Resident";
+							//System.out.println(currentRoleName);
+							cust1.setRoleActive();
+							stateChanged();
+						}
+						return;
+					}
 				}
-				return;
+			} else if (getHousing().type.toLowerCase().contains("west")) {
+				for (Role cust1 : roles) {
+					if (cust1 instanceof ApartmentResidentRole) {
+						ApartmentResidentRole HRR = (ApartmentResidentRole) cust1;
+						if (Phonebook.getPhonebook().getWestApartment().arrived(HRR)) {
+							currentRoleName = "WEST Apartment Resident";
+							//System.out.println(currentRoleName);
+							cust1.setRoleActive();
+							stateChanged();
+						}
+						return;
+					}
+				}
+			}		
+		
+		//person is NOT part of an apartment
+		} else if(getHousing().type.toLowerCase().contains("NANANANAN")){  //CHANGE BACK TO MANSION
+			for (Role cust1 : roles) { 
+				if (cust1 instanceof HousingResidentRole) {
+					HousingResidentRole HRR = (HousingResidentRole) cust1;
+					if (getHousing().arrived(HRR)) {
+						currentRoleName = "Housing Resident";
+						System.out.println(currentRoleName);
+						cust1.setRoleActive();
+						stateChanged();
+					}
+					return;
+				}
 			}
 		}
+		
 		//After arrives home
 		alarmClock.schedule(new TimerTask() {
 			public void run() {

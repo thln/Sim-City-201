@@ -18,13 +18,24 @@ public class Apartment {
 		this.name = name;
 	}
 	
-	public boolean arrived(HousingResidentRole HRR) {
-		HousingResidentGui HRG = new HousingResidentGui(HRR);
-		HRR.setGui(HRG);
-		apartmentPanel.addGui(HRG);
+	public boolean arrived(ApartmentResidentRole ARR) {
+		if(ARR instanceof ApartmentResidentRole) {
+			aptUnits = apartmentPanel.getAptUnits();
+			for(int i=0;i<aptUnits.size();i++) {
+				if(aptUnits.get(i).getOccupantName().equals(ARR.getName())) {
+					ARR.setUnit(i);
+					//System.out.println(ARR.getName() + " is going home to apartment " + i);
+				}
+			}
+			ApartmentResidentGui ARG = new ApartmentResidentGui(ARR);
+			ARR.setGui(ARG);
+			apartmentPanel.addGui(ARG);
+			return true;
+		}
 		return false;
 	}
 	
+	/*
 	public void House(HousingResidentRole HRR) {
 		HousingResidentGui HRG = new HousingResidentGui(HRR);
 		aptUnits = apartmentPanel.getAptUnits();
@@ -33,7 +44,7 @@ public class Apartment {
 				house.getPanel().addGui(HRG);
 			}
 		}
-	}
+	}*/
 	
 	public void setBuildingPanel(BuildingPanel myBuildingPanel) {
 		apartmentPanel = (ApartmentPanel)myBuildingPanel;

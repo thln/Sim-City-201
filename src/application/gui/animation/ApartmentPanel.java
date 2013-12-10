@@ -106,6 +106,21 @@ public class ApartmentPanel extends BuildingPanel implements MouseListener{
        		g2.drawString(housing.get(counter).getOccupantName(), 50*ix, 80*(rows+1)-15);
        		counter++;
         }
+        
+        synchronized(guis){
+			for(Gui gui : guis) {
+				if (gui.isPresent()) {
+					gui.updatePosition();
+				}
+			}
+
+			for(Gui gui : guis) {
+				if (gui.isPresent()) {
+					gui.draw(g2);
+				}
+			}
+			
+		}
 	}
 	
 	public void displayBuildingPanel() {

@@ -105,16 +105,6 @@ public class HousingResidentGui extends HousingGui {
     	yDestination = 200;
     }
     
-    public void DoDoToUnit(int unit) {
-    	CheckLessThan10();
-    	xDestination = 50;
-    	yDestination = 50;
-    }
-    
-    public void CheckLessThan10() {
-    	
-    }
-    
     public void DoExit() {
     	xDestination = 300;
     	yDestination = 300;
