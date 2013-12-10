@@ -1,5 +1,6 @@
 package application.gui.animation.agentGui;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
@@ -48,6 +49,22 @@ public class CopGui extends VehicleHorizontalGui {
 	}
 
 	public void draw(Graphics2D g) {
+		if (xPos%20 == 0 || xPos%20 == 1 || xPos%20 == 2 ||
+				xPos%20 == 3 || xPos%20 == 4 || xPos%20 == 5 ||
+				xPos%20 == 6 || xPos%20 == 7 || xPos%20 == 8 ||
+				xPos%20 == 9 || xPos%20 == 10) {
+			g.setColor(Color.RED);
+			g.fillRect(xPos+18, yPos-3, 10, 5);
+			g.setColor(Color.BLUE);
+			g.fillRect(xPos+28, yPos-3, 10, 5);
+		}
+		else {
+			g.setColor(Color.BLUE);
+			g.fillRect(xPos+18, yPos-3, 10, 5);
+			g.setColor(Color.RED);
+			g.fillRect(xPos+28, yPos-3, 10, 5);
+		}
+			
 		if (yPos == TopRoadY) {
 			g.drawImage(carRight.getImage(), xPos, yPos, null);
 		}

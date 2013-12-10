@@ -226,7 +226,7 @@ public class ChineseRestaurantHostRole extends Role {
 			}
 		}
 
-		if (leaveRole) {
+		if (leaveRole && (person != null)) {
 			chineseRestaurant.goingOffWork(person);
 			leaveRole = false;
 			return true;

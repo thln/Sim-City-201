@@ -3,13 +3,13 @@ import java.awt.Point;
 import java.util.*;
 
 import person.*;
+import application.*;
 import transportation.BusStop;
-import application.Phonebook;
-import application.WatchTime;
+import application.*;
 import application.gui.animation.*;
 import application.gui.animation.agentGui.*;
 
-public class ItalianRestaurant {
+public class ItalianRestaurant implements Restaurant{
 
 	//Data
 	String name;
@@ -81,7 +81,7 @@ public class ItalianRestaurant {
 			if (isOpen()) {
 				italianRestaurantHostRole.msgRestaurantOpen();
 			}
-			//restPanel.addGui(cookGui);
+			restPanel.addGui(cookGui);
 			return italianRestaurantCookRole;
 		}
 		else if (title.contains("americanRestaurantCashier")) {
@@ -95,6 +95,7 @@ public class ItalianRestaurant {
 			if (isOpen()) {
 				italianRestaurantHostRole.msgRestaurantOpen();
 			}
+			restPanel.addGui(cashierGui);
 			return italianRestaurantCashierRole;
 		}
 		else if (title == "waiter") {	
@@ -159,14 +160,16 @@ public class ItalianRestaurant {
 		Worker worker = (Worker) person;
 
 		if (worker.getWorkerRole().equals(italianRestaurantHostRole)) {
-			italianRestaurantHostRole = null;
-			//restPanel.removeGui(worker.getWorkerRole().gui);
+			worker.roleFinishedWork();
+			return;
 		}
-		if (worker.getWorkerRole().equals(italianRestaurantCashierRole)) {
-			italianRestaurantCashierRole = null;
+		else if (worker.getWorkerRole().equals(italianRestaurantCashierRole)) {
+			worker.roleFinishedWork();
+			return;
 		}
-		if (worker.getWorkerRole().equals(italianRestaurantCookRole)) {
-			italianRestaurantCookRole = null;
+		else if (worker.getWorkerRole().equals(italianRestaurantCookRole)) {
+			worker.roleFinishedWork();
+			return;
 			//restPanel.removeGui(cookGui);
 		}
 		//WAITERS AND ALT WAITERS

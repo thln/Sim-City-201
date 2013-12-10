@@ -33,6 +33,8 @@ public class ItalianCustomerRole extends Role implements ItalianCustomer{
 	private ItalianWaiterRole waiter;
 	private ItalianHostRole host;
 	private ItalianCashierRole cashier;
+	
+	protected String RoleName = "Restaurant Customer";
 
 	//    private boolean isHungry = false; //hack for gui
 	public enum AgentState
@@ -263,6 +265,14 @@ public class ItalianCustomerRole extends Role implements ItalianCustomer{
 			//no action
 			return true;
 		}
+		
+		if (leaveRole)
+		{
+			((Worker) person).roleFinishedWork();
+			leaveRole = false;
+			return true;
+		}
+		
 		return false;
 	}
 
