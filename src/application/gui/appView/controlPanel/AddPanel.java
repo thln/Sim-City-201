@@ -340,11 +340,12 @@ public class AddPanel extends JPanel implements ActionListener {
 				rave = true;
 				try {
 					app.animPanel.cityPanel.background = ImageIO.read(new File("res/rave.jpeg"));
-					MGP.start(BGM);
-					if(MGP.isInterrupted())
-					{
-						MGP.resume();
-					}
+					Phonebook.getPhonebook().getRadioStation().startRaveMusic();
+//					MGP.start(BGM);
+//					if(MGP.isInterrupted())
+//					{
+//						MGP.resume();
+//					}
 					
 					//app.animPanel.cityPanel.paint
 				} catch (IOException e1) {
@@ -355,8 +356,9 @@ public class AddPanel extends JPanel implements ActionListener {
 				rave = false;
 				try {
 					app.animPanel.cityPanel.background = ImageIO.read(new File("res/concrete.jpg"));
-					MGP.stop(BGM);
-					MGP.interrupt();
+					Phonebook.getPhonebook().getRadioStation().stopRaveMusic();
+//					MGP.stop(BGM);
+//					MGP.interrupt();
 				} catch (IOException e1) {
 				}
 				return;

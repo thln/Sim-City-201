@@ -1,28 +1,32 @@
 package application;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+//import java.io.FileInputStream;
+//import java.io.FileNotFoundException;
+//import java.io.IOException;
+//import java.io.InputStream;
 import java.net.URL;
 
 
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 //import javax.print.DocFlavor.URL;
 import javax.sound.sampled.Clip;
 
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
+//import sun.audio.AudioPlayer;
+//import sun.audio.AudioStream;
 
 public class RadioStation 
 {
-	AudioStream BGM;
-	AudioStream raveMusic;
-	AudioPlayer MGP = AudioPlayer.player;
+	//AudioStream BGM;
+	//AudioStream raveMusic;
+	//AudioPlayer MGP = AudioPlayer.player;
 	Clip standardCityClip;
 	Clip raveCityClip;
+	Timer musicTimer = new Timer();
 
 	RadioStation()
 	{
@@ -31,15 +35,19 @@ public class RadioStation
 	
 	private void initMusic() 
 	{
-		URL standardCityURL = this.getClass().getClassLoader().getResource("res/audio/Fur Elise.wav");
-		URL raveCityURL = this.getClass().getClassLoader().getResource("res/audio/Fur Elise.wav");
+		URL standardCityURL = this.getClass().getClassLoader().getResource("res/audio/FurElise.wav");
+		URL raveCityURL = this.getClass().getClassLoader().getResource("res/audio/ScaryMonstersAndNiceSprites.wav");
 		
 		try 
 		{
-			AudioInputStream standardCityIn = AudioSystem.getAudioInputStream(standardCityURL);
+			//AudioInputStream standardCityIn = AudioSystem.getAudioInputStream(standardCityURL);
+			System.out.println("1");
+			AudioInputStream standardCityIn = AudioSystem.getAudioInputStream(getClass().getResourceAsStream("res/audio/FurElise.wav"));
+			System.out.println("2");
 			standardCityClip = AudioSystem.getClip();
+			System.out.println("3");
 			standardCityClip.open(standardCityIn);
- 
+			System.out.println("4");
 		}
 		catch (Exception e) 
 		{
@@ -48,7 +56,8 @@ public class RadioStation
  
 		try 
 		{
-			AudioInputStream raveCityIn = AudioSystem.getAudioInputStream(raveCityURL);
+			//AudioInputStream raveCityIn = AudioSystem.getAudioInputStream(raveCityURL);
+			AudioInputStream raveCityIn = AudioSystem.getAudioInputStream(getClass().getResourceAsStream("res/audio/ScaryMonstersAndNiceSprites.wav"));
 			raveCityClip = AudioSystem.getClip();
 			raveCityClip.open(raveCityIn);
 		} 
@@ -61,13 +70,59 @@ public class RadioStation
 		{
 			standardCityClip.loop(Clip.LOOP_CONTINUOUSLY);
 		}
+		
+		System.out.println("1111111111111111111111111111111111111111111111111111");
 	}
 	
-	public void stopMusic() 
+	public void stopBGMusic() 
 	{
 		if (standardCityClip.isRunning()) 
 		{
 			standardCityClip.stop();
+		}
+	}
+	
+	//@Override
+	public void startBGMusic() 
+	{
+		//stopCompleted();
+		//stopPokeflute();
+		//stopRecovery();
+		stopRaveMusic();
+		
+		if (standardCityClip != null) 
+		{
+			standardCityClip.loop(Clip.LOOP_CONTINUOUSLY);
+		}
+	}
+	
+	public void startRaveMusic() 
+	{
+		if (raveCityClip != null) 
+		{
+			stopBGMusic();
+			//stopCompleted();
+			//stopRecovery();
+ 
+			System.out.println("RAVE"); // !!! EXTREMELY IMPORTANT
+			raveCityClip.setFramePosition(0);
+			raveCityClip.start();
+			musicTimer.schedule(new TimerTask() 
+			{
+				@Override
+				public void run() 
+				{
+					startBGMusic();
+				}
+			}, 4224);
+		}
+	}
+ 
+	public void stopRaveMusic() 
+	{
+		if (raveCityClip.isRunning()) 
+		{
+			raveCityClip.stop();
 		}
 	}
 		
