@@ -13,10 +13,10 @@ public class HousingResidentGui extends HousingGui {
     
     //RestaurantGui gui;
 
-    private int xPos = 300, yPos = 200;//default HouseRenter position
-    private int xDestination = 300, yDestination = 200;//default start position
+    private int xPos = 300, yPos = 350;//default HouseRenter position
+    private int xDestination = 300, yDestination = 260;//default start position
     
-    private enum Command {noCommand};
+    private enum Command {noCommand, inTransit};
 	private Command command = Command.noCommand;
 
 	private enum CustomerState {nothing};
@@ -43,7 +43,12 @@ public class HousingResidentGui extends HousingGui {
     			yPos--;
 
     		if (xPos == xDestination && yPos == yDestination) {
-    			
+    			if(command != Command.noCommand) {
+	    			if(agent != null) {
+	    				agent.msgAtDestination();
+	    			}
+    			}
+    			command = Command.noCommand;
     		}
         //}
     }
@@ -76,40 +81,48 @@ public class HousingResidentGui extends HousingGui {
     public void DoGoToKitchen() {
     	xDestination = 510;
     	yDestination = 85;
+    	command = Command.inTransit;
     }
     
     public void DoGoToFridge() {
     	xDestination = 450;
     	yDestination = 50;
+    	command = Command.inTransit;
     }
     
     public void DoCooking() {
     	xDestination = 510;
     	yDestination = 75;
+    	command = Command.inTransit;
     }
     
     public void DoGoToBed() {
     	xDestination = 510;
-    	yDestination = 200;
+    	yDestination = 250;
+    	command = Command.inTransit;
     }
     
     public void DoGoToBedRoom() {
     	xDestination = 450;
     	yDestination = 200;
+    	command = Command.inTransit;
     }
     
     public void DoGoToBathroom() {
-    	xDestination = 100;
+    	xDestination = 50;
     	yDestination = 50;
+    	command = Command.inTransit;
     }
     
     public void DoGoToLivingRoom() {
     	xDestination = 100;
-    	yDestination = 200;
+    	yDestination = 250;
+    	command = Command.inTransit;
     }
     
     public void DoExit() {
     	xDestination = 300;
     	yDestination = 350;
+    	command = Command.inTransit;
     }
 }

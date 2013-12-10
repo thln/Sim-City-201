@@ -175,6 +175,9 @@ public class Phonebook{
 		busStopsList.add(new BusStop(3, 420, 230));			// Bottom Right Bus Stop
 		busStopsList.add(new BusStop(4, 127, 230));			// Bottom Left Bus Stop
 		
+		eastApartment = new Apartment("East Apartment");
+		westApartment = new Apartment("West Apartment");
+		
 		eastBank = new Bank("East Bank");
 		eastBank.setClosestBusStopNumber(3);			//setting building's closest bus stop
 		

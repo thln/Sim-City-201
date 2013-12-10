@@ -15,7 +15,6 @@ public class HousingResidentRole extends Role{
 
 	public HousingResidentRole (Person p1, String pName, String rName) {
 		super(p1, pName, rName);
-		state = ResidentState.sleepy;
 	}
 	
 	//Messages
@@ -24,7 +23,7 @@ public class HousingResidentRole extends Role{
 		stateChanged();
 	}
 	
-	public void atDestination() {
+	public void msgAtDestination() {
 		atDestination.release();
 	}
 	

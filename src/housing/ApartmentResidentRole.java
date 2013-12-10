@@ -10,8 +10,9 @@ public class ApartmentResidentRole extends HousingResidentRole{
 	//DATA
 	private Apartment apartment;
 	private ApartmentResidentGui gui;
-	public enum ResidentState {moving, none};
-	public ResidentState state = ResidentState.none;
+	private HousingResidentGui HRR;
+	public enum PersonState {moving, none};
+	public PersonState pState = PersonState.none;
 	private Semaphore atDestination = new Semaphore(0, true);
 	private Housing myHome;
 	int aptUnit;
@@ -22,7 +23,7 @@ public class ApartmentResidentRole extends HousingResidentRole{
 	
 	//Messages
 	public void msgMoveToUnit() {
-		state = ResidentState.moving;
+		pState = PersonState.moving;
 		stateChanged();
 	}
 	
@@ -33,8 +34,24 @@ public class ApartmentResidentRole extends HousingResidentRole{
 	//Scheduler
 
 	public boolean pickAndExecuteAnAction () {
-		if(state == ResidentState.moving) {
+		if(pState == PersonState.moving) {
 			GoToUnit(aptUnit);
+			return true;
+		}
+		if(state == ResidentState.sleepy) {
+			goToSleep();
+			return true;
+		}
+		if(state == ResidentState.hungry) {
+			goToKitchen();
+			return true;
+		}
+		if(state == ResidentState.watchingTV) {
+			goToLivingRoom();
+			return true;
+		}
+		if(state == ResidentState.peeing) {
+			goToBathroom();
 			return true;
 		}
 		return false;
@@ -49,10 +66,65 @@ public class ApartmentResidentRole extends HousingResidentRole{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		HousingResidentGui HRR = new HousingResidentGui(this);
+		HRR = new HousingResidentGui(this);
 		myHome.getPanel().addGui(HRR);
 		myHome.setOccupied(true);
-		state = ResidentState.none;
+		/*************TEMP STATE for testing guis***********/
+		state = ResidentState.sleepy;
+		/*************END TEMP STATE*********************/
+		pState = PersonState.none;
+	}
+	
+	public void goToSleep() {
+		HRR.DoGoToBed();
+		try {
+			this.atDestination.acquire();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		/*************TEMP STATE for testing guis***********/
+		state = ResidentState.hungry;
+		/*************END TEMP STATE*********************/
+	}
+	
+	public void goToKitchen() {
+		HRR.DoGoToKitchen();
+		try {
+			this.atDestination.acquire();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+			/*************TEMP STATE for testing guis***********/
+			state = ResidentState.watchingTV;
+			/*************END TEMP STATE*********************/
+	}
+	
+	public void goToLivingRoom() {
+		HRR.DoGoToLivingRoom();
+		try {
+			this.atDestination.acquire();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+			/*************TEMP STATE for testing guis***********/
+			state = ResidentState.peeing;
+			/*************END TEMP STATE*********************/
+	}
+	
+	public void goToBathroom() {
+		HRR.DoGoToBathroom();
+		try {
+			this.atDestination.acquire();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+			/*************TEMP STATE for testing guis***********/
+			state = ResidentState.sleepy;
+			/*************END TEMP STATE*********************/
 	}
 	
 	//utilities
