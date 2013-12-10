@@ -1,10 +1,12 @@
 package application.gui.animation;
 
 import javax.swing.*;
+import javax.swing.Timer;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
+import java.util.List;
+import java.util.*;
 
 import application.Phonebook;
 import housing.*;
@@ -19,6 +21,7 @@ public class AnimationPanel extends JPanel implements MouseListener, ActionListe
 	JPanel buildingPanels;
 	CardLayout cardLayout;
 	ArrayList<Building> buildings;
+	List<BuildingPanel> buildingPanelsList = Collections.synchronizedList(new ArrayList<BuildingPanel>());
 
 	//begin list of mechanisms for testing agent guis
 	JButton testbutton = new JButton("test");
@@ -85,6 +88,7 @@ public class AnimationPanel extends JPanel implements MouseListener, ActionListe
 			b.setMyBuildingPanel(panel);
 			setBuildingInPhonebook(b);
 			buildingPanels.add(panel, name);
+			buildingPanelsList.add(panel);
 			add(BorderLayout.NORTH, cityPanel);
 			add(BorderLayout.SOUTH, buildingPanels);
 			Timer paintTimer = new Timer(10, this);
@@ -304,6 +308,7 @@ public class AnimationPanel extends JPanel implements MouseListener, ActionListe
 
 	public void addBuildingPanel(BuildingPanel panel) {
 		buildingPanels.add(panel, panel.name);
+		buildingPanelsList.add(panel);
 	}
 
 	public int getWindowX(){
@@ -348,12 +353,12 @@ public class AnimationPanel extends JPanel implements MouseListener, ActionListe
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		synchronized(buildings) {
-			if(!buildings.isEmpty()) {
-				for(Building building: buildings) {
-					if (building.myBuildingPanel != null) {
-						if(!building.myBuildingPanel.isVisible()) {
-							for(Gui gui : building.myBuildingPanel.guis) {
+		synchronized(buildingPanelsList) {
+			if(!buildingPanelsList.isEmpty()) {
+				for(BuildingPanel building: buildingPanelsList) {
+					if (building != null) {
+						if(!building.isVisible()) {
+							for(Gui gui : building.guis) {
 								gui.updatePosition();
 							}
 						}
