@@ -1,7 +1,9 @@
 package application;
 
 
+import java.io.BufferedInputStream;
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -32,22 +34,16 @@ public class RadioStation
 		//URL testURL = this.getClass().getClassLoader().getResource("res/audio/raveAudioMode.wav");
 		//URL standardCityURL = this.getClass().getClassLoader().getResource("res/audio/FurElise.wav");
 		//URL raveCityURL = this.getClass().getClassLoader().getResource("res/audio/ScaryMonstersAndNiceSprites.wav");
-		URL testURL = this.getClass().getClassLoader().getResource("src/res/audio/raveAudioMode.wav");
-		URL standardCityURL = this.getClass().getClassLoader().getResource("res/audio/FurElise.wav");
-		URL raveCityURL = this.getClass().getClassLoader().getResource("res/audio/ScaryMonstersAndNiceSprites.wav");
+		URL testURL = this.getClass().getResource("res/audio/raveAudioMode.wav");
+		URL standardCityURL = this.getClass().getResource("res/audio/FurElise.wav");
+		URL raveCityURL = this.getClass().getResource("res/audio/ScaryMonstersAndNiceSprites.wav");
 		//System.out.println(standardCityURL.getFile() + " " + raveCityURL.getFile() + " " + testURL.getFile());
-		//testURL.
 		try 
 		{
-			//AudioInputStream standardCityIn = new AudioInputStream(new FileInputStream("res/audio/FurElise.wav"));
-			AudioInputStream standardCityIn = AudioSystem.getAudioInputStream(testURL);
-			System.out.println("1");
-			//AudioInputStream standardCityIn = AudioSystem.getAudioInputStream(getClass().getResourceAsStream("res/audio/FurElise.wav"));
-			System.out.println("2");
+			InputStream standardCityTest = new BufferedInputStream(new FileInputStream("res/audio/FurElise.wav"));
+			AudioInputStream standardCityIn = AudioSystem.getAudioInputStream(standardCityTest);
 			standardCityClip = AudioSystem.getClip();
-			System.out.println("3");
 			standardCityClip.open(standardCityIn);
-			System.out.println("4");
 		}
 		catch (Exception e) 
 		{
@@ -56,8 +52,8 @@ public class RadioStation
  
 		try 
 		{
-			AudioInputStream raveCityIn = AudioSystem.getAudioInputStream(raveCityURL);
-			//AudioInputStream raveCityIn = AudioSystem.getAudioInputStream(getClass().getResourceAsStream("res/audio/ScaryMonstersAndNiceSprites.wav"));
+			InputStream raveCityTest = new BufferedInputStream(new FileInputStream("res/audio/ScaryMonstersCut.wav"));
+			AudioInputStream raveCityIn = AudioSystem.getAudioInputStream(raveCityTest);
 			raveCityClip = AudioSystem.getClip();
 			raveCityClip.open(raveCityIn);
 		} 
@@ -107,14 +103,15 @@ public class RadioStation
 			System.out.println("RAVE"); // !!! EXTREMELY IMPORTANT
 			raveCityClip.setFramePosition(0);
 			raveCityClip.start();
-			musicTimer.schedule(new TimerTask() 
-			{
-				@Override
-				public void run() 
-				{
-					startBGMusic();
-				}
-			}, 4224);
+			raveCityClip.loop(Clip.LOOP_CONTINUOUSLY);
+//			musicTimer.schedule(new TimerTask() 
+//			{
+//				@Override
+//				public void run() 
+//				{
+//					startBGMusic();
+//				}
+//			}, 4224);
 		}
 	}
  

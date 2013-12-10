@@ -357,7 +357,7 @@ public class AddPanel extends JPanel implements ActionListener {
 				rave = false;
 				try {
 					app.animPanel.cityPanel.background = ImageIO.read(new File("res/concrete.jpg"));
-					Phonebook.getPhonebook().getRadioStation().stopRaveMusic();
+					Phonebook.getPhonebook().getRadioStation().startBGMusic();
 //					MGP.stop(BGM);
 //					MGP.interrupt();
 				} catch (IOException e1) {
