@@ -9,6 +9,7 @@ import application.Phonebook;
 import application.Restaurant;
 import application.TimeManager;
 import application.TimeManager.Day;
+import application.gui.animation.agentGui.PersonGui.Command;
 import application.WatchTime;
 
 public class Worker extends Person {
@@ -294,10 +295,13 @@ public class Worker extends Person {
 				print("Destination bus Stop: " + Phonebook.getPhonebook().getAmericanRestaurant().getClosestBusStop().getBusStopNumber());
 
 				goToBusStop(Phonebook.getPhonebook().getAmericanRestaurant().getClosestBusStop().getBusStopNumber(), Phonebook.getPhonebook().getAmericanRestaurant().location);
+				gui.command = Command.GoToRestaurant;
 			}
 			if (myJob.jobPlace.contains("Chinese")){
 				print("Destination bus Stop: " + Phonebook.getPhonebook().getChineseRestaurant().getClosestBusStop().getBusStopNumber());
 				goToBusStop(Phonebook.getPhonebook().getChineseRestaurant().getClosestBusStop().getBusStopNumber(), Phonebook.getPhonebook().getChineseRestaurant().location);
+				gui.command = Command.GoToRestaurant;
+
 			}
 			//			if (myJob.jobPlace.contains("Seafood")){
 			//				print("Destination bus Stop: " + Phonebook.getPhonebook().getSeafoodRestaurant().getClosestBusStop().getBusStopNumber());
@@ -306,22 +310,29 @@ public class Worker extends Person {
 			if (myJob.jobPlace.contains("Italian")){
 				print("Destination bus Stop: " + Phonebook.getPhonebook().getItalianRestaurant().getClosestBusStop().getBusStopNumber());
 				goToBusStop(Phonebook.getPhonebook().getItalianRestaurant().getClosestBusStop().getBusStopNumber(), Phonebook.getPhonebook().getItalianRestaurant().location);
+				gui.command = Command.GoToRestaurant;
 			}
 			if (myJob.jobPlace.contains("West Bank")){
 				print("Destination bus Stop: " + Phonebook.getPhonebook().getWestBank().getClosestBusStop().getBusStopNumber());
 				goToBusStop(Phonebook.getPhonebook().getWestBank().getClosestBusStop().getBusStopNumber(), Phonebook.getPhonebook().getWestBank().location);
+				gui.command = Command.GoToBank;
+
 			}
 			if (myJob.jobPlace.contains("East Bank")){
 				print("Destination bus Stop: " + Phonebook.getPhonebook().getEastBank().getClosestBusStop().getBusStopNumber());
 				goToBusStop(Phonebook.getPhonebook().getEastBank().getClosestBusStop().getBusStopNumber(), Phonebook.getPhonebook().getEastBank().location);
+				gui.command = Command.GoToBank;
 			}
 			if (myJob.jobPlace.contains("West Market")){
 				print("Destination bus Stop: " + Phonebook.getPhonebook().getWestMarket().getClosestBusStop().getBusStopNumber());
 				goToBusStop(Phonebook.getPhonebook().getWestMarket().getClosestBusStop().getBusStopNumber(), Phonebook.getPhonebook().getWestMarket().location);
+				gui.command = Command.GoToMarket;
 			}
 			if (myJob.jobPlace.contains("East Market")){
 				print("Destination bus Stop: " + Phonebook.getPhonebook().getEastMarket().getClosestBusStop().getBusStopNumber());
 				goToBusStop(Phonebook.getPhonebook().getEastMarket().getClosestBusStop().getBusStopNumber(), Phonebook.getPhonebook().getEastMarket().location);
+			
+				gui.command = Command.GoToMarket;
 			}
 			
 		}

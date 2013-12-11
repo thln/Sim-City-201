@@ -44,8 +44,8 @@ public class PersonGui extends CityGui {
 	private int xPos, yPos;//default person position
 	private int xDestination, yDestination;//default start position
 	private int xHome, yHome;
-	private enum Command {noCommand, GoToRestaurant, GoToMarket, GoToBank, GoToBusStop, GoOnBus, GoHome};
-	private Command command = Command.noCommand;
+	public enum Command {noCommand, GoToRestaurant, GoToMarket, GoToBank, GoToBusStop, GoOnBus, GoHome};
+	public Command command = Command.noCommand;
 
 	int currentBlock, destinationBlock;
 

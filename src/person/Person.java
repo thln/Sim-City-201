@@ -21,6 +21,7 @@ import application.gui.trace.AlertLog;
 import application.gui.trace.AlertTag;
 import application.gui.animation.*;
 import application.gui.animation.agentGui.*;
+import application.gui.animation.agentGui.PersonGui.Command;
 
 public abstract class Person extends Agent{
 
@@ -213,6 +214,7 @@ public abstract class Person extends Agent{
 			{
 				goToBusStop(Phonebook.getPhonebook().getWestBank().getClosestBusStop().getBusStopNumber(), Phonebook.getPhonebook().getWestBank().location);
 			}
+			gui.command = Command.GoToBank;
 		}
 
 		try {
@@ -359,6 +361,8 @@ public abstract class Person extends Agent{
 			{
 				goToBusStop(Phonebook.getPhonebook().getWestMarket().getClosestBusStop().getBusStopNumber(), Phonebook.getPhonebook().getWestMarket().location);
 			}
+			gui.command = Command.GoToMarket;
+
 //			if (home.type.equals("East Apartment")){
 //				gui.doGoToBus(Phonebook.getPhonebook().getEastMarket().getClosestBusStop(), "East Market");
 //			}
@@ -455,6 +459,8 @@ public abstract class Person extends Agent{
 				print("Destination bus Stop: " + Phonebook.getPhonebook().getItalianRestaurant().getClosestBusStop().getBusStopNumber());
 				goToBusStop(Phonebook.getPhonebook().getItalianRestaurant().getClosestBusStop().getBusStopNumber(), Phonebook.getPhonebook().getItalianRestaurant().location);
 			}
+			gui.command = Command.GoToRestaurant;
+
 		}
 
 		try {
@@ -523,6 +529,8 @@ public abstract class Person extends Agent{
 //				gui.doGoToBus(Phonebook.getPhonebook().getWestMarket().getClosestStop().getX(),
 //						Phonebook.getPhonebook().getWestMarket().getClosestStop().getY());
 //			}
+			gui.command = Command.GoHome;
+
 		}
 
 		try {
