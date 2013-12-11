@@ -595,20 +595,21 @@ Roads should have appropriate complexity [e.g. intersections with stop signs and
 		market1d.startThread();
 		market1e.startThread();
 		market1f.startThread();
-//		rest1g.startThread();
-//		rest1h.startThread();
-//		rest1i.startThread();
-//		rest1j.startThread();
-//		rest1k.startThread();
+		rest1g.startThread();
+		rest1h.startThread();
+		rest1i.startThread();
+		rest1j.startThread();
+		rest1k.startThread();
 		bank3a.startThread();
 		bank3b.startThread();	
 		bank3c.startThread();
-
+/*
 		rest3g.startThread();
 		rest3h.startThread();
 		rest3i.startThread();
 		rest3j.startThread();
 		rest3k.startThread();
+		*/
 //
 //		//People
 		wealthy1.startThread();
