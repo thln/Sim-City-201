@@ -29,19 +29,19 @@ public abstract class VehicleGui extends CityGui {
 
 	//Actions
 	public void goToEndOfTopRoad() {
-		xDestination = 600;
+		xDestination = 650;
 	}
 
 	public void goToEndOfBottomRoad() {
-		xDestination = -25;
+		xDestination = -50;
 	}
 
 	public void goToEndOfLeftRoad() {
-		yDestination = -25;
+		yDestination = -50;
 	}
 
 	public void goToEndOfRightRoad() {
-		yDestination = 325;
+		yDestination = 350;
 	}
 
 	public void changeRoads() {
