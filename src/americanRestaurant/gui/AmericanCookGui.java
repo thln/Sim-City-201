@@ -19,7 +19,7 @@ public class AmericanCookGui implements Gui {
 	private int xSize = 20, ySize = 20;
 	private int xDestination, yDestination;
 	RestaurantPanel panel1;
-	ImageIcon ingredientsImage = new ImageIcon ("Images/ingredients.png");
+	ImageIcon ingredientsImage = new ImageIcon ("res/ingredients.png");
 	public static final int xPlatingArea = 400;
 	public static final int yPlatingArea = 300;
 	public static final int xCookingArea = 400;
