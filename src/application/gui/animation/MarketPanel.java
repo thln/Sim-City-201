@@ -51,7 +51,7 @@ public class MarketPanel extends BuildingPanel implements ActionListener{
 		
 		//g2.fillRect(90, 125, WINDOWX/2+20, 10); 
 		g2.setColor(new Color(255, 176, 102));
-		g2.fillRect(100, 170, WINDOWX/2+10, 20); //table bottom
+		g2.fillRect(100, 170, 310, 20); //table bottom
 		g2.drawString("Inventory",WINDOWX/2, 60 );
 		
 		g2.setColor(new Color(153, 76, 0));//table top

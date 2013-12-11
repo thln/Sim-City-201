@@ -153,4 +153,12 @@ public class MaintenanceWorkerRole extends Role  implements MaintenanceWorker
 			}
 		}
 	}
+	
+	public void setGui(HousingMaintenanceGui gui) {
+		this.gui = gui;
+	}
+	
+	public HousingMaintenanceGui getGui() {
+		return this.gui;
+	}
 }

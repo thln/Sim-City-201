@@ -3,6 +3,7 @@ package application.gui.animation.agentGui;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.util.Random;
 
 import person.Person;
@@ -10,9 +11,10 @@ import application.Phonebook;
 
 public class PersonGui extends CityGui {
 
-	private final int WINDOWX = 600;
-	private final int WINDOWY = 325;
-
+	Toolkit tk = Toolkit.getDefaultToolkit();
+	int WINDOWX = ((int) tk.getScreenSize().getWidth())/2; 
+	int WINDOWY = ((int) tk.getScreenSize().getHeight())/2;
+	
 	private Person agent = null;
 	private boolean isHungry = false;
 	public boolean walk = true;
@@ -63,21 +65,21 @@ public class PersonGui extends CityGui {
 	public PersonGui(Person p) {
 		this.agent = p;
 		if(p.home.type.equals("West Apartment")) {
-			xHome = 20;
-			yHome = 30;			
+			xHome = WINDOWX/6-WINDOWX/12;
+			yHome = WINDOWY/6-WINDOWY/20;			
 
 		}
 		if(p.home.type.equals("East Apartment")) {
-			xHome = 520;
-			yHome = 300;			
+			xHome = WINDOWX*5/6;
+			yHome = WINDOWY*5/6;			
 		}
 		if (p.home.type.equals("Mansion")){
-			xHome = 45;
-			yHome = 150;
+			xHome = WINDOWX/6-WINDOWX/12;
+			yHome = WINDOWX/2;
 		}
 
-		setxPos(xHome);
-		setyPos(yHome);
+		setxPos(xHome-20);
+		setyPos(yHome-20);
 		setxDestination(xHome);
 		setyDestination(yHome);
 		
@@ -288,12 +290,14 @@ public boolean decideForBus(String location) {
 	return true;
 }
 
+
 public int getClosestBusStopNumber()
 {
 	if(returnCurrentBlock(xPos, yPos) == 1 || returnCurrentBlock(xPos, yPos) == 2 || returnCurrentBlock(xPos, yPos) == 4 ||
 			returnCurrentBlock(xPos, yPos) == 5 )
 	{
 		return 1;
+
 	}
 	else if(returnCurrentBlock(xPos, yPos) == 3 || returnCurrentBlock(xPos, yPos) == 6)
 	{
@@ -354,16 +358,87 @@ public void walkToLocation(){
 	}
 }
 
+	public int returnCurrentBlock (int xPos, int yPos){
+		
+		if (xPos < WINDOWX/3-WINDOWY/20 && yPos < WINDOWY/3-WINDOWY/20){
+			return 1;
+		}
+		if ((xPos > WINDOWX/3+WINDOWY/20 && xPos < WINDOWX*2/3-WINDOWY/20) && yPos < WINDOWY/3-WINDOWY/20){
+			return 2;
+		}
+		if (xPos > WINDOWX*2/3+WINDOWY/20 && yPos < WINDOWY/3-WINDOWY/20){
+			return 3;
+		}
+
+		if (xPos < WINDOWX/3-WINDOWY/20 && (yPos > WINDOWY/3+WINDOWY/20 && yPos < WINDOWY*2/3-WINDOWY/20)){
+			return 4;
+		}
+		if ((xPos > WINDOWX/3+WINDOWY/20 && xPos < WINDOWX*2/3-WINDOWY/20) && (yPos > WINDOWY/3+WINDOWY/20 && yPos < WINDOWY*2/3-WINDOWY/20)){
+			return 5;
+		}
+		if (xPos > WINDOWX*2/3+WINDOWY/20 && (yPos > WINDOWY/3+WINDOWY/20 && yPos < WINDOWY*2/3-WINDOWY/20)){
+			return 6;
+		}
+
+
+		if (xPos < WINDOWX/3-WINDOWY/20 && yPos > WINDOWY*2/3+WINDOWY/20){
+			return 7;
+		}
+		if ((xPos > WINDOWX/3+WINDOWY/20 && xPos < WINDOWX*2/3-WINDOWY/20) && yPos > WINDOWY*2/3+WINDOWY/20){
+			return 8;
+		}
+		if (xPos > WINDOWX*2/3+WINDOWY/20 && yPos > WINDOWY*2/3+WINDOWY/20){
+			return 9;
+		}
+
+		else
+			return 0;
+		
+		/*
+		if (xPos < WINDOWX/3 && yPos < WINDOWY/3){
+			return 1;
+		}
+		if ((xPos > WINDOWX/3 && xPos < WINDOWX*2/3) && yPos < WINDOWY/3){
+			return 2;
+		}
+		if (xPos > WINDOWX*2/3 && yPos < WINDOWY/3){
+			return 3;
+		}
+
+		if (xPos < WINDOWX/3 && (yPos > WINDOWX*2/3 && yPos < WINDOWX*2/3)){
+			return 4;
+		}
+		if ((xPos > WINDOWX/3 && xPos < WINDOWX*2/3) && (yPos > WINDOWX/3 && yPos < WINDOWX*2/3)){
+			return 5;
+		}
+		if (xPos > WINDOWX*2/3 && (yPos > WINDOWY/3 && yPos < WINDOWX*2/3)){
+			return 6;
+		}
+		if (xPos < WINDOWX/3 && yPos > WINDOWX*2/3){
+			return 7;
+		}
+		if ((xPos > WINDOWX/3 && xPos < WINDOWX*2/3) && yPos > WINDOWX*2/3){
+			return 8;
+		}
+		if (xPos > WINDOWX*2/3 && yPos > WINDOWX*2/3){
+			return 9;
+		}
+
+		else
+			return 0;
+			*/
+	}
+
 public void findStartStop() {
-	if (xPos <= 300 && yPos <= 162.5){
+	if (xPos <= WINDOWX/2 && yPos <= WINDOWY/2){
 		startStopX = (int) Phonebook.getPhonebook().busStops.get(0).getX();
 		startStopY = (int) Phonebook.getPhonebook().busStops.get(0).getY();
 	}
-	if (xPos >= 300 && yPos <= 162.5){
+	if (xPos >= WINDOWX/2 && yPos <= WINDOWY/2){
 		startStopX = (int) Phonebook.getPhonebook().busStops.get(0).getX();
 		startStopY = (int) Phonebook.getPhonebook().busStops.get(0).getY();
 	}
-	if (xPos <= 300 && yPos >= 162.5){
+	if (xPos <= WINDOWX/2 && yPos >= WINDOWY/2){
 		startStopX = (int) Phonebook.getPhonebook().busStops.get(0).getX();
 		startStopY = (int) Phonebook.getPhonebook().busStops.get(0).getY();
 	}
@@ -431,41 +506,6 @@ public void popToMiddle(){
 	//yPos = 30;
 	//System.err.println("Name is " + agent.getName() + " and Block = " + currentBlock + "and position = " + xPos + " , " + yPos );
 	//System.err.println(agent.getName() + " has Destination block = " + destinationBlock);
-}
-
-public int returnCurrentBlock (int xPos, int yPos){
-	if (xPos < 160 && yPos < 70){
-		return 1;
-	}
-	else if ((xPos > 199 && xPos < 380) && yPos < 70){
-		return 2;
-	}
-	else if (xPos > 419 && yPos < 70){
-		return 3;
-	}
-
-	else if (xPos < 160 && (yPos > 100 && yPos < 190)){
-		return 4;
-	}
-	else if ((xPos > 199 && xPos < 380) && (yPos > 109 && yPos < 190)){
-		return 5;
-	}
-	else if (xPos > 419 && (yPos > 109 && yPos < 190)){
-		return 6;
-	}
-
-	else if (xPos < 160 && yPos > 229){
-		return 7;
-	}
-	else if ((xPos > 199 && xPos < 380) && yPos > 229){
-		return 8;
-	}
-	else if (xPos > 419 && yPos > 229){
-		return 9;
-	}
-
-	else
-		return 0;
 }
 
 public void setDefaultColor() {

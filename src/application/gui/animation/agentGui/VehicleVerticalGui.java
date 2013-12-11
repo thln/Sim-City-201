@@ -12,10 +12,11 @@ public class VehicleVerticalGui extends VehicleGui {
 	ImageIcon carUp = new ImageIcon("res/CarUp.png");
 	ImageIcon carDown = new ImageIcon("res/CarDown.png");
 
-	private final int leftRoadX = 168;
-	private final int rightRoadX = 395;
+
+	private final int leftRoadX = WINDOWX/3-carUp.getIconWidth()/2;
+	private final int rightRoadX = WINDOWX*2/3-carDown.getIconWidth()/2;
 	private final int offScreenTopLeftRoad = -50;
-	private final int offScreenBottomRightRoad = 350;
+	private final int offScreenBottomRightRoad = WINDOWY;
 
 	public VehicleVerticalGui() {
 		xPos = rightRoadX;

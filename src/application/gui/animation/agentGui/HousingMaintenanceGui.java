@@ -1,6 +1,6 @@
 package application.gui.animation.agentGui;
 
-//import housing.\*;
+import housing.*;
 
 import java.awt.*;
 
@@ -8,7 +8,7 @@ import javax.swing.*;
 
 public class HousingMaintenanceGui extends HousingGui{
 
-	//private MaintenanceWorker agent = null;
+	private MaintenanceWorkerRole agent = null;
 	private boolean isPresent = true;
 
 	//RestaurantGui gui;
@@ -21,9 +21,12 @@ public class HousingMaintenanceGui extends HousingGui{
 
 	private enum CustomerState {nothing};
 	CustomerState state = CustomerState.nothing;
+	
+	public HousingMaintenanceGui() {
+	}
 
-	public HousingMaintenanceGui(/*MaintenanceWorker c, RestaurantGui gui*/){
-		//agent = c;
+	public HousingMaintenanceGui(MaintenanceWorkerRole c/*, RestaurantGui gui*/){
+		agent = c;
 		//this.gui = gui;
 	}
 

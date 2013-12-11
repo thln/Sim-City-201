@@ -178,7 +178,7 @@ public class AmericanRestaurantCustomerRole extends Role implements AmericanRest
 			/**
 			 * Scheduler.  Determine what action is called for, and do it.
 			 */
-			protected boolean pickAndExecuteAnAction() {
+			public boolean pickAndExecuteAnAction() {
 				//	AmericanRestaurantCustomerRole is a finite state machine
 
 				if (getCustomerState() == CustomerState.DoingNothing && event == AgentEvent.gotHungry ){

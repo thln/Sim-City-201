@@ -265,7 +265,7 @@ public class SeafoodRestaurantHostRole extends Role
 	 * Scheduler.  Determine what action is called for, and do it.
 	 */
 	
-	protected boolean pickAndExecuteAnAction() 
+	public boolean pickAndExecuteAnAction() 
 	{
 		//////FILL IN HERE
 		//WAITER ON BREAK STUFF ******************************

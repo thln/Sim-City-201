@@ -1,7 +1,10 @@
 package market;
 
 import java.awt.Point;
+import java.awt.Toolkit;
 import java.util.*;
+
+import javax.swing.ImageIcon;
 
 import market.interfaces.MarketRunner;
 import market.interfaces.SalesPerson;
@@ -22,6 +25,11 @@ import application.gui.animation.agentGui.MarketSalesPersonGui;
 import application.gui.animation.agentGui.MarketUPSmanGui;
 
 public class Market {
+	
+	Toolkit tk = Toolkit.getDefaultToolkit();
+	int WINDOWX = ((int) tk.getScreenSize().getWidth())/2; 
+	int WINDOWY = (((int) tk.getScreenSize().getHeight())/2)*5/6; 
+	ImageIcon market = new ImageIcon("res/market.png", "market");
 
 	//Data
 	String name;
@@ -93,10 +101,10 @@ public class Market {
 	//Constructor
 	public Market(String name) 	{
 		if (name == "East Market"){
-			location = new Point(530, 123);
+			location = new Point(WINDOWX*5/6+5, WINDOWY/2-market.getIconHeight()/2);
 		}
 		if (name == "West Market"){
-			location = new Point(95, 290);	
+			location = new Point(WINDOWX/6, WINDOWY*5/6);	
 		}
 		
 		this.name = name;

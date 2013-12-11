@@ -29,7 +29,7 @@ public abstract class VehicleGui extends CityGui {
 
 	//Actions
 	public void goToEndOfTopRoad() {
-		xDestination = 650;
+		xDestination = WINDOWX;
 	}
 
 	public void goToEndOfBottomRoad() {

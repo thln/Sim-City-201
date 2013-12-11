@@ -1,10 +1,13 @@
 package bank;
 
 import java.awt.Point;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
+
+import javax.swing.ImageIcon;
 
 import chineseRestaurant.ChineseRestaurantWaiterRole;
 import market.MarketCustomerRole;
@@ -35,6 +38,10 @@ import application.gui.trace.AlertLog;
 import application.gui.trace.AlertTag;
 
 public class Bank {
+	
+	Toolkit tk = Toolkit.getDefaultToolkit();
+	int WINDOWX = ((int) tk.getScreenSize().getWidth())/2; 
+	int WINDOWY = (((int) tk.getScreenSize().getHeight())/2)*5/6;  
 
 	//Data
 	String name;
@@ -66,17 +73,17 @@ public class Bank {
 	public LoanOfficerMock loanOfficerMock = new LoanOfficerMock("Loan Officer");
 	public List <BankTellerMock> mockTellers = new ArrayList<>();
 	private BuildingPanel bankPanel;
+	private ImageIcon bank = new ImageIcon("res/bank.png", "bank");
 	
 	//Constructor
 	public Bank(String name) {
 		bankGuardRole  = new BankGuardRole("Bank Guard");
 		loanOfficerRole =  new LoanOfficerRole("Loan Officer");
 			
-		if (name.equals("East Bank")){
-			location = new Point(315, 275);
-		}
+		if (name.equals("East Bank"))
+			location = new Point(WINDOWX/2, WINDOWY-bank.getIconHeight()-20);
 		else if (name.equals("West Bank"))
-			location = new Point(215, 25);
+			location = new Point(WINDOWX/2 - bank.getIconWidth(), WINDOWY/6-bank.getIconHeight()/2);
 		
 		this.name = name;
 		vault = 10000;

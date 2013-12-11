@@ -1,5 +1,6 @@
 package seafoodRestaurant;
 import java.awt.Point;
+import java.awt.Toolkit;
 import java.util.Vector;
 
 import javax.swing.JComponent;
@@ -12,7 +13,11 @@ import application.WatchTime;
 import application.gui.animation.BuildingPanel;
 
 public class SeafoodRestaurant implements Restaurant {
-
+	
+	Toolkit tk = Toolkit.getDefaultToolkit();
+	int WINDOWX = ((int) tk.getScreenSize().getWidth())/2; 
+	int WINDOWY = (((int) tk.getScreenSize().getHeight())/2)*5/6;  
+	
 	//Data
 	String name;
 	public boolean userClosed = false;
@@ -41,7 +46,7 @@ public class SeafoodRestaurant implements Restaurant {
 
 	public SeafoodRestaurant(String name) {
 		this.name = name;
-		location = new Point(440, 132);
+		location = new Point(WINDOWX-175, WINDOWY/2);
 		//seafoodRestaurantCookRole.setGui(cookGui);
 	}
 

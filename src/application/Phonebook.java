@@ -5,6 +5,7 @@ import italianRestaurant.ItalianRestaurant;
 
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -18,6 +19,10 @@ import bank.Bank;
 import chineseRestaurant.ChineseRestaurant;
 
 public class Phonebook{
+	
+	Toolkit tk = Toolkit.getDefaultToolkit();
+	int WINDOWX = ((int) tk.getScreenSize().getWidth())/2; 
+	int WINDOWY = (((int) tk.getScreenSize().getHeight())/2)*5/6;   
 
 	//Banks
 	static private Bank eastBank;
@@ -141,28 +146,24 @@ public class Phonebook{
 	
 	
 	//Intersections	
-	public Intersection intersection1 = new Intersection(160, 72, 40, 38, 1);
-	public Intersection intersection2 = new Intersection(380, 72, 40, 38, 2);
-	public Intersection intersection3 = new Intersection(160, 192, 40, 38, 3);
-	public Intersection intersection4 = new Intersection(380, 192, 40, 38, 4);
+	public Intersection intersection1 = new Intersection(WINDOWX/3-WINDOWY/18, WINDOWY/3-WINDOWY/18, WINDOWY/9, WINDOWY/9, 1);
+	public Intersection intersection2 = new Intersection(WINDOWX*2/3-WINDOWY/18, WINDOWY/3-WINDOWY/18, WINDOWY/9, WINDOWY/9, 2);
+	public Intersection intersection3 = new Intersection(WINDOWX/3-WINDOWY/18, WINDOWY*2/3-WINDOWY/18, WINDOWY/9, WINDOWY/9, 3);
+	public Intersection intersection4 = new Intersection(WINDOWX*2/3-WINDOWY/18, WINDOWY*2/3-WINDOWY/18, WINDOWY/9, WINDOWY/9, 4);
 	
-	//Crosswalks
-	public Crosswalk crosswalk1 = new Crosswalk(160, 10, 39, 25, 1);
-	public Crosswalk crosswalk2 = new Crosswalk(380, 10, 39, 25, 1);
+	public Crosswalk crosswalk1 = new Crosswalk(WINDOWX/3-WINDOWX/35, WINDOWY/6-WINDOWY/9, WINDOWY/9, 25, 1);
+	public Crosswalk crosswalk2 = new Crosswalk(WINDOWX*2/3-WINDOWX/35, WINDOWY/6-WINDOWY/9, WINDOWY/9, 25, 1);
 
-	public Crosswalk crosswalk3 = new Crosswalk(70, 70, 25, 39, 3);
-	public Crosswalk crosswalk4 = new Crosswalk(280, 70, 25, 39, 4);
-	public Crosswalk crosswalk5 = new Crosswalk(490, 70, 25, 39, 5);
+	public Crosswalk crosswalk3 = new Crosswalk(WINDOWX/6, WINDOWY/3-WINDOWY/18, 25, WINDOWY/9, 3);
+	public Crosswalk crosswalk4 = new Crosswalk(WINDOWX/2, WINDOWY/3-WINDOWY/18, 25, WINDOWY/9, 4);
+	public Crosswalk crosswalk5 = new Crosswalk(WINDOWX*5/6, WINDOWY/3-WINDOWY/18, 25, WINDOWY/9, 5);
 
-	public Crosswalk crosswalk6 = new Crosswalk(160, 137, 39, 25, 6);
-	public Crosswalk crosswalk7 = new Crosswalk(380, 137, 39, 25, 7);
+	public Crosswalk crosswalk6 = new Crosswalk(WINDOWX/3-WINDOWX/35, WINDOWY/2-WINDOWY/18, WINDOWY/9, 25, 6);
+	public Crosswalk crosswalk7 = new Crosswalk(WINDOWX*2/3-WINDOWX/35, WINDOWY/2-WINDOWY/18, WINDOWY/9, 25, 7);
 
-	public Crosswalk crosswalk8 = new Crosswalk(70, 190, 25, 39, 8);
-	public Crosswalk crosswalk9 = new Crosswalk(280, 190, 25, 39, 9);
-	public Crosswalk crosswalk10 = new Crosswalk(490, 190, 25, 39, 10);
-
-	public Crosswalk crosswalk11 = new Crosswalk(160, 270, 39, 25, 11);
-	public Crosswalk crosswalk12 = new Crosswalk(380, 270, 39, 25, 12);
+	public Crosswalk crosswalk8 = new Crosswalk(WINDOWX/6, WINDOWY*2/3-WINDOWY/18, 25, WINDOWY/9, 8);
+	public Crosswalk crosswalk9 = new Crosswalk(WINDOWX/2, WINDOWY*2/3-WINDOWY/18, 25, WINDOWY/9, 9);
+	public Crosswalk crosswalk10 = new Crosswalk(WINDOWX*5/6, WINDOWY*2/3-WINDOWY/18, 25, WINDOWY/9, 10);
 	
 	//Bus Parking
 	//Stop 1
@@ -180,9 +181,10 @@ public class Phonebook{
 	//Stop 4
 	public BusParking busParking4H = new BusParking(98, 190, 60, 39, 7);
 	public BusParking busParking4V = new BusParking(160, 231, 39, 38, 8);
-	
-	
 
+	public Crosswalk crosswalk11 = new Crosswalk(WINDOWX/3-WINDOWX/35, WINDOWY*5/6, WINDOWY/9, 25, 11);
+	public Crosswalk crosswalk12 = new Crosswalk(WINDOWX*2/3-WINDOWX/35, WINDOWY*5/6, WINDOWY/9, 25, 12);
+	
 	private static Phonebook phonebook;
 
 
@@ -190,10 +192,10 @@ public class Phonebook{
 
 		//Set bus stops
 		busStopsList.add(new BusStop(0, 0, 0)); 			//empty busStop
-		busStopsList.add(new BusStop(1, 127, 28));			//Top left bus Stop
-		busStopsList.add(new BusStop(2, 420, 28));			// Top Right Bus Stop
-		busStopsList.add(new BusStop(3, 420, 230));			// Bottom Right Bus Stop
-		busStopsList.add(new BusStop(4, 127, 230));			// Bottom Left Bus Stop
+		busStopsList.add(new BusStop(1, WINDOWX/3-WINDOWX/12, WINDOWY/3-WINDOWY/5));	//Top left bus Stop
+		busStopsList.add(new BusStop(2, WINDOWX*2/3+WINDOWX/12, WINDOWY/3-WINDOWY/10));// Top Right Bus Stop
+		busStopsList.add(new BusStop(3, WINDOWX*2/3+WINDOWX/12, WINDOWY*2/3+WINDOWY/12));			// Bottom Right Bus Stop
+		busStopsList.add(new BusStop(4, WINDOWX/3-WINDOWX/12, WINDOWY*2/3+WINDOWY/12));			// Bottom Left Bus Stop
 		
 		eastApartment = new Apartment("East Apartment");
 		westApartment = new Apartment("West Apartment");
@@ -238,10 +240,10 @@ public class Phonebook{
 		restaurants.add(americanRestaurant);
 		
 		housingMaintenanceCompany = new HousingMaintenanceCompany("Housing maintenance company");
-		getBusStops().add(new Point(172, 28));
-		getBusStops().add(new Point(420, 28));
-		getBusStops().add(new Point(420, 230));
-		getBusStops().add(new Point(172, 230));
+		getBusStops().add(new Point(WINDOWX/3-WINDOWX/12, WINDOWY/3-WINDOWY/5));
+		getBusStops().add(new Point(WINDOWX*2/3+WINDOWX/18, WINDOWY/3-WINDOWY/10));
+		getBusStops().add(new Point(WINDOWX*2/3+WINDOWX/18, WINDOWY*2/3+WINDOWY/12));
+		getBusStops().add(new Point(WINDOWX/3-WINDOWX/12, WINDOWY*2/3+WINDOWY/12));
 	}
 
 	public static Phonebook getPhonebook() {

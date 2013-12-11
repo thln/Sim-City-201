@@ -2,13 +2,13 @@ package italianRestaurant;
 
 
 public class ItalianFood {
-	String type;
-	int cookingTime;
-	int low;
-	int inventory;
-	int capacity;
-	FoodState fs;
-	enum FoodState {inStock, isLow, ordered, orderingAgain, delivered};
+	public String type;
+	public int cookingTime;
+	public int low;
+	public int inventory;
+	public int capacity;
+	public FoodState fs;
+	public enum FoodState {inStock, isLow, ordered, orderingAgain, delivered};
 	
 	ItalianFood(String choice, int time, int invent, int lownum) {
 		type = choice;
