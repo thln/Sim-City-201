@@ -48,7 +48,7 @@ public class AddPanel extends JPanel implements ActionListener {
 	private JTextField jobETimeField = new JTextField(10);
 	private JButton addButton = new JButton("Add");
 	private JButton raveButton = new JButton("Rave Mode");
-	private JButton updateButton = new JButton("Update Description");
+	private JButton updateButton = new JButton("Update Time");
 	private ControlPanel cp;
 	private Application app;
 	private JComboBox socialClassBox;
@@ -435,6 +435,11 @@ public class AddPanel extends JPanel implements ActionListener {
 
 	public void setApplication(Application app){
 		this.app = app; 
+	}
+	
+	public void dashboardUpdate()
+	{
+		dashboard.updateDashboard();
 	}
 
 

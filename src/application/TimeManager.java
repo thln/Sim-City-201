@@ -8,6 +8,8 @@ public class TimeManager {
 
 	public enum Day{Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday};
 	
+	private boolean europeanCalendar;
+	
 	private static int speedOfTime = 80;
 
 	private TimeManager() {

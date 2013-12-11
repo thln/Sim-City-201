@@ -35,11 +35,11 @@ public class SeafoodRestaurant implements Restaurant {
 	public WatchTime closeTime = new WatchTime(21);
 
 	//Roles
-	public SeafoodRestaurantHostRole seafoodRestaurantHostRole = new SeafoodRestaurantHostRole("AmericanRestaurantHost");
+	public SeafoodRestaurantHostRole seafoodRestaurantHostRole = new SeafoodRestaurantHostRole("Host");
 	public SeafoodRestaurantCookRole seafoodRestaurantCookRole = new SeafoodRestaurantCookRole("Cook", this);
 	//public RestaurantCookGui cookGui = new RestaurantCookGui(seafoodRestaurantCookRole);
 
-	public SeafoodRestaurantCashierRole seafoodRestaurantCashierRole = new SeafoodRestaurantCashierRole("AmericanRestaurantCashier", this);
+	public SeafoodRestaurantCashierRole seafoodRestaurantCashierRole = new SeafoodRestaurantCashierRole("Cashier", this);
 	public SeafoodRestaurantRevolvingStand theRevolvingStand = new SeafoodRestaurantRevolvingStand();
 	private BuildingPanel restPanel;
 

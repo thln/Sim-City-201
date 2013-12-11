@@ -16,7 +16,7 @@ public class ControlPanel extends JPanel {
 	JPanel panel5 = new JPanel();
 	//Add Panel
 	private AddPanel addP;
-	private EditPanel editP;
+	private ScenarioPanel scenarioP;
 
 	//Trace Panel
 	private PrintPanel printPanel;
@@ -34,14 +34,14 @@ public class ControlPanel extends JPanel {
 		this.app = app;
 		this.appPanel = appPanel;
 		addP = new AddPanel(this, app);
-		editP = new EditPanel(this, app, appPanel);
+		scenarioP = new ScenarioPanel(this, app, appPanel);
 		selectP = new SelectBuilding(this, app, appPanel); //appPanel.getAppGui().getAnimationPanel());
 
 		printPanel = new PrintPanel();
 		printPanelTab = printPanel;
 
 		ControlPane.addTab("Dashboard", addP);
-		ControlPane.addTab("Edit Panel", editP);
+		ControlPane.addTab("Scenario Panel", scenarioP);
 		ControlPane.addTab("Select Building", selectP); //panel4);
 		ControlPane.addTab("Trace Panel", printPanelTab);
 
@@ -53,7 +53,12 @@ public class ControlPanel extends JPanel {
 		return appPanel;
 	}
 
-	public EditPanel getEditPanel(){
-		return editP;
+	public ScenarioPanel getEditPanel(){
+		return scenarioP;
+	}
+	
+	public AddPanel getAddPanel()
+	{
+		return addP;
 	}
 }
