@@ -6,10 +6,13 @@ import person.Person;
 import person.Role;
 import person.Worker;
 import transportation.BusStop;
+import americanRestaurant.gui.AmericanCookGui;
+import americanRestaurant.gui.AmericanWaiterGui;
 import application.Phonebook;
 import application.Restaurant;
 import application.WatchTime;
 import application.gui.animation.BuildingPanel;
+import application.gui.animation.RestaurantPanel;
 import application.gui.animation.agentGui.Gui;
 
 public class AmericanRestaurant implements Restaurant {
@@ -28,6 +31,8 @@ public class AmericanRestaurant implements Restaurant {
 	//Roles
 	public AmericanRestaurantHostRole americanHost;
 	public AmericanRestaurantCookRole americanCook;		
+	public AmericanCookGui cookGui;
+
 	public AmericanRestaurantCashierRole americanCashier;
 	public static AmericanRestaurantRevolvingStand theRevolvingStand;
 	private BuildingPanel restPanel;
@@ -38,8 +43,12 @@ public class AmericanRestaurant implements Restaurant {
 
 	public AmericanRestaurant(String name) {
 		americanHost = new AmericanRestaurantHostRole("American Host");
-		americanCook = new AmericanRestaurantCookRole("American Cook", this);	
+
+		americanCook = new AmericanRestaurantCookRole("American Cook", this);
+		cookGui = new AmericanCookGui(americanCook, (RestaurantPanel) restPanel);
+
 		americanCashier = new AmericanRestaurantCashierRole("American Cashier", this);
+
 		theRevolvingStand = new AmericanRestaurantRevolvingStand();
 		location = new Point(220, 250);
 		this.name = name;
@@ -62,26 +71,26 @@ public class AmericanRestaurant implements Restaurant {
 			return americanHost;
 		}
 		else if (title == "cook") {
-			//				//Setting previous bank guard role to inactive
-							if (americanCook.getPerson() != null) {
-								Worker worker = (Worker) americanCook.getPerson();
-								worker.roleFinishedWork();
-							}
+			//Setting previous bank guard role to inactive
+			if (americanCook.getPerson() != null) {
+				Worker worker = (Worker) americanCook.getPerson();
+				worker.roleFinishedWork();
+			}
 			//Setting cook role to new role
 			americanCook.setPerson(person);
 			if (isOpen()) {
 				americanHost.msgRestaurantOpen();
 			}
-					americanCook.setGui(americanCook.getGui());
-					restPanel.addGui((Gui) americanCook.getGui());
+			americanCook.setGui(cookGui);
+			restPanel.addGui(cookGui);
 			return americanCook;
 		}
 		else if (title.contains("cashier")) {
 			//Setting previous bank guard role to inactive
-							if (americanCashier.getPerson() != null) {
-								Worker worker = (Worker) americanCashier.getPerson();
-								worker.roleFinishedWork();
-							}
+			if (americanCashier.getPerson() != null) {
+				Worker worker = (Worker) americanCashier.getPerson();
+				worker.roleFinishedWork();
+			}
 			//Setting americanRestaurantCashier role to new role
 			americanCashier.setPerson(person);
 			if (isOpen()) {
@@ -91,16 +100,21 @@ public class AmericanRestaurant implements Restaurant {
 		}
 		else if (title == "waiter") {	
 			AmericanRestaurantWaiterRole waiter = new AmericanRestaurantWaiterRole(person, person.getName(), title, this);
+			AmericanWaiterGui gui1 = new AmericanWaiterGui(waiter, (RestaurantPanel) restPanel);
+			waiter.setGui(gui1);
+			restPanel.addGui(gui1);		
 			americanHost.msgAddWaiter(waiter);
-							if (isOpen()) {
-								americanHost.msgRestaurantOpen();
-							}
+			if (isOpen()) {
+				americanHost.msgRestaurantOpen();
+			}
 			return waiter;
 		}
 
 		else if (title == "altWaiter") {
 			AmericanRestaurantAltWaiterRole altWaiter = new AmericanRestaurantAltWaiterRole(person, person.getName(), title, this);
-
+			AmericanWaiterGui gui2 = new AmericanWaiterGui(altWaiter, (RestaurantPanel) restPanel);
+			altWaiter.setGui(gui2);
+			restPanel.addGui(gui2);
 			americanHost.msgAddWaiter(altWaiter);
 			if (isOpen()) {
 				americanHost.msgRestaurantOpen();
@@ -112,10 +126,10 @@ public class AmericanRestaurant implements Restaurant {
 	}
 
 	public boolean customerArrived(AmericanRestaurantCustomerRole rCR) {
-			//restPanel.addGui(rCG);
-			americanHost.msgIWantToEat(rCR);
-			//rCR.gotHungry((22 * customers.size()), 10);
-			return true;
+		//restPanel.addGui(rCG);
+		americanHost.msgIWantToEat(rCR);
+		//rCR.gotHungry((22 * customers.size()), 10);
+		return true;
 	}
 
 	public void goingOffWork(Person person) {
@@ -180,11 +194,10 @@ public class AmericanRestaurant implements Restaurant {
 		else 
 			return false;
 	}
-	//		
-	//		public void setBuildingPanel (BuildingPanel rp) {
-	//			restPanel = rp;
-	//		}
-	//
+
+	public void setBuildingPanel (BuildingPanel rp) {
+		restPanel = rp;
+	}
 
 	//		
 	public void closeBuilding(){

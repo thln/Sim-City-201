@@ -25,7 +25,7 @@ public class RestaurantPanel extends BuildingPanel implements ActionListener{
     
     //american restaurant data
     static int americanNTables = 4;
-	public static AmericanRestaurantTable[] tables = new AmericanRestaurantTable[americanNTables]; 		//declare list of tables
+	public AmericanRestaurantTable[] tables = new AmericanRestaurantTable[americanNTables]; 		//declare list of tables
 	static boolean isFood = true;
 	ImageIcon grillImage, fridgeImage;
 	public enum guiCookState {cooking, gathering, plating};

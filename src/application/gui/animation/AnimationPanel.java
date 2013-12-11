@@ -134,6 +134,9 @@ public class AnimationPanel extends JPanel implements MouseListener, ActionListe
 			if (building.getName().toLowerCase().contains("italian")) {
 				Phonebook.getPhonebook().getItalianRestaurant().setBuildingPanel(building.myBuildingPanel);
 			}
+			if (building.getName().toLowerCase().contains("american")) {
+				Phonebook.getPhonebook().getAmericanRestaurant().setBuildingPanel(building.myBuildingPanel);
+			}
 		}
 		if (building.getName().toLowerCase().contains("market")) {
 			if(building.getName().toLowerCase().contains("east"))
