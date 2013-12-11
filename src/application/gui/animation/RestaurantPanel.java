@@ -31,7 +31,7 @@ public class RestaurantPanel extends BuildingPanel implements ActionListener{
 	ImageIcon grillImage, fridgeImage;
 	public enum guiCookState {cooking, gathering, plating};
 	public guiCookState cookState;
-	ImageIcon fireImage = new ImageIcon ("Images/fire.png");
+	ImageIcon fireImage = new ImageIcon ("res/fire.png");
 	private static List<FoodGui> foodGuis = new ArrayList<FoodGui>();
 	
 	
