@@ -47,7 +47,7 @@ public class Application extends JPanel {
 		Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantCookRole.addMarket(Phonebook.getPhonebook().getWestMarket());
 
 		//runFullScenario();
-		//runScenarioA();
+		runScenarioA();
 		//runScenarioB();
 		//runScenarioC();
 		
