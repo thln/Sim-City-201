@@ -10,6 +10,7 @@ import application.Phonebook;
 import application.Restaurant;
 import application.WatchTime;
 import application.gui.animation.BuildingPanel;
+import application.gui.animation.agentGui.Gui;
 
 public class AmericanRestaurant implements Restaurant {
 	//Data
@@ -49,10 +50,10 @@ public class AmericanRestaurant implements Restaurant {
 
 		if (title == "host") {
 			//Setting previous bank guard role to inactive
-			//				if (AmericanRestaurantCookRole.getPerson() != null) {
-			//					Worker worker = (Worker) AmericanRestaurantCookRole.getPerson();
-			//					worker.roleFinishedWork();
-			//				}
+			if (americanHost.getPerson() != null) {
+				Worker worker = (Worker) americanHost.getPerson();
+				worker.roleFinishedWork();
+			}
 			//Setting bank guard role to new role
 			americanHost.setPerson(person);
 			if (isOpen()) {
@@ -62,25 +63,25 @@ public class AmericanRestaurant implements Restaurant {
 		}
 		else if (title == "cook") {
 			//				//Setting previous bank guard role to inactive
-			//				if (AmericanRestaurantCookRole.getPerson() != null) {
-			//					Worker worker = (Worker) AmericanRestaurantCookRole.getPerson();
-			//					worker.roleFinishedWork();
-			//				}
+							if (americanCook.getPerson() != null) {
+								Worker worker = (Worker) americanCook.getPerson();
+								worker.roleFinishedWork();
+							}
 			//Setting cook role to new role
 			americanCook.setPerson(person);
 			if (isOpen()) {
 				americanHost.msgRestaurantOpen();
 			}
-			//		AmericanRestaurantCookRole.setGui(cookGui);
-			//		restPanel.addGui(cookGui);
+					americanCook.setGui(americanCook.getGui());
+					restPanel.addGui((Gui) americanCook.getGui());
 			return americanCook;
 		}
 		else if (title.contains("cashier")) {
 			//Setting previous bank guard role to inactive
-			//				if (AmericanRestaurantCashierRole.getPerson() != null) {
-			//					Worker worker = (Worker) AmericanRestaurantCashierRole.getPerson();
-			//					worker.roleFinishedWork();
-			//				}
+							if (americanCashier.getPerson() != null) {
+								Worker worker = (Worker) americanCashier.getPerson();
+								worker.roleFinishedWork();
+							}
 			//Setting americanRestaurantCashier role to new role
 			americanCashier.setPerson(person);
 			if (isOpen()) {
@@ -90,40 +91,15 @@ public class AmericanRestaurant implements Restaurant {
 		}
 		else if (title == "waiter") {	
 			AmericanRestaurantWaiterRole waiter = new AmericanRestaurantWaiterRole(person, person.getName(), title, this);
-			if (americanHost.Waiters.size() <= 12) {
-				//RestaurantWaiterGui g = new RestaurantWaiterGui(waiter);
-				//restPanel.addGui(g);
-				//waiter.setGui(g);
-				//g.setHomePosition(5, (55 + (22 * waiters.size())));
-			}
-			else if (americanHost.Waiters.size() <= 24) {
-				//RestaurantWaiterGui g = new RestaurantWaiterGui(waiter);
-				//restPanel.addGui(g);
-				//waiter.setGui(g);
-				//g.setHomePosition(27, (55 + (22 * (waiters.size()-12))));
-			}
-
 			americanHost.msgAddWaiter(waiter);
-			//				if (isOpen()) {
-			//					AmericanRestaurantCookRole.msgRestaurantOpen();
-			//				}
+							if (isOpen()) {
+								americanHost.msgRestaurantOpen();
+							}
 			return waiter;
 		}
 
 		else if (title == "altWaiter") {
 			AmericanRestaurantAltWaiterRole altWaiter = new AmericanRestaurantAltWaiterRole(person, person.getName(), title, this);
-			if (americanHost.Waiters.size() <= 12) {
-				//	RestaurantWaiterGui g = new RestaurantWaiterGui(altWaiter);
-				//	restPanel.addGui(g);
-				//	altWaiter.setGui(g);
-				//	g.setHomePosition(5, (55 + (22 * waiters.size())));
-			}
-			else if (americanHost.Waiters.size() <= 24) {
-				//	RestaurantWaiterGui g = new RestaurantWaiterGui(altWaiter);
-				//	restPanel.addGui(g);
-				//	altWaiter.setGui(g);
-				//	g.setHomePosition(27, (55 + (22 * (waiters.size()-12))));
-			}
 
 			americanHost.msgAddWaiter(altWaiter);
 			if (isOpen()) {
@@ -136,23 +112,10 @@ public class AmericanRestaurant implements Restaurant {
 	}
 
 	public boolean customerArrived(AmericanRestaurantCustomerRole rCR) {
-		if (americanHost.waitingCustomers.size() <= 12) {
-			//RestaurantCustomerGui rCG = (RestaurantCustomerGui) rCR.getGui();
-			//rCG.setHomePosition((22 * customers.size()), 10);
 			//restPanel.addGui(rCG);
 			americanHost.msgIWantToEat(rCR);
 			//rCR.gotHungry((22 * customers.size()), 10);
 			return true;
-		}
-		else if (americanHost.waitingCustomers.size() <= 24) {
-			//RestaurantCustomerGui rCG = (RestaurantCustomerGui) rCR.getGui();
-			//rCG.setHomePosition((22 * (customers.size() - 12)), 32);
-			//restPanel.addGui(rCG);
-			americanHost.msgIWantToEat(rCR);
-			//rCR.gotHungry((22 * (customers.size() - 12)), 32);
-			return true;
-		}
-		return false;
 	}
 
 	public void goingOffWork(Person person) {
@@ -160,19 +123,18 @@ public class AmericanRestaurant implements Restaurant {
 
 		if (worker.getWorkerRole().equals(americanHost)) {
 			worker.roleFinishedWork();
-			//restPanel.removeGui(AmericanRestaurantCookRole.getGui());
 		}
 		if (worker.getWorkerRole().equals(americanCashier)) {
 			worker.roleFinishedWork();
 		}
-		if (worker.getWorkerRole().equals(americanHost)) {
+		if (worker.getWorkerRole().equals(americanCook)) {
 			worker.roleFinishedWork();
-			//restPanel.removeGui(cookGui);
+			restPanel.removeGui((Gui) americanCook.getGui());
 		}
 		if (worker.myJob.getTitle() == "waiter" || worker.myJob.getTitle() == "altWaiter"){
 			americanHost.waiterLeavingWork((AmericanRestaurantWaiterRole) worker.workerRole);
 			worker.roleFinishedWork();
-			//restPanel.removeGui(cookGui);
+			restPanel.removeGui((Gui) americanCook.getGui());
 		}
 
 		//WAITERS AND ALT WAITERS
@@ -238,7 +200,7 @@ public class AmericanRestaurant implements Restaurant {
 
 		americanCashier.msgLeaveRole();
 	}
-	
+
 	public BusStop getClosestBusStop() {
 		return Phonebook.getPhonebook().getAllBusStops().get(busStopNumber);
 	}

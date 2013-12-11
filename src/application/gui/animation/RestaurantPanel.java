@@ -213,6 +213,18 @@ public class RestaurantPanel extends BuildingPanel implements ActionListener{
 		}
 		else if (name.toLowerCase().contains("american")) { //for Josh's restaurant
 			
+			int tableWidth = 50;
+			int tableLength = 50;
+			g2.setColor(getBackground());
+			g2.fillRect(0, 0, getWidth(), getHeight() );
+			tables[0] = new AmericanRestaurantTable(tableWidth, tableLength, WINDOWX/4 - 25, WINDOWY/4 - 25);
+			tables[1] = new AmericanRestaurantTable(tableWidth, tableLength, WINDOWX/2 + 25, WINDOWY/4 - 25);
+			tables[2] = new AmericanRestaurantTable(tableWidth, tableLength, WINDOWX/4 - 25, WINDOWY/2 + 25);
+			tables[3] = new AmericanRestaurantTable(tableWidth, tableLength, WINDOWX/2 + 25, WINDOWY/2 + 25);
+
+			grillImage = new ImageIcon("res/grill.png");
+			fridgeImage = new ImageIcon("res/fridge.gif");
+			
 			g2.fillRect(0, 0, getWidth(), getHeight() );
 			for (int i = 0; i < americanNTables; i++){
 				g2.setColor(Color.ORANGE);
