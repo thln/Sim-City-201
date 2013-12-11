@@ -56,4 +56,11 @@ public class ApplicationPanel extends JPanel{
 	public ApplicationGui getAppGui(){
 		return appGui;
 	}
+	
+	public void updateInfo()
+	{
+		lp.updateList();
+		cp.getAddPanel().dashboardUpdate();
+		
+	}
 }

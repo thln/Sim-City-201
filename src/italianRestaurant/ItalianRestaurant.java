@@ -34,13 +34,13 @@ public class ItalianRestaurant implements Restaurant{
 	public WatchTime closeTime = new WatchTime(21);
 
 	//Roles
-	public ItalianHostRole italianRestaurantHostRole = new ItalianHostRole("AmericanRestaurantHost");
+	public ItalianHostRole italianRestaurantHostRole = new ItalianHostRole("Host");
 	public ItalianHostGui hostGui = new ItalianHostGui(italianRestaurantHostRole);
 	
 	public ItalianCookRole italianRestaurantCookRole = new ItalianCookRole("Cook", this);
 	public ItalianCookGui cookGui = new ItalianCookGui(italianRestaurantCookRole);
 
-	public ItalianCashierRole italianRestaurantCashierRole = new ItalianCashierRole("AmericanRestaurantCashier", this);
+	public ItalianCashierRole italianRestaurantCashierRole = new ItalianCashierRole("Cashier", this);
 	public ItalianCashierGui cashierGui = new ItalianCashierGui(italianRestaurantCashierRole);
 	public ItalianRevolvingStand theRevolvingStand = new ItalianRevolvingStand();
 	private BuildingPanel restPanel;

@@ -641,7 +641,12 @@ Roads should have appropriate complexity [e.g. intersections with stop signs and
 			Person gets on.
 			Person gets off at destination.
 	 */
-	public void runScenarioE () {
+	public void runScenarioD () {
+		
+	}
+	
+	public void stopRunningScenario ()
+	{
 		
 	}
 

@@ -274,7 +274,7 @@ public class SelectBuilding extends JPanel implements ActionListener
 				if(westBankIsOpen)
 				{
 					westBankIsOpen = false;
-					//Phonebook.getPhonebook().closeBuilding("westBank");
+					Phonebook.getPhonebook().closeBuilding("westBank");
 					openCloseBuildingButton.setText("Open Building");
 					AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY,selectBuildingBox.getSelectedItem().toString(), "is now closed.");
 
@@ -282,7 +282,7 @@ public class SelectBuilding extends JPanel implements ActionListener
 				else
 				{
 					westBankIsOpen = true;
-					//Phonebook.getPhonebook().openBuilding("westBank");
+					Phonebook.getPhonebook().openBuilding("westBank");
 					openCloseBuildingButton.setText("Close Building");
 					AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY,selectBuildingBox.getSelectedItem().toString(), "is now open.");
 
@@ -310,14 +310,14 @@ public class SelectBuilding extends JPanel implements ActionListener
 				if(westMarketIsOpen)
 				{
 					westMarketIsOpen = false;
-					//Phonebook.getPhonebook().closeBuilding("westMarket");
+					Phonebook.getPhonebook().closeBuilding("westMarket");
 					openCloseBuildingButton.setText("Open Building");
 					AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY,selectBuildingBox.getSelectedItem().toString(), "is now closed.");
 				}
 				else
 				{
 					westMarketIsOpen = true;
-					//Phonebook.getPhonebook().openBuilding("westMarket");
+					Phonebook.getPhonebook().openBuilding("westMarket");
 					openCloseBuildingButton.setText("Close Building");
 					AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY,selectBuildingBox.getSelectedItem().toString(), "is now open.");
 
@@ -328,14 +328,14 @@ public class SelectBuilding extends JPanel implements ActionListener
 				if(chineseRestaurantIsOpen)
 				{
 					chineseRestaurantIsOpen = false;
-					//Phonebook.getPhonebook().closeBuilding("chineseRestaurant");
+					Phonebook.getPhonebook().closeBuilding("chineseRestaurant");
 					openCloseBuildingButton.setText("Open Building");
 					AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY,selectBuildingBox.getSelectedItem().toString(), "is now closed.");
 				}
 				else
 				{
 					chineseRestaurantIsOpen = true;
-					//Phonebook.getPhonebook().openBuilding("chineseRestaurant");
+					Phonebook.getPhonebook().openBuilding("chineseRestaurant");
 					openCloseBuildingButton.setText("Close Building");
 					AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY,selectBuildingBox.getSelectedItem().toString(), "is now open.");
 				}
@@ -345,14 +345,14 @@ public class SelectBuilding extends JPanel implements ActionListener
 				if(seafoodRestaurantIsOpen)
 				{
 					seafoodRestaurantIsOpen = false;
-					//Phonebook.getPhonebook().closeBuilding("seafoodRestaurant");
+					Phonebook.getPhonebook().closeBuilding("seafoodRestaurant");
 					openCloseBuildingButton.setText("Open Building");
 					AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY,selectBuildingBox.getSelectedItem().toString(), "is now closed.");
 				}
 				else
 				{
 					seafoodRestaurantIsOpen = true;
-					//Phonebook.getPhonebook().openBuilding("seafoodRestaurant");
+					Phonebook.getPhonebook().openBuilding("seafoodRestaurant");
 					openCloseBuildingButton.setText("Close Building");
 					AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY,selectBuildingBox.getSelectedItem().toString(), "is now open.");
 				}
@@ -362,14 +362,14 @@ public class SelectBuilding extends JPanel implements ActionListener
 				if(americanRestaurantIsOpen)
 				{
 					americanRestaurantIsOpen = false;
-					//Phonebook.getPhonebook().closeBuilding("americanRestaurant");
+					Phonebook.getPhonebook().closeBuilding("americanRestaurant");
 					openCloseBuildingButton.setText("Open Building");
 					AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY,selectBuildingBox.getSelectedItem().toString(), "is now closed.");
 				}
 				else
 				{
 					americanRestaurantIsOpen = true;
-					//Phonebook.getPhonebook().openBuilding("americanRestaurant");
+					Phonebook.getPhonebook().openBuilding("americanRestaurant");
 					openCloseBuildingButton.setText("Close Building");
 					AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY,selectBuildingBox.getSelectedItem().toString(), "is now open.");
 				}
@@ -379,14 +379,14 @@ public class SelectBuilding extends JPanel implements ActionListener
 				if(italianRestaurantIsOpen)
 				{
 					italianRestaurantIsOpen = false;
-					//Phonebook.getPhonebook().closeBuilding("italianRestaurant");
+					Phonebook.getPhonebook().closeBuilding("italianRestaurant");
 					openCloseBuildingButton.setText("Open Building");
 					AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY,selectBuildingBox.getSelectedItem().toString(), "is now closed.");
 				}
 				else
 				{
 					italianRestaurantIsOpen = true;
-					//Phonebook.getPhonebook().openBuilding("italianRestaurant");
+					Phonebook.getPhonebook().openBuilding("italianRestaurant");
 					openCloseBuildingButton.setText("Close Building");
 					AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY,selectBuildingBox.getSelectedItem().toString(), "is now open.");
 				}
@@ -941,7 +941,16 @@ public class SelectBuilding extends JPanel implements ActionListener
 			
 			if(selectBuildingBox.getSelectedItem() == "Housing Maintenance Company")
 			{
-				JButton button = new JButton(Phonebook.getPhonebook().getHousingMaintenanceCompany().maintenanceWorkerRole.getRoleName() + " " + Phonebook.getPhonebook().getHousingMaintenanceCompany().maintenanceWorkerRole.getName());
+				String pName;
+				if(Phonebook.getPhonebook().getHousingMaintenanceCompany().maintenanceWorkerRole.person == null)
+				{
+				 	pName = "null";
+				}
+				else
+				{
+					pName = Phonebook.getPhonebook().getHousingMaintenanceCompany().maintenanceWorkerRole.getName();
+				}
+				JButton button = new JButton(Phonebook.getPhonebook().getHousingMaintenanceCompany().maintenanceWorkerRole.getRoleName() + " " + pName);
 				button.setMaximumSize(new Dimension(250, 25));
 				workerButtons.add(button);
 				restaurantInfoPanel.add(button);

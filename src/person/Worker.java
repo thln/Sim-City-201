@@ -3,6 +3,7 @@ package person;
 import java.awt.Point;
 import java.util.TimerTask;
 
+import chineseRestaurant.ChineseRestaurant;
 import person.Role.RoleState;
 import application.Phonebook;
 import application.Restaurant;
@@ -100,7 +101,8 @@ public class Worker extends Person {
 	public boolean pickAndExecuteAnAction() {
 
 		//Run your worker role
-		if (workerRole != null){
+		if (workerRole != null)
+		{
 			int currentTime = TimeManager.getTimeManager().getTime().dayHour;
 			int shiftLength = (((myJob.endTime.hour - myJob.startTime.hour) % 24) + 24) % 24;
 			if (workerRole.getState() == RoleState.active) {
@@ -136,7 +138,11 @@ public class Worker extends Person {
 		int currentTime = TimeManager.getTimeManager().getTime().dayHour;
 
 		//make sure user has not closed your business
-		if (workIsOpen()) {	
+		//No work on Saturday or Sunday UNLESS you work at the Chinese Restaurant
+		//Weekend will not go to work, go to work if Chinese Restaurant is open
+		if (workIsOpen() && ((TimeManager.getTimeManager().getTime().day != Day.Saturday
+				&& TimeManager.getTimeManager().getTime().day != Day.Sunday)|| myJob.jobPlace == "Chinese Restaurant")) 
+		{	
 
 			//If no role is active, check if it's time for work
 			if (((((myJob.startTime.hour - currentTime) % 24) + 24) % 24) <= 1) {
@@ -158,8 +164,10 @@ public class Worker extends Person {
 
 		//Bank Related (check if you need to go to the bank)
 		//Check if there is a bank open before you go
+		//DO NOT GO TO BANK ON WEEKEND
 		if (home.type == "East Apartment"){
-			if (Phonebook.getPhonebook().getEastBank().isOpen()){ // || Phonebook.getPhonebook().getEastBank().isOpen()){	
+			if (Phonebook.getPhonebook().getEastBank().isOpen() && (TimeManager.getTimeManager().getTime().day != Day.Saturday
+					&& TimeManager.getTimeManager().getTime().day != Day.Sunday)){ // || Phonebook.getPhonebook().getEastBank().isOpen()){	
 				if (money <= moneyMinThreshold || money >= moneyMaxThreshold) 
 				{
 					prepareForBank();
@@ -168,7 +176,8 @@ public class Worker extends Person {
 			}
 		}
 		if (home.type == "West Apartment"){
-			if (Phonebook.getPhonebook().getWestBank().isOpen()){ // || Phonebook.getPhonebook().getEastBank().isOpen()){	
+			if (Phonebook.getPhonebook().getWestBank().isOpen() && (TimeManager.getTimeManager().getTime().day != Day.Saturday
+					&& TimeManager.getTimeManager().getTime().day != Day.Sunday)){ // || Phonebook.getPhonebook().getEastBank().isOpen()){	
 				if (money <= moneyMinThreshold || money >= moneyMaxThreshold) 
 				{
 					prepareForBank();
@@ -200,7 +209,10 @@ public class Worker extends Person {
 			//If you don't have food in the fridge
 			if (!hasFoodInFridge) {
 				for (Restaurant r: Phonebook.getPhonebook().restaurants){
-					if (r.isOpen())
+					//Not on weekend UNLESS its the chinese restaurant and its open 
+					if ((r.isOpen() && (TimeManager.getTimeManager().getTime().day != Day.Saturday
+							&& TimeManager.getTimeManager().getTime().day != Day.Sunday)) ||
+							(r instanceof ChineseRestaurant && r.isOpen()))
 					{
 						prepareForRestaurant();
 						return true;
@@ -216,18 +228,23 @@ public class Worker extends Person {
 
 
 		//Market Related (check if you need to go to the market)
+		// Will not go to market if weekend
 		if (!hasFoodInFridge || carStatus == CarState.wantsCar) 
 		{ 
-			if (home.type == "East Apartment") {
-				if (Phonebook.getPhonebook().getEastMarket().isOpen()) // || Phonebook.getPhonebook().getEastMarket().isOpen())
+			if (home.type == "East Apartment") 
+			{
+				if (Phonebook.getPhonebook().getEastMarket().isOpen()  && (TimeManager.getTimeManager().getTime().day != Day.Saturday
+						&& TimeManager.getTimeManager().getTime().day != Day.Sunday)) // || Phonebook.getPhonebook().getEastMarket().isOpen())
 				{
 					print("Going to market");
 					prepareForMarket();
 					return true;
 				}
 			}
-			if (home.type == "West Apartment") {
-				if (Phonebook.getPhonebook().getWestMarket().isOpen()) // || Phonebook.getPhonebook().getEastMarket().isOpen())
+			if (home.type == "West Apartment") 
+			{
+				if (Phonebook.getPhonebook().getWestMarket().isOpen()  && (TimeManager.getTimeManager().getTime().day != Day.Saturday
+						&& TimeManager.getTimeManager().getTime().day != Day.Sunday)) // || Phonebook.getPhonebook().getEastMarket().isOpen())
 				{
 					print("Going to market");
 					prepareForMarket();
