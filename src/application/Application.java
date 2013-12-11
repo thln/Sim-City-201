@@ -47,7 +47,7 @@ public class Application extends JPanel {
 		Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantCookRole.addMarket(Phonebook.getPhonebook().getWestMarket());
 
 		//runFullScenario();
-		//runScenarioA();
+		runScenarioA();
 		//runScenarioB();
 		//runScenarioC();
 		
@@ -494,11 +494,11 @@ Roads should have appropriate complexity [e.g. intersections with stop signs and
 	
 		//American Restaurant Workers
 		//SHIFT 1 (make sure to revert work start times)
-		Worker rest3h = new Worker("Holly", 100, "host", "American Restaurant", 0, 1800, 23);
-		Worker rest3g = new Worker("Gerald", 100, "cashier", "American Restaurant", 0, 1800, 23);        
-		Worker rest3i = new Worker("India", 100, "cook", "American Restaurant", 0, 1800, 23);
-		Worker rest3j = new Worker("Jan", 100, "waiter", "American Restaurant", 0, 1800, 23);
-		Worker rest3k = new Worker("Kris", 100, "altWaiter", "American Restaurant", 0, 1800, 23);
+		Worker rest3h = new Worker("Holly", 100, "host", "American Restaurant", 0, 1800, 12);
+		Worker rest3g = new Worker("Gerald", 100, "cashier", "American Restaurant", 0, 1800, 12);        
+		Worker rest3i = new Worker("India", 100, "cook", "American Restaurant", 0, 1800, 12);
+		Worker rest3j = new Worker("Jan", 100, "waiter", "American Restaurant", 0, 1800, 12);
+		Worker rest3k = new Worker("Kris", 100, "altWaiter", "American Restaurant", 0, 1800, 12);
 
 		//!!!!Important -- Need to initialize setters 
 		//ex. waiter.setHost, waiter.setCook, waiter.setHost, 
@@ -595,11 +595,11 @@ Roads should have appropriate complexity [e.g. intersections with stop signs and
 		market1d.startThread();
 		market1e.startThread();
 		market1f.startThread();
-		rest1g.startThread();
-		rest1h.startThread();
-		rest1i.startThread();
-		rest1j.startThread();
-		rest1k.startThread();
+//		rest1g.startThread();
+//		rest1h.startThread();
+//		rest1i.startThread();
+//		rest1j.startThread();
+//		rest1k.startThread();
 		bank3a.startThread();
 		bank3b.startThread();	
 		bank3c.startThread();
