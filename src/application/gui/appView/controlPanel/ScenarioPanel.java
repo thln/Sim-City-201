@@ -136,6 +136,7 @@ public class ScenarioPanel extends JPanel implements ActionListener {
 			stopRunningScenario.setEnabled(false);
 			stopRunningScenario.setVisible(false);
 			app.stopRunningScenario();
+			System.exit(0);
 		}
 		
 		appPanel.updateInfo();

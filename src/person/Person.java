@@ -378,7 +378,9 @@ public abstract class Person extends Agent{
 			e.printStackTrace();
 
 		}
-
+		
+		System.err.println(" 111111111111111111111");
+		
 		//Checking if have enough money for car
 		if (accountBalance >= (carCost + 100)) {
 			if (carStatus == CarState.noCar) {
@@ -389,7 +391,9 @@ public abstract class Person extends Agent{
 		if (hasFoodInFridge == false) {
 			//choosing random item to buy from market
 			for (Role cust1 : roles) {
+				System.err.println("!!!!!!!!!!!!!!!!!!!!!");
 				if (cust1 instanceof MarketCustomerRole) {
+					System.err.println(" 2222222222222222222222");
 					MarketCustomerRole MCR = (MarketCustomerRole) cust1;
 					MCR.setItem("");
 					cust1.setRoleActive();
