@@ -1,5 +1,6 @@
 package person;
 
+import chineseRestaurant.ChineseRestaurant;
 import application.Phonebook;
 import application.Restaurant;
 import application.TimeManager;
@@ -42,7 +43,8 @@ public class Wealthy extends Person {
 		//If no role is active
 
 		//Bank Related
-		if (money <= moneyMinThreshold || money >= moneyMaxThreshold && Phonebook.getPhonebook().getWestBank().isOpen()) {
+		if (money <= moneyMinThreshold || money >= moneyMaxThreshold && Phonebook.getPhonebook().getWestBank().isOpen() && (TimeManager.getTimeManager().getTime().day != Day.Saturday
+				&& TimeManager.getTimeManager().getTime().day != Day.Sunday)) {
 			prepareForBank();
 			return true;
 		}
@@ -63,7 +65,9 @@ public class Wealthy extends Person {
 			//If you don't have food in the fridge
 			if (!hasFoodInFridge) {
 				for (Restaurant r: Phonebook.getPhonebook().restaurants){
-					if (r.isOpen())
+					if (r.isOpen() && (TimeManager.getTimeManager().getTime().day != Day.Saturday
+							&& TimeManager.getTimeManager().getTime().day != Day.Sunday) ||
+							(r instanceof ChineseRestaurant && r.isOpen()))
 					{
 						prepareForRestaurant();
 						return true;
@@ -80,7 +84,8 @@ public class Wealthy extends Person {
 
 		//Market Related
 		if (!hasFoodInFridge || carStatus == CarState.wantsCar) {
-			if (Phonebook.getPhonebook().getWestMarket().isOpen()){
+			if (Phonebook.getPhonebook().getWestMarket().isOpen() && (TimeManager.getTimeManager().getTime().day != Day.Saturday
+					&& TimeManager.getTimeManager().getTime().day != Day.Sunday)){
 				prepareForMarket();
 				return true;
 			}

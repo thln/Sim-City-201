@@ -187,17 +187,17 @@ public class Worker extends Person {
 		}
 
 		//Rent Related (check if you need to pay rent)
-		if (TimeManager.getTimeManager().getTime().day == Day.Monday) {
+		if (TimeManager.getTimeManager().getTime().day == Day.Tuesday) {
 			resetRentMailbox();
 			resetPayCheck();
 			return true;
 		}
-		if (TimeManager.getTimeManager().getTime().day == Day.Sunday && !checkedMailbox) {
+		if (TimeManager.getTimeManager().getTime().day == Day.Monday && !checkedMailbox) {
 			prepareForRent();
 			return true;
 		}
 		
-		if(TimeManager.getTimeManager().getTime().day == Day.Sunday && !getPayCheck)
+		if(TimeManager.getTimeManager().getTime().day == Day.Monday && !getPayCheck)
 		{
 			receivePayCheck();
 			return true;
@@ -209,7 +209,7 @@ public class Worker extends Person {
 			//If you don't have food in the fridge
 			if (!hasFoodInFridge) {
 				for (Restaurant r: Phonebook.getPhonebook().restaurants){
-					//Not on weekend UNLESS its the chinese restaurant and its open 
+					//Not on weekend UNLESS its the Chinese restaurant and its open 
 					if ((r.isOpen() && (TimeManager.getTimeManager().getTime().day != Day.Saturday
 							&& TimeManager.getTimeManager().getTime().day != Day.Sunday)) ||
 							(r instanceof ChineseRestaurant && r.isOpen()))

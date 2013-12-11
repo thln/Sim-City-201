@@ -3,6 +3,7 @@ package person;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import chineseRestaurant.ChineseRestaurant;
 import person.Person.HungerLevel;
 import person.Role.RoleState;
 import bank.BankCustomerRole;
@@ -51,19 +52,20 @@ public class Crook extends Person {
 		//Checking the time
 
 		//If it's time to rob the bank, go ahead
-		if (robState == RobState.readyToRob && Phonebook.getPhonebook().getEastBank().isOpen()){
+		if (robState == RobState.readyToRob && Phonebook.getPhonebook().getEastBank().isOpen() && (TimeManager.getTimeManager().getTime().day != Day.Saturday
+				&& TimeManager.getTimeManager().getTime().day != Day.Sunday)){
 			robState = RobState.robbedToday;		//reset state for new timer
 			prepareForBank();
 			return true;
 		}
 
 		//Rent Related
-		if(TimeManager.getTimeManager().getTime().day == Day.Monday)
+		if(TimeManager.getTimeManager().getTime().day == Day.Tuesday)
 		{
 			resetRentMailbox();
 			return true;
 		}
-		if(TimeManager.getTimeManager().getTime().day == Day.Sunday && !checkedMailbox)
+		if(TimeManager.getTimeManager().getTime().day == Day.Monday && !checkedMailbox)
 		{
 			prepareForRent();
 			return true;
@@ -75,7 +77,9 @@ public class Crook extends Person {
 			//If you don't have food in the fridge
 			if (!hasFoodInFridge) {
 				for (Restaurant r: Phonebook.getPhonebook().restaurants){
-					if (r.isOpen())
+					if (r.isOpen() && (TimeManager.getTimeManager().getTime().day != Day.Saturday
+							&& TimeManager.getTimeManager().getTime().day != Day.Sunday) ||
+							(r instanceof ChineseRestaurant && r.isOpen()))
 					{
 						prepareForRestaurant();
 						return true;
@@ -92,12 +96,14 @@ public class Crook extends Person {
 		//Market Related
 		if (!hasFoodInFridge || carStatus == CarState.wantsCar) {
 			if (money <= moneyMinThreshold && !hasFoodInFridge) {
-				if (Phonebook.getPhonebook().getEastBank().isOpen()){ // || Phonebook.getPhonebook().getEastBank().isOpen()){	
+				if (Phonebook.getPhonebook().getEastBank().isOpen()&& (TimeManager.getTimeManager().getTime().day != Day.Saturday
+						&& TimeManager.getTimeManager().getTime().day != Day.Sunday)){ // || Phonebook.getPhonebook().getEastBank().isOpen()){	
 					return true;
 				}
 			}
 			else {
-				if (Phonebook.getPhonebook().getEastMarket().isOpen()){
+				if (Phonebook.getPhonebook().getEastMarket().isOpen()&& (TimeManager.getTimeManager().getTime().day != Day.Saturday
+						&& TimeManager.getTimeManager().getTime().day != Day.Sunday)){
 					return true;
 				}
 			}

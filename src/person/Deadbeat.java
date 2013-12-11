@@ -6,6 +6,7 @@ import java.util.Random;
 import person.Role.RoleState;
 import application.Phonebook;
 import application.TimeManager;
+import application.TimeManager.Day;
 
 public class Deadbeat extends Person {
 
@@ -45,16 +46,19 @@ public class Deadbeat extends Person {
 		Random rand = new Random();
 		int myRandomChoice = rand.nextInt(3);
 		if (myRandomChoice == 0){
-			if (Phonebook.getPhonebook().getEastBank().isOpen()){ // || Phonebook.getPhonebook().getEastBank().isOpen()){	
+			if (Phonebook.getPhonebook().getEastBank().isOpen() && (TimeManager.getTimeManager().getTime().day != Day.Saturday
+					&& TimeManager.getTimeManager().getTime().day != Day.Sunday)){ // || Phonebook.getPhonebook().getEastBank().isOpen()){	
 				prepareForBank();
 			}
 		}
 		if (myRandomChoice == 1)
-			if (Phonebook.getPhonebook().getEastMarket().isOpen()){
+			if (Phonebook.getPhonebook().getEastMarket().isOpen()&& (TimeManager.getTimeManager().getTime().day != Day.Saturday
+					&& TimeManager.getTimeManager().getTime().day != Day.Sunday)){
 				prepareForMarket();
 			}
 		if (myRandomChoice == 2){
-			if (Phonebook.getPhonebook().getChineseRestaurant().isOpen()) {	
+			if (Phonebook.getPhonebook().getChineseRestaurant().isOpen() && (TimeManager.getTimeManager().getTime().day != Day.Saturday
+					&& TimeManager.getTimeManager().getTime().day != Day.Sunday)) {	
 				prepareForRestaurant();
 			}
 		}

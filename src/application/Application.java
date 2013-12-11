@@ -676,6 +676,9 @@ Roads should have appropriate complexity [e.g. intersections with stop signs and
 	 */
 	
 	public void runScenarioD () {
+		//To turn on weekend
+		//Use TimeManager.getTimeManager().setAmericanCalendarTrue();
+		//Which will set first day to Sunday
 		
 	}
 	
