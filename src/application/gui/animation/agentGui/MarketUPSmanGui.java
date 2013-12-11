@@ -13,8 +13,8 @@ public class MarketUPSmanGui extends MarketGui{
 
 	//RestaurantGui gui;
 
-    private int xPos = WINDOWX, yPos = 200;//default MarketRunner position
-    private int xDestination = WINDOWX-100, yDestination = 200;//default start position
+    private int xPos = 600, yPos = 200;//default MarketRunner position
+    private int xDestination = 600-100, yDestination = 200;//default start position
 	
 	private enum Command {noCommand, inTransit};
 	private Command command = Command.noCommand;
@@ -88,7 +88,7 @@ public class MarketUPSmanGui extends MarketGui{
 	
 	public void DoExit() { 
 		//going outside of market to deliver order
-		xDestination = WINDOWX;
+		xDestination = 600;
 		yDestination = 200;
 	}
 }

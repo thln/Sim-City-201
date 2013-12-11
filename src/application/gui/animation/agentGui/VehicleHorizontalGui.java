@@ -12,15 +12,15 @@ public class VehicleHorizontalGui extends VehicleGui {
 	ImageIcon carLeft = new ImageIcon("res/CarLeft.png");
 	ImageIcon carRight = new ImageIcon("res/CarRight.png");
 
-	private final int TopRoadY = WINDOWY/3-carLeft.getIconHeight()/2;;
-	private final int BottomRoadY = WINDOWY*2/3-carRight.getIconHeight()/2;
+	private final int TopRoadY = 325/3-carLeft.getIconHeight()/2;;
+	private final int BottomRoadY = 325*2/3-carRight.getIconHeight()/2;
 	private final int offScreenLeftBottomRoad = -50;
-	private final int offScreenRightTopRoad = WINDOWX;
+	private final int offScreenRightTopRoad = 600;
 
 	public VehicleHorizontalGui() {
 		xPos = offScreenLeftBottomRoad;
 		yPos = TopRoadY;
-		xDestination = WINDOWX;
+		xDestination = 600;
 		xDestination = offScreenRightTopRoad;
 		me.setSize(carLeft.getIconWidth(), carLeft.getIconHeight());
 		//me.setSize(25, 25);

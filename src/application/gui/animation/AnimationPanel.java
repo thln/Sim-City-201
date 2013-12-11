@@ -14,9 +14,11 @@ import application.gui.animation.agentGui.*;
 
 public class AnimationPanel extends JPanel implements MouseListener, ActionListener {
 
+	/*
 	Toolkit tk = Toolkit.getDefaultToolkit();
 	int WINDOWX = ((int) tk.getScreenSize().getWidth())/2; 
-	int WINDOWY = (((int) tk.getScreenSize().getHeight())/2)*5/6; 
+	int WINDOWY = (((int) tk.getScreenSize().getHeight())/2)*5/6;   
+	*/
 
 	public CityPanel cityPanel;
 	JPanel buildingPanels;
@@ -44,18 +46,18 @@ public class AnimationPanel extends JPanel implements MouseListener, ActionListe
 
 		//here we have the main city view
 		cityPanel = new CityPanel(this);
-		cityPanel.setPreferredSize(new Dimension(WINDOWX, WINDOWY));
-		cityPanel.setMaximumSize(new Dimension(WINDOWX,WINDOWY));
-		cityPanel.setMinimumSize(new Dimension(WINDOWX, WINDOWY));
+		cityPanel.setPreferredSize(new Dimension(600, 325));
+		cityPanel.setMaximumSize(new Dimension(600,325));
+		cityPanel.setMinimumSize(new Dimension(600, 325));
 		cityPanel.setVisible(true);
 
 		cardLayout = new CardLayout();
 
 		buildingPanels = new JPanel();
 		buildingPanels.setLayout(cardLayout);
-		buildingPanels.setMinimumSize(new Dimension(WINDOWX, WINDOWY));
-		buildingPanels.setMaximumSize(new Dimension(WINDOWX, WINDOWY));
-		buildingPanels.setPreferredSize(new Dimension(WINDOWX, WINDOWY));
+		buildingPanels.setMinimumSize(new Dimension(600, 325));
+		buildingPanels.setMaximumSize(new Dimension(600, 325));
+		buildingPanels.setPreferredSize(new Dimension(600, 325));
 
 		//Adding a blank building panel
 		BuildingPanel blank = new BuildingPanel("", this);
@@ -315,11 +317,11 @@ public class AnimationPanel extends JPanel implements MouseListener, ActionListe
 		buildingPanelsList.add(panel);
 	}
 
-	public int getWindowX(){
-		return WINDOWX;
+	public int get600(){
+		return 600;
 	}
-	public int getWindowY(){
-		return WINDOWY;
+	public int get325(){
+		return 325;
 	}
 	
 	public void setHousingPanel(Housing housing) {

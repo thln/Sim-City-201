@@ -21,9 +21,11 @@ import application.gui.animation.agentGui.*;
 
 public class BuildingPanel extends JPanel implements ActionListener {
 
+	/*
 	Toolkit tk = Toolkit.getDefaultToolkit();
 	int WINDOWX = ((int) tk.getScreenSize().getWidth())/2; 
 	int WINDOWY = (((int) tk.getScreenSize().getHeight())/2)*5/6;   
+	*/  
 	
 	public String name;
 	public List<Gui> guis = Collections.synchronizedList(new ArrayList<Gui>());
@@ -34,9 +36,9 @@ public class BuildingPanel extends JPanel implements ActionListener {
 	}
 	
 	public BuildingPanel(String buildName, AnimationPanel ap) {
-		setMinimumSize(new Dimension(WINDOWX, WINDOWY));
-		setMaximumSize(new Dimension(WINDOWX, WINDOWY));
-		setPreferredSize(new Dimension(WINDOWX, WINDOWY));
+		setMinimumSize(new Dimension(600, 325));
+		setMaximumSize(new Dimension(600, 325));
+		setPreferredSize(new Dimension(600, 325));
 		setVisible(true);
 		setLayout(null);
 		name = buildName;
@@ -54,13 +56,13 @@ public class BuildingPanel extends JPanel implements ActionListener {
 		Graphics2D g2 = (Graphics2D)g;
 		g2.setColor(getBackground());
 
-		g2.fillRect(0, 0, WINDOWX, WINDOWY );	
+		g2.fillRect(0, 0, 600, 325 );	
 		g2.setColor(Color.RED);
 
 		if(name == "name")
-			g.drawString("", WINDOWX/2, 10);
+			g.drawString("", 600/2, 10);
 		else
-			g.drawString(name, WINDOWX/2, 10);
+			g.drawString(name, 600/2, 10);
 
 		synchronized(guis){
 			for(Gui gui : guis) {

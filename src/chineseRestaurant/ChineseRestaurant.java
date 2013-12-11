@@ -24,9 +24,11 @@ import chineseRestaurant.test.mock.ChineseRestaurantMockCook;
 
 public class ChineseRestaurant implements Restaurant {
 
+	/*
 	Toolkit tk = Toolkit.getDefaultToolkit();
 	int WINDOWX = ((int) tk.getScreenSize().getWidth())/2; 
-	int WINDOWY = (((int) tk.getScreenSize().getHeight())/2)*5/6;  
+	int WINDOWY = (((int) tk.getScreenSize().getHeight())/2)*5/6;   
+	*/  
 	
 	//Data
 	String name;
@@ -61,7 +63,7 @@ public class ChineseRestaurant implements Restaurant {
 	public ChineseRestaurantMockCashier chineseRestaurantMockCashier = new ChineseRestaurantMockCashier("MockCashier");
 
 	public ChineseRestaurant(String name) {
-		location = new Point(WINDOWX/2, WINDOWY/6-restaurant.getIconHeight()-5);
+		location = new Point(600/2, 325/6-restaurant.getIconHeight()-5);
 		this.name = name;
 		//chineseRestaurantCookRole.setGui(cookGui);
 	}

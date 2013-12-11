@@ -24,8 +24,8 @@ public class ApartmentPanel extends BuildingPanel implements MouseListener{
 	BufferedImage doorRight;
 	BufferedImage doorLeft;
 	BufferedImage wall;
-	int xdoorPos = WINDOWX/2;
-	int ydoorPos = WINDOWY-75;
+	int xdoorPos = 600/2;
+	int ydoorPos = 325-75;
 	
 	public ApartmentPanel(String buildName, AnimationPanel ap) {
 		super(buildName, ap);
@@ -55,21 +55,21 @@ public class ApartmentPanel extends BuildingPanel implements MouseListener{
 		//Clear the screen by painting a rectangle the size of the frame
 		g2.setColor(new Color(255, 229, 204));	
 		
-		g2.fillRect(0, 0, WINDOWX, WINDOWY );	
+		g2.fillRect(0, 0, 600, 325 );	
 		g2.setColor(Color.RED);
 
 		if(name == "name")
-			g.drawString("", WINDOWX/2, 10);
+			g.drawString("", 600/2, 10);
 		else
-			g.drawString(getName(), WINDOWX/2, 10);
+			g.drawString(getName(), 600/2, 10);
 		
 		g2.setColor(new Color(139,69,19));
 		
-		g2.fill3DRect(0, ydoorPos-WINDOWY*1/10-10, WINDOWX, 10, false);
+		g2.fill3DRect(0, ydoorPos-325*1/10-10, 600, 10, false);
 		
 		for(int w=0; w < 6; w++)
 			//g2.drawImage(wall, 0 + wall.getWidth()*w, ydoorPos, null);
-		g2.drawImage(wall, 0+WINDOWX/6*w, ydoorPos-WINDOWY*1/10, WINDOWX/6, doorLeft.getHeight()+WINDOWY*1/10, null);
+		g2.drawImage(wall, 0+600/6*w, ydoorPos-325*1/10, 600/6, doorLeft.getHeight()+325*1/10, null);
 		g2.drawImage(doorRight, xdoorPos, ydoorPos, null);
 		g2.drawImage(doorLeft, xdoorPos-doorLeft.getWidth(), ydoorPos, null);
 		
@@ -88,16 +88,16 @@ public class ApartmentPanel extends BuildingPanel implements MouseListener{
         			g2.setColor(Color.RED);
         		else
         			g2.setColor(Color.ORANGE);
-        		g2.fill3DRect(WINDOWX/12*ix, 80*iy-50, 45, 45, true);
+        		g2.fill3DRect(600/12*ix, 80*iy-50, 45, 45, true);
         		if(aptRects.get(counter).getX() == 0 && aptRects.get(counter).getY() == 0)
-        			aptRects.get(counter).setLocation(WINDOWX/12*ix, 80*iy-50);
+        			aptRects.get(counter).setLocation(600/12*ix, 80*iy-50);
         		if(currHouse.isOccupied())
         			g2.setColor(Color.WHITE);
         		else
         			g2.setColor(Color.BLACK);
-        		g2.drawString(counter+"", WINDOWX/12*ix+WINDOWX/120, 80*iy-35);
+        		g2.drawString(counter+"", 600/12*ix+600/120, 80*iy-35);
         		g2.setFont(myFont);
-       			g2.drawString(currHouse.getOccupantName(), WINDOWX/12*ix+WINDOWX/120, 80*iy-15);
+       			g2.drawString(currHouse.getOccupantName(), 600/12*ix+600/120, 80*iy-15);
        			counter++;
         	}
         }
@@ -109,16 +109,16 @@ public class ApartmentPanel extends BuildingPanel implements MouseListener{
     		else
     			g2.setColor(Color.ORANGE);
         	//g2.fillRect(50*ix, 80*(rows+1)-50, 45, 45);
-    		g2.fill3DRect(WINDOWX/12*ix, 80*(rows+1)-50, 45, 45, true);
+    		g2.fill3DRect(600/12*ix, 80*(rows+1)-50, 45, 45, true);
     		if(aptRects.get(counter).getX() == 0 && aptRects.get(counter).getY() == 0)
-    			aptRects.get(counter).setLocation(WINDOWX/12*ix, 80*(rows+1)-50);
+    			aptRects.get(counter).setLocation(600/12*ix, 80*(rows+1)-50);
     		if(currHouse.isOccupied())
     			g2.setColor(Color.WHITE);
     		else
     			g2.setColor(Color.BLACK);
-        	g2.drawString(counter+"", WINDOWX/12*ix+WINDOWX/120, 80*(rows+1)-35);
+        	g2.drawString(counter+"", 600/12*ix+600/120, 80*(rows+1)-35);
         	g2.setFont(myFont);
-       		g2.drawString(currHouse.getOccupantName(), WINDOWX/12*ix+WINDOWX/120, 80*(rows+1)-15);
+       		g2.drawString(currHouse.getOccupantName(), 600/12*ix+600/120, 80*(rows+1)-15);
        		counter++;
         }
         

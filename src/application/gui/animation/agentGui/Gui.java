@@ -6,9 +6,11 @@ import application.Phonebook;
 
 public interface Gui {
 	
+	/*
 	Toolkit tk = Toolkit.getDefaultToolkit();
 	int WINDOWX = ((int) tk.getScreenSize().getWidth())/2; 
-	int WINDOWY = (((int) tk.getScreenSize().getHeight())/2)*5/6;
+	int WINDOWY = (((int) tk.getScreenSize().getHeight())/2)*5/6;   
+	*/
 
     public void updatePosition();
     public void draw(Graphics2D g);

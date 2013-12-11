@@ -14,9 +14,11 @@ import application.gui.animation.BuildingPanel;
 
 public class SeafoodRestaurant implements Restaurant {
 	
+	/*
 	Toolkit tk = Toolkit.getDefaultToolkit();
 	int WINDOWX = ((int) tk.getScreenSize().getWidth())/2; 
-	int WINDOWY = (((int) tk.getScreenSize().getHeight())/2)*5/6;  
+	int WINDOWY = (((int) tk.getScreenSize().getHeight())/2)*5/6;   
+	*/
 	
 	//Data
 	String name;
@@ -46,7 +48,7 @@ public class SeafoodRestaurant implements Restaurant {
 
 	public SeafoodRestaurant(String name) {
 		this.name = name;
-		location = new Point(WINDOWX-175, WINDOWY/2);
+		location = new Point(600-175, 325/2);
 		//seafoodRestaurantCookRole.setGui(cookGui);
 	}
 

@@ -26,9 +26,11 @@ import application.gui.animation.agentGui.MarketUPSmanGui;
 
 public class Market {
 	
+	/*
 	Toolkit tk = Toolkit.getDefaultToolkit();
 	int WINDOWX = ((int) tk.getScreenSize().getWidth())/2; 
-	int WINDOWY = (((int) tk.getScreenSize().getHeight())/2)*5/6; 
+	int WINDOWY = (((int) tk.getScreenSize().getHeight())/2)*5/6;   
+	*/
 	ImageIcon market = new ImageIcon("res/market.png", "market");
 
 	//Data
@@ -101,10 +103,10 @@ public class Market {
 	//Constructor
 	public Market(String name) 	{
 		if (name == "East Market"){
-			location = new Point(WINDOWX*5/6+5, WINDOWY/2-market.getIconHeight()/2);
+			location = new Point(600*5/6+5, 325/2-market.getIconHeight()/2);
 		}
 		if (name == "West Market"){
-			location = new Point(WINDOWX/6, WINDOWY*5/6);	
+			location = new Point(600/6, 325*5/6);	
 		}
 		
 		this.name = name;

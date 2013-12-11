@@ -73,7 +73,7 @@ public class MarketRunnerGui extends MarketGui{
     }
 	//Actions
     public void DoGoToInventory() {
-    	xDestination = WINDOWX-150;
+    	xDestination = 600-150;
     	yDestination = 60;
     	command = Command.inTransit;
     }

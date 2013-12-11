@@ -10,8 +10,8 @@ public class BankTellerGui extends BankGui{
 	private BankTellerRole agent = null;
 	private boolean isPresent = true;
 
-    private int xPos = WINDOWX, yPos = 30;//default bank teller position
-    private int xDestination = WINDOWX, yDestination = 50;//default start position
+    private int xPos = 600, yPos = 30;//default bank teller position
+    private int xDestination = 600, yDestination = 50;//default start position
 	private int tellerPosition;
     
 	private enum Command {noCommand};

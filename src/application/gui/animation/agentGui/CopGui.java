@@ -13,11 +13,11 @@ public class CopGui extends VehicleHorizontalGui {
 	ImageIcon carLeft = new ImageIcon("res/CopCarLeft.png");
 	ImageIcon carRight = new ImageIcon("res/CopCarRight.png");
 
-	private int TopRoadY = WINDOWY/3-carLeft.getIconHeight()/2;
-	private int BottomRoadY = WINDOWY*2/3-carRight.getIconHeight()/2;
+	private int TopRoadY = 325/3-carLeft.getIconHeight()/2;
+	private int BottomRoadY = 325*2/3-carRight.getIconHeight()/2;
 
 	public CopGui() {
-		xPos = WINDOWX;
+		xPos = 600;
 		yPos = BottomRoadY;
 		xDestination = -25;
 	}
@@ -39,7 +39,7 @@ public class CopGui extends VehicleHorizontalGui {
 		leftACrosswalk();
 		leftBusParking();
 
-		if (xPos == WINDOWX || xPos == -25) {
+		if (xPos == 600 || xPos == -25) {
 			changeRoads();
 		}
 
