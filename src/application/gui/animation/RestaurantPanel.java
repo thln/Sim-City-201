@@ -20,10 +20,11 @@ import application.gui.animation.agentGui.Gui;
 
 public class RestaurantPanel extends BuildingPanel implements ActionListener{
 	
+	//Italian Restaurant Data
 	static final int NTABLES = 5;
     BufferedImage fridge = null;
     
-    //american restaurant data
+    //American Restaurant Data
     static int americanNTables = 4;
 	public AmericanRestaurantTable[] tables = new AmericanRestaurantTable[americanNTables]; 		//declare list of tables
 	static boolean isFood = true;
