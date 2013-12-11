@@ -306,7 +306,6 @@ public int getClosestBusStopNumber()
 	}
 	else
 	{//forth bus stop
-		System.out.println("X: " + xPos + " Y: " + yPos);
 		return 3;
 	}
 }		

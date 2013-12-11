@@ -44,8 +44,8 @@ public class BusGuiVertical extends VehicleGui {
 
 	public void updatePosition() {
 		if (inBusyIntersection() || inBusyCrosswalk() || inBusyBusParking()) {
-			System.err.println(this + "State of variables intersection " + inBusyIntersection() +
-					" crosswalk = " + inBusyCrosswalk() + " and parking = " + inBusyBusParking());
+			//System.err.println(this + "State of variables intersection " + inBusyIntersection() +
+				//	" crosswalk = " + inBusyCrosswalk() + " and parking = " + inBusyBusParking());
 			return;
 		}
 
