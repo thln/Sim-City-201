@@ -17,6 +17,7 @@ public class Worker extends Person {
 	public Job myJob = null;
 	public Role workerRole = null;
 	public boolean leavingWork = false;
+	public boolean getPayCheck = false;
 
 	public Worker (String name, double money, String jobTitle, String jobPlace, int startT, int lunchT, int endT) {
 		super(name, money);
@@ -179,10 +180,17 @@ public class Worker extends Person {
 		//Rent Related (check if you need to pay rent)
 		if (TimeManager.getTimeManager().getTime().day == Day.Monday) {
 			resetRentMailbox();
+			resetPayCheck();
 			return true;
 		}
 		if (TimeManager.getTimeManager().getTime().day == Day.Sunday && !checkedMailbox) {
 			prepareForRent();
+			return true;
+		}
+		
+		if(TimeManager.getTimeManager().getTime().day == Day.Sunday && !getPayCheck)
+		{
+			receivePayCheck();
 			return true;
 		}
 
@@ -246,6 +254,19 @@ public class Worker extends Person {
 	//		((((nextTaskTime - currentTime) % 24) + 24) % 24) * timeConversion);
 	//	}
 
+	public void receivePayCheck()
+	{
+		getPayCheck = true;
+		print("Getting weekly paycheck for $100.");
+		money += 100;
+		return;
+	}
+	
+	public void resetPayCheck()
+	{
+		getPayCheck = false;
+	}
+	
 	public void prepareForWork() {
 		currentRoleName = myJob.title;
 		print("Preparing for work as " + myJob.title + " at " + myJob.jobPlace);
