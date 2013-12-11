@@ -77,7 +77,9 @@ public class ChineseRestaurantWaiterRole extends Role implements ChineseRestaura
 
 	public void msgIsInLobby() {
 		isInLobby = true;
-		stateChanged();
+		if (person != null){
+			stateChanged();
+		}
 	}
 
 	public void msgReadyToOrder(ChineseRestaurantCustomerRole customer) {

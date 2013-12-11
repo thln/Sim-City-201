@@ -23,7 +23,7 @@ public class MarketRunnerRole extends Role implements MarketRunner {
 
 	public List<MarketOrder> orders = Collections.synchronizedList(new ArrayList<MarketOrder>());
 	private Semaphore atDestination = new Semaphore(0, true);
-
+	boolean present = false;
 	public EventLog log = new EventLog();
 
 	public MarketRunnerRole(Person person, String pName, String rName, Market market) {
@@ -46,7 +46,7 @@ public class MarketRunnerRole extends Role implements MarketRunner {
 	}
 
 	public void msgAtDestination() {
-		atDestination.release();
+		this.atDestination.release();
 	}
 
 	//Scheduler
@@ -73,14 +73,13 @@ public class MarketRunnerRole extends Role implements MarketRunner {
 		//if(!marketRunnerGui.atInventory()) {
 		//CARMEN IF YOU UNCOMMENT THIS, MAKE SURE IT DOESN'T STOP THE WHOLE FREAKING INTERACTION
 		//BECUASE THE SEMAPHORE WAS NEVER RELEASED SO THE MARKET WASN'T WORKING
-		//			marketRunnerGui.DoGoToInventory();
-		//			try {
-		//				this.atDestination.acquire();
-		//			} catch (InterruptedException e) {
-		//				// TODO Auto-generated catch block
-		//				e.printStackTrace();
-		//			}
-		//}
+					marketRunnerGui.DoGoToInventory();
+					try {
+						this.atDestination.acquire();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 
 		if (o.customer != null) {
 			decreaseInventoryBy(o.item, o.itemAmountOrdered);
@@ -89,13 +88,13 @@ public class MarketRunnerRole extends Role implements MarketRunner {
 				print("Fulfilled order for customer: " + ((MarketCustomerRole) o.customer).getName());
 			}
 
-//			marketRunnerGui.DoGoToSalesPerson();
-//			try {
-//				this.atDestination.acquire();
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
+			marketRunnerGui.DoGoToSalesPerson();
+			try {
+				this.atDestination.acquire();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			market.getSalesPerson(test).msgOrderFulfilled(o);
 			orders.remove(o);
 		}
@@ -103,6 +102,14 @@ public class MarketRunnerRole extends Role implements MarketRunner {
 			decreaseInventoryBy(o.item, o.itemAmountOrdered);
 			o.itemAmountFulfilled = o.itemAmountOrdered;
 			print("Fulfilled order for restaurant for: " + o.item);
+			
+			marketRunnerGui.DoGoToSalesPerson();
+			try {
+				this.atDestination.acquire();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			market.getUPSman(test).msgDeliverOrder(o);
 			orders.remove(o);
 		}
@@ -115,5 +122,15 @@ public class MarketRunnerRole extends Role implements MarketRunner {
 
 	public void setGui(MarketRunnerGui gui) {
 		marketRunnerGui = gui;
+	}
+	
+	public void setPresent(boolean present) {
+		this.present = present;
+	}
+	
+	public boolean isPresent() {
+		if(present)
+			return true;
+		return false;
 	}
 }

@@ -34,7 +34,7 @@ public class ParkPanel extends BuildingPanel implements ActionListener{
 
 		//Clear the screen by painting a rectangle the size of the frame
 		//g2.setColor(new Color(215, 255, 204));
-		g2.drawImage(parkImage, 0,0, null);
+		g2.drawImage(parkImage, 0,0, WINDOWX, WINDOWY, null);
 		//g2.fillRect(0, 0, WINDOWX, WINDOWY );	
 		
 		g2.setColor(Color.RED);

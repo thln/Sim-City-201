@@ -20,7 +20,7 @@ import person.Worker;
 public class ChineseRestaurantCashierRole extends Role implements ChineseRestaurantCashier {
 
 	public ChineseRestaurant chineseRestaurant;
-	
+
 
 	//Keeps a list of checks
 	public List<Check> Checks = Collections.synchronizedList(new ArrayList<Check>());
@@ -59,7 +59,9 @@ public class ChineseRestaurantCashierRole extends Role implements ChineseRestaur
 			print("Calculating bill for table " + tableNumber);
 			//log.add(new LoggedEvent("Calculating bill for table"));
 			Checks.add(new Check(choice, tableNumber, chineseRestaurantWaiter));
-			stateChanged();
+			if (person != null){
+				stateChanged();
+			}
 		}
 	}
 
@@ -125,7 +127,7 @@ public class ChineseRestaurantCashierRole extends Role implements ChineseRestaur
 			leaveRole = false;
 			return true;
 		}
-		
+
 		return false;
 		//we have tried all our rules and found
 		//nothing to do. So return false to main loop of abstract agent
@@ -214,7 +216,7 @@ public class ChineseRestaurantCashierRole extends Role implements ChineseRestaur
 			this.bill = bill;
 			this.market = market;
 		}
-		
+
 		public void setBill(double newBill) {
 			bill = newBill;
 		}

@@ -78,7 +78,9 @@ public class ChineseRestaurantCookRole extends Role implements ChineseRestaurant
 			print("Order received for table " + table);
 			ChineseRestaurantOrder chineseRestaurantOrder = new ChineseRestaurantOrder(table, choice, chineseRestaurantWaiterRole);
 			myOrders.add(chineseRestaurantOrder);
-			stateChanged();
+			if (person != null){
+				stateChanged();
+			}
 		}
 	}
 
@@ -120,12 +122,12 @@ public class ChineseRestaurantCookRole extends Role implements ChineseRestaurant
             If so seat him at the table.
 		 */
 
-		inventoryChecker++;
-
-		if (inventoryChecker == 500) {
-			checkInventory();
-			return true;
-		}
+//		inventoryChecker++;
+//
+//		if (inventoryChecker == 500) {
+//			checkInventory();
+//			return true;
+//		}
 
 
 		if (!Phonebook.getPhonebook().getChineseRestaurant().getRevolvingStand().isStandEmpty()) {

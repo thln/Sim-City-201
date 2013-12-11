@@ -34,11 +34,15 @@ public class ApplicationGui extends JFrame {
 
 	ApplicationPanel appPanel; 
 	AnimationPanel animPanel = new AnimationPanel();	
-
-	final static int WINDOWX = 1200;
-	final static int WINDOWY = 700;
-	final static int APPWIDTH = WINDOWX*(4/10); //Application View Panel Width 400
-	final static int ANIMWIDTH = WINDOWX*(6/10); //Animation View Panel Width 600
+	Toolkit tk = Toolkit.getDefaultToolkit();
+	int WINDOWX = ((int) tk.getScreenSize().getWidth()); 
+	int WINDOWY = ((int) tk.getScreenSize().getHeight()); 
+	//final static int WINDOWX = 1200;
+	//final static int WINDOWY = 700;
+	int APPWIDTH = WINDOWX*(4/10);
+	int ANIMWIDTH = WINDOWX*(6/10);
+	//final static int APPWIDTH = WINDOWX*(4/10); //Application View Panel Width 400
+	//final static int ANIMWIDTH = WINDOWX*(6/10); //Animation View Panel Width 600
 	//final static int AnimPanelY = WINDOWY; //Animation View Panel Height 600	
 
 	ApplicationGui() {

@@ -19,7 +19,7 @@ import application.gui.animation.agentGui.RestaurantCustomerGui;
 public class ChineseRestaurantCustomerRole extends Role implements ChineseRestaurantCustomer {
 	private int hungerLevel = 5;        // determines length of meal
 	Timer timer = new Timer();
-	protected String RoleName = "Restaurant AmericanRestaurantCustomer";
+	protected String RoleName = "Restaurant Customer";
 
 	int xHome, yHome;
 	
@@ -166,8 +166,8 @@ public class ChineseRestaurantCustomerRole extends Role implements ChineseRestau
 	/**
 	 * Scheduler
 	 */
-	public boolean pickAndExecuteAnAction() {
-		//	AmericanRestaurantCustomerRole is a finite state machine
+	protected boolean pickAndExecuteAnAction() {
+		//	CustomerRole is a finite state machine
 
 		if (state == AgentState.DoingNothing && event == AgentEvent.gotHungry ) {
 			goToRestaurant();

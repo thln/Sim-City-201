@@ -45,12 +45,7 @@ public class ItalianCustomerRole extends Role implements ItalianCustomer{
 	{none, gotHungry, followWaiter, seated, doneOrdering, doneWaiting, doneEating, donePaying, senttoJail, doneLeaving};
 	AgentEvent event = AgentEvent.none;
 
-	/**
-	 * Constructor for AmericanRestaurantCustomerRole class
-	 *
-	 * @param name name of the customer
-	 * @param gui  reference to the customergui so the customer can send it messages
-	 */
+	
 	public ItalianCustomerRole(String name){
 		super(name);
 		
@@ -174,7 +169,7 @@ public class ItalianCustomerRole extends Role implements ItalianCustomer{
 		stateChanged();
 	}
 	
-	//received from americanRestaurantCashier to indicate he is done paying for bill
+	//received from Cashier to indicate he is done paying for bill
 	public void msgChangeAndReceipt(String receipt, Double change) {
 		
 		event = AgentEvent.donePaying;
@@ -209,8 +204,8 @@ public class ItalianCustomerRole extends Role implements ItalianCustomer{
 	/**
 	 * Scheduler.  Determine what action is called for, and do it.
 	 */
-	public boolean pickAndExecuteAnAction() {
-		//	AmericanRestaurantCustomerRole is a finite state machine
+	protected boolean pickAndExecuteAnAction() {
+		//	CustomerRole is a finite state machine
 
 		if (state == AgentState.DoingNothing && event == AgentEvent.gotHungry ){
 			state = AgentState.WaitingInRestaurant;

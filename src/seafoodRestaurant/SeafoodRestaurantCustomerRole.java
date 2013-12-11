@@ -45,8 +45,8 @@ public class SeafoodRestaurantCustomerRole extends Role implements SeafoodRestau
 	// agent correspondents
 	private SeafoodRestaurantWaiterRole waiter;
 	//private SeafoodRestaurantHostRole host;
-	//private SeafoodRestaurantCashierRole americanRestaurantCashier;
-	//AmericanRestaurantCashierRole
+	//private SeafoodRestaurantCashierRole Cashier;
+	//CashierRole
 	
 	//    private boolean isHungry = false; //hack for gui
 	public enum AgentState
@@ -58,12 +58,12 @@ public class SeafoodRestaurantCustomerRole extends Role implements SeafoodRestau
 	AgentEvent event = AgentEvent.none;
 
 	/**
-	 * Constructor for AmericanRestaurantCustomerRole class
+	 * Constructor for CustomerRole class
 	 *
 	 * @param name name of the customer
 	 * @param gui  reference to the customergui so the customer can send it messages
 	 */
-	public SeafoodRestaurantCustomerRole(String name, SeafoodRestaurantHostRole h, SeafoodRestaurantCashierRole cas, int n) //AmericanRestaurantCashierRole
+	public SeafoodRestaurantCustomerRole(String name, SeafoodRestaurantHostRole h, SeafoodRestaurantCashierRole cas, int n) //CashierRole
 	{
 		super(name);
 		
@@ -210,7 +210,7 @@ public class SeafoodRestaurantCustomerRole extends Role implements SeafoodRestau
 	 */
 	public boolean pickAndExecuteAnAction() 
 	{
-		//	AmericanRestaurantCustomerRole is a finite state machine
+		//	CustomerRole is a finite state machine
 		if (state == AgentState.DoingNothing && event == AgentEvent.gotHungry )
 		{
 			state = AgentState.WaitingInRestaurant;

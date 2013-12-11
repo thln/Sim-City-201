@@ -56,9 +56,9 @@ public class BusAgent extends Agent{
 	 * Bus arrives at bus stops and gets all waiting customers
 	 * Messages all sleeping customers to wake up
 	 * Customers responds by messaging bus I am getting on
-	 * AmericanRestaurantCustomer goes to sleep, Gui disappears
+	 * Customer goes to sleep, Gui disappears
 	 * Bus arrives at next bus stop, messages all customers with that destination
-	 * AmericanRestaurantCustomer wakes up, GUI reappears at that spot
+	 * Customer wakes up, GUI reappears at that spot
 	 * ***/
 
 	/*********************
@@ -71,7 +71,7 @@ public class BusAgent extends Agent{
 		if(!checkedStation)
 		{
 			checkedStation = true;
-			AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, "Arrived at Bus Stop " + busStopNumber);
+		//	AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, "Arrived at Bus Stop " + busStopNumber);
 			currentBusStop = busStopNumber;
 			state = busState.ReachedStop;
 			stateChanged();
@@ -86,7 +86,7 @@ public class BusAgent extends Agent{
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
-		AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, "Adding " + p.getName());
+		//AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, "Adding " + p.getName());
 		busPassengers.add(new busPassenger(p, bStop));
 		state = busState.PickingUpPeople;
 		stateChanged();
@@ -133,20 +133,20 @@ public class BusAgent extends Agent{
 	{
 		if( Phonebook.getPhonebook().getAllBusStops().get(currentBusStop).getCurrentBus() == null)
 		{
-			AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, "Telling people to get on at " + Phonebook.getPhonebook().getAllBusStops().get(currentBusStop).getBusStopNumber());
+			//AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, "Telling people to get on at " + Phonebook.getPhonebook().getAllBusStops().get(currentBusStop).getBusStopNumber());
 			//state = busState.PickingUpPeople;
 			state = busState.Waiting;
 			//peopleAtBusStop = Phonebook.getPhonebook().getAllBusStops().get(currentBusStop).getAllWaitingPassengers(this);
 			expectedNumberOfPassengers += Phonebook.getPhonebook().getAllBusStops().get(currentBusStop).getNumberOfWaitingPassengers();
 			if(Phonebook.getPhonebook().getAllBusStops().get(currentBusStop).getAllWaitingPassengers(this).isEmpty())
 			{
-				AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, "No one's here. Leaving.");
+			//	AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, "No one's here. Leaving.");
 				state = busState.PickingUpPeople;
 				return;
 			}
 			else
 			{
-				AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, "Telling"+ Phonebook.getPhonebook().getAllBusStops().get(currentBusStop).getNumberOfWaitingPassengers()+ " people at bus stop.");
+				//AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, "Telling"+ Phonebook.getPhonebook().getAllBusStops().get(currentBusStop).getNumberOfWaitingPassengers()+ " people at bus stop.");
 				synchronized(Phonebook.getPhonebook().getAllBusStops().get(currentBusStop).getAllWaitingPassengers(this))
 				{
 					int tempSize = Phonebook.getPhonebook().getAllBusStops().get(currentBusStop).getNumberOfWaitingPassengers();
@@ -158,11 +158,11 @@ public class BusAgent extends Agent{
 //					}
 					for(int i = 0; i < tempSize; i++)
 					{
-						AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, "Waking up " 
-					+ Phonebook.getPhonebook().getAllBusStops().get(currentBusStop).getAllWaitingPassengers(this).get(0).getName());
+					//	AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, "Waking up " 
+					//+ Phonebook.getPhonebook().getAllBusStops().get(currentBusStop).getAllWaitingPassengers(this).get(0).getName());
 						Phonebook.getPhonebook().getAllBusStops().get(currentBusStop).getAllWaitingPassengers(this).get(0).msgBusIsHere();
 						Phonebook.getPhonebook().getAllBusStops().get(currentBusStop).getAllWaitingPassengers(this).remove(0);
-						AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, " # " + Phonebook.getPhonebook().getAllBusStops().get(currentBusStop).getNumberOfWaitingPassengers());
+						//AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, " # " + Phonebook.getPhonebook().getAllBusStops().get(currentBusStop).getNumberOfWaitingPassengers());
 //						if(Phonebook.getPhonebook().getAllBusStops().get(currentBusStop).getNumberOfWaitingPassengers() == 0)
 //						{
 //							AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, "SDFDSf " );
@@ -179,14 +179,14 @@ public class BusAgent extends Agent{
 
 	private void tellPeopleGetOff()
 	{
-		AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, "Telling people to get off.");
+		//AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, "Telling people to get off.");
 		synchronized(busPassengers)
 		{
 			for(int i = 0; i < busPassengers.size(); i++)
 			{
 				if(busPassengers.get(i).busStop == currentBusStop)
 				{
-					AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, busPassengers.get(i).passenger.getName() + " is leaving at " + currentBusStop);				
+					//AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, busPassengers.get(i).passenger.getName() + " is leaving at " + currentBusStop);				
 					busPassengers.get(i).passenger.msgAtBusStopDestination();
 					busPassengers.get(i).busStop = 5;
 					//busPassengers.remove(i);
@@ -206,10 +206,10 @@ public class BusAgent extends Agent{
 	}
 
 	private void checkNumberOfPassengers() {
-		AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, "Checking if everyone's here. Expecting :" + expectedNumberOfPassengers);
+		//AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, "Checking if everyone's here. Expecting :" + expectedNumberOfPassengers);
 		if(expectedNumberOfPassengers == busPassengers.size())
 		{
-			AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, "Everyone's here, leaving. ");
+			//AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, "Everyone's here, leaving. ");
 			//			if(ifHorizontal)
 			//			{
 			//				guiH.wait.release();
@@ -224,7 +224,7 @@ public class BusAgent extends Agent{
 		else
 		{
 			state = busState.Waiting;	
-			AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, "Not enough people. Expecting :" + expectedNumberOfPassengers + " Have: " + busPassengers.size());
+			//AlertLog.getInstance().logInfo(AlertTag.GENERAL_CITY, name, "Not enough people. Expecting :" + expectedNumberOfPassengers + " Have: " + busPassengers.size());
 
 		}
 		//state = busState.Leaving;
@@ -257,5 +257,9 @@ public class BusAgent extends Agent{
 	public boolean getCheckedStation()
 	{
 		return checkedStation;
+	}
+	
+	public String toString() {
+		return name;
 	}
 }

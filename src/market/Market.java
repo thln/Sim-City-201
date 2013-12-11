@@ -1,7 +1,10 @@
 package market;
 
 import java.awt.Point;
+import java.awt.Toolkit;
 import java.util.*;
+
+import javax.swing.ImageIcon;
 
 import market.interfaces.MarketRunner;
 import market.interfaces.SalesPerson;
@@ -22,6 +25,11 @@ import application.gui.animation.agentGui.MarketSalesPersonGui;
 import application.gui.animation.agentGui.MarketUPSmanGui;
 
 public class Market {
+	
+	Toolkit tk = Toolkit.getDefaultToolkit();
+	int WINDOWX = ((int) tk.getScreenSize().getWidth())/2; 
+	int WINDOWY = (((int) tk.getScreenSize().getHeight())/2)*5/6; 
+	ImageIcon market = new ImageIcon("res/market.png", "market");
 
 	//Data
 	String name;
@@ -49,7 +57,7 @@ public class Market {
 	public MockMarketRunner mockMarketRunner = new MockMarketRunner("MockMarketRunner");
 	public MockUPSman mockUPSman = new MockUPSman("MockUPSMan");
 	
-	List <MarketCustomerGui> marketGuis = new ArrayList<MarketCustomerGui>();
+	public List <MarketCustomerGui> marketCustomerGuis = new ArrayList<MarketCustomerGui>();
 
 	private BuildingPanel marketPanel;
 
@@ -93,10 +101,10 @@ public class Market {
 	//Constructor
 	public Market(String name) 	{
 		if (name == "East Market"){
-			location = new Point(530, 123);
+			location = new Point(WINDOWX*5/6+5, WINDOWY/2-market.getIconHeight()/2);
 		}
 		if (name == "West Market"){
-			location = new Point(95, 290);	
+			location = new Point(WINDOWX/6, WINDOWY*5/6);	
 		}
 		
 		this.name = name;
@@ -128,6 +136,7 @@ public class Market {
 			}
 			//Setting bank guard role to new role
 			marketRunnerRole.setPerson(person);
+			marketRunnerRole.setPresent(true);
 			if (isOpen()) {
 				salesPersonRole.msgMarketOpen();
 			}
@@ -158,9 +167,9 @@ public class Market {
 		//MarketCustomerGui rCG = (MarketCustomerGui) mCR.gui;
 		MarketCustomerGui MCG = new MarketCustomerGui(mCR);
 		mCR.setGui(MCG);
-		MCG.setHome(marketGuis.size());
+		MCG.setHome(marketCustomerGuis.size());
 		mCR.setMarket(this);
-		marketGuis.add(MCG);
+		marketCustomerGuis.add(MCG);
 		marketPanel.addGui(MCG);
 		//MCG.waitInLine();
 	}
@@ -255,7 +264,7 @@ public class Market {
 	
 	public void removeCustomer(MarketCustomerRole customerRole) {
 		marketPanel.removeGui(customerRole.getGui());
-		marketGuis.remove(customerRole.getGui());
+		marketCustomerGuis.remove(customerRole.getGui());
 	}
 	
 	public void closeBuilding(){

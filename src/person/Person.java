@@ -2,6 +2,7 @@ package person;
 
 import housing.*;
 
+import java.awt.Point;
 import java.util.*;
 import java.util.concurrent.Semaphore;
 
@@ -25,7 +26,7 @@ public abstract class Person extends Agent{
 
 	//Data
 	String name;
-	protected Semaphore atDestination;
+	protected Semaphore atCityDestination;
 	public Housing home;
 	private Timer alarmClock = new Timer();
 	private Timer hungerTimer = new Timer();
@@ -47,7 +48,7 @@ public abstract class Person extends Agent{
 	public enum HungerLevel {full, moderate, hungry};
 	protected HungerLevel hunger;
 	protected List<String> restaurantQueue;
-	int eatTime = 4;
+	int eatTime = 2;
 	protected Semaphore eating = new Semaphore(0, true);
 	//IMPORTANT ADD TO MESSAGES
 	protected Semaphore waitingAtBus = new Semaphore(0, true);
@@ -81,14 +82,14 @@ public abstract class Person extends Agent{
 		roles.add(new ChineseRestaurantCustomerRole(this, getName(), "Restaurant Customer", Phonebook.getPhonebook().getChineseRestaurant()));
 		roles.add(new AmericanRestaurantCustomerRole(this, getName(), "Restaurant Customer"));
 		nextTask = new Timer();
-		atDestination = new Semaphore(0,true);
+		atCityDestination = new Semaphore(0,true);
 		setHunger(HungerLevel.full);
 		hasFoodInFridge = false;
 
 		//add restaurants to queue 
-		restaurantQueue = new ArrayList<String>();
-		restaurantQueue.add("American Restaurant");
+		restaurantQueue = new ArrayList<String>();	
 		restaurantQueue.add("Chinese Restaurant");
+		restaurantQueue.add("American Restaurant");
 		restaurantQueue.add("Italian Restaurant");
 		//	restaurantQueue.add("Chinese Restaurant");
 		restaurantQueue.add("Seafood Restaurant");
@@ -96,12 +97,12 @@ public abstract class Person extends Agent{
 
 	public void msgAtDestination() 
 	{
-		if(atDestination.availablePermits() < 1)
+		if(atCityDestination.availablePermits() < 1)
 		{
 			getAtDestination().release();
 		}
 	}
-	
+
 	public void msgBusIsHere()
 	{
 		if(waitingAtBus.availablePermits() < 1)
@@ -109,7 +110,7 @@ public abstract class Person extends Agent{
 			getWaitingAtBus().release();
 		}
 	}
-	
+
 	public void msgAtBusStopDestination()
 	{
 		if(beingTransported.availablePermits() < 1)
@@ -126,6 +127,59 @@ public abstract class Person extends Agent{
 		currentRoleName = "Housing Resident";
 		int timeConversion = 60 * TimeManager.getSpeedOfTime();
 		print("Going to eat at home");
+		//if(getGui().getxPos() != getGui().getxHome() || getGui().getyPos() != getGui().getxHome()) {
+		getGui().DoGoHome();
+			try {
+				this.atCityDestination.acquire();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+				//
+			}
+		//}
+		
+		//person is part of an apartment
+		if(getHousing().type.toLowerCase().contains("apartment")) {
+			if(getHousing().type.toLowerCase().contains("east")) {
+				for (Role cust1 : roles) {
+					if (cust1 instanceof ApartmentResidentRole) {
+						ApartmentResidentRole ARR = (ApartmentResidentRole) cust1;
+						if (Phonebook.getPhonebook().getEastApartment().arrived(ARR)) {
+							currentRoleName = "EAST Apartment Resident";
+							ARR.setRoleActive();
+							stateChanged();
+						}
+						return;
+					}
+				}
+			} else if (getHousing().type.toLowerCase().contains("west")) {
+				for (Role cust1 : roles) {
+					if (cust1 instanceof ApartmentResidentRole) {
+						ApartmentResidentRole ARR = (ApartmentResidentRole) cust1;
+						if (Phonebook.getPhonebook().getWestApartment().arrived(ARR)) {
+							currentRoleName = "WEST Apartment Resident";
+							cust1.setRoleActive();
+							stateChanged();
+						}
+						return;
+					}
+				}
+			}		
+
+			//person is NOT part of an apartment
+		} else if(getHousing().type.toLowerCase().contains("Mansion")){  //CHANGE BACK TO MANSION
+			for (Role cust1 : roles) { 
+				if (cust1 instanceof HousingResidentRole) {
+					HousingResidentRole HRR = (HousingResidentRole) cust1;
+					if (getHousing().arrived(HRR)) {
+						currentRoleName = "Housing Resident";
+						cust1.setRoleActive();
+						stateChanged();
+					}
+					return;
+				}
+			}
+		}
+		
 		nextTask.schedule(new TimerTask() {
 			public void run() {  
 				eating.release();
@@ -146,45 +200,30 @@ public abstract class Person extends Agent{
 
 
 		if (!(this instanceof Crook))
-			Do("Becoming Bank AmericanRestaurantCustomer");
+			Do("Becoming Bank Customer");
 
 		if (home.type.equals("East Apartment"))
 			gui.walk = gui.decideForBus("East Bank");
 		else
 			gui.walk = gui.decideForBus("West Bank");
 
-		//		if (gui.walk) {
-		//			gui.walkToLocation();
-		//			try {
-		//				atDestination.acquire();
-		//			} catch (InterruptedException e) {
-		//				// TODO Auto-generated catch block
-		//				e.printStackTrace();
-		//			}
-		//		}
-	
 		if (!gui.walk){
 			print("Destination bus Stop: " + Phonebook.getPhonebook().getEastBank().getClosestBusStop().getBusStopNumber());
 			if (home.type.equals("East Apartment"))
 			{
-				goToBusStop(Phonebook.getPhonebook().getEastBank().getClosestBusStop().getBusStopNumber());
+				goToBusStop(Phonebook.getPhonebook().getEastBank().getClosestBusStop().getBusStopNumber(), Phonebook.getPhonebook().getEastBank().location);
 			}
 			else 
 			{
-				goToBusStop(Phonebook.getPhonebook().getWestBank().getClosestBusStop().getBusStopNumber());
+				goToBusStop(Phonebook.getPhonebook().getWestBank().getClosestBusStop().getBusStopNumber(), Phonebook.getPhonebook().getWestBank().location);
 			}
 		}
 
-		if (home.type.equals("East Apartment"))
-			getGui().DoGoToBank("East");
-		else
-			getGui().DoGoToBank("West");
-
 		try {
-			atDestination.acquire();
+			atCityDestination.acquire();
 			if(!gui.walk)
 			{
-				atDestination.acquire();
+				atCityDestination.acquire();
 			}
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -205,7 +244,7 @@ public abstract class Person extends Agent{
 					BCR.state = CustomerState.ready;
 				}
 				else {
-					currentRoleName = "Bank AmericanRestaurantCustomer";
+					currentRoleName = "Bank Customer";
 
 					if (money <= moneyMinThreshold)
 						desiredCash = 100;
@@ -261,7 +300,7 @@ public abstract class Person extends Agent{
 		}
 	}
 
-	protected void goToBusStop(int destinationBusStopNumber)
+	protected void goToBusStop(int destinationBusStopNumber, Point location)
 	{
 
 		print("Going to bus Stop "+ gui.getClosestBusStopNumber());
@@ -269,7 +308,7 @@ public abstract class Person extends Agent{
 		//Finish the GUI version of it
 		try 
 		{
-			atDestination.acquire();
+			atCityDestination.acquire();
 		} 
 		catch (InterruptedException e) 
 		{
@@ -287,7 +326,6 @@ public abstract class Person extends Agent{
 		{
 			e.printStackTrace();
 		}
-		print(" Blah");
 		print("Telling " + Phonebook.getPhonebook().getAllBusStops().get(gui.getClosestBusStopNumber()).getCurrentBus().getName() + " that I'm getting on to go to bus stop # " + destinationBusStopNumber);
 		Phonebook.getPhonebook().getAllBusStops().get(gui.getClosestBusStopNumber()).getCurrentBus().msgGettingOnBus(this, destinationBusStopNumber);
 		gui.setInvisible();
@@ -303,8 +341,10 @@ public abstract class Person extends Agent{
 		}
 		print("Arriving at destination Bus Stop: " + destinationBusStopNumber);
 		gui.getOffBus(destinationBusStopNumber);
+		gui.setxDestination(location.x);
+		gui.setyDestination(location.y);
 	}
-	
+
 	protected void prepareForMarket() {
 		print("Going to market as a customer");
 
@@ -325,7 +365,7 @@ public abstract class Person extends Agent{
 		}
 
 		try {
-			atDestination.acquire();
+			atCityDestination.acquire();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 
@@ -346,7 +386,7 @@ public abstract class Person extends Agent{
 					MCR.setItem("");
 					cust1.setRoleActive();
 					Phonebook.getPhonebook().getEastMarket().arrived(MCR);
-					currentRoleName = "Market AmericanRestaurantCustomer";
+					currentRoleName = "Market Customer";
 					stateChanged();
 					return;
 				}
@@ -359,7 +399,7 @@ public abstract class Person extends Agent{
 					MCR.setItem("Car");
 					cust1.setRoleActive();
 					Phonebook.getPhonebook().getEastMarket().arrived(MCR);
-					currentRoleName = "Market AmericanRestaurantCustomer";
+					currentRoleName = "Market Customer";
 					stateChanged();
 					return;
 				}
@@ -370,41 +410,59 @@ public abstract class Person extends Agent{
 	protected void prepareForRestaurant() {
 
 		String choice = restaurantQueue.get(0);
-		//Moving this choice to back of queue
+		for (int i = 0; i < restaurantQueue.size(); i++){
+			choice = restaurantQueue.get(i);
+			if (choice.equals("American Restaurant") && Phonebook.getPhonebook().getAmericanRestaurant().isOpen()){
+				break;
+			}
+			if (choice.equals("Chinese Restaurant") && Phonebook.getPhonebook().getChineseRestaurant().isOpen()){
+				break;
+			}
+			if (choice.equals("Italian Restaurant") && Phonebook.getPhonebook().getItalianRestaurant().isOpen()){
+				break;
+			}
+			if (i == restaurantQueue.size())
+				print("Bummer, no restaurants open");
+		}
+
+		print("Going to become a customer at " + choice);
+
 		restaurantQueue.remove(choice);
 		restaurantQueue.add(choice);
+
+		//Moving this choice to back of queue
 
 		gui.walk = gui.decideForBus(choice);
 
 		if (!gui.walk){
-			if (choice.contains("American")){
+			if (choice.equals("American Restaurant")){
 				print("Destination bus Stop: " + Phonebook.getPhonebook().getAmericanRestaurant().getClosestBusStop().getBusStopNumber());
-				goToBusStop(Phonebook.getPhonebook().getAmericanRestaurant().getClosestBusStop().getBusStopNumber());
+				goToBusStop(Phonebook.getPhonebook().getAmericanRestaurant().getClosestBusStop().getBusStopNumber(), Phonebook.getPhonebook().getAmericanRestaurant().location);
 			}
-			if (choice.contains("Chinese")){
+			if (choice.equals("Chinese Restaurant")){
 				print("Destination bus Stop: " + Phonebook.getPhonebook().getChineseRestaurant().getClosestBusStop().getBusStopNumber());
-				goToBusStop(Phonebook.getPhonebook().getChineseRestaurant().getClosestBusStop().getBusStopNumber());
+				goToBusStop(Phonebook.getPhonebook().getChineseRestaurant().getClosestBusStop().getBusStopNumber(), Phonebook.getPhonebook().getChineseRestaurant().location);
 			}
-//			if (choice.contains("Seafood")){
-//				print("Destination bus Stop: " + Phonebook.getPhonebook().getSeafoodRestaurant().getClosestBusStop().getBusStopNumber());
-//				goToBusStop(Phonebook.getPhonebook().getSeafoodRestaurant().getClosestBusStop().getBusStopNumber());
-//			}
-			if (choice.contains("Italian")){
+			//			if (choice.contains("Seafood")){
+			//				print("Destination bus Stop: " + Phonebook.getPhonebook().getSeafoodRestaurant().getClosestBusStop().getBusStopNumber());
+			//				goToBusStop(Phonebook.getPhonebook().getSeafoodRestaurant().getClosestBusStop().getBusStopNumber());
+			//			}
+			if (choice.equals("Italian Restaurant")){
 				print("Destination bus Stop: " + Phonebook.getPhonebook().getItalianRestaurant().getClosestBusStop().getBusStopNumber());
-				goToBusStop(Phonebook.getPhonebook().getItalianRestaurant().getClosestBusStop().getBusStopNumber());
+				goToBusStop(Phonebook.getPhonebook().getItalianRestaurant().getClosestBusStop().getBusStopNumber(), Phonebook.getPhonebook().getItalianRestaurant().location);
 			}
 		}
-		
-		try {
-			atDestination.acquire();
-			if (!gui.walk){
-				try {
-					atDestination.acquire();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
 
-				}
-			}
+		try {
+			atCityDestination.acquire();
+			//					if (!gui.walk){
+			//						try {
+			//							atCityDestination.acquire();
+			//						} catch (InterruptedException e) {
+			//							e.printStackTrace();
+			//		
+			//						}
+			//				}
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 
@@ -429,59 +487,67 @@ public abstract class Person extends Agent{
 				}
 				return;
 			}
-			//			if (cust1 instanceof AmericanRestaurantCustomerRole) {
-			//				AmericanRestaurantCustomerRole RCR = (AmericanRestaurantCustomerRole) cust1;
-			//				if (Phonebook.getPhonebook().getAmericanRestaurant().customerArrived(RCR)) {
-			//					currentRoleName = "American Restaurant Customer";
-			//					cust1.setRoleActive();
-			//					stateChanged();
-			//				}
-			//				return;
-			//			}
+			if (cust1 instanceof AmericanRestaurantCustomerRole) {
+				AmericanRestaurantCustomerRole RCR = (AmericanRestaurantCustomerRole) cust1;
+				if (Phonebook.getPhonebook().getAmericanRestaurant().customerArrived(RCR)) {
+					currentRoleName = "American Restaurant Customer";
+					cust1.setRoleActive();
+					stateChanged();
+				}
+				return;
+			}
 		}
-
 	}
 
 	protected void goToSleep() {
-		gui.walk = true;
-		
-		getGui().DoGoHome();
+
+		gui.walk = gui.decideForBus("Home");
+		if (!gui.walk){
+			if (home.type.equals("East Apartment")){
+				gui.doGoToBus(Phonebook.getPhonebook().getEastMarket().getClosestStop().getX(),
+						Phonebook.getPhonebook().getEastMarket().getClosestStop().getY());
+			}
+			else {
+				gui.doGoToBus(Phonebook.getPhonebook().getWestMarket().getClosestStop().getX(),
+						Phonebook.getPhonebook().getWestMarket().getClosestStop().getY());
+			}
+		}
+
 		try {
-			atDestination.acquire();
+			atCityDestination.acquire();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
-			//
 		}
-		
+
 		//person is part of an apartment
 		if(getHousing().type.toLowerCase().contains("apartment")) {
 			if(getHousing().type.toLowerCase().contains("east")) {
 				for (Role cust1 : roles) {
 					if (cust1 instanceof ApartmentResidentRole) {
-							ApartmentResidentRole ARR = (ApartmentResidentRole) cust1;
-							if (Phonebook.getPhonebook().getEastApartment().arrived(ARR)) {
-								currentRoleName = "EAST Apartment Resident";
-								ARR.setRoleActive();
-								stateChanged();
-							}
-							return;
+						ApartmentResidentRole ARR = (ApartmentResidentRole) cust1;
+						if (Phonebook.getPhonebook().getEastApartment().arrived(ARR)) {
+							currentRoleName = "EAST Apartment Resident";
+							ARR.setRoleActive();
+							stateChanged();
+						}
+						return;
 					}
 				}
 			} else if (getHousing().type.toLowerCase().contains("west")) {
 				for (Role cust1 : roles) {
 					if (cust1 instanceof ApartmentResidentRole) {
-							ApartmentResidentRole ARR = (ApartmentResidentRole) cust1;
-							if (Phonebook.getPhonebook().getWestApartment().arrived(ARR)) {
-								currentRoleName = "WEST Apartment Resident";
-								cust1.setRoleActive();
-								stateChanged();
-							}
-							return;
+						ApartmentResidentRole ARR = (ApartmentResidentRole) cust1;
+						if (Phonebook.getPhonebook().getWestApartment().arrived(ARR)) {
+							currentRoleName = "WEST Apartment Resident";
+							cust1.setRoleActive();
+							stateChanged();
+						}
+						return;
 					}
 				}
 			}		
-		
-		//person is NOT part of an apartment
+
+			//person is NOT part of an apartment
 		} else if(getHousing().type.toLowerCase().contains("Mansion")){  //CHANGE BACK TO MANSION
 			for (Role cust1 : roles) { 
 				if (cust1 instanceof HousingResidentRole) {
@@ -495,7 +561,7 @@ public abstract class Person extends Agent{
 				}
 			}
 		}
-		
+
 		//After arrives home
 		alarmClock.schedule(new TimerTask() {
 			public void run() {
@@ -511,11 +577,12 @@ public abstract class Person extends Agent{
 		//After arrives home
 		hungerTimer.schedule(new TimerTask() {
 			public void run() {
+				print("I'm hungry...time to eat!");
 				setHunger(HungerLevel.hungry);
 				stateChanged();
 			}
 		},
-		(3000)); //Check this math please?
+		(9000)); //Check this math please?
 	}
 
 	@Override
@@ -555,9 +622,9 @@ public abstract class Person extends Agent{
 	}
 
 	public Semaphore getAtDestination() {
-		return atDestination;
+		return atCityDestination;
 	}
-	
+
 	public Semaphore getWaitingAtBus()
 	{
 		return waitingAtBus;
@@ -567,9 +634,9 @@ public abstract class Person extends Agent{
 	{
 		return beingTransported;
 	}
-	
+
 	public void setAtDestination(Semaphore atDestination) {
-		this.atDestination = atDestination;
+		this.atCityDestination = atDestination;
 	}
 
 	public PersonGui getGui() {
