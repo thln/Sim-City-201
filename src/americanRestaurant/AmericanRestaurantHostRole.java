@@ -147,7 +147,7 @@ public class AmericanRestaurantHostRole extends Role implements AmericanRestaura
 	/**
 	 * Scheduler.  Determine what action is called for, and do it.
 	 */
-	protected boolean pickAndExecuteAnAction() {
+	public boolean pickAndExecuteAnAction() {
 
 		int i = 0;
 		while (i < NTABLES){                        //Search to see if all americanRestaurantTables are occupied

@@ -155,7 +155,7 @@ public class AmericanRestaurantCookRole extends Role {
 
 	//SCHEDULER
 
-	protected boolean pickAndExecuteAnAction() {
+	public boolean pickAndExecuteAnAction() {
 
 		if(!myRestaurant.getRevolvingStand().isStandEmpty()) {
 			takeRevolvingStandOrder();

@@ -58,7 +58,7 @@
 //
 //	//SCHEDULER
 //
-//	protected boolean pickAndExecuteAnAction() {
+//	public boolean pickAndExecuteAnAction() {
 //
 //		synchronized(desiredFood) {
 //			for (Food f1: desiredFood) {
