@@ -234,49 +234,41 @@ public abstract class VehicleGui extends CityGui {
 				!(busParkingState == VehicleState.inBusParking1H)) {
 			Phonebook.getPhonebook().busParking1H.setBusParkingBusy(true);	
 			busParkingState = VehicleState.inBusParking1H;
-//			System.err.println(this+"I'm in bus parking 1H");
 		}
 		else if (Phonebook.getPhonebook().busParking2H.getBusParking().intersects(me) &&
 				!(busParkingState == VehicleState.inBusParking2H)) {
 			Phonebook.getPhonebook().busParking2H.setBusParkingBusy(true);	
 			busParkingState = VehicleState.inBusParking2H;
-//			System.err.println(this+"I'm in bus parking 2H");
 		}	
 		else if (Phonebook.getPhonebook().busParking3H.getBusParking().intersects(me) &&
 				!(busParkingState == VehicleState.inBusParking3H)) {
 			Phonebook.getPhonebook().busParking3H.setBusParkingBusy(true);	
 			busParkingState = VehicleState.inBusParking3H;
-//			System.err.println(this+"I'm in bus parking 3H");
 		}
 		else if (Phonebook.getPhonebook().busParking4H.getBusParking().intersects(me) &&
 				!(busParkingState == VehicleState.inBusParking4H)) {
 			Phonebook.getPhonebook().busParking4H.setBusParkingBusy(true);	
 			busParkingState = VehicleState.inBusParking4H;
-//			System.err.println(this+"I'm in bus parking 4H");
 		}
 		else if (Phonebook.getPhonebook().busParking1V.getBusParking().intersects(me) &&
 				!(busParkingState == VehicleState.inBusParking1V)) {
 			Phonebook.getPhonebook().busParking1V.setBusParkingBusy(true);	
 			busParkingState = VehicleState.inBusParking1V;
-//			System.err.println(this+"I'm in bus parking 1V");
 		}
 		else if (Phonebook.getPhonebook().busParking2V.getBusParking().intersects(me) &&
 				!(busParkingState == VehicleState.inBusParking2V)) {
 			Phonebook.getPhonebook().busParking2V.setBusParkingBusy(true);	
 			busParkingState = VehicleState.inBusParking2V;
-//			System.err.println(this+"I'm in bus parking 2V");
 		}	
 		else if (Phonebook.getPhonebook().busParking3V.getBusParking().intersects(me) &&
 				!(busParkingState == VehicleState.inBusParking3V)) {
 			Phonebook.getPhonebook().busParking3V.setBusParkingBusy(true);	
 			busParkingState = VehicleState.inBusParking3V;
-//			System.err.println(this+"I'm in bus parking 3V");
 		}
 		else if (Phonebook.getPhonebook().busParking4V.getBusParking().intersects(me) &&
 				!(busParkingState == VehicleState.inBusParking4V)) {
 			Phonebook.getPhonebook().busParking4V.setBusParkingBusy(true);	
 			busParkingState = VehicleState.inBusParking4V;
-//			System.err.println(this+"I'm in bus parking 4V");
 		}
 	}
 
@@ -285,12 +277,9 @@ public abstract class VehicleGui extends CityGui {
 		if (!Phonebook.getPhonebook().busParking1H.getBusParking().intersects(me)
 				&& (busParkingState == VehicleState.inBusParking1H)) {
 			Phonebook.getPhonebook().busParking1H.setBusParkingBusy(false);	
-//			System.err.println(this+"I'm leaving bus parking 1H");
-			busParkingState = VehicleState.enroute;	
 		}
 		else if (!Phonebook.getPhonebook().busParking2H.getBusParking().intersects(me)
 				&& (busParkingState == VehicleState.inBusParking2H)) {
-//			System.err.println("Leaving h2");
 			Phonebook.getPhonebook().busParking2H.setBusParkingBusy(false);	
 			busParkingState = VehicleState.enroute;	
 		}
@@ -307,7 +296,6 @@ public abstract class VehicleGui extends CityGui {
 		else if (!Phonebook.getPhonebook().busParking1V.getBusParking().intersects(me)
 				&& (busParkingState == VehicleState.inBusParking1V)) {
 			Phonebook.getPhonebook().busParking1V.setBusParkingBusy(false);	
-//			System.err.println("Leaving v1");
 			busParkingState = VehicleState.enroute;
 		}
 		else if (!Phonebook.getPhonebook().busParking2V.getBusParking().intersects(me)

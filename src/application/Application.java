@@ -47,7 +47,7 @@ public class Application extends JPanel {
 		Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantCookRole.addMarket(Phonebook.getPhonebook().getWestMarket());
 
 		//runFullScenario();
-		runScenarioA();
+		//runScenarioA();
 		//runScenarioB();
 		//runScenarioC();
 		
@@ -84,42 +84,60 @@ public class Application extends JPanel {
 	}
 
 	public void addPerson (String name ,int money, String type,
-			String jobTitle, String jobLocation, int startT, int lunchT, int endT) {
+			String jobTitle, String jobLocation, String housing, int startT, int lunchT, int endT) {
 		//last 4 parameters specifically for worker. make empty/0 for all other types
 		//add any special parameters if new things needed for other types
 		if (type.equals("Wealthy")) 
 		{
 			//min money req?
 			Wealthy newP = new Wealthy(name, money);
-			allHousing.add(new Housing(newP, allHousing.size(), "Mansion"));
+			allHousing.add(new Housing(newP, allHousing.size(), housing));
 			newP.setHome(allHousing.get(allHousing.size() - 1));
+			animPanel.setHousingPanel(allHousing.get(allHousing.size() - 1));
 			getPopulation().add(newP);
+			PersonGui pg = new PersonGui(newP);
+			newP.setGui(pg);
+			animPanel.addGui(pg);
 			newP.startThread();
 		}
 		else if (type.equals("Crook")) 
 		{
 			Crook newP = new Crook(name, money);
-			allHousing.add(new Housing(newP, allHousing.size(), "Apartment"));
+			allHousing.add(new Housing(newP, allHousing.size(), housing));
+			animPanel.setHousingPanel(allHousing.get(allHousing.size() - 1));
 			newP.setHome(allHousing.get(allHousing.size() - 1));
 			getPopulation().add(newP);
+			PersonGui pg = new PersonGui(newP);
+			newP.setGui(pg);
+			animPanel.addGui(pg);
 			newP.startThread();
 		}
 		else if (type.equals("Worker")) 
 		{
 			Worker newP = new Worker(name, money, jobTitle, jobLocation, startT, lunchT, endT);
-			allHousing.add(new Housing(newP, allHousing.size(), "Apartment"));
+			allHousing.add(new Housing(newP, allHousing.size(), housing));
+			animPanel.setHousingPanel(allHousing.get(allHousing.size() - 1));
 			newP.setHome(allHousing.get(allHousing.size() - 1));
 			getPopulation().add(newP);
+			PersonGui pg = new PersonGui(newP);
+			newP.setGui(pg);
+			animPanel.addGui(pg);
 			newP.startThread();	
 		}
 		else if (type.equals("Deadbeat")) 
 		{
 			Deadbeat newP = new Deadbeat(name, money);
-			allHousing.add(new Housing(newP, allHousing.size(), "Park"));
+			allHousing.add(new Housing(newP, allHousing.size(), housing));
+			animPanel.setHousingPanel(allHousing.get(allHousing.size() - 1));
 			newP.setHome(allHousing.get(allHousing.size() - 1));
 			getPopulation().add(newP);
+			PersonGui pg = new PersonGui(newP);
+			newP.setGui(pg);
+			animPanel.addGui(pg);
 			newP.startThread();
 		}
+		//runHousing();
+		//runGui();
 	}
 
 	public void editPerson(int index, String name, int money){
@@ -440,22 +458,6 @@ public class Application extends JPanel {
 	}
 
 	/*
-B. Scenario: [Tests all the behaviors.]
-All workplaces fully employed.
-Day starts and all workers go to work.
-Three not-working persons eat at home, then visit all the workplaces in different orders. [one should walk; one should take a car; one should take a bus.]
-C. Scenario: [Tests cook, cashier, market interaction.]
-Each restaurant gets low on food and orders from market(s).
-Market delivers food to the open restaurant.
-Market sends invoice to cashier, who verifies and pays it.
-E. Scenario: [Shows bus-stop behavior]
-Person visits a bus stop. [as part of step 7]
-Bus arrives.
-Person gets on.
-Person gets off at destination.
-	 */
-
-	/*
 	 * All workplaces (markets, all restaurants, banks) fully employed.
 Day starts and all workers go to work.
 One not-working person eats at home, then visits all the workplaces by walking.
@@ -611,7 +613,37 @@ Roads should have appropriate complexity [e.g. intersections with stop signs and
 //		//People
 		wealthy1.startThread();
 	}
-
+/*
+	B. Scenario: [Tests all the behaviors.]
+			All workplaces fully employed.
+			Day starts and all workers go to work.
+			Three not-working persons eat at home, then visit all the workplaces in different orders. 
+			[one should walk; one should take a car; one should take a bus.]
+			*/
+	public void runScenarioB () {
+		
+	}
+	
+	/*
+	 	C. Scenario: [Tests cook, cashier, market interaction.]
+			Each restaurant gets low on food and orders from market(s).
+			Market delivers food to the open restaurant.
+			Market sends invoice to cashier, who verifies and pays it.
+	 */
+	public void runScenarioC () {
+		
+	}
+	
+	/*
+	 * E. Scenario: [Shows bus-stop behavior]
+			Person visits a bus stop. [as part of step 7]
+			Bus arrives.
+			Person gets on.
+			Person gets off at destination.
+	 */
+	public void runScenarioE () {
+		
+	}
 
 
 

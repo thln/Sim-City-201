@@ -311,7 +311,6 @@ public class BusGuiHorizontal extends VehicleGui {
 //				System.err.println(this+" I'm about to go into busy bus parking 1 true");
 				return true;
 			}
-//			System.err.println(this+" I'm about to go into busy bus parking 1 false");
 			return false;
 		}
 
@@ -319,10 +318,8 @@ public class BusGuiHorizontal extends VehicleGui {
 		if (Phonebook.getPhonebook().busParking2H.getBusParking().intersects(me)) {
 			if (Phonebook.getPhonebook().busParking2H.isBusParkingBusy() == true &&
 					!(busParkingState == VehicleState.inBusParking2H)) {
-//				System.err.println(this+" I'm about to go into busy bus parking 2 true");
 				return  true;
 			}
-//			System.err.println(this+" I'm about to go into busy bus parking 2 false");
 			return false;
 		}
 
@@ -330,10 +327,8 @@ public class BusGuiHorizontal extends VehicleGui {
 		if (Phonebook.getPhonebook().busParking3H.getBusParking().intersects(me)) {
 			if (Phonebook.getPhonebook().busParking3H.isBusParkingBusy() == true &&
 					!(busParkingState == VehicleState.inBusParking3H)) {
-//				System.err.println(this+" I'm about to go into busy bus parking 3 true");
 				return  true;
 			}
-//			System.err.println(this+" I'm about to go into busy bus parking 3 false");
 			return false;
 		}
 
@@ -341,10 +336,8 @@ public class BusGuiHorizontal extends VehicleGui {
 		if (Phonebook.getPhonebook().busParking4H.getBusParking().intersects(me)) {
 			if (Phonebook.getPhonebook().busParking4H.isBusParkingBusy() == true &&
 					!(busParkingState == VehicleState.inBusParking4H)) {
-//				System.err.println(this+" I'm about to go into busy bus parking 4 true");
 				return  true;
 			}
-//			System.err.println(this+" I'm about to go into busy bus parking 4 false");
 			return false;
 		}
 		else {
