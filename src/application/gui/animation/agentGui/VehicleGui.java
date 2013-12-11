@@ -29,19 +29,19 @@ public abstract class VehicleGui extends CityGui {
 
 	//Actions
 	public void goToEndOfTopRoad() {
-		xDestination = 600;
+		xDestination = 650;
 	}
 
 	public void goToEndOfBottomRoad() {
-		xDestination = -25;
+		xDestination = -50;
 	}
 
 	public void goToEndOfLeftRoad() {
-		yDestination = -25;
+		yDestination = -50;
 	}
 
 	public void goToEndOfRightRoad() {
-		yDestination = 325;
+		yDestination = 350;
 	}
 
 	public void changeRoads() {
@@ -101,7 +101,7 @@ public abstract class VehicleGui extends CityGui {
 		me.setLocation(xPos, yPos);
 		if (Phonebook.getPhonebook().crosswalk1.getCrosswalk().intersects(me) &&
 				!(crosswalkState == VehicleState.inCrosswalk1)) {
-			System.err.println(this + "entering crosswalk 1");
+//			System.err.println(this + "entering crosswalk 1");
 			Phonebook.getPhonebook().crosswalk1.setCrosswalkBusy(true);	
 			crosswalkState = VehicleState.inCrosswalk1;
 		}
@@ -164,10 +164,9 @@ public abstract class VehicleGui extends CityGui {
 
 	synchronized public void leftACrosswalk() {
 		me.setLocation(xPos, yPos);
-	
 		if (!Phonebook.getPhonebook().crosswalk1.getCrosswalk().intersects(me)
 				&& (crosswalkState == VehicleState.inCrosswalk1)) {
-			System.err.println(this + "leaving crosswalk 1");
+//			System.err.println(this + "leaving crosswalk 1");
 			Phonebook.getPhonebook().crosswalk1.setCrosswalkBusy(false);	
 			crosswalkState = VehicleState.enroute;	
 		}
@@ -278,7 +277,6 @@ public abstract class VehicleGui extends CityGui {
 		if (!Phonebook.getPhonebook().busParking1H.getBusParking().intersects(me)
 				&& (busParkingState == VehicleState.inBusParking1H)) {
 			Phonebook.getPhonebook().busParking1H.setBusParkingBusy(false);	
-			busParkingState = VehicleState.enroute;	
 		}
 		else if (!Phonebook.getPhonebook().busParking2H.getBusParking().intersects(me)
 				&& (busParkingState == VehicleState.inBusParking2H)) {
