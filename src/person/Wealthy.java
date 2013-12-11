@@ -78,14 +78,14 @@ public class Wealthy extends Person {
 			}
 		}
 
-			//Market Related
-			if (!hasFoodInFridge || carStatus == CarState.wantsCar) {
-					if (Phonebook.getPhonebook().getWestMarket().isOpen()){
-						prepareForMarket();
-						return true;
-				}
+		//Market Related
+		if (!hasFoodInFridge || carStatus == CarState.wantsCar) {
+			if (Phonebook.getPhonebook().getWestMarket().isOpen()){
+				prepareForMarket();
+				return true;
 			}
-	
+		}
+
 		goToSleep();
 		return false;
 	}

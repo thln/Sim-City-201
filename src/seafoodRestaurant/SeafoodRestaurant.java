@@ -23,7 +23,8 @@ public class SeafoodRestaurant implements Restaurant {
 	//Data
 	String name;
 	public boolean userClosed = false;
-	public Point location; 
+	public Point location;
+	int busStopNumber;
 
 
 	//List of Waiters
@@ -244,6 +245,11 @@ public class SeafoodRestaurant implements Restaurant {
 		seafoodRestaurantCashierRole.msgLeaveRole();
 	}
 
+	public void setClosestBusStopNumber (int n) 
+	{
+		busStopNumber = n;
+	}
+	
 	public int  getClosestStop() {
 		// TODO Auto-generated method stub
 		return 3;

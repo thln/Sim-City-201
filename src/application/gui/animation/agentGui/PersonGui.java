@@ -218,16 +218,16 @@ public void DoGoHome() {
 	command = Command.GoHome;
 }
 
-public void doGoToBus(double endX, double endY) {
-	System.out.println("Going to bus stop");
-	endStopX = (int) endX;
-	endStopY = (int) endY;
-	findStartStop();
-	xDestination = startStopX;
-	yDestination = startStopY;
-	setDefaultColor();
-	command = Command.GoToBusStop;
-}
+//public void doGoToBus(double endX, double endY) {
+//	System.out.println("Going to bus stop");
+//	endStopX = (int) endX;
+//	endStopY = (int) endY;
+//	findStartStop();
+//	xDestination = startStopX;
+//	yDestination = startStopY;
+//	setDefaultColor();
+//	command = Command.GoToBusStop;
+//}
 
 public void doGoToBusStop()
 {
@@ -431,24 +431,24 @@ public void walkToLocation(){
 			*/
 	}
 
-public void findStartStop() {
-	if (xPos <= 600/2 && yPos <= 325/2){
-		startStopX = (int) Phonebook.getPhonebook().busStops.get(0).getX();
-		startStopY = (int) Phonebook.getPhonebook().busStops.get(0).getY();
-	}
-	if (xPos >= 600/2 && yPos <= 325/2){
-		startStopX = (int) Phonebook.getPhonebook().busStops.get(0).getX();
-		startStopY = (int) Phonebook.getPhonebook().busStops.get(0).getY();
-	}
-	if (xPos <= 600/2 && yPos >= 325/2){
-		startStopX = (int) Phonebook.getPhonebook().busStops.get(0).getX();
-		startStopY = (int) Phonebook.getPhonebook().busStops.get(0).getY();
-	}
-	else {
-		startStopX = (int) Phonebook.getPhonebook().busStops.get(0).getX();
-		startStopY = (int) Phonebook.getPhonebook().busStops.get(0).getY();
-	}
-}
+//public void findStartStop() {
+//	if (xPos <= 600/2 && yPos <= 325/2){
+//		startStopX = (int) Phonebook.getPhonebook().busStops.get(0).getX();
+//		startStopY = (int) Phonebook.getPhonebook().busStops.get(0).getY();
+//	}
+//	if (xPos >= 600/2 && yPos <= 325/2){
+//		startStopX = (int) Phonebook.getPhonebook().busStops.get(0).getX();
+//		startStopY = (int) Phonebook.getPhonebook().busStops.get(0).getY();
+//	}
+//	if (xPos <= 600/2 && yPos >= 325/2){
+//		startStopX = (int) Phonebook.getPhonebook().busStops.get(0).getX();
+//		startStopY = (int) Phonebook.getPhonebook().busStops.get(0).getY();
+//	}
+//	else {
+//		startStopX = (int) Phonebook.getPhonebook().busStops.get(0).getX();
+//		startStopY = (int) Phonebook.getPhonebook().busStops.get(0).getY();
+//	}
+//}
 
 public void popToMiddle(){
 

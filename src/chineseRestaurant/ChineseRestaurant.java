@@ -34,7 +34,7 @@ public class ChineseRestaurant implements Restaurant {
 	String name;
 	public boolean userClosed = false;
 	public Point location; 
-	private Point closestStop;
+	//private Point closestStop;
 	public int busStopNumber;
 
 	//List of Customers
@@ -263,9 +263,9 @@ public class ChineseRestaurant implements Restaurant {
 		chineseRestaurantCashierRole.msgLeaveRole();
 	}
 
-	public void setClosestStop(Point point) {
-		closestStop = point;
-	}
+//	public void setClosestStop(Point point) {
+//		closestStop = point;
+//	}
 
 	public void setClosestBusStopNumber (int n) 
 	{
@@ -277,10 +277,10 @@ public class ChineseRestaurant implements Restaurant {
 		return Phonebook.getPhonebook().getAllBusStops().get(busStopNumber);
 	}
 
-	public Point getClosestStop() {
-		return closestStop;
-	}
-	
+//	public Point getClosestStop() {
+//		return closestStop;
+//	}
+//	
 	public Vector<ChineseRestaurantCustomerRole> getCustomers()
 	{
 		return customers;

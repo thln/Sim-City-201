@@ -142,7 +142,7 @@ public class Phonebook{
 	
 
 	//List of bus stops
-	public List<Point> busStops = new ArrayList<>();
+	//public List<Point> busStops = new ArrayList<>();
 	public List<BusStop> busStopsList = new ArrayList<BusStop>();
 
 	
@@ -215,7 +215,7 @@ public class Phonebook{
 		westMarket.setClosestBusStopNumber(4);
 
 		seafoodRestaurant = new SeafoodRestaurant("Seafood Restaurant");
-//		seafoodRestaurant.setClosestStop(2));
+		seafoodRestaurant.setClosestBusStopNumber(2);
 		
 		chineseRestaurant = new ChineseRestaurant("Chinese Restaurant");
 		chineseRestaurant.setClosestBusStopNumber(2);			//setting building's closest bus stop
@@ -227,7 +227,7 @@ public class Phonebook{
 		
 		cityDJ = new RadioStation();
 		americanRestaurant = new AmericanRestaurant("American Restaurant");
-		//americanRestaurant.setClosestStop(2);
+		americanRestaurant.setClosestBusStopNumber(2);    //setting building's closest bus stop
 
 		/* For future use after all the restaurants have been integrated
 		 * 
@@ -242,10 +242,10 @@ public class Phonebook{
 		restaurants.add(americanRestaurant);
 		
 		housingMaintenanceCompany = new HousingMaintenanceCompany("Housing maintenance company");
-		getBusStops().add(new Point(600/3-600/12, 325/3-325/5));
-		getBusStops().add(new Point(600*2/3+600/18, 325/3-325/10));
-		getBusStops().add(new Point(600*2/3+600/18, 325*2/3+325/12));
-		getBusStops().add(new Point(600/3-600/12, 325*2/3+325/12));
+//		getBusStops().add(new Point(600/3-600/12, 325/3-325/5));
+//		getBusStops().add(new Point(600*2/3+600/18, 325/3-325/10));
+//		getBusStops().add(new Point(600*2/3+600/18, 325*2/3+325/12));
+//		getBusStops().add(new Point(600/3-600/12, 325*2/3+325/12));
 	}
 
 	public static Phonebook getPhonebook() {
@@ -349,18 +349,18 @@ public class Phonebook{
 		return cityDJ;
 	}
 
-	public List<Point> getBusStops() {
-		return busStops;
-	}
+//	public List<Point> getBusStops() {
+//		return busStops;
+//	}
 	
 	public List<BusStop> getAllBusStops()
 	{
 		return busStopsList;
 	}
 
-	public void setBusStops(List<Point> busStops) {
-		this.busStops = busStops;
-	}
+//	public void setBusStops(List<Point> busStops) {
+//		this.busStops = busStops;
+//	}
 
 	public void closeBuilding(String type){
 		System.out.println("Closing " + type);

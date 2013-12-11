@@ -350,14 +350,22 @@ public abstract class Person extends Agent{
 			gui.walk = gui.decideForBus("West Market");
 
 		if (!gui.walk){
-			if (home.type.equals("East Apartment")){
-				gui.doGoToBus(Phonebook.getPhonebook().getEastMarket().getClosestStop().getX(),
-						Phonebook.getPhonebook().getEastMarket().getClosestStop().getY());
+			print("Destination bus Stop: " + Phonebook.getPhonebook().getEastBank().getClosestBusStop().getBusStopNumber());
+			if (home.type.equals("East Apartment"))
+			{
+				goToBusStop(Phonebook.getPhonebook().getEastMarket().getClosestBusStop().getBusStopNumber(), Phonebook.getPhonebook().getEastMarket().location);
 			}
-			else {
-				gui.doGoToBus(Phonebook.getPhonebook().getWestMarket().getClosestStop().getX(),
-						Phonebook.getPhonebook().getWestMarket().getClosestStop().getY());
+			else 
+			{
+				goToBusStop(Phonebook.getPhonebook().getWestMarket().getClosestBusStop().getBusStopNumber(), Phonebook.getPhonebook().getWestMarket().location);
 			}
+//			if (home.type.equals("East Apartment")){
+//				gui.doGoToBus(Phonebook.getPhonebook().getEastMarket().getClosestBusStop(), "East Market");
+//			}
+//			else {
+//				gui.doGoToBus(Phonebook.getPhonebook().getWestMarket().getClosestStop().getX(),
+//						Phonebook.getPhonebook().getWestMarket().getClosestStop().getY());
+//			}
 		}
 
 		try {
@@ -499,14 +507,22 @@ public abstract class Person extends Agent{
 
 		gui.walk = gui.decideForBus("Home");
 		if (!gui.walk){
-			if (home.type.equals("East Apartment")){
-				gui.doGoToBus(Phonebook.getPhonebook().getEastMarket().getClosestStop().getX(),
-						Phonebook.getPhonebook().getEastMarket().getClosestStop().getY());
+			if (home.type.equals("East Apartment"))
+			{
+				goToBusStop(Phonebook.getPhonebook().getEastMarket().getClosestBusStop().getBusStopNumber(), Phonebook.getPhonebook().getEastMarket().location);
 			}
-			else {
-				gui.doGoToBus(Phonebook.getPhonebook().getWestMarket().getClosestStop().getX(),
-						Phonebook.getPhonebook().getWestMarket().getClosestStop().getY());
+			else 
+			{
+				goToBusStop(Phonebook.getPhonebook().getWestMarket().getClosestBusStop().getBusStopNumber(), Phonebook.getPhonebook().getWestMarket().location);
 			}
+//			if (home.type.equals("East Apartment")){
+//				gui.doGoToBus(Phonebook.getPhonebook().getEastMarket()//.getClosestStop().getX(),
+//						Phonebook.getPhonebook().getEastMarket().getClosestStop().getY());
+//			}
+//			else {
+//				gui.doGoToBus(Phonebook.getPhonebook().getWestMarket().getClosestStop().getX(),
+//						Phonebook.getPhonebook().getWestMarket().getClosestStop().getY());
+//			}
 		}
 
 		try {
@@ -578,7 +594,7 @@ public abstract class Person extends Agent{
 				stateChanged();
 			}
 		},
-		(9000)); //Check this math please?
+		(12000)); //Check this math please?
 	}
 
 	@Override

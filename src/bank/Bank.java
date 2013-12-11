@@ -48,7 +48,7 @@ public class Bank {
 	//Data
 	String name;
 	public boolean userClosed = false;
-	private Point closestStop;
+	//private Point closestStop;
 	public Point location;
 	public int busStopNumber;
 
@@ -245,9 +245,9 @@ public class Bank {
 		loanOfficerRole.msgLeaveRole();
 	}
 	
-	public void setClosestStop (Point p) {
-		closestStop = p;
-	}
+//	public void setClosestStop (Point p) {
+//		closestStop = p;
+//	}
 	
 	public void setClosestBusStopNumber (int n) 
 	{
@@ -260,7 +260,7 @@ public class Bank {
 	}
 
 
-	public Point getClosestStop() {
-		return closestStop;
-	}
+//	public Point getClosestStop() {
+//		return closestStop;
+//	}
 }

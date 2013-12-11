@@ -22,7 +22,7 @@ public class ItalianRestaurant implements Restaurant{
 	String name;
 	public boolean userClosed = false;
 	public Point location; 
-	private Point closestStop;
+	//private Point closestStop;
 	public int busStopNumber;
 
 	//List of Customers
@@ -250,9 +250,9 @@ public class ItalianRestaurant implements Restaurant{
 		italianRestaurantCashierRole.msgLeaveRole();
 	}
 
-	public void setClosestStop(Point point) {
-		closestStop = point;
-	}
+//	public void setClosestStop(Point point) {
+//		closestStop = point;
+//	}
 	
 	public void setClosestBusStopNumber (int n) 
 	{
@@ -264,8 +264,8 @@ public class ItalianRestaurant implements Restaurant{
 		return Phonebook.getPhonebook().getAllBusStops().get(busStopNumber);
 	}
 	
-	public Point getClosestStop() {
-		return closestStop;
-	}
+//	public Point getClosestStop() {
+//		return closestStop;
+//	}
 }
 

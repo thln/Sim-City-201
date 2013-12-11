@@ -37,7 +37,7 @@ public class Market {
 	String name;
 	public boolean userClosed = false;
 	public Point location; 
-	private Point closestStop;
+	//private Point closestStop;
 	public int busStopNumber;
 
 	//Open and closing times
@@ -279,9 +279,9 @@ public class Market {
 	}
 
 
-	public void setClosestStop(Point point) {
-		closestStop = point;
-	}
+//	public void setClosestStop(Point point) {
+//		closestStop = point;
+//	}
 	
 	public void setClosestBusStopNumber (int n) 
 	{
@@ -293,7 +293,7 @@ public class Market {
 		return Phonebook.getPhonebook().getAllBusStops().get(busStopNumber);
 	}
 	
-	public Point getClosestStop() {
-		return closestStop;
-	}
+//	public Point getClosestStop() {
+//		return closestStop;
+//	}
 }

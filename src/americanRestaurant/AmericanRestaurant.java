@@ -20,7 +20,7 @@ public class AmericanRestaurant implements Restaurant {
 	String name;
 	public boolean userClosed = false;
 	public Point location; 
-	private Point closestStop;
+	//private Point closestStop;
 	int busStopNumber = 4;
 
 
@@ -216,5 +216,9 @@ public class AmericanRestaurant implements Restaurant {
 
 	public BusStop getClosestBusStop() {
 		return Phonebook.getPhonebook().getAllBusStops().get(busStopNumber);
+	}
+	public void setClosestBusStopNumber (int n) 
+	{
+		busStopNumber = n;
 	}
 }
