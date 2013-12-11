@@ -72,8 +72,9 @@ public class Bank {
 		bankGuardRole  = new BankGuardRole("Bank Guard");
 		loanOfficerRole =  new LoanOfficerRole("Loan Officer");
 			
-		if (name.equals("East Bank"))
+		if (name.equals("East Bank")){
 			location = new Point(315, 275);
+		}
 		else if (name.equals("West Bank"))
 			location = new Point(215, 25);
 		
@@ -196,8 +197,9 @@ public class Bank {
 	}
 	
 	public boolean isOpen(){
-		if (loanOfficerRole.getPerson() != null && bankGuardRole.getPerson() != null && bankGuardRole.getTellers().size() > 0 && !userClosed)
+		if (loanOfficerRole.getPerson() != null && bankGuardRole.getPerson() != null && bankGuardRole.getTellers().size() > 0 && !userClosed){
 			return true;
+		}
 		else 
 			return false;
 	}

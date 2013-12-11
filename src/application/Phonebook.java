@@ -110,11 +110,9 @@ public class Phonebook{
 		blocks.put(5, new Block(5, block5));
 		
 		List<Integer> block6 = new ArrayList<Integer> ();
-		block6.add(2);
 		block6.add(3);
-		block6.add(4);
 		block6.add(5);	
-		block6.add(8);
+		block6.add(9);
 		blocks.put(6, new Block(6, block6));
 		
 		List<Integer> block7 = new ArrayList<Integer> ();	
