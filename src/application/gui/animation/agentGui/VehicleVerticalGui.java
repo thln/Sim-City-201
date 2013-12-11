@@ -14,20 +14,19 @@ public class VehicleVerticalGui extends VehicleGui {
 
 	private final int leftRoadX = 168;
 	private final int rightRoadX = 395;
+	private final int offScreenTopLeftRoad = -50;
+	private final int offScreenBottomRightRoad = 350;
 
 	public VehicleVerticalGui() {
 		xPos = rightRoadX;
-		yPos = -25;
-		yDestination = 325;
+		yPos = offScreenTopLeftRoad;
+		yDestination = offScreenBottomRightRoad;
 		me.setSize(carUp.getIconWidth(), carUp.getIconHeight());
-		System.out.println("CarWidth: " + carUp.getIconWidth() + " CarHeight: " + carUp.getIconHeight());
 		//me.setSize(25, 25);
 	}
 
 	public void updatePosition() {
 		if (inBusyIntersection() || inBusyCrosswalk() || inBusyBusParking()) {
-			System.err.println(this + "State of variables intersection " + inBusyIntersection() +
-					" crosswalk = " + inBusyCrosswalk() + " and parking = " + inBusyBusParking());
 			return;
 		}
 
@@ -44,7 +43,7 @@ public class VehicleVerticalGui extends VehicleGui {
 		leftBusParking();
 
 
-		if (yPos == 325 || yPos == -25) {
+		if (yPos == offScreenBottomRightRoad || yPos == offScreenTopLeftRoad) {
 			changeRoads();
 		}
 	}
@@ -59,13 +58,13 @@ public class VehicleVerticalGui extends VehicleGui {
 	}
 
 	public void changeRoads() {
-		if (yDestination == 325) {
+		if (yDestination == offScreenBottomRightRoad) {
 			xPos = leftRoadX;
-			yDestination = -25;
+			yDestination = offScreenTopLeftRoad;
 		}
 		else {
 			xPos = rightRoadX;
-			yDestination = 325;
+			yDestination = offScreenBottomRightRoad;
 		}
 	}
 
