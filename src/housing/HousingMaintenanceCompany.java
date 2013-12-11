@@ -37,11 +37,10 @@ public class HousingMaintenanceCompany
 				Worker worker = (Worker) maintenanceWorkerRole.getPerson();
 				worker.roleFinishedWork();
 			}
-			person.getGui().DoGoHome();
+			//person.getGui().DoGoHome();
 			//Setting maintenance Worker role to new role
 			maintenanceWorkerRole.setPerson(person);
 			maintenanceWorkerRole.setGui(maintenanceWorkerGui);
-			Phonebook.getPhonebook().getEastApartment().getPanel().addGui(maintenanceWorkerGui);
 			return maintenanceWorkerRole;
 		}
 		else

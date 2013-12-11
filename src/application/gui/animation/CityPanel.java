@@ -164,8 +164,8 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		g2.drawImage(busStop.getImage(), WINDOWX*2/3+WINDOWX/18, WINDOWY*2/3+WINDOWY/18, null);
 
 		//One Way Signs
-		g2.drawImage(oneWaySignLeft.getImage(), WINDOWX/2-oneWaySignLeft.getIconWidth()/2, 220, null);
-		g2.drawImage(oneWaySignRight.getImage(), 270, 30, null);
+		g2.drawImage(oneWaySignLeft.getImage(), WINDOWX*2/3+75, WINDOWY*2/3, null);
+		g2.drawImage(oneWaySignRight.getImage(), WINDOWX/3-75, WINDOWY/6, null);
 		g2.drawImage(oneWaySignUp.getImage(), WINDOWX/3+WINDOWX/25, WINDOWY/2-oneWaySignDown.getIconHeight()/2, null);
 		g2.drawImage(oneWaySignDown.getImage(), WINDOWX*2/3-WINDOWX/20, WINDOWY/2-oneWaySignDown.getIconHeight()/2, null);
 
@@ -173,7 +173,7 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		g2.drawImage(bench.getImage(), WINDOWX/6-bench.getIconWidth()-10, WINDOWY*5/6-bench.getIconHeight(), null);
 		g2.drawImage(bench.getImage(), WINDOWX*5/6-bench.getIconWidth()-10, WINDOWY/2-bench.getIconHeight(), null);
 		g2.drawImage(bench.getImage(), WINDOWX/2, WINDOWY/6, null);
-		g2.drawImage(bench.getImage(), WINDOWX*5/6-bench.getIconWidth()-10, WINDOWY*5/6-bench.getIconHeight(), null);
+		g2.drawImage(bench.getImage(), WINDOWX*5/6-bench.getIconWidth()-10, WINDOWY*5/6, null);
 
 		//Fountain
 		g2.drawImage(fountain.getImage(), WINDOWX/2-fountain.getIconWidth(), WINDOWY*5/6-fountain.getIconHeight(), null);

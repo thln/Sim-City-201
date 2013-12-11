@@ -126,6 +126,59 @@ public abstract class Person extends Agent{
 		currentRoleName = "Housing Resident";
 		int timeConversion = 60 * TimeManager.getSpeedOfTime();
 		print("Going to eat at home");
+		//if(getGui().getxPos() != getGui().getxHome() || getGui().getyPos() != getGui().getxHome()) {
+		getGui().DoGoHome();
+			try {
+				atDestination.acquire();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+				//
+			}
+		//}
+		
+		//person is part of an apartment
+		if(getHousing().type.toLowerCase().contains("apartment")) {
+			if(getHousing().type.toLowerCase().contains("east")) {
+				for (Role cust1 : roles) {
+					if (cust1 instanceof ApartmentResidentRole) {
+						ApartmentResidentRole ARR = (ApartmentResidentRole) cust1;
+						if (Phonebook.getPhonebook().getEastApartment().arrived(ARR)) {
+							currentRoleName = "EAST Apartment Resident";
+							ARR.setRoleActive();
+							stateChanged();
+						}
+						return;
+					}
+				}
+			} else if (getHousing().type.toLowerCase().contains("west")) {
+				for (Role cust1 : roles) {
+					if (cust1 instanceof ApartmentResidentRole) {
+						ApartmentResidentRole ARR = (ApartmentResidentRole) cust1;
+						if (Phonebook.getPhonebook().getWestApartment().arrived(ARR)) {
+							currentRoleName = "WEST Apartment Resident";
+							cust1.setRoleActive();
+							stateChanged();
+						}
+						return;
+					}
+				}
+			}		
+
+			//person is NOT part of an apartment
+		} else if(getHousing().type.toLowerCase().contains("Mansion")){  //CHANGE BACK TO MANSION
+			for (Role cust1 : roles) { 
+				if (cust1 instanceof HousingResidentRole) {
+					HousingResidentRole HRR = (HousingResidentRole) cust1;
+					if (getHousing().arrived(HRR)) {
+						currentRoleName = "Housing Resident";
+						cust1.setRoleActive();
+						stateChanged();
+					}
+					return;
+				}
+			}
+		}
+		
 		nextTask.schedule(new TimerTask() {
 			public void run() {  
 				eating.release();

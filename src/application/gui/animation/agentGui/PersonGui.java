@@ -13,8 +13,8 @@ public class PersonGui extends CityGui {
 
 	Toolkit tk = Toolkit.getDefaultToolkit();
 	int WINDOWX = ((int) tk.getScreenSize().getWidth())/2; 
-	int WINDOWY = ((int) tk.getScreenSize().getHeight())/2; 
-
+	int WINDOWY = ((int) tk.getScreenSize().getHeight())/2;
+	
 	private Person agent = null;
 	private boolean isHungry = false;
 	public boolean walk = true;
@@ -338,7 +338,8 @@ public class PersonGui extends CityGui {
 			state = PersonState.enroute;
 			return true;
 		}
-		destinationBlock = Phonebook.getPhonebook().blocks.get(currentBlock).doIWalk(destinationBlock);
+		//destinationBlock = Phonebook.getPhonebook().blocks.get(currentBlock).doIWalk(destinationBlock);
+		
 		if (agent.getName() == "Tam Henry")
 			agent.print("Location =" + xPos + " , " + yPos + " and current block =" + currentBlock + "and destination = " + destinationBlock);
 		if (destinationBlock == 0){
@@ -418,15 +419,15 @@ public class PersonGui extends CityGui {
 	}
 
 	public void findStartStop() {
-		if (xPos <= 300 && yPos <= 162.5){
+		if (xPos <= WINDOWX/2 && yPos <= WINDOWY/3-WINDOWY-WINDOWY/9){
 			startStopX = (int) Phonebook.getPhonebook().busStops.get(0).getX();
 			startStopY = (int) Phonebook.getPhonebook().busStops.get(0).getY();
 		}
-		if (xPos >= 300 && yPos <= 162.5){
+		if (xPos >= WINDOWX/2 && yPos <= WINDOWY/3-WINDOWY/9){
 			startStopX = (int) Phonebook.getPhonebook().busStops.get(0).getX();
 			startStopY = (int) Phonebook.getPhonebook().busStops.get(0).getY();
 		}
-		if (xPos <= 300 && yPos >= 162.5){
+		if (xPos <= WINDOWX/2 && yPos >= WINDOWY/3-WINDOWY/9){
 			startStopX = (int) Phonebook.getPhonebook().busStops.get(0).getX();
 			startStopY = (int) Phonebook.getPhonebook().busStops.get(0).getY();
 		}
@@ -496,39 +497,76 @@ public class PersonGui extends CityGui {
 	}
 
 	public int returnCurrentBlock (int xPos, int yPos){
-		if (xPos < 160 && yPos < 70){
+		
+		if (xPos < WINDOWX/3-WINDOWY/20 && yPos < WINDOWY/3-WINDOWY/20){
 			return 1;
 		}
-		if ((xPos > 199 && xPos < 380) && yPos < 70){
+		if ((xPos > WINDOWX/3+WINDOWY/20 && xPos < WINDOWX*2/3-WINDOWY/20) && yPos < WINDOWY/3-WINDOWY/20){
 			return 2;
 		}
-		if (xPos > 419 && yPos < 70){
+		if (xPos > WINDOWX*2/3+WINDOWY/20 && yPos < WINDOWY/3-WINDOWY/20){
 			return 3;
 		}
 
-		if (xPos < 160 && (yPos > 109 && yPos < 190)){
+		if (xPos < WINDOWX/3-WINDOWY/20 && (yPos > WINDOWY/3+WINDOWY/20 && yPos < WINDOWY*2/3-WINDOWY/20)){
 			return 4;
 		}
-		if ((xPos > 199 && xPos < 380) && (yPos > 109 && yPos < 190)){
+		if ((xPos > WINDOWX/3+WINDOWY/20 && xPos < WINDOWX*2/3-WINDOWY/20) && (yPos > WINDOWY/3+WINDOWY/20 && yPos < WINDOWY*2/3-WINDOWY/20)){
 			return 5;
 		}
-		if (xPos > 419 && (yPos > 109 && yPos < 190)){
+		if (xPos > WINDOWX*2/3+WINDOWY/20 && (yPos > WINDOWY/3+WINDOWY/20 && yPos < WINDOWY*2/3-WINDOWY/20)){
 			return 6;
 		}
 
 
-		if (xPos < 160 && yPos > 229){
+		if (xPos < WINDOWX/3-WINDOWY/20 && yPos > WINDOWY*2/3+WINDOWY/20){
 			return 7;
 		}
-		if ((xPos > 199 && xPos < 380) && yPos > 229){
+		if ((xPos > WINDOWX/3+WINDOWY/20 && xPos < WINDOWX*2/3-WINDOWY/20) && yPos > WINDOWY*2/3+WINDOWY/20){
 			return 8;
 		}
-		if (xPos > 419 && yPos > 229){
+		if (xPos > WINDOWX*2/3+WINDOWY/20 && yPos > WINDOWY*2/3+WINDOWY/20){
 			return 9;
 		}
 
 		else
 			return 0;
+		
+		/*
+		if (xPos < WINDOWX/3 && yPos < WINDOWY/3){
+			return 1;
+		}
+		if ((xPos > WINDOWX/3 && xPos < WINDOWX*2/3) && yPos < WINDOWY/3){
+			return 2;
+		}
+		if (xPos > WINDOWX*2/3 && yPos < WINDOWY/3){
+			return 3;
+		}
+
+		if (xPos < WINDOWX/3 && (yPos > WINDOWX*2/3 && yPos < WINDOWX*2/3)){
+			return 4;
+		}
+		if ((xPos > WINDOWX/3 && xPos < WINDOWX*2/3) && (yPos > WINDOWX/3 && yPos < WINDOWX*2/3)){
+			return 5;
+		}
+		if (xPos > WINDOWX*2/3 && (yPos > WINDOWY/3 && yPos < WINDOWX*2/3)){
+			return 6;
+		}
+
+
+		if (xPos < WINDOWX/3 && yPos > WINDOWX*2/3){
+			return 7;
+		}
+		if ((xPos > WINDOWX/3 && xPos < WINDOWX*2/3) && yPos > WINDOWX*2/3){
+			return 8;
+		}
+		if (xPos > WINDOWX*2/3 && yPos > WINDOWX*2/3){
+			return 9;
+		}
+
+		else
+			return 0;
+			*/
 	}
 
 	public void setDefaultColor() {
