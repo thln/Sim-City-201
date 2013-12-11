@@ -11,8 +11,9 @@ import java.util.concurrent.Semaphore;
 import market.Market;
 import person.Person;
 import person.Role;
+import americanRestaurant.gui.AmericanCookGui;
 import americanRestaurant.interfaces.AmericanRestaurantCashier;
-import application.Phonebook;
+import application.gui.animation.agentGui.Gui;
 
 /**
  * Restaurant Cook Agent
@@ -25,7 +26,7 @@ public class AmericanRestaurantCookRole extends Role {
 	//Revolving Stand timer to check stand
 	Timer revolvingStandTimer = new Timer();
 
-	//CookGui cookGui;
+	AmericanCookGui cookGui;
 	List<Order> PendingOrders;
 	List<Order> FinishedOrders;
 	private List<Market> markets;
@@ -210,15 +211,15 @@ public class AmericanRestaurantCookRole extends Role {
 		f.amount--;
 		print("Cooking " + order1.choice);
 
-		//		if (!(cookGui.getXPos() == cookGui.xFridgeArea && cookGui.getXPos() == cookGui.yFridgeArea)){
-		//			cookGui.DoGoToFridge();
-		//			try {
-		//				inProcess.acquire();			
-		//			} catch (InterruptedException e) {
-		//				// TODO Auto-generated catch block
-		//				e.printStackTrace();
-		//			}
-		//		}
+		if (!(cookGui.getXPos() == cookGui.xFridgeArea && cookGui.getXPos() == cookGui.yFridgeArea)){
+			cookGui.DoGoToFridge();
+			try {
+				inProcess.acquire();			
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		order1.t1.schedule(new TimerTask() {		//Start timer
 			public void run() {	
 				FinishedOrders.add(order1);
@@ -230,15 +231,15 @@ public class AmericanRestaurantCookRole extends Role {
 	void FinishOrder (Order order1){
 		print(order1.choice + " is finished");
 		order1.waiter1.msgOrderIsReady(order1.tab, order1.choice);
-		//		if (!(cookGui.getXPos() == cookGui.xPlatingArea && cookGui.getXPos() == cookGui.yPlatingArea)){
-		//			cookGui.DoGoPlate();
-		//			try {
-		//				inProcess.acquire();			
-		//			} catch (InterruptedException e) {
-		//				// TODO Auto-generated catch block
-		//				e.printStackTrace();
-		//			}
-		//		}	
+		if (!(cookGui.getXPos() == cookGui.xPlatingArea && cookGui.getXPos() == cookGui.yPlatingArea)){
+			cookGui.DoGoPlate();
+			try {
+				inProcess.acquire();			
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}	
 		FinishedOrders.remove(order1);
 	}
 
@@ -264,9 +265,13 @@ public class AmericanRestaurantCookRole extends Role {
 		return;
 	}
 
-	//	public void setGui(CookGui g) {
-	//		cookGui = g;
-	//	}
+	public void setGui(AmericanCookGui g) {
+		cookGui = g;
+	}
+	
+	public AmericanCookGui getGui() {
+		return cookGui;
+	}
 
 	public void setCashier(AmericanRestaurantCashier myCashier) {
 	}

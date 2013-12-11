@@ -15,9 +15,11 @@ import application.gui.animation.agentGui.*;
 
 public class Apartment {
 	
+	/*
 	Toolkit tk = Toolkit.getDefaultToolkit();
 	int WINDOWX = ((int) tk.getScreenSize().getWidth())/2; 
-	int WINDOWY = (((int) tk.getScreenSize().getHeight())/2)*5/6; 
+	int WINDOWY = (((int) tk.getScreenSize().getHeight())/2)*5/6;   
+	*/
 	ImageIcon apartment = new ImageIcon("res/apartment.png", "apartment");
 	
 	private Point location;
@@ -28,9 +30,9 @@ public class Apartment {
 	public Apartment(String name) {
 		this.name = name;
 		if (name.equals("West Apartment"))
-			location = new Point(WINDOWX/6-apartment.getIconWidth(), WINDOWY/6-apartment.getIconHeight()/2);
+			location = new Point(600/6-apartment.getIconWidth(), 325/6-apartment.getIconHeight()/2);
 		if (name.equals("East Apartment"))
-			location = new Point(WINDOWX*5/6, WINDOWY*5/6-apartment.getIconHeight()/2);
+			location = new Point(600*5/6, 325*5/6-apartment.getIconHeight()/2);
 	}
 	
 	public boolean arrived(ApartmentResidentRole ARR) {

@@ -20,8 +20,8 @@ public class BusGuiVertical extends VehicleGui {
 
 	private final int stopTopY = (int) Phonebook.getPhonebook().getAllBusStops().get(1).getBusStopLocation().getY()+8;
 	private final int stopBottomY = (int) Phonebook.getPhonebook().getAllBusStops().get(4).getBusStopLocation().getY()+8;
-	private final int stopLeftX = WINDOWX/3-busUp.getIconWidth()/2;
-	private final int stopRightX = WINDOWX*2/3-busDown.getIconWidth()/2;
+	private final int stopLeftX = 600/3-busUp.getIconWidth()/2;
+	private final int stopRightX = 600*2/3-busDown.getIconWidth()/2;
 
 	private final int waitTime = 1500;
 

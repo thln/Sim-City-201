@@ -137,7 +137,10 @@ public class BankTellerRole extends Role implements BankTeller {
 	public void msgLeavingBank(int accountNum) {
 		Account correct = findMyAccount (accountNum);
 		myAccounts.remove(correct);
-		Phonebook.getPhonebook().getEastBank().getBankGuard(test).msgCustomerLeavingBank(this);
+		if (((Worker) person).myJob.jobPlace.equals("East Bank"))
+			Phonebook.getPhonebook().getEastBank().getBankGuard(test).msgCustomerLeavingBank(this);
+		else
+			Phonebook.getPhonebook().getWestBank().getBankGuard(test).msgCustomerLeavingBank(this);
 		stateChanged();
 	}
 	

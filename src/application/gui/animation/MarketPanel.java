@@ -37,22 +37,22 @@ public class MarketPanel extends BuildingPanel implements ActionListener{
 		//Clear the screen by painting a rectangle the size of the frame
 		g2.setColor(new Color(255, 255, 204));
 
-		g2.fillRect(0, 0, WINDOWX, WINDOWY );	
+		g2.fillRect(0, 0, 600, 325 );	
 		g2.setColor(Color.RED);
 
 		if(name == "name")
-			g.drawString("", WINDOWX/2, 10);
+			g.drawString("", 600/2, 10);
 		else
-			g.drawString(name, WINDOWX/2, 10);
+			g.drawString(name, 600/2, 10);
 
 		//different layouts based on their type       
 		g2.setColor(Color.BLACK);
-		g2.fillRect(0, 80, WINDOWX - 100, 10); //inventory
+		g2.fillRect(0, 80, 600 - 100, 10); //inventory
 		
-		//g2.fillRect(90, 125, WINDOWX/2+20, 10); 
+		//g2.fillRect(90, 125, 600/2+20, 10); 
 		g2.setColor(new Color(255, 176, 102));
 		g2.fillRect(100, 170, 310, 20); //table bottom
-		g2.drawString("Inventory",WINDOWX/2, 60 );
+		g2.drawString("Inventory",600/2, 60 );
 		
 		g2.setColor(new Color(153, 76, 0));//table top
 		int [] x = {50, 100, 400, 450};

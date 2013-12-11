@@ -9,19 +9,17 @@ import americanRestaurant.AmericanRestaurantCookRole;
 import application.gui.animation.RestaurantPanel;
 import application.gui.animation.RestaurantPanel.guiCookState;
 import application.gui.animation.agentGui.Gui;
-import application.gui.animation.agentGui.RestaurantGui;
 
 public class AmericanCookGui implements Gui {
 
 	boolean isPresent;
 	private AmericanRestaurantCookRole agent = null;
-	RestaurantGui gui;
 
 	private int xPos, yPos;
 	private int xSize = 20, ySize = 20;
 	private int xDestination, yDestination;
 	RestaurantPanel panel1;
-	ImageIcon ingredientsImage = new ImageIcon ("Images/ingredients.png");
+	ImageIcon ingredientsImage = new ImageIcon ("res/ingredients.png");
 	public static final int xPlatingArea = 400;
 	public static final int yPlatingArea = 300;
 	public static final int xCookingArea = 400;
@@ -37,7 +35,6 @@ public class AmericanCookGui implements Gui {
 		xPos = xPlatingArea;
 		yPos = yPlatingArea;
 		agent = c;
-		this.gui = gui;
 		isPresent = true;
 	}
 

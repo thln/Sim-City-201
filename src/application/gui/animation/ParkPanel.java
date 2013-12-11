@@ -34,23 +34,23 @@ public class ParkPanel extends BuildingPanel implements ActionListener{
 
 		//Clear the screen by painting a rectangle the size of the frame
 		//g2.setColor(new Color(215, 255, 204));
-		g2.drawImage(parkImage, 0,0, WINDOWX, WINDOWY, null);
-		//g2.fillRect(0, 0, WINDOWX, WINDOWY );	
+		g2.drawImage(parkImage, 0,0, 600, 325, null);
+		//g2.fillRect(0, 0, 600, 325 );	
 		
 		g2.setColor(Color.RED);
 
 		if(name == "name")
-			g.drawString("", WINDOWX/2, 10);
+			g.drawString("", 600/2, 10);
 		else
-			g.drawString(name, WINDOWX/2, 10);
+			g.drawString(name, 600/2, 10);
 		
 		//different layouts based on their type       
 		/*g2.setColor(Color.BLACK);
-		g2.drawString("Inventory",WINDOWX/2, 60 );
-		g2.fillRect(0, 80, WINDOWX - 100, 10); //inventory
-		g2.fillRect(90, 125, WINDOWX/2+20, 10); //table top
+		g2.drawString("Inventory",600/2, 60 );
+		g2.fillRect(0, 80, 600 - 100, 10); //inventory
+		g2.fillRect(90, 125, 600/2+20, 10); //table top
 		g2.setColor(Color.CYAN);
-		g2.fillRect(100, 135, WINDOWX/2, 40); //table bottom*/
+		g2.fillRect(100, 135, 600/2, 40); //table bottom*/
 
 		synchronized(guis){
 			for(Gui gui : guis) {

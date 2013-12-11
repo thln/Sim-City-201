@@ -47,10 +47,10 @@ public class Application extends JPanel {
 		Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantCookRole.addMarket(Phonebook.getPhonebook().getWestMarket());
 
 		//runFullScenario();
-		//runScenarioA();
+		runScenarioA();
 		//runScenarioB();
 		//runScenarioC();
-		
+
 		//Buses
 		BusAgent horizontal = new BusAgent("Horizontal");
 		BusAgent vertical = new BusAgent("Vertical");
@@ -209,7 +209,7 @@ public class Application extends JPanel {
 
 
 
-		//Market Workers
+		//East Market Workers
 		//SHIFT 1
 		Worker market1d = new Worker("Derrick", 10, "marketRunner", "East Market", 0, 600, 13);
 		Worker market1e = new Worker("Erin", 1000, "salesPerson", "East Market", 0, 600, 13);
@@ -218,7 +218,19 @@ public class Application extends JPanel {
 		//SHIFT 2
 		Worker market2d = new Worker("Daniel", 100, "marketRunner", "East Market", 12, 400, 1);
 		Worker market2e = new Worker("Elle", 200, "salesPerson", "East Market", 12, 400, 1);
-		Worker market2f = new Worker("Frenchy", 100, "UPSman", "East Market", 12, 400, 1);        
+		Worker market2f = new Worker("Frenchy", 100, "UPSman", "East Market", 12, 400, 1);    
+
+		//West Market Workers
+		//SHIFT 1
+		Worker market3d = new Worker("Dan", 10, "marketRunner", "West Market", 0, 600, 13);
+		Worker market3e = new Worker("Elpha", 1000, "salesPerson", "West Market", 0, 600, 13);
+		Worker market3f = new Worker("Fitz", 10, "UPSman", "West Market", 0, 600, 13);        
+
+		//SHIFT 2
+		Worker market4d = new Worker("Diego", 100, "marketRunner", "West Market", 12, 400, 1);
+		Worker market4e = new Worker("Elmo", 200, "salesPerson", "West Market", 12, 400, 1);
+		Worker market4f = new Worker("Francine", 100, "UPSman", "West Market", 12, 400, 1);        
+
 
 		//Chinese Restaurant Workers
 		//SHIFT 1
@@ -275,6 +287,12 @@ public class Application extends JPanel {
 		market1e.setHome(allHousing.get(allHousing.size() - 1));
 		allHousing.add(new Housing(market1f, allHousing.size(), "West Apartment"));
 		market1f.setHome(allHousing.get(allHousing.size() - 1));
+		allHousing.add(new Housing(market4d, allHousing.size(), "West Apartment"));
+		market4d.setHome(allHousing.get(allHousing.size() - 1));
+		allHousing.add(new Housing(market4e, allHousing.size(), "East Apartment"));
+		market4e.setHome(allHousing.get(allHousing.size() - 1));
+		allHousing.add(new Housing(market4f, allHousing.size(), "West Apartment"));
+		market4f.setHome(allHousing.get(allHousing.size() - 1));
 		allHousing.add(new Housing(rest1g, allHousing.size(), "East Apartment"));
 		rest1g.setHome(allHousing.get(allHousing.size() - 1));
 		allHousing.add(new Housing(rest1h, allHousing.size(), "West Apartment"));
@@ -319,6 +337,12 @@ public class Application extends JPanel {
 		market2e.setHome(allHousing.get(allHousing.size() - 1));
 		allHousing.add(new Housing(market2f, allHousing.size(), "East Apartment"));
 		market2f.setHome(allHousing.get(allHousing.size() - 1));
+		allHousing.add(new Housing(market3d, allHousing.size(), "East Apartment"));
+		market3d.setHome(allHousing.get(allHousing.size() - 1));
+		allHousing.add(new Housing(market3e, allHousing.size(), "West Apartment"));
+		market3e.setHome(allHousing.get(allHousing.size() - 1));
+		allHousing.add(new Housing(market3f, allHousing.size(), "East Apartment"));
+		market3f.setHome(allHousing.get(allHousing.size() - 1));
 		allHousing.add(new Housing(rest2g, allHousing.size(), "West Apartment"));
 		rest2g.setHome(allHousing.get(allHousing.size() - 1));
 		allHousing.add(new Housing(rest2h, allHousing.size(), "East Apartment"));
@@ -403,10 +427,10 @@ public class Application extends JPanel {
 		getPopulation().add(wealthy3);
 		getPopulation().add(wealthy4);
 		getPopulation().add(crook1);
-		
+
 		runHousing();
 		runGui();
-		
+
 		//Starting Threads
 		//Shift 1
 		bank1a.startThread();
@@ -429,6 +453,14 @@ public class Application extends JPanel {
 		rest3i.startThread();
 		rest3j.startThread();
 		rest3k.startThread();
+
+		market3d.startThread();
+		market3e.startThread();
+		market3f.startThread();
+
+		market4d.startThread();
+		market4e.startThread();
+		market4f.startThread();
 
 		//Shift 2
 		bank2a.startThread();
@@ -478,12 +510,12 @@ Roads should have appropriate complexity [e.g. intersections with stop signs and
 		Worker bank3b = new Worker("Bailey", 100, "loanOfficer", "West Bank", 0, 6, 23);
 		Worker bank3c = new Worker("Corey", 100, "bankGuard", "West Bank", 0, 6, 23);
 
-		//Market Workers
+		//West Market Workers
 		//SHIFT 1
-		Worker market1d = new Worker("Derrick", 10, "marketRunner", "East Market", 0, 600, 23);
-		Worker market1e = new Worker("Erin", 1000, "salesPerson", "East Market", 0, 600, 23);
-		Worker market1f = new Worker("Fred", 10, "UPSman", "East Market", 0, 600, 23);        
-
+		Worker market3d = new Worker("Dan", 10, "marketRunner", "West Market", 0, 600, 13);
+		Worker market3e = new Worker("Elpha", 1000, "salesPerson", "West Market", 0, 600, 13);
+		Worker market3f = new Worker("Fitz", 10, "UPSman", "West Market", 0, 600, 13);        
+		
 		//Chinese Restaurant Workers
 		//SHIFT 1
 		Worker rest1h = new Worker("Henry", 100, "host", "Chinese Restaurant", 0, 1800, 23);
@@ -491,14 +523,14 @@ Roads should have appropriate complexity [e.g. intersections with stop signs and
 		Worker rest1i = new Worker("Iris", 100, "cook", "Chinese Restaurant", 0, 1800, 23);
 		Worker rest1j = new Worker("Josh", 100, "waiter", "Chinese Restaurant", 0, 1800, 23);
 		Worker rest1k = new Worker("Kristi", 100, "altWaiter", "Chinese Restaurant", 0, 1800, 23);
-	
+
 		//American Restaurant Workers
 		//SHIFT 1 (make sure to revert work start times)
-		Worker rest3h = new Worker("Holly", 100, "host", "American Restaurant", 0, 1800, 23);
-		Worker rest3g = new Worker("Gerald", 100, "cashier", "American Restaurant", 0, 1800, 23);        
-		Worker rest3i = new Worker("India", 100, "cook", "American Restaurant", 0, 1800, 23);
-		Worker rest3j = new Worker("Jan", 100, "waiter", "American Restaurant", 0, 1800, 23);
-		Worker rest3k = new Worker("Kris", 100, "altWaiter", "American Restaurant", 0, 1800, 23);
+		Worker rest3h = new Worker("Holly", 100, "host", "American Restaurant", 0, 1800, 12);
+		Worker rest3g = new Worker("Gerald", 100, "cashier", "American Restaurant", 0, 1800, 12);        
+		Worker rest3i = new Worker("India", 100, "cook", "American Restaurant", 0, 1800, 12);
+		Worker rest3j = new Worker("Jan", 100, "waiter", "American Restaurant", 0, 1800, 12);
+		Worker rest3k = new Worker("Kris", 100, "altWaiter", "American Restaurant", 0, 1800, 12);
 
 		//!!!!Important -- Need to initialize setters 
 		//ex. waiter.setHost, waiter.setCook, waiter.setHost, 
@@ -506,55 +538,55 @@ Roads should have appropriate complexity [e.g. intersections with stop signs and
 
 		//Standard Wealthy Person
 		Wealthy wealthy1 = new Wealthy("Tam Henry", 300);
-	
+
 		//Adding housing
 
 		//Shift 1
-		allHousing.add(new Housing(bank1a, allHousing.size(), "East Apartment"));
+		allHousing.add(new Housing(bank1a, allHousing.size(), "West Apartment"));
 		bank1a.setHome(allHousing.get(allHousing.size() - 1));
 		allHousing.add(new Housing(bank1b, allHousing.size(), "West Apartment"));
 		bank1b.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(bank1c, allHousing.size(), "East Apartment"));
+		allHousing.add(new Housing(bank1c, allHousing.size(), "West Apartment"));
 		bank1c.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(market1d, allHousing.size(), "West Apartment"));
-		market1d.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(market1e, allHousing.size(), "East Apartment"));
-		market1e.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(market1f, allHousing.size(), "West Apartment"));
-		market1f.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(rest1g, allHousing.size(), "East Apartment"));
+		allHousing.add(new Housing(market3d, allHousing.size(), "West Apartment"));
+		market3d.setHome(allHousing.get(allHousing.size() - 1));
+		allHousing.add(new Housing(market3e, allHousing.size(), "West Apartment"));
+		market3e.setHome(allHousing.get(allHousing.size() - 1));
+		allHousing.add(new Housing(market3f, allHousing.size(), "West Apartment"));
+		market3f.setHome(allHousing.get(allHousing.size() - 1));
+		allHousing.add(new Housing(rest1g, allHousing.size(), "West Apartment"));
 		rest1g.setHome(allHousing.get(allHousing.size() - 1));
 		allHousing.add(new Housing(rest1h, allHousing.size(), "West Apartment"));
 		rest1h.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(rest1i, allHousing.size(), "East Apartment"));
+		allHousing.add(new Housing(rest1i, allHousing.size(), "West Apartment"));
 		rest1i.setHome(allHousing.get(allHousing.size() - 1));
 		allHousing.add(new Housing(rest1j, allHousing.size(), "West Apartment"));
 		rest1j.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(rest1k, allHousing.size(), "East Apartment"));
+		allHousing.add(new Housing(rest1k, allHousing.size(), "West Apartment"));
 		rest1k.setHome(allHousing.get(allHousing.size() - 1));
 
-		allHousing.add(new Housing(bank3a, allHousing.size(), "East Apartment"));
+		allHousing.add(new Housing(bank3a, allHousing.size(), "West Apartment"));
 		bank3a.setHome(allHousing.get(allHousing.size() - 1));
 		allHousing.add(new Housing(bank3b, allHousing.size(), "West Apartment"));
 		bank3b.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(bank3c, allHousing.size(), "East Apartment"));
+		allHousing.add(new Housing(bank3c, allHousing.size(), "West Apartment"));
 		bank3c.setHome(allHousing.get(allHousing.size() - 1));
 
-		allHousing.add(new Housing(rest3g, allHousing.size(), "East Apartment"));
+		allHousing.add(new Housing(rest3g, allHousing.size(), "West Apartment"));
 		rest3g.setHome(allHousing.get(allHousing.size() - 1));
 		allHousing.add(new Housing(rest3h, allHousing.size(), "West Apartment"));
 		rest3h.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(rest3i, allHousing.size(), "East Apartment"));
+		allHousing.add(new Housing(rest3i, allHousing.size(), "West Apartment"));
 		rest3i.setHome(allHousing.get(allHousing.size() - 1));
 		allHousing.add(new Housing(rest3j, allHousing.size(), "West Apartment"));
 		rest3j.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(rest3k, allHousing.size(), "East Apartment"));
+		allHousing.add(new Housing(rest3k, allHousing.size(), "West Apartment"));
 		rest3k.setHome(allHousing.get(allHousing.size() - 1));
 
 		//People
 		allHousing.add(new Housing(wealthy1, allHousing.size(), "Mansion"));
 		wealthy1.setHome(allHousing.get(allHousing.size() - 1));
-	
+
 		Phonebook.getPhonebook().setHousingList(allHousing);
 
 
@@ -563,9 +595,9 @@ Roads should have appropriate complexity [e.g. intersections with stop signs and
 		getPopulation().add(bank1a);
 		getPopulation().add(bank1b);
 		getPopulation().add(bank1c);
-		getPopulation().add(market1d);
-		getPopulation().add(market1e);
-		getPopulation().add(market1f);
+		getPopulation().add(market3d);
+		getPopulation().add(market3e);
+		getPopulation().add(market3f);
 		getPopulation().add(rest1g);
 		getPopulation().add(rest1h);
 		getPopulation().add(rest1i);
@@ -583,18 +615,18 @@ Roads should have appropriate complexity [e.g. intersections with stop signs and
 
 		//People
 		getPopulation().add(wealthy1);
-		
+
 		runHousing();
 		runGui();
-		
+
 		//Starting Threads
 		//Shift 1
 		bank1a.startThread();
 		bank1b.startThread();	
 		bank1c.startThread();
-		market1d.startThread();
-		market1e.startThread();
-		market1f.startThread();
+		market3d.startThread();
+		market3e.startThread();
+		market3f.startThread();
 		rest1g.startThread();
 		rest1h.startThread();
 		rest1i.startThread();
@@ -603,27 +635,28 @@ Roads should have appropriate complexity [e.g. intersections with stop signs and
 		bank3a.startThread();
 		bank3b.startThread();	
 		bank3c.startThread();
-
+		/*
 		rest3g.startThread();
 		rest3h.startThread();
 		rest3i.startThread();
 		rest3j.startThread();
 		rest3k.startThread();
-//
-//		//People
+		 */
+		//
+		//		//People
 		wealthy1.startThread();
 	}
-/*
+	/*
 	B. Scenario: [Tests all the behaviors.]
 			All workplaces fully employed.
 			Day starts and all workers go to work.
 			Three not-working persons eat at home, then visit all the workplaces in different orders. 
 			[one should walk; one should take a car; one should take a bus.]
-			*/
+	 */
 	public void runScenarioB () {
-		
+
 	}
-	
+
 	/*
 	 	C. Scenario: [Tests cook, cashier, market interaction.]
 			Each restaurant gets low on food and orders from market(s).
@@ -631,9 +664,9 @@ Roads should have appropriate complexity [e.g. intersections with stop signs and
 			Market sends invoice to cashier, who verifies and pays it.
 	 */
 	public void runScenarioC () {
-		
+
 	}
-	
+
 	/*
 	 * E. Scenario: [Shows bus-stop behavior]
 			Person visits a bus stop. [as part of step 7]
@@ -641,13 +674,17 @@ Roads should have appropriate complexity [e.g. intersections with stop signs and
 			Person gets on.
 			Person gets off at destination.
 	 */
+	
 	public void runScenarioD () {
 		
 	}
 	
+	public void runScenarioE () {
+
+	}
+	
 	public void stopRunningScenario ()
 	{
-		
 	}
 
 

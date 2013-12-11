@@ -11,9 +11,11 @@ import application.Phonebook;
 
 public class PersonGui extends CityGui {
 
+	/*
 	Toolkit tk = Toolkit.getDefaultToolkit();
 	int WINDOWX = ((int) tk.getScreenSize().getWidth())/2; 
-	int WINDOWY = ((int) tk.getScreenSize().getHeight())/2;
+	int WINDOWY = (((int) tk.getScreenSize().getHeight())/2)*5/6;   
+	*/
 	
 	private Person agent = null;
 	private boolean isHungry = false;
@@ -65,21 +67,21 @@ public class PersonGui extends CityGui {
 	public PersonGui(Person p) {
 		this.agent = p;
 		if(p.home.type.equals("West Apartment")) {
-			xHome = WINDOWX/6-WINDOWX/12;
-			yHome = WINDOWY/6-WINDOWY/20;			
+			xHome = 50;
+			yHome = 50;			
 
 		}
 		if(p.home.type.equals("East Apartment")) {
-			xHome = WINDOWX*5/6;
-			yHome = WINDOWY*5/6;			
+			xHome = 520;
+			yHome = 260;			
 		}
 		if (p.home.type.equals("Mansion")){
-			xHome = WINDOWX/6-WINDOWX/12;
-			yHome = WINDOWX/2;
+			xHome = 30;
+			yHome = 150;
 		}
 
-		setxPos(xHome-20);
-		setyPos(yHome-20);
+		setxPos(xHome);
+		setyPos(yHome);
 		setxDestination(xHome);
 		setyDestination(yHome);
 		
@@ -216,16 +218,16 @@ public void DoGoHome() {
 	command = Command.GoHome;
 }
 
-public void doGoToBus(double endX, double endY) {
-	System.out.println("Going to bus stop");
-	endStopX = (int) endX;
-	endStopY = (int) endY;
-	findStartStop();
-	xDestination = startStopX;
-	yDestination = startStopY;
-	setDefaultColor();
-	command = Command.GoToBusStop;
-}
+//public void doGoToBus(double endX, double endY) {
+//	System.out.println("Going to bus stop");
+//	endStopX = (int) endX;
+//	endStopY = (int) endY;
+//	findStartStop();
+//	xDestination = startStopX;
+//	yDestination = startStopY;
+//	setDefaultColor();
+//	command = Command.GoToBusStop;
+//}
 
 public void doGoToBusStop()
 {
@@ -360,34 +362,34 @@ public void walkToLocation(){
 
 	public int returnCurrentBlock (int xPos, int yPos){
 		
-		if (xPos < WINDOWX/3-WINDOWY/20 && yPos < WINDOWY/3-WINDOWY/20){
+		if (xPos < 600/3-325/20 && yPos < 325/3-325/20){
 			return 1;
 		}
-		if ((xPos > WINDOWX/3+WINDOWY/20 && xPos < WINDOWX*2/3-WINDOWY/20) && yPos < WINDOWY/3-WINDOWY/20){
+		if ((xPos > 600/3+325/20 && xPos < 600*2/3-325/20) && yPos < 325/3-325/20){
 			return 2;
 		}
-		if (xPos > WINDOWX*2/3+WINDOWY/20 && yPos < WINDOWY/3-WINDOWY/20){
+		if (xPos > 600*2/3+325/20 && yPos < 325/3-325/20){
 			return 3;
 		}
 
-		if (xPos < WINDOWX/3-WINDOWY/20 && (yPos > WINDOWY/3+WINDOWY/20 && yPos < WINDOWY*2/3-WINDOWY/20)){
+		if (xPos < 600/3-325/20 && (yPos > 325/3+325/20 && yPos < 325*2/3-325/20)){
 			return 4;
 		}
-		if ((xPos > WINDOWX/3+WINDOWY/20 && xPos < WINDOWX*2/3-WINDOWY/20) && (yPos > WINDOWY/3+WINDOWY/20 && yPos < WINDOWY*2/3-WINDOWY/20)){
+		if ((xPos > 600/3+325/20 && xPos < 600*2/3-325/20) && (yPos > 325/3+325/20 && yPos < 325*2/3-325/20)){
 			return 5;
 		}
-		if (xPos > WINDOWX*2/3+WINDOWY/20 && (yPos > WINDOWY/3+WINDOWY/20 && yPos < WINDOWY*2/3-WINDOWY/20)){
+		if (xPos > 600*2/3+325/20 && (yPos > 325/3+325/20 && yPos < 325*2/3-325/20)){
 			return 6;
 		}
 
 
-		if (xPos < WINDOWX/3-WINDOWY/20 && yPos > WINDOWY*2/3+WINDOWY/20){
+		if (xPos < 600/3-325/20 && yPos > 325*2/3+325/20){
 			return 7;
 		}
-		if ((xPos > WINDOWX/3+WINDOWY/20 && xPos < WINDOWX*2/3-WINDOWY/20) && yPos > WINDOWY*2/3+WINDOWY/20){
+		if ((xPos > 600/3+325/20 && xPos < 600*2/3-325/20) && yPos > 325*2/3+325/20){
 			return 8;
 		}
-		if (xPos > WINDOWX*2/3+WINDOWY/20 && yPos > WINDOWY*2/3+WINDOWY/20){
+		if (xPos > 600*2/3+325/20 && yPos > 325*2/3+325/20){
 			return 9;
 		}
 
@@ -395,32 +397,32 @@ public void walkToLocation(){
 			return 0;
 		
 		/*
-		if (xPos < WINDOWX/3 && yPos < WINDOWY/3){
+		if (xPos < 600/3 && yPos < 325/3){
 			return 1;
 		}
-		if ((xPos > WINDOWX/3 && xPos < WINDOWX*2/3) && yPos < WINDOWY/3){
+		if ((xPos > 600/3 && xPos < 600*2/3) && yPos < 325/3){
 			return 2;
 		}
-		if (xPos > WINDOWX*2/3 && yPos < WINDOWY/3){
+		if (xPos > 600*2/3 && yPos < 325/3){
 			return 3;
 		}
 
-		if (xPos < WINDOWX/3 && (yPos > WINDOWX*2/3 && yPos < WINDOWX*2/3)){
+		if (xPos < 600/3 && (yPos > 600*2/3 && yPos < 600*2/3)){
 			return 4;
 		}
-		if ((xPos > WINDOWX/3 && xPos < WINDOWX*2/3) && (yPos > WINDOWX/3 && yPos < WINDOWX*2/3)){
+		if ((xPos > 600/3 && xPos < 600*2/3) && (yPos > 600/3 && yPos < 600*2/3)){
 			return 5;
 		}
-		if (xPos > WINDOWX*2/3 && (yPos > WINDOWY/3 && yPos < WINDOWX*2/3)){
+		if (xPos > 600*2/3 && (yPos > 325/3 && yPos < 600*2/3)){
 			return 6;
 		}
-		if (xPos < WINDOWX/3 && yPos > WINDOWX*2/3){
+		if (xPos < 600/3 && yPos > 600*2/3){
 			return 7;
 		}
-		if ((xPos > WINDOWX/3 && xPos < WINDOWX*2/3) && yPos > WINDOWX*2/3){
+		if ((xPos > 600/3 && xPos < 600*2/3) && yPos > 600*2/3){
 			return 8;
 		}
-		if (xPos > WINDOWX*2/3 && yPos > WINDOWX*2/3){
+		if (xPos > 600*2/3 && yPos > 600*2/3){
 			return 9;
 		}
 
@@ -429,24 +431,24 @@ public void walkToLocation(){
 			*/
 	}
 
-public void findStartStop() {
-	if (xPos <= WINDOWX/2 && yPos <= WINDOWY/2){
-		startStopX = (int) Phonebook.getPhonebook().busStops.get(0).getX();
-		startStopY = (int) Phonebook.getPhonebook().busStops.get(0).getY();
-	}
-	if (xPos >= WINDOWX/2 && yPos <= WINDOWY/2){
-		startStopX = (int) Phonebook.getPhonebook().busStops.get(0).getX();
-		startStopY = (int) Phonebook.getPhonebook().busStops.get(0).getY();
-	}
-	if (xPos <= WINDOWX/2 && yPos >= WINDOWY/2){
-		startStopX = (int) Phonebook.getPhonebook().busStops.get(0).getX();
-		startStopY = (int) Phonebook.getPhonebook().busStops.get(0).getY();
-	}
-	else {
-		startStopX = (int) Phonebook.getPhonebook().busStops.get(0).getX();
-		startStopY = (int) Phonebook.getPhonebook().busStops.get(0).getY();
-	}
-}
+//public void findStartStop() {
+//	if (xPos <= 600/2 && yPos <= 325/2){
+//		startStopX = (int) Phonebook.getPhonebook().busStops.get(0).getX();
+//		startStopY = (int) Phonebook.getPhonebook().busStops.get(0).getY();
+//	}
+//	if (xPos >= 600/2 && yPos <= 325/2){
+//		startStopX = (int) Phonebook.getPhonebook().busStops.get(0).getX();
+//		startStopY = (int) Phonebook.getPhonebook().busStops.get(0).getY();
+//	}
+//	if (xPos <= 600/2 && yPos >= 325/2){
+//		startStopX = (int) Phonebook.getPhonebook().busStops.get(0).getX();
+//		startStopY = (int) Phonebook.getPhonebook().busStops.get(0).getY();
+//	}
+//	else {
+//		startStopX = (int) Phonebook.getPhonebook().busStops.get(0).getX();
+//		startStopY = (int) Phonebook.getPhonebook().busStops.get(0).getY();
+//	}
+//}
 
 public void popToMiddle(){
 

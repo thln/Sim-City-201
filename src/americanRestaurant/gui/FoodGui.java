@@ -31,13 +31,13 @@ public class FoodGui implements Gui{
 		isPresent = true;
 		
 		if (choice == "Steak")
-			foodImage = new ImageIcon("Images/steak.png");
+			foodImage = new ImageIcon("res/steak.png");
 		if (choice == "Chicken")
-			foodImage = new ImageIcon("Images/chicken.jpg");
+			foodImage = new ImageIcon("res/chicken.jpg");
 		if (choice == "Salad")
-			foodImage = new ImageIcon("Images/salad.gif");
+			foodImage = new ImageIcon("res/salad.gif");
 		if (choice == "Pizza")
-			foodImage = new ImageIcon("Images/pizza.jpeg");
+			foodImage = new ImageIcon("res/pizza.jpeg");
 	}
 
 	public void updatePosition() {

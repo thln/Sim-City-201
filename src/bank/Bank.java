@@ -39,14 +39,16 @@ import application.gui.trace.AlertTag;
 
 public class Bank {
 	
+	/*
 	Toolkit tk = Toolkit.getDefaultToolkit();
 	int WINDOWX = ((int) tk.getScreenSize().getWidth())/2; 
-	int WINDOWY = (((int) tk.getScreenSize().getHeight())/2)*5/6;  
+	int WINDOWY = (((int) tk.getScreenSize().getHeight())/2)*5/6;   
+	*/  
 
 	//Data
 	String name;
 	public boolean userClosed = false;
-	private Point closestStop;
+	//private Point closestStop;
 	public Point location;
 	public int busStopNumber;
 
@@ -81,9 +83,9 @@ public class Bank {
 		loanOfficerRole =  new LoanOfficerRole("Loan Officer");
 			
 		if (name.equals("East Bank"))
-			location = new Point(WINDOWX/2, WINDOWY-bank.getIconHeight()-20);
+			location = new Point(600/2, 325-bank.getIconHeight()-20);
 		else if (name.equals("West Bank"))
-			location = new Point(WINDOWX/2 - bank.getIconWidth(), WINDOWY/6-bank.getIconHeight()/2);
+			location = new Point(600/2 - bank.getIconWidth(), 325/6-bank.getIconHeight()/2);
 		
 		this.name = name;
 		vault = 10000;
@@ -243,9 +245,9 @@ public class Bank {
 		loanOfficerRole.msgLeaveRole();
 	}
 	
-	public void setClosestStop (Point p) {
-		closestStop = p;
-	}
+//	public void setClosestStop (Point p) {
+//		closestStop = p;
+//	}
 	
 	public void setClosestBusStopNumber (int n) 
 	{
@@ -258,7 +260,7 @@ public class Bank {
 	}
 
 
-	public Point getClosestStop() {
-		return closestStop;
-	}
+//	public Point getClosestStop() {
+//		return closestStop;
+//	}
 }

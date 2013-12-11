@@ -358,15 +358,15 @@ public class ChineseRestaurantCookRole extends Role implements ChineseRestaurant
 	}
 
 	public void startRevolvingStandTimer() {
-		revolvingStandTimer.schedule(new TimerTask() {
-			public void run() {
-				if (person != null){
-					stateChanged();
-					startRevolvingStandTimer();
-				}
-			}
-		},
-		3000);
+//		revolvingStandTimer.schedule(new TimerTask() {
+//			public void run() {
+//				if (person != null){
+//					stateChanged();
+//					startRevolvingStandTimer();
+//				}
+//			}
+//		},
+//		3000);
 	}
 
 
@@ -399,7 +399,7 @@ public class ChineseRestaurantCookRole extends Role implements ChineseRestaurant
 	public class Food {
 		String foodType;
 		int	cookTime;
-		int quantity = 0;
+		int quantity = 3;
 		int capacity = 10;
 		int threshold = 2;
 		int amountOrdered = 0;

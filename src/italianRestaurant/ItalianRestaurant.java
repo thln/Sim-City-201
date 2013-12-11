@@ -12,15 +12,17 @@ import application.gui.animation.agentGui.*;
 
 public class ItalianRestaurant implements Restaurant{
 
+	/*
 	Toolkit tk = Toolkit.getDefaultToolkit();
 	int WINDOWX = ((int) tk.getScreenSize().getWidth())/2; 
-	int WINDOWY = (((int) tk.getScreenSize().getHeight())/2)*5/6;  
+	int WINDOWY = (((int) tk.getScreenSize().getHeight())/2)*5/6;   
+	*/
 	
 	//Data
 	String name;
 	public boolean userClosed = false;
 	public Point location; 
-	private Point closestStop;
+	//private Point closestStop;
 	public int busStopNumber;
 
 	//List of Customers
@@ -50,7 +52,7 @@ public class ItalianRestaurant implements Restaurant{
 	//public ItalianMockCashier italianRestaurantMockCashier = new ItalianMockCashier("MockCashier");
 
 	public ItalianRestaurant(String name) {
-		location = new Point(WINDOWX-123, WINDOWY/6-restaurant.getIconHeight()/2);
+		location = new Point(600-123, 325/6-restaurant.getIconHeight()/2);
 		this.name = name;
 		italianRestaurantCookRole.setGui(cookGui);
 		italianRestaurantCashierRole.setGui(cashierGui);
@@ -248,9 +250,9 @@ public class ItalianRestaurant implements Restaurant{
 		italianRestaurantCashierRole.msgLeaveRole();
 	}
 
-	public void setClosestStop(Point point) {
-		closestStop = point;
-	}
+//	public void setClosestStop(Point point) {
+//		closestStop = point;
+//	}
 	
 	public void setClosestBusStopNumber (int n) 
 	{
@@ -262,8 +264,8 @@ public class ItalianRestaurant implements Restaurant{
 		return Phonebook.getPhonebook().getAllBusStops().get(busStopNumber);
 	}
 	
-	public Point getClosestStop() {
-		return closestStop;
-	}
+//	public Point getClosestStop() {
+//		return closestStop;
+//	}
 }
 
