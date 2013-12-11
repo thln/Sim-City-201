@@ -223,8 +223,13 @@ public class ChineseRestaurant implements Restaurant {
 	}
 
 	public boolean isOpen() {
-		if (chineseRestaurantHostRole.getPerson() != null && chineseRestaurantHostRole.waiters.size() != 0 && chineseRestaurantCookRole.getPerson() != null && chineseRestaurantCashierRole != null && !userClosed)
+	//	System.err.println("Testing chinese open");
+		if (chineseRestaurantHostRole.getPerson() != null && chineseRestaurantHostRole.waiters.size() != 0 
+				&& chineseRestaurantCookRole.getPerson() != null && chineseRestaurantCashierRole != null && !userClosed){
+			System.err.println("Chinese restaurant now open!");
 			return true;
+		}
+			
 		else 
 			return false;
 	}
@@ -272,5 +277,10 @@ public class ChineseRestaurant implements Restaurant {
 
 	public Point getClosestStop() {
 		return closestStop;
+	}
+	
+	public Vector<ChineseRestaurantCustomerRole> getCustomers()
+	{
+		return customers;
 	}
 }

@@ -16,14 +16,18 @@ public class VehicleVerticalGui extends VehicleGui {
 	private final int rightRoadX = WINDOWX*2/3-carDown.getIconWidth()/2;
 
 	public VehicleVerticalGui() {
-		xPos = leftRoadX;
-		yPos = 325;
-		yDestination = -25;
+		xPos = rightRoadX;
+		yPos = -25;
+		yDestination = 325;
+		me.setSize(carUp.getIconWidth(), carUp.getIconHeight());
+		System.out.println("CarWidth: " + carUp.getIconWidth() + " CarHeight: " + carUp.getIconHeight());
+		//me.setSize(25, 25);
 	}
 
 	public void updatePosition() {
-
-		if (/*inBusyIntersection() ||*/ inBusyCrosswalk()) {
+		if (inBusyIntersection() || inBusyCrosswalk() || inBusyBusParking()) {
+			System.err.println(this + "State of variables intersection " + inBusyIntersection() +
+					" crosswalk = " + inBusyCrosswalk() + " and parking = " + inBusyBusParking());
 			return;
 		}
 
@@ -33,9 +37,11 @@ public class VehicleVerticalGui extends VehicleGui {
 			yPos--;
 
 		inAnIntersection();
-		inACrosswalk();
+		inACrosswalk();	
+		inBusParking();
 		leftAnIntersection();
 		leftACrosswalk();
+		leftBusParking();
 
 
 		if (yPos == 325 || yPos == -25) {
@@ -62,40 +68,39 @@ public class VehicleVerticalGui extends VehicleGui {
 			yDestination = 325;
 		}
 	}
-	
-	synchronized public boolean inBusyIntersection() {
 
-		Rectangle me = new Rectangle(xPos, yPos-1, 25, 25);
+	synchronized public boolean inBusyIntersection() {
+		me.setLocation(xPos, yPos-1);
 		if (Phonebook.getPhonebook().intersection1.getIntersection().intersects(me)) {
 			if (Phonebook.getPhonebook().intersection1.isIntersectionBusy() == true &&
-					!(state == VehicleState.inIntersection1)) {
+					!(intersectionState == VehicleState.inIntersection1)) {
 				return  true;
 			}
 			return false;
 		}
-		
+
 		me.setLocation(xPos, yPos+1);
 		if (Phonebook.getPhonebook().intersection2.getIntersection().intersects(me)) {
 			if (Phonebook.getPhonebook().intersection2.isIntersectionBusy() == true &&
-					!(state == VehicleState.inIntersection2)) {
+					!(intersectionState == VehicleState.inIntersection2)) {
 				return  true;
 			}
 			return false;
 		}
-		
+
 		me.setLocation(xPos, yPos-1);
 		if (Phonebook.getPhonebook().intersection3.getIntersection().intersects(me)) {
 			if (Phonebook.getPhonebook().intersection3.isIntersectionBusy() == true &&
-					!(state == VehicleState.inIntersection3)) {
+					!(intersectionState == VehicleState.inIntersection3)) {
 				return  true;
 			}
 			return false;
 		}
-		
+
 		me.setLocation(xPos, yPos+1);
 		if (Phonebook.getPhonebook().intersection4.getIntersection().intersects(me)) {
 			if (Phonebook.getPhonebook().intersection4.isIntersectionBusy() == true &&
-					!(state == VehicleState.inIntersection4)) {
+					!(intersectionState == VehicleState.inIntersection4)) {
 				return true;
 			}
 			return false;
@@ -104,58 +109,98 @@ public class VehicleVerticalGui extends VehicleGui {
 			return false;
 		}
 	}
-	
-	synchronized public boolean inBusyCrosswalk() {
 
-		Rectangle me = new Rectangle(xPos, yPos-1, 25, 25);
+	synchronized public boolean inBusyCrosswalk() {
+		me.setLocation(xPos, yPos-1);
 		if (Phonebook.getPhonebook().crosswalk1.getCrosswalk().intersects(me)) {
 			if (Phonebook.getPhonebook().crosswalk1.isCrosswalkBusy() == true &&
-					!(state == VehicleState.inCrosswalk1)) {
+					!(crosswalkState == VehicleState.inCrosswalk1)) {
 				return true;
 			}
 			return false;
 		}
-		
+
 		me.setLocation(xPos, yPos+1);
 		if (Phonebook.getPhonebook().crosswalk2.getCrosswalk().intersects(me)) {
 			if (Phonebook.getPhonebook().crosswalk2.isCrosswalkBusy() == true &&
-					!(state == VehicleState.inCrosswalk2)) {
+					!(crosswalkState == VehicleState.inCrosswalk2)) {
 				return true;
 			}
 			return false;
 		}
-		
+
 		me.setLocation(xPos, yPos-1);
 		if (Phonebook.getPhonebook().crosswalk6.getCrosswalk().intersects(me)) {
 			if (Phonebook.getPhonebook().crosswalk6.isCrosswalkBusy() == true &&
-					!(state == VehicleState.inCrosswalk6)) {
+					!(crosswalkState == VehicleState.inCrosswalk6)) {
 				return  true;
 			}
 			return false;
 		}
-		
+
 		me.setLocation(xPos, yPos+1);
 		if (Phonebook.getPhonebook().crosswalk7.getCrosswalk().intersects(me)) {
 			if (Phonebook.getPhonebook().crosswalk7.isCrosswalkBusy() == true &&
-					!(state == VehicleState.inCrosswalk7)) {
+					!(crosswalkState == VehicleState.inCrosswalk7)) {
 				return  true;
 			}
 			return false;
 		}
-		
+
 		me.setLocation(xPos, yPos-1);
 		if (Phonebook.getPhonebook().crosswalk11.getCrosswalk().intersects(me)) {
 			if (Phonebook.getPhonebook().crosswalk11.isCrosswalkBusy() == true &&
-					!(state == VehicleState.inCrosswalk11)) {
+					!(crosswalkState == VehicleState.inCrosswalk11)) {
 				return  true;
 			}
 			return false;
 		}
-		
+
 		me.setLocation(xPos, yPos+1);
 		if (Phonebook.getPhonebook().crosswalk12.getCrosswalk().intersects(me)) {
 			if (Phonebook.getPhonebook().crosswalk12.isCrosswalkBusy() == true &&
-					!(state == VehicleState.inCrosswalk12)) {
+					!(crosswalkState == VehicleState.inCrosswalk12)) {
+				return  true;
+			}
+			return false;
+		}
+		else {
+			return false;
+		}
+	}
+
+	synchronized public boolean inBusyBusParking() {
+		me.setLocation(xPos, yPos-1);
+		if (Phonebook.getPhonebook().busParking1V.getBusParking().intersects(me)) {
+			if (Phonebook.getPhonebook().busParking1V.isBusParkingBusy() == true &&
+					!(busParkingState == VehicleState.inBusParking1V)) {
+				return true;
+			}
+			return false;
+		}
+
+		me.setLocation(xPos, yPos+1);
+		if (Phonebook.getPhonebook().busParking2V.getBusParking().intersects(me)) {
+			if (Phonebook.getPhonebook().busParking2V.isBusParkingBusy() == true &&
+					!(busParkingState == VehicleState.inBusParking2V)) {
+				return true;
+			}
+			return false;
+		}
+
+		me.setLocation(xPos, yPos+1);
+		if (Phonebook.getPhonebook().busParking3V.getBusParking().intersects(me)) {
+			if (Phonebook.getPhonebook().busParking3V.isBusParkingBusy() == true &&
+					!(busParkingState == VehicleState.inBusParking3V)) {
+				return  true;
+			}
+			return false;
+		}
+
+		me.setLocation(xPos, yPos-1);
+		if (Phonebook.getPhonebook().busParking4V.getBusParking().intersects(me)) {
+			if (Phonebook.getPhonebook().busParking4V.isBusParkingBusy() == true &&
+					!(busParkingState == VehicleState.inBusParking4V)) {
 				return  true;
 			}
 			return false;

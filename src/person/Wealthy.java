@@ -68,6 +68,7 @@ public class Wealthy extends Person {
 						prepareForRestaurant();
 						return true;
 					}
+
 				}			
 			}
 			else //if you do have food in the fridge

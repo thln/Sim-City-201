@@ -30,7 +30,8 @@ public class ListPanel extends JPanel implements ActionListener{
 	private List<JButton> buttons = new ArrayList<JButton>(); 
 	
 	//Info Panel
-	private JPanel infoPane;
+	private JPanel infoPersonPane;
+	//private JPanel infoBuildingPane;
 	private List<Profile> people = new ArrayList<Profile>();
 	private JTextArea personInfoArea = new JTextArea();
 	
@@ -42,6 +43,8 @@ public class ListPanel extends JPanel implements ActionListener{
 	private JLabel infoStartTime = new JLabel ("Start Time: ");
 	private JLabel infoLunchTime = new JLabel ("Lunch Time: ");
 	private JLabel infoEndTime = new JLabel ("End Time: ");	
+	
+	//private JLabel infoTest = new JLabel("test: ");
 	
 	public ListPanel(ApplicationPanel appPanel, Application app){
 		this.app = app;
@@ -62,8 +65,8 @@ public class ListPanel extends JPanel implements ActionListener{
         
 		add(pane);
 		
-		infoPane = new JPanel();
-		infoPane.setLayout(new GridLayout(0,1));
+		infoPersonPane = new JPanel();
+		infoPersonPane.setLayout(new GridLayout(0,1));
 		infoName.setVisible(false);
 		infoType.setVisible(false);
 		infoMoney.setVisible(false);
@@ -72,15 +75,20 @@ public class ListPanel extends JPanel implements ActionListener{
 		infoStartTime.setVisible(false);
 		infoLunchTime.setVisible(false);
 		infoEndTime.setVisible(false);
-		infoPane.add(infoName);
-		infoPane.add(infoType);
-		infoPane.add(infoMoney);
-		infoPane.add(infoJobLoc);
-		infoPane.add(infoJobTitle);
-		infoPane.add(infoStartTime);
-		infoPane.add(infoLunchTime);
-		infoPane.add(infoEndTime);
-		add(infoPane);
+		infoPersonPane.add(infoName);
+		infoPersonPane.add(infoType);
+		infoPersonPane.add(infoMoney);
+		infoPersonPane.add(infoJobLoc);
+		infoPersonPane.add(infoJobTitle);
+		infoPersonPane.add(infoStartTime);
+		infoPersonPane.add(infoLunchTime);
+		infoPersonPane.add(infoEndTime);
+		add(infoPersonPane);
+		
+//		infoBuildingPane = new JPanel();
+//		infoBuildingPane.setLayout(new GridLayout(0,1));
+//		infoBuildingPane.add(infoTest);
+//		add(infoBuildingPane);
 		
 	}
 
