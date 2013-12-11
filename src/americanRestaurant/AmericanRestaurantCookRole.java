@@ -25,7 +25,7 @@ public class AmericanRestaurantCookRole extends Role {
 	//Revolving Stand timer to check stand
 	Timer revolvingStandTimer = new Timer();
 
-	//CookGui cookGui;
+	//AmericanCookGui cookGui;
 	List<Order> PendingOrders;
 	List<Order> FinishedOrders;
 	private List<Market> markets;
@@ -264,7 +264,7 @@ public class AmericanRestaurantCookRole extends Role {
 		return;
 	}
 
-	//	public void setGui(CookGui g) {
+	//	public void setGui(AmericanCookGui g) {
 	//		cookGui = g;
 	//	}
 

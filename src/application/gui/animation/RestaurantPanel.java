@@ -1,23 +1,38 @@
 package application.gui.animation;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-import application.gui.animation.agentGui.*;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+
+import americanRestaurant.AmericanRestaurantTable;
+import americanRestaurant.gui.AmericanCookGui;
+import americanRestaurant.gui.FoodGui;
+import application.gui.animation.agentGui.Gui;
 
 public class RestaurantPanel extends BuildingPanel implements ActionListener{
 	
 	static final int NTABLES = 5;
     BufferedImage fridge = null;
+    
+    //american restaurant data
+    static int americanNTables = 4;
+	public static AmericanRestaurantTable[] tables = new AmericanRestaurantTable[americanNTables]; 		//declare list of tables
+	static boolean isFood = true;
+	ImageIcon grillImage, fridgeImage;
+	public enum guiCookState {cooking, gathering, plating};
+	public guiCookState cookState;
+	ImageIcon fireImage = new ImageIcon ("Images/fire.png");
+	private static List<FoodGui> foodGuis = new ArrayList<FoodGui>();
+	
 	
 	public RestaurantPanel(String buildName, AnimationPanel ap) {
 		super(buildName, ap);
@@ -196,8 +211,52 @@ public class RestaurantPanel extends BuildingPanel implements ActionListener{
 	        	g2.fill3DRect(50*ix, 120, 40, 40, true);
 	        }
 		}
-		else if (name.toLowerCase().contains("fancy")) { //for Josh's restaurant
+		else if (name.toLowerCase().contains("american")) { //for Josh's restaurant
 			
+			g2.fillRect(0, 0, getWidth(), getHeight() );
+			for (int i = 0; i < americanNTables; i++){
+				g2.setColor(Color.ORANGE);
+				int x = tables[i].xCoordinate;
+				int y = tables[i].yCoordinate;
+				int l = tables[i].tableLength;
+				int w = tables[i].tableWidth;
+
+				g2.fillRect(x,y,l,w);
+			}
+			
+			g.drawImage(grillImage.getImage(), 387, 215, this);
+			g.drawImage(fridgeImage.getImage(), 470, 300, this);
+
+			if (cookState == guiCookState.cooking)
+				g.drawImage(fireImage.getImage(), 401, 200, this);
+					
+			for(Gui gui : guis) {
+				if (gui.isPresent()) {
+					gui.updatePosition();
+				}
+			}
+
+			if (isFood) {
+				for (FoodGui f1: foodGuis) {
+					if (!f1.getStop() && f1.isPresent())
+						f1.updatePosition();
+				}
+			}	
+				
+			for(Gui gui : guis) {
+				if (gui.isPresent()) {
+					if (gui instanceof AmericanCookGui && cookState == guiCookState.gathering)
+						((AmericanCookGui) gui).drawIngredients(g2, this);
+					gui.draw(g2);
+				}
+			}
+
+			if (isFood) {
+				for (FoodGui f1: foodGuis) {
+					if (f1.isPresent())
+						((FoodGui) f1).drawIcon(g, this);
+				}
+			}
 		}
 		else if (name.toLowerCase().contains("mexican")) { //for Henry's restaurant
 			

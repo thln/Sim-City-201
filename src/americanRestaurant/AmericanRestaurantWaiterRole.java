@@ -11,6 +11,7 @@ import chineseRestaurant.ChineseRestaurant;
 import person.Person;
 import person.Role;
 import americanRestaurant.AmericanRestaurantCookRole.Order;
+import americanRestaurant.gui.AmericanWaiterGui;
 import americanRestaurant.interfaces.AmericanRestaurantCashier;
 import americanRestaurant.interfaces.AmericanRestaurantCustomer;
 import americanRestaurant.interfaces.AmericanRestaurantWaiter;
@@ -52,7 +53,7 @@ public class AmericanRestaurantWaiterRole extends Role implements AmericanRestau
 
 		private List<MyCustomer> customers;	
 		private AmericanRestaurantHostRole myHost;
-//		public WaiterGui waiterGui;
+		public AmericanWaiterGui waiterGui;
 		RestaurantPanel panel1;
 		WaiterState waitState;
 		static List<String> itemsRemoved = Collections.synchronizedList(new ArrayList<String>());
@@ -401,13 +402,13 @@ public class AmericanRestaurantWaiterRole extends Role implements AmericanRestau
 
 		//utilities
 
-//		public void setGui(WaiterGui gui) {
-//			waiterGui = gui;
-//		}
-//
-//		public WaiterGui getGui() {
-//			return waiterGui;
-//		}
+		public void setGui(AmericanWaiterGui gui) {
+			waiterGui = gui;
+		}
+
+		public AmericanWaiterGui getGui() {
+			return waiterGui;
+		}
 
 		public void setPanel (RestaurantPanel p) {
 			panel1 = p;
@@ -455,11 +456,6 @@ public class AmericanRestaurantWaiterRole extends Role implements AmericanRestau
 			return onBreak;
 		}
 
-		@Override
-		public Object getGui() {
-			// TODO Auto-generated method stub
-			return null;
-		}
 		@Override
 		public void msgSeatAtTable (AmericanRestaurantCustomer c1, AmericanRestaurantTable t1){
 			print("Seat Assigned");

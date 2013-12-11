@@ -41,7 +41,7 @@ public class AmericanRestaurantCustomerRole extends Role implements AmericanRest
 	Timer eating;
 	private int hungerLevel = 5;        // determines length of meal
 
-	//private CustomerGui customerGui;
+	//private AmericanCustomerGui customerGui;
 
 	// agent correspondents
 
@@ -348,11 +348,11 @@ public class AmericanRestaurantCustomerRole extends Role implements AmericanRest
 				return "customer " + getName();
 			}
 
-			//			public void setGui(CustomerGui g) {
+			//			public void setGui(AmericanCustomerGui g) {
 			//				customerGui = g;
 			//			}
 			//
-			//			public CustomerGui getGui() {
+			//			public AmericanCustomerGui getGui() {
 			//				return customerGui;
 			//			}
 
