@@ -31,6 +31,12 @@ public class PersonGui extends CityGui {
 	Color transColor;
 	Color currColor;
 
+	//Bus stops
+	private int startStopX;
+	private int startStopY;
+	private int endStopX;
+	private int endStopY;
+
 	//Walking
 	private int nextCrosswalkX;
 	private int nextCrosswalkY;
@@ -45,6 +51,8 @@ public class PersonGui extends CityGui {
 
 	private enum PersonState {nothing, enroute, walkingToCrosswalk, inCrosswalk1, inCrosswalk2, inCrosswalk3, inCrosswalk4, inCrosswalk5, inCrosswalk6, inCrosswalk7, inCrosswalk8, inCrosswalk9, inCrosswalk10, inCrosswalk11, inCrosswalk12};
 	PersonState state = PersonState.nothing;
+
+	private String choice;
 
 	public PersonGui() {
 		setxPos(0);
@@ -210,6 +218,17 @@ public void DoGoHome() {
 	command = Command.GoHome;
 }
 
+//public void doGoToBus(double endX, double endY) {
+//	System.out.println("Going to bus stop");
+//	endStopX = (int) endX;
+//	endStopY = (int) endY;
+//	findStartStop();
+//	xDestination = startStopX;
+//	yDestination = startStopY;
+//	setDefaultColor();
+//	command = Command.GoToBusStop;
+//}
+
 public void doGoToBusStop()
 {
 	xDestination = Phonebook.getPhonebook().getAllBusStops().get(getClosestBusStopNumber()).getBusStopLocation().x;
@@ -217,6 +236,9 @@ public void doGoToBusStop()
 	System.out.println("Going to bus stop");
 	setDefaultColor();
 	command = Command.GoToBusStop;
+	//Phonebook.getPhonebook().getAllBusStops().get(index);
+	//getClosestBusStop, use Phonebook to get point
+	//set XDestination and yDestination
 }
 
 public boolean decideForBus(String location) {
