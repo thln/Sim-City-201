@@ -458,22 +458,6 @@ public class Application extends JPanel {
 	}
 
 	/*
-B. Scenario: [Tests all the behaviors.]
-All workplaces fully employed.
-Day starts and all workers go to work.
-Three not-working persons eat at home, then visit all the workplaces in different orders. [one should walk; one should take a car; one should take a bus.]
-C. Scenario: [Tests cook, cashier, market interaction.]
-Each restaurant gets low on food and orders from market(s).
-Market delivers food to the open restaurant.
-Market sends invoice to cashier, who verifies and pays it.
-E. Scenario: [Shows bus-stop behavior]
-Person visits a bus stop. [as part of step 7]
-Bus arrives.
-Person gets on.
-Person gets off at destination.
-	 */
-
-	/*
 	 * All workplaces (markets, all restaurants, banks) fully employed.
 Day starts and all workers go to work.
 One not-working person eats at home, then visits all the workplaces by walking.
@@ -629,7 +613,37 @@ Roads should have appropriate complexity [e.g. intersections with stop signs and
 //		//People
 		wealthy1.startThread();
 	}
-
+/*
+	B. Scenario: [Tests all the behaviors.]
+			All workplaces fully employed.
+			Day starts and all workers go to work.
+			Three not-working persons eat at home, then visit all the workplaces in different orders. 
+			[one should walk; one should take a car; one should take a bus.]
+			*/
+	public void runScenarioB () {
+		
+	}
+	
+	/*
+	 	C. Scenario: [Tests cook, cashier, market interaction.]
+			Each restaurant gets low on food and orders from market(s).
+			Market delivers food to the open restaurant.
+			Market sends invoice to cashier, who verifies and pays it.
+	 */
+	public void runScenarioC () {
+		
+	}
+	
+	/*
+	 * E. Scenario: [Shows bus-stop behavior]
+			Person visits a bus stop. [as part of step 7]
+			Bus arrives.
+			Person gets on.
+			Person gets off at destination.
+	 */
+	public void runScenarioE () {
+		
+	}
 
 
 

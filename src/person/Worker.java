@@ -254,6 +254,7 @@ public class Worker extends Person {
 		if (!gui.walk){
 			if (myJob.jobPlace.contains("American")){
 				print("Destination bus Stop: " + Phonebook.getPhonebook().getAmericanRestaurant().getClosestBusStop().getBusStopNumber());
+
 				goToBusStop(Phonebook.getPhonebook().getAmericanRestaurant().getClosestBusStop().getBusStopNumber(), Phonebook.getPhonebook().getAmericanRestaurant().location);
 			}
 			if (myJob.jobPlace.contains("Chinese")){

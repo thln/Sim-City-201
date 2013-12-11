@@ -141,11 +141,12 @@ public class Phonebook{
 	
 	
 	//Intersections	
-	public Intersection intersection1 = new Intersection(170, 72, 30, 38, 1);
-	public Intersection intersection2 = new Intersection(390, 72, 30, 38, 2);
-	public Intersection intersection3 = new Intersection(170, 192, 30, 38, 3);
-	public Intersection intersection4 = new Intersection(390, 192, 30, 38, 4);
-
+	public Intersection intersection1 = new Intersection(160, 72, 40, 38, 1);
+	public Intersection intersection2 = new Intersection(380, 72, 40, 38, 2);
+	public Intersection intersection3 = new Intersection(160, 192, 40, 38, 3);
+	public Intersection intersection4 = new Intersection(380, 192, 40, 38, 4);
+	
+	//Crosswalks
 	public Crosswalk crosswalk1 = new Crosswalk(160, 10, 39, 25, 1);
 	public Crosswalk crosswalk2 = new Crosswalk(380, 10, 39, 25, 1);
 
@@ -162,6 +163,25 @@ public class Phonebook{
 
 	public Crosswalk crosswalk11 = new Crosswalk(160, 270, 39, 25, 11);
 	public Crosswalk crosswalk12 = new Crosswalk(380, 270, 39, 25, 12);
+	
+	//Bus Parking
+	//Stop 1
+	public BusParking busParking1H = new BusParking(98, 70, 60, 39, 1);
+	public BusParking busParking1V = new BusParking(160, 37, 39, 35, 2);
+	
+	//Stop 2
+	public BusParking busParking2H = new BusParking(422, 70, 66, 39, 3);
+	public BusParking busParking2V = new BusParking(380, 37, 39, 35, 4);
+	
+	//Stop 3
+	public BusParking busParking3H = new BusParking(422, 190, 66, 39, 5);
+	public BusParking busParking3V = new BusParking(380, 231, 39, 38, 6);
+	
+	//Stop 4
+	public BusParking busParking4H = new BusParking(98, 190, 60, 39, 7);
+	public BusParking busParking4V = new BusParking(160, 231, 39, 38, 8);
+	
+	
 
 	private static Phonebook phonebook;
 
@@ -378,19 +398,19 @@ public class Phonebook{
 			number = n;
 		}
 
-		public Rectangle getIntersection() {
+		synchronized public Rectangle getIntersection() {
 			return intersection;
 		}
 
-		public void setIntersection(Rectangle intersection) {
+		synchronized  public void setIntersection(Rectangle intersection) {
 			this.intersection = intersection;
 		}
 
-		public boolean isIntersectionBusy() {
+		synchronized public boolean isIntersectionBusy() {
 			return intersectionBusy;
 		}
 
-		public void setIntersectionBusy(boolean intersectionBusy) {
+		synchronized public void setIntersectionBusy(boolean intersectionBusy) {
 			this.intersectionBusy = intersectionBusy;
 		}
 	}
@@ -407,20 +427,49 @@ public class Phonebook{
 			number = n;
 		}
 
-		public Rectangle getCrosswalk() {
+		synchronized public Rectangle getCrosswalk() {
 			return crosswalk;
 		}
 
-		public void setCrosswalk(Rectangle crosswalk) {
+		synchronized public void setCrosswalk(Rectangle crosswalk) {
 			this.crosswalk = crosswalk;
 		}
 
-		public boolean isCrosswalkBusy() {
+		synchronized public boolean isCrosswalkBusy() {
 			return crosswalkBusy;
 		}
 
-		public void setCrosswalkBusy(boolean crosswalkBusy) {
+		synchronized public void setCrosswalkBusy(boolean crosswalkBusy) {
 			this.crosswalkBusy = crosswalkBusy;
+		}
+	}
+	
+	public class BusParking {
+		public Rectangle busParking;
+		public int number;
+
+		public boolean busParkingBusy;
+
+		public BusParking(int x, int y, int width, int height, int n) {
+			busParking = new Rectangle(x, y, width, height);
+			busParkingBusy = false;
+			number = n;
+		}
+
+		synchronized public Rectangle getBusParking() {
+			return busParking;
+		}
+
+		synchronized public void setBusParking(Rectangle busParking) {
+			this.busParking = busParking;
+		}
+
+		synchronized public boolean isBusParkingBusy() {
+			return busParkingBusy;
+		}
+
+		synchronized public void setBusParkingBusy(boolean busParkingBusy) {
+			this.busParkingBusy = busParkingBusy;
 		}
 	}
 }
