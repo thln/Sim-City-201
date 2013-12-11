@@ -219,12 +219,12 @@ public class RestaurantPanel extends BuildingPanel implements ActionListener{
 			
 			for (int i = 0; i < americanNTables; i++){
 				g2.setColor(Color.ORANGE);
-				int x = tables[i].xCoordinate;
-				int y = tables[i].yCoordinate;
-				int l = tables[i].tableLength;
-				int w = tables[i].tableWidth;
+//				int x = tables[i].xCoordinate;
+//				int y = tables[i].yCoordinate;
+//				int l = tables[i].tableLength;
+//				int w = tables[i].tableWidth;
 
-				g2.fillRect(x,y,l,w);
+//				g2.fillRect(x,y,l,w);
 			}
 			
 			g.drawImage(grillImage.getImage(), 387, 215, this);
