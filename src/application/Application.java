@@ -512,10 +512,10 @@ Roads should have appropriate complexity [e.g. intersections with stop signs and
 
 		//West Market Workers
 		//SHIFT 1
-		Worker market3d = new Worker("Dan", 10, "marketRunner", "West Market", 0, 600, 13);
-		Worker market3e = new Worker("Elpha", 1000, "salesPerson", "West Market", 0, 600, 13);
-		Worker market3f = new Worker("Fitz", 10, "UPSman", "West Market", 0, 600, 13);        
-		
+		Worker market3d = new Worker("Dan", 10, "marketRunner", "West Market", 0, 600, 18);
+		Worker market3e = new Worker("Elpha", 1000, "salesPerson", "West Market", 0, 600, 18);
+		Worker market3f = new Worker("Fitz", 10, "UPSman", "West Market", 0, 600, 18);        
+
 		//Chinese Restaurant Workers
 		//SHIFT 1
 		Worker rest1h = new Worker("Henry", 100, "host", "Chinese Restaurant", 0, 1800, 23);
@@ -632,9 +632,9 @@ Roads should have appropriate complexity [e.g. intersections with stop signs and
 		rest1i.startThread();
 		rest1j.startThread();
 		rest1k.startThread();
-		bank3a.startThread();
-		bank3b.startThread();	
-		bank3c.startThread();
+		//		bank3a.startThread();
+		//		bank3b.startThread();	
+		//		bank3c.startThread();
 		/*
 		rest3g.startThread();
 		rest3h.startThread();
@@ -677,9 +677,6 @@ Roads should have appropriate complexity [e.g. intersections with stop signs and
 	public void runScenarioE () {
 
 	}
-
-
-
 
 }
 

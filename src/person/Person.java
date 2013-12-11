@@ -129,14 +129,14 @@ public abstract class Person extends Agent{
 		print("Going to eat at home");
 		//if(getGui().getxPos() != getGui().getxHome() || getGui().getyPos() != getGui().getxHome()) {
 		getGui().DoGoHome();
-			try {
-				this.atCityDestination.acquire();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-				//
-			}
+		try {
+			this.atCityDestination.acquire();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+			//
+		}
 		//}
-		
+
 		//person is part of an apartment
 		if(getHousing().type.toLowerCase().contains("apartment")) {
 			if(getHousing().type.toLowerCase().contains("east")) {
@@ -179,7 +179,7 @@ public abstract class Person extends Agent{
 				}
 			}
 		}
-		
+
 		nextTask.schedule(new TimerTask() {
 			public void run() {  
 				eating.release();
@@ -359,22 +359,17 @@ public abstract class Person extends Agent{
 			{
 				goToBusStop(Phonebook.getPhonebook().getWestMarket().getClosestBusStop().getBusStopNumber(), Phonebook.getPhonebook().getWestMarket().location);
 			}
-//			if (home.type.equals("East Apartment")){
-//				gui.doGoToBus(Phonebook.getPhonebook().getEastMarket().getClosestBusStop(), "East Market");
-//			}
-//			else {
-//				gui.doGoToBus(Phonebook.getPhonebook().getWestMarket().getClosestStop().getX(),
-//						Phonebook.getPhonebook().getWestMarket().getClosestStop().getY());
-//			}
 		}
 
-		try {
-			atCityDestination.acquire();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+	//	if (!gui.walk){
+			try {
+				atCityDestination.acquire();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 
-		}
-
+			}
+	//	}
+			print("Becoming market customer");
 		//Checking if have enough money for car
 		if (accountBalance >= (carCost + 100)) {
 			if (carStatus == CarState.noCar) {
@@ -515,14 +510,14 @@ public abstract class Person extends Agent{
 			{
 				goToBusStop(Phonebook.getPhonebook().getWestMarket().getClosestBusStop().getBusStopNumber(), Phonebook.getPhonebook().getWestMarket().location);
 			}
-//			if (home.type.equals("East Apartment")){
-//				gui.doGoToBus(Phonebook.getPhonebook().getEastMarket()//.getClosestStop().getX(),
-//						Phonebook.getPhonebook().getEastMarket().getClosestStop().getY());
-//			}
-//			else {
-//				gui.doGoToBus(Phonebook.getPhonebook().getWestMarket().getClosestStop().getX(),
-//						Phonebook.getPhonebook().getWestMarket().getClosestStop().getY());
-//			}
+			//			if (home.type.equals("East Apartment")){
+			//				gui.doGoToBus(Phonebook.getPhonebook().getEastMarket()//.getClosestStop().getX(),
+			//						Phonebook.getPhonebook().getEastMarket().getClosestStop().getY());
+			//			}
+			//			else {
+			//				gui.doGoToBus(Phonebook.getPhonebook().getWestMarket().getClosestStop().getX(),
+			//						Phonebook.getPhonebook().getWestMarket().getClosestStop().getY());
+			//			}
 		}
 
 		try {
