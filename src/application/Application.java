@@ -47,7 +47,7 @@ public class Application extends JPanel {
 		Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantCookRole.addMarket(Phonebook.getPhonebook().getWestMarket());
 
 		//runFullScenario();
-		runScenarioA();
+		//runScenarioA();
 		//runScenarioB();
 		//runScenarioC();
 		
@@ -84,42 +84,60 @@ public class Application extends JPanel {
 	}
 
 	public void addPerson (String name ,int money, String type,
-			String jobTitle, String jobLocation, int startT, int lunchT, int endT) {
+			String jobTitle, String jobLocation, String housing, int startT, int lunchT, int endT) {
 		//last 4 parameters specifically for worker. make empty/0 for all other types
 		//add any special parameters if new things needed for other types
 		if (type.equals("Wealthy")) 
 		{
 			//min money req?
 			Wealthy newP = new Wealthy(name, money);
-			allHousing.add(new Housing(newP, allHousing.size(), "Mansion"));
+			allHousing.add(new Housing(newP, allHousing.size(), housing));
 			newP.setHome(allHousing.get(allHousing.size() - 1));
+			animPanel.setHousingPanel(allHousing.get(allHousing.size() - 1));
 			getPopulation().add(newP);
+			PersonGui pg = new PersonGui(newP);
+			newP.setGui(pg);
+			animPanel.addGui(pg);
 			newP.startThread();
 		}
 		else if (type.equals("Crook")) 
 		{
 			Crook newP = new Crook(name, money);
-			allHousing.add(new Housing(newP, allHousing.size(), "Apartment"));
+			allHousing.add(new Housing(newP, allHousing.size(), housing));
+			animPanel.setHousingPanel(allHousing.get(allHousing.size() - 1));
 			newP.setHome(allHousing.get(allHousing.size() - 1));
 			getPopulation().add(newP);
+			PersonGui pg = new PersonGui(newP);
+			newP.setGui(pg);
+			animPanel.addGui(pg);
 			newP.startThread();
 		}
 		else if (type.equals("Worker")) 
 		{
 			Worker newP = new Worker(name, money, jobTitle, jobLocation, startT, lunchT, endT);
-			allHousing.add(new Housing(newP, allHousing.size(), "Apartment"));
+			allHousing.add(new Housing(newP, allHousing.size(), housing));
+			animPanel.setHousingPanel(allHousing.get(allHousing.size() - 1));
 			newP.setHome(allHousing.get(allHousing.size() - 1));
 			getPopulation().add(newP);
+			PersonGui pg = new PersonGui(newP);
+			newP.setGui(pg);
+			animPanel.addGui(pg);
 			newP.startThread();	
 		}
 		else if (type.equals("Deadbeat")) 
 		{
 			Deadbeat newP = new Deadbeat(name, money);
-			allHousing.add(new Housing(newP, allHousing.size(), "Park"));
+			allHousing.add(new Housing(newP, allHousing.size(), housing));
+			animPanel.setHousingPanel(allHousing.get(allHousing.size() - 1));
 			newP.setHome(allHousing.get(allHousing.size() - 1));
 			getPopulation().add(newP);
+			PersonGui pg = new PersonGui(newP);
+			newP.setGui(pg);
+			animPanel.addGui(pg);
 			newP.startThread();
 		}
+		//runHousing();
+		//runGui();
 	}
 
 	public void editPerson(int index, String name, int money){

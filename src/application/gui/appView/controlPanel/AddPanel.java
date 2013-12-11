@@ -34,6 +34,7 @@ public class AddPanel extends JPanel implements ActionListener {
 	private JLabel nameLabel = new JLabel("Name: ");
 	private JLabel typeLabel = new JLabel("Select Type");
 	private JLabel startingMoneyLabel = new JLabel("Starting Cash: ");
+	private JLabel housingLabel = new JLabel("Housing: ");
 	private JLabel jobTypeLabel = new JLabel("Job Type: ");
 	private JLabel jobLocationLabel = new JLabel("Job Location: ");
 	private JLabel jobStartTimeLabel = new JLabel("Job Start Time: ");
@@ -52,6 +53,7 @@ public class AddPanel extends JPanel implements ActionListener {
 	private JComboBox socialClassBox;
 	private JComboBox jobLocationBox;
 	private JComboBox jobTypeBox;
+	private JComboBox housingBox;
 
 	
 	private boolean raveMode = false;	
@@ -65,7 +67,13 @@ public class AddPanel extends JPanel implements ActionListener {
 	private String[] marketJobs = {" ", "UPS Man", "Sales Person", "Market Runner"};
 	private String[] bankJobs = {" ", "Bank Guard", "Bank Teller", "Loan Officer"};
 	private String[] housingJobs = {" ", "Maintenance Worker"};
-
+	private String[] apartmentHousing = {" ", "East Apartment", "West Apartment"};
+	private String[] mansionHousing = {" ", "Mansion"};
+	private String[] parkHousing = {" ", "Park" };
+	
+	//}
+	//}
+	
 	public AddPanel(ControlPanel cp, Application app)
 	{
 		
@@ -78,7 +86,7 @@ public class AddPanel extends JPanel implements ActionListener {
 		GridBagConstraints gbcConstraints = new GridBagConstraints();
 		gbcConstraints.fill = GridBagConstraints.VERTICAL;
 		gbcConstraints.anchor = GridBagConstraints.CENTER;
-		mainPanel.setLayout(new GridLayout(10, 2));
+		mainPanel.setLayout(new GridLayout(11, 2));
 
 		//name
 		gbcConstraints.gridx = 0;
@@ -107,12 +115,25 @@ public class AddPanel extends JPanel implements ActionListener {
 		gbcConstraints.gridy = 1;
 		mainPanel.add(moneyIntField, gbcConstraints);
 
-		//Job Location
+		//Housing Location
 		gbcConstraints.gridx = 3;
+		gbcConstraints.gridy = 0;
+		housingLabel.setVisible(true);
+		mainPanel.add(housingLabel, gbcConstraints);
+		gbcConstraints.gridx = 3;
+		gbcConstraints.gridy = 1;
+		housingBox = new JComboBox(emptyList);
+		housingBox.setSelectedIndex(0);
+		housingBox.addActionListener(this);
+		housingBox.setVisible(true);
+		mainPanel.add(housingBox, gbcConstraints);
+		
+		//Job Location
+		gbcConstraints.gridx = 4;
 		gbcConstraints.gridy = 0;
 		jobLocationLabel.setVisible(false);
 		mainPanel.add(jobLocationLabel, gbcConstraints);
-		gbcConstraints.gridx = 3;
+		gbcConstraints.gridx = 4;
 		gbcConstraints.gridy = 1;
 		jobLocationBox = new JComboBox(emptyList);
 		jobLocationBox.setSelectedIndex(0);
@@ -121,11 +142,11 @@ public class AddPanel extends JPanel implements ActionListener {
 		mainPanel.add(jobLocationBox, gbcConstraints);
 
 		//JobTypes
-		gbcConstraints.gridx = 4;
+		gbcConstraints.gridx = 5;
 		gbcConstraints.gridy = 0;
 		jobTypeLabel.setVisible(false);
 		mainPanel.add(jobTypeLabel, gbcConstraints);		
-		gbcConstraints.gridx = 4;
+		gbcConstraints.gridx = 5;
 		gbcConstraints.gridy = 1;
 		jobTypeBox = new JComboBox(emptyList);
 		jobTypeBox.setSelectedIndex(0);
@@ -134,29 +155,29 @@ public class AddPanel extends JPanel implements ActionListener {
 		mainPanel.add(jobTypeBox,gbcConstraints);
 
 		//Start, Lunch, End Times
-		gbcConstraints.gridx = 5;
+		gbcConstraints.gridx = 6;
 		gbcConstraints.gridy = 0;
 		jobStartTimeLabel.setVisible(false);
 		mainPanel.add(jobStartTimeLabel, gbcConstraints);
-		gbcConstraints.gridx = 5;
+		gbcConstraints.gridx = 6;
 		gbcConstraints.gridy = 1;
 		jobSTimeField.setVisible(false);
 		mainPanel.add(jobSTimeField, gbcConstraints);
 
-		gbcConstraints.gridx = 6;
+		gbcConstraints.gridx = 7;
 		gbcConstraints.gridy = 0;
 		jobLunchTimeLabel.setVisible(false);
 		mainPanel.add(jobLunchTimeLabel, gbcConstraints);
-		gbcConstraints.gridx = 6;
+		gbcConstraints.gridx = 7;
 		gbcConstraints.gridy = 1;
 		jobLTimeField.setVisible(false);
 		mainPanel.add(jobLTimeField, gbcConstraints);
 
-		gbcConstraints.gridx = 7;
+		gbcConstraints.gridx = 8;
 		gbcConstraints.gridy = 0;
 		jobEndTimeLabel.setVisible(false);
 		mainPanel.add(jobEndTimeLabel, gbcConstraints);
-		gbcConstraints.gridx = 7;
+		gbcConstraints.gridx = 8;
 		gbcConstraints.gridy = 1;
 		jobETimeField.setVisible(false);
 		mainPanel.add(jobETimeField, gbcConstraints);
@@ -184,18 +205,47 @@ public class AddPanel extends JPanel implements ActionListener {
 			if(socialClassBox.getSelectedItem() == "Worker")
 			{
 				jobLocationBox.removeAllItems();
-
 				for(int i = 0; i < jobLocation.length; i++)
 				{
 					showJobLocationFields(true);
 					jobLocationBox.addItem(jobLocation[i]);
 				}
+				
+				housingBox.removeAllItems();
+				for(int i = 0; i < apartmentHousing.length; i++)
+				{
+					housingBox.addItem(apartmentHousing[i]);
+				}
 			}
-			else
+			else if(socialClassBox.getSelectedItem() == "Wealthy")
 			{
 				jobLocationBox.removeAllItems();
 				showJobLocationFields(false);
 				jobLocationBox.addItem(" ");
+				housingBox.removeAllItems();		
+				for(int i = 0; i < mansionHousing.length; i++)
+				{
+					housingBox.addItem(mansionHousing[i]);
+				}
+			}
+			else if(socialClassBox.getSelectedItem() == "Deadbeat")
+			{
+				jobLocationBox.removeAllItems();
+				showJobLocationFields(false);
+				jobLocationBox.addItem(" ");
+				housingBox.removeAllItems();
+				for(int i = 0; i < parkHousing.length; i++)
+				{
+					housingBox.addItem(parkHousing[i]);
+				}
+			}
+			else
+			{
+				jobLocationBox.removeAllItems();
+				housingBox.removeAllItems();
+				showJobLocationFields(false);
+				jobLocationBox.addItem(" ");
+				housingBox.addItem(" ");
 			}
 		}
 
@@ -265,7 +315,7 @@ public class AddPanel extends JPanel implements ActionListener {
 				}
 				else
 				{
-					jobStartTime = 0;
+					jobStartTime = -1;
 					jobLunchTime = 0;
 					jobEndTime = 0;
 				}
@@ -288,8 +338,8 @@ public class AddPanel extends JPanel implements ActionListener {
 				jobEndTime = jobEndTime*100;
 				
 				app.addPerson(nameTextField.getText(), money, (String) socialClassBox.getSelectedItem(), 
-						(String) jobTypeBox.getSelectedItem(), (String) jobLocationBox.getSelectedItem(), 
-						jobStartTime, jobLunchTime, jobEndTime);
+						(String) jobTypeBox.getSelectedItem(), (String) jobLocationBox.getSelectedItem(),
+						(String) housingBox.getSelectedItem(), jobStartTime, jobLunchTime, jobEndTime);
 				cp.getAppPanel().getListPanel().updateList();
 			}
 			else
@@ -351,7 +401,8 @@ public class AddPanel extends JPanel implements ActionListener {
 
 	public boolean allFieldsEntered()
 	{
-		if(nameTextField.getText()  != "")// && moneyIntField.getText() != "" && jobSTimeField.getText() != ""
+		if(nameTextField.getText()  != "" && housingBox.getSelectedIndex() != 0)
+			// && moneyIntField.getText() != "" && jobSTimeField.getText() != ""
 			//&& jobLTimeField.getText() != "" && jobETimeField.getText() != "" && socialClassBox.getSelectedIndex() != 0
 			// && jobTypeBox.getSelectedIndex() != 0  && jobLocationBox.getSelectedIndex() != 0)
 		{
