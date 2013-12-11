@@ -48,6 +48,7 @@ public class AddPanel extends JPanel implements ActionListener {
 	private JTextField jobETimeField = new JTextField(10);
 	private JButton addButton = new JButton("Add");
 	private JButton raveButton = new JButton("Rave Mode");
+	private JButton updateButton = new JButton("Update Description");
 	private ControlPanel cp;
 	private Application app;
 	private JComboBox socialClassBox;
@@ -190,8 +191,10 @@ public class AddPanel extends JPanel implements ActionListener {
 		gbcConstraints.gridy = 1;
 		addButton.addActionListener(this);
 		raveButton.addActionListener(this);
+		updateButton.addActionListener(this);
 		mainPanel.add(addButton,gbcConstraints);
 		mainPanel.add(raveButton,gbcConstraints);
+		mainPanel.add(updateButton,gbcConstraints);
 
 
 		add(mainPanel);
@@ -200,6 +203,10 @@ public class AddPanel extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
+		if(e.getSource() == updateButton)
+		{
+			dashboard.updateDashboard();
+		}
 		if(e.getSource() == socialClassBox)
 		{
 			if(socialClassBox.getSelectedItem() == "Worker")
