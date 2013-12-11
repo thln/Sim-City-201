@@ -371,12 +371,13 @@ public abstract class Person extends Agent{
 //						Phonebook.getPhonebook().getWestMarket().getClosestStop().getY());
 //			}
 		}
-
-		try {
-			atCityDestination.acquire();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-
+		if(gui.walk)
+		{
+			try {
+				atCityDestination.acquire();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		System.err.println(" 111111111111111111111");
@@ -393,11 +394,13 @@ public abstract class Person extends Agent{
 			for (Role cust1 : roles) {
 				System.err.println("!!!!!!!!!!!!!!!!!!!!!");
 				if (cust1 instanceof MarketCustomerRole) {
-					System.err.println(" 2222222222222222222222");
 					MarketCustomerRole MCR = (MarketCustomerRole) cust1;
 					MCR.setItem("");
 					cust1.setRoleActive();
-					Phonebook.getPhonebook().getEastMarket().arrived(MCR);
+					if (home.type.equals("East Apartment"))
+						Phonebook.getPhonebook().getEastMarket().arrived(MCR);
+					else
+						Phonebook.getPhonebook().getWestMarket().arrived(MCR);
 					currentRoleName = "Market Customer";
 					stateChanged();
 					return;

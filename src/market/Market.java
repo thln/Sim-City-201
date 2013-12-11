@@ -173,7 +173,7 @@ public class Market {
 		mCR.setMarket(this);
 		marketCustomerGuis.add(MCG);
 		marketPanel.addGui(MCG);
-		//MCG.waitInLine();
+	//	MCG.waitInLine();
 	}
 
 	public void goingOffWork(Person person) {

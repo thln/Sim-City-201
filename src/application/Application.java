@@ -512,9 +512,9 @@ Roads should have appropriate complexity [e.g. intersections with stop signs and
 
 		//West Market Workers
 		//SHIFT 1
-		Worker market3d = new Worker("Dan", 10, "marketRunner", "West Market", 0, 600, 13);
-		Worker market3e = new Worker("Elpha", 1000, "salesPerson", "West Market", 0, 600, 13);
-		Worker market3f = new Worker("Fitz", 10, "UPSman", "West Market", 0, 600, 13);        
+		Worker market3d = new Worker("Dan", 10, "marketRunner", "West Market", 0, 600, 23);
+		Worker market3e = new Worker("Elpha", 1000, "salesPerson", "West Market", 0, 600, 23);
+		Worker market3f = new Worker("Fitz", 10, "UPSman", "West Market", 0, 600, 23);        
 		
 		//Chinese Restaurant Workers
 		//SHIFT 1
