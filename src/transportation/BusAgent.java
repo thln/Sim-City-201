@@ -258,4 +258,8 @@ public class BusAgent extends Agent{
 	{
 		return checkedStation;
 	}
+	
+	public String toString() {
+		return name;
+	}
 }
