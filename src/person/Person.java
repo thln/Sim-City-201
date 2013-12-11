@@ -198,10 +198,6 @@ public abstract class Person extends Agent{
 
 	protected void prepareForBank () {
 
-
-		if (!(this instanceof Crook))
-			Do("Becoming Bank Customer");
-
 		if (home.type.equals("East Apartment"))
 			gui.walk = gui.decideForBus("East Bank");
 		else
@@ -244,8 +240,8 @@ public abstract class Person extends Agent{
 					BCR.state = CustomerState.ready;
 				}
 				else {
+					Do("Becoming Bank Customer");
 					currentRoleName = "Bank Customer";
-
 					if (money <= moneyMinThreshold)
 						desiredCash = 100;
 					else if (money >= moneyMaxThreshold)

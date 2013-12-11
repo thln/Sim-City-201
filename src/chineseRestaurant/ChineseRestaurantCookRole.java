@@ -358,15 +358,15 @@ public class ChineseRestaurantCookRole extends Role implements ChineseRestaurant
 	}
 
 	public void startRevolvingStandTimer() {
-		revolvingStandTimer.schedule(new TimerTask() {
-			public void run() {
-				if (person != null){
-					stateChanged();
-					startRevolvingStandTimer();
-				}
-			}
-		},
-		3000);
+//		revolvingStandTimer.schedule(new TimerTask() {
+//			public void run() {
+//				if (person != null){
+//					stateChanged();
+//					startRevolvingStandTimer();
+//				}
+//			}
+//		},
+//		3000);
 	}
 
 

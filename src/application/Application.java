@@ -510,45 +510,45 @@ Roads should have appropriate complexity [e.g. intersections with stop signs and
 		//Adding housing
 
 		//Shift 1
-		allHousing.add(new Housing(bank1a, allHousing.size(), "East Apartment"));
+		allHousing.add(new Housing(bank1a, allHousing.size(), "West Apartment"));
 		bank1a.setHome(allHousing.get(allHousing.size() - 1));
 		allHousing.add(new Housing(bank1b, allHousing.size(), "West Apartment"));
 		bank1b.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(bank1c, allHousing.size(), "East Apartment"));
+		allHousing.add(new Housing(bank1c, allHousing.size(), "West Apartment"));
 		bank1c.setHome(allHousing.get(allHousing.size() - 1));
 		allHousing.add(new Housing(market1d, allHousing.size(), "West Apartment"));
 		market1d.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(market1e, allHousing.size(), "East Apartment"));
+		allHousing.add(new Housing(market1e, allHousing.size(), "West Apartment"));
 		market1e.setHome(allHousing.get(allHousing.size() - 1));
 		allHousing.add(new Housing(market1f, allHousing.size(), "West Apartment"));
 		market1f.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(rest1g, allHousing.size(), "East Apartment"));
+		allHousing.add(new Housing(rest1g, allHousing.size(), "West Apartment"));
 		rest1g.setHome(allHousing.get(allHousing.size() - 1));
 		allHousing.add(new Housing(rest1h, allHousing.size(), "West Apartment"));
 		rest1h.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(rest1i, allHousing.size(), "East Apartment"));
+		allHousing.add(new Housing(rest1i, allHousing.size(), "West Apartment"));
 		rest1i.setHome(allHousing.get(allHousing.size() - 1));
 		allHousing.add(new Housing(rest1j, allHousing.size(), "West Apartment"));
 		rest1j.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(rest1k, allHousing.size(), "East Apartment"));
+		allHousing.add(new Housing(rest1k, allHousing.size(), "West Apartment"));
 		rest1k.setHome(allHousing.get(allHousing.size() - 1));
 
-		allHousing.add(new Housing(bank3a, allHousing.size(), "East Apartment"));
+		allHousing.add(new Housing(bank3a, allHousing.size(), "West Apartment"));
 		bank3a.setHome(allHousing.get(allHousing.size() - 1));
 		allHousing.add(new Housing(bank3b, allHousing.size(), "West Apartment"));
 		bank3b.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(bank3c, allHousing.size(), "East Apartment"));
+		allHousing.add(new Housing(bank3c, allHousing.size(), "West Apartment"));
 		bank3c.setHome(allHousing.get(allHousing.size() - 1));
 
-		allHousing.add(new Housing(rest3g, allHousing.size(), "East Apartment"));
+		allHousing.add(new Housing(rest3g, allHousing.size(), "West Apartment"));
 		rest3g.setHome(allHousing.get(allHousing.size() - 1));
 		allHousing.add(new Housing(rest3h, allHousing.size(), "West Apartment"));
 		rest3h.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(rest3i, allHousing.size(), "East Apartment"));
+		allHousing.add(new Housing(rest3i, allHousing.size(), "West Apartment"));
 		rest3i.setHome(allHousing.get(allHousing.size() - 1));
 		allHousing.add(new Housing(rest3j, allHousing.size(), "West Apartment"));
 		rest3j.setHome(allHousing.get(allHousing.size() - 1));
-		allHousing.add(new Housing(rest3k, allHousing.size(), "East Apartment"));
+		allHousing.add(new Housing(rest3k, allHousing.size(), "West Apartment"));
 		rest3k.setHome(allHousing.get(allHousing.size() - 1));
 
 		//People

@@ -77,7 +77,7 @@ public class PersonGui extends CityGui {
 		}
 		if (p.home.type.equals("Mansion")){
 			xHome = 600/6-600/12;
-			yHome = 600/2;
+			yHome = 150;
 		}
 
 		setxPos(xHome-20);
