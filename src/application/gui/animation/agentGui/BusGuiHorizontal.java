@@ -23,8 +23,10 @@ public class BusGuiHorizontal extends VehicleGui {
 
 	private final int stopLeftX = (int) Phonebook.getPhonebook().getAllBusStops().get(1).getBusStopLocation().getX()-15;
 	private final int stopRightX = (int) Phonebook.getPhonebook().getAllBusStops().get(2).getBusStopLocation().getX();
-	private final int stopTopY = WINDOWY/3-busLeft.getIconHeight()/2;
-	private final int stopBottomY = WINDOWY*2/3-busRight.getIconHeight()/2;
+	private final int stopTopY = WINDOWY/3-WINDOWY/18;
+	private final int stopBottomY = WINDOWY*2/3+WINDOWY/18;
+	private final int offScreenLeftBottomRoad = -50;
+	private final int offScreenRightTopRoad = WINDOWX;
 
 	private final int waitTime = 1500;
 
@@ -40,7 +42,7 @@ public class BusGuiHorizontal extends VehicleGui {
 	public BusGuiHorizontal(BusAgent bus){
 		agent = bus;
 		me.setSize(busLeft.getIconWidth(), busLeft.getIconHeight());
-		xPos = 0;
+		xPos = offScreenLeftBottomRoad;
 		yPos = stopTopY;//default bus position
 		//me.setSize(25, 25);
 	}
@@ -62,7 +64,7 @@ public class BusGuiHorizontal extends VehicleGui {
 		leftACrosswalk();
 		leftBusParking();
 
-		if (xPos == WINDOWX || xPos == -25) {
+		if (xPos == offScreenRightTopRoad || xPos == offScreenLeftBottomRoad) {
 			changeRoads();
 		}
 
@@ -183,15 +185,15 @@ public class BusGuiHorizontal extends VehicleGui {
 	}
 
 	public void goToEndOfTopRoad() {
-		xDestination = WINDOWX;
+		xDestination = offScreenRightTopRoad;
 	}
 
 	public void goToEndOfBottomRoad() {
-		xDestination = -25;
+		xDestination = offScreenLeftBottomRoad;
 	}
 
 	public void changeRoads() {
-		if (xDestination == WINDOWX) {
+		if (xDestination == offScreenRightTopRoad) {
 			yPos = stopBottomY;
 			goToStop3();
 		}
@@ -306,7 +308,7 @@ public class BusGuiHorizontal extends VehicleGui {
 		if (Phonebook.getPhonebook().busParking1H.getBusParking().intersects(me)) {
 			if (Phonebook.getPhonebook().busParking1H.isBusParkingBusy() == true &&
 					!(busParkingState == VehicleState.inBusParking1H)) {
-				System.err.println(this+" I'm about to go into busy bus parking 1 true");
+//				System.err.println(this+" I'm about to go into busy bus parking 1 true");
 				return true;
 			}
 //			System.err.println(this+" I'm about to go into busy bus parking 1 false");

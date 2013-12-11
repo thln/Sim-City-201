@@ -136,23 +136,23 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		g2.fillRect(WINDOWX*2/3-WINDOWY/18, 0, WINDOWY/9, WINDOWY);
 
 		//Intersections
-		g2.setColor(Color.PINK);
-		g2.fillRect((int) Phonebook.getPhonebook().intersection1.getIntersection().getX(),
-				(int) Phonebook.getPhonebook().intersection1.getIntersection().getY(),
-				(int) Phonebook.getPhonebook().intersection1.getIntersection().getWidth(),
-				(int) Phonebook.getPhonebook().intersection1.getIntersection().getHeight());
-		g2.fillRect((int) Phonebook.getPhonebook().intersection2.getIntersection().getX(),
-				(int) Phonebook.getPhonebook().intersection2.getIntersection().getY(),
-				(int) Phonebook.getPhonebook().intersection2.getIntersection().getWidth(),
-				(int) Phonebook.getPhonebook().intersection2.getIntersection().getHeight());
-		g2.fillRect((int) Phonebook.getPhonebook().intersection3.getIntersection().getX(),
-				(int) Phonebook.getPhonebook().intersection3.getIntersection().getY(),
-				(int) Phonebook.getPhonebook().intersection3.getIntersection().getWidth(),
-				(int) Phonebook.getPhonebook().intersection3.getIntersection().getHeight());
-		g2.fillRect((int) Phonebook.getPhonebook().intersection4.getIntersection().getX(),
-				(int) Phonebook.getPhonebook().intersection4.getIntersection().getY(),
-				(int) Phonebook.getPhonebook().intersection4.getIntersection().getWidth(),
-				(int) Phonebook.getPhonebook().intersection4.getIntersection().getHeight());
+//		g2.setColor(Color.PINK);
+//		g2.fillRect((int) Phonebook.getPhonebook().intersection1.getIntersection().getX(),
+//				(int) Phonebook.getPhonebook().intersection1.getIntersection().getY(),
+//				(int) Phonebook.getPhonebook().intersection1.getIntersection().getWidth(),
+//				(int) Phonebook.getPhonebook().intersection1.getIntersection().getHeight());
+//		g2.fillRect((int) Phonebook.getPhonebook().intersection2.getIntersection().getX(),
+//				(int) Phonebook.getPhonebook().intersection2.getIntersection().getY(),
+//				(int) Phonebook.getPhonebook().intersection2.getIntersection().getWidth(),
+//				(int) Phonebook.getPhonebook().intersection2.getIntersection().getHeight());
+//		g2.fillRect((int) Phonebook.getPhonebook().intersection3.getIntersection().getX(),
+//				(int) Phonebook.getPhonebook().intersection3.getIntersection().getY(),
+//				(int) Phonebook.getPhonebook().intersection3.getIntersection().getWidth(),
+//				(int) Phonebook.getPhonebook().intersection3.getIntersection().getHeight());
+//		g2.fillRect((int) Phonebook.getPhonebook().intersection4.getIntersection().getX(),
+//				(int) Phonebook.getPhonebook().intersection4.getIntersection().getY(),
+//				(int) Phonebook.getPhonebook().intersection4.getIntersection().getWidth(),
+//				(int) Phonebook.getPhonebook().intersection4.getIntersection().getHeight());
 
 		//Crosswalks
 		drawCrosswalks(g2);
@@ -164,39 +164,39 @@ public class CityPanel extends JPanel implements ActionListener, MouseListener {
 		g2.drawImage(busStop.getImage(), WINDOWX*2/3+WINDOWX/18, WINDOWY*2/3+WINDOWY/18, null);
 		
 		//Bus Parking
-		g2.setColor(Color.CYAN);
-		g2.fillRect((int) Phonebook.getPhonebook().busParking1H.getBusParking().getX(),
-				(int) Phonebook.getPhonebook().busParking1H.getBusParking().getY(),
-				(int) Phonebook.getPhonebook().busParking1H.getBusParking().getWidth(),
-				(int) Phonebook.getPhonebook().busParking1H.getBusParking().getHeight());
-		g2.fillRect((int) Phonebook.getPhonebook().busParking1V.getBusParking().getX(),
-				(int) Phonebook.getPhonebook().busParking1V.getBusParking().getY(),
-				(int) Phonebook.getPhonebook().busParking1V.getBusParking().getWidth(),
-				(int) Phonebook.getPhonebook().busParking1V.getBusParking().getHeight());
-		g2.fillRect((int) Phonebook.getPhonebook().busParking2H.getBusParking().getX(),
-				(int) Phonebook.getPhonebook().busParking2H.getBusParking().getY(),
-				(int) Phonebook.getPhonebook().busParking2H.getBusParking().getWidth(),
-				(int) Phonebook.getPhonebook().busParking2H.getBusParking().getHeight());
-		g2.fillRect((int) Phonebook.getPhonebook().busParking2V.getBusParking().getX(),
-				(int) Phonebook.getPhonebook().busParking2V.getBusParking().getY(),
-				(int) Phonebook.getPhonebook().busParking2V.getBusParking().getWidth(),
-				(int) Phonebook.getPhonebook().busParking2V.getBusParking().getHeight());
-		g2.fillRect((int) Phonebook.getPhonebook().busParking3H.getBusParking().getX(),
-				(int) Phonebook.getPhonebook().busParking3H.getBusParking().getY(),
-				(int) Phonebook.getPhonebook().busParking3H.getBusParking().getWidth(),
-				(int) Phonebook.getPhonebook().busParking3H.getBusParking().getHeight());
-		g2.fillRect((int) Phonebook.getPhonebook().busParking3V.getBusParking().getX(),
-				(int) Phonebook.getPhonebook().busParking3V.getBusParking().getY(),
-				(int) Phonebook.getPhonebook().busParking3V.getBusParking().getWidth(),
-				(int) Phonebook.getPhonebook().busParking3V.getBusParking().getHeight());
-		g2.fillRect((int) Phonebook.getPhonebook().busParking4H.getBusParking().getX(),
-				(int) Phonebook.getPhonebook().busParking4H.getBusParking().getY(),
-				(int) Phonebook.getPhonebook().busParking4H.getBusParking().getWidth(),
-				(int) Phonebook.getPhonebook().busParking4H.getBusParking().getHeight());
-		g2.fillRect((int) Phonebook.getPhonebook().busParking4V.getBusParking().getX(),
-				(int) Phonebook.getPhonebook().busParking4V.getBusParking().getY(),
-				(int) Phonebook.getPhonebook().busParking4V.getBusParking().getWidth(),
-				(int) Phonebook.getPhonebook().busParking4V.getBusParking().getHeight());
+//		g2.setColor(Color.CYAN);
+//		g2.fillRect((int) Phonebook.getPhonebook().busParking1H.getBusParking().getX(),
+//				(int) Phonebook.getPhonebook().busParking1H.getBusParking().getY(),
+//				(int) Phonebook.getPhonebook().busParking1H.getBusParking().getWidth(),
+//				(int) Phonebook.getPhonebook().busParking1H.getBusParking().getHeight());
+//		g2.fillRect((int) Phonebook.getPhonebook().busParking1V.getBusParking().getX(),
+//				(int) Phonebook.getPhonebook().busParking1V.getBusParking().getY(),
+//				(int) Phonebook.getPhonebook().busParking1V.getBusParking().getWidth(),
+//				(int) Phonebook.getPhonebook().busParking1V.getBusParking().getHeight());
+//		g2.fillRect((int) Phonebook.getPhonebook().busParking2H.getBusParking().getX(),
+//				(int) Phonebook.getPhonebook().busParking2H.getBusParking().getY(),
+//				(int) Phonebook.getPhonebook().busParking2H.getBusParking().getWidth(),
+//				(int) Phonebook.getPhonebook().busParking2H.getBusParking().getHeight());
+//		g2.fillRect((int) Phonebook.getPhonebook().busParking2V.getBusParking().getX(),
+//				(int) Phonebook.getPhonebook().busParking2V.getBusParking().getY(),
+//				(int) Phonebook.getPhonebook().busParking2V.getBusParking().getWidth(),
+//				(int) Phonebook.getPhonebook().busParking2V.getBusParking().getHeight());
+//		g2.fillRect((int) Phonebook.getPhonebook().busParking3H.getBusParking().getX(),
+//				(int) Phonebook.getPhonebook().busParking3H.getBusParking().getY(),
+//				(int) Phonebook.getPhonebook().busParking3H.getBusParking().getWidth(),
+//				(int) Phonebook.getPhonebook().busParking3H.getBusParking().getHeight());
+//		g2.fillRect((int) Phonebook.getPhonebook().busParking3V.getBusParking().getX(),
+//				(int) Phonebook.getPhonebook().busParking3V.getBusParking().getY(),
+//				(int) Phonebook.getPhonebook().busParking3V.getBusParking().getWidth(),
+//				(int) Phonebook.getPhonebook().busParking3V.getBusParking().getHeight());
+//		g2.fillRect((int) Phonebook.getPhonebook().busParking4H.getBusParking().getX(),
+//				(int) Phonebook.getPhonebook().busParking4H.getBusParking().getY(),
+//				(int) Phonebook.getPhonebook().busParking4H.getBusParking().getWidth(),
+//				(int) Phonebook.getPhonebook().busParking4H.getBusParking().getHeight());
+//		g2.fillRect((int) Phonebook.getPhonebook().busParking4V.getBusParking().getX(),
+//				(int) Phonebook.getPhonebook().busParking4V.getBusParking().getY(),
+//				(int) Phonebook.getPhonebook().busParking4V.getBusParking().getWidth(),
+//				(int) Phonebook.getPhonebook().busParking4V.getBusParking().getHeight());
 
 		//One Way Signs
 		g2.drawImage(oneWaySignLeft.getImage(), WINDOWX*2/3+75, WINDOWY*2/3, null);

@@ -24,11 +24,12 @@ public class BusGuiVertical extends VehicleGui {
 	private final int stopRightX = WINDOWX*2/3-busDown.getIconWidth()/2;
 
 	private final int waitTime = 1500;
-	
-	private int xPos = stopLeftX, yPos = WINDOWY;//default bus position
 
 	private int yDestination = stopBottomY;//Stop 4
 	private int xDestination = xPos;
+	
+	private final int offScreenTopLeftRoad = -50;
+	private final int offScreenBottomRightRoad = 350;
 
 	private enum Command {noCommand, wait, stop1, stop2, stop3, stop4};
 	private Command command = Command.stop4;
@@ -39,17 +40,16 @@ public class BusGuiVertical extends VehicleGui {
 	public BusGuiVertical(BusAgent bus){
 		agent = bus;
 		xPos = stopLeftX;
-		yPos = 325;
+		yPos = offScreenBottomRightRoad;
 		me.setSize(busUp.getIconWidth(), busDown.getIconHeight()-5);
 		//me.setSize(25, 25);
 	}
 
 	public void updatePosition() {
 		if (inBusyIntersection() || inBusyCrosswalk() || inBusyBusParking()) {
-			System.err.println(this + "State of variables intersection " + inBusyIntersection() +
-					" crosswalk = " + inBusyCrosswalk() + " and parking = " + inBusyBusParking());
 			return;
 		}
+
 		if (yPos < yDestination)
 			yPos++;
 		else if (yPos > yDestination)
@@ -60,9 +60,10 @@ public class BusGuiVertical extends VehicleGui {
 		inBusParking();
 		leftAnIntersection();
 		leftACrosswalk();
-		
-		
-		if (yPos == WINDOWY || yPos == -25) {
+		leftBusParking();
+
+
+		if (yPos == offScreenBottomRightRoad || yPos == offScreenTopLeftRoad) {
 			changeRoads();
 		}
 
@@ -70,7 +71,7 @@ public class BusGuiVertical extends VehicleGui {
 		if (yPos == yDestination) {
 			if (command == Command.stop1) {
 				command = Command.wait;
-				System.err.println("Arrived at bus stop 1");
+//				System.err.println("Arrived at bus stop 1");
 				busStop.schedule(new TimerTask() {
 					public void run() {
 						agent.msgAtBusStop(1);
@@ -110,10 +111,8 @@ public class BusGuiVertical extends VehicleGui {
 				waitTime);
 			}
 		}
-		else
-		{
-			if(agent.getCheckedStation())
-			{
+		else {
+			if(agent.getCheckedStation()) {
 				agent.msgLeavingStation();
 			}
 		}
@@ -185,15 +184,15 @@ public class BusGuiVertical extends VehicleGui {
 	}
 
 	public void goToEndOfRightRoad() {
-		yDestination = WINDOWY;
+		yDestination = offScreenBottomRightRoad;
 	}
 
 	public void goToEndOfLeftRoad() {
-		yDestination = -25;
+		yDestination = offScreenTopLeftRoad;
 	}
 
 	public void changeRoads() {
-		if (yDestination == WINDOWY) {
+		if (yDestination == offScreenBottomRightRoad) {
 			xPos = stopLeftX;
 			goToStop4();
 		}
@@ -343,5 +342,4 @@ public class BusGuiVertical extends VehicleGui {
 			return false;
 		}
 	}
-	
 }
