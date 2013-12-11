@@ -86,7 +86,7 @@ public abstract class Role {
             {
             AlertLog.getInstance().logInfo(AlertTag.HOUSING, roleName + " " + Name, msg);
             }
-            else if (roleName.equals("Market AmericanRestaurantCustomer") || roleName.contains("MarketCustomer") || roleName.equals("Market Runner") 
+            else if (roleName.equals("Market Customer") || roleName.contains("MarketCustomer") || roleName.equals("Market Runner") 
                             || roleName.contains("MarketRunner") || roleName.equals("Sales Person") || roleName.contains("SalesPerson") || roleName.contains("Market") || roleName.equals("UPS Man"))
             {
             AlertLog.getInstance().logInfo(AlertTag.MARKET, roleName + " " + Name, msg);
@@ -94,7 +94,7 @@ public abstract class Role {
             //Different Restaurants IMPLEMENT
             else if (roleName.equals("Alternative AmericanRestaurantWaiter") || roleName.equals("AmericanRestaurantCashier")
                             || roleName.equals("Cook") || roleName.equals("AmericanRestaurantHost") 
-                            || roleName.equals("Restaurant AmericanRestaurantCustomer") || roleName.equals("waiter") )
+                            || roleName.equals("Restaurant Customer") || roleName.equals("waiter") )
             {
             AlertLog.getInstance().logInfo(AlertTag.RESTAURANT, roleName + " " + Name, msg);
             }
@@ -136,7 +136,11 @@ public abstract class Role {
     }
     
     public String getName() {
-    	return person.getName();
+    	if(person != null) {
+    		return person.getName();
+    	}
+    	else
+    		return " ";
     }
     
     public void setState(RoleState state) 

@@ -14,8 +14,9 @@ import application.gui.animation.agentGui.*;
 
 public class AnimationPanel extends JPanel implements MouseListener, ActionListener {
 
-	final static int WINDOWX = 600;
-	final static int WINDOWY = 325;
+	Toolkit tk = Toolkit.getDefaultToolkit();
+	int WINDOWX = ((int) tk.getScreenSize().getWidth())/2; 
+	int WINDOWY = (((int) tk.getScreenSize().getHeight())/2)*5/6; 
 
 	public CityPanel cityPanel;
 	JPanel buildingPanels;
@@ -133,6 +134,9 @@ public class AnimationPanel extends JPanel implements MouseListener, ActionListe
 			}
 			if (building.getName().toLowerCase().contains("italian")) {
 				Phonebook.getPhonebook().getItalianRestaurant().setBuildingPanel(building.myBuildingPanel);
+			}
+			if (building.getName().toLowerCase().contains("american")) {
+				Phonebook.getPhonebook().getAmericanRestaurant().setBuildingPanel(building.myBuildingPanel);
 			}
 		}
 		if (building.getName().toLowerCase().contains("market")) {

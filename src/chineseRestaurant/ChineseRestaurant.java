@@ -1,6 +1,7 @@
 package chineseRestaurant;
 
 import java.awt.Point;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -23,6 +24,10 @@ import chineseRestaurant.test.mock.ChineseRestaurantMockCook;
 
 public class ChineseRestaurant implements Restaurant {
 
+	Toolkit tk = Toolkit.getDefaultToolkit();
+	int WINDOWX = ((int) tk.getScreenSize().getWidth())/2; 
+	int WINDOWY = (((int) tk.getScreenSize().getHeight())/2)*5/6;  
+	
 	//Data
 	String name;
 	public boolean userClosed = false;
@@ -56,7 +61,7 @@ public class ChineseRestaurant implements Restaurant {
 	public ChineseRestaurantMockCashier chineseRestaurantMockCashier = new ChineseRestaurantMockCashier("MockCashier");
 
 	public ChineseRestaurant(String name) {
-		location = new Point(335, 20);
+		location = new Point(WINDOWX/2, WINDOWY/6-restaurant.getIconHeight()-5);
 		this.name = name;
 		//chineseRestaurantCookRole.setGui(cookGui);
 	}
@@ -218,8 +223,13 @@ public class ChineseRestaurant implements Restaurant {
 	}
 
 	public boolean isOpen() {
-		if (chineseRestaurantHostRole.getPerson() != null && chineseRestaurantHostRole.waiters.size() != 0 && chineseRestaurantCookRole.getPerson() != null && chineseRestaurantCashierRole != null && !userClosed)
+	//	System.err.println("Testing chinese open");
+		if (chineseRestaurantHostRole.getPerson() != null && chineseRestaurantHostRole.waiters.size() != 0 
+				&& chineseRestaurantCookRole.getPerson() != null && chineseRestaurantCashierRole != null && !userClosed){
+			System.err.println("Chinese restaurant now open!");
 			return true;
+		}
+			
 		else 
 			return false;
 	}
@@ -267,5 +277,10 @@ public class ChineseRestaurant implements Restaurant {
 
 	public Point getClosestStop() {
 		return closestStop;
+	}
+	
+	public Vector<ChineseRestaurantCustomerRole> getCustomers()
+	{
+		return customers;
 	}
 }

@@ -17,6 +17,7 @@ public class Worker extends Person {
 	public Job myJob = null;
 	public Role workerRole = null;
 	public boolean leavingWork = false;
+	public boolean getPayCheck = false;
 
 	public Worker (String name, double money, String jobTitle, String jobPlace, int startT, int lunchT, int endT) {
 		super(name, money);
@@ -179,10 +180,17 @@ public class Worker extends Person {
 		//Rent Related (check if you need to pay rent)
 		if (TimeManager.getTimeManager().getTime().day == Day.Monday) {
 			resetRentMailbox();
+			resetPayCheck();
 			return true;
 		}
 		if (TimeManager.getTimeManager().getTime().day == Day.Sunday && !checkedMailbox) {
 			prepareForRent();
+			return true;
+		}
+		
+		if(TimeManager.getTimeManager().getTime().day == Day.Sunday && !getPayCheck)
+		{
+			receivePayCheck();
 			return true;
 		}
 
@@ -246,20 +254,33 @@ public class Worker extends Person {
 	//		((((nextTaskTime - currentTime) % 24) + 24) % 24) * timeConversion);
 	//	}
 
+	public void receivePayCheck()
+	{
+		getPayCheck = true;
+		print("Getting weekly paycheck for $100.");
+		money += 100;
+		return;
+	}
+	
+	public void resetPayCheck()
+	{
+		getPayCheck = false;
+	}
+	
 	public void prepareForWork() {
 		currentRoleName = myJob.title;
 		print("Preparing for work as " + myJob.title + " at " + myJob.jobPlace);
 
 		gui.walk = gui.decideForBus(myJob.jobPlace);
-
 		if (!gui.walk){
 			if (myJob.jobPlace.contains("American")){
 				print("Destination bus Stop: " + Phonebook.getPhonebook().getAmericanRestaurant().getClosestBusStop().getBusStopNumber());
-				goToBusStop(Phonebook.getPhonebook().getAmericanRestaurant().getClosestBusStop().getBusStopNumber());
+
+				goToBusStop(Phonebook.getPhonebook().getAmericanRestaurant().getClosestBusStop().getBusStopNumber(), Phonebook.getPhonebook().getAmericanRestaurant().location);
 			}
 			if (myJob.jobPlace.contains("Chinese")){
 				print("Destination bus Stop: " + Phonebook.getPhonebook().getChineseRestaurant().getClosestBusStop().getBusStopNumber());
-				goToBusStop(Phonebook.getPhonebook().getChineseRestaurant().getClosestBusStop().getBusStopNumber());
+				goToBusStop(Phonebook.getPhonebook().getChineseRestaurant().getClosestBusStop().getBusStopNumber(), Phonebook.getPhonebook().getChineseRestaurant().location);
 			}
 			//			if (myJob.jobPlace.contains("Seafood")){
 			//				print("Destination bus Stop: " + Phonebook.getPhonebook().getSeafoodRestaurant().getClosestBusStop().getBusStopNumber());
@@ -267,13 +288,30 @@ public class Worker extends Person {
 			//			}
 			if (myJob.jobPlace.contains("Italian")){
 				print("Destination bus Stop: " + Phonebook.getPhonebook().getItalianRestaurant().getClosestBusStop().getBusStopNumber());
-				goToBusStop(Phonebook.getPhonebook().getItalianRestaurant().getClosestBusStop().getBusStopNumber());
+				goToBusStop(Phonebook.getPhonebook().getItalianRestaurant().getClosestBusStop().getBusStopNumber(), Phonebook.getPhonebook().getItalianRestaurant().location);
 			}
+			if (myJob.jobPlace.contains("West Bank")){
+				print("Destination bus Stop: " + Phonebook.getPhonebook().getWestBank().getClosestBusStop().getBusStopNumber());
+				goToBusStop(Phonebook.getPhonebook().getWestBank().getClosestBusStop().getBusStopNumber(), Phonebook.getPhonebook().getWestBank().location);
+			}
+			if (myJob.jobPlace.contains("East Bank")){
+				print("Destination bus Stop: " + Phonebook.getPhonebook().getEastBank().getClosestBusStop().getBusStopNumber());
+				goToBusStop(Phonebook.getPhonebook().getEastBank().getClosestBusStop().getBusStopNumber(), Phonebook.getPhonebook().getEastBank().location);
+			}
+			if (myJob.jobPlace.contains("West Market")){
+				print("Destination bus Stop: " + Phonebook.getPhonebook().getWestMarket().getClosestBusStop().getBusStopNumber());
+				goToBusStop(Phonebook.getPhonebook().getWestMarket().getClosestBusStop().getBusStopNumber(), Phonebook.getPhonebook().getWestMarket().location);
+			}
+			if (myJob.jobPlace.contains("East Market")){
+				print("Destination bus Stop: " + Phonebook.getPhonebook().getEastMarket().getClosestBusStop().getBusStopNumber());
+				goToBusStop(Phonebook.getPhonebook().getEastMarket().getClosestBusStop().getBusStopNumber(), Phonebook.getPhonebook().getEastMarket().location);
+			}
+			
 		}
 
 		if (!gui.walk){
 			try {
-				atDestination.acquire();
+				atCityDestination.acquire();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -302,6 +340,7 @@ public class Worker extends Person {
 
 		if (myJob.jobPlace.equals("West Bank")) 
 		{
+			print("test working");
 			workerRole = Phonebook.getPhonebook().getWestBank().arrivedAtWork(this, myJob.title);
 			workerRole.setRoleActive();
 			return;

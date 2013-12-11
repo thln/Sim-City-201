@@ -3,7 +3,9 @@ package housing;
 import person.Person;
 import person.Role;
 import person.Worker;
+import application.Phonebook;
 import application.WatchTime;
+import application.gui.animation.agentGui.*;
 
 public class HousingMaintenanceCompany 
 {
@@ -18,6 +20,7 @@ public class HousingMaintenanceCompany
 
 	//ROLES
 	public MaintenanceWorkerRole maintenanceWorkerRole = new MaintenanceWorkerRole("Maintenance Worker");
+	public HousingMaintenanceGui maintenanceWorkerGui = new HousingMaintenanceGui(maintenanceWorkerRole);
 	
 	public HousingMaintenanceCompany(String name) 
 	{
@@ -34,8 +37,10 @@ public class HousingMaintenanceCompany
 				Worker worker = (Worker) maintenanceWorkerRole.getPerson();
 				worker.roleFinishedWork();
 			}
+			//person.getGui().DoGoHome();
 			//Setting maintenance Worker role to new role
 			maintenanceWorkerRole.setPerson(person);
+			maintenanceWorkerRole.setGui(maintenanceWorkerGui);
 			return maintenanceWorkerRole;
 		}
 		else

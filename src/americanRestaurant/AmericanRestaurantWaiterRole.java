@@ -11,6 +11,7 @@ import chineseRestaurant.ChineseRestaurant;
 import person.Person;
 import person.Role;
 import americanRestaurant.AmericanRestaurantCookRole.Order;
+import americanRestaurant.gui.AmericanWaiterGui;
 import americanRestaurant.interfaces.AmericanRestaurantCashier;
 import americanRestaurant.interfaces.AmericanRestaurantCustomer;
 import americanRestaurant.interfaces.AmericanRestaurantWaiter;
@@ -52,7 +53,7 @@ public class AmericanRestaurantWaiterRole extends Role implements AmericanRestau
 
 		private List<MyCustomer> customers;	
 		private AmericanRestaurantHostRole myHost;
-//		public WaiterGui waiterGui;
+		public AmericanWaiterGui waiterGui;
 		RestaurantPanel panel1;
 		WaiterState waitState;
 		static List<String> itemsRemoved = Collections.synchronizedList(new ArrayList<String>());
@@ -150,7 +151,7 @@ public class AmericanRestaurantWaiterRole extends Role implements AmericanRestau
 		/**
 		 * Scheduler.  Determine what action is called for, and do it.
 		 */
-		protected boolean pickAndExecuteAnAction() {
+		public boolean pickAndExecuteAnAction() {
 
 			try {
 
@@ -243,16 +244,16 @@ public class AmericanRestaurantWaiterRole extends Role implements AmericanRestau
 
 		private void seatCustomer(MyCustomer c1) {
 			c1.state = customerState.BeingSeated;
-//			if (!(waiterGui.getXPos() == waiterGui.entranceX && waiterGui.getXPos() == waiterGui.entranceY)){
-//				waiterGui.inProcess = true;
-//				waiterGui.DoGoToEntrance();
-//				try {
-//					atTable.acquire();
-//				} catch (InterruptedException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//			}
+			if (!(waiterGui.getXPos() == waiterGui.entranceX && waiterGui.getXPos() == waiterGui.entranceY)){
+				waiterGui.inProcess = true;
+				waiterGui.DoGoToEntrance();
+				try {
+					atTable.acquire();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 
 			Menu m = new Menu();
 			if (itemsRemoved.size() != 0){
@@ -267,25 +268,25 @@ public class AmericanRestaurantWaiterRole extends Role implements AmericanRestau
 
 		private void DoSeatCustomer(MyCustomer C1) {
 			print("Seating customer at table " + (C1.tab.getSeatNum()+1));
-//			waiterGui.DoBringToTable(C1.tab); 
-//			try {
-//				atTable.acquire();
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//			waiterGui.DoLeaveCustomer();	
+			waiterGui.DoBringToTable(C1.tab); 
+			try {
+				atTable.acquire();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			waiterGui.DoLeaveCustomer();	
 	}
 
 		private void TakeOrder(MyCustomer c1) {	
 			c1.state = customerState.Ordering;
-//			waiterGui.DoBringToTable(c1.tab);
-//			try {
-//				atTable.acquire();			
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
+			waiterGui.DoBringToTable(c1.tab);
+			try {
+				atTable.acquire();			
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			print("Taking Order");
 			c1.cust.msgWhatIsYourChoice();
 		}
@@ -293,20 +294,20 @@ public class AmericanRestaurantWaiterRole extends Role implements AmericanRestau
 		private void ProcessOrder(MyCustomer c1){
 			print("Contacting Cook");	
 			c1.state = customerState.WaitingForFood;
-//			waiterGui.WalkToCook(c1.cust);
-//			try {
-//				atTable.acquire();
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}	
+			waiterGui.WalkToCook(c1.cust);
+			try {
+				atTable.acquire();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
 			c1.state = customerState.WaiterAtCook;
 		}
 
 		public void OrderFromCook(MyCustomer c1){
 
 			myRestaurant.americanCook.msgHereIsAnOrder(new Order(c1.choice, this, c1.tab));	
-		//	waiterGui.DoLeaveCustomer();
+			waiterGui.DoLeaveCustomer();
 			c1.state = customerState.WaitingForFood;
 		}
 
@@ -320,69 +321,69 @@ public class AmericanRestaurantWaiterRole extends Role implements AmericanRestau
 				}	
 			}
 
-//			waiterGui.DoBringToTable(c1.tab);		
-//			try {
-//				atTable.acquire();
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
+			waiterGui.DoBringToTable(c1.tab);		
+			try {
+				atTable.acquire();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			c1.cust.msgReOrder(m);
-//			waiterGui.DoLeaveCustomer();
+			waiterGui.DoLeaveCustomer();
 		}
 
 		private void ServeCustomer(MyCustomer c1) {	
 
-//			if (!(waiterGui.getXPos() == waiterGui.cookX && waiterGui.getXPos() == waiterGui.cookY)){	//if not already at cook
-//				waiterGui.WalkToCookForFood(c1.cust);
-//				try {
-//					atTable.acquire();
-//				} catch (InterruptedException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//			}	
+			if (!(waiterGui.getXPos() == waiterGui.cookX && waiterGui.getXPos() == waiterGui.cookY)){	//if not already at cook
+				waiterGui.WalkToCookForFood(c1.cust);
+				try {
+					atTable.acquire();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}	
 			c1.state = customerState.Eating;
 			print("Delivering Order");
-//			panel1.addFoodIcon(c1.choice, this);
-//			waiterGui.DoBringToTable(c1.tab);		
-//			try {
-//				atTable.acquire();
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
+			//panel1.addFoodIcon(c1.choice, this);
+			waiterGui.DoBringToTable(c1.tab);		
+			try {
+				atTable.acquire();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			print("Here is your food");
-//			waiterGui.DoLeaveCustomer();
-//			panel1.stopFoodIcon(this);
+			waiterGui.DoLeaveCustomer();
+			//panel1.stopFoodIcon(this);
 			c1.cust.msgHereIsYourFood(c1.choice);
 		}
 
 		private void NotifyCashier (MyCustomer c1) {
-//			if (!(waiterGui.getXPos() == waiterGui.homeX && waiterGui.getXPos() == waiterGui.homeY)){
-//				waiterGui.inProcess = true;
-//				waiterGui.DoGoToEntrance();
-//				try {
-//					atTable.acquire();
-//				} catch (InterruptedException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//			}
+			if (!(waiterGui.getXPos() == waiterGui.homeX && waiterGui.getXPos() == waiterGui.homeY)){
+				waiterGui.inProcess = true;
+				waiterGui.DoGoToEntrance();
+				try {
+					atTable.acquire();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 			myRestaurant.americanCashier.msgComputeBill(this, c1.cust, c1.choice);
 			c1.state = customerState.WaitingForCheck;
 		}
 
 		private void CustomerPay (MyCustomer c1) {
-//			waiterGui.DoBringToTable(c1.tab);
-//			try {
-//				atTable.acquire();			
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
+			waiterGui.DoBringToTable(c1.tab);
+			try {
+				atTable.acquire();			
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			c1.cust.msgPleasePayBill();
-	//		waiterGui.DoLeaveCustomer();
+			waiterGui.DoLeaveCustomer();
 			c1.state = customerState.Paying;
 		}
 
@@ -395,19 +396,19 @@ public class AmericanRestaurantWaiterRole extends Role implements AmericanRestau
 		private void GoBreak () {
 			setOnBreak(false);
 			final AmericanRestaurantWaiterRole w = this;
-	//		waiterGui.GoBreak();
+			waiterGui.GoBreak();
 		}
 
 
 		//utilities
 
-//		public void setGui(WaiterGui gui) {
-//			waiterGui = gui;
-//		}
-//
-//		public WaiterGui getGui() {
-//			return waiterGui;
-//		}
+		public void setGui(AmericanWaiterGui gui) {
+			waiterGui = gui;
+		}
+
+		public AmericanWaiterGui getGui() {
+			return waiterGui;
+		}
 
 		public void setPanel (RestaurantPanel p) {
 			panel1 = p;
@@ -455,11 +456,6 @@ public class AmericanRestaurantWaiterRole extends Role implements AmericanRestau
 			return onBreak;
 		}
 
-		@Override
-		public Object getGui() {
-			// TODO Auto-generated method stub
-			return null;
-		}
 		@Override
 		public void msgSeatAtTable (AmericanRestaurantCustomer c1, AmericanRestaurantTable t1){
 			print("Seat Assigned");

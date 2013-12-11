@@ -17,7 +17,7 @@ public class AmericanRestaurantAltWaiterRole extends AmericanRestaurantWaiterRol
 		print("Placing order on Revolving Stand.");
 		myRestaurant.getRevolvingStand().newOrder(new Order(c1.choice, this, c1.tab));
 //		print("stand size = " + myRestaurant.getRevolvingStand().getSize());
-//		waiterGui.DoLeaveCustomer();
+		waiterGui.DoLeaveCustomer();
 		c1.state = customerState.WaitingForFood;
 	}
 

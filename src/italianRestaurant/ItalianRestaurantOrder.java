@@ -8,12 +8,12 @@ public class ItalianRestaurantOrder {
 	 * the waiter gives to the cook, and its state
 	 * of cooking on the cook's "grill".
 	 */
-	enum OrderState {pending, cooking, done, finished};
-	ItalianWaiter w;
-	ItalianFood food;
-	String choice;
-	int table;
-	OrderState s;
+	public enum OrderState {pending, cooking, done, finished};
+	public ItalianWaiter w;
+	public ItalianFood food;
+	public String choice;
+	public int table;
+	public OrderState s;
 	
 	ItalianRestaurantOrder(ItalianWaiter waiter, String f, int t)  {
 		w = waiter;

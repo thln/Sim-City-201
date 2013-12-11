@@ -24,7 +24,7 @@ public class SeafoodRestaurantHostRole extends Role
 	public enum CustomerState 
 	{Waiting,Seated, Left};
 	
-	private class MyCustomer
+	public class MyCustomer
 	{
 		public SeafoodRestaurantCustomerRole c;
 		private CustomerState state = CustomerState.Waiting;
@@ -37,7 +37,7 @@ public class SeafoodRestaurantHostRole extends Role
 	public enum WaiterState {Working, Asked, onBreak, LeavingSoon, Leaving};
 	//public boolean CheckingWaiters = false;
 	
-	private class MyWaiter
+	public class MyWaiter
 	{
 		public SeafoodRestaurantWaiterRole w1;
 		//used possibly to go through the waiterlist and reorganize the customers
@@ -265,7 +265,7 @@ public class SeafoodRestaurantHostRole extends Role
 	 * Scheduler.  Determine what action is called for, and do it.
 	 */
 	
-	protected boolean pickAndExecuteAnAction() 
+	public boolean pickAndExecuteAnAction() 
 	{
 		//////FILL IN HERE
 		//WAITER ON BREAK STUFF ******************************

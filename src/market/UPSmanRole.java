@@ -44,7 +44,7 @@ public class UPSmanRole extends Role implements UPSman {
 	}
 	
 	public void msgAtDestination() {
-		atDestination.release();
+		this.atDestination.release();
 	}
 
 	//Scheduler
@@ -67,7 +67,17 @@ public class UPSmanRole extends Role implements UPSman {
 
 	//Actions
 	public void deliverOrder(MarketOrder o) {
+		
+		UPSmanGui.DoGoToSalesPerson();
+		try {
+			this.atDestination.acquire();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
+		UPSmanGui.DoExit();
+		
 		print("Delivered an order to a restaurant");
 		if (o.chineseRestaurant != null) {
 			o.chineseRestaurant.getCook(test).msgOrderFulfillment(o.item, o.itemAmountFulfilled, o.itemAmountOrdered);

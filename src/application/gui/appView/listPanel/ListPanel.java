@@ -30,18 +30,22 @@ public class ListPanel extends JPanel implements ActionListener{
 	private List<JButton> buttons = new ArrayList<JButton>(); 
 	
 	//Info Panel
-	private JPanel infoPane;
+	private JPanel infoPersonPane;
+	//private JPanel infoBuildingPane;
 	private List<Profile> people = new ArrayList<Profile>();
 	private JTextArea personInfoArea = new JTextArea();
 	
 	private JLabel infoName = new JLabel("Name: ");
 	private JLabel infoType = new JLabel("Type: ");
 	private JLabel infoMoney = new JLabel("Money: ");
+	private JLabel infoHousing = new JLabel("Housing: ");
 	private JLabel infoJobLoc = new JLabel ("Job Location: ");
 	private JLabel infoJobTitle = new JLabel ("Job Title: ");
 	private JLabel infoStartTime = new JLabel ("Start Time: ");
 	private JLabel infoLunchTime = new JLabel ("Lunch Time: ");
 	private JLabel infoEndTime = new JLabel ("End Time: ");	
+	
+	//private JLabel infoTest = new JLabel("test: ");
 	
 	public ListPanel(ApplicationPanel appPanel, Application app){
 		this.app = app;
@@ -62,25 +66,32 @@ public class ListPanel extends JPanel implements ActionListener{
         
 		add(pane);
 		
-		infoPane = new JPanel();
-		infoPane.setLayout(new GridLayout(0,1));
+		infoPersonPane = new JPanel();
+		infoPersonPane.setLayout(new GridLayout(0,1));
 		infoName.setVisible(false);
 		infoType.setVisible(false);
 		infoMoney.setVisible(false);
+		infoHousing.setVisible(false);
 		infoJobLoc.setVisible(false);
 		infoJobTitle.setVisible(false);
 		infoStartTime.setVisible(false);
 		infoLunchTime.setVisible(false);
 		infoEndTime.setVisible(false);
-		infoPane.add(infoName);
-		infoPane.add(infoType);
-		infoPane.add(infoMoney);
-		infoPane.add(infoJobLoc);
-		infoPane.add(infoJobTitle);
-		infoPane.add(infoStartTime);
-		infoPane.add(infoLunchTime);
-		infoPane.add(infoEndTime);
-		add(infoPane);
+		infoPersonPane.add(infoName);
+		infoPersonPane.add(infoType);
+		infoPersonPane.add(infoMoney);
+		infoPersonPane.add(infoHousing);
+		infoPersonPane.add(infoJobLoc);
+		infoPersonPane.add(infoJobTitle);
+		infoPersonPane.add(infoStartTime);
+		infoPersonPane.add(infoLunchTime);
+		infoPersonPane.add(infoEndTime);
+		add(infoPersonPane);
+		
+//		infoBuildingPane = new JPanel();
+//		infoBuildingPane.setLayout(new GridLayout(0,1));
+//		infoBuildingPane.add(infoTest);
+//		add(infoBuildingPane);
 		
 	}
 
@@ -96,7 +107,7 @@ public class ListPanel extends JPanel implements ActionListener{
 	}
 
 	public void addPerson (String name ,int money, String type,
-			String jobTitle, String jobLocation, int startT, int lunchT, int endT){
+			String jobTitle, String jobLocation, String housing, int startT, int lunchT, int endT){
 		if(name != null){
 			JButton button = new JButton(name);
 				if(type.equals("Wealthy")){
@@ -120,7 +131,7 @@ public class ListPanel extends JPanel implements ActionListener{
 			button.addActionListener(this);
 			buttons.add(button);
 			listPane.add(button);
-			people.add(new Profile(name, money, type, jobTitle,jobLocation,startT,lunchT,endT));
+			people.add(new Profile(name, money, type, jobTitle,jobLocation, housing, startT,lunchT,endT));
 			//validate();
 		}
 	}
@@ -130,9 +141,11 @@ public class ListPanel extends JPanel implements ActionListener{
 			infoName.setVisible(true);
 			infoType.setVisible(true);
 			infoMoney.setVisible(true);
+			infoHousing.setVisible(true);
 			infoName.setText("Name: " + pf.getName());
 			infoType.setText("Type: " + pf.getType());
 			infoMoney.setText("Money: " + pf.getMoney());
+			infoHousing.setText("Housing: " + pf.getHousing());
 			if(pf.getType() == "Worker")
 			{
 				infoJobLoc.setVisible(true);
@@ -166,26 +179,26 @@ public class ListPanel extends JPanel implements ActionListener{
 			Person temp = app.getPerson(i);
 			JButton button = new JButton(temp.getName());
 			if(temp instanceof Crook){
-				people.add(new Profile(temp.getName(), (int) temp.getMoney(), "Crook", temp.getCurrentRoleName(), null, 0,0,0));
+				people.add(new Profile(temp.getName(), (int) temp.getMoney(), "Crook", temp.getCurrentRoleName(), null, temp.getHousing().type, 0,0,0));
 				button.setBackground(Color.lightGray);
 			}
 			else if(temp instanceof Deadbeat){
-				people.add(new Profile(temp.getName(), (int) temp.getMoney(), "Deadbeat", temp.getCurrentRoleName(), null, 0,0,0));
+				people.add(new Profile(temp.getName(), (int) temp.getMoney(), "Deadbeat", temp.getCurrentRoleName(), null, temp.getHousing().type, 0,0,0));
 				button.setBackground(Color.orange);
 			}
 			else if(temp instanceof Worker){
 				Job tempJob = ((Worker) temp).getJob();
-				people.add(new Profile(temp.getName(), (int) temp.getMoney(), "Worker", tempJob.getTitle(), tempJob.getJobLoc(), tempJob.getStartTime().getTimeHour()
-										,tempJob.getLunchTime().getTimeHour(),tempJob.getEndTime().getTimeHour()));
+				people.add(new Profile(temp.getName(), (int) temp.getMoney(), "Worker", tempJob.getTitle(), tempJob.getJobLoc(), temp.getHousing().type,
+						tempJob.getStartTime().getTimeHour(),tempJob.getLunchTime().getTimeHour(),tempJob.getEndTime().getTimeHour()));
 				button.setBackground(Color.white);
 			}
 			else if(temp instanceof Wealthy){
-				people.add(new Profile(temp.getName(), (int) temp.getMoney(), "Wealthy", temp.getCurrentRoleName(), null, 0,0,0));
+				people.add(new Profile(temp.getName(), (int) temp.getMoney(), "Wealthy", temp.getCurrentRoleName(), null, temp.getHousing().type, 0,0,0));
 				button.setBackground(Color.green);
 			}
 			else {
 				//if the person is none of the types of the type can't be detected, output a black button to indicate an error
-				people.add(new Profile(temp.getName(), (int) temp.getMoney(), "None", temp.getCurrentRoleName(), null, 0,0,0));
+				people.add(new Profile(temp.getName(), (int) temp.getMoney(), "None", temp.getCurrentRoleName(), null, temp.getHousing().type, 0,0,0));
 				button.setBackground(Color.black);
 			}
             button.setMaximumSize(new Dimension(125, 25));
@@ -228,6 +241,7 @@ public class ListPanel extends JPanel implements ActionListener{
 		int money;
 		String jobTitle;
 		String jobLocation;
+		String housing;
 		int startT;
 		int lunchT;
 		int endT;
@@ -236,12 +250,13 @@ public class ListPanel extends JPanel implements ActionListener{
 		int index;
 		
 		public Profile (String name ,int money, String type,
-				String jobTitle, String jobLocation, int startT, int lunchT, int endT){
+				String jobTitle, String jobLocation, String housing, int startT, int lunchT, int endT){
 			this.name = name;
 			this.money = money;
 			this.type = type;
 			this.jobTitle = jobTitle;
 			this.jobLocation = jobLocation;
+			this.housing = housing;
 			this.startT = startT;
 			this.lunchT = lunchT;
 			this.endT = endT;
@@ -252,6 +267,7 @@ public class ListPanel extends JPanel implements ActionListener{
 			this.type = null;
 			this.jobTitle = null;
 			this.jobLocation = null;
+			this.housing = null;
 			this.startT = 0;
 			this.lunchT = 0;
 			this.endT = 0;
@@ -306,6 +322,16 @@ public class ListPanel extends JPanel implements ActionListener{
 			this.jobLocation = jobLocation;
 		}
 
+		public String getHousing()
+		{
+			return housing;
+		}
+		
+		public void setHousing(String h)
+		{
+			this.housing = h;
+		}
+		
 		public int getStartT() {
 			return startT;
 		}

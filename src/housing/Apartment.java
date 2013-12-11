@@ -4,18 +4,33 @@ import java.awt.*;
 import java.util.List;
 import java.util.*;
 
+import javax.swing.ImageIcon;
+
+import person.Person;
+import person.Worker;
+import bank.BankTellerRole;
 import application.gui.animation.*;
 import application.gui.animation.agentGui.*;
 
 
 public class Apartment {
 	
+	Toolkit tk = Toolkit.getDefaultToolkit();
+	int WINDOWX = ((int) tk.getScreenSize().getWidth())/2; 
+	int WINDOWY = (((int) tk.getScreenSize().getHeight())/2)*5/6; 
+	ImageIcon apartment = new ImageIcon("res/apartment.png", "apartment");
+	
+	private Point location;
 	private ApartmentPanel apartmentPanel;
 	String name;
 	List<Housing> aptUnits = new ArrayList<Housing>();
 	
 	public Apartment(String name) {
 		this.name = name;
+		if (name.equals("West Apartment"))
+			location = new Point(WINDOWX/6-apartment.getIconWidth(), WINDOWY/6-apartment.getIconHeight()/2);
+		if (name.equals("East Apartment"))
+			location = new Point(WINDOWX*5/6, WINDOWY*5/6-apartment.getIconHeight()/2);
 	}
 	
 	public boolean arrived(ApartmentResidentRole ARR) {
@@ -36,6 +51,13 @@ public class Apartment {
 			}
 		}
 		return false;
+	}
+	
+	public void removeResident(ApartmentResidentRole role) {
+		role.setPerson(null);
+		role.getHome().setOccupied(false);
+		role.setRoleInactive();
+		apartmentPanel.removeGui(role.getGui());
 	}
 	
 	public void setBuildingPanel(BuildingPanel myBuildingPanel) {

@@ -120,4 +120,9 @@ public class MarketCustomerGui extends MarketGui {
     	yDestination = 350;
     	command = Command.inTransit;
     }
+    
+    public MarketCustomerRole getAgent()
+    {
+    	return agent;
+    }
 }

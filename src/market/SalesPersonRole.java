@@ -117,7 +117,7 @@ public class SalesPersonRole extends Role implements SalesPerson {
 	}
 	
 	public void msgAtDestination() {
-		atDestination.release();
+		this.atDestination.release();
 	}
 
 
@@ -225,13 +225,13 @@ public class SalesPersonRole extends Role implements SalesPerson {
 		
 //CARMEN IF YOU UNCOMMENT THIS, MAKE SURE IT DOESN'T STOP THE WHOLE FREAKING INTERACTION
 //BECUASE THE SEMAPHORE WAS NEVER RELEASED SO THE MARKET WASN'T WORKING
-//		salesPersonGui.DoGotoRunner();
-//		try {
-//			this.atDestination.acquire();
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		salesPersonGui.DoGotoRunner();
+		try {
+			this.atDestination.acquire();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		print("Gave Market Runner an order to find");
 		if(market.getMarketRunner(test).isPresent()) {

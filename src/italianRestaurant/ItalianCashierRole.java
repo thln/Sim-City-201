@@ -79,16 +79,19 @@ public class ItalianCashierRole extends Role implements ItalianCashier{
 		}
 	}
 	
-	//message from ItalianMarket to americanRestaurantCashier to give payment for bill for restocking
+	
+	//message from ItalianMarket to italianRestaurantCashier to give payment for bill for restocking
 	public void msgRestockingBill(ItalianMarket market, String foodname, Double billtotal) {
 		print("Received bill of " + billtotal + " from " + market + " for " + foodname);
 		BillFoods.add(new Bill(market, billtotal));
 		stateChanged();
 	}
 	
+	
 	public void msgPleasePayForItems(String foodname, String orderAmt, Double billtotal, SalesPerson sp) {
 		print("Received bill of " + billtotal + " from " + sp.toString() + " for " + foodname);
-		BillFoods.add(new Bill(sp, billtotal, foodname, orderAmt));
+		int order = Integer.parseInt(orderAmt);
+		BillFoods.add(new Bill(sp, billtotal, foodname, order));
 		stateChanged();
 	}
 	
@@ -278,6 +281,8 @@ public class ItalianCashierRole extends Role implements ItalianCashier{
 		public Double total = 0.0;
 		public Double change;
 		public BillState s;
+		public int orderAmt;
+		
 		Bill(ItalianWaiter waiter, ItalianCustomer cust, Food food) {
 			w = waiter;
 			c = cust;
@@ -285,15 +290,18 @@ public class ItalianCashierRole extends Role implements ItalianCashier{
 			s = BillState.pending;
 		}
 		
+		
 		Bill(ItalianMarket market, Double bill) {
 			m = market;
 			total = bill;
 			s = BillState.pending;
 		}
 		
-		Bill(SalesPerson sp, Double bill, String foodname, String orderAmt) {
+		
+		Bill(SalesPerson sp, Double bill, String foodname, int orderAmt) {
 			this.salesPerson = sp;
 			total = bill;
+			this.orderAmt = orderAmt;
 			s = BillState.pending;
 		}
 		

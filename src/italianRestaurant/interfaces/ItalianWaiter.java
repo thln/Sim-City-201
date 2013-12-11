@@ -9,7 +9,7 @@ package italianRestaurant.interfaces;
  */
 public interface ItalianWaiter {
 
-	
+	public abstract void msgHereIsOrder(ItalianCustomer c, String choice);
 	public abstract void msgHereIsCheck(ItalianCustomer c, Double total);
 	public abstract void msgOrderDone(String choice, int table);
 	public abstract void msgFoodOut(String choice, int table);

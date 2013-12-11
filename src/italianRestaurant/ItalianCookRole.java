@@ -28,7 +28,7 @@ public class ItalianCookRole extends Role implements ItalianCook{
 	
 	private Semaphore atMarket = new Semaphore(0, true);
 	private Semaphore atFridge = new Semaphore(0, true);
-	private List<ItalianRestaurantOrder> Orders = Collections.synchronizedList(new ArrayList<ItalianRestaurantOrder>());
+	public List<ItalianRestaurantOrder> Orders = Collections.synchronizedList(new ArrayList<ItalianRestaurantOrder>());
 	//public List<ItalianMarket> Markets = Collections.synchronizedList(new ArrayList<ItalianMarket>());
 	//public List<ItalianMarket> visitedMarkets = Collections.synchronizedList(new ArrayList<ItalianMarket>());
 	public List<Market> Markets = Collections.synchronizedList(new ArrayList<Market>());
@@ -44,8 +44,8 @@ public class ItalianCookRole extends Role implements ItalianCook{
 	protected String RoleName = "Cook";
 	public ItalianCookGui cookGui = null;
 
-	public ItalianCookRole(String name, ItalianRestaurant restaurant) {
-		super(name);
+	public ItalianCookRole(Person person, String name, String title, ItalianRestaurant restaurant) {
+		super(person, name, title);
 		this.restaurant = restaurant;
 		//initializing food inventories when application starts
 		/*
@@ -61,6 +61,15 @@ public class ItalianCookRole extends Role implements ItalianCook{
 		Foods.add(new ItalianFood("Salad", 3, 10, 1));
 		Foods.add(new ItalianFood("Pizza", 4, 12, 2));
 		
+	}
+	
+	public ItalianCookRole(String name, ItalianRestaurant restaurant) {
+		super(name);
+		this.restaurant = restaurant;
+		Foods.add(new ItalianFood("Steak", 5, 12, 3)); //name, cooktime, inventory, low
+		Foods.add(new ItalianFood("Chicken", 2, 10, 2)); 
+		Foods.add(new ItalianFood("Salad", 3, 10, 1));
+		Foods.add(new ItalianFood("Pizza", 4, 12, 2));
 	}
 
 	// Messages
@@ -154,7 +163,7 @@ public class ItalianCookRole extends Role implements ItalianCook{
 	/**
 	 * Scheduler.  Determine what action is called for, and do it.
 	 */
-	protected boolean pickAndExecuteAnAction() {
+	public boolean pickAndExecuteAnAction() {
 		
 		if(!Phonebook.getPhonebook().getItalianRestaurant().getRevolvingStand().isStandEmpty()) {
 			takeRevolvingStandOrder();
