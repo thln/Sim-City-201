@@ -9,11 +9,10 @@ public abstract class VehicleGui extends CityGui {
 
 	protected Agent agent = null;
 	protected boolean isPresent = true;
-
 	protected int xPos, yPos;
 	protected int xDestination, yDestination;
 
-	Rectangle me = new Rectangle(xPos, yPos, 0, 0);
+	Rectangle me = new Rectangle();
 
 	protected enum Command {noCommand, block1, block2, block3, block4, block5, block6, block7, block8, block9, block10};
 	protected Command command = Command.noCommand;
@@ -289,10 +288,12 @@ public abstract class VehicleGui extends CityGui {
 		if (!Phonebook.getPhonebook().busParking1H.getBusParking().intersects(me)
 				&& (busParkingState == VehicleState.inBusParking1H)) {
 			Phonebook.getPhonebook().busParking1H.setBusParkingBusy(false);	
+			System.err.println(this+"I'm leaving bus parking 1H");
 			busParkingState = VehicleState.enroute;	
 		}
 		else if (!Phonebook.getPhonebook().busParking2H.getBusParking().intersects(me)
 				&& (busParkingState == VehicleState.inBusParking2H)) {
+			System.err.println("Leaving h2");
 			Phonebook.getPhonebook().busParking2H.setBusParkingBusy(false);	
 			busParkingState = VehicleState.enroute;	
 		}

@@ -13,18 +13,18 @@ public class VehicleVerticalGui extends VehicleGui {
 	ImageIcon carDown = new ImageIcon("res/CarDown.png");
 
 	private final int leftRoadX = 168;
-	private final int rightRoadX = 386;
+	private final int rightRoadX = 395;
 
 	public VehicleVerticalGui() {
 		xPos = rightRoadX;
 		yPos = -25;
 		yDestination = 325;
 		me.setSize(carUp.getIconWidth(), carUp.getIconHeight());
+		System.out.println("CarWidth: " + carUp.getIconWidth() + " CarHeight: " + carUp.getIconHeight());
 		//me.setSize(25, 25);
 	}
 
 	public void updatePosition() {
-
 		if (inBusyIntersection() || inBusyCrosswalk() || inBusyBusParking()) {
 			System.err.println(this + "State of variables intersection " + inBusyIntersection() +
 					" crosswalk = " + inBusyCrosswalk() + " and parking = " + inBusyBusParking());

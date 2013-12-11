@@ -1,16 +1,14 @@
 package application.gui.animation.agentGui;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import transportation.BusAgent;
-
 import javax.swing.ImageIcon;
 
+import transportation.BusAgent;
 import application.Phonebook;
-import application.gui.animation.agentGui.VehicleGui.VehicleState;
 
 public class BusGuiVertical extends VehicleGui {
 
@@ -23,11 +21,10 @@ public class BusGuiVertical extends VehicleGui {
 	private final int stopTopY = (int) Phonebook.getPhonebook().getAllBusStops().get(1).getBusStopLocation().getY()+8;
 	private final int stopBottomY = (int) Phonebook.getPhonebook().getAllBusStops().get(4).getBusStopLocation().getY()+8;
 	private final int stopLeftX = 168;
-	private final int stopRightX = 386;
+	private final int stopRightX = 395;
 
 	private final int waitTime = 1500;
 
-	private int xPos = stopLeftX, yPos = 325;//default bus position
 	private int yDestination = stopBottomY;//Stop 4
 	private int xDestination = xPos;
 
@@ -39,6 +36,8 @@ public class BusGuiVertical extends VehicleGui {
 
 	public BusGuiVertical(BusAgent bus){
 		agent = bus;
+		xPos = stopLeftX;
+		yPos = 325;
 		me.setSize(busUp.getIconWidth(), busDown.getIconHeight()-5);
 		//me.setSize(25, 25);
 	}
@@ -128,18 +127,19 @@ public class BusGuiVertical extends VehicleGui {
 			g.drawImage(busDown.getImage(), xPos, yPos, null);
 		}
 
+		g.setColor(Color.GRAY);
 		if(xPos == stopLeftX && yPos == stopTopY) {
 			g.fillRect(xPos-4, yPos+4, 5, 20);
 		}
 		else if(xPos == stopRightX && yPos == stopTopY) {
-			g.fillRect(xPos+26, yPos+4, 5, 20);
+			g.fillRect(xPos+20, yPos+4, 5, 20);
 		}
 
 		else if(xPos == stopLeftX && yPos == stopBottomY) {
 			g.fillRect(xPos-4, yPos+4, 5, 20);
 		}
 		else if(xPos == stopRightX && yPos == stopBottomY) {
-			g.fillRect(xPos+26, yPos+4, 5, 20);
+			g.fillRect(xPos+20, yPos+4, 5, 20);
 		}
 	}
 
