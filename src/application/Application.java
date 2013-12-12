@@ -410,9 +410,7 @@ public class Application extends JPanel {
 		getPopulation().add(market2d);
 		getPopulation().add(market2e);
 		getPopulation().add(market2f);
-		getPopulation().add(market3d);
-		getPopulation().add(market3e);
-		getPopulation().add(market3f);
+		
 		getPopulation().add(rest2g);
 		getPopulation().add(rest2h);
 		getPopulation().add(rest2i);
@@ -423,6 +421,13 @@ public class Application extends JPanel {
 		getPopulation().add(bank4b);
 		getPopulation().add(bank4c);
 
+		getPopulation().add(market3d);
+		getPopulation().add(market3e);
+		getPopulation().add(market3f);
+		getPopulation().add(market4d);
+		getPopulation().add(market4e);
+		getPopulation().add(market4f);
+		
 		//People
 		getPopulation().add(wealthy1);
 		getPopulation().add(wealthy2);

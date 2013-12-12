@@ -258,7 +258,6 @@ public boolean decideForBus(String location) {
 		command = Command.GoToMarket;
 	}
 	if (location.contains("West Market")) {
-		System.err.println ("In market statement");
 		xDestination = (int) Phonebook.getPhonebook().getWestMarket().location.getX();
 		yDestination = (int) Phonebook.getPhonebook().getWestMarket().location.getY();
 		command = Command.GoToMarket;

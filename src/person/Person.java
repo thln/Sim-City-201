@@ -363,13 +363,7 @@ public abstract class Person extends Agent{
 			}
 			gui.command = Command.GoToMarket;
 
-//			if (home.type.equals("East Apartment")){
-//				gui.doGoToBus(Phonebook.getPhonebook().getEastMarket().getClosestBusStop(), "East Market");
-//			}
-//			else {
-//				gui.doGoToBus(Phonebook.getPhonebook().getWestMarket().getClosestStop().getX(),
-//						Phonebook.getPhonebook().getWestMarket().getClosestStop().getY());
-//			}
+
 		}
 		if(gui.walk)
 		{
@@ -379,8 +373,6 @@ public abstract class Person extends Agent{
 				e.printStackTrace();
 			}
 		}
-		
-		System.err.println(" 111111111111111111111");
 		
 		//Checking if have enough money for car
 		if (accountBalance >= (carCost + 100)) {
@@ -392,7 +384,6 @@ public abstract class Person extends Agent{
 		if (hasFoodInFridge == false) {
 			//choosing random item to buy from market
 			for (Role cust1 : roles) {
-				System.err.println("!!!!!!!!!!!!!!!!!!!!!");
 				if (cust1 instanceof MarketCustomerRole) {
 					MarketCustomerRole MCR = (MarketCustomerRole) cust1;
 					MCR.setItem("");

@@ -327,13 +327,13 @@ public class Worker extends Person {
 			
 		}
 
-//		if (!gui.walk){
-//			try {
-//				atCityDestination.acquire();
-//			} catch (InterruptedException e) {
-//				e.printStackTrace();
-//			}
-//		}
+		if (!gui.walk){
+			try {
+				atCityDestination.acquire();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 
 		if (myJob.jobPlace == "Chinese Restaurant") 
 		{
