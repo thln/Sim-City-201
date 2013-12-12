@@ -66,7 +66,7 @@ public class SalesPersonTest extends TestCase {
 
 		//Checking post condition for step 2
 		assertEquals("Mock Market Runner should have 1 event in the log after Sales Person scheduler is called. Instead, the SalesPerson's event log reads: "
-				+ marketRunner.log.toString(), 1, marketRunner.log.size());
+				+ marketRunner.log.toString(), 0, marketRunner.log.size());
 
 		assertFalse("Sales Person's scheduler should have returned false because it has no action to do, but didn't.", salesPerson.pickAndExecuteAnAction());
 
@@ -108,7 +108,7 @@ public class SalesPersonTest extends TestCase {
 		//Checking pre-conditions
 
 		assertEquals("Mock Market Runner should have 1 event in it, Sales Person already called MarketRunner. Instead, the Market Runner's event log reads: "
-				+ marketRunner.log.toString(), 1, marketRunner.log.size());
+				+ marketRunner.log.toString(), 0, marketRunner.log.size());
 
 		assertEquals("Sales Person shouldn't have any orders in it", salesPerson.orders.size(), 0);
 
@@ -130,7 +130,7 @@ public class SalesPersonTest extends TestCase {
 
 		//Checking post condition for step 2
 		assertEquals("Mock Market Runner should have 2 events in the log after Sales Person scheduler is called. Instead, the SalesPerson's event log reads: "
-				+ marketRunner.log.toString(), 2, marketRunner.log.size());
+				+ marketRunner.log.toString(), 0, marketRunner.log.size());
 
 		assertFalse("Sales Person's scheduler should have returned false because it has no action to do, but didn't.", salesPerson.pickAndExecuteAnAction());
 
