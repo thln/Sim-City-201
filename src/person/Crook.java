@@ -73,7 +73,7 @@ public class Crook extends Person {
 
 		//Hunger Related
 		
-		if (getHunger() == HungerLevel.hungry) {
+		if (getHunger() == HungerLevel.hungry && robState == RobState.robbedToday) {
 			//If you don't have food in the fridge
 			if (!hasFoodInFridge) {
 				for (Restaurant r: Phonebook.getPhonebook().restaurants){
@@ -109,7 +109,8 @@ public class Crook extends Person {
 			}
 		}
 
-		goToSleep(); 
+		if (robState == RobState.robbedToday)
+			goToSleep(); 
 		return false;
 	}
 

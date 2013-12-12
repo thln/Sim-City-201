@@ -223,7 +223,7 @@ public class Application extends JPanel {
 		//West Market Workers
 		//SHIFT 1
 		Worker market3d = new Worker("Dan", 10, "marketRunner", "West Market", 0, 600, 13);
-		Worker market3e = new Worker("Elpha", 1000, "salesPerson", "West Market", 0, 600, 13);
+		Worker market3e = new Worker("Elpha", 100, "salesPerson", "West Market", 0, 600, 13);
 		Worker market3f = new Worker("Fitz", 10, "UPSman", "West Market", 0, 600, 13);        
 
 		//SHIFT 2
@@ -410,6 +410,9 @@ public class Application extends JPanel {
 		getPopulation().add(market2d);
 		getPopulation().add(market2e);
 		getPopulation().add(market2f);
+		getPopulation().add(market3d);
+		getPopulation().add(market3e);
+		getPopulation().add(market3f);
 		getPopulation().add(rest2g);
 		getPopulation().add(rest2h);
 		getPopulation().add(rest2i);
@@ -447,12 +450,6 @@ public class Application extends JPanel {
 		bank3a.startThread();
 		bank3b.startThread();	
 		bank3c.startThread();
-
-		rest3g.startThread();
-		rest3h.startThread();
-		rest3i.startThread();
-		rest3j.startThread();
-		rest3k.startThread();
 
 		market3d.startThread();
 		market3e.startThread();

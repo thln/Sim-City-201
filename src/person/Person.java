@@ -427,9 +427,6 @@ public abstract class Person extends Agent{
 		String choice = restaurantQueue.get(0);
 		for (int i = 0; i < restaurantQueue.size(); i++){
 			choice = restaurantQueue.get(i);
-			if (choice.equals("American Restaurant") && Phonebook.getPhonebook().getAmericanRestaurant().isOpen()){
-				break;
-			}
 			if (choice.equals("Chinese Restaurant") && Phonebook.getPhonebook().getChineseRestaurant().isOpen()){
 				break;
 			}

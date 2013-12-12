@@ -291,22 +291,12 @@ public class Worker extends Person {
 
 		gui.walk = gui.decideForBus(myJob.jobPlace);
 		if (!gui.walk){
-			if (myJob.jobPlace.contains("American")){
-				print("Destination bus Stop: " + Phonebook.getPhonebook().getAmericanRestaurant().getClosestBusStop().getBusStopNumber());
-
-				goToBusStop(Phonebook.getPhonebook().getAmericanRestaurant().getClosestBusStop().getBusStopNumber(), Phonebook.getPhonebook().getAmericanRestaurant().location);
-				gui.command = Command.GoToRestaurant;
-			}
 			if (myJob.jobPlace.contains("Chinese")){
 				print("Destination bus Stop: " + Phonebook.getPhonebook().getChineseRestaurant().getClosestBusStop().getBusStopNumber());
 				goToBusStop(Phonebook.getPhonebook().getChineseRestaurant().getClosestBusStop().getBusStopNumber(), Phonebook.getPhonebook().getChineseRestaurant().location);
 				gui.command = Command.GoToRestaurant;
 
 			}
-			//			if (myJob.jobPlace.contains("Seafood")){
-			//				print("Destination bus Stop: " + Phonebook.getPhonebook().getSeafoodRestaurant().getClosestBusStop().getBusStopNumber());
-			//				goToBusStop(Phonebook.getPhonebook().getSeafoodRestaurant().getClosestBusStop().getBusStopNumber());
-			//			}
 			if (myJob.jobPlace.contains("Italian")){
 				print("Destination bus Stop: " + Phonebook.getPhonebook().getItalianRestaurant().getClosestBusStop().getBusStopNumber());
 				goToBusStop(Phonebook.getPhonebook().getItalianRestaurant().getClosestBusStop().getBusStopNumber(), Phonebook.getPhonebook().getItalianRestaurant().location);
@@ -337,20 +327,13 @@ public class Worker extends Person {
 			
 		}
 
-		if (!gui.walk){
-			try {
-				atCityDestination.acquire();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-
-		if (myJob.jobPlace == "American Restaurant") 
-		{
-			workerRole = Phonebook.getPhonebook().getAmericanRestaurant().arrivedAtWork(this, myJob.title);
-			workerRole.setRoleActive();
-			return;
-		}
+//		if (!gui.walk){
+//			try {
+//				atCityDestination.acquire();
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+//		}
 
 		if (myJob.jobPlace == "Chinese Restaurant") 
 		{
