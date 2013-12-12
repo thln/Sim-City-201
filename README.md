@@ -179,3 +179,9 @@ team20
   + Integrated but unimplemented GUI for Bank & Market
   + Crooks/Deadbeats/Non Norm's
   + Configuration File
+
+###How To Run Scenarios (V2)
+  + Press a scenario to run under the Run Scenario Tab
+  + Pressing immediately is recommended in order to see results (before the day is over)
+  + We have only added scenario A so far
+  + Pressing Stop Scenario ends the scenario
