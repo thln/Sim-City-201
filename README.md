@@ -184,4 +184,9 @@ team20
   + Press a scenario to run under the Run Scenario Tab
   + Pressing immediately is recommended in order to see results (before the day is over)
   + We have only added scenario A so far
-  + Pressing Stop Scenario ends the scenario
+  + Pressing Stop Scenario ends the scenario by exiting application
+
+###Unimplemented/Not Working (V2)
+  + Not all restaurants are working
+  + No Cars
+
