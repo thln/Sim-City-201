@@ -23,7 +23,7 @@ public class UPSmanRole extends Role implements UPSman {
 	private MarketUPSmanGui UPSmanGui;
 
 	public EventLog log = new EventLog();
-	
+
 	public UPSmanRole (Person p, String pName, String rName, Market market) {
 		super(p, pName, rName);
 		this.market = market;
@@ -40,9 +40,9 @@ public class UPSmanRole extends Role implements UPSman {
 		log.add(new LoggedEvent("Recieved msgDeliverOrder"));
 		orders.add(o);
 		if (person != null)
-		stateChanged();
+			stateChanged();
 	}
-	
+
 	public void msgAtDestination() {
 		this.atDestination.release();
 	}
@@ -55,29 +55,31 @@ public class UPSmanRole extends Role implements UPSman {
 				return true;
 			}
 		}
-		
+
 		if (leaveRole && orders.isEmpty()) {
 			market.goingOffWork(person);
 			leaveRole = false;
 			return true;
 		}
-		
+
 		return false;
 	}
 
 	//Actions
 	public void deliverOrder(MarketOrder o) {
-		
-		UPSmanGui.DoGoToSalesPerson();
-		try {
-			this.atDestination.acquire();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
+		if (!test) {
+			UPSmanGui.DoGoToSalesPerson();
+			try {
+				this.atDestination.acquire();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 		UPSmanGui.DoExit();
-		
+		}
+
 		print("Delivered an order to a restaurant");
 		if (o.chineseRestaurant != null) {
 			o.chineseRestaurant.getCook(test).msgOrderFulfillment(o.item, o.itemAmountFulfilled, o.itemAmountOrdered);
@@ -85,7 +87,7 @@ public class UPSmanRole extends Role implements UPSman {
 			orders.remove(o);
 			return;
 		}
-		
+
 		if (o.seafoodRestaurant != null) {
 			//Must send then order back
 			market.getSalesPerson(test).msgOrderDelivered(o);
@@ -99,7 +101,7 @@ public class UPSmanRole extends Role implements UPSman {
 			orders.remove(o);
 			return;
 		}
-		
+
 		if (o.americanRestaurant != null) {
 			o.americanRestaurant.americanCook.msgHereIsYourOrder(o.item);
 			market.getSalesPerson(test).msgOrderDelivered(o);
@@ -108,11 +110,11 @@ public class UPSmanRole extends Role implements UPSman {
 		}
 		return;
 	}
-	
+
 	public void setGui(MarketUPSmanGui gui) {
 		UPSmanGui = gui;
 	}
-	
+
 	public MarketUPSmanGui getGui() {
 		return UPSmanGui;
 	}

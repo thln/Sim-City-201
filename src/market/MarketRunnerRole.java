@@ -42,7 +42,7 @@ public class MarketRunnerRole extends Role implements MarketRunner {
 		log.add(new LoggedEvent("Recieved msgHeresAnOrder"));
 		orders.add(o);
 		if (person != null)
-		stateChanged();
+			stateChanged();
 	}
 
 	public void msgAtDestination() {
@@ -73,13 +73,15 @@ public class MarketRunnerRole extends Role implements MarketRunner {
 		//if(!marketRunnerGui.atInventory()) {
 		//CARMEN IF YOU UNCOMMENT THIS, MAKE SURE IT DOESN'T STOP THE WHOLE FREAKING INTERACTION
 		//BECUASE THE SEMAPHORE WAS NEVER RELEASED SO THE MARKET WASN'T WORKING
-					marketRunnerGui.DoGoToInventory();
-					try {
-						this.atDestination.acquire();
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+		if (!test){
+			marketRunnerGui.DoGoToInventory();
+			try {
+				this.atDestination.acquire();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 
 		if (o.customer != null) {
 			decreaseInventoryBy(o.item, o.itemAmountOrdered);
@@ -88,12 +90,14 @@ public class MarketRunnerRole extends Role implements MarketRunner {
 				print("Fulfilled order for customer: " + ((MarketCustomerRole) o.customer).getName());
 			}
 
-			marketRunnerGui.DoGoToSalesPerson();
-			try {
-				this.atDestination.acquire();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if (!test) {
+				marketRunnerGui.DoGoToSalesPerson();
+				try {
+					this.atDestination.acquire();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			market.getSalesPerson(test).msgOrderFulfilled(o);
 			orders.remove(o);
@@ -102,13 +106,15 @@ public class MarketRunnerRole extends Role implements MarketRunner {
 			decreaseInventoryBy(o.item, o.itemAmountOrdered);
 			o.itemAmountFulfilled = o.itemAmountOrdered;
 			print("Fulfilled order for restaurant for: " + o.item);
-			
-			marketRunnerGui.DoGoToSalesPerson();
-			try {
-				this.atDestination.acquire();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+
+			if (!test) {
+				marketRunnerGui.DoGoToSalesPerson();
+				try {
+					this.atDestination.acquire();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			market.getUPSman(test).msgDeliverOrder(o);
 			orders.remove(o);
@@ -123,11 +129,11 @@ public class MarketRunnerRole extends Role implements MarketRunner {
 	public void setGui(MarketRunnerGui gui) {
 		marketRunnerGui = gui;
 	}
-	
+
 	public void setPresent(boolean present) {
 		this.present = present;
 	}
-	
+
 	public boolean isPresent() {
 		if(present)
 			return true;

@@ -130,21 +130,23 @@ public class MarketCustomerRole extends Role implements MarketCustomer {
 	public void payBill(){
 		if (bill == myMarket.inventory.get(item).price * itemAmount) {
 			print("Paying my bill");
-			marketCustomerGui.DoGoToSalesPerson();
-			try {
-				this.atDestination.acquire();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if (!test) {
+				marketCustomerGui.DoGoToSalesPerson();
+				try {
+					this.atDestination.acquire();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				myMarket.getSalesPerson(test).msgPayment(this, bill);
+				person.money -= bill;
+				state = MarketCustomerState.payed;
 			}
-			myMarket.getSalesPerson(test).msgPayment(this, bill);
-			person.money -= bill;
-			state = MarketCustomerState.payed;
-		}
-		else {
-			//message market that bill was wrong
-			//for now leaving market
-			exitMarket();
+			else {
+				//message market that bill was wrong
+				//for now leaving market
+				exitMarket();
+			}
 		}
 	}
 

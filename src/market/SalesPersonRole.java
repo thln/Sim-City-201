@@ -32,7 +32,7 @@ public class SalesPersonRole extends Role implements SalesPerson {
 	public List<MarketOrder> orders = Collections.synchronizedList(new ArrayList<MarketOrder>());
 	private Semaphore atDestination = new Semaphore(0, true);
 	MarketSalesPersonGui salesPersonGui;
-	
+
 	//Constructors
 	public SalesPersonRole(Person person, String pName, String rName, Market market) {
 		super(person, pName, rName);
@@ -57,21 +57,21 @@ public class SalesPersonRole extends Role implements SalesPerson {
 	}
 
 
-	
+
 	public void msgIWantProducts(ChineseRestaurant restaurant, String item, int numWanted) {
 		print("Restaurant asked for " + numWanted + " " + item + "(s)");
 		log.add(new LoggedEvent("Recieved msgIWantProducts"));
 		orders.add(new MarketOrder(restaurant, item, numWanted));
 		stateChanged();
 	}
-	
+
 	public void msgIWantProducts(SeafoodRestaurant restaurant, String item, int numWanted) {
 		print("Restaurant asked for " + numWanted + " " + item + "(s)");
 		log.add(new LoggedEvent("Recieved msgIWantProducts"));
 		orders.add(new MarketOrder(restaurant, item, numWanted));
 		stateChanged();
 	}
-	
+
 	public void msgIWantProducts(ItalianRestaurant restaurant, String item, int numWanted) {
 		print("Restaurant asked for " + numWanted + " " + item + "(s)");
 		log.add(new LoggedEvent("Recieved msgIWantProducts"));
@@ -79,13 +79,13 @@ public class SalesPersonRole extends Role implements SalesPerson {
 		if (person != null)
 			stateChanged();
 	}
-	
+
 	public void msgIWantProducts(AmericanRestaurant restaurant, String item, int numWanted) {
 		print("Restaurant asked for " + numWanted + " " + item + "(s)");
 		log.add(new LoggedEvent("Recieved msgIWantProducts"));
 		orders.add(new MarketOrder(restaurant, item, numWanted));
 		if (person != null)
-		stateChanged();
+			stateChanged();
 	}
 
 	public void msgOrderFulfilled(MarketOrder o) {
@@ -115,7 +115,7 @@ public class SalesPersonRole extends Role implements SalesPerson {
 			}
 		}
 	}
-	
+
 	public void msgAtDestination() {
 		this.atDestination.release();
 	}
@@ -157,7 +157,7 @@ public class SalesPersonRole extends Role implements SalesPerson {
 			}
 		}
 	}
-	
+
 	public void msgPayment(ItalianRestaurant italianRestaurant, double payment) {
 		print("Recieved payment of $" + payment + " from restaurant " + italianRestaurant.getName());
 		market.money += payment;
@@ -168,7 +168,7 @@ public class SalesPersonRole extends Role implements SalesPerson {
 			}
 		}
 	}
-	
+
 	public void msgPayment(AmericanRestaurant americanRestaurant, double payment) {
 		print("Recieved payment of $" + payment + " from restaurant " + americanRestaurant.getName());
 		market.money += payment;
@@ -179,7 +179,7 @@ public class SalesPersonRole extends Role implements SalesPerson {
 			}
 		}
 	}
-	
+
 	//Scheduler
 	public boolean pickAndExecuteAnAction() {
 		if (!orders.isEmpty()) {
@@ -215,22 +215,24 @@ public class SalesPersonRole extends Role implements SalesPerson {
 		o.state = orderState.processing;
 
 		if (market.inventory.get(o.item).amount == 0) {
-			if (o.chineseRestaurant !=  null) {
+			if (o.chineseRestaurant !=  null || test) {
 				o.chineseRestaurant.getCook(test).msgCantFulfill(o.item, 0, o.itemAmountOrdered);
 				orders.remove(o);
 				stateChanged();
 				return;
 			}
 		}
-		
-//CARMEN IF YOU UNCOMMENT THIS, MAKE SURE IT DOESN'T STOP THE WHOLE FREAKING INTERACTION
-//BECUASE THE SEMAPHORE WAS NEVER RELEASED SO THE MARKET WASN'T WORKING
-		salesPersonGui.DoGotoRunner();
-		try {
-			this.atDestination.acquire();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
+		//CARMEN IF YOU UNCOMMENT THIS, MAKE SURE IT DOESN'T STOP THE WHOLE FREAKING INTERACTION
+		//BECUASE THE SEMAPHORE WAS NEVER RELEASED SO THE MARKET WASN'T WORKING
+		if (!test){
+			salesPersonGui.DoGotoRunner();
+			try {
+				this.atDestination.acquire();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 		print("Gave Market Runner an order to find");
@@ -275,11 +277,11 @@ public class SalesPersonRole extends Role implements SalesPerson {
 			}
 		}
 	}
-	
+
 	public void setGui(MarketSalesPersonGui gui) {
 		salesPersonGui = gui;
 	}
-	
+
 	public MarketSalesPersonGui getGui() {
 		return salesPersonGui;
 	}
