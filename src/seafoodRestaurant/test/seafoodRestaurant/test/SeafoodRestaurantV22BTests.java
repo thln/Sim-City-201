@@ -1,4 +1,4 @@
-//package seafoodRestaurant.test;
+package seafoodRestaurant.test;
 //
 //import junit.framework.TestCase;
 ////import restaurant.CashierAgent;

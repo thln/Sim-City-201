@@ -1,4 +1,4 @@
-//package seafoodRestaurant;
+package seafoodRestaurant;
 //
 //import java.util.ArrayList;
 //import java.util.Collections;

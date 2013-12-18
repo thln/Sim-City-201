@@ -237,7 +237,7 @@ public class SeafoodRestaurant implements Restaurant {
 		seafoodRestaurantHostRole.msgLeaveRole();
 		for (SeafoodRestaurantWaiterRole w1: waiters) {
 			w1.msgLeaveRole();
-			restPanel.removeGui(w1.getGui());
+			//restPanel.removeGui(w1.getGui());
 		}
 		seafoodRestaurantCookRole.msgLeaveRole();
 		//restPanel.removeGui(cookGui);

@@ -281,13 +281,13 @@ public class SeafoodRestaurantCookRole extends Role implements Restaurant
 		S = cookState.Cooking;
 		print("We are low on " + foodItem + ". Let's order " + FoodInventory.get(foodItem).OrderSize + " more from " + Phonebook.getPhonebook().getEastMarket().getName() + "!");
 		//Implement a mechanism to choose between markets
-		Phonebook.getPhonebook().getEastMarket().salesPersonRole.msgIWantProducts(Phonebook.getPhonebook().getSeafoodRestaurant(), foodItem, FoodInventory.get(foodItem).OrderSize);
+		//Phonebook.getPhonebook().getEastMarket().salesPersonRole.msgIWantProducts(Phonebook.getPhonebook().getSeafoodRestaurant(), foodItem, FoodInventory.get(foodItem).OrderSize);
 	}
 	
 	private void takeRevolvingStandOrder()
 	{
 		print("Taking order from Revolving Stand.");
-		orders.add(Phonebook.getPhonebook().getSeafoodRestaurant().getRevolvingStand().takeOrder());
+	//	orders.add(Phonebook.getPhonebook().getSeafoodRestaurant().getRevolvingStand().takeOrder());
 	}
 	
 //	public void addMarket(SeafoodRestaurantMarketRole m)

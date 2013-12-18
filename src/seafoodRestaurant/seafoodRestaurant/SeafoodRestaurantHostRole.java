@@ -402,7 +402,7 @@ public class SeafoodRestaurantHostRole extends Role
 
 	public void deleteWaiter(MyWaiter mw) 
 	{
-		Phonebook.getPhonebook().getSeafoodRestaurant().removeWaiter(mw.w1);
+		//Phonebook.getPhonebook().getSeafoodRestaurant().removeWaiter(mw.w1);
 		mw = null;
 		MyWaiters.remove(mw);
 	}

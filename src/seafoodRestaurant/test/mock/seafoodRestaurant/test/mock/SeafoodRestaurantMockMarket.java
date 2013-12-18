@@ -1,4 +1,4 @@
-//package seafoodRestaurant.test.mock;
+package seafoodRestaurant.test.mock;
 //
 //import restaurant.interfaces.Market;
 //

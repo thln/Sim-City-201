@@ -267,11 +267,11 @@ public boolean decideForBus(String location) {
 		yDestination = (int) Phonebook.getPhonebook().getChineseRestaurant().location.getY();
 		command = Command.GoToRestaurant;
 	}
-	if (location.equals("American Restaurant")) {
-		xDestination = (int) Phonebook.getPhonebook().getAmericanRestaurant().location.getX();
-		yDestination = (int) Phonebook.getPhonebook().getAmericanRestaurant().location.getY();
-		command = Command.GoToRestaurant;
-	}
+//	if (location.equals("American Restaurant")) {
+//		xDestination = (int) Phonebook.getPhonebook().getAmericanRestaurant().location.getX();
+//		yDestination = (int) Phonebook.getPhonebook().getAmericanRestaurant().location.getY();
+//		command = Command.GoToRestaurant;
+//	}
 	if (location.equals("Home")) {
 		xDestination = xHome;
 		yDestination = yHome;

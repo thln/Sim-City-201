@@ -1,4 +1,4 @@
-//package seafoodRestaurant.test;
+package seafoodRestaurant.test;
 //
 ////import restaurant.CashierAgent;
 ////import restaurant.Check;

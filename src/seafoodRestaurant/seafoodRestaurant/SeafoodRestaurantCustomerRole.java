@@ -7,7 +7,7 @@ import seafoodRestaurant.interfaces.SeafoodRestaurantCustomer;
 import agent.Agent;
 import application.Phonebook;
 import application.gui.animation.agentGui.RestaurantCustomerGui;
-import application.gui.animation.agentGui.SeafoodRestaurantCustomerGui;
+//import application.gui.animation.agentGui.SeafoodRestaurantCustomerGui;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -26,7 +26,7 @@ public class SeafoodRestaurantCustomerRole extends Role implements SeafoodRestau
 {
 	private int hungerLevel = 5;        // determines length of meal
 	Timer timer = new Timer();
-	private SeafoodRestaurantCustomerGui customerGui;
+	//private SeafoodRestaurantCustomerGui customerGui;
 	private int currentTable;
 	private SeafoodRestaurantMenu myMenu;
 	private String myOrder;
@@ -156,7 +156,7 @@ public class SeafoodRestaurantCustomerRole extends Role implements SeafoodRestau
 	public void HereIsYourCheck(SeafoodRestaurantCheck ch)
 	{
 		myCheck = ch;
-		customerGui.DoOrder("Check");
+		//customerGui.DoOrder("Check");
 		state = AgentState.CheckReceived;
 		stateChanged();
 	}
@@ -308,17 +308,17 @@ public class SeafoodRestaurantCustomerRole extends Role implements SeafoodRestau
 
 	private void goToRestaurant() 
 	{
-		customerGui.DoEnterRestaurant();
+		//customerGui.DoEnterRestaurant();
 		print("Going to restaurant");
 		//waiter.msgIWantFood(this);//send our instance, so he can respond to us
-		Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantHostRole.IWantFood(this);
+		//Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantHostRole.IWantFood(this);
 		WaitingToBeSeated = true;
 	}
 
 	private void SitDown() 
 	{
 		print("Being seated. Going to table");
-		customerGui.DoGoToSeat(currentTable);//hack; only one table
+		//customerGui.DoGoToSeat(currentTable);//hack; only one table
 	}
 	
 	private void choosingOrderTime()
@@ -342,7 +342,7 @@ public class SeafoodRestaurantCustomerRole extends Role implements SeafoodRestau
 		{
 			print("Oh man, I can't even afford a Clam Chowder Sourdough Bowl. I should leave.");
 			myOrder = "";
-			customerGui.DoOrder("");
+			//customerGui.DoOrder("");
 			waiter.iAmLeavingTable(this);
 			state = AgentState.donePaying;
 			event = AgentEvent.atCashier;
@@ -353,7 +353,7 @@ public class SeafoodRestaurantCustomerRole extends Role implements SeafoodRestau
 		{
 			print("I only have enough for a Clam Chowder Sourdough Bowl. But they're out! I'll leave.");
 			myOrder = "";
-			customerGui.DoOrder("");
+			//customerGui.DoOrder("");
 			waiter.iAmLeavingTable(this);
 			state = AgentState.donePaying;
 			event = AgentEvent.atCashier;
@@ -415,14 +415,14 @@ public class SeafoodRestaurantCustomerRole extends Role implements SeafoodRestau
 	{
 				state = AgentState.WaitingForFood;
 				waiter.myChoiceIs(order, this);
-				customerGui.DoOrder(order+"?");
+				//customerGui.DoOrder(order+"?");
 				print("Message 6 Sent - Gave Order: " + order);
 				stateChanged();
 	}
 
 	private void EatFood() 
 	{
-		customerGui.DoOrder(myOrder);
+		//customerGui.DoOrder(myOrder);
 		print("Eating Food");
 		//This next complicated line creates and starts a timer thread.
 		//We schedule a deadline of getHungerLevel()*1000 milliseconds.
@@ -448,7 +448,7 @@ public class SeafoodRestaurantCustomerRole extends Role implements SeafoodRestau
 	
 	private void AskForCheck()
 	{
-		customerGui.DoOrder("Check?");
+		//customerGui.DoOrder("Check?");
 		waiter.CanIGetMyCheck(this);
 	}
 	
@@ -458,20 +458,20 @@ public class SeafoodRestaurantCustomerRole extends Role implements SeafoodRestau
 		myMenu = null;
 		myOrder = "Check";
 		waiter.iAmLeavingTable(this);
-		customerGui.GoToCashier();
+		//customerGui.GoToCashier();
 	}
 	
 	private void PayForFood()
 	{
 		myOrder = "";
-		customerGui.DoOrder("");
+		//customerGui.DoOrder("");
 		if(Debt > 0)
 		{
 			myCheck.cost += Debt;
 			print("I have a debt. I will add it to the bill.");
 		}
 		print("I am giving the americanRestaurantCashier $" + Cash);
-		Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantCashierRole.HereIsPayment(myCheck, Cash);
+		//Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantCashierRole.HereIsPayment(myCheck, Cash);
 		Cash = 0;
 	}
 
@@ -485,7 +485,7 @@ public class SeafoodRestaurantCustomerRole extends Role implements SeafoodRestau
 		print("Leaving.");
 		//waiter.iAmLeavingTable(this);
 		print("Message 10 Sent - I am leaving");
-		customerGui.DoExit();
+		//customerGui.DoExit();
 	}
 
 	// Accessors, etc.
@@ -527,15 +527,15 @@ public class SeafoodRestaurantCustomerRole extends Role implements SeafoodRestau
 		return "customer " + getName();
 	}
 
-	public void setGui(SeafoodRestaurantCustomerGui g) 
-	{
-		customerGui = g;
-	}
-
-	public SeafoodRestaurantCustomerGui getGui() 
-	{
-		return customerGui;
-	}
+//	public void setGui(SeafoodRestaurantCustomerGui g) 
+//	{
+//		customerGui = g;
+//	}
+//
+//	public SeafoodRestaurantCustomerGui getGui() 
+//	{
+//		return customerGui;
+//	}
 	
 	public int getCustomerNumber()
 	{

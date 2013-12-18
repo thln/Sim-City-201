@@ -231,7 +231,7 @@ public class SeafoodRestaurantCashierRole extends Role implements SeafoodRestaur
 		print("PayMarket runs.");
 		print("I am paying for the bill " + mb.finalTotal + " and I have " + profits);
 		//mb.market.Paid(mb.finalTotal);
-		mb.market.msgPayment(seafoodRestaurant, mb.finalTotal);
+		//mb.market.msgPayment(seafoodRestaurant, mb.finalTotal);
 		mb.finalTotal = Double.parseDouble(df.format(mb.finalTotal));
 		accumulatedCosts += mb.finalTotal;
 		profits -= mb.finalTotal;

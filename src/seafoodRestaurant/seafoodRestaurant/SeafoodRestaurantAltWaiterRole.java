@@ -27,9 +27,9 @@ public class SeafoodRestaurantAltWaiterRole extends SeafoodRestaurantWaiterRole 
 		{
 			e.printStackTrace();
 		}
-		waiterGui.GoHomePosition();
+		//waiterGui.GoHomePosition();
 		//cook.pleaseCook(mc.choice, mc.table, this);
-		Phonebook.getPhonebook().getSeafoodRestaurant().getRevolvingStand().newOrder(mc.choice, mc.table, this);
+		//Phonebook.getPhonebook().getSeafoodRestaurant().getRevolvingStand().newOrder(mc.choice, mc.table, this);
 		print("Message 7 - Sent Order To Revolving Stand");
 		mc.state = myCustomerState.OrderSent;
 	}

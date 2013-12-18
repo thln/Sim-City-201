@@ -13,7 +13,7 @@ import java.util.concurrent.Semaphore;
 
 
 import application.Phonebook;
-import application.gui.animation.agentGui.SeafoodRestaurantWaiterGui;
+//import application.gui.animation.agentGui.SeafoodRestaurantWaiterGui;
 import person.Person;
 //import application.gui.animation.agentGui.SeafoodRestaurantWaiterGui;
 import person.Role;
@@ -73,7 +73,7 @@ public class SeafoodRestaurantWaiterRole extends Role implements SeafoodRestaura
 	protected Semaphore atCashier = new Semaphore(0, true);
 	protected Semaphore receivingCheck = new Semaphore(0, true);
 	
-	public SeafoodRestaurantWaiterGui waiterGui = null;
+	//public SeafoodRestaurantWaiterGui waiterGui = null;
 	
 	public enum myCustomerState 
 	{Waiting, Seated, readyToOrder, TakingOrder, OrderReceived, OrderSent, OutOfOrder, DeliveringMeal, Eating, AskedForCheck, GettingCheck, WaitingForCashierCheck, CheckReceived, GivenCheckToCustomer, Leaving, Left};
@@ -471,7 +471,7 @@ public class SeafoodRestaurantWaiterRole extends Role implements SeafoodRestaura
 	protected void AskHost()
 	{
 		state = WaiterState.AskedHost;
-		Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantHostRole.CanIGoOnBreak(this);
+		//Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantHostRole.CanIGoOnBreak(this);
 	}
 	
 	//WAITER ON BREAK STUFF ******************************
@@ -481,28 +481,28 @@ public class SeafoodRestaurantWaiterRole extends Role implements SeafoodRestaura
 		print("I am coming back to work.");
 		requestingBreak = false;
 		onBreak = false;
-		waiterGui.setOffBreakbool();
-		waiterGui.GoHomePosition();
-		Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantHostRole.BackToWork(this);
+		//waiterGui.setOffBreakbool();
+		//waiterGui.GoHomePosition();
+		//Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantHostRole.BackToWork(this);
 		//stateChange
 	}
 	
 	protected void seatCustomer(MyCustomer mc) 
 	{
 		AtHomeboolean = false;
-		if(waiterGui.getXPos() != mc.xCordCustomerLobby && waiterGui.getYPos() != mc.yCordCustomerLobby)
-		{
-			print("Aha!");
-			waiterGui.GoToCustomerLobby(mc.c.getCustomerNumber());
-			try 
-			{
-				atCustomerLobby.acquire();
-				//atFrontDesk.acquire();
-			} catch (InterruptedException e) 
-			{
-				e.printStackTrace();
-			}
-		}
+//		if(waiterGui.getXPos() != mc.xCordCustomerLobby && waiterGui.getYPos() != mc.yCordCustomerLobby)
+//		{
+//			print("Aha!");
+//			waiterGui.GoToCustomerLobby(mc.c.getCustomerNumber());
+//			try 
+//			{
+//				atCustomerLobby.acquire();
+//				//atFrontDesk.acquire();
+//			} catch (InterruptedException e) 
+//			{
+//				e.printStackTrace();
+//			}
+//		}
 		print("Here!");
 		SeafoodRestaurantMenu menuforCust = new SeafoodRestaurantMenu();
 		mc.c.followMe(menuforCust, this, mc.table);
@@ -516,7 +516,7 @@ public class SeafoodRestaurantWaiterRole extends Role implements SeafoodRestaura
 		}
 		//Leaving Customers
 		atCustomerLobby.tryAcquire();
-		waiterGui.GoHomePosition();
+		//waiterGui.GoHomePosition();
 		mc.state = myCustomerState.Seated;
 
 	}
@@ -527,7 +527,7 @@ public class SeafoodRestaurantWaiterRole extends Role implements SeafoodRestaura
 		//Same with "table"
 		print("Seating " + customer + " at table " + table);
 		atCustomerLobby.tryAcquire();
-		waiterGui.GoToTable(customer); 
+		//waiterGui.GoToTable(customer); 
 
 	}
 
@@ -561,7 +561,7 @@ public class SeafoodRestaurantWaiterRole extends Role implements SeafoodRestaura
 		//AFFECTS GUI!!!!!!!!!
 		print("Going to Table" + cust.getCurrentTable() + " Customer " + cust);
 		atCustomerLobby.tryAcquire();
-		waiterGui.GoToTable(cust);
+		//waiterGui.GoToTable(cust);
 		
 	}
 	
@@ -575,8 +575,8 @@ public class SeafoodRestaurantWaiterRole extends Role implements SeafoodRestaura
 		{
 			e.printStackTrace();
 		}
-		waiterGui.GoHomePosition();
-		Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantCookRole.pleaseCook(mc.choice, mc.table, this);
+		//waiterGui.GoHomePosition();
+		//Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantCookRole.pleaseCook(mc.choice, mc.table, this);
 		print("Message 7 - Sent Order");
 		mc.state = myCustomerState.OrderSent;
 	}
@@ -587,7 +587,7 @@ public class SeafoodRestaurantWaiterRole extends Role implements SeafoodRestaura
 		//AFFECTS GUI!!!!!!
 		print("Going to Kitchen");
 		atCustomerLobby.tryAcquire();
-		waiterGui.GoToKitchen();
+		//waiterGui.GoToKitchen();
 	}
 	
 	public void RejectCustomerOrder(MyCustomer mc)
@@ -602,7 +602,7 @@ public class SeafoodRestaurantWaiterRole extends Role implements SeafoodRestaura
 		}
 		//print ("At Kitchen " + atTable.toString());
 		///Do we need to carry the order
-		waiterGui.DoDeliver(" :( ");
+		//waiterGui.DoDeliver(" :( ");
 		DoGoToTable(mc.c);
 		try 
 		{
@@ -616,11 +616,11 @@ public class SeafoodRestaurantWaiterRole extends Role implements SeafoodRestaura
 		mc.c.OutOfChoice(mc.choice);
 		//print("We are unfortunately out of " + mc.choice);
 		//atFrontDesk.tryAcquire();
-		waiterGui.DoDeliver("");
+		//waiterGui.DoDeliver("");
 		mc.state = myCustomerState.Seated;
 		//mc.state = myCustomerState.Leaving;
 		//atFrontDesk.tryAcquire();
-		waiterGui.GoHomePosition();
+		//waiterGui.GoHomePosition();
 	}
 	
 	public void DeliverMeal(MyCustomer mc)
@@ -635,8 +635,8 @@ public class SeafoodRestaurantWaiterRole extends Role implements SeafoodRestaura
 		}
 		//print ("At Kitchen " + atTable.toString());
 		///Do we need to carry the order
-		waiterGui.DoDeliver(mc.choice);
-		Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantCookRole.PickedUpOrder(mc.choice);
+	//	waiterGui.DoDeliver(mc.choice);
+	//	Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantCookRole.PickedUpOrder(mc.choice);
 		DoGoToTable(mc.c);
 		try 
 		{
@@ -650,11 +650,11 @@ public class SeafoodRestaurantWaiterRole extends Role implements SeafoodRestaura
 		//print ("At table " + atTable.toString());
 		mc.c.HereIsYourOrder(mc.choice);
 		atCustomerLobby.tryAcquire();
-		waiterGui.DoDeliver("");
+	//	waiterGui.DoDeliver("");
 		print("Message 9 Sent - Delivering Meal");
 		mc.state = myCustomerState.Eating;
 		atCustomerLobby.tryAcquire();
-		waiterGui.GoHomePosition();
+		//waiterGui.GoHomePosition();
 	}
 	
 	public void RetrieveCheck(MyCustomer mc)
@@ -670,9 +670,9 @@ public class SeafoodRestaurantWaiterRole extends Role implements SeafoodRestaura
 		}
 		//Line originally here
 		print("At Cashier");
-		waiterGui.DoDeliver("Check");
+		//waiterGui.DoDeliver("Check");
 		mc.state = myCustomerState.GettingCheck;
-		Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantCashierRole.GiveMeCheck(mc.choice, mc.c, this);
+		//Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantCashierRole.GiveMeCheck(mc.choice, mc.c, this);
 		try 
 		{
 			receivingCheck.acquire();
@@ -689,7 +689,7 @@ public class SeafoodRestaurantWaiterRole extends Role implements SeafoodRestaura
 		//AFFECTS GUI!!!!!!
 		print("Going to Cashier");
 		atCustomerLobby.tryAcquire();
-		waiterGui.GoToCashier();
+	//	waiterGui.GoToCashier();
 	}
 	
 	public void DeliverCheck(MyCustomer mc)
@@ -704,11 +704,11 @@ public class SeafoodRestaurantWaiterRole extends Role implements SeafoodRestaura
 			e.printStackTrace();
 		}
 		mc.c.HereIsYourCheck(mc.CustomersCheck);
-		waiterGui.DoDeliver("");
+	//	waiterGui.DoDeliver("");
 		print("Delivered Check");
 		mc.state = myCustomerState.GivenCheckToCustomer;
 		atCustomerLobby.tryAcquire();
-		waiterGui.GoHomePosition();
+		//waiterGui.GoHomePosition();
 	}
 	
 	public void clearTable(MyCustomer mc)
@@ -721,7 +721,7 @@ public class SeafoodRestaurantWaiterRole extends Role implements SeafoodRestaura
 				print(mc.c + " leaving table " + mc.table);
 				//table.setUnoccupied();
 				mc.state = myCustomerState.Left;
-				Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantHostRole.TableIsFree(mc.table, this);
+			//	Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantHostRole.TableIsFree(mc.table, this);
 				print("Message 11 Sent, " + mc.c + " has left, " + mc.table + " is free");
 				MyCustomers.remove(mc);
 			//}
@@ -739,7 +739,7 @@ public class SeafoodRestaurantWaiterRole extends Role implements SeafoodRestaura
 	//WAITER ON BREAK STUFF ******************************
 	protected void doGoOnBreak()
 	{
-		waiterGui.GoToBreakRoom();
+	//	waiterGui.GoToBreakRoom();
 		/*
 		timer.schedule(new TimerTask() 
 		{
@@ -754,10 +754,10 @@ public class SeafoodRestaurantWaiterRole extends Role implements SeafoodRestaura
 	}	
 	
 	protected void AskHostToLeave()	{
-	Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantHostRole.msgIAmLeavingSoon(this);
+//	Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantHostRole.msgIAmLeavingSoon(this);
 	if(MyCustomers.isEmpty())
 	{
-		Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantHostRole.msgIAmLeavingWork(this);
+	//	Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantHostRole.msgIAmLeavingWork(this);
 		((Worker) person).roleFinishedWork();
 		leaveRole = false;
 	}
@@ -780,23 +780,23 @@ public class SeafoodRestaurantWaiterRole extends Role implements SeafoodRestaura
 		//doRelax();
 	}
 	
-	public void doRelax()
-	{
-		waiterGui.DoRelax();
-	}
+//	public void doRelax()
+//	{
+//		waiterGui.DoRelax();
+//	}
 	
 	
 	//utilities
 
-	public void setGui(SeafoodRestaurantWaiterGui gui) 
-	{
-		waiterGui = gui;
-	}
-
-	public SeafoodRestaurantWaiterGui getGui() 
-	{
-		return waiterGui;
-	}
+//	public void setGui(SeafoodRestaurantWaiterGui gui) 
+//	{
+//		waiterGui = gui;
+//	}
+//
+//	public SeafoodRestaurantWaiterGui getGui() 
+//	{
+//		return waiterGui;
+//	}
 	
 	public boolean isOnBreak()
 	{
