@@ -13,7 +13,7 @@ import bank.BankCustomerRole.CustomerState;
 import market.MarketCustomerRole;
 import person.Role;
 import agent.Agent;
-import americanRestaurant.AmericanRestaurantCustomerRole;
+//import americanRestaurant.AmericanRestaurantCustomerRole;
 import application.Phonebook;
 import application.Restaurant;
 import application.TimeManager;
@@ -81,7 +81,7 @@ public abstract class Person extends Agent{
 		roles.add(new BankCustomerRole(this, getName(), "Bank Customer"));
 		roles.add(new MarketCustomerRole(this, getName(), "Market Customer"));
 		roles.add(new ChineseRestaurantCustomerRole(this, getName(), "Restaurant Customer", Phonebook.getPhonebook().getChineseRestaurant()));
-		roles.add(new AmericanRestaurantCustomerRole(this, getName(), "Restaurant Customer"));
+		//roles.add(new AmericanRestaurantCustomerRole(this, getName(), "Restaurant Customer"));
 		nextTask = new Timer();
 		atCityDestination = new Semaphore(0,true);
 		setHunger(HungerLevel.full);
@@ -438,10 +438,10 @@ public abstract class Person extends Agent{
 		gui.walk = gui.decideForBus(choice);
 
 		if (!gui.walk){
-			if (choice.equals("American Restaurant")){
-				print("Destination bus Stop: " + Phonebook.getPhonebook().getAmericanRestaurant().getClosestBusStop().getBusStopNumber());
-				goToBusStop(Phonebook.getPhonebook().getAmericanRestaurant().getClosestBusStop().getBusStopNumber(), Phonebook.getPhonebook().getAmericanRestaurant().location);
-			}
+//			if (choice.equals("American Restaurant")){
+//				print("Destination bus Stop: " + Phonebook.getPhonebook().getAmericanRestaurant().getClosestBusStop().getBusStopNumber());
+//				goToBusStop(Phonebook.getPhonebook().getAmericanRestaurant().getClosestBusStop().getBusStopNumber(), Phonebook.getPhonebook().getAmericanRestaurant().location);
+//			}
 			if (choice.equals("Chinese Restaurant")){
 				print("Destination bus Stop: " + Phonebook.getPhonebook().getChineseRestaurant().getClosestBusStop().getBusStopNumber());
 				goToBusStop(Phonebook.getPhonebook().getChineseRestaurant().getClosestBusStop().getBusStopNumber(), Phonebook.getPhonebook().getChineseRestaurant().location);
@@ -492,17 +492,17 @@ public abstract class Person extends Agent{
 				}
 				return;
 			}
-			if (cust1 instanceof AmericanRestaurantCustomerRole) {
-				AmericanRestaurantCustomerRole RCR = (AmericanRestaurantCustomerRole) cust1;
-				if (Phonebook.getPhonebook().getAmericanRestaurant().customerArrived(RCR)) {
-					currentRoleName = "American Restaurant Customer";
-					cust1.setRoleActive();
-					stateChanged();
-				}
+//			if (cust1 instanceof AmericanRestaurantCustomerRole) {
+//				AmericanRestaurantCustomerRole RCR = (AmericanRestaurantCustomerRole) cust1;
+//				if (Phonebook.getPhonebook().getAmericanRestaurant().customerArrived(RCR)) {
+//					currentRoleName = "American Restaurant Customer";
+//					cust1.setRoleActive();
+//					stateChanged();
+//				}
 				return;
 			}
 		}
-	}
+	
 
 	protected void goToSleep() {
 

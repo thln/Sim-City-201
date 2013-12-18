@@ -13,9 +13,9 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
-import americanRestaurant.AmericanRestaurantTable;
-import americanRestaurant.gui.AmericanCookGui;
-import americanRestaurant.gui.FoodGui;
+//import americanRestaurant.AmericanRestaurantTable;
+//import americanRestaurant.gui.AmericanCookGui;
+//import americanRestaurant.gui.FoodGui;
 import application.gui.animation.agentGui.Gui;
 
 public class RestaurantPanel extends BuildingPanel implements ActionListener{
@@ -26,13 +26,13 @@ public class RestaurantPanel extends BuildingPanel implements ActionListener{
     
     //American Restaurant Data
     static int americanNTables = 4;
-	public AmericanRestaurantTable[] tables = new AmericanRestaurantTable[americanNTables]; 		//declare list of tables
+	//public AmericanRestaurantTable[] tables = new AmericanRestaurantTable[americanNTables]; 		//declare list of tables
 	static boolean isFood = true;
 	ImageIcon grillImage, fridgeImage;
 	public enum guiCookState {cooking, gathering, plating};
 	public guiCookState cookState;
 	ImageIcon fireImage = new ImageIcon ("res/fire.png");
-	private static List<FoodGui> foodGuis = new ArrayList<FoodGui>();
+	//private static List<FoodGui> foodGuis = new ArrayList<FoodGui>();
 	
 	
 	public RestaurantPanel(String buildName, AnimationPanel ap) {
@@ -240,25 +240,25 @@ public class RestaurantPanel extends BuildingPanel implements ActionListener{
 			}
 
 			if (isFood) {
-				for (FoodGui f1: foodGuis) {
-					if (!f1.getStop() && f1.isPresent())
-						f1.updatePosition();
-				}
+//				for (FoodGui f1: foodGuis) {
+//					if (!f1.getStop() && f1.isPresent())
+//						f1.updatePosition();
+//				}
 			}	
 				
 			for(Gui gui : guis) {
 				if (gui.isPresent()) {
-					if (gui instanceof AmericanCookGui && cookState == guiCookState.gathering)
-						((AmericanCookGui) gui).drawIngredients(g2, this);
+//					if (gui instanceof AmericanCookGui && cookState == guiCookState.gathering)
+//						((AmericanCookGui) gui).drawIngredients(g2, this);
 					gui.draw(g2);
 				}
 			}
 
 			if (isFood) {
-				for (FoodGui f1: foodGuis) {
-					if (f1.isPresent())
-						((FoodGui) f1).drawIcon(g, this);
-				}
+//				for (FoodGui f1: foodGuis) {
+//					if (f1.isPresent())
+//						((FoodGui) f1).drawIcon(g, this);
+//				}
 			}
 		}
 		else if (name.toLowerCase().contains("mexican")) { //for Henry's restaurant

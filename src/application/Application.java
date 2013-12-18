@@ -15,7 +15,7 @@ import person.Deadbeat;
 import person.Person;
 import person.Wealthy;
 import person.Worker;
-import americanRestaurant.AmericanRestaurantCookRole;
+//import americanRestaurant.AmericanRestaurantCookRole;
 import transportation.BusAgent;
 import application.gui.animation.AnimationPanel;
 import application.gui.animation.agentGui.BusGuiHorizontal;
@@ -38,9 +38,9 @@ public class Application extends JPanel {
 
 		animPanel = ap;
 		//Initialize the building reference's to one another
-		AmericanRestaurantCookRole cook = Phonebook.getPhonebook().getAmericanRestaurant().americanCook;
-		cook.getMarkets().add(Phonebook.getPhonebook().getEastMarket());
-		cook.getMarkets().add(Phonebook.getPhonebook().getWestMarket());
+		//AmericanRestaurantCookRole cook = Phonebook.getPhonebook().getAmericanRestaurant().americanCook;
+		//cook.getMarkets().add(Phonebook.getPhonebook().getEastMarket());
+		//cook.getMarkets().add(Phonebook.getPhonebook().getWestMarket());
 
 		//Adding markets to the cook in Chinese Restaurant
 		Phonebook.getPhonebook().getChineseRestaurant().chineseRestaurantCookRole.addMarket(Phonebook.getPhonebook().getEastMarket());

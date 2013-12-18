@@ -417,13 +417,13 @@ public class Worker extends Person {
 				return false;
 		}
 
-		if (myJob.jobPlace == "American Restaurant") 
-		{
-			if (!Phonebook.getPhonebook().getAmericanRestaurant().userClosed)
-				return true;
-			else
-				return false;
-		}
+//		if (myJob.jobPlace == "American Restaurant") 
+//		{
+//			if (!Phonebook.getPhonebook().getAmericanRestaurant().userClosed)
+//				return true;
+//			else
+//				return false;
+//		}
 		if (myJob.jobPlace == "Italian Restaurant") 
 		{
 			if (!Phonebook.getPhonebook().getItalianRestaurant().userClosed)
@@ -431,13 +431,13 @@ public class Worker extends Person {
 			else
 				return false;
 		}
-		if (myJob.jobPlace == "Seafood Restaurant") 
-		{
-			if (!Phonebook.getPhonebook().getSeafoodRestaurant().userClosed)
-				return true;
-			else
-				return false;
-		}
+//		if (myJob.jobPlace == "Seafood Restaurant") 
+//		{
+//			if (!Phonebook.getPhonebook().getSeafoodRestaurant().userClosed)
+//				return true;
+//			else
+//				return false;
+//		}
 		return true;
 	}
 

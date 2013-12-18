@@ -14,10 +14,10 @@ import market.interfaces.MarketCustomer;
 import market.interfaces.SalesPerson;
 import person.Person;
 import person.Role;
-import seafoodRestaurant.SeafoodRestaurant;
+//import seafoodRestaurant.SeafoodRestaurant;
 import testing.EventLog;
 import testing.LoggedEvent;
-import americanRestaurant.AmericanRestaurant;
+//import americanRestaurant.AmericanRestaurant;
 import application.Restaurant;
 import application.gui.animation.agentGui.MarketSalesPersonGui;
 import chineseRestaurant.ChineseRestaurant;
@@ -65,12 +65,12 @@ public class SalesPersonRole extends Role implements SalesPerson {
 		stateChanged();
 	}
 
-	public void msgIWantProducts(SeafoodRestaurant restaurant, String item, int numWanted) {
-		print("Restaurant asked for " + numWanted + " " + item + "(s)");
-		log.add(new LoggedEvent("Recieved msgIWantProducts"));
-		orders.add(new MarketOrder(restaurant, item, numWanted));
-		stateChanged();
-	}
+//	public void msgIWantProducts(SeafoodRestaurant restaurant, String item, int numWanted) {
+//		print("Restaurant asked for " + numWanted + " " + item + "(s)");
+//		log.add(new LoggedEvent("Recieved msgIWantProducts"));
+//		orders.add(new MarketOrder(restaurant, item, numWanted));
+//		stateChanged();
+//	}
 
 	public void msgIWantProducts(ItalianRestaurant restaurant, String item, int numWanted) {
 		print("Restaurant asked for " + numWanted + " " + item + "(s)");
@@ -80,13 +80,13 @@ public class SalesPersonRole extends Role implements SalesPerson {
 			stateChanged();
 	}
 
-	public void msgIWantProducts(AmericanRestaurant restaurant, String item, int numWanted) {
-		print("Restaurant asked for " + numWanted + " " + item + "(s)");
-		log.add(new LoggedEvent("Recieved msgIWantProducts"));
-		orders.add(new MarketOrder(restaurant, item, numWanted));
-		if (person != null)
-			stateChanged();
-	}
+//	public void msgIWantProducts(AmericanRestaurant restaurant, String item, int numWanted) {
+//		print("Restaurant asked for " + numWanted + " " + item + "(s)");
+//		log.add(new LoggedEvent("Recieved msgIWantProducts"));
+//		orders.add(new MarketOrder(restaurant, item, numWanted));
+//		if (person != null)
+//			stateChanged();
+//	}
 
 	public void msgOrderFulfilled(MarketOrder o) {
 		if (o.customer instanceof MarketCustomerRole) {
@@ -147,16 +147,16 @@ public class SalesPersonRole extends Role implements SalesPerson {
 		}
 	}
 
-	public void msgPayment(SeafoodRestaurant seafoodRestaurant, double payment) {
-		print("Recieved payment of $" + payment + " from restaurant " + seafoodRestaurant.getName());
-		market.money += payment;
-		for (MarketOrder o : orders) {
-			if (o.seafoodRestaurant.equals(seafoodRestaurant)) {
-				orders.remove(o);
-				return;
-			}
-		}
-	}
+//	public void msgPayment(SeafoodRestaurant seafoodRestaurant, double payment) {
+//		print("Recieved payment of $" + payment + " from restaurant " + seafoodRestaurant.getName());
+//		market.money += payment;
+//		for (MarketOrder o : orders) {
+//			if (o.seafoodRestaurant.equals(seafoodRestaurant)) {
+//				orders.remove(o);
+//				return;
+//			}
+//		}
+//	}
 
 	public void msgPayment(ItalianRestaurant italianRestaurant, double payment) {
 		print("Recieved payment of $" + payment + " from restaurant " + italianRestaurant.getName());
@@ -169,16 +169,16 @@ public class SalesPersonRole extends Role implements SalesPerson {
 		}
 	}
 
-	public void msgPayment(AmericanRestaurant americanRestaurant, double payment) {
-		print("Recieved payment of $" + payment + " from restaurant " + americanRestaurant.getName());
-		market.money += payment;
-		for (MarketOrder o : orders) {
-			if (o.americanRestaurant.equals(americanRestaurant)) {
-				orders.remove(o);
-				return;
-			}
-		}
-	}
+//	public void msgPayment(AmericanRestaurant americanRestaurant, double payment) {
+//		print("Recieved payment of $" + payment + " from restaurant " + americanRestaurant.getName());
+//		market.money += payment;
+//		for (MarketOrder o : orders) {
+//			if (o.americanRestaurant.equals(americanRestaurant)) {
+//				orders.remove(o);
+//				return;
+//			}
+//		}
+//	}
 
 	//Scheduler
 	public boolean pickAndExecuteAnAction() {

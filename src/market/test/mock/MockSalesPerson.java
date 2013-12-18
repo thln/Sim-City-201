@@ -3,7 +3,7 @@ package market.test.mock;
 import market.MarketOrder;
 import market.interfaces.MarketCustomer;
 import market.interfaces.SalesPerson;
-import seafoodRestaurant.SeafoodRestaurant;
+//import seafoodRestaurant.SeafoodRestaurant;
 import testing.EventLog;
 import testing.LoggedEvent;
 import testing.Mock;
@@ -51,10 +51,10 @@ public class MockSalesPerson extends Mock implements SalesPerson {
 
 	}
 
-	@Override
-	public void msgPayment(SeafoodRestaurant seafoodRestaurant, double payment) {
-		// TODO Auto-generated method stub
-		
-	}
+//	@Override
+//	public void msgPayment(SeafoodRestaurant seafoodRestaurant, double payment) {
+//		// TODO Auto-generated method stub
+//		
+//	}
 
 }

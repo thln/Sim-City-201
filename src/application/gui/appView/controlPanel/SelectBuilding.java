@@ -241,7 +241,7 @@ public class SelectBuilding extends JPanel implements ActionListener
 			}
 			if(selectBuildingBox.getSelectedItem() == "Seafood Restaurant")
 			{
-				Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantCookRole.setEmpty();
+				//Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantCookRole.setEmpty();
 			}
 			if(selectBuildingBox.getSelectedItem() == "Italian Restaurant")
 			{
@@ -725,147 +725,147 @@ public class SelectBuilding extends JPanel implements ActionListener
 					validate();
 				}
 			}
-			if(selectBuildingBox.getSelectedItem() == "Seafood Restaurant")
-			{
-				String pName;
-				//Host
-				if(Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantHostRole.person == null)
-				{
-				 	pName = "null";
-				}
-				else
-				{
-					pName = Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantHostRole.getName();
-				}
-				JButton button1 = new JButton(Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantHostRole.getRoleName() + " " + pName);
-				button1.setMaximumSize(new Dimension(250, 25));
-				workerButtons.add(button1);
-				restaurantInfoPanel.add(button1);
-				validate();
-				
-				//Cook
-				if(Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantCookRole.person == null)
-				{
-				 	pName = "null";
-				}
-				else
-				{
-					pName = Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantCookRole.getName();
-				}
-				JButton button2 = new JButton(Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantCookRole.getRoleName() + " " + pName);
-				button2.setMaximumSize(new Dimension(250, 25));
-				workerButtons.add(button2);
-				restaurantInfoPanel.add(button2);
-				validate();
-				
-				//Cashier
-				if(Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantCashierRole.person == null)
-				{
-				 	pName = "null";
-				}
-				else
-				{
-					pName = Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantCashierRole.getName();
-				}
-				JButton button3 = new JButton(Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantCashierRole.getRoleName() + " " + pName);
-				button3.setMaximumSize(new Dimension(250, 25));
-				workerButtons.add(button3);
-				restaurantInfoPanel.add(button3);
-				validate();
-				
-				//Waiters
-				for(int i = 0; i < Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantHostRole.MyWaiters.size(); i++)
-				{
-					JButton tempbutton1 = new JButton(Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantHostRole.MyWaiters.get(i).w1.getRoleName() 
-							+ " " + Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantHostRole.MyWaiters.get(i).w1.getName());
-					tempbutton1.setMaximumSize(new Dimension(250, 25));
-					workerButtons.add(tempbutton1);
-					restaurantInfoPanel.add(tempbutton1);
-					validate();
-				}
-
-				//Customers
-				for(int i = 0; i < Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantHostRole.MyCustomers.size(); i++)
-				{
-					JButton tempbutton1 = new JButton(Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantHostRole.MyCustomers.get(i).c.getRoleName() 
-							+ " " + Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantHostRole.MyCustomers.get(i).c.getName());
-					tempbutton1.setMaximumSize(new Dimension(250, 25));
-					workerButtons.add(tempbutton1);
-					restaurantInfoPanel.add(tempbutton1);
-					validate();
-				}
-			}
-			
-			if(selectBuildingBox.getSelectedItem() == "American Restaurant")
-			{
-				String pName;
-				//Host
-				if(Phonebook.getPhonebook().getAmericanRestaurant().americanHost.person == null)
-				{
-				 	pName = "null";
-				}
-				else
-				{
-					pName = Phonebook.getPhonebook().getAmericanRestaurant().americanHost.getName();
-				}
-				JButton button1 = new JButton(Phonebook.getPhonebook().getAmericanRestaurant().americanHost.getRoleName() + " " + pName);
-				button1.setMaximumSize(new Dimension(250, 25));
-				workerButtons.add(button1);
-				restaurantInfoPanel.add(button1);
-				validate();
-				
-				//Cook
-				if(Phonebook.getPhonebook().getAmericanRestaurant().americanCook.person == null)
-				{
-				 	pName = "null";
-				}
-				else
-				{
-					pName = Phonebook.getPhonebook().getAmericanRestaurant().americanCook.getName();
-				}
-				JButton button2 = new JButton(Phonebook.getPhonebook().getAmericanRestaurant().americanCook.getRoleName() + " " + pName);
-				button2.setMaximumSize(new Dimension(250, 25));
-				workerButtons.add(button2);
-				restaurantInfoPanel.add(button2);
-				validate();
-				
-				//Cashier
-				if(Phonebook.getPhonebook().getAmericanRestaurant().americanCashier.person == null)
-				{
-				 	pName = "null";
-				}
-				else
-				{
-					pName = Phonebook.getPhonebook().getAmericanRestaurant().americanCashier.getName();
-				}
-				JButton button3 = new JButton(Phonebook.getPhonebook().getAmericanRestaurant().americanCashier.getRoleName() + " " + pName);
-				button3.setMaximumSize(new Dimension(250, 25));
-				workerButtons.add(button3);
-				restaurantInfoPanel.add(button3);
-				validate();
-				
-				//Waiters
-				for(int i = 0; i < Phonebook.getPhonebook().getAmericanRestaurant().americanHost.Waiters.size(); i++)
-				{
-					JButton tempbutton1 = new JButton(Phonebook.getPhonebook().getAmericanRestaurant().americanHost.Waiters.get(i).getRoleName() 
-							+ " " + Phonebook.getPhonebook().getAmericanRestaurant().americanHost.Waiters.get(i).getName());
-					tempbutton1.setMaximumSize(new Dimension(250, 25));
-					workerButtons.add(tempbutton1);
-					restaurantInfoPanel.add(tempbutton1);
-					validate();
-				}
-
-				//Customers
-				for(int i = 0; i < Phonebook.getPhonebook().getAmericanRestaurant().americanHost.waitingCustomers.size(); i++)
-				{
-					JButton tempbutton1 = new JButton(Phonebook.getPhonebook().getAmericanRestaurant().americanHost.waitingCustomers.get(i).getRoleName() 
-							+ " " + Phonebook.getPhonebook().getAmericanRestaurant().americanHost.waitingCustomers.get(i).getName());
-					tempbutton1.setMaximumSize(new Dimension(250, 25));
-					workerButtons.add(tempbutton1);
-					restaurantInfoPanel.add(tempbutton1);
-					validate();
-				}
-			}
+//			if(selectBuildingBox.getSelectedItem() == "Seafood Restaurant")
+//			{
+//				String pName;
+//				//Host
+//				if(Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantHostRole.person == null)
+//				{
+//				 	pName = "null";
+//				}
+//				else
+//				{
+//					pName = Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantHostRole.getName();
+//				}
+//				JButton button1 = new JButton(Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantHostRole.getRoleName() + " " + pName);
+//				button1.setMaximumSize(new Dimension(250, 25));
+//				workerButtons.add(button1);
+//				restaurantInfoPanel.add(button1);
+//				validate();
+//				
+//				//Cook
+//				if(Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantCookRole.person == null)
+//				{
+//				 	pName = "null";
+//				}
+//				else
+//				{
+//					pName = Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantCookRole.getName();
+//				}
+//				JButton button2 = new JButton(Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantCookRole.getRoleName() + " " + pName);
+//				button2.setMaximumSize(new Dimension(250, 25));
+//				workerButtons.add(button2);
+//				restaurantInfoPanel.add(button2);
+//				validate();
+//				
+//				//Cashier
+//				if(Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantCashierRole.person == null)
+//				{
+//				 	pName = "null";
+//				}
+//				else
+//				{
+//					pName = Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantCashierRole.getName();
+//				}
+//				JButton button3 = new JButton(Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantCashierRole.getRoleName() + " " + pName);
+//				button3.setMaximumSize(new Dimension(250, 25));
+//				workerButtons.add(button3);
+//				restaurantInfoPanel.add(button3);
+//				validate();
+//				
+//				//Waiters
+//				for(int i = 0; i < Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantHostRole.MyWaiters.size(); i++)
+//				{
+//					JButton tempbutton1 = new JButton(Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantHostRole.MyWaiters.get(i).w1.getRoleName() 
+//							+ " " + Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantHostRole.MyWaiters.get(i).w1.getName());
+//					tempbutton1.setMaximumSize(new Dimension(250, 25));
+//					workerButtons.add(tempbutton1);
+//					restaurantInfoPanel.add(tempbutton1);
+//					validate();
+//				}
+//
+//				//Customers
+//				for(int i = 0; i < Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantHostRole.MyCustomers.size(); i++)
+//				{
+//					JButton tempbutton1 = new JButton(Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantHostRole.MyCustomers.get(i).c.getRoleName() 
+//							+ " " + Phonebook.getPhonebook().getSeafoodRestaurant().seafoodRestaurantHostRole.MyCustomers.get(i).c.getName());
+//					tempbutton1.setMaximumSize(new Dimension(250, 25));
+//					workerButtons.add(tempbutton1);
+//					restaurantInfoPanel.add(tempbutton1);
+//					validate();
+//				}
+//			}
+//			
+//			if(selectBuildingBox.getSelectedItem() == "American Restaurant")
+//			{
+//				String pName;
+//				//Host
+//				if(Phonebook.getPhonebook().getAmericanRestaurant().americanHost.person == null)
+//				{
+//				 	pName = "null";
+//				}
+//				else
+//				{
+//					pName = Phonebook.getPhonebook().getAmericanRestaurant().americanHost.getName();
+//				}
+//				JButton button1 = new JButton(Phonebook.getPhonebook().getAmericanRestaurant().americanHost.getRoleName() + " " + pName);
+//				button1.setMaximumSize(new Dimension(250, 25));
+//				workerButtons.add(button1);
+//				restaurantInfoPanel.add(button1);
+//				validate();
+//				
+//				//Cook
+//				if(Phonebook.getPhonebook().getAmericanRestaurant().americanCook.person == null)
+//				{
+//				 	pName = "null";
+//				}
+//				else
+//				{
+//					pName = Phonebook.getPhonebook().getAmericanRestaurant().americanCook.getName();
+//				}
+//				JButton button2 = new JButton(Phonebook.getPhonebook().getAmericanRestaurant().americanCook.getRoleName() + " " + pName);
+//				button2.setMaximumSize(new Dimension(250, 25));
+//				workerButtons.add(button2);
+//				restaurantInfoPanel.add(button2);
+//				validate();
+//				
+//				//Cashier
+//				if(Phonebook.getPhonebook().getAmericanRestaurant().americanCashier.person == null)
+//				{
+//				 	pName = "null";
+//				}
+//				else
+//				{
+//					pName = Phonebook.getPhonebook().getAmericanRestaurant().americanCashier.getName();
+//				}
+//				JButton button3 = new JButton(Phonebook.getPhonebook().getAmericanRestaurant().americanCashier.getRoleName() + " " + pName);
+//				button3.setMaximumSize(new Dimension(250, 25));
+//				workerButtons.add(button3);
+//				restaurantInfoPanel.add(button3);
+//				validate();
+//				
+//				//Waiters
+//				for(int i = 0; i < Phonebook.getPhonebook().getAmericanRestaurant().americanHost.Waiters.size(); i++)
+//				{
+//					JButton tempbutton1 = new JButton(Phonebook.getPhonebook().getAmericanRestaurant().americanHost.Waiters.get(i).getRoleName() 
+//							+ " " + Phonebook.getPhonebook().getAmericanRestaurant().americanHost.Waiters.get(i).getName());
+//					tempbutton1.setMaximumSize(new Dimension(250, 25));
+//					workerButtons.add(tempbutton1);
+//					restaurantInfoPanel.add(tempbutton1);
+//					validate();
+//				}
+//
+//				//Customers
+//				for(int i = 0; i < Phonebook.getPhonebook().getAmericanRestaurant().americanHost.waitingCustomers.size(); i++)
+//				{
+//					JButton tempbutton1 = new JButton(Phonebook.getPhonebook().getAmericanRestaurant().americanHost.waitingCustomers.get(i).getRoleName() 
+//							+ " " + Phonebook.getPhonebook().getAmericanRestaurant().americanHost.waitingCustomers.get(i).getName());
+//					tempbutton1.setMaximumSize(new Dimension(250, 25));
+//					workerButtons.add(tempbutton1);
+//					restaurantInfoPanel.add(tempbutton1);
+//					validate();
+//				}
+//			}
 			
 			if(selectBuildingBox.getSelectedItem() == "Italian Restaurant")
 			{

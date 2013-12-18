@@ -12,9 +12,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import market.Market;
-import seafoodRestaurant.SeafoodRestaurant;
+//import seafoodRestaurant.SeafoodRestaurant;
 import transportation.BusStop;
-import americanRestaurant.AmericanRestaurant;
+//import americanRestaurant.AmericanRestaurant;
 import bank.Bank;
 import chineseRestaurant.ChineseRestaurant;
 
@@ -40,9 +40,9 @@ public class Phonebook{
 	
 	//Restaurants
 	static private ChineseRestaurant chineseRestaurant;
-    static private SeafoodRestaurant seafoodRestaurant;
+    //static private SeafoodRestaurant seafoodRestaurant;
     //ItalianRestaurant italianRestaurant;
-    static private AmericanRestaurant americanRestaurant;
+    //static private AmericanRestaurant americanRestaurant;
     static private ItalianRestaurant italianRestaurant;
     public List<Restaurant> restaurants;
 
@@ -214,8 +214,8 @@ public class Phonebook{
 		westMarket = new Market("West Market");
 		westMarket.setClosestBusStopNumber(4);
 
-		seafoodRestaurant = new SeafoodRestaurant("Seafood Restaurant");
-		seafoodRestaurant.setClosestBusStopNumber(2);
+		//seafoodRestaurant = new SeafoodRestaurant("Seafood Restaurant");
+		//seafoodRestaurant.setClosestBusStopNumber(2);
 		
 		chineseRestaurant = new ChineseRestaurant("Chinese Restaurant");
 		chineseRestaurant.setClosestBusStopNumber(2);			//setting building's closest bus stop
@@ -226,8 +226,8 @@ public class Phonebook{
 	
 		
 		cityDJ = new RadioStation();
-		americanRestaurant = new AmericanRestaurant("American Restaurant");
-		americanRestaurant.setClosestBusStopNumber(2);    //setting building's closest bus stop
+		//americanRestaurant = new AmericanRestaurant("American Restaurant");
+		//americanRestaurant.setClosestBusStopNumber(2);    //setting building's closest bus stop
 
 		/* For future use after all the restaurants have been integrated
 		 * 
@@ -238,8 +238,8 @@ public class Phonebook{
 		restaurants = Collections.synchronizedList(new ArrayList<Restaurant>());
 		restaurants.add(italianRestaurant);
 		restaurants.add(chineseRestaurant);
-		restaurants.add(seafoodRestaurant);
-		restaurants.add(americanRestaurant);
+		//restaurants.add(seafoodRestaurant);
+		//restaurants.add(americanRestaurant);
 		
 		housingMaintenanceCompany = new HousingMaintenanceCompany("Housing maintenance company");
 //		getBusStops().add(new Point(600/3-600/12, 325/3-325/5));
@@ -288,9 +288,9 @@ public class Phonebook{
 		return chineseRestaurant; //temporary stub. make more dynamic later
 	}
 
-	public SeafoodRestaurant getSeafoodRestaurant() {
-		return seafoodRestaurant;
-	}
+//	public SeafoodRestaurant getSeafoodRestaurant() {
+//		return seafoodRestaurant;
+//	}
 	
 	public ItalianRestaurant getItalianRestaurant() 
 	{
@@ -307,10 +307,10 @@ public class Phonebook{
 		return seafoodRestaurant;
 	}
 	*/
-	public AmericanRestaurant getAmericanRestaurant() 
-	{
-		return americanRestaurant; //temporary stub. make more dynamic later
-	}
+//	public AmericanRestaurant getAmericanRestaurant() 
+//	{
+//		return americanRestaurant; //temporary stub. make more dynamic later
+//	}
 	
 	public List<Housing> getAllHousing(boolean test)
 	{

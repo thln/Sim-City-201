@@ -88,12 +88,12 @@ public class UPSmanRole extends Role implements UPSman {
 			return;
 		}
 
-		if (o.seafoodRestaurant != null) {
-			//Must send then order back
-			market.getSalesPerson(test).msgOrderDelivered(o);
-			orders.remove(o);
-			return;
-		}
+//		if (o.seafoodRestaurant != null) {
+//			//Must send then order back
+//			market.getSalesPerson(test).msgOrderDelivered(o);
+//			orders.remove(o);
+//			return;
+//		}
 
 		if (o.italianRestaurant != null) {
 			//Must sent the order back
@@ -102,12 +102,12 @@ public class UPSmanRole extends Role implements UPSman {
 			return;
 		}
 
-		if (o.americanRestaurant != null) {
-			o.americanRestaurant.americanCook.msgHereIsYourOrder(o.item);
-			market.getSalesPerson(test).msgOrderDelivered(o);
-			orders.remove(o);
-			return;
-		}
+//		if (o.americanRestaurant != null) {
+//			o.americanRestaurant.americanCook.msgHereIsYourOrder(o.item);
+//			market.getSalesPerson(test).msgOrderDelivered(o);
+//			orders.remove(o);
+//			return;
+//		}
 		return;
 	}
 
